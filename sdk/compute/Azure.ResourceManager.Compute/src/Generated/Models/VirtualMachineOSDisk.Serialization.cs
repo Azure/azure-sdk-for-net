@@ -15,70 +15,70 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineOSDisk : IUtf8JsonSerializable, IJsonModel<VirtualMachineOSDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineOSDisk>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineOSDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineOSDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineOSDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineOSDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineOSDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OSType.HasValue)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (EncryptionSettings != null)
+            if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings);
+                writer.WriteObjectValue(EncryptionSettings, options);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Vhd != null)
+            if (Optional.IsDefined(Vhd))
             {
                 writer.WritePropertyName("vhd"u8);
-                writer.WriteObjectValue(Vhd);
+                writer.WriteObjectValue(Vhd, options);
             }
-            if (Image != null)
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image);
+                writer.WriteObjectValue(Image, options);
             }
-            if (Caching.HasValue)
+            if (Optional.IsDefined(Caching))
             {
                 writer.WritePropertyName("caching"u8);
                 writer.WriteStringValue(Caching.Value.ToSerialString());
             }
-            if (WriteAcceleratorEnabled.HasValue)
+            if (Optional.IsDefined(WriteAcceleratorEnabled))
             {
                 writer.WritePropertyName("writeAcceleratorEnabled"u8);
                 writer.WriteBooleanValue(WriteAcceleratorEnabled.Value);
             }
-            if (DiffDiskSettings != null)
+            if (Optional.IsDefined(DiffDiskSettings))
             {
                 writer.WritePropertyName("diffDiskSettings"u8);
-                writer.WriteObjectValue(DiffDiskSettings);
+                writer.WriteObjectValue(DiffDiskSettings, options);
             }
             writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToString());
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (ManagedDisk != null)
+            if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk);
+                writer.WriteObjectValue(ManagedDisk, options);
             }
-            if (DeleteOption.HasValue)
+            if (Optional.IsDefined(DeleteOption))
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineOSDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineOSDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineOSDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineOSDisk DeserializeVirtualMachineOSDisk(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineManagedDisk managedDisk = default;
             DiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"u8))
@@ -239,10 +239,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineOSDisk(
                 osType,
                 encryptionSettings,
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineOSDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineOSDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineOSDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineOSDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineOSDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

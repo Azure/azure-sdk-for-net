@@ -15,75 +15,75 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class DiskCreationData : IUtf8JsonSerializable, IJsonModel<DiskCreationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskCreationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskCreationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskCreationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskCreationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskCreationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskCreationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("createOption"u8);
             writer.WriteStringValue(CreateOption.ToString());
-            if (StorageAccountId != null)
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (ImageReference != null)
+            if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference);
+                writer.WriteObjectValue(ImageReference, options);
             }
-            if (GalleryImageReference != null)
+            if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
-                writer.WriteObjectValue(GalleryImageReference);
+                writer.WriteObjectValue(GalleryImageReference, options);
             }
-            if (SourceUri != null)
+            if (Optional.IsDefined(SourceUri))
             {
                 writer.WritePropertyName("sourceUri"u8);
                 writer.WriteStringValue(SourceUri.AbsoluteUri);
             }
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (options.Format != "W" && SourceUniqueId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceUniqueId))
             {
                 writer.WritePropertyName("sourceUniqueId"u8);
                 writer.WriteStringValue(SourceUniqueId);
             }
-            if (UploadSizeBytes.HasValue)
+            if (Optional.IsDefined(UploadSizeBytes))
             {
                 writer.WritePropertyName("uploadSizeBytes"u8);
                 writer.WriteNumberValue(UploadSizeBytes.Value);
             }
-            if (LogicalSectorSize.HasValue)
+            if (Optional.IsDefined(LogicalSectorSize))
             {
                 writer.WritePropertyName("logicalSectorSize"u8);
                 writer.WriteNumberValue(LogicalSectorSize.Value);
             }
-            if (SecurityDataUri != null)
+            if (Optional.IsDefined(SecurityDataUri))
             {
                 writer.WritePropertyName("securityDataUri"u8);
                 writer.WriteStringValue(SecurityDataUri.AbsoluteUri);
             }
-            if (IsPerformancePlusEnabled.HasValue)
+            if (Optional.IsDefined(IsPerformancePlusEnabled))
             {
                 writer.WritePropertyName("performancePlus"u8);
                 writer.WriteBooleanValue(IsPerformancePlusEnabled.Value);
             }
-            if (ElasticSanResourceId != null)
+            if (Optional.IsDefined(ElasticSanResourceId))
             {
                 writer.WritePropertyName("elasticSanResourceId"u8);
                 writer.WriteStringValue(ElasticSanResourceId);
             }
-            if (ProvisionedBandwidthCopySpeed.HasValue)
+            if (Optional.IsDefined(ProvisionedBandwidthCopySpeed))
             {
                 writer.WritePropertyName("provisionedBandwidthCopySpeed"u8);
                 writer.WriteStringValue(ProvisionedBandwidthCopySpeed.Value.ToString());
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskCreationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskCreationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskCreationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskCreationData DeserializeDiskCreationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
             ResourceIdentifier elasticSanResourceId = default;
             ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"u8))
@@ -254,10 +254,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DiskCreationData(
                 createOption,
                 storageAccountId,
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskCreationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskCreationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDiskCreationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskCreationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskCreationData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sql.Models;
@@ -70,38 +69,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<JobCredentialListResult>> ListByAgentAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var message = CreateListByAgentRequest(subscriptionId, resourceGroupName, serverName, jobAgentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -129,38 +100,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<JobCredentialListResult> ListByAgent(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var message = CreateListByAgentRequest(subscriptionId, resourceGroupName, serverName, jobAgentName);
             _pipeline.Send(message, cancellationToken);
@@ -213,46 +156,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SqlServerJobCredentialData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string credentialName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, credentialName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -283,46 +191,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SqlServerJobCredentialData> Get(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string credentialName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, credentialName);
             _pipeline.Send(message, cancellationToken);
@@ -364,7 +237,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -382,50 +255,12 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SqlServerJobCredentialData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string credentialName, SqlServerJobCredentialData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, credentialName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -456,50 +291,12 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SqlServerJobCredentialData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string credentialName, SqlServerJobCredentialData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, credentialName, data);
             _pipeline.Send(message, cancellationToken);
@@ -552,46 +349,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string credentialName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, credentialName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -616,46 +378,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/> or <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string credentialName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
-            if (credentialName == null)
-            {
-                throw new ArgumentNullException(nameof(credentialName));
-            }
-            if (credentialName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(credentialName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serverName, jobAgentName, credentialName);
             _pipeline.Send(message, cancellationToken);
@@ -694,42 +421,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<JobCredentialListResult>> ListByAgentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var message = CreateListByAgentNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -758,42 +454,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="jobAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<JobCredentialListResult> ListByAgentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (serverName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverName));
-            }
-            if (jobAgentName == null)
-            {
-                throw new ArgumentNullException(nameof(jobAgentName));
-            }
-            if (jobAgentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(jobAgentName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+            Argument.AssertNotNullOrEmpty(jobAgentName, nameof(jobAgentName));
 
             using var message = CreateListByAgentNextPageRequest(nextLink, subscriptionId, resourceGroupName, serverName, jobAgentName);
             _pipeline.Send(message, cancellationToken);

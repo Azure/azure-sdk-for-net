@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryKeyVaultProperties : IUtf8JsonSerializable, IJsonModel<ContainerRegistryKeyVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryKeyVaultProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryKeyVaultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryKeyVaultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (KeyIdentifier != null)
+            if (Optional.IsDefined(KeyIdentifier))
             {
                 writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier);
             }
-            if (options.Format != "W" && VersionedKeyIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(VersionedKeyIdentifier))
             {
                 writer.WritePropertyName("versionedKeyIdentifier"u8);
                 writer.WriteStringValue(VersionedKeyIdentifier);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
             }
-            if (options.Format != "W" && IsKeyRotationEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsKeyRotationEnabled))
             {
                 writer.WritePropertyName("keyRotationEnabled"u8);
                 writer.WriteBooleanValue(IsKeyRotationEnabled.Value);
             }
-            if (options.Format != "W" && LastKeyRotationTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastKeyRotationTimestamp))
             {
                 writer.WritePropertyName("lastKeyRotationTimestamp"u8);
                 writer.WriteStringValue(LastKeyRotationTimestamp.Value, "O");
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryKeyVaultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryKeyVaultProperties DeserializeContainerRegistryKeyVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             bool? keyRotationEnabled = default;
             DateTimeOffset? lastKeyRotationTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyIdentifier"u8))
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryKeyVaultProperties(
                 keyIdentifier,
                 versionedKeyIdentifier,
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryKeyVaultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryKeyVaultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryKeyVaultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

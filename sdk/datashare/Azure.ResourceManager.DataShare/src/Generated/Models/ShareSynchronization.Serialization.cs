@@ -15,63 +15,63 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class ShareSynchronization : IUtf8JsonSerializable, IJsonModel<ShareSynchronization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareSynchronization>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareSynchronization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ShareSynchronization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ShareSynchronization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareSynchronization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareSynchronization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ConsumerEmail != null)
+            if (Optional.IsDefined(ConsumerEmail))
             {
                 writer.WritePropertyName("consumerEmail"u8);
                 writer.WriteStringValue(ConsumerEmail);
             }
-            if (ConsumerName != null)
+            if (Optional.IsDefined(ConsumerName))
             {
                 writer.WritePropertyName("consumerName"u8);
                 writer.WriteStringValue(ConsumerName);
             }
-            if (ConsumerTenantName != null)
+            if (Optional.IsDefined(ConsumerTenantName))
             {
                 writer.WritePropertyName("consumerTenantName"u8);
                 writer.WriteStringValue(ConsumerTenantName);
             }
-            if (DurationInMilliSeconds.HasValue)
+            if (Optional.IsDefined(DurationInMilliSeconds))
             {
                 writer.WritePropertyName("durationMs"u8);
                 writer.WriteNumberValue(DurationInMilliSeconds.Value);
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (SynchronizationId.HasValue)
+            if (Optional.IsDefined(SynchronizationId))
             {
                 writer.WritePropertyName("synchronizationId"u8);
                 writer.WriteStringValue(SynchronizationId.Value);
             }
-            if (options.Format != "W" && SynchronizationMode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SynchronizationMode))
             {
                 writer.WritePropertyName("synchronizationMode"u8);
                 writer.WriteStringValue(SynchronizationMode.Value.ToString());
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareSynchronization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareSynchronization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareSynchronization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ShareSynchronization DeserializeShareSynchronization(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataShare.Models
             Guid? synchronizationId = default;
             SynchronizationMode? synchronizationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("consumerEmail"u8))
@@ -200,10 +200,10 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ShareSynchronization(
                 consumerEmail,
                 consumerName,
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ShareSynchronization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareSynchronization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeShareSynchronization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ShareSynchronization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareSynchronization)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -16,48 +16,48 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class RestResourceDataset : IUtf8JsonSerializable, IJsonModel<RestResourceDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestResourceDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestResourceDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestResourceDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RestResourceDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestResourceDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestResourceDataset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Structure != null)
+            if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
                 JsonSerializer.Serialize(writer, Structure);
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -79,29 +79,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue(Folder, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (RelativeUri != null)
+            if (Optional.IsDefined(RelativeUri))
             {
                 writer.WritePropertyName("relativeUrl"u8);
                 JsonSerializer.Serialize(writer, RelativeUri);
             }
-            if (RequestMethod != null)
+            if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
                 JsonSerializer.Serialize(writer, RequestMethod);
             }
-            if (RequestBody != null)
+            if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
                 JsonSerializer.Serialize(writer, RequestBody);
             }
-            if (!(AdditionalHeaders is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
                 writer.WriteStartObject();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(PaginationRules is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(PaginationRules))
             {
                 writer.WritePropertyName("paginationRules"u8);
                 writer.WriteStartObject();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestResourceDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestResourceDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestResourceDataset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static RestResourceDataset DeserializeRestResourceDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestResourceDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestResourceDataset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeRestResourceDataset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestResourceDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestResourceDataset)} does not support reading '{options.Format}' format.");
             }
         }
 

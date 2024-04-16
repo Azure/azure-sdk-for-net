@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class QuotaCounterContract : IUtf8JsonSerializable, IJsonModel<QuotaCounterContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaCounterContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaCounterContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuotaCounterContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QuotaCounterContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(PeriodStartOn, "O");
             writer.WritePropertyName("periodEndTime"u8);
             writer.WriteStringValue(PeriodEndOn, "O");
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value);
+                writer.WriteObjectValue(Value, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaCounterContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static QuotaCounterContract DeserializeQuotaCounterContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             DateTimeOffset periodEndTime = default;
             QuotaCounterValueContractProperties value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("counterKey"u8))
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new QuotaCounterContract(
                 counterKey,
                 periodKey,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeQuotaCounterContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaCounterContract)} does not support reading '{options.Format}' format.");
             }
         }
 

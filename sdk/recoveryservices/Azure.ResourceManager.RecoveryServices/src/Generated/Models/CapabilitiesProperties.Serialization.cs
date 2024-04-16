@@ -15,24 +15,24 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 {
     internal partial class CapabilitiesProperties : IUtf8JsonSerializable, IJsonModel<CapabilitiesProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapabilitiesProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapabilitiesProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CapabilitiesProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CapabilitiesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(DnsZones is ChangeTrackingList<DnsZone> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsZones))
             {
                 writer.WritePropertyName("dnsZones"u8);
                 writer.WriteStartArray();
                 foreach (var item in DnsZones)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapabilitiesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static CapabilitiesProperties DeserializeCapabilitiesProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             IList<DnsZone> dnsZones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dnsZones"u8))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CapabilitiesProperties(dnsZones ?? new ChangeTrackingList<DnsZone>(), serializedAdditionalRawData);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeCapabilitiesProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapabilitiesProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class FileStorageInfo : IUtf8JsonSerializable, IJsonModel<FileStorageInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileStorageInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileStorageInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FileStorageInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FileStorageInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileStorageInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileStorageInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (!(Headers is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileStorageInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileStorageInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileStorageInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static FileStorageInfo DeserializeFileStorageInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Uri uri = default;
             IReadOnlyDictionary<string, string> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FileStorageInfo(uri, headers ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FileStorageInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileStorageInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeFileStorageInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileStorageInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileStorageInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

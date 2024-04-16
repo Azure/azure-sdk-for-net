@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningWorkspaceDiagnoseProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceDiagnoseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceDiagnoseProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceDiagnoseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningWorkspaceDiagnoseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceDiagnoseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningWorkspaceDiagnoseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceDiagnoseProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ApplicationInsights is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(ContainerRegistry is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ContainerRegistry))
             {
                 writer.WritePropertyName("containerRegistry"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(DnsResolution is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DnsResolution))
             {
                 writer.WritePropertyName("dnsResolution"u8);
                 writer.WriteStartObject();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(KeyVault is ChangeTrackingDictionary<string, BinaryData> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(KeyVault))
             {
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteStartObject();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Nsg is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Nsg))
             {
                 writer.WritePropertyName("nsg"u8);
                 writer.WriteStartObject();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Others is ChangeTrackingDictionary<string, BinaryData> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Others))
             {
                 writer.WritePropertyName("others"u8);
                 writer.WriteStartObject();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(ResourceLock is ChangeTrackingDictionary<string, BinaryData> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceLock))
             {
                 writer.WritePropertyName("resourceLock"u8);
                 writer.WriteStartObject();
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(StorageAccount is ChangeTrackingDictionary<string, BinaryData> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStartObject();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Udr is ChangeTrackingDictionary<string, BinaryData> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(Udr))
             {
                 writer.WritePropertyName("udr"u8);
                 writer.WriteStartObject();
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceDiagnoseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningWorkspaceDiagnoseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceDiagnoseProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningWorkspaceDiagnoseProperties DeserializeMachineLearningWorkspaceDiagnoseProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, BinaryData> storageAccount = default;
             IDictionary<string, BinaryData> udr = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationInsights"u8))
@@ -475,10 +475,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningWorkspaceDiagnoseProperties(
                 applicationInsights ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 containerRegistry ?? new ChangeTrackingDictionary<string, BinaryData>(),
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceDiagnoseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceDiagnoseProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningWorkspaceDiagnoseProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceDiagnoseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceDiagnoseProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

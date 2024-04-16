@@ -16,41 +16,41 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AmazonRedshiftLinkedService : IUtf8JsonSerializable, IJsonModel<AmazonRedshiftLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmazonRedshiftLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmazonRedshiftLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AmazonRedshiftLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AmazonRedshiftLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmazonRedshiftLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmazonRedshiftLinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -76,24 +76,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
             JsonSerializer.Serialize(writer, Server);
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 JsonSerializer.Serialize(writer, Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
             writer.WritePropertyName("database"u8);
             JsonSerializer.Serialize(writer, Database);
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 JsonSerializer.Serialize(writer, Port);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmazonRedshiftLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmazonRedshiftLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmazonRedshiftLinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AmazonRedshiftLinkedService DeserializeAmazonRedshiftLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> server = default;
             DataFactoryElement<string> username = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> database = default;
             DataFactoryElement<int> port = default;
             string encryptedCredential = default;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("database"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmazonRedshiftLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmazonRedshiftLinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAmazonRedshiftLinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmazonRedshiftLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmazonRedshiftLinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

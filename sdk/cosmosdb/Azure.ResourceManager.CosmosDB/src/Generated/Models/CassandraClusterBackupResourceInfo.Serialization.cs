@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,38 +16,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CassandraClusterBackupResourceInfo : IUtf8JsonSerializable, IJsonModel<CassandraClusterBackupResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterBackupResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterBackupResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CassandraClusterBackupResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterBackupResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BackupId != null)
+            if (Optional.IsDefined(BackupId))
             {
                 writer.WritePropertyName("backupId"u8);
                 writer.WriteStringValue(BackupId);
             }
-            if (BackupState.HasValue)
+            if (Optional.IsDefined(BackupState))
             {
                 writer.WritePropertyName("backupState"u8);
                 writer.WriteStringValue(BackupState.Value.ToString());
             }
-            if (BackupStartTimestamp.HasValue)
+            if (Optional.IsDefined(BackupStartTimestamp))
             {
                 writer.WritePropertyName("backupStartTimestamp"u8);
                 writer.WriteStringValue(BackupStartTimestamp.Value, "O");
             }
-            if (BackupStopTimestamp.HasValue)
+            if (Optional.IsDefined(BackupStopTimestamp))
             {
                 writer.WritePropertyName("backupStopTimestamp"u8);
                 writer.WriteStringValue(BackupStopTimestamp.Value, "O");
             }
-            if (BackupExpiryTimestamp.HasValue)
+            if (Optional.IsDefined(BackupExpiryTimestamp))
             {
                 writer.WritePropertyName("backupExpiryTimestamp"u8);
                 writer.WriteStringValue(BackupExpiryTimestamp.Value, "O");
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterBackupResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraClusterBackupResourceInfo DeserializeCassandraClusterBackupResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DateTimeOffset? backupStopTimestamp = default;
             DateTimeOffset? backupExpiryTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupId"u8))
@@ -141,10 +142,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CassandraClusterBackupResourceInfo(
                 backupId,
                 backupState,
@@ -152,6 +153,102 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 backupStopTimestamp,
                 backupExpiryTimestamp,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupId), out propertyOverride);
+            if (Optional.IsDefined(BackupId) || hasPropertyOverride)
+            {
+                builder.Append("  backupId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (BackupId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BackupId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BackupId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupState), out propertyOverride);
+            if (Optional.IsDefined(BackupState) || hasPropertyOverride)
+            {
+                builder.Append("  backupState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{BackupState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStartTimestamp), out propertyOverride);
+            if (Optional.IsDefined(BackupStartTimestamp) || hasPropertyOverride)
+            {
+                builder.Append("  backupStartTimestamp: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(BackupStartTimestamp.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStopTimestamp), out propertyOverride);
+            if (Optional.IsDefined(BackupStopTimestamp) || hasPropertyOverride)
+            {
+                builder.Append("  backupStopTimestamp: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(BackupStopTimestamp.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupExpiryTimestamp), out propertyOverride);
+            if (Optional.IsDefined(BackupExpiryTimestamp) || hasPropertyOverride)
+            {
+                builder.Append("  backupExpiryTimestamp: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(BackupExpiryTimestamp.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CassandraClusterBackupResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -162,8 +259,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +278,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCassandraClusterBackupResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CassandraClusterBackupResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

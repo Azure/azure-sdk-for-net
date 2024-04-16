@@ -16,41 +16,41 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AzureFileStorageLinkedService : IUtf8JsonSerializable, IJsonModel<AzureFileStorageLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFileStorageLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFileStorageLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureFileStorageLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureFileStorageLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFileStorageLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFileStorageLinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -74,52 +74,52 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 JsonSerializer.Serialize(writer, Host);
             }
-            if (UserId != null)
+            if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 JsonSerializer.Serialize(writer, UserId);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 JsonSerializer.Serialize(writer, ConnectionString);
             }
-            if (AccountKey != null)
+            if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
                 JsonSerializer.Serialize(writer, AccountKey);
             }
-            if (SasUri != null)
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
                 JsonSerializer.Serialize(writer, SasUri);
             }
-            if (SasToken != null)
+            if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
                 JsonSerializer.Serialize(writer, SasToken);
             }
-            if (FileShare != null)
+            if (Optional.IsDefined(FileShare))
             {
                 writer.WritePropertyName("fileShare"u8);
                 JsonSerializer.Serialize(writer, FileShare);
             }
-            if (Snapshot != null)
+            if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
                 JsonSerializer.Serialize(writer, Snapshot);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureFileStorageLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFileStorageLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFileStorageLinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureFileStorageLinkedService DeserializeAzureFileStorageLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,11 +167,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> host = default;
             DataFactoryElement<string> userId = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> connectionString = default;
-            DataFactoryKeyVaultSecretReference accountKey = default;
+            DataFactoryKeyVaultSecret accountKey = default;
             DataFactoryElement<string> sasUri = default;
-            DataFactoryKeyVaultSecretReference sasToken = default;
+            DataFactoryKeyVaultSecret sasToken = default;
             DataFactoryElement<string> fileShare = default;
             DataFactoryElement<string> snapshot = default;
             string encryptedCredential = default;
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("connectionString"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accountKey = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
+                            accountKey = JsonSerializer.Deserialize<DataFactoryKeyVaultSecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sasUri"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sasToken = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
+                            sasToken = JsonSerializer.Deserialize<DataFactoryKeyVaultSecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("fileShare"u8))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureFileStorageLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFileStorageLinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAzureFileStorageLinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureFileStorageLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFileStorageLinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

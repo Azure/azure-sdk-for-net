@@ -15,88 +15,88 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class SynchronizationDetails : IUtf8JsonSerializable, IJsonModel<SynchronizationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynchronizationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynchronizationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynchronizationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynchronizationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DataSetId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataSetId))
             {
                 writer.WritePropertyName("dataSetId"u8);
                 writer.WriteStringValue(DataSetId.Value);
             }
-            if (options.Format != "W" && DataSetType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataSetType))
             {
                 writer.WritePropertyName("dataSetType"u8);
                 writer.WriteStringValue(DataSetType.Value.ToString());
             }
-            if (options.Format != "W" && DurationInMilliSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DurationInMilliSeconds))
             {
                 writer.WritePropertyName("durationMs"u8);
                 writer.WriteNumberValue(DurationInMilliSeconds.Value);
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && FilesRead.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FilesRead))
             {
                 writer.WritePropertyName("filesRead"u8);
                 writer.WriteNumberValue(FilesRead.Value);
             }
-            if (options.Format != "W" && FilesWritten.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FilesWritten))
             {
                 writer.WritePropertyName("filesWritten"u8);
                 writer.WriteNumberValue(FilesWritten.Value);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && RowsCopied.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RowsCopied))
             {
                 writer.WritePropertyName("rowsCopied"u8);
                 writer.WriteNumberValue(RowsCopied.Value);
             }
-            if (options.Format != "W" && RowsRead.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RowsRead))
             {
                 writer.WritePropertyName("rowsRead"u8);
                 writer.WriteNumberValue(RowsRead.Value);
             }
-            if (options.Format != "W" && SizeRead.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SizeRead))
             {
                 writer.WritePropertyName("sizeRead"u8);
                 writer.WriteNumberValue(SizeRead.Value);
             }
-            if (options.Format != "W" && SizeWritten.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SizeWritten))
             {
                 writer.WritePropertyName("sizeWritten"u8);
                 writer.WriteNumberValue(SizeWritten.Value);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && VCore.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VCore))
             {
                 writer.WritePropertyName("vCore"u8);
                 writer.WriteNumberValue(VCore.Value);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynchronizationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static SynchronizationDetails DeserializeSynchronizationDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataShare.Models
             string status = default;
             long? vCore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSetId"u8))
@@ -283,10 +283,10 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SynchronizationDetails(
                 dataSetId,
                 dataSetType,
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeSynchronizationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynchronizationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

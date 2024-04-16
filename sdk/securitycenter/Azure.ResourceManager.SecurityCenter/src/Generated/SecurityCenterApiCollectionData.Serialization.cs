@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityCenterApiCollectionData : IUtf8JsonSerializable, IJsonModel<SecurityCenterApiCollectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCenterApiCollectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCenterApiCollectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityCenterApiCollectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterApiCollectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterApiCollectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterApiCollectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && DiscoveredVia != null)
+            if (options.Format != "W" && Optional.IsDefined(DiscoveredVia))
             {
                 writer.WritePropertyName("discoveredVia"u8);
                 writer.WriteStringValue(DiscoveredVia);
             }
-            if (options.Format != "W" && BaseUri != null)
+            if (options.Format != "W" && Optional.IsDefined(BaseUri))
             {
                 writer.WritePropertyName("baseUrl"u8);
                 writer.WriteStringValue(BaseUri.AbsoluteUri);
             }
-            if (options.Format != "W" && NumberOfApiEndpoints.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfApiEndpoints))
             {
                 writer.WritePropertyName("numberOfApiEndpoints"u8);
                 writer.WriteNumberValue(NumberOfApiEndpoints.Value);
             }
-            if (options.Format != "W" && NumberOfInactiveApiEndpoints.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfInactiveApiEndpoints))
             {
                 writer.WritePropertyName("numberOfInactiveApiEndpoints"u8);
                 writer.WriteNumberValue(NumberOfInactiveApiEndpoints.Value);
             }
-            if (options.Format != "W" && NumberOfUnauthenticatedApiEndpoints.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfUnauthenticatedApiEndpoints))
             {
                 writer.WritePropertyName("numberOfUnauthenticatedApiEndpoints"u8);
                 writer.WriteNumberValue(NumberOfUnauthenticatedApiEndpoints.Value);
             }
-            if (options.Format != "W" && NumberOfExternalApiEndpoints.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfExternalApiEndpoints))
             {
                 writer.WritePropertyName("numberOfExternalApiEndpoints"u8);
                 writer.WriteNumberValue(NumberOfExternalApiEndpoints.Value);
             }
-            if (options.Format != "W" && NumberOfApiEndpointsWithSensitiveDataExposed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfApiEndpointsWithSensitiveDataExposed))
             {
                 writer.WritePropertyName("numberOfApiEndpointsWithSensitiveDataExposed"u8);
                 writer.WriteNumberValue(NumberOfApiEndpointsWithSensitiveDataExposed.Value);
             }
-            if (options.Format != "W" && SensitivityLabel != null)
+            if (options.Format != "W" && Optional.IsDefined(SensitivityLabel))
             {
                 writer.WritePropertyName("sensitivityLabel"u8);
                 writer.WriteStringValue(SensitivityLabel);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterApiCollectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterApiCollectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterApiCollectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityCenterApiCollectionData DeserializeSecurityCenterApiCollectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecurityCenter
             long? numberOfApiEndpointsWithSensitiveDataExposed = default;
             string sensitivityLabel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -277,10 +277,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityCenterApiCollectionData(
                 id,
                 name,
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterApiCollectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterApiCollectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeSecurityCenterApiCollectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterApiCollectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterApiCollectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

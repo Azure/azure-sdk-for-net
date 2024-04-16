@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 {
     public partial class FacetRequest : IUtf8JsonSerializable, IJsonModel<FacetRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FacetRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FacetRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FacetRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FacetRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FacetRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FacetRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("expression"u8);
             writer.WriteStringValue(Expression);
-            if (Options != null)
+            if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                writer.WriteObjectValue(Options, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<FacetRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FacetRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FacetRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         internal static FacetRequest DeserializeFacetRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             string expression = default;
             FacetRequestOptions options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expression"u8))
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FacetRequest(expression, options0, serializedAdditionalRawData);
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FacetRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FacetRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                         return DeserializeFacetRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FacetRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FacetRequest)} does not support reading '{options.Format}' format.");
             }
         }
 

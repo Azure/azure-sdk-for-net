@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteNumberValue(BoostingRangeStart);
             writer.WritePropertyName("boostingRangeEnd"u8);
             writer.WriteNumberValue(BoostingRangeEnd);
-            if (ShouldBoostBeyondRangeByConstant.HasValue)
+            if (Optional.IsDefined(ShouldBoostBeyondRangeByConstant))
             {
                 writer.WritePropertyName("constantBoostBeyondRange"u8);
                 writer.WriteBooleanValue(ShouldBoostBeyondRangeByConstant.Value);
@@ -59,6 +59,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new MagnitudeScoringParameters(boostingRangeStart, boostingRangeEnd, constantBoostBeyondRange);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MagnitudeScoringParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMagnitudeScoringParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

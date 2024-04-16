@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageSyncServerEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverEndpointName, StorageSyncServerEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<StorageSyncServerEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string serverEndpointName, StorageSyncServerEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
         public virtual async Task<Response<StorageSyncServerEndpointResource>> GetAsync(string serverEndpointName, CancellationToken cancellationToken = default)
         {
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
             using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
         public virtual Response<StorageSyncServerEndpointResource> Get(string serverEndpointName, CancellationToken cancellationToken = default)
         {
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
             using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.Get");
             scope.Start();
@@ -361,14 +325,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serverEndpointName, CancellationToken cancellationToken = default)
         {
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
             using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.Exists");
             scope.Start();
@@ -411,14 +368,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string serverEndpointName, CancellationToken cancellationToken = default)
         {
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
             using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.Exists");
             scope.Start();
@@ -461,14 +411,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageSyncServerEndpointResource>> GetIfExistsAsync(string serverEndpointName, CancellationToken cancellationToken = default)
         {
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
             using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.GetIfExists");
             scope.Start();
@@ -513,14 +456,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
         public virtual NullableResponse<StorageSyncServerEndpointResource> GetIfExists(string serverEndpointName, CancellationToken cancellationToken = default)
         {
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
             using var scope = _storageSyncServerEndpointServerEndpointsClientDiagnostics.CreateScope("StorageSyncServerEndpointCollection.GetIfExists");
             scope.Start();

@@ -18,23 +18,23 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppManagedEnvironmentData : IUtf8JsonSerializable, IJsonModel<ContainerAppManagedEnvironmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppManagedEnvironmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppManagedEnvironmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppManagedEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppManagedEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppManagedEnvironmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppManagedEnvironmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,97 +62,97 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (DaprAIInstrumentationKey != null)
+            if (Optional.IsDefined(DaprAIInstrumentationKey))
             {
                 writer.WritePropertyName("daprAIInstrumentationKey"u8);
                 writer.WriteStringValue(DaprAIInstrumentationKey);
             }
-            if (DaprAIConnectionString != null)
+            if (Optional.IsDefined(DaprAIConnectionString))
             {
                 writer.WritePropertyName("daprAIConnectionString"u8);
                 writer.WriteStringValue(DaprAIConnectionString);
             }
-            if (VnetConfiguration != null)
+            if (Optional.IsDefined(VnetConfiguration))
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
-                writer.WriteObjectValue(VnetConfiguration);
+                writer.WriteObjectValue(VnetConfiguration, options);
             }
-            if (options.Format != "W" && DeploymentErrors != null)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
             {
                 writer.WritePropertyName("deploymentErrors"u8);
                 writer.WriteStringValue(DeploymentErrors);
             }
-            if (options.Format != "W" && DefaultDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
             {
                 writer.WritePropertyName("defaultDomain"u8);
                 writer.WriteStringValue(DefaultDomain);
             }
-            if (options.Format != "W" && StaticIP != null)
+            if (options.Format != "W" && Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
                 writer.WriteStringValue(StaticIP.ToString());
             }
-            if (AppLogsConfiguration != null)
+            if (Optional.IsDefined(AppLogsConfiguration))
             {
                 writer.WritePropertyName("appLogsConfiguration"u8);
-                writer.WriteObjectValue(AppLogsConfiguration);
+                writer.WriteObjectValue(AppLogsConfiguration, options);
             }
-            if (IsZoneRedundant.HasValue)
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (CustomDomainConfiguration != null)
+            if (Optional.IsDefined(CustomDomainConfiguration))
             {
                 writer.WritePropertyName("customDomainConfiguration"u8);
-                writer.WriteObjectValue(CustomDomainConfiguration);
+                writer.WriteObjectValue(CustomDomainConfiguration, options);
             }
-            if (options.Format != "W" && EventStreamEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(EventStreamEndpoint))
             {
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint);
             }
-            if (!(WorkloadProfiles is ChangeTrackingList<ContainerAppWorkloadProfile> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(WorkloadProfiles))
             {
                 writer.WritePropertyName("workloadProfiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in WorkloadProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (KedaConfiguration != null)
+            if (Optional.IsDefined(KedaConfiguration))
             {
                 writer.WritePropertyName("kedaConfiguration"u8);
-                writer.WriteObjectValue(KedaConfiguration);
+                writer.WriteObjectValue(KedaConfiguration, options);
             }
-            if (DaprConfiguration != null)
+            if (Optional.IsDefined(DaprConfiguration))
             {
                 writer.WritePropertyName("daprConfiguration"u8);
-                writer.WriteObjectValue(DaprConfiguration);
+                writer.WriteObjectValue(DaprConfiguration, options);
             }
-            if (InfrastructureResourceGroup != null)
+            if (Optional.IsDefined(InfrastructureResourceGroup))
             {
                 writer.WritePropertyName("infrastructureResourceGroup"u8);
                 writer.WriteStringValue(InfrastructureResourceGroup);
             }
-            if (PeerAuthentication != null)
+            if (Optional.IsDefined(PeerAuthentication))
             {
                 writer.WritePropertyName("peerAuthentication"u8);
-                writer.WriteObjectValue(PeerAuthentication);
+                writer.WriteObjectValue(PeerAuthentication, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppContainers
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppManagedEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppManagedEnvironmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppManagedEnvironmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppManagedEnvironmentData DeserializeContainerAppManagedEnvironmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppContainers
             string infrastructureResourceGroup = default;
             ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -407,10 +407,10 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppManagedEnvironmentData(
                 id,
                 name,
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.AppContainers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppManagedEnvironmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppManagedEnvironmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.AppContainers
                         return DeserializeContainerAppManagedEnvironmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppManagedEnvironmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppManagedEnvironmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

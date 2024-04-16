@@ -19,7 +19,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteObjectValue(Aggregation);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -59,6 +59,22 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
             }
             return new AggregateVariable(kind, filter, aggregation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AggregateVariable FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAggregateVariable(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

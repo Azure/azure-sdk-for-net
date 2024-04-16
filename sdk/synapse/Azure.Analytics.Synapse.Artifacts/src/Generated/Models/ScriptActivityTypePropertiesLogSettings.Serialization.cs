@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("logDestination"u8);
             writer.WriteStringValue(LogDestination.ToString());
-            if (LogLocationSettings != null)
+            if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
                 writer.WriteObjectValue(LogLocationSettings);
@@ -51,6 +51,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new ScriptActivityTypePropertiesLogSettings(logDestination, logLocationSettings);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ScriptActivityTypePropertiesLogSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeScriptActivityTypePropertiesLogSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

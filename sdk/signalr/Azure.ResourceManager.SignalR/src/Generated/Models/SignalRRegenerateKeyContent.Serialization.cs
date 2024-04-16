@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class SignalRRegenerateKeyContent : IUtf8JsonSerializable, IJsonModel<SignalRRegenerateKeyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRRegenerateKeyContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRRegenerateKeyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignalRRegenerateKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SignalRRegenerateKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRRegenerateKeyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRRegenerateKeyContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (KeyType.HasValue)
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("keyType"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRRegenerateKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRRegenerateKeyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRRegenerateKeyContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRRegenerateKeyContent DeserializeSignalRRegenerateKeyContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
             SignalRKeyType? keyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyType"u8))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SignalRRegenerateKeyContent(keyType, serializedAdditionalRawData);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SignalRRegenerateKeyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRRegenerateKeyContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SignalR.Models
                         return DeserializeSignalRRegenerateKeyContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignalRRegenerateKeyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRRegenerateKeyContent)} does not support reading '{options.Format}' format.");
             }
         }
 

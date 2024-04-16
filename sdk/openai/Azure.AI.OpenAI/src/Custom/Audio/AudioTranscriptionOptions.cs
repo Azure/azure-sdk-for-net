@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI;
@@ -56,6 +57,30 @@ public partial class AudioTranscriptionOptions
     public string DeploymentName { get; set; }
 
     // CUSTOM CODE NOTE:
+    // The specification-level array of strings for timestamp granularities (["word","segment"]) is replaced by a
+    // [Flags] enum.
+
+    /// <summary>
+    /// The bitwise-aggregated timestamp granularity types that should be requested on an audio transcription
+    /// operation.
+    /// </summary>
+    /// <remarks>
+    /// <para>Transcription timing information requires the <see cref="AudioTranscriptionFormat.Verbose"/> setting
+    /// for <see cref="ResponseFormat"/>.</para>
+    /// <para>If no explicit value is set for <see cref="TimestampGranularityFlags"/>, segment-level timing
+    /// information will be provided by default.</para>
+    /// <para>Multiple timestamp granularities may be requested via joining values with the single-pipe |
+    /// operator, with e.g. the following requesting both word- and segment-level timing:
+    /// <code>
+    /// TimestampGranularityFlags = <see cref="AudioTimestampGranularity.Word"/> | <see cref="AudioTimestampGranularity.Segment"/>
+    /// </code>
+    /// </para>
+    /// </remarks>
+    public AudioTimestampGranularity TimestampGranularityFlags { get; set; }
+
+    internal IList<AudioTranscriptionTimestampGranularity> TimestampGranularities { get; set; }
+
+    // CUSTOM CODE NOTE:
     // Add a parameterized constructor that receives the deployment name as a parameter in addition
     // to the other required properties.
 
@@ -65,6 +90,12 @@ public partial class AudioTranscriptionOptions
     /// The audio data to transcribe.This must be the binary content of a file in one of the supported media formats:
     /// flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
     /// </param>
+    /// <remarks>
+    /// By default, audio data will be provided as if it were from an audio file named "file.wav". For other audio
+    /// formats, set an appropriate filename via the <see cref="Filename"/> property such that the format can be
+    /// inferred. For example, setting <see cref="Filename"/> to "foo.mp3" for an MP3 stream will ensure that the
+    /// audio data is handled as MP3 input.
+    /// </remarks>
     /// <exception cref="ArgumentNullException">
     ///     <paramref name="deploymentName"/> or <paramref name="audioData"/> is null.
     /// </exception>

@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -27,30 +27,30 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Skills)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SearchIndexerSkill>(item);
             }
             writer.WriteEndArray();
-            if (CognitiveServicesAccount != null)
+            if (Optional.IsDefined(CognitiveServicesAccount))
             {
                 writer.WritePropertyName("cognitiveServices"u8);
                 writer.WriteObjectValue(CognitiveServicesAccount);
             }
-            if (KnowledgeStore != null)
+            if (Optional.IsDefined(KnowledgeStore))
             {
                 writer.WritePropertyName("knowledgeStore"u8);
                 writer.WriteObjectValue(KnowledgeStore);
             }
-            if (IndexProjections != null)
+            if (Optional.IsDefined(IndexProjections))
             {
                 writer.WritePropertyName("indexProjections"u8);
                 writer.WriteObjectValue(IndexProjections);
             }
-            if (_etag != null)
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
-            if (EncryptionKey != null)
+            if (Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {
@@ -153,6 +153,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 indexProjections,
                 odataEtag,
                 encryptionKey);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndexerSkillset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchIndexerSkillset(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

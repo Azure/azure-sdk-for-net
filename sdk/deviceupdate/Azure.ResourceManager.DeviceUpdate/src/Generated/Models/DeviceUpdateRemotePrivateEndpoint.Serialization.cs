@@ -15,79 +15,79 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     public partial class DeviceUpdateRemotePrivateEndpoint : IUtf8JsonSerializable, IJsonModel<DeviceUpdateRemotePrivateEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdateRemotePrivateEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdateRemotePrivateEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceUpdateRemotePrivateEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdateRemotePrivateEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdateRemotePrivateEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdateRemotePrivateEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (ImmutableSubscriptionId != null)
+            if (Optional.IsDefined(ImmutableSubscriptionId))
             {
                 writer.WritePropertyName("immutableSubscriptionId"u8);
                 writer.WriteStringValue(ImmutableSubscriptionId);
             }
-            if (ImmutableResourceId != null)
+            if (Optional.IsDefined(ImmutableResourceId))
             {
                 writer.WritePropertyName("immutableResourceId"u8);
                 writer.WriteStringValue(ImmutableResourceId);
             }
-            if (VnetTrafficTag != null)
+            if (Optional.IsDefined(VnetTrafficTag))
             {
                 writer.WritePropertyName("vnetTrafficTag"u8);
                 writer.WriteStringValue(VnetTrafficTag);
             }
-            if (!(ManualPrivateLinkServiceConnections is ChangeTrackingList<DeviceUpdatePrivateLinkServiceConnection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ManualPrivateLinkServiceConnections))
             {
                 writer.WritePropertyName("manualPrivateLinkServiceConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManualPrivateLinkServiceConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(PrivateLinkServiceConnections is ChangeTrackingList<DeviceUpdatePrivateLinkServiceConnection> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateLinkServiceConnections))
             {
                 writer.WritePropertyName("privateLinkServiceConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkServiceConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(PrivateLinkServiceProxies is ChangeTrackingList<DeviceUpdatePrivateLinkServiceProxy> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateLinkServiceProxies))
             {
                 writer.WritePropertyName("privateLinkServiceProxies"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkServiceProxies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ConnectionDetails is ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionDetails> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectionDetails))
             {
                 writer.WritePropertyName("connectionDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ConnectionDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdateRemotePrivateEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdateRemotePrivateEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdateRemotePrivateEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static DeviceUpdateRemotePrivateEndpoint DeserializeDeviceUpdateRemotePrivateEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             IList<DeviceUpdatePrivateLinkServiceProxy> privateLinkServiceProxies = default;
             IList<DeviceUpdatePrivateEndpointConnectionDetails> connectionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -237,10 +237,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DeviceUpdateRemotePrivateEndpoint(
                 id,
                 location,
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdateRemotePrivateEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdateRemotePrivateEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         return DeserializeDeviceUpdateRemotePrivateEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdateRemotePrivateEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdateRemotePrivateEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

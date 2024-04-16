@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiVersionSetData : IUtf8JsonSerializable, IJsonModel<ApiVersionSetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiVersionSetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiVersionSetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiVersionSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiVersionSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiVersionSetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiVersionSetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (VersionQueryName != null)
+            if (Optional.IsDefined(VersionQueryName))
             {
                 writer.WritePropertyName("versionQueryName"u8);
                 writer.WriteStringValue(VersionQueryName);
             }
-            if (VersionHeaderName != null)
+            if (Optional.IsDefined(VersionHeaderName))
             {
                 writer.WritePropertyName("versionHeaderName"u8);
                 writer.WriteStringValue(VersionHeaderName);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (VersioningScheme.HasValue)
+            if (Optional.IsDefined(VersioningScheme))
             {
                 writer.WritePropertyName("versioningScheme"u8);
                 writer.WriteStringValue(VersioningScheme.Value.ToString());
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiVersionSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiVersionSetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiVersionSetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiVersionSetData DeserializeApiVersionSetData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
             string displayName = default;
             VersioningScheme? versioningScheme = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiVersionSetData(
                 id,
                 name,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiVersionSetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiVersionSetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiVersionSetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiVersionSetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiVersionSetData)} does not support reading '{options.Format}' format.");
             }
         }
 

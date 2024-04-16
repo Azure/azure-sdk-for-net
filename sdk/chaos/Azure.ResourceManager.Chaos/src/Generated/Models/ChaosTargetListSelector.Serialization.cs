@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Chaos.Models
 {
     public partial class ChaosTargetListSelector : IUtf8JsonSerializable, IJsonModel<ChaosTargetListSelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosTargetListSelector>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosTargetListSelector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChaosTargetListSelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetListSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosTargetListSelector)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosTargetListSelector)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SelectorType.ToString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue(Filter, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosTargetListSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosTargetListSelector)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosTargetListSelector)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static ChaosTargetListSelector DeserializeChaosTargetListSelector(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosTargetListSelector)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosTargetListSelector)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         return DeserializeChaosTargetListSelector(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosTargetListSelector)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosTargetListSelector)} does not support reading '{options.Format}' format.");
             }
         }
 

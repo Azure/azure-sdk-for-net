@@ -15,17 +15,17 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxTokenLength.HasValue)
+            if (Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (IsSearchTokenizer.HasValue)
+            if (Optional.IsDefined(IsSearchTokenizer))
             {
                 writer.WritePropertyName("isSearchTokenizer"u8);
                 writer.WriteBooleanValue(IsSearchTokenizer.Value);
             }
-            if (Language.HasValue)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language.Value.ToSerialString());
@@ -89,6 +89,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new MicrosoftLanguageStemmingTokenizer(odataType, name, maxTokenLength, isSearchTokenizer, language);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MicrosoftLanguageStemmingTokenizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMicrosoftLanguageStemmingTokenizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -15,79 +15,79 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicApiOperationProperties : IUtf8JsonSerializable, IJsonModel<LogicApiOperationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiOperationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiOperationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicApiOperationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Visibility != null)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (Trigger != null)
+            if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger);
             }
-            if (TriggerHint != null)
+            if (Optional.IsDefined(TriggerHint))
             {
                 writer.WritePropertyName("triggerHint"u8);
                 writer.WriteStringValue(TriggerHint);
             }
-            if (IsPageable.HasValue)
+            if (Optional.IsDefined(IsPageable))
             {
                 writer.WritePropertyName("pageable"u8);
                 writer.WriteBooleanValue(IsPageable.Value);
             }
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
-                writer.WriteObjectValue(Annotation);
+                writer.WriteObjectValue(Annotation, options);
             }
-            if (Api != null)
+            if (Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
-                writer.WriteObjectValue(Api);
+                writer.WriteObjectValue(Api, options);
             }
-            if (InputsDefinition != null)
+            if (Optional.IsDefined(InputsDefinition))
             {
                 writer.WritePropertyName("inputsDefinition"u8);
-                writer.WriteObjectValue(InputsDefinition);
+                writer.WriteObjectValue(InputsDefinition, options);
             }
-            if (!(ResponsesDefinition is ChangeTrackingDictionary<string, SwaggerSchema> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResponsesDefinition))
             {
                 writer.WritePropertyName("responsesDefinition"u8);
                 writer.WriteStartObject();
                 foreach (var item in ResponsesDefinition)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (IsWebhook.HasValue)
+            if (Optional.IsDefined(IsWebhook))
             {
                 writer.WritePropertyName("isWebhook"u8);
                 writer.WriteBooleanValue(IsWebhook.Value);
             }
-            if (IsNotification.HasValue)
+            if (Optional.IsDefined(IsNotification))
             {
                 writer.WritePropertyName("isNotification"u8);
                 writer.WriteBooleanValue(IsNotification.Value);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicApiOperationProperties DeserializeLogicApiOperationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Logic.Models
             bool? isWebhook = default;
             bool? isNotification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogicApiOperationProperties(
                 summary,
                 description,
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicApiOperationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

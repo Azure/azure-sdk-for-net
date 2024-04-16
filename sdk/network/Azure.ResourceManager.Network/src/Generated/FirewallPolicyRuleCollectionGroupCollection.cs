@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FirewallPolicyRuleCollectionGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleCollectionGroupName, FirewallPolicyRuleCollectionGroupData data, CancellationToken cancellationToken = default)
         {
-            if (ruleCollectionGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-            }
-            if (ruleCollectionGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FirewallPolicyRuleCollectionGroupResource> CreateOrUpdate(WaitUntil waitUntil, string ruleCollectionGroupName, FirewallPolicyRuleCollectionGroupData data, CancellationToken cancellationToken = default)
         {
-            if (ruleCollectionGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-            }
-            if (ruleCollectionGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
         public virtual async Task<Response<FirewallPolicyRuleCollectionGroupResource>> GetAsync(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
-            if (ruleCollectionGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-            }
-            if (ruleCollectionGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
 
             using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
         public virtual Response<FirewallPolicyRuleCollectionGroupResource> Get(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
-            if (ruleCollectionGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-            }
-            if (ruleCollectionGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
 
             using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
-            if (ruleCollectionGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-            }
-            if (ruleCollectionGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
 
             using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
-            if (ruleCollectionGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-            }
-            if (ruleCollectionGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
 
             using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<FirewallPolicyRuleCollectionGroupResource>> GetIfExistsAsync(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
-            if (ruleCollectionGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-            }
-            if (ruleCollectionGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
 
             using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
         public virtual NullableResponse<FirewallPolicyRuleCollectionGroupResource> GetIfExists(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
-            if (ruleCollectionGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleCollectionGroupName));
-            }
-            if (ruleCollectionGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleCollectionGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleCollectionGroupName, nameof(ruleCollectionGroupName));
 
             using var scope = _firewallPolicyRuleCollectionGroupClientDiagnostics.CreateScope("FirewallPolicyRuleCollectionGroupCollection.GetIfExists");
             scope.Start();

@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class AlertRulePatch : IUtf8JsonSerializable, IJsonModel<AlertRulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertRulePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertRulePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AlertRulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AlertRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRulePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Condition != null)
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
-                writer.WriteObjectValue(Condition);
+                writer.WriteObjectValue(Condition, options);
             }
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                writer.WriteObjectValue(Action, options);
             }
-            if (!(Actions is ChangeTrackingList<AlertRuleAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertRulePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static AlertRulePatch DeserializeAlertRulePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<AlertRuleAction> actions = default;
             DateTimeOffset? lastUpdatedTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AlertRulePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 name,
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRulePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeAlertRulePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertRulePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
@@ -86,18 +84,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<InstanceFailoverGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string failoverGroupName, InstanceFailoverGroupData data, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _instanceFailoverGroupClientDiagnostics.CreateScope("InstanceFailoverGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -145,18 +133,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<InstanceFailoverGroupResource> CreateOrUpdate(WaitUntil waitUntil, string failoverGroupName, InstanceFailoverGroupData data, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _instanceFailoverGroupClientDiagnostics.CreateScope("InstanceFailoverGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -202,14 +180,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         public virtual async Task<Response<InstanceFailoverGroupResource>> GetAsync(string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var scope = _instanceFailoverGroupClientDiagnostics.CreateScope("InstanceFailoverGroupCollection.Get");
             scope.Start();
@@ -254,14 +225,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         public virtual Response<InstanceFailoverGroupResource> Get(string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var scope = _instanceFailoverGroupClientDiagnostics.CreateScope("InstanceFailoverGroupCollection.Get");
             scope.Start();
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var scope = _instanceFailoverGroupClientDiagnostics.CreateScope("InstanceFailoverGroupCollection.Exists");
             scope.Start();
@@ -416,14 +373,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var scope = _instanceFailoverGroupClientDiagnostics.CreateScope("InstanceFailoverGroupCollection.Exists");
             scope.Start();
@@ -466,14 +416,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<InstanceFailoverGroupResource>> GetIfExistsAsync(string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var scope = _instanceFailoverGroupClientDiagnostics.CreateScope("InstanceFailoverGroupCollection.GetIfExists");
             scope.Start();
@@ -518,14 +461,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="failoverGroupName"/> is null. </exception>
         public virtual NullableResponse<InstanceFailoverGroupResource> GetIfExists(string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            if (failoverGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(failoverGroupName));
-            }
-            if (failoverGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(failoverGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(failoverGroupName, nameof(failoverGroupName));
 
             using var scope = _instanceFailoverGroupClientDiagnostics.CreateScope("InstanceFailoverGroupCollection.GetIfExists");
             scope.Start();

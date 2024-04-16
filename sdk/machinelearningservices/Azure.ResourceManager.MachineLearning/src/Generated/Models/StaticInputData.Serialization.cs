@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class StaticInputData : IUtf8JsonSerializable, IJsonModel<StaticInputData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticInputData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticInputData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StaticInputData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticInputData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticInputData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticInputData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PreprocessingComponentId != null)
+            if (Optional.IsDefined(PreprocessingComponentId))
             {
                 if (PreprocessingComponentId != null)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(WindowEnd, "O");
             writer.WritePropertyName("windowStart"u8);
             writer.WriteStringValue(WindowStart, "O");
-            if (!(Columns is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Columns))
             {
                 if (Columns != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns");
                 }
             }
-            if (DataContext != null)
+            if (Optional.IsDefined(DataContext))
             {
                 if (DataContext != null)
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticInputData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticInputData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticInputData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static StaticInputData DeserializeStaticInputData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobInputType jobInputType = default;
             Uri uri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preprocessingComponentId"u8))
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StaticInputData(
                 columns ?? new ChangeTrackingDictionary<string, string>(),
                 dataContext,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StaticInputData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticInputData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeStaticInputData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticInputData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticInputData)} does not support reading '{options.Format}' format.");
             }
         }
 

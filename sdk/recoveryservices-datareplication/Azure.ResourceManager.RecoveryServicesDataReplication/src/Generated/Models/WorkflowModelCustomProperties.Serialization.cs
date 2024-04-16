@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     [PersistableModelProxy(typeof(UnknownWorkflowModelCustomProperties))]
     public partial class WorkflowModelCustomProperties : IUtf8JsonSerializable, IJsonModel<WorkflowModelCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkflowModelCustomProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkflowModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkflowModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WorkflowModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && !(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AffectedObjectDetails))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkflowModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static WorkflowModelCustomProperties DeserializeWorkflowModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeWorkflowModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkflowModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

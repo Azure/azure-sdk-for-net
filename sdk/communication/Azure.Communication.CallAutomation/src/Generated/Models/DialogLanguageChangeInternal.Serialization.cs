@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -97,6 +96,14 @@ namespace Azure.Communication.CallAutomation
                 callConnectionId,
                 serverCallId,
                 correlationId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DialogLanguageChangeInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDialogLanguageChangeInternal(document.RootElement);
         }
     }
 }

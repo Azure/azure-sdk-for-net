@@ -16,57 +16,57 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DynamicsSink : IUtf8JsonSerializable, IJsonModel<DynamicsSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicsSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicsSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DynamicsSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DynamicsSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynamicsSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynamicsSink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("writeBehavior"u8);
             writer.WriteStringValue(WriteBehavior.ToString());
-            if (IgnoreNullValues != null)
+            if (Optional.IsDefined(IgnoreNullValues))
             {
                 writer.WritePropertyName("ignoreNullValues"u8);
                 JsonSerializer.Serialize(writer, IgnoreNullValues);
             }
-            if (AlternateKeyName != null)
+            if (Optional.IsDefined(AlternateKeyName))
             {
                 writer.WritePropertyName("alternateKeyName"u8);
                 JsonSerializer.Serialize(writer, AlternateKeyName);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (WriteBatchSize != null)
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (WriteBatchTimeout != null)
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (SinkRetryCount != null)
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (SinkRetryWait != null)
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynamicsSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynamicsSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynamicsSink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DynamicsSink DeserializeDynamicsSink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynamicsSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynamicsSink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDynamicsSink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynamicsSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynamicsSink)} does not support reading '{options.Format}' format.");
             }
         }
 

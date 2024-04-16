@@ -15,50 +15,50 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ManagedClusterRunCommandResult : IUtf8JsonSerializable, IJsonModel<ManagedClusterRunCommandResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterRunCommandResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterRunCommandResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterRunCommandResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterRunCommandResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterRunCommandResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterRunCommandResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && ExitCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExitCode))
             {
                 writer.WritePropertyName("exitCode"u8);
                 writer.WriteNumberValue(ExitCode.Value);
             }
-            if (options.Format != "W" && StartedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && FinishedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
             {
                 writer.WritePropertyName("finishedAt"u8);
                 writer.WriteStringValue(FinishedOn.Value, "O");
             }
-            if (options.Format != "W" && Logs != null)
+            if (options.Format != "W" && Optional.IsDefined(Logs))
             {
                 writer.WritePropertyName("logs"u8);
                 writer.WriteStringValue(Logs);
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterRunCommandResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterRunCommandResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterRunCommandResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterRunCommandResult DeserializeManagedClusterRunCommandResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string logs = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedClusterRunCommandResult(
                 id,
                 provisioningState,
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterRunCommandResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterRunCommandResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterRunCommandResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterRunCommandResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterRunCommandResult)} does not support reading '{options.Format}' format.");
             }
         }
 

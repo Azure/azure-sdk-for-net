@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityCenter.Models;
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(informationProtectionPolicy);
+            content.JsonWriter.WriteObjectValue(informationProtectionPolicy, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -67,14 +66,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="informationProtectionPolicy"/> is null. </exception>
         public async Task<Response<InformationProtectionPolicy>> CreateOrUpdateAsync(string scope, InformationProtectionPolicyName informationProtectionPolicyName, InformationProtectionPolicy informationProtectionPolicy, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (informationProtectionPolicy == null)
-            {
-                throw new ArgumentNullException(nameof(informationProtectionPolicy));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(informationProtectionPolicy, nameof(informationProtectionPolicy));
 
             using var message = CreateCreateOrUpdateRequest(scope, informationProtectionPolicyName, informationProtectionPolicy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,14 +94,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="informationProtectionPolicy"/> is null. </exception>
         public Response<InformationProtectionPolicy> CreateOrUpdate(string scope, InformationProtectionPolicyName informationProtectionPolicyName, InformationProtectionPolicy informationProtectionPolicy, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (informationProtectionPolicy == null)
-            {
-                throw new ArgumentNullException(nameof(informationProtectionPolicy));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(informationProtectionPolicy, nameof(informationProtectionPolicy));
 
             using var message = CreateCreateOrUpdateRequest(scope, informationProtectionPolicyName, informationProtectionPolicy);
             _pipeline.Send(message, cancellationToken);
@@ -150,10 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<InformationProtectionPolicyList>> ListAsync(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -177,10 +161,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<InformationProtectionPolicyList> List(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             _pipeline.Send(message, cancellationToken);
@@ -219,14 +200,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<InformationProtectionPolicyList>> ListNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -251,14 +226,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<InformationProtectionPolicyList> ListNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             _pipeline.Send(message, cancellationToken);

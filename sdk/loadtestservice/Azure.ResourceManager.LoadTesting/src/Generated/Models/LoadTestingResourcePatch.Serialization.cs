@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.LoadTesting.Models
 {
     public partial class LoadTestingResourcePatch : IUtf8JsonSerializable, IJsonModel<LoadTestingResourcePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestingResourcePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestingResourcePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LoadTestingResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     writer.WriteNull("tags");
                 }
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 if (Encryption != null)
                 {
                     writer.WritePropertyName("encryption"u8);
-                    writer.WriteObjectValue(Encryption);
+                    writer.WriteObjectValue(Encryption, options);
                 }
                 else
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
 
         internal static LoadTestingResourcePatch DeserializeLoadTestingResourcePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             string description = default;
             LoadTestingCmkEncryptionProperties encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LoadTestingResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, description, encryption, serializedAdditionalRawData);
         }
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         return DeserializeLoadTestingResourcePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingResourcePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

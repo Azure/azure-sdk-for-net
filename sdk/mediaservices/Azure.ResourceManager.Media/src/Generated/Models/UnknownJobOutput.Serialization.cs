@@ -15,45 +15,45 @@ namespace Azure.ResourceManager.Media.Models
 {
     internal partial class UnknownJobOutput : IUtf8JsonSerializable, IJsonModel<MediaJobOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaJobOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue(Error, options);
             }
-            if (PresetOverride != null)
+            if (Optional.IsDefined(PresetOverride))
             {
                 writer.WritePropertyName("presetOverride"u8);
-                writer.WriteObjectValue(PresetOverride);
+                writer.WriteObjectValue(PresetOverride, options);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Progress.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Progress))
             {
                 writer.WritePropertyName("progress"u8);
                 writer.WriteNumberValue(Progress.Value);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 if (StartOn != null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
                 {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static UnknownJobOutput DeserializeUnknownJobOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Media.Models
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"u8))
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UnknownJobOutput(
                 odataType,
                 error,
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaJobOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -40,17 +40,17 @@ namespace Azure.Communication.MediaComposition
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Resolution != null)
+            if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (PlaceholderImageUri != null)
+            if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (ScalingMode.HasValue)
+            if (Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -142,6 +142,22 @@ namespace Azure.Communication.MediaComposition
                 rows,
                 columns,
                 inputIds);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GridLayout FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGridLayout(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

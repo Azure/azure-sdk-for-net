@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     internal partial class NewRelicAccountsListResult : IUtf8JsonSerializable, IJsonModel<NewRelicAccountsListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicAccountsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicAccountsListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NewRelicAccountsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicAccountsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicAccountsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicAccountsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicAccountsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicAccountsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicAccountsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         internal static NewRelicAccountsListResult DeserializeNewRelicAccountsListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             IReadOnlyList<NewRelicAccountResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NewRelicAccountsListResult(value, nextLink, serializedAdditionalRawData);
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicAccountsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicAccountsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                         return DeserializeNewRelicAccountsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicAccountsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicAccountsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

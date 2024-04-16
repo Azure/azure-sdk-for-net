@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudL3NetworkData : IUtf8JsonSerializable, IJsonModel<NetworkCloudL3NetworkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudL3NetworkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudL3NetworkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkCloudL3NetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            writer.WriteObjectValue(ExtendedLocation, options);
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AssociatedResourceIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AssociatedResourceIds))
             {
                 writer.WritePropertyName("associatedResourceIds"u8);
                 writer.WriteStartArray();
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ClusterId != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (options.Format != "W" && DetailedStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && DetailedStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && !(HybridAksClustersAssociatedIds is ChangeTrackingList<ResourceIdentifier> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HybridAksClustersAssociatedIds))
             {
                 writer.WritePropertyName("hybridAksClustersAssociatedIds"u8);
                 writer.WriteStartArray();
@@ -110,44 +110,44 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (HybridAksIpamEnabled.HasValue)
+            if (Optional.IsDefined(HybridAksIpamEnabled))
             {
                 writer.WritePropertyName("hybridAksIpamEnabled"u8);
                 writer.WriteStringValue(HybridAksIpamEnabled.Value.ToString());
             }
-            if (HybridAksPluginType.HasValue)
+            if (Optional.IsDefined(HybridAksPluginType))
             {
                 writer.WritePropertyName("hybridAksPluginType"u8);
                 writer.WriteStringValue(HybridAksPluginType.Value.ToString());
             }
-            if (InterfaceName != null)
+            if (Optional.IsDefined(InterfaceName))
             {
                 writer.WritePropertyName("interfaceName"u8);
                 writer.WriteStringValue(InterfaceName);
             }
-            if (IPAllocationType.HasValue)
+            if (Optional.IsDefined(IPAllocationType))
             {
                 writer.WritePropertyName("ipAllocationType"u8);
                 writer.WriteStringValue(IPAllocationType.Value.ToString());
             }
-            if (IPv4ConnectedPrefix != null)
+            if (Optional.IsDefined(IPv4ConnectedPrefix))
             {
                 writer.WritePropertyName("ipv4ConnectedPrefix"u8);
                 writer.WriteStringValue(IPv4ConnectedPrefix);
             }
-            if (IPv6ConnectedPrefix != null)
+            if (Optional.IsDefined(IPv6ConnectedPrefix))
             {
                 writer.WritePropertyName("ipv6ConnectedPrefix"u8);
                 writer.WriteStringValue(IPv6ConnectedPrefix);
             }
             writer.WritePropertyName("l3IsolationDomainId"u8);
             writer.WriteStringValue(L3IsolationDomainId);
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(VirtualMachinesAssociatedIds is ChangeTrackingList<ResourceIdentifier> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociatedIds))
             {
                 writer.WritePropertyName("virtualMachinesAssociatedIds"u8);
                 writer.WriteStartArray();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
         internal static NetworkCloudL3NetworkData DeserializeNetworkCloudL3NetworkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.NetworkCloud
             IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds = default;
             long vlan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -438,10 +438,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudL3NetworkData(
                 id,
                 name,
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         return DeserializeNetworkCloudL3NetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

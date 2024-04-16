@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningJobService : IUtf8JsonSerializable, IJsonModel<MachineLearningJobService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningJobService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningJobService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningJobService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 if (Endpoint != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endpoint");
                 }
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 if (ErrorMessage != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("errorMessage");
                 }
             }
-            if (JobServiceType != null)
+            if (Optional.IsDefined(JobServiceType))
             {
                 if (JobServiceType != null)
                 {
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobServiceType");
                 }
             }
-            if (Nodes != null)
+            if (Optional.IsDefined(Nodes))
             {
                 if (Nodes != null)
                 {
                     writer.WritePropertyName("nodes"u8);
-                    writer.WriteObjectValue(Nodes);
+                    writer.WriteObjectValue(Nodes, options);
                 }
                 else
                 {
                     writer.WriteNull("nodes");
                 }
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 if (Port != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("port");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 if (Status != null)
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningJobService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningJobService DeserializeMachineLearningJobService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> properties = default;
             string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoint"u8))
@@ -242,10 +242,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningJobService(
                 endpoint,
                 errorMessage,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningJobService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningJobService)} does not support reading '{options.Format}' format.");
             }
         }
 

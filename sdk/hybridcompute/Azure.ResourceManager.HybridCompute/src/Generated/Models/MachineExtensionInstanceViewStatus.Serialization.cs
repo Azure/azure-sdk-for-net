@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class MachineExtensionInstanceViewStatus : IUtf8JsonSerializable, IJsonModel<MachineExtensionInstanceViewStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineExtensionInstanceViewStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineExtensionInstanceViewStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineExtensionInstanceViewStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionInstanceViewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Level.HasValue)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (DisplayStatus != null)
+            if (Optional.IsDefined(DisplayStatus))
             {
                 writer.WritePropertyName("displayStatus"u8);
                 writer.WriteStringValue(DisplayStatus);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Time.HasValue)
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionInstanceViewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static MachineExtensionInstanceViewStatus DeserializeMachineExtensionInstanceViewStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             string message = default;
             DateTimeOffset? time = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineExtensionInstanceViewStatus(
                 code,
                 level,
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeMachineExtensionInstanceViewStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

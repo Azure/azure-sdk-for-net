@@ -15,22 +15,22 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (OpinionMining.HasValue)
+            if (Optional.IsDefined(OpinionMining))
             {
                 writer.WritePropertyName("opinionMining"u8);
                 writer.WriteBooleanValue(OpinionMining.Value);
             }
-            if (StringIndexType.HasValue)
+            if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
-            if (ModelVersion != null)
+            if (Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (LoggingOptOut.HasValue)
+            if (Optional.IsDefined(LoggingOptOut))
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
@@ -84,6 +84,22 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new SentimentAnalysisTaskParameters(loggingOptOut, modelVersion, opinionMining, stringIndexType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SentimentAnalysisTaskParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSentimentAnalysisTaskParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

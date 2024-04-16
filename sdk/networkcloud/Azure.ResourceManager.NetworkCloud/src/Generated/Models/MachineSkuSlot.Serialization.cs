@@ -15,85 +15,85 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class MachineSkuSlot : IUtf8JsonSerializable, IJsonModel<MachineSkuSlot>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineSkuSlot>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineSkuSlot>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineSkuSlot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineSkuSlot>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RackSlot.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RackSlot))
             {
                 writer.WritePropertyName("rackSlot"u8);
                 writer.WriteNumberValue(RackSlot.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && BootstrapProtocol.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BootstrapProtocol))
             {
                 writer.WritePropertyName("bootstrapProtocol"u8);
                 writer.WriteStringValue(BootstrapProtocol.Value.ToString());
             }
-            if (options.Format != "W" && CpuCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuCores))
             {
                 writer.WritePropertyName("cpuCores"u8);
                 writer.WriteNumberValue(CpuCores.Value);
             }
-            if (options.Format != "W" && CpuSockets.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuSockets))
             {
                 writer.WritePropertyName("cpuSockets"u8);
                 writer.WriteNumberValue(CpuSockets.Value);
             }
-            if (options.Format != "W" && !(Disks is ChangeTrackingList<MachineDisk> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Generation != null)
+            if (options.Format != "W" && Optional.IsDefined(Generation))
             {
                 writer.WritePropertyName("generation"u8);
                 writer.WriteStringValue(Generation);
             }
-            if (options.Format != "W" && HardwareVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(HardwareVersion))
             {
                 writer.WritePropertyName("hardwareVersion"u8);
                 writer.WriteStringValue(HardwareVersion);
             }
-            if (options.Format != "W" && MemoryCapacityGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemoryCapacityGB))
             {
                 writer.WritePropertyName("memoryCapacityGB"u8);
                 writer.WriteNumberValue(MemoryCapacityGB.Value);
             }
-            if (options.Format != "W" && Model != null)
+            if (options.Format != "W" && Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (options.Format != "W" && !(NetworkInterfaces is ChangeTrackingList<NetworkCloudNetworkInterface> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && TotalThreads.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalThreads))
             {
                 writer.WritePropertyName("totalThreads"u8);
                 writer.WriteNumberValue(TotalThreads.Value);
             }
-            if (options.Format != "W" && Vendor != null)
+            if (options.Format != "W" && Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineSkuSlot>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static MachineSkuSlot DeserializeMachineSkuSlot(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             long? totalThreads = default;
             string vendor = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rackSlot"u8))
@@ -269,10 +269,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineSkuSlot(
                 rackSlot,
                 bootstrapProtocol,
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeMachineSkuSlot(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineSkuSlot)} does not support reading '{options.Format}' format.");
             }
         }
 

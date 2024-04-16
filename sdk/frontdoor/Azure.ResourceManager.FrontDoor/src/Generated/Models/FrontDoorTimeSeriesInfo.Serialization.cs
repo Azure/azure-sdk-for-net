@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
 {
     public partial class FrontDoorTimeSeriesInfo : IUtf8JsonSerializable, IJsonModel<FrontDoorTimeSeriesInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorTimeSeriesInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorTimeSeriesInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorTimeSeriesInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorTimeSeriesInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,50 +55,50 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTimeUTC"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTimeUTC"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (AggregationInterval.HasValue)
+            if (Optional.IsDefined(AggregationInterval))
             {
                 writer.WritePropertyName("aggregationInterval"u8);
                 writer.WriteStringValue(AggregationInterval.Value.ToString());
             }
-            if (TimeSeriesType.HasValue)
+            if (Optional.IsDefined(TimeSeriesType))
             {
                 writer.WritePropertyName("timeseriesType"u8);
                 writer.WriteStringValue(TimeSeriesType.Value.ToString());
             }
-            if (Country != null)
+            if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (!(TimeSeriesData is ChangeTrackingList<FrontDoorTimeSeriesDataPoint> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TimeSeriesData))
             {
                 writer.WritePropertyName("timeseriesData"u8);
                 writer.WriteStartArray();
                 foreach (var item in TimeSeriesData)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorTimeSeriesInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorTimeSeriesInfo DeserializeFrontDoorTimeSeriesInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string country = default;
             IList<FrontDoorTimeSeriesDataPoint> timeSeriesData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -279,10 +279,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FrontDoorTimeSeriesInfo(
                 id,
                 name,
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeFrontDoorTimeSeriesInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorTimeSeriesInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

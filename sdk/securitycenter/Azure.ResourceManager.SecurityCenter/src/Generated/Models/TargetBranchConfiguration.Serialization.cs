@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class TargetBranchConfiguration : IUtf8JsonSerializable, IJsonModel<TargetBranchConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetBranchConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetBranchConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TargetBranchConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TargetBranchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(BranchNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BranchNames))
             {
                 writer.WritePropertyName("branchNames"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AnnotateDefaultBranch.HasValue)
+            if (Optional.IsDefined(AnnotateDefaultBranch))
             {
                 writer.WritePropertyName("annotateDefaultBranch"u8);
                 writer.WriteStringValue(AnnotateDefaultBranch.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetBranchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static TargetBranchConfiguration DeserializeTargetBranchConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             IList<string> branchNames = default;
             AnnotateDefaultBranchState? annotateDefaultBranch = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("branchNames"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TargetBranchConfiguration(branchNames ?? new ChangeTrackingList<string>(), annotateDefaultBranch, serializedAdditionalRawData);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeTargetBranchConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

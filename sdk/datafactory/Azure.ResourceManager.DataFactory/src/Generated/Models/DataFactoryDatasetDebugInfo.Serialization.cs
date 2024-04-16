@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DataFactoryDatasetDebugInfo : IUtf8JsonSerializable, IJsonModel<DataFactoryDatasetDebugInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryDatasetDebugInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryDatasetDebugInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryDatasetDebugInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDatasetDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryDatasetDebugInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryDatasetDebugInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
-            if (Name != null)
+            writer.WriteObjectValue(Properties, options);
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDatasetDebugInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryDatasetDebugInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryDatasetDebugInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFactoryDatasetDebugInfo DeserializeDataFactoryDatasetDebugInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryDatasetProperties properties = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataFactoryDatasetDebugInfo(name, serializedAdditionalRawData, properties);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryDatasetDebugInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryDatasetDebugInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryDatasetDebugInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryDatasetDebugInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryDatasetDebugInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

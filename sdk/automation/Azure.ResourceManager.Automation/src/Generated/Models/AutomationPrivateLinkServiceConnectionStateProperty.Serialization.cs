@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationPrivateLinkServiceConnectionStateProperty : IUtf8JsonSerializable, IJsonModel<AutomationPrivateLinkServiceConnectionStateProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationPrivateLinkServiceConnectionStateProperty>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationPrivateLinkServiceConnectionStateProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationPrivateLinkServiceConnectionStateProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationPrivateLinkServiceConnectionStateProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationPrivateLinkServiceConnectionStateProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationPrivateLinkServiceConnectionStateProperty)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ActionsRequired != null)
+            if (options.Format != "W" && Optional.IsDefined(ActionsRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationPrivateLinkServiceConnectionStateProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationPrivateLinkServiceConnectionStateProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationPrivateLinkServiceConnectionStateProperty)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationPrivateLinkServiceConnectionStateProperty DeserializeAutomationPrivateLinkServiceConnectionStateProperty(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Automation.Models
             string description = default;
             string actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutomationPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationPrivateLinkServiceConnectionStateProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationPrivateLinkServiceConnectionStateProperty)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationPrivateLinkServiceConnectionStateProperty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationPrivateLinkServiceConnectionStateProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationPrivateLinkServiceConnectionStateProperty)} does not support reading '{options.Format}' format.");
             }
         }
 

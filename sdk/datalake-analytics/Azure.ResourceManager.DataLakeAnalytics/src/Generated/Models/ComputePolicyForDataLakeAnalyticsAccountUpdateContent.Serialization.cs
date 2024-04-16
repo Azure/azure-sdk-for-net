@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     public partial class ComputePolicyForDataLakeAnalyticsAccountUpdateContent : IUtf8JsonSerializable, IJsonModel<ComputePolicyForDataLakeAnalyticsAccountUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputePolicyForDataLakeAnalyticsAccountUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputePolicyForDataLakeAnalyticsAccountUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComputePolicyForDataLakeAnalyticsAccountUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ComputePolicyForDataLakeAnalyticsAccountUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputePolicyForDataLakeAnalyticsAccountUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputePolicyForDataLakeAnalyticsAccountUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ObjectId.HasValue)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId.Value);
             }
-            if (ObjectType.HasValue)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType.Value.ToString());
             }
-            if (MaxDegreeOfParallelismPerJob.HasValue)
+            if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
             {
                 writer.WritePropertyName("maxDegreeOfParallelismPerJob"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelismPerJob.Value);
             }
-            if (MinPriorityPerJob.HasValue)
+            if (Optional.IsDefined(MinPriorityPerJob))
             {
                 writer.WritePropertyName("minPriorityPerJob"u8);
                 writer.WriteNumberValue(MinPriorityPerJob.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputePolicyForDataLakeAnalyticsAccountUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputePolicyForDataLakeAnalyticsAccountUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputePolicyForDataLakeAnalyticsAccountUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         internal static ComputePolicyForDataLakeAnalyticsAccountUpdateContent DeserializeComputePolicyForDataLakeAnalyticsAccountUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             int? maxDegreeOfParallelismPerJob = default;
             int? minPriorityPerJob = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ComputePolicyForDataLakeAnalyticsAccountUpdateContent(
                 name,
                 objectId,
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputePolicyForDataLakeAnalyticsAccountUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputePolicyForDataLakeAnalyticsAccountUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         return DeserializeComputePolicyForDataLakeAnalyticsAccountUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputePolicyForDataLakeAnalyticsAccountUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputePolicyForDataLakeAnalyticsAccountUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

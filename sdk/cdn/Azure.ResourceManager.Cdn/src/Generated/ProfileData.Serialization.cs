@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class ProfileData : IUtf8JsonSerializable, IJsonModel<ProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProfileData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProfileData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfileData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
-            if (options.Format != "W" && Kind != null)
+            writer.WriteObjectValue(Sku, options);
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,29 +63,29 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && FrontDoorId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FrontDoorId))
             {
                 writer.WritePropertyName("frontDoorId"u8);
                 writer.WriteStringValue(FrontDoorId.Value);
             }
-            if (OriginResponseTimeoutSeconds.HasValue)
+            if (Optional.IsDefined(OriginResponseTimeoutSeconds))
             {
                 if (OriginResponseTimeoutSeconds != null)
                 {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Cdn
             var format = options.Format == "W" ? ((IPersistableModel<ProfileData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfileData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfileData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Cdn
 
         internal static ProfileData DeserializeProfileData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn
             Guid? frontDoorId = default;
             int? originResponseTimeoutSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.Cdn
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProfileData(
                 id,
                 name,
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Cdn
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfileData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Cdn
                         return DeserializeProfileData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProfileData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfileData)} does not support reading '{options.Format}' format.");
             }
         }
 

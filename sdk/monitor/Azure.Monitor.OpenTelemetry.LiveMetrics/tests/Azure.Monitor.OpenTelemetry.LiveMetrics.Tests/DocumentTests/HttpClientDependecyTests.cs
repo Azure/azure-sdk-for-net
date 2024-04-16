@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using Microsoft.AspNetCore.Builder;
 using OpenTelemetry;
@@ -54,7 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 
             // ASSERT
             Assert.Equal("http://bing.com", dependencyDocument.CommandName);
-            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal("HelloWorld", dependencyDocument.Name);
             Assert.Equal("200", dependencyDocument.ResultCode);
 
@@ -105,7 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
 
             Assert.Equal(requestUrl, dependencyDocument.CommandName);
-            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
             Assert.Equal("GET", dependencyDocument.Name);
             Assert.Equal(successfulRequest ? "200" : "404", dependencyDocument.ResultCode);

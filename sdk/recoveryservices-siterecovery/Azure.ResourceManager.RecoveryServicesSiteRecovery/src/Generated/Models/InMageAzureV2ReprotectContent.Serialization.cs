@@ -15,48 +15,48 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageAzureV2ReprotectContent : IUtf8JsonSerializable, IJsonModel<InMageAzureV2ReprotectContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageAzureV2ReprotectContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageAzureV2ReprotectContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InMageAzureV2ReprotectContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2ReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageAzureV2ReprotectContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageAzureV2ReprotectContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MasterTargetId != null)
+            if (Optional.IsDefined(MasterTargetId))
             {
                 writer.WritePropertyName("masterTargetId"u8);
                 writer.WriteStringValue(MasterTargetId);
             }
-            if (ProcessServerId.HasValue)
+            if (Optional.IsDefined(ProcessServerId))
             {
                 writer.WritePropertyName("processServerId"u8);
                 writer.WriteStringValue(ProcessServerId.Value);
             }
-            if (StorageAccountId != null)
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (RunAsAccountId != null)
+            if (Optional.IsDefined(RunAsAccountId))
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (LogStorageAccountId != null)
+            if (Optional.IsDefined(LogStorageAccountId))
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
             }
-            if (!(DisksToInclude is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisksToInclude))
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2ReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageAzureV2ReprotectContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageAzureV2ReprotectContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static InMageAzureV2ReprotectContent DeserializeInMageAzureV2ReprotectContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<string> disksToInclude = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("masterTargetId"u8))
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new InMageAzureV2ReprotectContent(
                 instanceType,
                 serializedAdditionalRawData,
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageAzureV2ReprotectContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageAzureV2ReprotectContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageAzureV2ReprotectContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageAzureV2ReprotectContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageAzureV2ReprotectContent)} does not support reading '{options.Format}' format.");
             }
         }
 

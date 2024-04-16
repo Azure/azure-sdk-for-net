@@ -15,34 +15,34 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorTimeSeriesElement : IUtf8JsonSerializable, IJsonModel<MonitorTimeSeriesElement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorTimeSeriesElement>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorTimeSeriesElement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorTimeSeriesElement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorTimeSeriesElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Metadatavalues is ChangeTrackingList<MonitorMetadataValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadatavalues))
             {
                 writer.WritePropertyName("metadatavalues"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metadatavalues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Data is ChangeTrackingList<MonitorMetricValue> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorTimeSeriesElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorTimeSeriesElement DeserializeMonitorTimeSeriesElement(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IReadOnlyList<MonitorMetadataValue> metadatavalues = default;
             IReadOnlyList<MonitorMetricValue> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metadatavalues"u8))
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MonitorTimeSeriesElement(metadatavalues ?? new ChangeTrackingList<MonitorMetadataValue>(), data ?? new ChangeTrackingList<MonitorMetricValue>(), serializedAdditionalRawData);
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorTimeSeriesElement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support reading '{options.Format}' format.");
             }
         }
 

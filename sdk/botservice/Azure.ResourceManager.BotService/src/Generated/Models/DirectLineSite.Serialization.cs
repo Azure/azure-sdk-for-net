@@ -9,64 +9,63 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     public partial class DirectLineSite : IUtf8JsonSerializable, IJsonModel<DirectLineSite>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectLineSite>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectLineSite>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DirectLineSite>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DirectLineSite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectLineSite)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectLineSite)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && SiteId != null)
+            if (options.Format != "W" && Optional.IsDefined(SiteId))
             {
                 writer.WritePropertyName("siteId"u8);
                 writer.WriteStringValue(SiteId);
             }
             writer.WritePropertyName("siteName"u8);
             writer.WriteStringValue(SiteName);
-            if (options.Format != "W" && Key != null)
+            if (options.Format != "W" && Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (options.Format != "W" && Key2 != null)
+            if (options.Format != "W" && Optional.IsDefined(Key2))
             {
                 writer.WritePropertyName("key2"u8);
                 writer.WriteStringValue(Key2);
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (options.Format != "W" && IsTokenEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsTokenEnabled))
             {
                 writer.WritePropertyName("isTokenEnabled"u8);
                 writer.WriteBooleanValue(IsTokenEnabled.Value);
             }
-            if (IsEndpointParametersEnabled.HasValue)
+            if (Optional.IsDefined(IsEndpointParametersEnabled))
             {
                 writer.WritePropertyName("isEndpointParametersEnabled"u8);
                 writer.WriteBooleanValue(IsEndpointParametersEnabled.Value);
             }
-            if (IsDetailedLoggingEnabled.HasValue)
+            if (Optional.IsDefined(IsDetailedLoggingEnabled))
             {
                 writer.WritePropertyName("isDetailedLoggingEnabled"u8);
                 writer.WriteBooleanValue(IsDetailedLoggingEnabled.Value);
             }
-            if (IsBlockUserUploadEnabled.HasValue)
+            if (Optional.IsDefined(IsBlockUserUploadEnabled))
             {
                 if (IsBlockUserUploadEnabled != null)
                 {
@@ -78,37 +77,37 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("isBlockUserUploadEnabled");
                 }
             }
-            if (IsNoStorageEnabled.HasValue)
+            if (Optional.IsDefined(IsNoStorageEnabled))
             {
                 writer.WritePropertyName("isNoStorageEnabled"u8);
                 writer.WriteBooleanValue(IsNoStorageEnabled.Value);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (AppId != null)
+            if (Optional.IsDefined(AppId))
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (IsV1Enabled.HasValue)
+            if (Optional.IsDefined(IsV1Enabled))
             {
                 writer.WritePropertyName("isV1Enabled"u8);
                 writer.WriteBooleanValue(IsV1Enabled.Value);
             }
-            if (IsV3Enabled.HasValue)
+            if (Optional.IsDefined(IsV3Enabled))
             {
                 writer.WritePropertyName("isV3Enabled"u8);
                 writer.WriteBooleanValue(IsV3Enabled.Value);
             }
-            if (IsSecureSiteEnabled.HasValue)
+            if (Optional.IsDefined(IsSecureSiteEnabled))
             {
                 writer.WritePropertyName("isSecureSiteEnabled"u8);
                 writer.WriteBooleanValue(IsSecureSiteEnabled.Value);
             }
-            if (!(TrustedOrigins is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TrustedOrigins))
             {
                 writer.WritePropertyName("trustedOrigins"u8);
                 writer.WriteStartArray();
@@ -118,12 +117,12 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsWebChatSpeechEnabled.HasValue)
+            if (Optional.IsDefined(IsWebChatSpeechEnabled))
             {
                 writer.WritePropertyName("isWebChatSpeechEnabled"u8);
                 writer.WriteBooleanValue(IsWebChatSpeechEnabled.Value);
             }
-            if (IsWebchatPreviewEnabled.HasValue)
+            if (Optional.IsDefined(IsWebchatPreviewEnabled))
             {
                 writer.WritePropertyName("isWebchatPreviewEnabled"u8);
                 writer.WriteBooleanValue(IsWebchatPreviewEnabled.Value);
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DirectLineSite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectLineSite)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectLineSite)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static DirectLineSite DeserializeDirectLineSite(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -186,7 +185,7 @@ namespace Azure.ResourceManager.BotService.Models
             bool? isWebChatSpeechEnabled = default;
             bool? isWebchatPreviewEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -344,10 +343,10 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DirectLineSite(
                 tenantId,
                 siteId,
@@ -380,7 +379,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DirectLineSite)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectLineSite)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -396,7 +395,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeDirectLineSite(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DirectLineSite)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectLineSite)} does not support reading '{options.Format}' format.");
             }
         }
 

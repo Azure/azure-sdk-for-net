@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Communication.Models
 {
     public partial class DomainVerificationStatusRecord : IUtf8JsonSerializable, IJsonModel<DomainVerificationStatusRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainVerificationStatusRecord>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainVerificationStatusRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DomainVerificationStatusRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DomainVerificationStatusRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainVerificationStatusRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainVerificationStatusRecord)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && ErrorCode != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Communication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DomainVerificationStatusRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainVerificationStatusRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainVerificationStatusRecord)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         internal static DomainVerificationStatusRecord DeserializeDomainVerificationStatusRecord(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Communication.Models
             DomainRecordVerificationStatus? status = default;
             string errorCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DomainVerificationStatusRecord(status, errorCode, serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Communication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DomainVerificationStatusRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainVerificationStatusRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Communication.Models
                         return DeserializeDomainVerificationStatusRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DomainVerificationStatusRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainVerificationStatusRecord)} does not support reading '{options.Format}' format.");
             }
         }
 

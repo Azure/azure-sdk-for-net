@@ -16,60 +16,60 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class LoadBalancerBackendAddress : IUtf8JsonSerializable, IJsonModel<LoadBalancerBackendAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancerBackendAddress>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancerBackendAddress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LoadBalancerBackendAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerBackendAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VirtualNetwork != null)
+            if (Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
                 JsonSerializer.Serialize(writer, VirtualNetwork);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && NetworkInterfaceIPConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkInterfaceIPConfiguration))
             {
                 writer.WritePropertyName("networkInterfaceIPConfiguration"u8);
                 JsonSerializer.Serialize(writer, NetworkInterfaceIPConfiguration);
             }
-            if (LoadBalancerFrontendIPConfiguration != null)
+            if (Optional.IsDefined(LoadBalancerFrontendIPConfiguration))
             {
                 writer.WritePropertyName("loadBalancerFrontendIPConfiguration"u8);
                 JsonSerializer.Serialize(writer, LoadBalancerFrontendIPConfiguration);
             }
-            if (options.Format != "W" && !(InboundNatRulesPortMapping is ChangeTrackingList<NatRulePortMapping> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(InboundNatRulesPortMapping))
             {
                 writer.WritePropertyName("inboundNatRulesPortMapping"u8);
                 writer.WriteStartArray();
                 foreach (var item in InboundNatRulesPortMapping)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (AdminState.HasValue)
+            if (Optional.IsDefined(AdminState))
             {
                 writer.WritePropertyName("adminState"u8);
                 writer.WriteStringValue(AdminState.Value.ToString());
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerBackendAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static LoadBalancerBackendAddress DeserializeLoadBalancerBackendAddress(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<NatRulePortMapping> inboundNatRulesPortMapping = default;
             LoadBalancerBackendAddressAdminState? adminState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LoadBalancerBackendAddress(
                 name,
                 virtualNetwork,
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeLoadBalancerBackendAddress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerBackendAddress)} does not support reading '{options.Format}' format.");
             }
         }
 

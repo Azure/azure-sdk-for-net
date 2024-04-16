@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("nodeName"u8);
             writer.WriteStringValue(NodeName);
-            if (!(OutputSelectors is ChangeTrackingList<OutputSelector> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutputSelectors))
             {
                 writer.WritePropertyName("outputSelectors"u8);
                 writer.WriteStartArray();
@@ -62,6 +62,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new NodeInput(nodeName, outputSelectors ?? new ChangeTrackingList<OutputSelector>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static NodeInput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNodeInput(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

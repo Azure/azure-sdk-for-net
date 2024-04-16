@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.LoadTesting.Models;
@@ -64,14 +63,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LoadTestingQuotaListResult>> ListAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -97,14 +89,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LoadTestingQuotaListResult> List(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListRequest(subscriptionId, location);
             _pipeline.Send(message, cancellationToken);
@@ -151,22 +136,8 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="quotaBucketName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LoadTestingQuotaData>> GetAsync(string subscriptionId, AzureLocation location, string quotaBucketName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (quotaBucketName == null)
-            {
-                throw new ArgumentNullException(nameof(quotaBucketName));
-            }
-            if (quotaBucketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaBucketName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
 
             using var message = CreateGetRequest(subscriptionId, location, quotaBucketName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -195,22 +166,8 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="quotaBucketName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LoadTestingQuotaData> Get(string subscriptionId, AzureLocation location, string quotaBucketName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (quotaBucketName == null)
-            {
-                throw new ArgumentNullException(nameof(quotaBucketName));
-            }
-            if (quotaBucketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaBucketName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
 
             using var message = CreateGetRequest(subscriptionId, location, quotaBucketName);
             _pipeline.Send(message, cancellationToken);
@@ -249,7 +206,7 @@ namespace Azure.ResourceManager.LoadTesting
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -265,26 +222,9 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="quotaBucketName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LoadTestingQuotaAvailabilityResult>> CheckAvailabilityAsync(string subscriptionId, AzureLocation location, string quotaBucketName, LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (quotaBucketName == null)
-            {
-                throw new ArgumentNullException(nameof(quotaBucketName));
-            }
-            if (quotaBucketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaBucketName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckAvailabilityRequest(subscriptionId, location, quotaBucketName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -312,26 +252,9 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="quotaBucketName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LoadTestingQuotaAvailabilityResult> CheckAvailability(string subscriptionId, AzureLocation location, string quotaBucketName, LoadTestingQuotaBucketContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (quotaBucketName == null)
-            {
-                throw new ArgumentNullException(nameof(quotaBucketName));
-            }
-            if (quotaBucketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(quotaBucketName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(quotaBucketName, nameof(quotaBucketName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckAvailabilityRequest(subscriptionId, location, quotaBucketName, content);
             _pipeline.Send(message, cancellationToken);
@@ -372,18 +295,8 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LoadTestingQuotaListResult>> ListNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -410,18 +323,8 @@ namespace Azure.ResourceManager.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LoadTestingQuotaListResult> ListNextPage(string nextLink, string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, location);
             _pipeline.Send(message, cancellationToken);

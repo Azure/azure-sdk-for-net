@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class NetworkRule : IUtf8JsonSerializable, IJsonModel<NetworkRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(IPProtocols is ChangeTrackingList<FirewallPolicyRuleNetworkProtocol> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPProtocols))
             {
                 writer.WritePropertyName("ipProtocols"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourceAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceAddresses))
             {
                 writer.WritePropertyName("sourceAddresses"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationAddresses is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationAddresses))
             {
                 writer.WritePropertyName("destinationAddresses"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationPorts is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationPorts))
             {
                 writer.WritePropertyName("destinationPorts"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(SourceIPGroups is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceIPGroups))
             {
                 writer.WritePropertyName("sourceIpGroups"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationIPGroups is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationIPGroups))
             {
                 writer.WritePropertyName("destinationIpGroups"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DestinationFqdns is ChangeTrackingList<string> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(DestinationFqdns))
             {
                 writer.WritePropertyName("destinationFqdns"u8);
                 writer.WriteStartArray();
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkRule DeserializeNetworkRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network.Models
             string description = default;
             FirewallPolicyRuleType ruleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipProtocols"u8))
@@ -275,10 +275,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkRule(
                 name,
                 description,
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkRule)} does not support reading '{options.Format}' format.");
             }
         }
 

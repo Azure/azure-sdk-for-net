@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class NetworkFabricControllerPatch : IUtf8JsonSerializable, IJsonModel<NetworkFabricControllerPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricControllerPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricControllerPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFabricControllerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricControllerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricControllerPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricControllerPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,23 +39,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(InfrastructureExpressRouteConnections is ChangeTrackingList<ExpressRouteConnectionInformation> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(InfrastructureExpressRouteConnections))
             {
                 writer.WritePropertyName("infrastructureExpressRouteConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in InfrastructureExpressRouteConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(WorkloadExpressRouteConnections is ChangeTrackingList<ExpressRouteConnectionInformation> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(WorkloadExpressRouteConnections))
             {
                 writer.WritePropertyName("workloadExpressRouteConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in WorkloadExpressRouteConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricControllerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricControllerPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricControllerPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static NetworkFabricControllerPatch DeserializeNetworkFabricControllerPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = default;
             IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkFabricControllerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, infrastructureExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>(), workloadExpressRouteConnections ?? new ChangeTrackingList<ExpressRouteConnectionInformation>());
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricControllerPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricControllerPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkFabricControllerPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricControllerPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricControllerPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

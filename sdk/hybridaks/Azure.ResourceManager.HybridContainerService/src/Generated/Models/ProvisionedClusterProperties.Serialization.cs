@@ -15,81 +15,81 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 {
     public partial class ProvisionedClusterProperties : IUtf8JsonSerializable, IJsonModel<ProvisionedClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProvisionedClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LinuxProfile != null)
+            if (Optional.IsDefined(LinuxProfile))
             {
                 writer.WritePropertyName("linuxProfile"u8);
-                writer.WriteObjectValue(LinuxProfile);
+                writer.WriteObjectValue(LinuxProfile, options);
             }
-            if (ControlPlane != null)
+            if (Optional.IsDefined(ControlPlane))
             {
                 writer.WritePropertyName("controlPlane"u8);
-                writer.WriteObjectValue(ControlPlane);
+                writer.WriteObjectValue(ControlPlane, options);
             }
-            if (KubernetesVersion != null)
+            if (Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue(StorageProfile, options);
             }
-            if (ClusterVmAccessProfile != null)
+            if (Optional.IsDefined(ClusterVmAccessProfile))
             {
                 writer.WritePropertyName("clusterVMAccessProfile"u8);
-                writer.WriteObjectValue(ClusterVmAccessProfile);
+                writer.WriteObjectValue(ClusterVmAccessProfile, options);
             }
-            if (!(AgentPoolProfiles is ChangeTrackingList<HybridContainerServiceNamedAgentPoolProfile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AgentPoolProfiles))
             {
                 writer.WritePropertyName("agentPoolProfiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in AgentPoolProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (CloudProviderProfile != null)
+            if (Optional.IsDefined(CloudProviderProfile))
             {
                 writer.WritePropertyName("cloudProviderProfile"u8);
-                writer.WriteObjectValue(CloudProviderProfile);
+                writer.WriteObjectValue(CloudProviderProfile, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue(Status, options);
             }
-            if (LicenseProfile != null)
+            if (Optional.IsDefined(LicenseProfile))
             {
                 writer.WritePropertyName("licenseProfile"u8);
-                writer.WriteObjectValue(LicenseProfile);
+                writer.WriteObjectValue(LicenseProfile, options);
             }
-            if (AutoScalerProfile != null)
+            if (Optional.IsDefined(AutoScalerProfile))
             {
                 writer.WritePropertyName("autoScalerProfile"u8);
-                writer.WriteObjectValue(AutoScalerProfile);
+                writer.WriteObjectValue(AutoScalerProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ProvisionedClusterProperties DeserializeProvisionedClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             ProvisionedClusterLicenseProfile licenseProfile = default;
             ProvisionedClusterPropertiesAutoScalerProfile autoScalerProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linuxProfile"u8))
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProvisionedClusterProperties(
                 linuxProfile,
                 controlPlane,
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeProvisionedClusterProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

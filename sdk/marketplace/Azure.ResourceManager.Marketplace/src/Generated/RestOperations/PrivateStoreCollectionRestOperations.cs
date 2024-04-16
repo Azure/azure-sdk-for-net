@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Marketplace.Models;
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.Marketplace
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(info);
+            content.JsonWriter.WriteObjectValue(info, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -192,10 +191,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public async Task<Response<PrivateStoreCollectionInfoData>> CreateOrUpdateAsync(Guid privateStoreId, Guid collectionId, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var message = CreateCreateOrUpdateRequest(privateStoreId, collectionId, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -221,10 +217,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public Response<PrivateStoreCollectionInfoData> CreateOrUpdate(Guid privateStoreId, Guid collectionId, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var message = CreateCreateOrUpdateRequest(privateStoreId, collectionId, info);
             _pipeline.Send(message, cancellationToken);
@@ -376,7 +369,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -17,43 +16,43 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkVirtualApplianceSkuData : IUtf8JsonSerializable, IJsonModel<NetworkVirtualApplianceSkuData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkVirtualApplianceSkuData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkVirtualApplianceSkuData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkVirtualApplianceSkuData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceSkuData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,12 +65,12 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Vendor != null)
+            if (options.Format != "W" && Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
-            if (options.Format != "W" && !(AvailableVersions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableVersions))
             {
                 writer.WritePropertyName("availableVersions"u8);
                 writer.WriteStartArray();
@@ -81,13 +80,13 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (!(AvailableScaleUnits is ChangeTrackingList<NetworkVirtualApplianceSkuInstances> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailableScaleUnits))
             {
                 writer.WritePropertyName("availableScaleUnits"u8);
                 writer.WriteStartArray();
                 foreach (var item in AvailableScaleUnits)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceSkuData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.Network
 
         internal static NetworkVirtualApplianceSkuData DeserializeNetworkVirtualApplianceSkuData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.Network
             IReadOnlyList<string> availableVersions = default;
             IList<NetworkVirtualApplianceSkuInstances> availableScaleUnits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -245,10 +244,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkVirtualApplianceSkuData(
                 id,
                 name,
@@ -271,7 +270,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -287,7 +286,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeNetworkVirtualApplianceSkuData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceSkuData)} does not support reading '{options.Format}' format.");
             }
         }
 

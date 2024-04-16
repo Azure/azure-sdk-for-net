@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class UpdateRunData : IUtf8JsonSerializable, IJsonModel<UpdateRunData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateRunData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateRunData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UpdateRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UpdateRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateRunData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,82 +48,82 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (TimeStarted.HasValue)
+            if (Optional.IsDefined(TimeStarted))
             {
                 writer.WritePropertyName("timeStarted"u8);
                 writer.WriteStringValue(TimeStarted.Value, "O");
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Duration != null)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("progress"u8);
             writer.WriteStartObject();
-            if (NamePropertiesProgressName != null)
+            if (Optional.IsDefined(NamePropertiesProgressName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesProgressName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (StartTimeUtc.HasValue)
+            if (Optional.IsDefined(StartTimeUtc))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
                 writer.WriteStringValue(StartTimeUtc.Value, "O");
             }
-            if (EndTimeUtc.HasValue)
+            if (Optional.IsDefined(EndTimeUtc))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
                 writer.WriteStringValue(EndTimeUtc.Value, "O");
             }
-            if (LastUpdatedTimeUtc.HasValue)
+            if (Optional.IsDefined(LastUpdatedTimeUtc))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
             }
-            if (!(Steps is ChangeTrackingList<HciUpdateStep> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Steps))
             {
                 writer.WritePropertyName("steps"u8);
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<UpdateRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateRunData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Hci
 
         internal static UpdateRunData DeserializeUpdateRunData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Hci
             DateTimeOffset? lastUpdatedTimeUtc = default;
             IList<HciUpdateStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -350,10 +350,10 @@ namespace Azure.ResourceManager.Hci
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UpdateRunData(
                 id,
                 name,
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Hci
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateRunData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Hci
                         return DeserializeUpdateRunData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateRunData)} does not support reading '{options.Format}' format.");
             }
         }
 

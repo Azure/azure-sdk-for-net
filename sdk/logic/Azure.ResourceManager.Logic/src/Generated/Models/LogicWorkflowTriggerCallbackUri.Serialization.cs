@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicWorkflowTriggerCallbackUri : IUtf8JsonSerializable, IJsonModel<LogicWorkflowTriggerCallbackUri>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowTriggerCallbackUri>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowTriggerCallbackUri>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicWorkflowTriggerCallbackUri>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerCallbackUri>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackUri)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackUri)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Method.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (options.Format != "W" && BasePath != null)
+            if (options.Format != "W" && Optional.IsDefined(BasePath))
             {
                 writer.WritePropertyName("basePath"u8);
                 writer.WriteStringValue(BasePath);
             }
-            if (options.Format != "W" && RelativePath != null)
+            if (options.Format != "W" && Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            if (!(RelativePathParameters is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RelativePathParameters))
             {
                 writer.WritePropertyName("relativePathParameters"u8);
                 writer.WriteStartArray();
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Queries != null)
+            if (Optional.IsDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);
-                writer.WriteObjectValue(Queries);
+                writer.WriteObjectValue(Queries, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerCallbackUri>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackUri)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackUri)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowTriggerCallbackUri DeserializeLogicWorkflowTriggerCallbackUri(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Logic.Models
             IReadOnlyList<string> relativePathParameters = default;
             LogicWorkflowTriggerCallbackQueryParameterInfo queries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogicWorkflowTriggerCallbackUri(
                 value,
                 method,
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackUri)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackUri)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicWorkflowTriggerCallbackUri(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackUri)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackUri)} does not support reading '{options.Format}' format.");
             }
         }
 

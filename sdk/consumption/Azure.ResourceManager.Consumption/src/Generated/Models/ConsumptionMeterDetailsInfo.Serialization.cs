@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionMeterDetailsInfo : IUtf8JsonSerializable, IJsonModel<ConsumptionMeterDetailsInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionMeterDetailsInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionMeterDetailsInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionMeterDetailsInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetailsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionMeterDetailsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionMeterDetailsInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MeterName != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterName))
             {
                 writer.WritePropertyName("meterName"u8);
                 writer.WriteStringValue(MeterName);
             }
-            if (options.Format != "W" && MeterCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterCategory))
             {
                 writer.WritePropertyName("meterCategory"u8);
                 writer.WriteStringValue(MeterCategory);
             }
-            if (options.Format != "W" && MeterSubCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterSubCategory))
             {
                 writer.WritePropertyName("meterSubCategory"u8);
                 writer.WriteStringValue(MeterSubCategory);
             }
-            if (options.Format != "W" && UnitOfMeasure != null)
+            if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
             {
                 writer.WritePropertyName("unitOfMeasure"u8);
                 writer.WriteStringValue(UnitOfMeasure);
             }
-            if (options.Format != "W" && ServiceFamily != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceFamily))
             {
                 writer.WritePropertyName("serviceFamily"u8);
                 writer.WriteStringValue(ServiceFamily);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMeterDetailsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionMeterDetailsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionMeterDetailsInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionMeterDetailsInfo DeserializeConsumptionMeterDetailsInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string unitOfMeasure = default;
             string serviceFamily = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("meterName"u8))
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionMeterDetailsInfo(
                 meterName,
                 meterCategory,
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionMeterDetailsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionMeterDetailsInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionMeterDetailsInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionMeterDetailsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionMeterDetailsInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

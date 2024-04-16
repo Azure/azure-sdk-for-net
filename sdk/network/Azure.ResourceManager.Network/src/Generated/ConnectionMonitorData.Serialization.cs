@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -18,28 +17,28 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ConnectionMonitorData : IUtf8JsonSerializable, IJsonModel<ConnectionMonitorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectionMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -65,94 +64,94 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue(Source, options);
             }
-            if (Destination != null)
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                writer.WriteObjectValue(Destination, options);
             }
-            if (AutoStart.HasValue)
+            if (Optional.IsDefined(AutoStart))
             {
                 writer.WritePropertyName("autoStart"u8);
                 writer.WriteBooleanValue(AutoStart.Value);
             }
-            if (MonitoringIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(MonitoringIntervalInSeconds))
             {
                 writer.WritePropertyName("monitoringIntervalInSeconds"u8);
                 writer.WriteNumberValue(MonitoringIntervalInSeconds.Value);
             }
-            if (!(Endpoints is ChangeTrackingList<ConnectionMonitorEndpoint> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TestConfigurations is ChangeTrackingList<ConnectionMonitorTestConfiguration> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TestConfigurations))
             {
                 writer.WritePropertyName("testConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in TestConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TestGroups is ChangeTrackingList<ConnectionMonitorTestGroup> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(TestGroups))
             {
                 writer.WritePropertyName("testGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in TestGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Outputs is ChangeTrackingList<ConnectionMonitorOutput> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Notes != null)
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && MonitoringStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(MonitoringStatus))
             {
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus);
             }
-            if (options.Format != "W" && ConnectionMonitorType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionMonitorType))
             {
                 writer.WritePropertyName("connectionMonitorType"u8);
                 writer.WriteStringValue(ConnectionMonitorType.Value.ToString());
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ConnectionMonitorData DeserializeConnectionMonitorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -217,7 +216,7 @@ namespace Azure.ResourceManager.Network
             string monitoringStatus = default;
             ConnectionMonitorType? connectionMonitorType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -419,10 +418,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectionMonitorData(
                 id,
                 name,
@@ -456,7 +455,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -472,7 +471,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeConnectionMonitorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorData)} does not support reading '{options.Format}' format.");
             }
         }
 

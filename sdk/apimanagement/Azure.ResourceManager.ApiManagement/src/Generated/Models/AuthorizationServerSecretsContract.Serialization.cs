@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class AuthorizationServerSecretsContract : IUtf8JsonSerializable, IJsonModel<AuthorizationServerSecretsContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizationServerSecretsContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizationServerSecretsContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AuthorizationServerSecretsContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationServerSecretsContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationServerSecretsContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationServerSecretsContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (ResourceOwnerUsername != null)
+            if (Optional.IsDefined(ResourceOwnerUsername))
             {
                 writer.WritePropertyName("resourceOwnerUsername"u8);
                 writer.WriteStringValue(ResourceOwnerUsername);
             }
-            if (ResourceOwnerPassword != null)
+            if (Optional.IsDefined(ResourceOwnerPassword))
             {
                 writer.WritePropertyName("resourceOwnerPassword"u8);
                 writer.WriteStringValue(ResourceOwnerPassword);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationServerSecretsContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationServerSecretsContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationServerSecretsContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static AuthorizationServerSecretsContract DeserializeAuthorizationServerSecretsContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string resourceOwnerUsername = default;
             string resourceOwnerPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientSecret"u8))
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AuthorizationServerSecretsContract(clientSecret, resourceOwnerUsername, resourceOwnerPassword, serializedAdditionalRawData);
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationServerSecretsContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationServerSecretsContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeAuthorizationServerSecretsContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationServerSecretsContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationServerSecretsContract)} does not support reading '{options.Format}' format.");
             }
         }
 

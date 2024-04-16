@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -58,6 +58,14 @@ namespace Azure.Maps.Search.Models
                 }
             }
             return new ReverseSearchAddressBatchItemResponse(summary, addresses ?? new ChangeTrackingList<ReverseSearchAddressItem>(), error);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ReverseSearchAddressBatchItemResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeReverseSearchAddressBatchItemResponse(document.RootElement);
         }
     }
 }

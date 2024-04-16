@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Transport.HasValue)
+            if (Optional.IsDefined(Transport))
             {
                 writer.WritePropertyName("transport"u8);
                 writer.WriteStringValue(Transport.Value.ToString());
@@ -67,6 +67,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new RtspSource(type, name, transport, endpoint);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RtspSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRtspSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

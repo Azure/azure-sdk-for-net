@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,33 +16,33 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionReservationRecommendationDetails : IUtf8JsonSerializable, IJsonModel<ConsumptionReservationRecommendationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionReservationRecommendationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionReservationRecommendationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionReservationRecommendationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationRecommendationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionReservationRecommendationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionReservationRecommendationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -69,42 +68,42 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Currency != null)
+            if (options.Format != "W" && Optional.IsDefined(Currency))
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (options.Format != "W" && Properties != null)
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && ResourceGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && Savings != null)
+            if (options.Format != "W" && Optional.IsDefined(Savings))
             {
                 writer.WritePropertyName("savings"u8);
-                writer.WriteObjectValue(Savings);
+                writer.WriteObjectValue(Savings, options);
             }
-            if (options.Format != "W" && Scope != null)
+            if (options.Format != "W" && Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (options.Format != "W" && Usage != null)
+            if (options.Format != "W" && Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage);
+                writer.WriteObjectValue(Usage, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationRecommendationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionReservationRecommendationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionReservationRecommendationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionReservationRecommendationDetails DeserializeConsumptionReservationRecommendationDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string scope = default;
             ConsumptionUsageProperties usage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -280,10 +279,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionReservationRecommendationDetails(
                 id,
                 name,
@@ -311,7 +310,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionReservationRecommendationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionReservationRecommendationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionReservationRecommendationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionReservationRecommendationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionReservationRecommendationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

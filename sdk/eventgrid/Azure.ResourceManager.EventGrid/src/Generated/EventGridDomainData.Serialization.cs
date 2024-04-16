@@ -17,28 +17,28 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class EventGridDomainData : IUtf8JsonSerializable, IJsonModel<EventGridDomainData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridDomainData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridDomainData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventGridDomainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventGridDomainData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridDomainData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridDomainData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,89 +66,89 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<EventGridPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (MinimumTlsVersionAllowed.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersionAllowed))
             {
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
             }
-            if (options.Format != "W" && Endpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (InputSchema.HasValue)
+            if (Optional.IsDefined(InputSchema))
             {
                 writer.WritePropertyName("inputSchema"u8);
                 writer.WriteStringValue(InputSchema.Value.ToString());
             }
-            if (EventTypeInfo != null)
+            if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
-                writer.WriteObjectValue(EventTypeInfo);
+                writer.WriteObjectValue(EventTypeInfo, options);
             }
-            if (InputSchemaMapping != null)
+            if (Optional.IsDefined(InputSchemaMapping))
             {
                 writer.WritePropertyName("inputSchemaMapping"u8);
-                writer.WriteObjectValue(InputSchemaMapping);
+                writer.WriteObjectValue(InputSchemaMapping, options);
             }
-            if (options.Format != "W" && MetricResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(MetricResourceId))
             {
                 writer.WritePropertyName("metricResourceId"u8);
                 writer.WriteStringValue(MetricResourceId);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (!(InboundIPRules is ChangeTrackingList<EventGridInboundIPRule> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(InboundIPRules))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in InboundIPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (IsLocalAuthDisabled.HasValue)
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (AutoCreateTopicWithFirstSubscription.HasValue)
+            if (Optional.IsDefined(AutoCreateTopicWithFirstSubscription))
             {
                 writer.WritePropertyName("autoCreateTopicWithFirstSubscription"u8);
                 writer.WriteBooleanValue(AutoCreateTopicWithFirstSubscription.Value);
             }
-            if (AutoDeleteTopicWithLastSubscription.HasValue)
+            if (Optional.IsDefined(AutoDeleteTopicWithLastSubscription))
             {
                 writer.WritePropertyName("autoDeleteTopicWithLastSubscription"u8);
                 writer.WriteBooleanValue(AutoDeleteTopicWithLastSubscription.Value);
             }
-            if (DataResidencyBoundary.HasValue)
+            if (Optional.IsDefined(DataResidencyBoundary))
             {
                 writer.WritePropertyName("dataResidencyBoundary"u8);
                 writer.WriteStringValue(DataResidencyBoundary.Value.ToString());
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<EventGridDomainData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridDomainData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridDomainData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static EventGridDomainData DeserializeEventGridDomainData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.EventGrid
             bool? autoDeleteTopicWithLastSubscription = default;
             DataResidencyBoundary? dataResidencyBoundary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -425,10 +425,10 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EventGridDomainData(
                 id,
                 name,
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.EventGrid
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridDomainData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridDomainData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.EventGrid
                         return DeserializeEventGridDomainData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridDomainData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridDomainData)} does not support reading '{options.Format}' format.");
             }
         }
 

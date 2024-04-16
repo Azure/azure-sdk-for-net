@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageAzureV2DiskDetails : IUtf8JsonSerializable, IJsonModel<InMageAzureV2DiskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageAzureV2DiskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageAzureV2DiskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InMageAzureV2DiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2DiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageAzureV2DiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageAzureV2DiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DiskId != null)
+            if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (LogStorageAccountId != null)
+            if (Optional.IsDefined(LogStorageAccountId))
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
             }
-            if (DiskType.HasValue)
+            if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
-            if (DiskEncryptionSetId != null)
+            if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2DiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageAzureV2DiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageAzureV2DiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static InMageAzureV2DiskDetails DeserializeInMageAzureV2DiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SiteRecoveryDiskAccountType? diskType = default;
             ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new InMageAzureV2DiskDetails(diskId, logStorageAccountId, diskType, diskEncryptionSetId, serializedAdditionalRawData);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageAzureV2DiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageAzureV2DiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageAzureV2DiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageAzureV2DiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageAzureV2DiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

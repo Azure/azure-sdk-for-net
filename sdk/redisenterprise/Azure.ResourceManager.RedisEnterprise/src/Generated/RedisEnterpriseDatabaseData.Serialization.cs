@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.RedisEnterprise
 {
     public partial class RedisEnterpriseDatabaseData : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseDatabaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseDatabaseData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseDatabaseData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisEnterpriseDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,62 +43,62 @@ namespace Azure.ResourceManager.RedisEnterprise
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ClientProtocol.HasValue)
+            if (Optional.IsDefined(ClientProtocol))
             {
                 writer.WritePropertyName("clientProtocol"u8);
                 writer.WriteStringValue(ClientProtocol.Value.ToString());
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (ClusteringPolicy.HasValue)
+            if (Optional.IsDefined(ClusteringPolicy))
             {
                 writer.WritePropertyName("clusteringPolicy"u8);
                 writer.WriteStringValue(ClusteringPolicy.Value.ToString());
             }
-            if (EvictionPolicy.HasValue)
+            if (Optional.IsDefined(EvictionPolicy))
             {
                 writer.WritePropertyName("evictionPolicy"u8);
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
-            if (Persistence != null)
+            if (Optional.IsDefined(Persistence))
             {
                 writer.WritePropertyName("persistence"u8);
-                writer.WriteObjectValue(Persistence);
+                writer.WriteObjectValue(Persistence, options);
             }
-            if (!(Modules is ChangeTrackingList<RedisEnterpriseModule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Modules))
             {
                 writer.WritePropertyName("modules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Modules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (GeoReplication != null)
+            if (Optional.IsDefined(GeoReplication))
             {
                 writer.WritePropertyName("geoReplication"u8);
-                writer.WriteObjectValue(GeoReplication);
+                writer.WriteObjectValue(GeoReplication, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         internal static RedisEnterpriseDatabaseData DeserializeRedisEnterpriseDatabaseData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             IList<RedisEnterpriseModule> modules = default;
             RedisEnterpriseDatabaseGeoReplication geoReplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -280,10 +280,10 @@ namespace Azure.ResourceManager.RedisEnterprise
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RedisEnterpriseDatabaseData(
                 id,
                 name,
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                         return DeserializeRedisEnterpriseDatabaseData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support reading '{options.Format}' format.");
             }
         }
 

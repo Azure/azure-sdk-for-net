@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,28 +16,28 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageRoutingPreference : IUtf8JsonSerializable, IJsonModel<StorageRoutingPreference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageRoutingPreference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageRoutingPreference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageRoutingPreference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageRoutingPreference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RoutingChoice.HasValue)
+            if (Optional.IsDefined(RoutingChoice))
             {
                 writer.WritePropertyName("routingChoice"u8);
                 writer.WriteStringValue(RoutingChoice.Value.ToString());
             }
-            if (IsMicrosoftEndpointsPublished.HasValue)
+            if (Optional.IsDefined(IsMicrosoftEndpointsPublished))
             {
                 writer.WritePropertyName("publishMicrosoftEndpoints"u8);
                 writer.WriteBooleanValue(IsMicrosoftEndpointsPublished.Value);
             }
-            if (IsInternetEndpointsPublished.HasValue)
+            if (Optional.IsDefined(IsInternetEndpointsPublished))
             {
                 writer.WritePropertyName("publishInternetEndpoints"u8);
                 writer.WriteBooleanValue(IsInternetEndpointsPublished.Value);
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageRoutingPreference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageRoutingPreference DeserializeStorageRoutingPreference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Storage.Models
             bool? publishMicrosoftEndpoints = default;
             bool? publishInternetEndpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routingChoice"u8))
@@ -115,11 +116,70 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageRoutingPreference(routingChoice, publishMicrosoftEndpoints, publishInternetEndpoints, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingChoice), out propertyOverride);
+            if (Optional.IsDefined(RoutingChoice) || hasPropertyOverride)
+            {
+                builder.Append("  routingChoice: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{RoutingChoice.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsMicrosoftEndpointsPublished), out propertyOverride);
+            if (Optional.IsDefined(IsMicrosoftEndpointsPublished) || hasPropertyOverride)
+            {
+                builder.Append("  publishMicrosoftEndpoints: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsMicrosoftEndpointsPublished.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInternetEndpointsPublished), out propertyOverride);
+            if (Optional.IsDefined(IsInternetEndpointsPublished) || hasPropertyOverride)
+            {
+                builder.Append("  publishInternetEndpoints: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsInternetEndpointsPublished.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<StorageRoutingPreference>.Write(ModelReaderWriterOptions options)
@@ -130,8 +190,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +209,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageRoutingPreference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageRoutingPreference)} does not support reading '{options.Format}' format.");
             }
         }
 

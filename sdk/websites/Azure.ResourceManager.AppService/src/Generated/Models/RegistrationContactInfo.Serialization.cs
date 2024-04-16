@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,30 +16,30 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class RegistrationContactInfo : IUtf8JsonSerializable, IJsonModel<RegistrationContactInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegistrationContactInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegistrationContactInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RegistrationContactInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RegistrationContactInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AddressMailing != null)
+            if (Optional.IsDefined(AddressMailing))
             {
                 writer.WritePropertyName("addressMailing"u8);
-                writer.WriteObjectValue(AddressMailing);
+                writer.WriteObjectValue(AddressMailing, options);
             }
             writer.WritePropertyName("email"u8);
             writer.WriteStringValue(Email);
-            if (Fax != null)
+            if (Optional.IsDefined(Fax))
             {
                 writer.WritePropertyName("fax"u8);
                 writer.WriteStringValue(Fax);
             }
-            if (JobTitle != null)
+            if (Optional.IsDefined(JobTitle))
             {
                 writer.WritePropertyName("jobTitle"u8);
                 writer.WriteStringValue(JobTitle);
@@ -47,12 +48,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(NameFirst);
             writer.WritePropertyName("nameLast"u8);
             writer.WriteStringValue(NameLast);
-            if (NameMiddle != null)
+            if (Optional.IsDefined(NameMiddle))
             {
                 writer.WritePropertyName("nameMiddle"u8);
                 writer.WriteStringValue(NameMiddle);
             }
-            if (Organization != null)
+            if (Optional.IsDefined(Organization))
             {
                 writer.WritePropertyName("organization"u8);
                 writer.WriteStringValue(Organization);
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegistrationContactInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static RegistrationContactInfo DeserializeRegistrationContactInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
             string organization = default;
             string phone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addressMailing"u8))
@@ -161,10 +162,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RegistrationContactInfo(
                 addressMailing,
                 email,
@@ -178,6 +179,211 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AddressMailing), out propertyOverride);
+            if (Optional.IsDefined(AddressMailing) || hasPropertyOverride)
+            {
+                builder.Append("  addressMailing: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, AddressMailing, options, 2, false, "  addressMailing: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Email), out propertyOverride);
+            if (Optional.IsDefined(Email) || hasPropertyOverride)
+            {
+                builder.Append("  email: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Email.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Email}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Email}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Fax), out propertyOverride);
+            if (Optional.IsDefined(Fax) || hasPropertyOverride)
+            {
+                builder.Append("  fax: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Fax.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Fax}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Fax}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobTitle), out propertyOverride);
+            if (Optional.IsDefined(JobTitle) || hasPropertyOverride)
+            {
+                builder.Append("  jobTitle: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (JobTitle.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{JobTitle}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{JobTitle}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NameFirst), out propertyOverride);
+            if (Optional.IsDefined(NameFirst) || hasPropertyOverride)
+            {
+                builder.Append("  nameFirst: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (NameFirst.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NameFirst}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NameFirst}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NameLast), out propertyOverride);
+            if (Optional.IsDefined(NameLast) || hasPropertyOverride)
+            {
+                builder.Append("  nameLast: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (NameLast.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NameLast}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NameLast}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NameMiddle), out propertyOverride);
+            if (Optional.IsDefined(NameMiddle) || hasPropertyOverride)
+            {
+                builder.Append("  nameMiddle: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (NameMiddle.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NameMiddle}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NameMiddle}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Organization), out propertyOverride);
+            if (Optional.IsDefined(Organization) || hasPropertyOverride)
+            {
+                builder.Append("  organization: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Organization.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Organization}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Organization}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Phone), out propertyOverride);
+            if (Optional.IsDefined(Phone) || hasPropertyOverride)
+            {
+                builder.Append("  phone: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Phone.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Phone}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Phone}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RegistrationContactInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RegistrationContactInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,8 +392,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +411,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeRegistrationContactInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

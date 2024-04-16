@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class RoleInstanceNetworkProfile : IUtf8JsonSerializable, IJsonModel<RoleInstanceNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleInstanceNetworkProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleInstanceNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleInstanceNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoleInstanceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleInstanceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleInstanceNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(NetworkInterfaces is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleInstanceNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleInstanceNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleInstanceNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RoleInstanceNetworkProfile DeserializeRoleInstanceNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             IReadOnlyList<WritableSubResource> networkInterfaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaces"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RoleInstanceNetworkProfile(networkInterfaces ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoleInstanceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleInstanceNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRoleInstanceNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleInstanceNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleInstanceNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

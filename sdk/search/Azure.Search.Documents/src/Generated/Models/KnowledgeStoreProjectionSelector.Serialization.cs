@@ -16,27 +16,27 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ReferenceKeyName != null)
+            if (Optional.IsDefined(ReferenceKeyName))
             {
                 writer.WritePropertyName("referenceKeyName"u8);
                 writer.WriteStringValue(ReferenceKeyName);
             }
-            if (GeneratedKeyName != null)
+            if (Optional.IsDefined(GeneratedKeyName))
             {
                 writer.WritePropertyName("generatedKeyName"u8);
                 writer.WriteStringValue(GeneratedKeyName);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (SourceContext != null)
+            if (Optional.IsDefined(SourceContext))
             {
                 writer.WritePropertyName("sourceContext"u8);
                 writer.WriteStringValue(SourceContext);
             }
-            if (!(Inputs is ChangeTrackingList<InputFieldMappingEntry> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -98,6 +98,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new KnowledgeStoreProjectionSelector(referenceKeyName, generatedKeyName, source, sourceContext, inputs ?? new ChangeTrackingList<InputFieldMappingEntry>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KnowledgeStoreProjectionSelector FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKnowledgeStoreProjectionSelector(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

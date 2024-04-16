@@ -15,29 +15,29 @@ namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class AmlFileSystemPropertiesHsm : IUtf8JsonSerializable, IJsonModel<AmlFileSystemPropertiesHsm>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemPropertiesHsm>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemPropertiesHsm>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AmlFileSystemPropertiesHsm>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemPropertiesHsm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                writer.WriteObjectValue(Settings, options);
             }
-            if (options.Format != "W" && !(ArchiveStatus is ChangeTrackingList<AmlFileSystemArchive> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ArchiveStatus))
             {
                 writer.WritePropertyName("archiveStatus"u8);
                 writer.WriteStartArray();
                 foreach (var item in ArchiveStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemPropertiesHsm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static AmlFileSystemPropertiesHsm DeserializeAmlFileSystemPropertiesHsm(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             AmlFileSystemHsmSettings settings = default;
             IReadOnlyList<AmlFileSystemArchive> archiveStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("settings"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AmlFileSystemPropertiesHsm(settings, archiveStatus ?? new ChangeTrackingList<AmlFileSystemArchive>(), serializedAdditionalRawData);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeAmlFileSystemPropertiesHsm(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemPropertiesHsm)} does not support reading '{options.Format}' format.");
             }
         }
 

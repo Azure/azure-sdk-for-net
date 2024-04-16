@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class SqlDatabaseResourceSettings : IUtf8JsonSerializable, IJsonModel<SqlDatabaseResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseResourceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseResourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlDatabaseResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabaseResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabaseResourceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ZoneRedundant.HasValue)
+            if (Optional.IsDefined(ZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteStringValue(ZoneRedundant.Value.ToString());
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (TargetResourceName != null)
+            if (Optional.IsDefined(TargetResourceName))
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (TargetResourceGroupName != null)
+            if (Optional.IsDefined(TargetResourceGroupName))
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabaseResourceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabaseResourceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static SqlDatabaseResourceSettings DeserializeSqlDatabaseResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             string targetResourceName = default;
             string targetResourceGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlDatabaseResourceSettings(
                 resourceType,
                 targetResourceName,
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabaseResourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeSqlDatabaseResourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseResourceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabaseResourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

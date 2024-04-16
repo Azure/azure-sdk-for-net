@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineCaptureResult : IUtf8JsonSerializable, IJsonModel<VirtualMachineCaptureResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineCaptureResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineCaptureResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineCaptureResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineCaptureResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Schema != null)
+            if (options.Format != "W" && Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("$schema"u8);
                 writer.WriteStringValue(Schema);
             }
-            if (options.Format != "W" && ContentVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (options.Format != "W" && Parameters != null)
+            if (options.Format != "W" && Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
 #endif
             }
-            if (options.Format != "W" && !(Resources is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineCaptureResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineCaptureResult DeserializeVirtualMachineCaptureResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
             IReadOnlyList<BinaryData> resources = default;
             ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("$schema"u8))
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineCaptureResult(
                 id,
                 serializedAdditionalRawData,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineCaptureResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineCaptureResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,23 +16,23 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class EventHubsProvisioningIssueProperties : IUtf8JsonSerializable, IJsonModel<EventHubsProvisioningIssueProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsProvisioningIssueProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsProvisioningIssueProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsProvisioningIssueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsProvisioningIssueProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsProvisioningIssueProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IssueType != null)
+            if (Optional.IsDefined(IssueType))
             {
                 writer.WritePropertyName("issueType"u8);
                 writer.WriteStringValue(IssueType);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsProvisioningIssueProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsProvisioningIssueProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsProvisioningIssueProperties DeserializeEventHubsProvisioningIssueProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             string issueType = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("issueType"u8))
@@ -92,11 +93,70 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EventHubsProvisioningIssueProperties(issueType, description, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IssueType), out propertyOverride);
+            if (Optional.IsDefined(IssueType) || hasPropertyOverride)
+            {
+                builder.Append("  issueType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (IssueType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IssueType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IssueType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (Optional.IsDefined(Description) || hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<EventHubsProvisioningIssueProperties>.Write(ModelReaderWriterOptions options)
@@ -107,8 +167,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsProvisioningIssueProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsProvisioningIssueProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +186,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeEventHubsProvisioningIssueProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsProvisioningIssueProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsProvisioningIssueProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 {
     public partial class AgentPoolUpdateProfile : IUtf8JsonSerializable, IJsonModel<AgentPoolUpdateProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolUpdateProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolUpdateProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AgentPoolUpdateProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolUpdateProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolUpdateProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolUpdateProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (options.Format != "W" && KubernetesVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolUpdateProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolUpdateProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolUpdateProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static AgentPoolUpdateProfile DeserializeAgentPoolUpdateProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             string vmSize = default;
             string kubernetesVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AgentPoolUpdateProfile(count, vmSize, kubernetesVersion, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolUpdateProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolUpdateProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeAgentPoolUpdateProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolUpdateProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolUpdateProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

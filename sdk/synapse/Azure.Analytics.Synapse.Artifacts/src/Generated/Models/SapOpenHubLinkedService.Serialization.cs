@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -53,63 +53,63 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("server"u8);
-            writer.WriteObjectValue(Server);
+            writer.WriteObjectValue<object>(Server);
             writer.WritePropertyName("systemNumber"u8);
-            writer.WriteObjectValue(SystemNumber);
+            writer.WriteObjectValue<object>(SystemNumber);
             writer.WritePropertyName("clientId"u8);
-            writer.WriteObjectValue(ClientId);
-            if (Language != null)
+            writer.WriteObjectValue<object>(ClientId);
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
-                writer.WriteObjectValue(Language);
+                writer.WriteObjectValue<object>(Language);
             }
-            if (SystemId != null)
+            if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
-                writer.WriteObjectValue(SystemId);
+                writer.WriteObjectValue<object>(SystemId);
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName);
+                writer.WriteObjectValue<object>(UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (MessageServer != null)
+            if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
-                writer.WriteObjectValue(MessageServer);
+                writer.WriteObjectValue<object>(MessageServer);
             }
-            if (MessageServerService != null)
+            if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
-                writer.WriteObjectValue(MessageServerService);
+                writer.WriteObjectValue<object>(MessageServerService);
             }
-            if (LogonGroup != null)
+            if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
-                writer.WriteObjectValue(LogonGroup);
+                writer.WriteObjectValue<object>(LogonGroup);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -316,12 +316,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SapOpenHubLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapOpenHubLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SapOpenHubLinkedServiceConverter : JsonConverter<SapOpenHubLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, SapOpenHubLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SapOpenHubLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

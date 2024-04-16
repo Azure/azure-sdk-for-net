@@ -15,35 +15,35 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class NetCoreZipUploadedUserSourceInfo : IUtf8JsonSerializable, IJsonModel<NetCoreZipUploadedUserSourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetCoreZipUploadedUserSourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetCoreZipUploadedUserSourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetCoreZipUploadedUserSourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetCoreZipUploadedUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetCoreZipUploadedUserSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetCoreZipUploadedUserSourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NetCoreMainEntryPath != null)
+            if (Optional.IsDefined(NetCoreMainEntryPath))
             {
                 writer.WritePropertyName("netCoreMainEntryPath"u8);
                 writer.WriteStringValue(NetCoreMainEntryPath);
             }
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (RelativePath != null)
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetCoreZipUploadedUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetCoreZipUploadedUserSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetCoreZipUploadedUserSourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static NetCoreZipUploadedUserSourceInfo DeserializeNetCoreZipUploadedUserSourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             string type = default;
             string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("netCoreMainEntryPath"u8))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetCoreZipUploadedUserSourceInfo(
                 type,
                 version,
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetCoreZipUploadedUserSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetCoreZipUploadedUserSourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeNetCoreZipUploadedUserSourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetCoreZipUploadedUserSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetCoreZipUploadedUserSourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

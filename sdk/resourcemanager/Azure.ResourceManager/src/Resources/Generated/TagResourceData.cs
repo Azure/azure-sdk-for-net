@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public TagResourceData(Tag properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
@@ -85,6 +82,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The set of tags. </summary>
         internal Tag Properties { get; set; }
         /// <summary> Dictionary of &lt;string&gt;. </summary>
+        [WirePath("properties.tags")]
         public IDictionary<string, string> TagValues
         {
             get

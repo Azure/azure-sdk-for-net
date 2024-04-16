@@ -15,30 +15,30 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class RerunTumblingWindowTrigger : IUtf8JsonSerializable, IJsonModel<RerunTumblingWindowTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RerunTumblingWindowTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RerunTumblingWindowTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RerunTumblingWindowTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RerunTumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RerunTumblingWindowTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RerunTumblingWindowTrigger)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && RuntimeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RuntimeState))
             {
                 writer.WritePropertyName("runtimeState"u8);
                 writer.WriteStringValue(RuntimeState.Value.ToString());
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<RerunTumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RerunTumblingWindowTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RerunTumblingWindowTrigger)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static RerunTumblingWindowTrigger DeserializeRerunTumblingWindowTrigger(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RerunTumblingWindowTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RerunTumblingWindowTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeRerunTumblingWindowTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RerunTumblingWindowTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RerunTumblingWindowTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 

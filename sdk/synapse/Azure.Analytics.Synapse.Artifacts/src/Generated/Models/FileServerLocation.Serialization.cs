@@ -21,20 +21,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-                writer.WriteObjectValue(FolderPath);
+                writer.WriteObjectValue<object>(FolderPath);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
-                writer.WriteObjectValue(FileName);
+                writer.WriteObjectValue<object>(FileName);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -81,12 +81,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new FileServerLocation(type, folderPath, fileName, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new FileServerLocation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFileServerLocation(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class FileServerLocationConverter : JsonConverter<FileServerLocation>
         {
             public override void Write(Utf8JsonWriter writer, FileServerLocation model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override FileServerLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

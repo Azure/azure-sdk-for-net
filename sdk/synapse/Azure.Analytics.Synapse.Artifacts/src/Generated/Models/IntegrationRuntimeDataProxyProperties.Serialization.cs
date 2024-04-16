@@ -18,17 +18,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (StagingLinkedService != null)
+            if (Optional.IsDefined(StagingLinkedService))
             {
                 writer.WritePropertyName("stagingLinkedService"u8);
                 writer.WriteObjectValue(StagingLinkedService);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -74,12 +74,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new IntegrationRuntimeDataProxyProperties(connectVia, stagingLinkedService, path);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IntegrationRuntimeDataProxyProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIntegrationRuntimeDataProxyProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class IntegrationRuntimeDataProxyPropertiesConverter : JsonConverter<IntegrationRuntimeDataProxyProperties>
         {
             public override void Write(Utf8JsonWriter writer, IntegrationRuntimeDataProxyProperties model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override IntegrationRuntimeDataProxyProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Stopwords is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Stopwords))
             {
                 writer.WritePropertyName("stopwords"u8);
                 writer.WriteStartArray();
@@ -26,17 +26,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (StopwordsList.HasValue)
+            if (Optional.IsDefined(StopwordsList))
             {
                 writer.WritePropertyName("stopwordsList"u8);
                 writer.WriteStringValue(StopwordsList.Value.ToSerialString());
             }
-            if (IgnoreCase.HasValue)
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase"u8);
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (RemoveTrailingStopWords.HasValue)
+            if (Optional.IsDefined(RemoveTrailingStopWords))
             {
                 writer.WritePropertyName("removeTrailing"u8);
                 writer.WriteBooleanValue(RemoveTrailingStopWords.Value);
@@ -121,6 +121,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 stopwordsList,
                 ignoreCase,
                 removeTrailing);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new StopwordsTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStopwordsTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

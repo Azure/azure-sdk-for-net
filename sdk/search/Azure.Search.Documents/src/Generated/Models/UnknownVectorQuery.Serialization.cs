@@ -17,22 +17,22 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (KNearestNeighborsCount.HasValue)
+            if (Optional.IsDefined(KNearestNeighborsCount))
             {
                 writer.WritePropertyName("k"u8);
                 writer.WriteNumberValue(KNearestNeighborsCount.Value);
             }
-            if (FieldsRaw != null)
+            if (Optional.IsDefined(FieldsRaw))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStringValue(FieldsRaw);
             }
-            if (Exhaustive.HasValue)
+            if (Optional.IsDefined(Exhaustive))
             {
                 writer.WritePropertyName("exhaustive"u8);
                 writer.WriteBooleanValue(Exhaustive.Value);
             }
-            if (Oversampling.HasValue)
+            if (Optional.IsDefined(Oversampling))
             {
                 writer.WritePropertyName("oversampling"u8);
                 writer.WriteNumberValue(Oversampling.Value);
@@ -92,6 +92,22 @@ namespace Azure.Search.Documents.Models
                 }
             }
             return new UnknownVectorQuery(kind, k, fields, exhaustive, oversampling);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownVectorQuery FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownVectorQuery(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

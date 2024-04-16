@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class LogicWorkflowRunActionRepetitionDefinitionData : IUtf8JsonSerializable, IJsonModel<LogicWorkflowRunActionRepetitionDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRunActionRepetitionDefinitionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRunActionRepetitionDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicWorkflowRunActionRepetitionDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowRunActionRepetitionDefinitionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowRunActionRepetitionDefinitionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,39 +56,39 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Correlation != null)
+            if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation);
+                writer.WriteObjectValue(Correlation, options);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER
@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (options.Format != "W" && TrackingId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TrackingId))
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId.Value);
             }
-            if (options.Format != "W" && Inputs != null)
+            if (options.Format != "W" && Optional.IsDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
 #if NET6_0_OR_GREATER
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (options.Format != "W" && InputsLink != null)
+            if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue(InputsLink);
+                writer.WriteObjectValue(InputsLink, options);
             }
-            if (options.Format != "W" && Outputs != null)
+            if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
 #if NET6_0_OR_GREATER
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (options.Format != "W" && OutputsLink != null)
+            if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue(OutputsLink);
+                writer.WriteObjectValue(OutputsLink, options);
             }
-            if (options.Format != "W" && TrackedProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackedProperties))
             {
                 writer.WritePropertyName("trackedProperties"u8);
 #if NET6_0_OR_GREATER
@@ -151,28 +151,28 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (!(RetryHistory is ChangeTrackingList<LogicWorkRetryHistory> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RetryHistory))
             {
                 writer.WritePropertyName("retryHistory"u8);
                 writer.WriteStartArray();
                 foreach (var item in RetryHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (IterationCount.HasValue)
+            if (Optional.IsDefined(IterationCount))
             {
                 writer.WritePropertyName("iterationCount"u8);
                 writer.WriteNumberValue(IterationCount.Value);
             }
-            if (!(RepetitionIndexes is ChangeTrackingList<LogicWorkflowRepetitionIndex> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(RepetitionIndexes))
             {
                 writer.WritePropertyName("repetitionIndexes"u8);
                 writer.WriteStartArray();
                 foreach (var item in RepetitionIndexes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowRunActionRepetitionDefinitionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowRunActionRepetitionDefinitionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Logic
 
         internal static LogicWorkflowRunActionRepetitionDefinitionData DeserializeLogicWorkflowRunActionRepetitionDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Logic
             int? iterationCount = default;
             IList<LogicWorkflowRepetitionIndex> repetitionIndexes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -438,10 +438,10 @@ namespace Azure.ResourceManager.Logic
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogicWorkflowRunActionRepetitionDefinitionData(
                 id,
                 name,
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Logic
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowRunActionRepetitionDefinitionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowRunActionRepetitionDefinitionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Logic
                         return DeserializeLogicWorkflowRunActionRepetitionDefinitionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowRunActionRepetitionDefinitionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowRunActionRepetitionDefinitionData)} does not support reading '{options.Format}' format.");
             }
         }
 

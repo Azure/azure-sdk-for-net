@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningProbeSettings : IUtf8JsonSerializable, IJsonModel<MachineLearningProbeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningProbeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningProbeSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningProbeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningProbeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FailureThreshold.HasValue)
+            if (Optional.IsDefined(FailureThreshold))
             {
                 writer.WritePropertyName("failureThreshold"u8);
                 writer.WriteNumberValue(FailureThreshold.Value);
             }
-            if (InitialDelay.HasValue)
+            if (Optional.IsDefined(InitialDelay))
             {
                 if (InitialDelay != null)
                 {
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("initialDelay");
                 }
             }
-            if (Period.HasValue)
+            if (Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteStringValue(Period.Value, "P");
             }
-            if (SuccessThreshold.HasValue)
+            if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningProbeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningProbeSettings DeserializeMachineLearningProbeSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             int? successThreshold = default;
             TimeSpan? timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureThreshold"u8))
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningProbeSettings(
                 failureThreshold,
                 initialDelay,
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningProbeSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningProbeSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

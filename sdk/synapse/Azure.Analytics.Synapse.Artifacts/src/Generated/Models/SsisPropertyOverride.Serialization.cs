@@ -19,8 +19,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value);
-            if (IsSensitive.HasValue)
+            writer.WriteObjectValue<object>(Value);
+            if (Optional.IsDefined(IsSensitive))
             {
                 writer.WritePropertyName("isSensitive"u8);
                 writer.WriteBooleanValue(IsSensitive.Value);
@@ -56,12 +56,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SsisPropertyOverride(value, isSensitive);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SsisPropertyOverride FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSsisPropertyOverride(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SsisPropertyOverrideConverter : JsonConverter<SsisPropertyOverride>
         {
             public override void Write(Utf8JsonWriter writer, SsisPropertyOverride model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SsisPropertyOverride Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

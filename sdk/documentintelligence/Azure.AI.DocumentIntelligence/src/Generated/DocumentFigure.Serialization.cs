@@ -9,31 +9,30 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
     public partial class DocumentFigure : IUtf8JsonSerializable, IJsonModel<DocumentFigure>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentFigure>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentFigure>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DocumentFigure>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentFigure>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentFigure)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentFigure)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BoundingRegions))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in BoundingRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -41,10 +40,10 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (!(Elements is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Elements))
             {
                 writer.WritePropertyName("elements"u8);
                 writer.WriteStartArray();
@@ -54,18 +53,18 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndArray();
             }
-            if (Caption != null)
+            if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
-                writer.WriteObjectValue(Caption);
+                writer.WriteObjectValue(Caption, options);
             }
-            if (!(Footnotes is ChangeTrackingList<DocumentFootnote> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Footnotes))
             {
                 writer.WritePropertyName("footnotes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Footnotes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +91,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentFigure>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentFigure)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentFigure)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +100,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal static DocumentFigure DeserializeDocumentFigure(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,7 +112,7 @@ namespace Azure.AI.DocumentIntelligence
             DocumentCaption caption = default;
             IReadOnlyList<DocumentFootnote> footnotes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boundingRegions"u8))
@@ -179,10 +178,10 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DocumentFigure(
                 boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
                 spans,
@@ -201,7 +200,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentFigure)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentFigure)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,7 +216,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentFigure(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentFigure)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentFigure)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -231,11 +230,11 @@ namespace Azure.AI.DocumentIntelligence
             return DeserializeDocumentFigure(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class SlimPolicyMetadata : IUtf8JsonSerializable, IJsonModel<SlimPolicyMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SlimPolicyMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SlimPolicyMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SlimPolicyMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SlimPolicyMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && MetadataId != null)
+            if (options.Format != "W" && Optional.IsDefined(MetadataId))
             {
                 writer.WritePropertyName("metadataId"u8);
                 writer.WriteStringValue(MetadataId);
             }
-            if (options.Format != "W" && Category != null)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Title != null)
+            if (options.Format != "W" && Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && Owner != null)
+            if (options.Format != "W" && Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (options.Format != "W" && AdditionalContentUri != null)
+            if (options.Format != "W" && Optional.IsDefined(AdditionalContentUri))
             {
                 writer.WritePropertyName("additionalContentUrl"u8);
                 writer.WriteStringValue(AdditionalContentUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SlimPolicyMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static SlimPolicyMetadata DeserializeSlimPolicyMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Uri additionalContentUrl = default;
             BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -215,10 +215,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SlimPolicyMetadata(
                 id,
                 name,
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeSlimPolicyMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

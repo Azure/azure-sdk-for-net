@@ -16,94 +16,94 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AzureMLExecutePipelineActivity : IUtf8JsonSerializable, IJsonModel<AzureMLExecutePipelineActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMLExecutePipelineActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMLExecutePipelineActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureMLExecutePipelineActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureMLExecutePipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMLExecutePipelineActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureMLExecutePipelineActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (MLPipelineId != null)
+            if (Optional.IsDefined(MLPipelineId))
             {
                 writer.WritePropertyName("mlPipelineId"u8);
                 JsonSerializer.Serialize(writer, MLPipelineId);
             }
-            if (MLPipelineEndpointId != null)
+            if (Optional.IsDefined(MLPipelineEndpointId))
             {
                 writer.WritePropertyName("mlPipelineEndpointId"u8);
                 JsonSerializer.Serialize(writer, MLPipelineEndpointId);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 JsonSerializer.Serialize(writer, Version);
             }
-            if (ExperimentName != null)
+            if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
                 JsonSerializer.Serialize(writer, ExperimentName);
             }
-            if (MLPipelineParameters != null)
+            if (Optional.IsDefined(MLPipelineParameters))
             {
                 writer.WritePropertyName("mlPipelineParameters"u8);
                 JsonSerializer.Serialize(writer, MLPipelineParameters);
             }
-            if (DataPathAssignments != null)
+            if (Optional.IsDefined(DataPathAssignments))
             {
                 writer.WritePropertyName("dataPathAssignments"u8);
 #if NET6_0_OR_GREATER
@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (MLParentRunId != null)
+            if (Optional.IsDefined(MLParentRunId))
             {
                 writer.WritePropertyName("mlParentRunId"u8);
                 JsonSerializer.Serialize(writer, MLParentRunId);
             }
-            if (ContinueOnStepFailure != null)
+            if (Optional.IsDefined(ContinueOnStepFailure))
             {
                 writer.WritePropertyName("continueOnStepFailure"u8);
                 JsonSerializer.Serialize(writer, ContinueOnStepFailure);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureMLExecutePipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMLExecutePipelineActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureMLExecutePipelineActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureMLExecutePipelineActivity DeserializeAzureMLExecutePipelineActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureMLExecutePipelineActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureMLExecutePipelineActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAzureMLExecutePipelineActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureMLExecutePipelineActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureMLExecutePipelineActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

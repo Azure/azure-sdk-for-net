@@ -20,17 +20,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("alwaysEncryptedAkvAuthType"u8);
             writer.WriteStringValue(AlwaysEncryptedAkvAuthType.ToString());
-            if (ServicePrincipalId != null)
+            if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId);
+                writer.WriteObjectValue<object>(ServicePrincipalId);
             }
-            if (ServicePrincipalKey != null)
+            if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
                 writer.WriteObjectValue(ServicePrincipalKey);
             }
-            if (Credential != null)
+            if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -86,12 +86,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SqlAlwaysEncryptedProperties(alwaysEncryptedAkvAuthType, servicePrincipalId, servicePrincipalKey, credential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SqlAlwaysEncryptedProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlAlwaysEncryptedProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SqlAlwaysEncryptedPropertiesConverter : JsonConverter<SqlAlwaysEncryptedProperties>
         {
             public override void Write(Utf8JsonWriter writer, SqlAlwaysEncryptedProperties model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SqlAlwaysEncryptedProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

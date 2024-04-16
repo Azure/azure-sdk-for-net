@@ -18,25 +18,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PartitionNames != null)
+            if (Optional.IsDefined(PartitionNames))
             {
                 writer.WritePropertyName("partitionNames"u8);
-                writer.WriteObjectValue(PartitionNames);
+                writer.WriteObjectValue<object>(PartitionNames);
             }
-            if (PartitionColumnName != null)
+            if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
-                writer.WriteObjectValue(PartitionColumnName);
+                writer.WriteObjectValue<object>(PartitionColumnName);
             }
-            if (PartitionUpperBound != null)
+            if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
-                writer.WriteObjectValue(PartitionUpperBound);
+                writer.WriteObjectValue<object>(PartitionUpperBound);
             }
-            if (PartitionLowerBound != null)
+            if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
-                writer.WriteObjectValue(PartitionLowerBound);
+                writer.WriteObjectValue<object>(PartitionLowerBound);
             }
             writer.WriteEndObject();
         }
@@ -93,12 +93,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AmazonRdsForOraclePartitionSettings(partitionNames, partitionColumnName, partitionUpperBound, partitionLowerBound);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AmazonRdsForOraclePartitionSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAmazonRdsForOraclePartitionSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class AmazonRdsForOraclePartitionSettingsConverter : JsonConverter<AmazonRdsForOraclePartitionSettings>
         {
             public override void Write(Utf8JsonWriter writer, AmazonRdsForOraclePartitionSettings model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override AmazonRdsForOraclePartitionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -16,42 +16,42 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SnowflakeV2Source : IUtf8JsonSerializable, IJsonModel<SnowflakeV2Source>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnowflakeV2Source>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnowflakeV2Source>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SnowflakeV2Source>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SnowflakeV2Source>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnowflakeV2Source)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnowflakeV2Source)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 JsonSerializer.Serialize(writer, Query);
             }
             writer.WritePropertyName("exportSettings"u8);
-            writer.WriteObjectValue(ExportSettings);
+            writer.WriteObjectValue(ExportSettings, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (SourceRetryCount != null)
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (SourceRetryWait != null)
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnowflakeV2Source>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnowflakeV2Source)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnowflakeV2Source)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SnowflakeV2Source DeserializeSnowflakeV2Source(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnowflakeV2Source)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnowflakeV2Source)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSnowflakeV2Source(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnowflakeV2Source)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnowflakeV2Source)} does not support reading '{options.Format}' format.");
             }
         }
 

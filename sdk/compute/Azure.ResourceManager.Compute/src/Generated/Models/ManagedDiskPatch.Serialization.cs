@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ManagedDiskPatch : IUtf8JsonSerializable, IJsonModel<ManagedDiskPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedDiskPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,109 +37,109 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OSType.HasValue)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (EncryptionSettingsGroup != null)
+            if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsGroup);
+                writer.WriteObjectValue(EncryptionSettingsGroup, options);
             }
-            if (DiskIopsReadWrite.HasValue)
+            if (Optional.IsDefined(DiskIopsReadWrite))
             {
                 writer.WritePropertyName("diskIOPSReadWrite"u8);
                 writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
-            if (DiskMBpsReadWrite.HasValue)
+            if (Optional.IsDefined(DiskMBpsReadWrite))
             {
                 writer.WritePropertyName("diskMBpsReadWrite"u8);
                 writer.WriteNumberValue(DiskMBpsReadWrite.Value);
             }
-            if (DiskIopsReadOnly.HasValue)
+            if (Optional.IsDefined(DiskIopsReadOnly))
             {
                 writer.WritePropertyName("diskIOPSReadOnly"u8);
                 writer.WriteNumberValue(DiskIopsReadOnly.Value);
             }
-            if (DiskMBpsReadOnly.HasValue)
+            if (Optional.IsDefined(DiskMBpsReadOnly))
             {
                 writer.WritePropertyName("diskMBpsReadOnly"u8);
                 writer.WriteNumberValue(DiskMBpsReadOnly.Value);
             }
-            if (MaxShares.HasValue)
+            if (Optional.IsDefined(MaxShares))
             {
                 writer.WritePropertyName("maxShares"u8);
                 writer.WriteNumberValue(MaxShares.Value);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue(Encryption, options);
             }
-            if (NetworkAccessPolicy.HasValue)
+            if (Optional.IsDefined(NetworkAccessPolicy))
             {
                 writer.WritePropertyName("networkAccessPolicy"u8);
                 writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
             }
-            if (DiskAccessId != null)
+            if (Optional.IsDefined(DiskAccessId))
             {
                 writer.WritePropertyName("diskAccessId"u8);
                 writer.WriteStringValue(DiskAccessId);
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (BurstingEnabled.HasValue)
+            if (Optional.IsDefined(BurstingEnabled))
             {
                 writer.WritePropertyName("burstingEnabled"u8);
                 writer.WriteBooleanValue(BurstingEnabled.Value);
             }
-            if (PurchasePlan != null)
+            if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                writer.WriteObjectValue(PurchasePlan, options);
             }
-            if (SupportedCapabilities != null)
+            if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities);
+                writer.WriteObjectValue(SupportedCapabilities, options);
             }
-            if (options.Format != "W" && PropertyUpdatesInProgress != null)
+            if (options.Format != "W" && Optional.IsDefined(PropertyUpdatesInProgress))
             {
                 writer.WritePropertyName("propertyUpdatesInProgress"u8);
-                writer.WriteObjectValue(PropertyUpdatesInProgress);
+                writer.WriteObjectValue(PropertyUpdatesInProgress, options);
             }
-            if (SupportsHibernation.HasValue)
+            if (Optional.IsDefined(SupportsHibernation))
             {
                 writer.WritePropertyName("supportsHibernation"u8);
                 writer.WriteBooleanValue(SupportsHibernation.Value);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (DataAccessAuthMode.HasValue)
+            if (Optional.IsDefined(DataAccessAuthMode))
             {
                 writer.WritePropertyName("dataAccessAuthMode"u8);
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
-            if (IsOptimizedForFrequentAttach.HasValue)
+            if (Optional.IsDefined(IsOptimizedForFrequentAttach))
             {
                 writer.WritePropertyName("optimizedForFrequentAttach"u8);
                 writer.WriteBooleanValue(IsOptimizedForFrequentAttach.Value);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ManagedDiskPatch DeserializeManagedDiskPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Compute.Models
             DataAccessAuthMode? dataAccessAuthMode = default;
             bool? optimizedForFrequentAttach = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -422,10 +422,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedDiskPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 sku,
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeManagedDiskPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDiskPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

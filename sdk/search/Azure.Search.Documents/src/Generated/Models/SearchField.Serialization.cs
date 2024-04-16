@@ -20,42 +20,42 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (IsKey.HasValue)
+            if (Optional.IsDefined(IsKey))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteBooleanValue(IsKey.Value);
             }
-            if (IsRetrievable.HasValue)
+            if (Optional.IsDefined(IsRetrievable))
             {
                 writer.WritePropertyName("retrievable"u8);
                 writer.WriteBooleanValue(IsRetrievable.Value);
             }
-            if (IsStored.HasValue)
+            if (Optional.IsDefined(IsStored))
             {
                 writer.WritePropertyName("stored"u8);
                 writer.WriteBooleanValue(IsStored.Value);
             }
-            if (IsSearchable.HasValue)
+            if (Optional.IsDefined(IsSearchable))
             {
                 writer.WritePropertyName("searchable"u8);
                 writer.WriteBooleanValue(IsSearchable.Value);
             }
-            if (IsFilterable.HasValue)
+            if (Optional.IsDefined(IsFilterable))
             {
                 writer.WritePropertyName("filterable"u8);
                 writer.WriteBooleanValue(IsFilterable.Value);
             }
-            if (IsSortable.HasValue)
+            if (Optional.IsDefined(IsSortable))
             {
                 writer.WritePropertyName("sortable"u8);
                 writer.WriteBooleanValue(IsSortable.Value);
             }
-            if (IsFacetable.HasValue)
+            if (Optional.IsDefined(IsFacetable))
             {
                 writer.WritePropertyName("facetable"u8);
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
-            if (AnalyzerName.HasValue)
+            if (Optional.IsDefined(AnalyzerName))
             {
                 if (AnalyzerName != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("analyzer");
                 }
             }
-            if (SearchAnalyzerName.HasValue)
+            if (Optional.IsDefined(SearchAnalyzerName))
             {
                 if (SearchAnalyzerName != null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("searchAnalyzer");
                 }
             }
-            if (IndexAnalyzerName.HasValue)
+            if (Optional.IsDefined(IndexAnalyzerName))
             {
                 if (IndexAnalyzerName != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("indexAnalyzer");
                 }
             }
-            if (NormalizerName.HasValue)
+            if (Optional.IsDefined(NormalizerName))
             {
                 if (NormalizerName != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("normalizer");
                 }
             }
-            if (VectorSearchDimensions.HasValue)
+            if (Optional.IsDefined(VectorSearchDimensions))
             {
                 if (VectorSearchDimensions != null)
                 {
@@ -115,7 +115,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("dimensions");
                 }
             }
-            if (VectorSearchProfileName != null)
+            if (Optional.IsDefined(VectorSearchProfileName))
             {
                 if (VectorSearchProfileName != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("vectorSearchProfile");
                 }
             }
-            if (!(SynonymMapNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SynonymMapNames))
             {
                 writer.WritePropertyName("synonymMaps"u8);
                 writer.WriteStartArray();
@@ -137,13 +137,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Fields is ChangeTrackingList<SearchField> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Fields))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchField>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -355,6 +355,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 vectorSearchProfile,
                 synonymMaps ?? new ChangeTrackingList<string>(),
                 fields ?? new ChangeTrackingList<SearchField>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchField FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchField(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

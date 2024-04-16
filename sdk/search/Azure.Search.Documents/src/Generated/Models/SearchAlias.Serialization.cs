@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (_etag != null)
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
@@ -66,6 +66,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new SearchAlias(name, indexes, odataEtag);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchAlias FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchAlias(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

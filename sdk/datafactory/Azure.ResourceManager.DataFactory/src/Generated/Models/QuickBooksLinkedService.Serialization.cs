@@ -16,41 +16,41 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class QuickBooksLinkedService : IUtf8JsonSerializable, IJsonModel<QuickBooksLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuickBooksLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuickBooksLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuickBooksLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QuickBooksLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuickBooksLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuickBooksLinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (ConnectionProperties != null)
+            if (Optional.IsDefined(ConnectionProperties))
             {
                 writer.WritePropertyName("connectionProperties"u8);
 #if NET6_0_OR_GREATER
@@ -86,42 +86,42 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 JsonSerializer.Serialize(writer, Endpoint);
             }
-            if (CompanyId != null)
+            if (Optional.IsDefined(CompanyId))
             {
                 writer.WritePropertyName("companyId"u8);
                 JsonSerializer.Serialize(writer, CompanyId);
             }
-            if (ConsumerKey != null)
+            if (Optional.IsDefined(ConsumerKey))
             {
                 writer.WritePropertyName("consumerKey"u8);
                 JsonSerializer.Serialize(writer, ConsumerKey);
             }
-            if (ConsumerSecret != null)
+            if (Optional.IsDefined(ConsumerSecret))
             {
                 writer.WritePropertyName("consumerSecret"u8);
                 JsonSerializer.Serialize(writer, ConsumerSecret);
             }
-            if (AccessToken != null)
+            if (Optional.IsDefined(AccessToken))
             {
                 writer.WritePropertyName("accessToken"u8);
                 JsonSerializer.Serialize(writer, AccessToken);
             }
-            if (AccessTokenSecret != null)
+            if (Optional.IsDefined(AccessTokenSecret))
             {
                 writer.WritePropertyName("accessTokenSecret"u8);
                 JsonSerializer.Serialize(writer, AccessTokenSecret);
             }
-            if (UseEncryptedEndpoints != null)
+            if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
                 JsonSerializer.Serialize(writer, UseEncryptedEndpoints);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuickBooksLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuickBooksLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuickBooksLinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static QuickBooksLinkedService DeserializeQuickBooksLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,9 +171,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> endpoint = default;
             DataFactoryElement<string> companyId = default;
             DataFactoryElement<string> consumerKey = default;
-            DataFactorySecretBaseDefinition consumerSecret = default;
-            DataFactorySecretBaseDefinition accessToken = default;
-            DataFactorySecretBaseDefinition accessTokenSecret = default;
+            DataFactorySecret consumerSecret = default;
+            DataFactorySecret accessToken = default;
+            DataFactorySecret accessTokenSecret = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            consumerSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            consumerSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessToken"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessToken = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            accessToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessTokenSecret"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessTokenSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            accessTokenSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuickBooksLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuickBooksLinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeQuickBooksLinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuickBooksLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuickBooksLinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

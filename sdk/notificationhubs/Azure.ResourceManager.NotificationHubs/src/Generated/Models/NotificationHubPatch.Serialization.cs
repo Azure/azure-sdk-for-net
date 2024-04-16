@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 {
     public partial class NotificationHubPatch : IUtf8JsonSerializable, IJsonModel<NotificationHubPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationHubPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,62 +60,62 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (NotificationHubName != null)
+            if (Optional.IsDefined(NotificationHubName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NotificationHubName);
             }
-            if (RegistrationTtl.HasValue)
+            if (Optional.IsDefined(RegistrationTtl))
             {
                 writer.WritePropertyName("registrationTtl"u8);
                 writer.WriteStringValue(RegistrationTtl.Value, "c");
             }
-            if (!(AuthorizationRules is ChangeTrackingList<SharedAccessAuthorizationRuleProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AuthorizationRules))
             {
                 writer.WritePropertyName("authorizationRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ApnsCredential != null)
+            if (Optional.IsDefined(ApnsCredential))
             {
                 writer.WritePropertyName("apnsCredential"u8);
-                writer.WriteObjectValue(ApnsCredential);
+                writer.WriteObjectValue(ApnsCredential, options);
             }
-            if (WnsCredential != null)
+            if (Optional.IsDefined(WnsCredential))
             {
                 writer.WritePropertyName("wnsCredential"u8);
-                writer.WriteObjectValue(WnsCredential);
+                writer.WriteObjectValue(WnsCredential, options);
             }
-            if (GcmCredential != null)
+            if (Optional.IsDefined(GcmCredential))
             {
                 writer.WritePropertyName("gcmCredential"u8);
-                writer.WriteObjectValue(GcmCredential);
+                writer.WriteObjectValue(GcmCredential, options);
             }
-            if (MpnsCredential != null)
+            if (Optional.IsDefined(MpnsCredential))
             {
                 writer.WritePropertyName("mpnsCredential"u8);
-                writer.WriteObjectValue(MpnsCredential);
+                writer.WriteObjectValue(MpnsCredential, options);
             }
-            if (AdmCredential != null)
+            if (Optional.IsDefined(AdmCredential))
             {
                 writer.WritePropertyName("admCredential"u8);
-                writer.WriteObjectValue(AdmCredential);
+                writer.WriteObjectValue(AdmCredential, options);
             }
-            if (BaiduCredential != null)
+            if (Optional.IsDefined(BaiduCredential))
             {
                 writer.WritePropertyName("baiduCredential"u8);
-                writer.WriteObjectValue(BaiduCredential);
+                writer.WriteObjectValue(BaiduCredential, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubPatch DeserializeNotificationHubPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             NotificationHubAdmCredential admCredential = default;
             NotificationHubBaiduCredential baiduCredential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -324,10 +324,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NotificationHubPatch(
                 id,
                 name,
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         return DeserializeNotificationHubPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

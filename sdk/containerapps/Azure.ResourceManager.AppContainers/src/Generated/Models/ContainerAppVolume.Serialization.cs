@@ -15,43 +15,43 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppVolume : IUtf8JsonSerializable, IJsonModel<ContainerAppVolume>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppVolume>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppVolume>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppVolume>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (StorageType.HasValue)
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
             }
-            if (StorageName != null)
+            if (Optional.IsDefined(StorageName))
             {
                 writer.WritePropertyName("storageName"u8);
                 writer.WriteStringValue(StorageName);
             }
-            if (!(Secrets is ChangeTrackingList<SecretVolumeItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (MountOptions != null)
+            if (Optional.IsDefined(MountOptions))
             {
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppVolume DeserializeContainerAppVolume(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             IList<SecretVolumeItem> secrets = default;
             string mountOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppVolume(
                 name,
                 storageType,
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppVolume(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support reading '{options.Format}' format.");
             }
         }
 

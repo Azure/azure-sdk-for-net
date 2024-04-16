@@ -17,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Measurements is ChangeTrackingDictionary<string, double> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Measurements))
             {
                 writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();
@@ -44,9 +44,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

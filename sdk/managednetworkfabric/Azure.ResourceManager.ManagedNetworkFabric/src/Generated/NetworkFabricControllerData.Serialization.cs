@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricControllerData : IUtf8JsonSerializable, IJsonModel<NetworkFabricControllerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricControllerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricControllerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFabricControllerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricControllerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricControllerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricControllerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,54 +56,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (!(InfrastructureExpressRouteConnections is ChangeTrackingList<ExpressRouteConnectionInformation> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(InfrastructureExpressRouteConnections))
             {
                 writer.WritePropertyName("infrastructureExpressRouteConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in InfrastructureExpressRouteConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(WorkloadExpressRouteConnections is ChangeTrackingList<ExpressRouteConnectionInformation> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(WorkloadExpressRouteConnections))
             {
                 writer.WritePropertyName("workloadExpressRouteConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in WorkloadExpressRouteConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && InfrastructureServices != null)
+            if (options.Format != "W" && Optional.IsDefined(InfrastructureServices))
             {
                 writer.WritePropertyName("infrastructureServices"u8);
-                writer.WriteObjectValue(InfrastructureServices);
+                writer.WriteObjectValue(InfrastructureServices, options);
             }
-            if (options.Format != "W" && WorkloadServices != null)
+            if (options.Format != "W" && Optional.IsDefined(WorkloadServices))
             {
                 writer.WritePropertyName("workloadServices"u8);
-                writer.WriteObjectValue(WorkloadServices);
+                writer.WriteObjectValue(WorkloadServices, options);
             }
-            if (ManagedResourceGroupConfiguration != null)
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
             }
-            if (options.Format != "W" && !(NetworkFabricIds is ChangeTrackingList<ResourceIdentifier> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkFabricIds))
             {
                 writer.WritePropertyName("networkFabricIds"u8);
                 writer.WriteStartArray();
@@ -118,17 +118,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsWorkloadManagementNetwork.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsWorkloadManagementNetwork))
             {
                 writer.WritePropertyName("workloadManagementNetwork"u8);
                 writer.WriteBooleanValue(IsWorkloadManagementNetwork.Value);
             }
-            if (IsWorkloadManagementNetworkEnabled.HasValue)
+            if (Optional.IsDefined(IsWorkloadManagementNetworkEnabled))
             {
                 writer.WritePropertyName("isWorkloadManagementNetworkEnabled"u8);
                 writer.WriteStringValue(IsWorkloadManagementNetworkEnabled.Value.ToString());
             }
-            if (options.Format != "W" && !(TenantInternetGatewayIds is ChangeTrackingList<ResourceIdentifier> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TenantInternetGatewayIds))
             {
                 writer.WritePropertyName("tenantInternetGatewayIds"u8);
                 writer.WriteStartArray();
@@ -143,22 +143,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (IPv4AddressSpace != null)
+            if (Optional.IsDefined(IPv4AddressSpace))
             {
                 writer.WritePropertyName("ipv4AddressSpace"u8);
                 writer.WriteStringValue(IPv4AddressSpace);
             }
-            if (IPv6AddressSpace != null)
+            if (Optional.IsDefined(IPv6AddressSpace))
             {
                 writer.WritePropertyName("ipv6AddressSpace"u8);
                 writer.WriteStringValue(IPv6AddressSpace);
             }
-            if (NfcSku.HasValue)
+            if (Optional.IsDefined(NfcSku))
             {
                 writer.WritePropertyName("nfcSku"u8);
                 writer.WriteStringValue(NfcSku.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricControllerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricControllerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricControllerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         internal static NetworkFabricControllerData DeserializeNetworkFabricControllerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkFabricControllerSKU? nfcSku = default;
             NetworkFabricProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -431,10 +431,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkFabricControllerData(
                 id,
                 name,
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricControllerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricControllerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         return DeserializeNetworkFabricControllerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricControllerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricControllerData)} does not support reading '{options.Format}' format.");
             }
         }
 

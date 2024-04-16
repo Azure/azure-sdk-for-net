@@ -16,33 +16,33 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class PublicIPDdosProtectionStatusResult : IUtf8JsonSerializable, IJsonModel<PublicIPDdosProtectionStatusResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicIPDdosProtectionStatusResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicIPDdosProtectionStatusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PublicIPDdosProtectionStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PublicIPDdosProtectionStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIPDdosProtectionStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicIPDdosProtectionStatusResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PublicIPAddressId != null)
+            if (Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress.ToString());
             }
-            if (IsWorkloadProtected.HasValue)
+            if (Optional.IsDefined(IsWorkloadProtected))
             {
                 writer.WritePropertyName("isWorkloadProtected"u8);
                 writer.WriteStringValue(IsWorkloadProtected.Value.ToString());
             }
-            if (DdosProtectionPlanId != null)
+            if (Optional.IsDefined(DdosProtectionPlanId))
             {
                 writer.WritePropertyName("ddosProtectionPlanId"u8);
                 writer.WriteStringValue(DdosProtectionPlanId);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PublicIPDdosProtectionStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIPDdosProtectionStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicIPDdosProtectionStatusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PublicIPDdosProtectionStatusResult DeserializePublicIPDdosProtectionStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             WorkloadProtectedFlag? isWorkloadProtected = default;
             ResourceIdentifier ddosProtectionPlanId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicIpAddressId"u8))
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PublicIPDdosProtectionStatusResult(publicIPAddressId, publicIPAddress, isWorkloadProtected, ddosProtectionPlanId, serializedAdditionalRawData);
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PublicIPDdosProtectionStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicIPDdosProtectionStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePublicIPDdosProtectionStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PublicIPDdosProtectionStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicIPDdosProtectionStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 

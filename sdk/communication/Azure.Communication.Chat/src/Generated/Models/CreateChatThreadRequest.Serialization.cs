@@ -17,7 +17,7 @@ namespace Azure.Communication.Chat
             writer.WriteStartObject();
             writer.WritePropertyName("topic"u8);
             writer.WriteStringValue(Topic);
-            if (!(Participants is ChangeTrackingList<ChatParticipantInternal> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Participants))
             {
                 writer.WritePropertyName("participants"u8);
                 writer.WriteStartArray();
@@ -28,6 +28,14 @@ namespace Azure.Communication.Chat
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

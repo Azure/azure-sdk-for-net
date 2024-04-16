@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningRegistryEnvironmentContainerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string environmentName, MachineLearningEnvironmentContainerData data, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningRegistryEnvironmentContainerResource> CreateOrUpdate(WaitUntil waitUntil, string environmentName, MachineLearningEnvironmentContainerData data, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual async Task<Response<MachineLearningRegistryEnvironmentContainerResource>> GetAsync(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual Response<MachineLearningRegistryEnvironmentContainerResource> Get(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerCollection.Get");
             scope.Start();
@@ -367,14 +331,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerCollection.Exists");
             scope.Start();
@@ -417,14 +374,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual Response<bool> Exists(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerCollection.Exists");
             scope.Start();
@@ -467,14 +417,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual async Task<NullableResponse<MachineLearningRegistryEnvironmentContainerResource>> GetIfExistsAsync(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerCollection.GetIfExists");
             scope.Start();
@@ -519,14 +462,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/> is null. </exception>
         public virtual NullableResponse<MachineLearningRegistryEnvironmentContainerResource> GetIfExists(string environmentName, CancellationToken cancellationToken = default)
         {
-            if (environmentName == null)
-            {
-                throw new ArgumentNullException(nameof(environmentName));
-            }
-            if (environmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(environmentName));
-            }
+            Argument.AssertNotNullOrEmpty(environmentName, nameof(environmentName));
 
             using var scope = _machineLearningRegistryEnvironmentContainerRegistryEnvironmentContainersClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentContainerCollection.GetIfExists");
             scope.Start();

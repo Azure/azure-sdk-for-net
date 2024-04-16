@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class DevCenterProjectEnvironmentPatch : IUtf8JsonSerializable, IJsonModel<DevCenterProjectEnvironmentPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterProjectEnvironmentPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterProjectEnvironmentPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevCenterProjectEnvironmentPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,36 +38,36 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DeploymentTargetId != null)
+            if (Optional.IsDefined(DeploymentTargetId))
             {
                 writer.WritePropertyName("deploymentTargetId"u8);
                 writer.WriteStringValue(DeploymentTargetId);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (CreatorRoleAssignment != null)
+            if (Optional.IsDefined(CreatorRoleAssignment))
             {
                 writer.WritePropertyName("creatorRoleAssignment"u8);
-                writer.WriteObjectValue(CreatorRoleAssignment);
+                writer.WriteObjectValue(CreatorRoleAssignment, options);
             }
-            if (!(UserRoleAssignments is ChangeTrackingDictionary<string, DevCenterUserRoleAssignments> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserRoleAssignments))
             {
                 writer.WritePropertyName("userRoleAssignments"u8);
                 writer.WriteStartObject();
                 foreach (var item in UserRoleAssignments)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static DevCenterProjectEnvironmentPatch DeserializeDevCenterProjectEnvironmentPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment creatorRoleAssignment = default;
             IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevCenterProjectEnvironmentPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         return DeserializeDevCenterProjectEnvironmentPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

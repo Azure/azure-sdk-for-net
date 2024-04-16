@@ -9,25 +9,24 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
 {
     public partial class ClinicalTrialRegistryFilter : IUtf8JsonSerializable, IJsonModel<ClinicalTrialRegistryFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClinicalTrialRegistryFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClinicalTrialRegistryFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClinicalTrialRegistryFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClinicalTrialRegistryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClinicalTrialRegistryFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClinicalTrialRegistryFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Conditions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
@@ -37,7 +36,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (!(StudyTypes is ChangeTrackingList<ClinicalTrialStudyType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(StudyTypes))
             {
                 writer.WritePropertyName("studyTypes"u8);
                 writer.WriteStartArray();
@@ -47,7 +46,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (!(RecruitmentStatuses is ChangeTrackingList<ClinicalTrialRecruitmentStatus> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(RecruitmentStatuses))
             {
                 writer.WritePropertyName("recruitmentStatuses"u8);
                 writer.WriteStartArray();
@@ -57,7 +56,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sponsors is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Sponsors))
             {
                 writer.WritePropertyName("sponsors"u8);
                 writer.WriteStartArray();
@@ -67,7 +66,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (!(Phases is ChangeTrackingList<ClinicalTrialPhase> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Phases))
             {
                 writer.WritePropertyName("phases"u8);
                 writer.WriteStartArray();
@@ -77,7 +76,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (!(Purposes is ChangeTrackingList<ClinicalTrialPurpose> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Purposes))
             {
                 writer.WritePropertyName("purposes"u8);
                 writer.WriteStartArray();
@@ -87,7 +86,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (!(Ids is ChangeTrackingList<string> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Ids))
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
@@ -97,7 +96,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sources is ChangeTrackingList<ClinicalTrialSource> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -107,7 +106,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (!(FacilityNames is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(FacilityNames))
             {
                 writer.WritePropertyName("facilityNames"u8);
                 writer.WriteStartArray();
@@ -117,23 +116,23 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 writer.WriteEndArray();
             }
-            if (!(FacilityLocations is ChangeTrackingList<GeographicLocation> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(FacilityLocations))
             {
                 writer.WritePropertyName("facilityLocations"u8);
                 writer.WriteStartArray();
                 foreach (var item in FacilityLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(FacilityAreas is ChangeTrackingList<GeographicArea> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(FacilityAreas))
             {
                 writer.WritePropertyName("facilityAreas"u8);
                 writer.WriteStartArray();
                 foreach (var item in FacilityAreas)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +159,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<ClinicalTrialRegistryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClinicalTrialRegistryFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClinicalTrialRegistryFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +168,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         internal static ClinicalTrialRegistryFilter DeserializeClinicalTrialRegistryFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +186,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             IList<GeographicLocation> facilityLocations = default;
             IList<GeographicArea> facilityAreas = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditions"u8))
@@ -346,10 +345,10 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClinicalTrialRegistryFilter(
                 conditions ?? new ChangeTrackingList<string>(),
                 studyTypes ?? new ChangeTrackingList<ClinicalTrialStudyType>(),
@@ -374,7 +373,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClinicalTrialRegistryFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClinicalTrialRegistryFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -390,7 +389,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                         return DeserializeClinicalTrialRegistryFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClinicalTrialRegistryFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClinicalTrialRegistryFilter)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -404,11 +403,11 @@ namespace Azure.Health.Insights.ClinicalMatching
             return DeserializeClinicalTrialRegistryFilter(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

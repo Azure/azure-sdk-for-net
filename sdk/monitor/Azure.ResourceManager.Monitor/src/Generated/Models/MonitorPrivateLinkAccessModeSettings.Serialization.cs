@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorPrivateLinkAccessModeSettings : IUtf8JsonSerializable, IJsonModel<MonitorPrivateLinkAccessModeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorPrivateLinkAccessModeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorPrivateLinkAccessModeSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorPrivateLinkAccessModeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkAccessModeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(QueryAccessMode.ToString());
             writer.WritePropertyName("ingestionAccessMode"u8);
             writer.WriteStringValue(IngestionAccessMode.ToString());
-            if (!(Exclusions is ChangeTrackingList<MonitorPrivateLinkAccessModeSettingsExclusion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkAccessModeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorPrivateLinkAccessModeSettings DeserializeMonitorPrivateLinkAccessModeSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MonitorPrivateLinkAccessMode ingestionAccessMode = default;
             IList<MonitorPrivateLinkAccessModeSettingsExclusion> exclusions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryAccessMode"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MonitorPrivateLinkAccessModeSettings(queryAccessMode, ingestionAccessMode, exclusions ?? new ChangeTrackingList<MonitorPrivateLinkAccessModeSettingsExclusion>(), serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorPrivateLinkAccessModeSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorPrivateLinkAccessModeSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

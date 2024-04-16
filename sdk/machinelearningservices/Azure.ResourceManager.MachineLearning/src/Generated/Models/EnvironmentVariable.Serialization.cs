@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class EnvironmentVariable : IUtf8JsonSerializable, IJsonModel<EnvironmentVariable>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnvironmentVariable>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnvironmentVariable>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EnvironmentVariable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnvironmentVariable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnvironmentVariable)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VariableType.HasValue)
+            if (Optional.IsDefined(VariableType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(VariableType.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnvironmentVariable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnvironmentVariable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnvironmentVariable)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static EnvironmentVariable DeserializeEnvironmentVariable(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnvironmentVariable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnvironmentVariable)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeEnvironmentVariable(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnvironmentVariable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnvironmentVariable)} does not support reading '{options.Format}' format.");
             }
         }
 

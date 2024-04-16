@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class BackupResourceEncryptionConfig : IUtf8JsonSerializable, IJsonModel<BackupResourceEncryptionConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupResourceEncryptionConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupResourceEncryptionConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupResourceEncryptionConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EncryptionAtRestType.HasValue)
+            if (Optional.IsDefined(EncryptionAtRestType))
             {
                 writer.WritePropertyName("encryptionAtRestType"u8);
                 writer.WriteStringValue(EncryptionAtRestType.Value.ToString());
             }
-            if (KeyUri != null)
+            if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUri"u8);
                 writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (LastUpdateStatus.HasValue)
+            if (Optional.IsDefined(LastUpdateStatus))
             {
                 writer.WritePropertyName("lastUpdateStatus"u8);
                 writer.WriteStringValue(LastUpdateStatus.Value.ToString());
             }
-            if (InfrastructureEncryptionState.HasValue)
+            if (Optional.IsDefined(InfrastructureEncryptionState))
             {
                 writer.WritePropertyName("infrastructureEncryptionState"u8);
                 writer.WriteStringValue(InfrastructureEncryptionState.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupResourceEncryptionConfig DeserializeBackupResourceEncryptionConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             LastUpdateStatus? lastUpdateStatus = default;
             InfrastructureEncryptionState? infrastructureEncryptionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encryptionAtRestType"u8))
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackupResourceEncryptionConfig(
                 encryptionAtRestType,
                 keyUri,
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupResourceEncryptionConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupResourceEncryptionConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

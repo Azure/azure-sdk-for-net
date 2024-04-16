@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Sphere;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
@@ -24,9 +23,10 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="tenantId"> The Azure Sphere tenant ID associated with the catalog. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Sphere.SphereCatalogData"/> instance for mocking. </returns>
-        public static SphereCatalogData SphereCatalogData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SphereProvisioningState? provisioningState = null)
+        public static SphereCatalogData SphereCatalogData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, Guid? tenantId = null, SphereProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 systemData,
                 tags,
                 location,
+                tenantId,
                 provisioningState,
                 serializedAdditionalRawData: null);
         }
@@ -123,12 +124,12 @@ namespace Azure.ResourceManager.Sphere.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CountDeviceResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CountDevicesResult"/>. </summary>
         /// <param name="value"> Number of children resources in parent resource. </param>
-        /// <returns> A new <see cref="Models.CountDeviceResult"/> instance for mocking. </returns>
-        public static CountDeviceResult CountDeviceResult(int value = default)
+        /// <returns> A new <see cref="Models.CountDevicesResult"/> instance for mocking. </returns>
+        public static CountDevicesResult CountDevicesResult(int value = default)
         {
-            return new CountDeviceResult(value, serializedAdditionalRawData: null);
+            return new CountDevicesResult(value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CountElementsResult"/>. </summary>

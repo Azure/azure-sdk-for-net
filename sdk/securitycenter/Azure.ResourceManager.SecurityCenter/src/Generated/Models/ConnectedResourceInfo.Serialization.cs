@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class ConnectedResourceInfo : IUtf8JsonSerializable, IJsonModel<ConnectedResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectedResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ConnectedResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectedResourceId))
             {
                 writer.WritePropertyName("connectedResourceId"u8);
                 writer.WriteStringValue(ConnectedResourceId);
             }
-            if (options.Format != "W" && TcpPorts != null)
+            if (options.Format != "W" && Optional.IsDefined(TcpPorts))
             {
                 writer.WritePropertyName("tcpPorts"u8);
                 writer.WriteStringValue(TcpPorts);
             }
-            if (options.Format != "W" && UdpPorts != null)
+            if (options.Format != "W" && Optional.IsDefined(UdpPorts))
             {
                 writer.WritePropertyName("udpPorts"u8);
                 writer.WriteStringValue(UdpPorts);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static ConnectedResourceInfo DeserializeConnectedResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string tcpPorts = default;
             string udpPorts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectedResourceId"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectedResourceInfo(connectedResourceId, tcpPorts, udpPorts, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeConnectedResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

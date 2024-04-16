@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.CallingServer;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -15,30 +16,35 @@ namespace Azure.Communication
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (RawId != null)
+            if (CallingServer.Optional.IsDefined(RawId))
             {
                 writer.WritePropertyName("rawId"u8);
                 writer.WriteStringValue(RawId);
             }
-            if (Kind.HasValue)
+            if (CallingServer.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (CommunicationUser != null)
+            if (CallingServer.Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser"u8);
                 writer.WriteObjectValue(CommunicationUser);
             }
-            if (PhoneNumber != null)
+            if (CallingServer.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteObjectValue(PhoneNumber);
             }
-            if (MicrosoftTeamsUser != null)
+            if (CallingServer.Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
                 writer.WriteObjectValue(MicrosoftTeamsUser);
+            }
+            if (CallingServer.Optional.IsDefined(MicrosoftTeamsApp))
+            {
+                writer.WritePropertyName("microsoftTeamsApp"u8);
+                writer.WriteObjectValue(MicrosoftTeamsApp);
             }
             writer.WriteEndObject();
         }
@@ -54,6 +60,7 @@ namespace Azure.Communication
             CommunicationUserIdentifierModel communicationUser = default;
             PhoneNumberIdentifierModel phoneNumber = default;
             MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default;
+            MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rawId"u8))
@@ -97,8 +104,39 @@ namespace Azure.Communication
                     microsoftTeamsUser = MicrosoftTeamsUserIdentifierModel.DeserializeMicrosoftTeamsUserIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("microsoftTeamsApp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    microsoftTeamsApp = MicrosoftTeamsAppIdentifierModel.DeserializeMicrosoftTeamsAppIdentifierModel(property.Value);
+                    continue;
+                }
             }
-            return new CommunicationIdentifierModel(rawId, kind, communicationUser, phoneNumber, microsoftTeamsUser);
+            return new CommunicationIdentifierModel(
+                rawId,
+                kind,
+                communicationUser,
+                phoneNumber,
+                microsoftTeamsUser,
+                microsoftTeamsApp);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CommunicationIdentifierModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCommunicationIdentifierModel(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new CallingServer.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

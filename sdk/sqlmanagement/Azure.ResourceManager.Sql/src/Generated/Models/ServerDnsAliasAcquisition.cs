@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="oldServerDnsAliasId"/> is null. </exception>
         public ServerDnsAliasAcquisition(ResourceIdentifier oldServerDnsAliasId)
         {
-            if (oldServerDnsAliasId == null)
-            {
-                throw new ArgumentNullException(nameof(oldServerDnsAliasId));
-            }
+            Argument.AssertNotNull(oldServerDnsAliasId, nameof(oldServerDnsAliasId));
 
             OldServerDnsAliasId = oldServerDnsAliasId;
         }
@@ -74,6 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The id of the server alias that will be acquired to point to this server instead. </summary>
+        [WirePath("oldServerDnsAliasId")]
         public ResourceIdentifier OldServerDnsAliasId { get; }
     }
 }

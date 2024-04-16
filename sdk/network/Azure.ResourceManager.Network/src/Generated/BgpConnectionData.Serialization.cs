@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,60 +17,60 @@ namespace Azure.ResourceManager.Network
 {
     public partial class BgpConnectionData : IUtf8JsonSerializable, IJsonModel<BgpConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BgpConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BgpConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BgpConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BgpConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PeerAsn.HasValue)
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (PeerIP != null)
+            if (Optional.IsDefined(PeerIP))
             {
                 writer.WritePropertyName("peerIp"u8);
                 writer.WriteStringValue(PeerIP);
             }
-            if (HubVirtualNetworkConnection != null)
+            if (Optional.IsDefined(HubVirtualNetworkConnection))
             {
                 writer.WritePropertyName("hubVirtualNetworkConnection"u8);
                 JsonSerializer.Serialize(writer, HubVirtualNetworkConnection);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ConnectionState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<BgpConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.Network
 
         internal static BgpConnectionData DeserializeBgpConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.Network
             NetworkProvisioningState? provisioningState = default;
             HubBgpConnectionStatus? connectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -215,10 +214,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BgpConnectionData(
                 id,
                 name,
@@ -241,7 +240,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BgpConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -257,7 +256,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeBgpConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BgpConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

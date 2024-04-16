@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsIncidentConfiguration : IUtf8JsonSerializable, IJsonModel<SecurityInsightsIncidentConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsIncidentConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("createIncident"u8);
             writer.WriteBooleanValue(IsIncidentCreated);
-            if (GroupingConfiguration != null)
+            if (Optional.IsDefined(GroupingConfiguration))
             {
                 writer.WritePropertyName("groupingConfiguration"u8);
-                writer.WriteObjectValue(GroupingConfiguration);
+                writer.WriteObjectValue(GroupingConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsIncidentConfiguration DeserializeSecurityInsightsIncidentConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             bool createIncident = default;
             SecurityInsightsGroupingConfiguration groupingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createIncident"u8))
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsIncidentConfiguration(createIncident, groupingConfiguration, serializedAdditionalRawData);
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsIncidentConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

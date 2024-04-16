@@ -10,6 +10,26 @@
 
 ### Other Changes
 
+## 7.17.5 (2024-04-09)
+
+### Bugs Fixed
+
+- Fixed an edge case where a cancellation token signaled while waiting for a throttling delay would cause a failure to reset state and service operations would continue to apply the throttle delay going forward.  ([#42952](https://github.com/Azure/azure-sdk-for-net/issues/42952))
+
+- Fixed an issue where the `ServiceBusSessionProcessor` was not respecting `ServiceBusSessionProcessorOptions.MaxConcurrentCallsPerSession` when `ServiceBusSessionProcessorOptions.SessionIds` was set to a value. ([#43157](https://github.com/Azure/azure-sdk-for-net/pull/43157))
+
+### Other Changes
+
+- Added missing documentation for `ServiceBusModelFactory` members with a focus on clarifying what model properties each parameter to the factory methods will populate.  In some cases, parameter names differ from the associated model properties, causing confusion.  ([#42772](https://github.com/Azure/azure-sdk-for-net/issues/42772))
+
+## 7.17.4 (2024-03-05)
+
+### Bugs Fixed
+
+- When creating a new `ServiceBusMessage` from an existing `ServiceBusReceivedMessage`, diagnostic properties will now be properly reset.  Previously, they were incorrectly retained which led to the new message being indistinguishable from the old in traces.
+
+### Other Changes
+
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.5, which includes several bug fixes.  One notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.  Another notable fix is for an obscure race condition that occurred when attempting to complete a message which caused the operation to hang.
 
 ## 7.17.3 (2024-02-14)

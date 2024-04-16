@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,43 +17,43 @@ namespace Azure.ResourceManager.Network
 {
     public partial class P2SVpnGatewayData : IUtf8JsonSerializable, IJsonModel<P2SVpnGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<P2SVpnGatewayData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<P2SVpnGatewayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<P2SVpnGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<P2SVpnGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,42 +66,42 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VirtualHub != null)
+            if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
-            if (!(P2SConnectionConfigurations is ChangeTrackingList<P2SConnectionConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(P2SConnectionConfigurations))
             {
                 writer.WritePropertyName("p2SConnectionConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in P2SConnectionConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (VpnGatewayScaleUnit.HasValue)
+            if (Optional.IsDefined(VpnGatewayScaleUnit))
             {
                 writer.WritePropertyName("vpnGatewayScaleUnit"u8);
                 writer.WriteNumberValue(VpnGatewayScaleUnit.Value);
             }
-            if (VpnServerConfiguration != null)
+            if (Optional.IsDefined(VpnServerConfiguration))
             {
                 writer.WritePropertyName("vpnServerConfiguration"u8);
                 JsonSerializer.Serialize(writer, VpnServerConfiguration);
             }
-            if (options.Format != "W" && VpnClientConnectionHealth != null)
+            if (options.Format != "W" && Optional.IsDefined(VpnClientConnectionHealth))
             {
                 writer.WritePropertyName("vpnClientConnectionHealth"u8);
-                writer.WriteObjectValue(VpnClientConnectionHealth);
+                writer.WriteObjectValue(VpnClientConnectionHealth, options);
             }
-            if (!(CustomDnsServers is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomDnsServers))
             {
                 writer.WritePropertyName("customDnsServers"u8);
                 writer.WriteStartArray();
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (IsRoutingPreferenceInternet.HasValue)
+            if (Optional.IsDefined(IsRoutingPreferenceInternet))
             {
                 writer.WritePropertyName("isRoutingPreferenceInternet"u8);
                 writer.WriteBooleanValue(IsRoutingPreferenceInternet.Value);
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<P2SVpnGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.Network
 
         internal static P2SVpnGatewayData DeserializeP2SVpnGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.Network
             IList<string> customDnsServers = default;
             bool? isRoutingPreferenceInternet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -325,10 +324,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new P2SVpnGatewayData(
                 id,
                 name,
@@ -356,7 +355,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -372,7 +371,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeP2SVpnGatewayData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support reading '{options.Format}' format.");
             }
         }
 

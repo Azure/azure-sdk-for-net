@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkTapData : IUtf8JsonSerializable, IJsonModel<NetworkTapData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkTapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTapData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkTapData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkTapData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,21 +56,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
             writer.WritePropertyName("networkPacketBrokerId"u8);
             writer.WriteStringValue(NetworkPacketBrokerId);
-            if (options.Format != "W" && SourceTapRuleId != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceTapRuleId))
             {
                 writer.WritePropertyName("sourceTapRuleId"u8);
                 writer.WriteStringValue(SourceTapRuleId);
@@ -79,25 +79,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStartArray();
             foreach (var item in Destinations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (PollingType.HasValue)
+            if (Optional.IsDefined(PollingType))
             {
                 writer.WritePropertyName("pollingType"u8);
                 writer.WriteStringValue(PollingType.Value.ToString());
             }
-            if (options.Format != "W" && ConfigurationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AdministrativeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTapData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkTapData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkTapData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         internal static NetworkTapData DeserializeNetworkTapData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -281,10 +281,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkTapData(
                 id,
                 name,
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkTapData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkTapData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         return DeserializeNetworkTapData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkTapData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkTapData)} does not support reading '{options.Format}' format.");
             }
         }
 

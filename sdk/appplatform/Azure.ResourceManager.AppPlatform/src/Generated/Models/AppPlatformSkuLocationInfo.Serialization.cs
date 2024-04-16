@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformSkuLocationInfo : IUtf8JsonSerializable, IJsonModel<AppPlatformSkuLocationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformSkuLocationInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformSkuLocationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformSkuLocationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ZoneDetails is ChangeTrackingList<AppPlatformSkuZoneDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ZoneDetails))
             {
                 writer.WritePropertyName("zoneDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ZoneDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformSkuLocationInfo DeserializeAppPlatformSkuLocationInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             IReadOnlyList<string> zones = default;
             IReadOnlyList<AppPlatformSkuZoneDetails> zoneDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppPlatformSkuLocationInfo(location, zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<AppPlatformSkuZoneDetails>(), serializedAdditionalRawData);
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformSkuLocationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

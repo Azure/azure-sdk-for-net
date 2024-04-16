@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class StreamingPathsResult : IUtf8JsonSerializable, IJsonModel<StreamingPathsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingPathsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingPathsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamingPathsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPathsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(StreamingPaths is ChangeTrackingList<StreamingPath> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StreamingPaths))
             {
                 writer.WritePropertyName("streamingPaths"u8);
                 writer.WriteStartArray();
                 foreach (var item in StreamingPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(DownloadPaths is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DownloadPaths))
             {
                 writer.WritePropertyName("downloadPaths"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPathsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingPathsResult DeserializeStreamingPathsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Media.Models
             IReadOnlyList<StreamingPath> streamingPaths = default;
             IReadOnlyList<string> downloadPaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streamingPaths"u8))
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StreamingPathsResult(streamingPaths ?? new ChangeTrackingList<StreamingPath>(), downloadPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingPathsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPathsResult)} does not support reading '{options.Format}' format.");
             }
         }
 

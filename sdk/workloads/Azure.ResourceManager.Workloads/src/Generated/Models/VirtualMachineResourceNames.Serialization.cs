@@ -15,43 +15,43 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class VirtualMachineResourceNames : IUtf8JsonSerializable, IJsonModel<VirtualMachineResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineResourceNames>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineResourceNames>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VmName != null)
+            if (Optional.IsDefined(VmName))
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (!(NetworkInterfaces is ChangeTrackingList<NetworkInterfaceResourceNames> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (OSDiskName != null)
+            if (Optional.IsDefined(OSDiskName))
             {
                 writer.WritePropertyName("osDiskName"u8);
                 writer.WriteStringValue(OSDiskName);
             }
-            if (!(DataDiskNames is ChangeTrackingDictionary<string, IList<string>> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DataDiskNames))
             {
                 writer.WritePropertyName("dataDiskNames"u8);
                 writer.WriteStartObject();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static VirtualMachineResourceNames DeserializeVirtualMachineResourceNames(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Workloads.Models
             string osDiskName = default;
             IDictionary<string, IList<string>> dataDiskNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmName"u8))
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineResourceNames(
                 vmName,
                 hostName,
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeVirtualMachineResourceNames(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineResourceNames)} does not support reading '{options.Format}' format.");
             }
         }
 

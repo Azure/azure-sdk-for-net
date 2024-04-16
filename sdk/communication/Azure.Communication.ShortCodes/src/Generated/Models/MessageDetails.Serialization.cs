@@ -16,7 +16,7 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(SupportedProtocols is ChangeTrackingList<MessageProtocol> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedProtocols))
             {
                 writer.WritePropertyName("supportedProtocols"u8);
                 writer.WriteStartArray();
@@ -26,42 +26,42 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Recurrence.HasValue)
+            if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteStringValue(Recurrence.Value.ToString());
             }
-            if (HelpMessage != null)
+            if (Optional.IsDefined(HelpMessage))
             {
                 writer.WritePropertyName("helpMessage"u8);
                 writer.WriteStringValue(HelpMessage);
             }
-            if (OptOutMessage != null)
+            if (Optional.IsDefined(OptOutMessage))
             {
                 writer.WritePropertyName("optOutMessage"u8);
                 writer.WriteStringValue(OptOutMessage);
             }
-            if (OptInMessage != null)
+            if (Optional.IsDefined(OptInMessage))
             {
                 writer.WritePropertyName("optInMessage"u8);
                 writer.WriteStringValue(OptInMessage);
             }
-            if (OptInReply != null)
+            if (Optional.IsDefined(OptInReply))
             {
                 writer.WritePropertyName("optInReply"u8);
                 writer.WriteStringValue(OptInReply);
             }
-            if (ConfirmationMessage != null)
+            if (Optional.IsDefined(ConfirmationMessage))
             {
                 writer.WritePropertyName("confirmationMessage"u8);
                 writer.WriteStringValue(ConfirmationMessage);
             }
-            if (Directionality.HasValue)
+            if (Optional.IsDefined(Directionality))
             {
                 writer.WritePropertyName("directionality"u8);
                 writer.WriteStringValue(Directionality.Value.ToString());
             }
-            if (!(UseCases is ChangeTrackingList<UseCase> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UseCases))
             {
                 writer.WritePropertyName("useCases"u8);
                 writer.WriteStartArray();
@@ -173,6 +173,22 @@ namespace Azure.Communication.ShortCodes.Models
                 confirmationMessage,
                 directionality,
                 useCases ?? new ChangeTrackingList<UseCase>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MessageDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMessageDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

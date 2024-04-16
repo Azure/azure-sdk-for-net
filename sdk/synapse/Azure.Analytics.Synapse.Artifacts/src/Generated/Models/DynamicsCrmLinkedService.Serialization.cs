@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -53,71 +53,71 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("deploymentType"u8);
-            writer.WriteObjectValue(DeploymentType);
-            if (HostName != null)
+            writer.WriteObjectValue<object>(DeploymentType);
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
-                writer.WriteObjectValue(HostName);
+                writer.WriteObjectValue<object>(HostName);
             }
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port);
+                writer.WriteObjectValue<object>(Port);
             }
-            if (ServiceUri != null)
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri"u8);
-                writer.WriteObjectValue(ServiceUri);
+                writer.WriteObjectValue<object>(ServiceUri);
             }
-            if (OrganizationName != null)
+            if (Optional.IsDefined(OrganizationName))
             {
                 writer.WritePropertyName("organizationName"u8);
-                writer.WriteObjectValue(OrganizationName);
+                writer.WriteObjectValue<object>(OrganizationName);
             }
             writer.WritePropertyName("authenticationType"u8);
-            writer.WriteObjectValue(AuthenticationType);
-            if (Username != null)
+            writer.WriteObjectValue<object>(AuthenticationType);
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username);
+                writer.WriteObjectValue<object>(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password);
             }
-            if (ServicePrincipalId != null)
+            if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId);
+                writer.WriteObjectValue<object>(ServicePrincipalId);
             }
-            if (ServicePrincipalCredentialType != null)
+            if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
-                writer.WriteObjectValue(ServicePrincipalCredentialType);
+                writer.WriteObjectValue<object>(ServicePrincipalCredentialType);
             }
-            if (ServicePrincipalCredential != null)
+            if (Optional.IsDefined(ServicePrincipalCredential))
             {
                 writer.WritePropertyName("servicePrincipalCredential"u8);
                 writer.WriteObjectValue(ServicePrincipalCredential);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -339,12 +339,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DynamicsCrmLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDynamicsCrmLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class DynamicsCrmLinkedServiceConverter : JsonConverter<DynamicsCrmLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, DynamicsCrmLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override DynamicsCrmLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

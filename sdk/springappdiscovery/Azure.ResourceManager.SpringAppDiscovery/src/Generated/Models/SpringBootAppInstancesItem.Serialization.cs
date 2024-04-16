@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
     public partial class SpringBootAppInstancesItem : IUtf8JsonSerializable, IJsonModel<SpringBootAppInstancesItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootAppInstancesItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootAppInstancesItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SpringBootAppInstancesItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppInstancesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("machineArmId"u8);
             writer.WriteStringValue(MachineArmId);
-            if (InstanceCount.HasValue)
+            if (Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (JvmMemoryInMB.HasValue)
+            if (Optional.IsDefined(JvmMemoryInMB))
             {
                 writer.WritePropertyName("jvmMemoryInMB"u8);
                 writer.WriteNumberValue(JvmMemoryInMB.Value);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppInstancesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
 
         internal static SpringBootAppInstancesItem DeserializeSpringBootAppInstancesItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             int? instanceCount = default;
             int? jvmMemoryInMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("machineArmId"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SpringBootAppInstancesItem(machineArmId, instanceCount, jvmMemoryInMB, serializedAdditionalRawData);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         return DeserializeSpringBootAppInstancesItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support reading '{options.Format}' format.");
             }
         }
 

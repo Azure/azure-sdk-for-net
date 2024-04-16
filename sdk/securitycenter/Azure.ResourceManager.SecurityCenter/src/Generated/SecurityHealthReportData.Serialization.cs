@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityHealthReportData : IUtf8JsonSerializable, IJsonModel<SecurityHealthReportData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityHealthReportData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityHealthReportData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityHealthReportData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityHealthReportData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityHealthReportData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityHealthReportData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ResourceDetails != null)
+            if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue(ResourceDetails);
+                writer.WriteObjectValue(ResourceDetails, options);
             }
-            if (EnvironmentDetails != null)
+            if (Optional.IsDefined(EnvironmentDetails))
             {
                 writer.WritePropertyName("environmentDetails"u8);
-                writer.WriteObjectValue(EnvironmentDetails);
+                writer.WriteObjectValue(EnvironmentDetails, options);
             }
-            if (HealthDataClassification != null)
+            if (Optional.IsDefined(HealthDataClassification))
             {
                 writer.WritePropertyName("healthDataClassification"u8);
-                writer.WriteObjectValue(HealthDataClassification);
+                writer.WriteObjectValue(HealthDataClassification, options);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue(Status, options);
             }
-            if (!(AffectedDefendersPlans is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AffectedDefendersPlans))
             {
                 writer.WritePropertyName("affectedDefendersPlans"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (!(AffectedDefendersSubPlans is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AffectedDefendersSubPlans))
             {
                 writer.WritePropertyName("affectedDefendersSubPlans"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ReportAdditionalData is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReportAdditionalData))
             {
                 writer.WritePropertyName("reportAdditionalData"u8);
                 writer.WriteStartObject();
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndObject();
             }
-            if (!(Issues is ChangeTrackingList<SecurityHealthReportIssue> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Issues))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecurityHealthReportData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityHealthReportData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityHealthReportData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityHealthReportData DeserializeSecurityHealthReportData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityCenter
             IReadOnlyDictionary<string, string> reportAdditionalData = default;
             IList<SecurityHealthReportIssue> issues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -296,10 +296,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityHealthReportData(
                 id,
                 name,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityHealthReportData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityHealthReportData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeSecurityHealthReportData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityHealthReportData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityHealthReportData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -18,15 +18,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (FileMissing != null)
+            if (Optional.IsDefined(FileMissing))
             {
                 writer.WritePropertyName("fileMissing"u8);
-                writer.WriteObjectValue(FileMissing);
+                writer.WriteObjectValue<object>(FileMissing);
             }
-            if (DataInconsistency != null)
+            if (Optional.IsDefined(DataInconsistency))
             {
                 writer.WritePropertyName("dataInconsistency"u8);
-                writer.WriteObjectValue(DataInconsistency);
+                writer.WriteObjectValue<object>(DataInconsistency);
             }
             writer.WriteEndObject();
         }
@@ -63,12 +63,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SkipErrorFile(fileMissing, dataInconsistency);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SkipErrorFile FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSkipErrorFile(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SkipErrorFileConverter : JsonConverter<SkipErrorFile>
         {
             public override void Write(Utf8JsonWriter writer, SkipErrorFile model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SkipErrorFile Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

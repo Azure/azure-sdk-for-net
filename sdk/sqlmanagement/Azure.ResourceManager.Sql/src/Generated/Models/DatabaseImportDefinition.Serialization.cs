@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class DatabaseImportDefinition : IUtf8JsonSerializable, IJsonModel<DatabaseImportDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseImportDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseImportDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatabaseImportDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseImportDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Edition != null)
+            if (Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (ServiceObjectiveName != null)
+            if (Optional.IsDefined(ServiceObjectiveName))
             {
                 writer.WritePropertyName("serviceObjectiveName"u8);
                 writer.WriteStringValue(ServiceObjectiveName);
             }
-            if (MaxSizeBytes != null)
+            if (Optional.IsDefined(MaxSizeBytes))
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteStringValue(MaxSizeBytes);
@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStringValue(AdministratorLogin);
             writer.WritePropertyName("administratorLoginPassword"u8);
             writer.WriteStringValue(AdministratorLoginPassword);
-            if (AuthenticationType != null)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType);
             }
-            if (NetworkIsolation != null)
+            if (Optional.IsDefined(NetworkIsolation))
             {
                 writer.WritePropertyName("networkIsolation"u8);
-                writer.WriteObjectValue(NetworkIsolation);
+                writer.WriteObjectValue(NetworkIsolation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseImportDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static DatabaseImportDefinition DeserializeDatabaseImportDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Models
             string authenticationType = default;
             NetworkIsolationSettings networkIsolation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DatabaseImportDefinition(
                 databaseName,
                 edition,
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeDatabaseImportDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

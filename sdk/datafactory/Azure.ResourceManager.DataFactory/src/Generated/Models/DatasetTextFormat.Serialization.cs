@@ -16,70 +16,70 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DatasetTextFormat : IUtf8JsonSerializable, IJsonModel<DatasetTextFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetTextFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetTextFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatasetTextFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DatasetTextFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ColumnDelimiter != null)
+            if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
                 JsonSerializer.Serialize(writer, ColumnDelimiter);
             }
-            if (RowDelimiter != null)
+            if (Optional.IsDefined(RowDelimiter))
             {
                 writer.WritePropertyName("rowDelimiter"u8);
                 JsonSerializer.Serialize(writer, RowDelimiter);
             }
-            if (EscapeChar != null)
+            if (Optional.IsDefined(EscapeChar))
             {
                 writer.WritePropertyName("escapeChar"u8);
                 JsonSerializer.Serialize(writer, EscapeChar);
             }
-            if (QuoteChar != null)
+            if (Optional.IsDefined(QuoteChar))
             {
                 writer.WritePropertyName("quoteChar"u8);
                 JsonSerializer.Serialize(writer, QuoteChar);
             }
-            if (NullValue != null)
+            if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
                 JsonSerializer.Serialize(writer, NullValue);
             }
-            if (EncodingName != null)
+            if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
                 JsonSerializer.Serialize(writer, EncodingName);
             }
-            if (TreatEmptyAsNull != null)
+            if (Optional.IsDefined(TreatEmptyAsNull))
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
                 JsonSerializer.Serialize(writer, TreatEmptyAsNull);
             }
-            if (SkipLineCount != null)
+            if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
                 JsonSerializer.Serialize(writer, SkipLineCount);
             }
-            if (FirstRowAsHeader != null)
+            if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
                 JsonSerializer.Serialize(writer, FirstRowAsHeader);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
-            if (Serializer != null)
+            if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
                 JsonSerializer.Serialize(writer, Serializer);
             }
-            if (Deserializer != null)
+            if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
                 JsonSerializer.Serialize(writer, Deserializer);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatasetTextFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DatasetTextFormat DeserializeDatasetTextFormat(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDatasetTextFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

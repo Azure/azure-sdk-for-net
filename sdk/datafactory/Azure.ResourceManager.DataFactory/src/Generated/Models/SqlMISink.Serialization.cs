@@ -16,33 +16,33 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SqlMISink : IUtf8JsonSerializable, IJsonModel<SqlMISink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMISink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMISink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlMISink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlMISink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlMISink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlMISink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SqlWriterStoredProcedureName != null)
+            if (Optional.IsDefined(SqlWriterStoredProcedureName))
             {
                 writer.WritePropertyName("sqlWriterStoredProcedureName"u8);
                 JsonSerializer.Serialize(writer, SqlWriterStoredProcedureName);
             }
-            if (SqlWriterTableType != null)
+            if (Optional.IsDefined(SqlWriterTableType))
             {
                 writer.WritePropertyName("sqlWriterTableType"u8);
                 JsonSerializer.Serialize(writer, SqlWriterTableType);
             }
-            if (PreCopyScript != null)
+            if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
                 JsonSerializer.Serialize(writer, PreCopyScript);
             }
-            if (StoredProcedureParameters != null)
+            if (Optional.IsDefined(StoredProcedureParameters))
             {
                 writer.WritePropertyName("storedProcedureParameters"u8);
 #if NET6_0_OR_GREATER
@@ -54,59 +54,59 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (StoredProcedureTableTypeParameterName != null)
+            if (Optional.IsDefined(StoredProcedureTableTypeParameterName))
             {
                 writer.WritePropertyName("storedProcedureTableTypeParameterName"u8);
                 JsonSerializer.Serialize(writer, StoredProcedureTableTypeParameterName);
             }
-            if (TableOption != null)
+            if (Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
                 JsonSerializer.Serialize(writer, TableOption);
             }
-            if (SqlWriterUseTableLock != null)
+            if (Optional.IsDefined(SqlWriterUseTableLock))
             {
                 writer.WritePropertyName("sqlWriterUseTableLock"u8);
                 JsonSerializer.Serialize(writer, SqlWriterUseTableLock);
             }
-            if (WriteBehavior != null)
+            if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
                 JsonSerializer.Serialize(writer, WriteBehavior);
             }
-            if (UpsertSettings != null)
+            if (Optional.IsDefined(UpsertSettings))
             {
                 writer.WritePropertyName("upsertSettings"u8);
-                writer.WriteObjectValue(UpsertSettings);
+                writer.WriteObjectValue(UpsertSettings, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (WriteBatchSize != null)
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (WriteBatchTimeout != null)
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (SinkRetryCount != null)
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (SinkRetryWait != null)
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlMISink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlMISink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlMISink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlMISink DeserializeSqlMISink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlMISink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlMISink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSqlMISink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlMISink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlMISink)} does not support reading '{options.Format}' format.");
             }
         }
 

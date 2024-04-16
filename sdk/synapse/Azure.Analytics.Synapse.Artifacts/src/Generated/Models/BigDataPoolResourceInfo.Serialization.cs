@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -34,62 +34,62 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (AutoScale != null)
+            if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
                 writer.WriteObjectValue(AutoScale);
             }
-            if (CreationDate.HasValue)
+            if (Optional.IsDefined(CreationDate))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreationDate.Value, "O");
             }
-            if (AutoPause != null)
+            if (Optional.IsDefined(AutoPause))
             {
                 writer.WritePropertyName("autoPause"u8);
                 writer.WriteObjectValue(AutoPause);
             }
-            if (IsComputeIsolationEnabled.HasValue)
+            if (Optional.IsDefined(IsComputeIsolationEnabled))
             {
                 writer.WritePropertyName("isComputeIsolationEnabled"u8);
                 writer.WriteBooleanValue(IsComputeIsolationEnabled.Value);
             }
-            if (SessionLevelPackagesEnabled.HasValue)
+            if (Optional.IsDefined(SessionLevelPackagesEnabled))
             {
                 writer.WritePropertyName("sessionLevelPackagesEnabled"u8);
                 writer.WriteBooleanValue(SessionLevelPackagesEnabled.Value);
             }
-            if (CacheSize.HasValue)
+            if (Optional.IsDefined(CacheSize))
             {
                 writer.WritePropertyName("cacheSize"u8);
                 writer.WriteNumberValue(CacheSize.Value);
             }
-            if (DynamicExecutorAllocation != null)
+            if (Optional.IsDefined(DynamicExecutorAllocation))
             {
                 writer.WritePropertyName("dynamicExecutorAllocation"u8);
                 writer.WriteObjectValue(DynamicExecutorAllocation);
             }
-            if (SparkEventsFolder != null)
+            if (Optional.IsDefined(SparkEventsFolder))
             {
                 writer.WritePropertyName("sparkEventsFolder"u8);
                 writer.WriteStringValue(SparkEventsFolder);
             }
-            if (NodeCount.HasValue)
+            if (Optional.IsDefined(NodeCount))
             {
                 writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
-            if (LibraryRequirements != null)
+            if (Optional.IsDefined(LibraryRequirements))
             {
                 writer.WritePropertyName("libraryRequirements"u8);
                 writer.WriteObjectValue(LibraryRequirements);
             }
-            if (!(CustomLibraries is ChangeTrackingList<LibraryInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomLibraries))
             {
                 writer.WritePropertyName("customLibraries"u8);
                 writer.WriteStartArray();
@@ -99,27 +99,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SparkConfigProperties != null)
+            if (Optional.IsDefined(SparkConfigProperties))
             {
                 writer.WritePropertyName("sparkConfigProperties"u8);
                 writer.WriteObjectValue(SparkConfigProperties);
             }
-            if (SparkVersion != null)
+            if (Optional.IsDefined(SparkVersion))
             {
                 writer.WritePropertyName("sparkVersion"u8);
                 writer.WriteStringValue(SparkVersion);
             }
-            if (DefaultSparkLogFolder != null)
+            if (Optional.IsDefined(DefaultSparkLogFolder))
             {
                 writer.WritePropertyName("defaultSparkLogFolder"u8);
                 writer.WriteStringValue(DefaultSparkLogFolder);
             }
-            if (NodeSize.HasValue)
+            if (Optional.IsDefined(NodeSize))
             {
                 writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize.Value.ToString());
             }
-            if (NodeSizeFamily.HasValue)
+            if (Optional.IsDefined(NodeSizeFamily))
             {
                 writer.WritePropertyName("nodeSizeFamily"u8);
                 writer.WriteStringValue(NodeSizeFamily.Value.ToString());
@@ -383,12 +383,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 lastSucceededTimestamp);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new BigDataPoolResourceInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBigDataPoolResourceInfo(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class BigDataPoolResourceInfoConverter : JsonConverter<BigDataPoolResourceInfo>
         {
             public override void Write(Utf8JsonWriter writer, BigDataPoolResourceInfo model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override BigDataPoolResourceInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

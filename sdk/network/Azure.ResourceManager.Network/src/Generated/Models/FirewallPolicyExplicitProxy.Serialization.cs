@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class FirewallPolicyExplicitProxy : IUtf8JsonSerializable, IJsonModel<FirewallPolicyExplicitProxy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyExplicitProxy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyExplicitProxy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallPolicyExplicitProxy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyExplicitProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EnableExplicitProxy.HasValue)
+            if (Optional.IsDefined(EnableExplicitProxy))
             {
                 if (EnableExplicitProxy != null)
                 {
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.Network.Models
                     writer.WriteNull("enableExplicitProxy");
                 }
             }
-            if (HttpPort.HasValue)
+            if (Optional.IsDefined(HttpPort))
             {
                 writer.WritePropertyName("httpPort"u8);
                 writer.WriteNumberValue(HttpPort.Value);
             }
-            if (HttpsPort.HasValue)
+            if (Optional.IsDefined(HttpsPort))
             {
                 writer.WritePropertyName("httpsPort"u8);
                 writer.WriteNumberValue(HttpsPort.Value);
             }
-            if (EnablePacFile.HasValue)
+            if (Optional.IsDefined(EnablePacFile))
             {
                 if (EnablePacFile != null)
                 {
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Network.Models
                     writer.WriteNull("enablePacFile");
                 }
             }
-            if (PacFilePort.HasValue)
+            if (Optional.IsDefined(PacFilePort))
             {
                 writer.WritePropertyName("pacFilePort"u8);
                 writer.WriteNumberValue(PacFilePort.Value);
             }
-            if (PacFile != null)
+            if (Optional.IsDefined(PacFile))
             {
                 writer.WritePropertyName("pacFile"u8);
                 writer.WriteStringValue(PacFile);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyExplicitProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyExplicitProxy DeserializeFirewallPolicyExplicitProxy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
             int? pacFilePort = default;
             string pacFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableExplicitProxy"u8))
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FirewallPolicyExplicitProxy(
                 enableExplicitProxy,
                 httpPort,
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFirewallPolicyExplicitProxy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support reading '{options.Format}' format.");
             }
         }
 

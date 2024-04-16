@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class HyperVReplicaAzureUpdateReplicationProtectedItemContent : IUtf8JsonSerializable, IJsonModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryAzureV1ResourceGroupId != null)
+            if (Optional.IsDefined(RecoveryAzureV1ResourceGroupId))
             {
                 writer.WritePropertyName("recoveryAzureV1ResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryAzureV1ResourceGroupId);
             }
-            if (RecoveryAzureV2ResourceGroupId != null)
+            if (Optional.IsDefined(RecoveryAzureV2ResourceGroupId))
             {
                 writer.WritePropertyName("recoveryAzureV2ResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryAzureV2ResourceGroupId);
             }
-            if (UseManagedDisks != null)
+            if (Optional.IsDefined(UseManagedDisks))
             {
                 writer.WritePropertyName("useManagedDisks"u8);
                 writer.WriteStringValue(UseManagedDisks);
             }
-            if (!(DiskIdToDiskEncryptionMap is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskIdToDiskEncryptionMap))
             {
                 writer.WritePropertyName("diskIdToDiskEncryptionMap"u8);
                 writer.WriteStartObject();
@@ -52,17 +52,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (TargetProximityPlacementGroupId != null)
+            if (Optional.IsDefined(TargetProximityPlacementGroupId))
             {
                 writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
-            if (TargetAvailabilityZone != null)
+            if (Optional.IsDefined(TargetAvailabilityZone))
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
-            if (!(TargetVmTags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetVmTags))
             {
                 writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(TargetManagedDiskTags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetManagedDiskTags))
             {
                 writer.WritePropertyName("targetManagedDiskTags"u8);
                 writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(TargetNicTags is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetNicTags))
             {
                 writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartObject();
@@ -95,18 +95,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (SqlServerLicenseType.HasValue)
+            if (Optional.IsDefined(SqlServerLicenseType))
             {
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
-            if (!(VmDisks is ChangeTrackingList<UpdateDiskContent> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(VmDisks))
             {
                 writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static HyperVReplicaAzureUpdateReplicationProtectedItemContent DeserializeHyperVReplicaAzureUpdateReplicationProtectedItemContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<UpdateDiskContent> vmDisks = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryAzureV1ResourceGroupId"u8))
@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVReplicaAzureUpdateReplicationProtectedItemContent(
                 instanceType,
                 serializedAdditionalRawData,
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeHyperVReplicaAzureUpdateReplicationProtectedItemContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureUpdateReplicationProtectedItemContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,12 +15,12 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AnalysisInput != null)
+            if (Optional.IsDefined(AnalysisInput))
             {
                 writer.WritePropertyName("analysisInput"u8);
                 writer.WriteObjectValue(AnalysisInput);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Parameters);
@@ -28,6 +28,14 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

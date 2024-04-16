@@ -15,53 +15,53 @@ namespace Azure.ResourceManager.MySql.Models
 {
     public partial class MySqlPerformanceTierServiceLevelObjectives : IUtf8JsonSerializable, IJsonModel<MySqlPerformanceTierServiceLevelObjectives>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlPerformanceTierServiceLevelObjectives>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlPerformanceTierServiceLevelObjectives>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlPerformanceTierServiceLevelObjectives>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MySqlPerformanceTierServiceLevelObjectives>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlPerformanceTierServiceLevelObjectives)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlPerformanceTierServiceLevelObjectives)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Edition != null)
+            if (Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (VCores.HasValue)
+            if (Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCore"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (HardwareGeneration != null)
+            if (Optional.IsDefined(HardwareGeneration))
             {
                 writer.WritePropertyName("hardwareGeneration"u8);
                 writer.WriteStringValue(HardwareGeneration);
             }
-            if (MaxBackupRetentionDays.HasValue)
+            if (Optional.IsDefined(MaxBackupRetentionDays))
             {
                 writer.WritePropertyName("maxBackupRetentionDays"u8);
                 writer.WriteNumberValue(MaxBackupRetentionDays.Value);
             }
-            if (MinBackupRetentionDays.HasValue)
+            if (Optional.IsDefined(MinBackupRetentionDays))
             {
                 writer.WritePropertyName("minBackupRetentionDays"u8);
                 writer.WriteNumberValue(MinBackupRetentionDays.Value);
             }
-            if (MaxStorageInMB.HasValue)
+            if (Optional.IsDefined(MaxStorageInMB))
             {
                 writer.WritePropertyName("maxStorageMB"u8);
                 writer.WriteNumberValue(MaxStorageInMB.Value);
             }
-            if (MinStorageInMB.HasValue)
+            if (Optional.IsDefined(MinStorageInMB))
             {
                 writer.WritePropertyName("minStorageMB"u8);
                 writer.WriteNumberValue(MinStorageInMB.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlPerformanceTierServiceLevelObjectives>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlPerformanceTierServiceLevelObjectives)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlPerformanceTierServiceLevelObjectives)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlPerformanceTierServiceLevelObjectives DeserializeMySqlPerformanceTierServiceLevelObjectives(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MySql.Models
             int? maxStorageMB = default;
             int? minStorageMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.MySql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlPerformanceTierServiceLevelObjectives(
                 id,
                 edition,
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlPerformanceTierServiceLevelObjectives)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlPerformanceTierServiceLevelObjectives)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlPerformanceTierServiceLevelObjectives(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlPerformanceTierServiceLevelObjectives)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlPerformanceTierServiceLevelObjectives)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 {
     public partial class ResourceHealthEventArticle : IUtf8JsonSerializable, IJsonModel<ResourceHealthEventArticle>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthEventArticle>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthEventArticle>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceHealthEventArticle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventArticle>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthEventArticle)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthEventArticle)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ArticleContent != null)
+            if (Optional.IsDefined(ArticleContent))
             {
                 writer.WritePropertyName("articleContent"u8);
                 writer.WriteStringValue(ArticleContent);
             }
-            if (ArticleId != null)
+            if (Optional.IsDefined(ArticleId))
             {
                 writer.WritePropertyName("articleId"u8);
                 writer.WriteStringValue(ArticleId);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventArticle>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthEventArticle)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthEventArticle)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         internal static ResourceHealthEventArticle DeserializeResourceHealthEventArticle(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             string articleId = default;
             BinaryData parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("articleContent"u8))
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceHealthEventArticle(articleContent, articleId, parameters, serializedAdditionalRawData);
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventArticle)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthEventArticle)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeResourceHealthEventArticle(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventArticle)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthEventArticle)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +9,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 {
@@ -67,26 +67,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             return JsonSerializer.Serialize((object)this, options);
         }
 
-       internal virtual JsonSerializerOptions JsonSerializerOptions => new JsonSerializerOptions() { WriteIndented = true, PropertyNameCaseInsensitive = true };
+        internal virtual JsonSerializerOptions JsonSerializerOptions => new JsonSerializerOptions() { WriteIndented = true, PropertyNameCaseInsensitive = true };
 
         internal abstract AuthenticationEventResponse GetResponseObject();
 
         /// <summary>Set the response to Failed mode.</summary>
         /// <param name="exception">The exception to return in the response.</param>
-        /// <param name="internalError">Throw 500 internal server error.</param>
         /// <returns>The Underlying AuthEventResponse.</returns>
-        internal abstract Task<AuthenticationEventResponse> Failed(Exception exception, bool internalError);
-
-        /// <summary>Set the response to Failed mode.</summary>
-        /// <param name="exception">The exception to return in the response.</param>
-        /// <returns>The Underlying AuthEventResponse.</returns>
-        public Task<AuthenticationEventResponse> Failed(Exception exception)
-        {
-            return Failed(exception, false);
-        }
+        public abstract AuthenticationEventResponse Failed(Exception exception);
 
         /// <summary>Validates the response and creates the IActionResult with the json payload based on the status of the request.</summary>
         /// <returns>IActionResult based on the EventStatus (UnauthorizedResult, BadRequestObjectResult or JsonResult).</returns>
-        public abstract Task<AuthenticationEventResponse> Completed();
+        public abstract AuthenticationEventResponse Completed();
     }
 }

@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     public partial class ServiceFabricManagedNodeTypeData : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedNodeTypeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedNodeTypeData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedNodeTypeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceFabricManagedNodeTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,39 +59,39 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsPrimary.HasValue)
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("isPrimary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
             }
-            if (VmInstanceCount.HasValue)
+            if (Optional.IsDefined(VmInstanceCount))
             {
                 writer.WritePropertyName("vmInstanceCount"u8);
                 writer.WriteNumberValue(VmInstanceCount.Value);
             }
-            if (DataDiskSizeInGB.HasValue)
+            if (Optional.IsDefined(DataDiskSizeInGB))
             {
                 writer.WritePropertyName("dataDiskSizeGB"u8);
                 writer.WriteNumberValue(DataDiskSizeInGB.Value);
             }
-            if (DataDiskType.HasValue)
+            if (Optional.IsDefined(DataDiskType))
             {
                 writer.WritePropertyName("dataDiskType"u8);
                 writer.WriteStringValue(DataDiskType.Value.ToString());
             }
-            if (DataDiskLetter != null)
+            if (Optional.IsDefined(DataDiskLetter))
             {
                 writer.WritePropertyName("dataDiskLetter"u8);
                 writer.WriteStringValue(DataDiskLetter);
             }
-            if (!(PlacementProperties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PlacementProperties))
             {
                 writer.WritePropertyName("placementProperties"u8);
                 writer.WriteStartObject();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndObject();
             }
-            if (!(Capacities is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Capacities))
             {
                 writer.WritePropertyName("capacities"u8);
                 writer.WriteStartObject();
@@ -113,137 +113,137 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndObject();
             }
-            if (ApplicationPorts != null)
+            if (Optional.IsDefined(ApplicationPorts))
             {
                 writer.WritePropertyName("applicationPorts"u8);
-                writer.WriteObjectValue(ApplicationPorts);
+                writer.WriteObjectValue(ApplicationPorts, options);
             }
-            if (EphemeralPorts != null)
+            if (Optional.IsDefined(EphemeralPorts))
             {
                 writer.WritePropertyName("ephemeralPorts"u8);
-                writer.WriteObjectValue(EphemeralPorts);
+                writer.WriteObjectValue(EphemeralPorts, options);
             }
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (VmImagePublisher != null)
+            if (Optional.IsDefined(VmImagePublisher))
             {
                 writer.WritePropertyName("vmImagePublisher"u8);
                 writer.WriteStringValue(VmImagePublisher);
             }
-            if (VmImageOffer != null)
+            if (Optional.IsDefined(VmImageOffer))
             {
                 writer.WritePropertyName("vmImageOffer"u8);
                 writer.WriteStringValue(VmImageOffer);
             }
-            if (VmImageSku != null)
+            if (Optional.IsDefined(VmImageSku))
             {
                 writer.WritePropertyName("vmImageSku"u8);
                 writer.WriteStringValue(VmImageSku);
             }
-            if (VmImageVersion != null)
+            if (Optional.IsDefined(VmImageVersion))
             {
                 writer.WritePropertyName("vmImageVersion"u8);
                 writer.WriteStringValue(VmImageVersion);
             }
-            if (!(VmSecrets is ChangeTrackingList<NodeTypeVaultSecretGroup> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(VmSecrets))
             {
                 writer.WritePropertyName("vmSecrets"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmSecrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(VmExtensions is ChangeTrackingList<NodeTypeVmssExtension> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(VmExtensions))
             {
                 writer.WritePropertyName("vmExtensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmExtensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (VmManagedIdentity != null)
+            if (Optional.IsDefined(VmManagedIdentity))
             {
                 writer.WritePropertyName("vmManagedIdentity"u8);
-                writer.WriteObjectValue(VmManagedIdentity);
+                writer.WriteObjectValue(VmManagedIdentity, options);
             }
-            if (IsStateless.HasValue)
+            if (Optional.IsDefined(IsStateless))
             {
                 writer.WritePropertyName("isStateless"u8);
                 writer.WriteBooleanValue(IsStateless.Value);
             }
-            if (HasMultiplePlacementGroups.HasValue)
+            if (Optional.IsDefined(HasMultiplePlacementGroups))
             {
                 writer.WritePropertyName("multiplePlacementGroups"u8);
                 writer.WriteBooleanValue(HasMultiplePlacementGroups.Value);
             }
-            if (!(FrontendConfigurations is ChangeTrackingList<NodeTypeFrontendConfiguration> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(FrontendConfigurations))
             {
                 writer.WritePropertyName("frontendConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in FrontendConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(NetworkSecurityRules is ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkSecurityRules))
             {
                 writer.WritePropertyName("networkSecurityRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdditionalDataDisks is ChangeTrackingList<NodeTypeVmssDataDisk> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalDataDisks))
             {
                 writer.WritePropertyName("additionalDataDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalDataDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (IsEncryptionAtHostEnabled.HasValue)
+            if (Optional.IsDefined(IsEncryptionAtHostEnabled))
             {
                 writer.WritePropertyName("enableEncryptionAtHost"u8);
                 writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (IsAcceleratedNetworkingEnabled.HasValue)
+            if (Optional.IsDefined(IsAcceleratedNetworkingEnabled))
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(IsAcceleratedNetworkingEnabled.Value);
             }
-            if (UseDefaultPublicLoadBalancer.HasValue)
+            if (Optional.IsDefined(UseDefaultPublicLoadBalancer))
             {
                 writer.WritePropertyName("useDefaultPublicLoadBalancer"u8);
                 writer.WriteBooleanValue(UseDefaultPublicLoadBalancer.Value);
             }
-            if (UseTempDataDisk.HasValue)
+            if (Optional.IsDefined(UseTempDataDisk))
             {
                 writer.WritePropertyName("useTempDataDisk"u8);
                 writer.WriteBooleanValue(UseTempDataDisk.Value);
             }
-            if (IsOverProvisioningEnabled.HasValue)
+            if (Optional.IsDefined(IsOverProvisioningEnabled))
             {
                 writer.WritePropertyName("enableOverProvisioning"u8);
                 writer.WriteBooleanValue(IsOverProvisioningEnabled.Value);
             }
-            if (!(Zones is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -253,42 +253,42 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (IsSpotVm.HasValue)
+            if (Optional.IsDefined(IsSpotVm))
             {
                 writer.WritePropertyName("isSpotVM"u8);
                 writer.WriteBooleanValue(IsSpotVm.Value);
             }
-            if (HostGroupId != null)
+            if (Optional.IsDefined(HostGroupId))
             {
                 writer.WritePropertyName("hostGroupId"u8);
                 writer.WriteStringValue(HostGroupId);
             }
-            if (UseEphemeralOSDisk.HasValue)
+            if (Optional.IsDefined(UseEphemeralOSDisk))
             {
                 writer.WritePropertyName("useEphemeralOSDisk"u8);
                 writer.WriteBooleanValue(UseEphemeralOSDisk.Value);
             }
-            if (SpotRestoreTimeout != null)
+            if (Optional.IsDefined(SpotRestoreTimeout))
             {
                 writer.WritePropertyName("spotRestoreTimeout"u8);
                 writer.WriteStringValue(SpotRestoreTimeout);
             }
-            if (EvictionPolicy.HasValue)
+            if (Optional.IsDefined(EvictionPolicy))
             {
                 writer.WritePropertyName("evictionPolicy"u8);
                 writer.WriteStringValue(EvictionPolicy.Value.ToString());
             }
-            if (VmImageResourceId != null)
+            if (Optional.IsDefined(VmImageResourceId))
             {
                 writer.WritePropertyName("vmImageResourceId"u8);
                 writer.WriteStringValue(VmImageResourceId);
             }
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (!(VmSetupActions is ChangeTrackingList<VmSetupAction> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(VmSetupActions))
             {
                 writer.WritePropertyName("vmSetupActions"u8);
                 writer.WriteStartArray();
@@ -298,58 +298,58 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (SecurityType.HasValue)
+            if (Optional.IsDefined(SecurityType))
             {
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (IsSecureBootEnabled.HasValue)
+            if (Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
                 writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
-            if (IsNodePublicIPEnabled.HasValue)
+            if (Optional.IsDefined(IsNodePublicIPEnabled))
             {
                 writer.WritePropertyName("enableNodePublicIP"u8);
                 writer.WriteBooleanValue(IsNodePublicIPEnabled.Value);
             }
-            if (IsNodePublicIPv6Enabled.HasValue)
+            if (Optional.IsDefined(IsNodePublicIPv6Enabled))
             {
                 writer.WritePropertyName("enableNodePublicIPv6"u8);
                 writer.WriteBooleanValue(IsNodePublicIPv6Enabled.Value);
             }
-            if (VmSharedGalleryImageId != null)
+            if (Optional.IsDefined(VmSharedGalleryImageId))
             {
                 writer.WritePropertyName("vmSharedGalleryImageId"u8);
                 writer.WriteStringValue(VmSharedGalleryImageId);
             }
-            if (NatGatewayId != null)
+            if (Optional.IsDefined(NatGatewayId))
             {
                 writer.WritePropertyName("natGatewayId"u8);
                 writer.WriteStringValue(NatGatewayId);
             }
-            if (VmImagePlan != null)
+            if (Optional.IsDefined(VmImagePlan))
             {
                 writer.WritePropertyName("vmImagePlan"u8);
-                writer.WriteObjectValue(VmImagePlan);
+                writer.WriteObjectValue(VmImagePlan, options);
             }
-            if (ServiceArtifactReferenceId != null)
+            if (Optional.IsDefined(ServiceArtifactReferenceId))
             {
                 writer.WritePropertyName("serviceArtifactReferenceId"u8);
                 writer.WriteStringValue(ServiceArtifactReferenceId);
             }
-            if (DscpConfigurationId != null)
+            if (Optional.IsDefined(DscpConfigurationId))
             {
                 writer.WritePropertyName("dscpConfigurationId"u8);
                 writer.WriteStringValue(DscpConfigurationId);
             }
-            if (!(AdditionalNetworkInterfaceConfigurations is ChangeTrackingList<AdditionalNetworkInterfaceConfiguration> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalNetworkInterfaceConfigurations))
             {
                 writer.WritePropertyName("additionalNetworkInterfaceConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalNetworkInterfaceConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         internal static ServiceFabricManagedNodeTypeData DeserializeServiceFabricManagedNodeTypeData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             ResourceIdentifier dscpConfigurationId = default;
             IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -951,10 +951,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceFabricManagedNodeTypeData(
                 id,
                 name,
@@ -1021,7 +1021,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         return DeserializeServiceFabricManagedNodeTypeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support reading '{options.Format}' format.");
             }
         }
 

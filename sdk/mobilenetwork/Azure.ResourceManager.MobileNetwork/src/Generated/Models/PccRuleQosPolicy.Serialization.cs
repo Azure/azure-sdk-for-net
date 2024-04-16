@@ -15,44 +15,44 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class PccRuleQosPolicy : IUtf8JsonSerializable, IJsonModel<PccRuleQosPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PccRuleQosPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PccRuleQosPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PccRuleQosPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PccRuleQosPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PccRuleQosPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PccRuleQosPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (GuaranteedBitRate != null)
+            if (Optional.IsDefined(GuaranteedBitRate))
             {
                 writer.WritePropertyName("guaranteedBitRate"u8);
-                writer.WriteObjectValue(GuaranteedBitRate);
+                writer.WriteObjectValue(GuaranteedBitRate, options);
             }
-            if (FiveQi.HasValue)
+            if (Optional.IsDefined(FiveQi))
             {
                 writer.WritePropertyName("5qi"u8);
                 writer.WriteNumberValue(FiveQi.Value);
             }
-            if (AllocationAndRetentionPriorityLevel.HasValue)
+            if (Optional.IsDefined(AllocationAndRetentionPriorityLevel))
             {
                 writer.WritePropertyName("allocationAndRetentionPriorityLevel"u8);
                 writer.WriteNumberValue(AllocationAndRetentionPriorityLevel.Value);
             }
-            if (PreemptionCapability.HasValue)
+            if (Optional.IsDefined(PreemptionCapability))
             {
                 writer.WritePropertyName("preemptionCapability"u8);
                 writer.WriteStringValue(PreemptionCapability.Value.ToString());
             }
-            if (PreemptionVulnerability.HasValue)
+            if (Optional.IsDefined(PreemptionVulnerability))
             {
                 writer.WritePropertyName("preemptionVulnerability"u8);
                 writer.WriteStringValue(PreemptionVulnerability.Value.ToString());
             }
             writer.WritePropertyName("maximumBitRate"u8);
-            writer.WriteObjectValue(MaximumBitRate);
+            writer.WriteObjectValue(MaximumBitRate, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<PccRuleQosPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PccRuleQosPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PccRuleQosPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PccRuleQosPolicy DeserializePccRuleQosPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             MobileNetworkPreemptionVulnerability? preemptionVulnerability = default;
             Ambr maximumBitRate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("guaranteedBitRate"u8))
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PccRuleQosPolicy(
                 _5qi,
                 allocationAndRetentionPriorityLevel,
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PccRuleQosPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PccRuleQosPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializePccRuleQosPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PccRuleQosPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PccRuleQosPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

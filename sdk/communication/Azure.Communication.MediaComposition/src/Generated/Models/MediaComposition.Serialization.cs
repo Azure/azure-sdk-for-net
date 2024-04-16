@@ -17,17 +17,17 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Layout != null)
+            if (Optional.IsDefined(Layout))
             {
                 writer.WritePropertyName("layout"u8);
                 writer.WriteObjectValue(Layout);
             }
-            if (!(Inputs is ChangeTrackingDictionary<string, MediaInput> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.Communication.MediaComposition
                 }
                 writer.WriteEndObject();
             }
-            if (!(Outputs is ChangeTrackingDictionary<string, MediaOutput> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.Communication.MediaComposition
                 }
                 writer.WriteEndObject();
             }
-            if (StreamState != null)
+            if (Optional.IsDefined(StreamState))
             {
                 writer.WritePropertyName("streamState"u8);
                 writer.WriteObjectValue(StreamState);
@@ -123,6 +123,22 @@ namespace Azure.Communication.MediaComposition
                 }
             }
             return new MediaComposition(id, layout, inputs ?? new ChangeTrackingDictionary<string, MediaInput>(), outputs ?? new ChangeTrackingDictionary<string, MediaOutput>(), streamState);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaComposition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaComposition(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

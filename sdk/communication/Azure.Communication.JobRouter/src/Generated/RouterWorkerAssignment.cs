@@ -53,14 +53,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentId"/> or <paramref name="jobId"/> is null. </exception>
         internal RouterWorkerAssignment(string assignmentId, string jobId, int capacityCost, DateTimeOffset assignedAt)
         {
-            if (assignmentId == null)
-            {
-                throw new ArgumentNullException(nameof(assignmentId));
-            }
-            if (jobId == null)
-            {
-                throw new ArgumentNullException(nameof(jobId));
-            }
+            Argument.AssertNotNull(assignmentId, nameof(assignmentId));
+            Argument.AssertNotNull(jobId, nameof(jobId));
 
             AssignmentId = assignmentId;
             JobId = jobId;

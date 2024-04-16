@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ProviderHub.Models;
@@ -66,30 +65,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DefaultRolloutData>> GetAsync(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
 
             using var message = CreateGetRequest(subscriptionId, providerNamespace, rolloutName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -118,30 +96,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DefaultRolloutData> Get(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
 
             using var message = CreateGetRequest(subscriptionId, providerNamespace, rolloutName);
             _pipeline.Send(message, cancellationToken);
@@ -190,30 +147,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
 
             using var message = CreateDeleteRequest(subscriptionId, providerNamespace, rolloutName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -236,30 +172,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
 
             using var message = CreateDeleteRequest(subscriptionId, providerNamespace, rolloutName);
             _pipeline.Send(message, cancellationToken);
@@ -291,7 +206,7 @@ namespace Azure.ResourceManager.ProviderHub
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -307,34 +222,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string providerNamespace, string rolloutName, DefaultRolloutData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, providerNamespace, rolloutName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -358,34 +249,10 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string providerNamespace, string rolloutName, DefaultRolloutData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, providerNamespace, rolloutName, data);
             _pipeline.Send(message, cancellationToken);
@@ -426,22 +293,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DefaultRolloutListResult>> ListByProviderRegistrationAsync(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var message = CreateListByProviderRegistrationRequest(subscriptionId, providerNamespace);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -467,22 +320,8 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DefaultRolloutListResult> ListByProviderRegistration(string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var message = CreateListByProviderRegistrationRequest(subscriptionId, providerNamespace);
             _pipeline.Send(message, cancellationToken);
@@ -530,30 +369,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StopAsync(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
 
             using var message = CreateStopRequest(subscriptionId, providerNamespace, rolloutName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -575,30 +393,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="providerNamespace"/> or <paramref name="rolloutName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Stop(string subscriptionId, string providerNamespace, string rolloutName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
-            if (rolloutName == null)
-            {
-                throw new ArgumentNullException(nameof(rolloutName));
-            }
-            if (rolloutName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(rolloutName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
+            Argument.AssertNotNullOrEmpty(rolloutName, nameof(rolloutName));
 
             using var message = CreateStopRequest(subscriptionId, providerNamespace, rolloutName);
             _pipeline.Send(message, cancellationToken);
@@ -634,26 +431,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DefaultRolloutListResult>> ListByProviderRegistrationNextPageAsync(string nextLink, string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var message = CreateListByProviderRegistrationNextPageRequest(nextLink, subscriptionId, providerNamespace);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -680,26 +460,9 @@ namespace Azure.ResourceManager.ProviderHub
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DefaultRolloutListResult> ListByProviderRegistrationNextPage(string nextLink, string subscriptionId, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (providerNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(providerNamespace));
-            }
-            if (providerNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(providerNamespace));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(providerNamespace, nameof(providerNamespace));
 
             using var message = CreateListByProviderRegistrationNextPageRequest(nextLink, subscriptionId, providerNamespace);
             _pipeline.Send(message, cancellationToken);

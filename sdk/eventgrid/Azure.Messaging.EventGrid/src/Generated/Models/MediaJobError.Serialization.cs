@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -74,6 +73,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MediaJobError(code, message, category, retry, details ?? new ChangeTrackingList<MediaJobErrorDetail>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaJobError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaJobError(document.RootElement);
         }
     }
 }

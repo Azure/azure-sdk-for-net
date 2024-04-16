@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class PowerBIOutputDataSource : IUtf8JsonSerializable, IJsonModel<PowerBIOutputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PowerBIOutputDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PowerBIOutputDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PowerBIOutputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PowerBIOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PowerBIOutputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PowerBIOutputDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,42 +30,42 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RefreshToken != null)
+            if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (TokenUserPrincipalName != null)
+            if (Optional.IsDefined(TokenUserPrincipalName))
             {
                 writer.WritePropertyName("tokenUserPrincipalName"u8);
                 writer.WriteStringValue(TokenUserPrincipalName);
             }
-            if (TokenUserDisplayName != null)
+            if (Optional.IsDefined(TokenUserDisplayName))
             {
                 writer.WritePropertyName("tokenUserDisplayName"u8);
                 writer.WriteStringValue(TokenUserDisplayName);
             }
-            if (Dataset != null)
+            if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteStringValue(Dataset);
             }
-            if (Table != null)
+            if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
-            if (GroupId.HasValue)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId.Value);
             }
-            if (GroupName != null)
+            if (Optional.IsDefined(GroupName))
             {
                 writer.WritePropertyName("groupName"u8);
                 writer.WriteStringValue(GroupName);
             }
-            if (AuthenticationMode.HasValue)
+            if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<PowerBIOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PowerBIOutputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PowerBIOutputDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static PowerBIOutputDataSource DeserializePowerBIOutputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             string groupName = default;
             StreamAnalyticsAuthenticationMode? authenticationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PowerBIOutputDataSource(
                 type,
                 serializedAdditionalRawData,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PowerBIOutputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PowerBIOutputDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializePowerBIOutputDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PowerBIOutputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PowerBIOutputDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

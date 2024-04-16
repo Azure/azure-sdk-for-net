@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseManagedVirtualNetworkSettings : IUtf8JsonSerializable, IJsonModel<SynapseManagedVirtualNetworkSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseManagedVirtualNetworkSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseManagedVirtualNetworkSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseManagedVirtualNetworkSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseManagedVirtualNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseManagedVirtualNetworkSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseManagedVirtualNetworkSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PreventDataExfiltration.HasValue)
+            if (Optional.IsDefined(PreventDataExfiltration))
             {
                 writer.WritePropertyName("preventDataExfiltration"u8);
                 writer.WriteBooleanValue(PreventDataExfiltration.Value);
             }
-            if (EnableLinkedAccessCheckOnTargetResource.HasValue)
+            if (Optional.IsDefined(EnableLinkedAccessCheckOnTargetResource))
             {
                 writer.WritePropertyName("linkedAccessCheckOnTargetResource"u8);
                 writer.WriteBooleanValue(EnableLinkedAccessCheckOnTargetResource.Value);
             }
-            if (!(AllowedAadTenantIdsForLinking is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedAadTenantIdsForLinking))
             {
                 writer.WritePropertyName("allowedAadTenantIdsForLinking"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseManagedVirtualNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseManagedVirtualNetworkSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseManagedVirtualNetworkSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseManagedVirtualNetworkSettings DeserializeSynapseManagedVirtualNetworkSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse.Models
             bool? linkedAccessCheckOnTargetResource = default;
             IList<string> allowedAadTenantIdsForLinking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preventDataExfiltration"u8))
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SynapseManagedVirtualNetworkSettings(preventDataExfiltration, linkedAccessCheckOnTargetResource, allowedAadTenantIdsForLinking ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseManagedVirtualNetworkSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseManagedVirtualNetworkSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseManagedVirtualNetworkSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseManagedVirtualNetworkSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseManagedVirtualNetworkSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

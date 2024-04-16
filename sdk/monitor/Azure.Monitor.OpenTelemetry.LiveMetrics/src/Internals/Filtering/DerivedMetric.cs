@@ -22,15 +22,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         private static readonly MethodInfo DoubleParseMethodInfo = typeof(double).GetMethod(
            "Parse",
-           new[] { typeof(string), typeof(IFormatProvider) });
+           new[] { typeof(string), typeof(IFormatProvider) })!;
 
         private static readonly MethodInfo ObjectToStringMethodInfo = typeof(object).GetMethod(
             "ToString",
-            BindingFlags.Public | BindingFlags.Instance);
+            BindingFlags.Public | BindingFlags.Instance)!;
 
         private static readonly MethodInfo DoubleToStringMethodInfo = typeof(double).GetMethod(
             "ToString",
-            new[] { typeof(IFormatProvider) });
+            new[] { typeof(IFormatProvider) })!;
 
         private readonly DerivedMetricInfo info;
 
@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         public string Id => this.info.Id;
 
-        public DerivedMetricInfoAggregation? AggregationType => this.info.Aggregation;  // TODO: this was enum. Need to double check new type is parsed and used correctly.
+        public Models.AggregationType? AggregationType => this.info.Aggregation;  // TODO: this was enum. Need to double check new type is parsed and used correctly.
 
         public bool CheckFilters(TTelemetry document, out CollectionConfigurationError[] errors)
         {
@@ -110,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         public override string ToString()
         {
-            return this.info.ToString();
+            return this.info.ToString()!;
         }
 
         private void CreateFilters(out CollectionConfigurationError[] errors)
@@ -157,7 +157,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             {
                 if (error.Data[i].Key == "MetricId")
                 {
-                    error.Data[i].Value = id;
+                    error.Data[i] = new KeyValuePairString(error.Data[i].Key, id);
+
+                    // TODO: MODEL CHANGED TO READONLY. I'M INVESTIGATING IF WE CAN REVERT THIS CHANGE. (2024-03-22)
+                    //error.Data[i].Value = id;
+
                     return;
                 }
             }
@@ -192,6 +196,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     // special case - for TimeSpan values ToString() will not result in a value convertable to double, so we must take care of that ourselves
                     if (fieldType == typeof(TimeSpan))
                     {
+                        if (fieldExpression.Type == typeof(string))
+                        {
+                            MethodInfo? parseMethod = typeof(TimeSpan).GetMethod("Parse", new[] { typeof(string) });
+                            fieldExpression = Expression.Call(parseMethod!, fieldExpression);
+                        }
                         fieldExpression = Expression.Property(fieldExpression, "TotalMilliseconds");
                     }
                 }

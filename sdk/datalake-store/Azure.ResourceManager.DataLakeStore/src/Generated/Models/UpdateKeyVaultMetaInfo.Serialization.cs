@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 {
     internal partial class UpdateKeyVaultMetaInfo : IUtf8JsonSerializable, IJsonModel<UpdateKeyVaultMetaInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateKeyVaultMetaInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateKeyVaultMetaInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UpdateKeyVaultMetaInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UpdateKeyVaultMetaInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateKeyVaultMetaInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateKeyVaultMetaInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EncryptionKeyVersion != null)
+            if (Optional.IsDefined(EncryptionKeyVersion))
             {
                 writer.WritePropertyName("encryptionKeyVersion"u8);
                 writer.WriteStringValue(EncryptionKeyVersion);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateKeyVaultMetaInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateKeyVaultMetaInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateKeyVaultMetaInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         internal static UpdateKeyVaultMetaInfo DeserializeUpdateKeyVaultMetaInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             }
             string encryptionKeyVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encryptionKeyVersion"u8))
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UpdateKeyVaultMetaInfo(encryptionKeyVersion, serializedAdditionalRawData);
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateKeyVaultMetaInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateKeyVaultMetaInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                         return DeserializeUpdateKeyVaultMetaInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateKeyVaultMetaInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateKeyVaultMetaInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

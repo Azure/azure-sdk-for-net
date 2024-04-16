@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Sphere
 {
     public partial class SphereDeviceData : IUtf8JsonSerializable, IJsonModel<SphereDeviceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereDeviceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereDeviceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SphereDeviceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SphereDeviceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereDeviceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereDeviceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Sphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DeviceId != null)
+            if (Optional.IsDefined(DeviceId))
             {
                 writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
-            if (options.Format != "W" && ChipSku != null)
+            if (options.Format != "W" && Optional.IsDefined(ChipSku))
             {
                 writer.WritePropertyName("chipSku"u8);
                 writer.WriteStringValue(ChipSku);
             }
-            if (options.Format != "W" && LastAvailableOSVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(LastAvailableOSVersion))
             {
                 writer.WritePropertyName("lastAvailableOsVersion"u8);
                 writer.WriteStringValue(LastAvailableOSVersion);
             }
-            if (options.Format != "W" && LastInstalledOSVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(LastInstalledOSVersion))
             {
                 writer.WritePropertyName("lastInstalledOsVersion"u8);
                 writer.WriteStringValue(LastInstalledOSVersion);
             }
-            if (options.Format != "W" && LastOSUpdateUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastOSUpdateUtc))
             {
                 writer.WritePropertyName("lastOsUpdateUtc"u8);
                 writer.WriteStringValue(LastOSUpdateUtc.Value, "O");
             }
-            if (options.Format != "W" && LastUpdateRequestUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdateRequestUtc))
             {
                 writer.WritePropertyName("lastUpdateRequestUtc"u8);
                 writer.WriteStringValue(LastUpdateRequestUtc.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sphere
             var format = options.Format == "W" ? ((IPersistableModel<SphereDeviceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SphereDeviceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SphereDeviceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Sphere
 
         internal static SphereDeviceData DeserializeSphereDeviceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sphere
             DateTimeOffset? lastUpdateRequestUtc = default;
             SphereProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.Sphere
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SphereDeviceData(
                 id,
                 name,
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sphere
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SphereDeviceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereDeviceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Sphere
                         return DeserializeSphereDeviceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SphereDeviceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SphereDeviceData)} does not support reading '{options.Format}' format.");
             }
         }
 

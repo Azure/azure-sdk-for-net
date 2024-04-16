@@ -15,43 +15,43 @@ namespace Azure.ResourceManager.Elastic.Models
 {
     public partial class MonitorProperties : IUtf8JsonSerializable, IJsonModel<MonitorProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (MonitoringStatus.HasValue)
+            if (Optional.IsDefined(MonitoringStatus))
             {
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
-            if (ElasticProperties != null)
+            if (Optional.IsDefined(ElasticProperties))
             {
                 writer.WritePropertyName("elasticProperties"u8);
-                writer.WriteObjectValue(ElasticProperties);
+                writer.WriteObjectValue(ElasticProperties, options);
             }
-            if (UserInfo != null)
+            if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo);
+                writer.WriteObjectValue(UserInfo, options);
             }
-            if (options.Format != "W" && LiftrResourceCategory.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
             {
                 writer.WritePropertyName("liftrResourceCategory"u8);
                 writer.WriteStringValue(LiftrResourceCategory.Value.ToString());
             }
-            if (options.Format != "W" && LiftrResourcePreference.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LiftrResourcePreference))
             {
                 writer.WritePropertyName("liftrResourcePreference"u8);
                 writer.WriteNumberValue(LiftrResourcePreference.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static MonitorProperties DeserializeMonitorProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Elastic.Models
             LiftrResourceCategory? liftrResourceCategory = default;
             int? liftrResourcePreference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MonitorProperties(
                 provisioningState,
                 monitoringStatus,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeMonitorProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

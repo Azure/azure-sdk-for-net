@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class VolumeDefinition : IUtf8JsonSerializable, IJsonModel<VolumeDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VolumeDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VolumeDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VolumeDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VolumeDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VolumeDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DefinitionType.HasValue)
+            if (Optional.IsDefined(DefinitionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DefinitionType.Value.ToString());
             }
-            if (ReadOnly.HasValue)
+            if (Optional.IsDefined(ReadOnly))
             {
                 if (ReadOnly != null)
                 {
@@ -43,17 +43,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("readOnly");
                 }
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Consistency != null)
+            if (Optional.IsDefined(Consistency))
             {
                 if (Consistency != null)
                 {
@@ -65,36 +65,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("consistency");
                 }
             }
-            if (Bind != null)
+            if (Optional.IsDefined(Bind))
             {
                 if (Bind != null)
                 {
                     writer.WritePropertyName("bind"u8);
-                    writer.WriteObjectValue(Bind);
+                    writer.WriteObjectValue(Bind, options);
                 }
                 else
                 {
                     writer.WriteNull("bind");
                 }
             }
-            if (Volume != null)
+            if (Optional.IsDefined(Volume))
             {
                 if (Volume != null)
                 {
                     writer.WritePropertyName("volume"u8);
-                    writer.WriteObjectValue(Volume);
+                    writer.WriteObjectValue(Volume, options);
                 }
                 else
                 {
                     writer.WriteNull("volume");
                 }
             }
-            if (Tmpfs != null)
+            if (Optional.IsDefined(Tmpfs))
             {
                 if (Tmpfs != null)
                 {
                     writer.WritePropertyName("tmpfs"u8);
-                    writer.WriteObjectValue(Tmpfs);
+                    writer.WriteObjectValue(Tmpfs, options);
                 }
                 else
                 {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<VolumeDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VolumeDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static VolumeDefinition DeserializeVolumeDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             VolumeOptions volume = default;
             TmpfsOptions tmpfs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VolumeDefinition(
                 type,
                 readOnly,
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VolumeDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VolumeDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeVolumeDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VolumeDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VolumeDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxSkuCapacity : IUtf8JsonSerializable, IJsonModel<DataBoxSkuCapacity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxSkuCapacity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxSkuCapacity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxSkuCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxSkuCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxSkuCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Usable != null)
+            if (options.Format != "W" && Optional.IsDefined(Usable))
             {
                 writer.WritePropertyName("usable"u8);
                 writer.WriteStringValue(Usable);
             }
-            if (options.Format != "W" && Maximum != null)
+            if (options.Format != "W" && Optional.IsDefined(Maximum))
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteStringValue(Maximum);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxSkuCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxSkuCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxSkuCapacity DeserializeDataBoxSkuCapacity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataBox.Models
             string usable = default;
             string maximum = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usable"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxSkuCapacity(usable, maximum, serializedAdditionalRawData);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxSkuCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxSkuCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxSkuCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxSkuCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxSkuCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SelfHostedIntegrationRuntimeNode : IUtf8JsonSerializable, IJsonModel<SelfHostedIntegrationRuntimeNode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHostedIntegrationRuntimeNode>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHostedIntegrationRuntimeNode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SelfHostedIntegrationRuntimeNode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NodeName != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeName))
             {
                 writer.WritePropertyName("nodeName"u8);
                 writer.WriteStringValue(NodeName);
             }
-            if (options.Format != "W" && MachineName != null)
+            if (options.Format != "W" && Optional.IsDefined(MachineName))
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
             }
-            if (options.Format != "W" && HostServiceUri != null)
+            if (options.Format != "W" && Optional.IsDefined(HostServiceUri))
             {
                 writer.WritePropertyName("hostServiceUri"u8);
                 writer.WriteStringValue(HostServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -57,67 +57,67 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && VersionStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(VersionStatus))
             {
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && RegisterOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RegisterOn))
             {
                 writer.WritePropertyName("registerTime"u8);
                 writer.WriteStringValue(RegisterOn.Value, "O");
             }
-            if (options.Format != "W" && LastConnectOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastConnectOn))
             {
                 writer.WritePropertyName("lastConnectTime"u8);
                 writer.WriteStringValue(LastConnectOn.Value, "O");
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && LastStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStartOn))
             {
                 writer.WritePropertyName("lastStartTime"u8);
                 writer.WriteStringValue(LastStartOn.Value, "O");
             }
-            if (options.Format != "W" && LastStopOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStopOn))
             {
                 writer.WritePropertyName("lastStopTime"u8);
                 writer.WriteStringValue(LastStopOn.Value, "O");
             }
-            if (options.Format != "W" && LastUpdateResult.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdateResult))
             {
                 writer.WritePropertyName("lastUpdateResult"u8);
                 writer.WriteStringValue(LastUpdateResult.Value.ToString());
             }
-            if (options.Format != "W" && LastStartUpdateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStartUpdateOn))
             {
                 writer.WritePropertyName("lastStartUpdateTime"u8);
                 writer.WriteStringValue(LastStartUpdateOn.Value, "O");
             }
-            if (options.Format != "W" && LastEndUpdateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastEndUpdateOn))
             {
                 writer.WritePropertyName("lastEndUpdateTime"u8);
                 writer.WriteStringValue(LastEndUpdateOn.Value, "O");
             }
-            if (options.Format != "W" && IsActiveDispatcher.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsActiveDispatcher))
             {
                 writer.WritePropertyName("isActiveDispatcher"u8);
                 writer.WriteBooleanValue(IsActiveDispatcher.Value);
             }
-            if (options.Format != "W" && ConcurrentJobsLimit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConcurrentJobsLimit))
             {
                 writer.WritePropertyName("concurrentJobsLimit"u8);
                 writer.WriteNumberValue(ConcurrentJobsLimit.Value);
             }
-            if (options.Format != "W" && MaxConcurrentJobs.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxConcurrentJobs))
             {
                 writer.WritePropertyName("maxConcurrentJobs"u8);
                 writer.WriteNumberValue(MaxConcurrentJobs.Value);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SelfHostedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SelfHostedIntegrationRuntimeNode DeserializeSelfHostedIntegrationRuntimeNode(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSelfHostedIntegrationRuntimeNode(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SelfHostedIntegrationRuntimeNode)} does not support reading '{options.Format}' format.");
             }
         }
 

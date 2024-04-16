@@ -15,48 +15,48 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public partial class ManagedMaintenanceWindowStatus : IUtf8JsonSerializable, IJsonModel<ManagedMaintenanceWindowStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedMaintenanceWindowStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedMaintenanceWindowStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedMaintenanceWindowStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedMaintenanceWindowStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedMaintenanceWindowStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedMaintenanceWindowStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsWindowEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsWindowEnabled))
             {
                 writer.WritePropertyName("isWindowEnabled"u8);
                 writer.WriteBooleanValue(IsWindowEnabled.Value);
             }
-            if (options.Format != "W" && IsRegionReady.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsRegionReady))
             {
                 writer.WritePropertyName("isRegionReady"u8);
                 writer.WriteBooleanValue(IsRegionReady.Value);
             }
-            if (options.Format != "W" && IsWindowActive.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsWindowActive))
             {
                 writer.WritePropertyName("isWindowActive"u8);
                 writer.WriteBooleanValue(IsWindowActive.Value);
             }
-            if (options.Format != "W" && CanApplyUpdates.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CanApplyUpdates))
             {
                 writer.WritePropertyName("canApplyUpdates"u8);
                 writer.WriteBooleanValue(CanApplyUpdates.Value);
             }
-            if (options.Format != "W" && LastWindowStatusUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastWindowStatusUpdatedOn))
             {
                 writer.WritePropertyName("lastWindowStatusUpdateAtUTC"u8);
                 writer.WriteStringValue(LastWindowStatusUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastWindowStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastWindowStartOn))
             {
                 writer.WritePropertyName("lastWindowStartTimeUTC"u8);
                 writer.WriteStringValue(LastWindowStartOn.Value, "O");
             }
-            if (options.Format != "W" && LastWindowEndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastWindowEndOn))
             {
                 writer.WritePropertyName("lastWindowEndTimeUTC"u8);
                 writer.WriteStringValue(LastWindowEndOn.Value, "O");
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedMaintenanceWindowStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedMaintenanceWindowStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedMaintenanceWindowStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedMaintenanceWindowStatus DeserializeManagedMaintenanceWindowStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             DateTimeOffset? lastWindowStartTimeUTC = default;
             DateTimeOffset? lastWindowEndTimeUTC = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isWindowEnabled"u8))
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedMaintenanceWindowStatus(
                 isWindowEnabled,
                 isRegionReady,
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedMaintenanceWindowStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedMaintenanceWindowStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedMaintenanceWindowStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedMaintenanceWindowStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedMaintenanceWindowStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

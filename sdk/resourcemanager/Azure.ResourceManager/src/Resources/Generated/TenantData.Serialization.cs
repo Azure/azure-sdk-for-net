@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -16,48 +18,48 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class TenantData : IUtf8JsonSerializable, IJsonModel<TenantData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TenantData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TenantData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TenantData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TenantData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && TenantCategory.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantCategory))
             {
                 writer.WritePropertyName("tenantCategory"u8);
                 writer.WriteStringValue(TenantCategory.Value.ToSerialString());
             }
-            if (options.Format != "W" && Country != null)
+            if (options.Format != "W" && Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (options.Format != "W" && CountryCode != null)
+            if (options.Format != "W" && Optional.IsDefined(CountryCode))
             {
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && !(Domains is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Domains))
             {
                 writer.WritePropertyName("domains"u8);
                 writer.WriteStartArray();
@@ -67,17 +69,17 @@ namespace Azure.ResourceManager.Resources
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DefaultDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
             {
                 writer.WritePropertyName("defaultDomain"u8);
                 writer.WriteStringValue(DefaultDomain);
             }
-            if (options.Format != "W" && TenantType != null)
+            if (options.Format != "W" && Optional.IsDefined(TenantType))
             {
                 writer.WritePropertyName("tenantType"u8);
                 writer.WriteStringValue(TenantType);
             }
-            if (options.Format != "W" && TenantBrandingLogoUri != null)
+            if (options.Format != "W" && Optional.IsDefined(TenantBrandingLogoUri))
             {
                 writer.WritePropertyName("tenantBrandingLogoUrl"u8);
                 writer.WriteStringValue(TenantBrandingLogoUri.AbsoluteUri);
@@ -105,7 +107,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<TenantData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,7 +116,7 @@ namespace Azure.ResourceManager.Resources
 
         internal static TenantData DeserializeTenantData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,7 +133,7 @@ namespace Azure.ResourceManager.Resources
             string tenantType = default;
             Uri tenantBrandingLogoUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -207,10 +209,10 @@ namespace Azure.ResourceManager.Resources
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TenantData(
                 id,
                 tenantId,
@@ -225,6 +227,230 @@ namespace Azure.ResourceManager.Resources
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
+            {
+                builder.Append("  tenantId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantCategory), out propertyOverride);
+            if (Optional.IsDefined(TenantCategory) || hasPropertyOverride)
+            {
+                builder.Append("  tenantCategory: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TenantCategory.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Country), out propertyOverride);
+            if (Optional.IsDefined(Country) || hasPropertyOverride)
+            {
+                builder.Append("  country: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Country.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Country}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Country}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountryCode), out propertyOverride);
+            if (Optional.IsDefined(CountryCode) || hasPropertyOverride)
+            {
+                builder.Append("  countryCode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CountryCode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CountryCode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CountryCode}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (Optional.IsDefined(DisplayName) || hasPropertyOverride)
+            {
+                builder.Append("  displayName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Domains), out propertyOverride);
+            if (Optional.IsCollectionDefined(Domains) || hasPropertyOverride)
+            {
+                if (Domains.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  domains: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Domains)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultDomain), out propertyOverride);
+            if (Optional.IsDefined(DefaultDomain) || hasPropertyOverride)
+            {
+                builder.Append("  defaultDomain: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DefaultDomain.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DefaultDomain}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DefaultDomain}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantType), out propertyOverride);
+            if (Optional.IsDefined(TenantType) || hasPropertyOverride)
+            {
+                builder.Append("  tenantType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (TenantType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TenantType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TenantType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantBrandingLogoUri), out propertyOverride);
+            if (Optional.IsDefined(TenantBrandingLogoUri) || hasPropertyOverride)
+            {
+                builder.Append("  tenantBrandingLogoUrl: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TenantBrandingLogoUri.AbsoluteUri}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TenantData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TenantData>)this).GetFormatFromOptions(options) : options.Format;
@@ -233,8 +459,10 @@ namespace Azure.ResourceManager.Resources
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TenantData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -250,7 +478,7 @@ namespace Azure.ResourceManager.Resources
                         return DeserializeTenantData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TenantData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantData)} does not support reading '{options.Format}' format.");
             }
         }
 

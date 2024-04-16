@@ -15,68 +15,68 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class HyperVReplicaBluePolicyDetails : IUtf8JsonSerializable, IJsonModel<HyperVReplicaBluePolicyDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaBluePolicyDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaBluePolicyDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HyperVReplicaBluePolicyDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaBluePolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaBluePolicyDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaBluePolicyDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ReplicationFrequencyInSeconds.HasValue)
+            if (Optional.IsDefined(ReplicationFrequencyInSeconds))
             {
                 writer.WritePropertyName("replicationFrequencyInSeconds"u8);
                 writer.WriteNumberValue(ReplicationFrequencyInSeconds.Value);
             }
-            if (RecoveryPoints.HasValue)
+            if (Optional.IsDefined(RecoveryPoints))
             {
                 writer.WritePropertyName("recoveryPoints"u8);
                 writer.WriteNumberValue(RecoveryPoints.Value);
             }
-            if (ApplicationConsistentSnapshotFrequencyInHours.HasValue)
+            if (Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
             {
                 writer.WritePropertyName("applicationConsistentSnapshotFrequencyInHours"u8);
                 writer.WriteNumberValue(ApplicationConsistentSnapshotFrequencyInHours.Value);
             }
-            if (Compression != null)
+            if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteStringValue(Compression);
             }
-            if (InitialReplicationMethod != null)
+            if (Optional.IsDefined(InitialReplicationMethod))
             {
                 writer.WritePropertyName("initialReplicationMethod"u8);
                 writer.WriteStringValue(InitialReplicationMethod);
             }
-            if (OnlineReplicationStartTime != null)
+            if (Optional.IsDefined(OnlineReplicationStartTime))
             {
                 writer.WritePropertyName("onlineReplicationStartTime"u8);
                 writer.WriteStringValue(OnlineReplicationStartTime);
             }
-            if (OfflineReplicationImportPath != null)
+            if (Optional.IsDefined(OfflineReplicationImportPath))
             {
                 writer.WritePropertyName("offlineReplicationImportPath"u8);
                 writer.WriteStringValue(OfflineReplicationImportPath);
             }
-            if (OfflineReplicationExportPath != null)
+            if (Optional.IsDefined(OfflineReplicationExportPath))
             {
                 writer.WritePropertyName("offlineReplicationExportPath"u8);
                 writer.WriteStringValue(OfflineReplicationExportPath);
             }
-            if (ReplicationPort.HasValue)
+            if (Optional.IsDefined(ReplicationPort))
             {
                 writer.WritePropertyName("replicationPort"u8);
                 writer.WriteNumberValue(ReplicationPort.Value);
             }
-            if (AllowedAuthenticationType.HasValue)
+            if (Optional.IsDefined(AllowedAuthenticationType))
             {
                 writer.WritePropertyName("allowedAuthenticationType"u8);
                 writer.WriteNumberValue(AllowedAuthenticationType.Value);
             }
-            if (ReplicaDeletionOption != null)
+            if (Optional.IsDefined(ReplicaDeletionOption))
             {
                 writer.WritePropertyName("replicaDeletionOption"u8);
                 writer.WriteStringValue(ReplicaDeletionOption);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaBluePolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaBluePolicyDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaBluePolicyDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static HyperVReplicaBluePolicyDetails DeserializeHyperVReplicaBluePolicyDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string replicaDeletionOption = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicationFrequencyInSeconds"u8))
@@ -219,10 +219,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVReplicaBluePolicyDetails(
                 instanceType,
                 serializedAdditionalRawData,
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaBluePolicyDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaBluePolicyDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeHyperVReplicaBluePolicyDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaBluePolicyDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaBluePolicyDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

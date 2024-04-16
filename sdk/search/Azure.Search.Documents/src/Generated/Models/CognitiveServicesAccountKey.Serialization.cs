@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(Key);
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -55,6 +55,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new CognitiveServicesAccountKey(odataType, description, key);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CognitiveServicesAccountKey FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCognitiveServicesAccountKey(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

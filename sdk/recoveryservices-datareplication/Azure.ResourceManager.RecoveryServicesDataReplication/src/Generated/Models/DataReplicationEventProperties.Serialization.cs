@@ -15,69 +15,69 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     public partial class DataReplicationEventProperties : IUtf8JsonSerializable, IJsonModel<DataReplicationEventProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationEventProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationEventProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataReplicationEventProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (options.Format != "W" && ResourceName != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (options.Format != "W" && EventType != null)
+            if (options.Format != "W" && Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (options.Format != "W" && EventName != null)
+            if (options.Format != "W" && Optional.IsDefined(EventName))
             {
                 writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName);
             }
-            if (options.Format != "W" && OccurredOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OccurredOn))
             {
                 writer.WritePropertyName("timeOfOccurrence"u8);
                 writer.WriteStringValue(OccurredOn.Value, "O");
             }
-            if (options.Format != "W" && Severity != null)
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && CorrelationId != null)
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<DataReplicationHealthErrorInfo> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties);
+            writer.WriteObjectValue(CustomProperties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationEventProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static DataReplicationEventProperties DeserializeDataReplicationEventProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             EventModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataReplicationEventProperties(
                 resourceType,
                 resourceName,
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDataReplicationEventProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

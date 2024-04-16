@@ -9,42 +9,41 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxHeavyJobSecrets : IUtf8JsonSerializable, IJsonModel<DataBoxHeavyJobSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxHeavyJobSecrets>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxHeavyJobSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxHeavyJobSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxHeavyJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxHeavyJobSecrets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxHeavyJobSecrets)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(CabinetPodSecrets is ChangeTrackingList<DataBoxHeavySecret> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CabinetPodSecrets))
             {
                 writer.WritePropertyName("cabinetPodSecrets"u8);
                 writer.WriteStartArray();
                 foreach (var item in CabinetPodSecrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("jobSecretsType"u8);
             writer.WriteStringValue(JobSecretsType.ToSerialString());
-            if (options.Format != "W" && DataCenterAccessSecurityCode != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
-                writer.WriteObjectValue(DataCenterAccessSecurityCode);
+                writer.WriteObjectValue(DataCenterAccessSecurityCode, options);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxHeavyJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxHeavyJobSecrets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxHeavyJobSecrets)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxHeavyJobSecrets DeserializeDataBoxHeavyJobSecrets(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataCenterAccessSecurityCode dcAccessSecurityCode = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cabinetPodSecrets"u8))
@@ -134,10 +133,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxHeavyJobSecrets(jobSecretsType, dcAccessSecurityCode, error, serializedAdditionalRawData, cabinetPodSecrets ?? new ChangeTrackingList<DataBoxHeavySecret>());
         }
 
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxHeavyJobSecrets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxHeavyJobSecrets)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxHeavyJobSecrets(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxHeavyJobSecrets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxHeavyJobSecrets)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,17 +17,25 @@ namespace Azure.AI.Language.QuestionAnswering
             writer.WriteStartObject();
             writer.WritePropertyName("enable"u8);
             writer.WriteBooleanValue(Enable);
-            if (ConfidenceThreshold.HasValue)
+            if (Optional.IsDefined(ConfidenceThreshold))
             {
                 writer.WritePropertyName("confidenceScoreThreshold"u8);
                 writer.WriteNumberValue(ConfidenceThreshold.Value);
             }
-            if (Size.HasValue)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("topAnswersWithSpan"u8);
                 writer.WriteNumberValue(Size.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

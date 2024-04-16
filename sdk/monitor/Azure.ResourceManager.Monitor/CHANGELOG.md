@@ -10,6 +10,9 @@
 
 ### Bugs Fixed
 
+- Fix [issue#41377](https://github.com/Azure/azure-sdk-for-net/issues/41377), change the serialization for `MonitorConditionOperator`.
+- Fix [issue#43151](https://github.com/Azure/azure-sdk-for-net/issues/43151), change the deserialization for `TenantId`.
+
 ### Other Changes
 
 ## 1.3.0 (2023-11-21)

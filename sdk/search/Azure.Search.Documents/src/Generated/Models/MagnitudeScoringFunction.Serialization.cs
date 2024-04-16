@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(FieldName);
             writer.WritePropertyName("boost"u8);
             writer.WriteNumberValue(Boost);
-            if (Interpolation.HasValue)
+            if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteStringValue(Interpolation.Value.ToSerialString());
@@ -75,6 +75,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new MagnitudeScoringFunction(type, fieldName, boost, interpolation, magnitude);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MagnitudeScoringFunction FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMagnitudeScoringFunction(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

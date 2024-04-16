@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -18,14 +17,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class PreRulestackRuleData : IUtf8JsonSerializable, IJsonModel<PreRulestackRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PreRulestackRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PreRulestackRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PreRulestackRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PreRulestackRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreRulestackRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreRulestackRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,56 +43,56 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("ruleName"u8);
             writer.WriteStringValue(RuleName);
-            if (options.Format != "W" && Priority.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (RuleState.HasValue)
+            if (Optional.IsDefined(RuleState))
             {
                 writer.WritePropertyName("ruleState"u8);
                 writer.WriteStringValue(RuleState.Value.ToString());
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue(Source, options);
             }
-            if (NegateSource.HasValue)
+            if (Optional.IsDefined(NegateSource))
             {
                 writer.WritePropertyName("negateSource"u8);
                 writer.WriteStringValue(NegateSource.Value.ToString());
             }
-            if (Destination != null)
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                writer.WriteObjectValue(Destination, options);
             }
-            if (NegateDestination.HasValue)
+            if (Optional.IsDefined(NegateDestination))
             {
                 writer.WritePropertyName("negateDestination"u8);
                 writer.WriteStringValue(NegateDestination.Value.ToString());
             }
-            if (!(Applications is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Applications))
             {
                 writer.WritePropertyName("applications"u8);
                 writer.WriteStartArray();
@@ -103,17 +102,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteObjectValue(Category);
+                writer.WriteObjectValue(Category, options);
             }
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (!(ProtocolPortList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtocolPortList))
             {
                 writer.WritePropertyName("protocolPortList"u8);
                 writer.WriteStartArray();
@@ -123,42 +122,42 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
-            if (InboundInspectionCertificate != null)
+            if (Optional.IsDefined(InboundInspectionCertificate))
             {
                 writer.WritePropertyName("inboundInspectionCertificate"u8);
                 writer.WriteStringValue(InboundInspectionCertificate);
             }
-            if (AuditComment != null)
+            if (Optional.IsDefined(AuditComment))
             {
                 writer.WritePropertyName("auditComment"u8);
                 writer.WriteStringValue(AuditComment);
             }
-            if (ActionType.HasValue)
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("actionType"u8);
                 writer.WriteStringValue(ActionType.Value.ToString());
             }
-            if (EnableLogging.HasValue)
+            if (Optional.IsDefined(EnableLogging))
             {
                 writer.WritePropertyName("enableLogging"u8);
                 writer.WriteStringValue(EnableLogging.Value.ToString());
             }
-            if (DecryptionRuleType.HasValue)
+            if (Optional.IsDefined(DecryptionRuleType))
             {
                 writer.WritePropertyName("decryptionRuleType"u8);
                 writer.WriteStringValue(DecryptionRuleType.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingList<RulestackTagInfo> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -187,7 +186,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             var format = options.Format == "W" ? ((IPersistableModel<PreRulestackRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreRulestackRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreRulestackRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         internal static PreRulestackRuleData DeserializePreRulestackRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             IList<RulestackTagInfo> tags = default;
             FirewallProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -443,10 +442,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PreRulestackRuleData(
                 id,
                 name,
@@ -484,7 +483,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PreRulestackRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreRulestackRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -500,7 +499,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         return DeserializePreRulestackRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PreRulestackRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreRulestackRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

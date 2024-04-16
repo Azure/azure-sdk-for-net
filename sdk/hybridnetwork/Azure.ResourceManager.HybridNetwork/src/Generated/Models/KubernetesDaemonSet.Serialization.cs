@@ -15,53 +15,53 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class KubernetesDaemonSet : IUtf8JsonSerializable, IJsonModel<KubernetesDaemonSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesDaemonSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesDaemonSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubernetesDaemonSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesDaemonSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesDaemonSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesDaemonSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (DesiredNumberOfPods.HasValue)
+            if (Optional.IsDefined(DesiredNumberOfPods))
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteNumberValue(DesiredNumberOfPods.Value);
             }
-            if (CurrentNumberOfPods.HasValue)
+            if (Optional.IsDefined(CurrentNumberOfPods))
             {
                 writer.WritePropertyName("current"u8);
                 writer.WriteNumberValue(CurrentNumberOfPods.Value);
             }
-            if (ReadyNumberOfPods.HasValue)
+            if (Optional.IsDefined(ReadyNumberOfPods))
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteNumberValue(ReadyNumberOfPods.Value);
             }
-            if (UpToDateNumberOfPods.HasValue)
+            if (Optional.IsDefined(UpToDateNumberOfPods))
             {
                 writer.WritePropertyName("upToDate"u8);
                 writer.WriteNumberValue(UpToDateNumberOfPods.Value);
             }
-            if (AvailableNumberOfPods.HasValue)
+            if (Optional.IsDefined(AvailableNumberOfPods))
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteNumberValue(AvailableNumberOfPods.Value);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesDaemonSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesDaemonSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesDaemonSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static KubernetesDaemonSet DeserializeKubernetesDaemonSet(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             int? available = default;
             DateTimeOffset? creationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KubernetesDaemonSet(
                 name,
                 @namespace,
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesDaemonSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesDaemonSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeKubernetesDaemonSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesDaemonSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesDaemonSet)} does not support reading '{options.Format}' format.");
             }
         }
 

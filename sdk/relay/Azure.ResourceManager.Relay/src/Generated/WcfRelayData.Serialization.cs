@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Relay
 {
     public partial class WcfRelayData : IUtf8JsonSerializable, IJsonModel<WcfRelayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WcfRelayData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WcfRelayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WcfRelayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WcfRelayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WcfRelayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WcfRelayData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,49 +48,49 @@ namespace Azure.ResourceManager.Relay
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && IsDynamic.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDynamic))
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && ListenerCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ListenerCount))
             {
                 writer.WritePropertyName("listenerCount"u8);
                 writer.WriteNumberValue(ListenerCount.Value);
             }
-            if (RelayType.HasValue)
+            if (Optional.IsDefined(RelayType))
             {
                 writer.WritePropertyName("relayType"u8);
                 writer.WriteStringValue(RelayType.Value.ToSerialString());
             }
-            if (IsClientAuthorizationRequired.HasValue)
+            if (Optional.IsDefined(IsClientAuthorizationRequired))
             {
                 writer.WritePropertyName("requiresClientAuthorization"u8);
                 writer.WriteBooleanValue(IsClientAuthorizationRequired.Value);
             }
-            if (IsTransportSecurityRequired.HasValue)
+            if (Optional.IsDefined(IsTransportSecurityRequired))
             {
                 writer.WritePropertyName("requiresTransportSecurity"u8);
                 writer.WriteBooleanValue(IsTransportSecurityRequired.Value);
             }
-            if (UserMetadata != null)
+            if (Optional.IsDefined(UserMetadata))
             {
                 writer.WritePropertyName("userMetadata"u8);
                 writer.WriteStringValue(UserMetadata);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Relay
             var format = options.Format == "W" ? ((IPersistableModel<WcfRelayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WcfRelayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WcfRelayData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Relay
 
         internal static WcfRelayData DeserializeWcfRelayData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Relay
             bool? requiresTransportSecurity = default;
             string userMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -266,10 +266,10 @@ namespace Azure.ResourceManager.Relay
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WcfRelayData(
                 id,
                 name,
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Relay
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WcfRelayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WcfRelayData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Relay
                         return DeserializeWcfRelayData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WcfRelayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WcfRelayData)} does not support reading '{options.Format}' format.");
             }
         }
 

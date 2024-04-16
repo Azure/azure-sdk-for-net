@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -71,6 +71,14 @@ namespace Azure.Maps.Routing.Models
                 }
             }
             return new ErrorDetail(code, message, target, details ?? new ChangeTrackingList<ErrorDetail>(), additionalInfo ?? new ChangeTrackingList<ErrorAdditionalInfo>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorDetail FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeErrorDetail(document.RootElement);
         }
     }
 }

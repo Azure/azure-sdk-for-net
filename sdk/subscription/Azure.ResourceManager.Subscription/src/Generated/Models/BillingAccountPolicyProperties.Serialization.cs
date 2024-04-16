@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class BillingAccountPolicyProperties : IUtf8JsonSerializable, IJsonModel<BillingAccountPolicyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingAccountPolicyProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingAccountPolicyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BillingAccountPolicyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BillingAccountPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ServiceTenants is ChangeTrackingList<ServiceTenant> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceTenants))
             {
                 writer.WritePropertyName("serviceTenants"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceTenants)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (AllowTransfers.HasValue)
+            if (Optional.IsDefined(AllowTransfers))
             {
                 writer.WritePropertyName("allowTransfers"u8);
                 writer.WriteBooleanValue(AllowTransfers.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingAccountPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Subscription.Models
 
         internal static BillingAccountPolicyProperties DeserializeBillingAccountPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Subscription.Models
             IReadOnlyList<ServiceTenant> serviceTenants = default;
             bool? allowTransfers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceTenants"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BillingAccountPolicyProperties(serviceTenants ?? new ChangeTrackingList<ServiceTenant>(), allowTransfers, serializedAdditionalRawData);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         return DeserializeBillingAccountPolicyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingAccountPolicyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

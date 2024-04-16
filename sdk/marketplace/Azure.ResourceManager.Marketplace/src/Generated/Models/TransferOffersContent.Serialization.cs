@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class TransferOffersContent : IUtf8JsonSerializable, IJsonModel<TransferOffersContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransferOffersContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransferOffersContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TransferOffersContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TransferOffersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferOffersContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferOffersContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(TargetCollections is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetCollections))
             {
                 writer.WritePropertyName("targetCollections"u8);
                 writer.WriteStartArray();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Operation != null)
+            if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (!(OfferIdsList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(OfferIdsList))
             {
                 writer.WritePropertyName("offerIdsList"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransferOffersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferOffersContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferOffersContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static TransferOffersContent DeserializeTransferOffersContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             string operation = default;
             IList<string> offerIdsList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TransferOffersContent(targetCollections ?? new ChangeTrackingList<string>(), operation, offerIdsList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TransferOffersContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferOffersContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeTransferOffersContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransferOffersContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferOffersContent)} does not support reading '{options.Format}' format.");
             }
         }
 

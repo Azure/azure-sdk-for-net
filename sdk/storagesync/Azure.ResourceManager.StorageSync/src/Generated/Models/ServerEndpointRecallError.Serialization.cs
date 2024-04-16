@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class ServerEndpointRecallError : IUtf8JsonSerializable, IJsonModel<ServerEndpointRecallError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointRecallError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointRecallError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServerEndpointRecallError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointRecallError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointRecallError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointRecallError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ErrorCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && Count.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointRecallError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointRecallError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointRecallError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         internal static ServerEndpointRecallError DeserializeServerEndpointRecallError(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             int? errorCode = default;
             long? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServerEndpointRecallError(errorCode, count, serializedAdditionalRawData);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointRecallError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointRecallError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeServerEndpointRecallError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointRecallError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointRecallError)} does not support reading '{options.Format}' format.");
             }
         }
 

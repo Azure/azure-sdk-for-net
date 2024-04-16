@@ -16,50 +16,50 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class SharedGalleryImageVersionData : IUtf8JsonSerializable, IJsonModel<SharedGalleryImageVersionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedGalleryImageVersionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedGalleryImageVersionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SharedGalleryImageVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryImageVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedGalleryImageVersionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedGalleryImageVersionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PublishedOn.HasValue)
+            if (Optional.IsDefined(PublishedOn))
             {
                 writer.WritePropertyName("publishedDate"u8);
                 writer.WriteStringValue(PublishedOn.Value, "O");
             }
-            if (EndOfLifeOn.HasValue)
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (IsExcludedFromLatest.HasValue)
+            if (Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
                 writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue(StorageProfile, options);
             }
-            if (!(ArtifactTags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ArtifactTags))
             {
                 writer.WritePropertyName("artifactTags"u8);
                 writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute
             writer.WriteEndObject();
             writer.WritePropertyName("identifier"u8);
             writer.WriteStartObject();
-            if (UniqueId != null)
+            if (Optional.IsDefined(UniqueId))
             {
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryImageVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedGalleryImageVersionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedGalleryImageVersionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static SharedGalleryImageVersionData DeserializeSharedGalleryImageVersionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute
             IReadOnlyDictionary<string, string> artifactTags = default;
             string uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SharedGalleryImageVersionData(
                 name,
                 location,
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SharedGalleryImageVersionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedGalleryImageVersionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeSharedGalleryImageVersionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharedGalleryImageVersionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedGalleryImageVersionData)} does not support reading '{options.Format}' format.");
             }
         }
 

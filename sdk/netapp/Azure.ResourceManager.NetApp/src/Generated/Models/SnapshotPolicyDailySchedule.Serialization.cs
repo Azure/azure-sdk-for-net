@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class SnapshotPolicyDailySchedule : IUtf8JsonSerializable, IJsonModel<SnapshotPolicyDailySchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotPolicyDailySchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotPolicyDailySchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SnapshotPolicyDailySchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotPolicyDailySchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SnapshotsToKeep.HasValue)
+            if (Optional.IsDefined(SnapshotsToKeep))
             {
                 writer.WritePropertyName("snapshotsToKeep"u8);
                 writer.WriteNumberValue(SnapshotsToKeep.Value);
             }
-            if (Hour.HasValue)
+            if (Optional.IsDefined(Hour))
             {
                 writer.WritePropertyName("hour"u8);
                 writer.WriteNumberValue(Hour.Value);
             }
-            if (Minute.HasValue)
+            if (Optional.IsDefined(Minute))
             {
                 writer.WritePropertyName("minute"u8);
                 writer.WriteNumberValue(Minute.Value);
             }
-            if (UsedBytes.HasValue)
+            if (Optional.IsDefined(UsedBytes))
             {
                 writer.WritePropertyName("usedBytes"u8);
                 writer.WriteNumberValue(UsedBytes.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotPolicyDailySchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static SnapshotPolicyDailySchedule DeserializeSnapshotPolicyDailySchedule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
             int? minute = default;
             long? usedBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("snapshotsToKeep"u8))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SnapshotPolicyDailySchedule(snapshotsToKeep, hour, minute, usedBytes, serializedAdditionalRawData);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeSnapshotPolicyDailySchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

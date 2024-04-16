@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownDataFlow))]
     public partial class DataFactoryDataFlowProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryDataFlowProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryDataFlowProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryDataFlowProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryDataFlowProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryDataFlowProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryDataFlowProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DataFlowType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue(Folder, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryDataFlowProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryDataFlowProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFactoryDataFlowProperties DeserializeDataFactoryDataFlowProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryDataFlowProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryDataFlowProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryDataFlowProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryDataFlowProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryDataFlowProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

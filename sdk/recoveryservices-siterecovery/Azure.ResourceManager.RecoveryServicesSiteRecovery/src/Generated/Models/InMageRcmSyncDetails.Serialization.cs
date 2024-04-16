@@ -15,53 +15,53 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageRcmSyncDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmSyncDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmSyncDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmSyncDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InMageRcmSyncDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmSyncDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmSyncDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmSyncDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProgressHealth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProgressHealth))
             {
                 writer.WritePropertyName("progressHealth"u8);
                 writer.WriteStringValue(ProgressHealth.Value.ToString());
             }
-            if (options.Format != "W" && TransferredBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TransferredBytes))
             {
                 writer.WritePropertyName("transferredBytes"u8);
                 writer.WriteNumberValue(TransferredBytes.Value);
             }
-            if (options.Format != "W" && Last15MinutesTransferredBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Last15MinutesTransferredBytes))
             {
                 writer.WritePropertyName("last15MinutesTransferredBytes"u8);
                 writer.WriteNumberValue(Last15MinutesTransferredBytes.Value);
             }
-            if (options.Format != "W" && LastDataTransferTimeUtc != null)
+            if (options.Format != "W" && Optional.IsDefined(LastDataTransferTimeUtc))
             {
                 writer.WritePropertyName("lastDataTransferTimeUtc"u8);
                 writer.WriteStringValue(LastDataTransferTimeUtc);
             }
-            if (options.Format != "W" && ProcessedBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProcessedBytes))
             {
                 writer.WritePropertyName("processedBytes"u8);
                 writer.WriteNumberValue(ProcessedBytes.Value);
             }
-            if (options.Format != "W" && StaStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StaStartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StaStartOn.Value, "O");
             }
-            if (options.Format != "W" && LastRefreshedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastRefreshedOn))
             {
                 writer.WritePropertyName("lastRefreshTime"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
-            if (options.Format != "W" && ProgressPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmSyncDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmSyncDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmSyncDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static InMageRcmSyncDetails DeserializeInMageRcmSyncDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DateTimeOffset? lastRefreshTime = default;
             int? progressPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("progressHealth"u8))
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new InMageRcmSyncDetails(
                 progressHealth,
                 transferredBytes,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmSyncDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmSyncDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmSyncDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmSyncDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmSyncDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

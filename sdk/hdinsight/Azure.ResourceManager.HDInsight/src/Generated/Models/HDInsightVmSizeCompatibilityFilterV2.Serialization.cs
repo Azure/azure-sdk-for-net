@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightVmSizeCompatibilityFilterV2 : IUtf8JsonSerializable, IJsonModel<HDInsightVmSizeCompatibilityFilterV2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightVmSizeCompatibilityFilterV2>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightVmSizeCompatibilityFilterV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HDInsightVmSizeCompatibilityFilterV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FilterMode.HasValue)
+            if (Optional.IsDefined(FilterMode))
             {
                 writer.WritePropertyName("filterMode"u8);
                 writer.WriteStringValue(FilterMode.Value.ToString());
             }
-            if (!(Regions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ClusterFlavors is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ClusterFlavors))
             {
                 writer.WritePropertyName("clusterFlavors"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NodeTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeTypes))
             {
                 writer.WritePropertyName("nodeTypes"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ClusterVersions is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ClusterVersions))
             {
                 writer.WritePropertyName("clusterVersions"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(OSType is ChangeTrackingList<HDInsightOSType> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VmSizes is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(VmSizes))
             {
                 writer.WritePropertyName("vmSizes"u8);
                 writer.WriteStartArray();
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (EspApplied != null)
+            if (Optional.IsDefined(EspApplied))
             {
                 writer.WritePropertyName("espApplied"u8);
                 writer.WriteStringValue(EspApplied);
             }
-            if (IsComputeIsolationSupported != null)
+            if (Optional.IsDefined(IsComputeIsolationSupported))
             {
                 writer.WritePropertyName("computeIsolationSupported"u8);
                 writer.WriteStringValue(IsComputeIsolationSupported);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightVmSizeCompatibilityFilterV2 DeserializeHDInsightVmSizeCompatibilityFilterV2(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string espApplied = default;
             string computeIsolationSupported = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filterMode"u8))
@@ -257,10 +257,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightVmSizeCompatibilityFilterV2(
                 filterMode,
                 regions ?? new ChangeTrackingList<string>(),
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightVmSizeCompatibilityFilterV2(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Dynatrace.Models
 {
     public partial class DynatraceMonitorPatch : IUtf8JsonSerializable, IJsonModel<DynatraceMonitorPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceMonitorPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceMonitorPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DynatraceMonitorPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceMonitorPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitorPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,30 +37,30 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 writer.WriteEndObject();
             }
-            if (MonitoringStatus.HasValue)
+            if (Optional.IsDefined(MonitoringStatus))
             {
                 writer.WritePropertyName("monitoringStatus"u8);
                 writer.WriteStringValue(MonitoringStatus.Value.ToString());
             }
-            if (MarketplaceSubscriptionStatus.HasValue)
+            if (Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
             }
-            if (DynatraceEnvironmentProperties != null)
+            if (Optional.IsDefined(DynatraceEnvironmentProperties))
             {
                 writer.WritePropertyName("dynatraceEnvironmentProperties"u8);
-                writer.WriteObjectValue(DynatraceEnvironmentProperties);
+                writer.WriteObjectValue(DynatraceEnvironmentProperties, options);
             }
-            if (UserInfo != null)
+            if (Optional.IsDefined(UserInfo))
             {
                 writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo);
+                writer.WriteObjectValue(UserInfo, options);
             }
-            if (PlanData != null)
+            if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData);
+                writer.WriteObjectValue(PlanData, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceMonitorPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitorPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceMonitorPatch DeserializeDynatraceMonitorPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             DynatraceMonitorUserInfo userInfo = default;
             DynatraceBillingPlanInfo planData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DynatraceMonitorPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 monitoringStatus,
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceMonitorPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitorPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceMonitorPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceMonitorPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitorPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

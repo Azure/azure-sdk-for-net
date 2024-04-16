@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationScheduleData : IUtf8JsonSerializable, IJsonModel<AutomationScheduleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationScheduleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationScheduleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationScheduleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationScheduleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationScheduleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && StartInMinutes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartInMinutes))
             {
                 writer.WritePropertyName("startTimeOffsetMinutes"u8);
                 writer.WriteNumberValue(StartInMinutes.Value);
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 if (ExpireOn != null)
                 {
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("expiryTime");
                 }
             }
-            if (ExpireInMinutes.HasValue)
+            if (Optional.IsDefined(ExpireInMinutes))
             {
                 writer.WritePropertyName("expiryTimeOffsetMinutes"u8);
                 writer.WriteNumberValue(ExpireInMinutes.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (NextRunOn.HasValue)
+            if (Optional.IsDefined(NextRunOn))
             {
                 if (NextRunOn != null)
                 {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("nextRun");
                 }
             }
-            if (NextRunInMinutes.HasValue)
+            if (Optional.IsDefined(NextRunInMinutes))
             {
                 writer.WritePropertyName("nextRunOffsetMinutes"u8);
                 writer.WriteNumberValue(NextRunInMinutes.Value);
             }
-            if (Interval != null)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
 #if NET6_0_OR_GREATER
@@ -111,32 +111,32 @@ namespace Azure.ResourceManager.Automation
                 }
 #endif
             }
-            if (Frequency.HasValue)
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (AdvancedSchedule != null)
+            if (Optional.IsDefined(AdvancedSchedule))
             {
                 writer.WritePropertyName("advancedSchedule"u8);
-                writer.WriteObjectValue(AdvancedSchedule);
+                writer.WriteObjectValue(AdvancedSchedule, options);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<AutomationScheduleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationScheduleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationScheduleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Automation
 
         internal static AutomationScheduleData DeserializeAutomationScheduleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Automation
             DateTimeOffset? lastModifiedTime = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -360,10 +360,10 @@ namespace Azure.ResourceManager.Automation
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutomationScheduleData(
                 id,
                 name,
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationScheduleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationScheduleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeAutomationScheduleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationScheduleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationScheduleData)} does not support reading '{options.Format}' format.");
             }
         }
 

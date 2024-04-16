@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="condition"/> or <paramref name="action"/> is null. </exception>
         public RoutePolicyStatementProperties(long sequenceNumber, StatementConditionProperties condition, StatementActionProperties action)
         {
-            if (condition == null)
-            {
-                throw new ArgumentNullException(nameof(condition));
-            }
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action));
-            }
+            Argument.AssertNotNull(condition, nameof(condition));
+            Argument.AssertNotNull(action, nameof(action));
 
             SequenceNumber = sequenceNumber;
             Condition = condition;

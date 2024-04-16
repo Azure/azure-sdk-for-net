@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DataFactoryRecurrenceScheduleOccurrence : IUtf8JsonSerializable, IJsonModel<DataFactoryRecurrenceScheduleOccurrence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryRecurrenceScheduleOccurrence>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryRecurrenceScheduleOccurrence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryRecurrenceScheduleOccurrence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryRecurrenceScheduleOccurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryRecurrenceScheduleOccurrence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryRecurrenceScheduleOccurrence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Day.HasValue)
+            if (Optional.IsDefined(Day))
             {
                 writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToSerialString());
             }
-            if (Occurrence.HasValue)
+            if (Optional.IsDefined(Occurrence))
             {
                 writer.WritePropertyName("occurrence"u8);
                 writer.WriteNumberValue(Occurrence.Value);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryRecurrenceScheduleOccurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryRecurrenceScheduleOccurrence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryRecurrenceScheduleOccurrence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFactoryRecurrenceScheduleOccurrence DeserializeDataFactoryRecurrenceScheduleOccurrence(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryRecurrenceScheduleOccurrence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryRecurrenceScheduleOccurrence)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryRecurrenceScheduleOccurrence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryRecurrenceScheduleOccurrence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryRecurrenceScheduleOccurrence)} does not support reading '{options.Format}' format.");
             }
         }
 

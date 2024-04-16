@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.LargeInstance.Models
 {
     public partial class LargeInstanceDisk : IUtf8JsonSerializable, IJsonModel<LargeInstanceDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LargeInstanceDisk>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LargeInstanceDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LargeInstanceDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (DiskSizeGB.HasValue)
+            if (Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (options.Format != "W" && Lun.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<LargeInstanceDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
 
         internal static LargeInstanceDisk DeserializeLargeInstanceDisk(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             int? diskSizeGB = default;
             int? lun = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LargeInstanceDisk(name, diskSizeGB, lun, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                         return DeserializeLargeInstanceDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LargeInstanceDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

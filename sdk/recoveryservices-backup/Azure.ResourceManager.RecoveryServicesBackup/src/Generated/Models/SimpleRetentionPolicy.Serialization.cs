@@ -15,21 +15,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class SimpleRetentionPolicy : IUtf8JsonSerializable, IJsonModel<SimpleRetentionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimpleRetentionPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimpleRetentionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SimpleRetentionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SimpleRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RetentionDuration != null)
+            if (Optional.IsDefined(RetentionDuration))
             {
                 writer.WritePropertyName("retentionDuration"u8);
-                writer.WriteObjectValue(RetentionDuration);
+                writer.WriteObjectValue(RetentionDuration, options);
             }
             writer.WritePropertyName("retentionPolicyType"u8);
             writer.WriteStringValue(RetentionPolicyType);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SimpleRetentionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static SimpleRetentionPolicy DeserializeSimpleRetentionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RetentionDuration retentionDuration = default;
             string retentionPolicyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retentionDuration"u8))
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SimpleRetentionPolicy(retentionPolicyType, serializedAdditionalRawData, retentionDuration);
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeSimpleRetentionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimpleRetentionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

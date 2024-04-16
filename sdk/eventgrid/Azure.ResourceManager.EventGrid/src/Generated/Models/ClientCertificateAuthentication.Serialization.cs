@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class ClientCertificateAuthentication : IUtf8JsonSerializable, IJsonModel<ClientCertificateAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientCertificateAuthentication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientCertificateAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClientCertificateAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClientCertificateAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ValidationScheme.HasValue)
+            if (Optional.IsDefined(ValidationScheme))
             {
                 writer.WritePropertyName("validationScheme"u8);
                 writer.WriteStringValue(ValidationScheme.Value.ToString());
             }
-            if (!(AllowedThumbprints is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedThumbprints))
             {
                 writer.WritePropertyName("allowedThumbprints"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClientCertificateAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static ClientCertificateAuthentication DeserializeClientCertificateAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             ClientCertificateValidationScheme? validationScheme = default;
             IList<string> allowedThumbprints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationScheme"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClientCertificateAuthentication(validationScheme, allowedThumbprints ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeClientCertificateAuthentication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support reading '{options.Format}' format.");
             }
         }
 

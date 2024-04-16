@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     public partial class CosmosDBForPostgreSqlServerConfigurationData : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlServerConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlServerConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlServerConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBForPostgreSqlServerConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Source != null)
+            if (options.Format != "W" && Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && DefaultValue != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (options.Format != "W" && DataType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType.Value.ToString());
             }
-            if (options.Format != "W" && AllowedValues != null)
+            if (options.Format != "W" && Optional.IsDefined(AllowedValues))
             {
                 writer.WritePropertyName("allowedValues"u8);
                 writer.WriteStringValue(AllowedValues);
             }
-            if (options.Format != "W" && IsRestartRequired.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsRestartRequired))
             {
                 writer.WritePropertyName("requiresRestart"u8);
                 writer.WriteBooleanValue(IsRestartRequired.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlServerConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 
         internal static CosmosDBForPostgreSqlServerConfigurationData DeserializeCosmosDBForPostgreSqlServerConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             bool? requiresRestart = default;
             CosmosDBForPostgreSqlProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -235,10 +235,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CosmosDBForPostgreSqlServerConfigurationData(
                 id,
                 name,
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                         return DeserializeCosmosDBForPostgreSqlServerConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlServerConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.LoadTesting
 {
     public partial class LoadTestingResourceData : IUtf8JsonSerializable, IJsonModel<LoadTestingResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestingResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestingResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LoadTestingResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,34 +62,34 @@ namespace Azure.ResourceManager.LoadTesting
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DataPlaneUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DataPlaneUri))
             {
                 writer.WritePropertyName("dataPlaneURI"u8);
                 writer.WriteStringValue(DataPlaneUri);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 if (Encryption != null)
                 {
                     writer.WritePropertyName("encryption"u8);
-                    writer.WriteObjectValue(Encryption);
+                    writer.WriteObjectValue(Encryption, options);
                 }
                 else
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.LoadTesting
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.LoadTesting
 
         internal static LoadTestingResourceData DeserializeLoadTestingResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.LoadTesting
             string dataPlaneUri = default;
             LoadTestingCmkEncryptionProperties encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.LoadTesting
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LoadTestingResourceData(
                 id,
                 name,
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.LoadTesting
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.LoadTesting
                         return DeserializeLoadTestingResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

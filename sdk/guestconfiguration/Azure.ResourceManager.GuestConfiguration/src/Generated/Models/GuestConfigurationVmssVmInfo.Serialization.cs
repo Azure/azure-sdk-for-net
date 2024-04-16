@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     public partial class GuestConfigurationVmssVmInfo : IUtf8JsonSerializable, IJsonModel<GuestConfigurationVmssVmInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationVmssVmInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationVmssVmInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GuestConfigurationVmssVmInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationVmssVmInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VmId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId.Value);
             }
-            if (options.Format != "W" && VmResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(VmResourceId))
             {
                 writer.WritePropertyName("vmResourceId"u8);
                 writer.WriteStringValue(VmResourceId);
             }
-            if (options.Format != "W" && ComplianceStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && LatestReportId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LatestReportId))
             {
                 if (LatestReportId != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("latestReportId");
                 }
             }
-            if (options.Format != "W" && LastComplianceCheckedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastComplianceCheckedOn))
             {
                 if (LastComplianceCheckedOn != null)
                 {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationVmssVmInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationVmssVmInfo DeserializeGuestConfigurationVmssVmInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Guid? latestReportId = default;
             DateTimeOffset? lastComplianceChecked = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmId"u8))
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GuestConfigurationVmssVmInfo(
                 vmId,
                 vmResourceId,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeGuestConfigurationVmssVmInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationVmssVmInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

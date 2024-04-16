@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 if (ConnectionString != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("connectionString");
                 }
             }
-            if (Database != null)
+            if (Optional.IsDefined(Database))
             {
                 if (Database != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("database");
                 }
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 if (UserName != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("userName");
                 }
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 if (Password != null)
                 {
@@ -140,6 +140,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new InfluxDBParameter(connectionString, database, userName, password, query);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InfluxDBParameter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInfluxDBParameter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

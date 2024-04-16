@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
 {
     public partial class HealthMonitorData : IUtf8JsonSerializable, IJsonModel<HealthMonitorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthMonitorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthMonitorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HealthMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HealthMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthMonitorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthMonitorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (MonitorName != null)
+            if (Optional.IsDefined(MonitorName))
             {
                 writer.WritePropertyName("monitorName"u8);
                 writer.WriteStringValue(MonitorName);
             }
-            if (MonitorType != null)
+            if (Optional.IsDefined(MonitorType))
             {
                 writer.WritePropertyName("monitorType"u8);
                 writer.WriteStringValue(MonitorType);
             }
-            if (MonitoredObject != null)
+            if (Optional.IsDefined(MonitoredObject))
             {
                 writer.WritePropertyName("monitoredObject"u8);
                 writer.WriteStringValue(MonitoredObject);
             }
-            if (ParentMonitorName != null)
+            if (Optional.IsDefined(ParentMonitorName))
             {
                 writer.WritePropertyName("parentMonitorName"u8);
                 writer.WriteStringValue(ParentMonitorName);
             }
-            if (options.Format != "W" && PreviousMonitorState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PreviousMonitorState))
             {
                 writer.WritePropertyName("previousMonitorState"u8);
                 writer.WriteStringValue(PreviousMonitorState.Value.ToString());
             }
-            if (options.Format != "W" && CurrentMonitorState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentMonitorState))
             {
                 writer.WritePropertyName("currentMonitorState"u8);
                 writer.WriteStringValue(CurrentMonitorState.Value.ToString());
             }
-            if (EvaluationTimestamp != null)
+            if (Optional.IsDefined(EvaluationTimestamp))
             {
                 writer.WritePropertyName("evaluationTimestamp"u8);
                 writer.WriteStringValue(EvaluationTimestamp);
             }
-            if (CurrentStateFirstObservedTimestamp != null)
+            if (Optional.IsDefined(CurrentStateFirstObservedTimestamp))
             {
                 writer.WritePropertyName("currentStateFirstObservedTimestamp"u8);
                 writer.WriteStringValue(CurrentStateFirstObservedTimestamp);
             }
-            if (LastReportedTimestamp != null)
+            if (Optional.IsDefined(LastReportedTimestamp))
             {
                 writer.WritePropertyName("lastReportedTimestamp"u8);
                 writer.WriteStringValue(LastReportedTimestamp);
             }
-            if (Evidence != null)
+            if (Optional.IsDefined(Evidence))
             {
                 writer.WritePropertyName("evidence"u8);
 #if NET6_0_OR_GREATER
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 }
 #endif
             }
-            if (MonitorConfiguration != null)
+            if (Optional.IsDefined(MonitorConfiguration))
             {
                 writer.WritePropertyName("monitorConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             var format = options.Format == "W" ? ((IPersistableModel<HealthMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthMonitorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthMonitorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
 
         internal static HealthMonitorData DeserializeHealthMonitorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             BinaryData evidence = default;
             BinaryData monitorConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -286,10 +286,10 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HealthMonitorData(
                 id,
                 name,
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthMonitorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthMonitorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                         return DeserializeHealthMonitorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthMonitorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthMonitorData)} does not support reading '{options.Format}' format.");
             }
         }
 

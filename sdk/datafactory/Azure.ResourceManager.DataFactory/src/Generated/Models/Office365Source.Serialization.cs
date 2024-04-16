@@ -16,65 +16,65 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class Office365Source : IUtf8JsonSerializable, IJsonModel<Office365Source>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Office365Source>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Office365Source>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<Office365Source>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<Office365Source>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Office365Source)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Office365Source)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AllowedGroups != null)
+            if (Optional.IsDefined(AllowedGroups))
             {
                 writer.WritePropertyName("allowedGroups"u8);
                 JsonSerializer.Serialize(writer, AllowedGroups);
             }
-            if (UserScopeFilterUri != null)
+            if (Optional.IsDefined(UserScopeFilterUri))
             {
                 writer.WritePropertyName("userScopeFilterUri"u8);
                 JsonSerializer.Serialize(writer, UserScopeFilterUri);
             }
-            if (DateFilterColumn != null)
+            if (Optional.IsDefined(DateFilterColumn))
             {
                 writer.WritePropertyName("dateFilterColumn"u8);
                 JsonSerializer.Serialize(writer, DateFilterColumn);
             }
-            if (StartOn != null)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 JsonSerializer.Serialize(writer, StartOn);
             }
-            if (EndOn != null)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 JsonSerializer.Serialize(writer, EndOn);
             }
-            if (OutputColumns != null)
+            if (Optional.IsDefined(OutputColumns))
             {
                 writer.WritePropertyName("outputColumns"u8);
                 JsonSerializer.Serialize(writer, OutputColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (SourceRetryCount != null)
+            if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (SourceRetryWait != null)
+            if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<Office365Source>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Office365Source)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Office365Source)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static Office365Source DeserializeOffice365Source(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Office365Source)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Office365Source)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeOffice365Source(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Office365Source)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Office365Source)} does not support reading '{options.Format}' format.");
             }
         }
 

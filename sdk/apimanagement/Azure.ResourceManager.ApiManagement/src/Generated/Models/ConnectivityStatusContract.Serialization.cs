@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ConnectivityStatusContract : IUtf8JsonSerializable, IJsonModel<ConnectivityStatusContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityStatusContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityStatusContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectivityStatusContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityStatusContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityStatusContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityStatusContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityStatusContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityStatusContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityStatusContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ConnectivityStatusContract DeserializeConnectivityStatusContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string resourceType = default;
             bool isOptional = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectivityStatusContract(
                 name,
                 status,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityStatusContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityStatusContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeConnectivityStatusContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityStatusContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityStatusContract)} does not support reading '{options.Format}' format.");
             }
         }
 

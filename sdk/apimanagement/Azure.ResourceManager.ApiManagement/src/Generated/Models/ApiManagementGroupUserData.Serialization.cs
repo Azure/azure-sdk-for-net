@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementGroupUserData : IUtf8JsonSerializable, IJsonModel<ApiManagementGroupUserData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementGroupUserData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementGroupUserData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementGroupUserData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGroupUserData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementGroupUserData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementGroupUserData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,60 +42,60 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Note != null)
+            if (Optional.IsDefined(Note))
             {
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
-            if (!(Identities is ChangeTrackingList<UserIdentityContract> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Identities))
             {
                 writer.WritePropertyName("identities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Identities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (FirstName != null)
+            if (Optional.IsDefined(FirstName))
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (LastName != null)
+            if (Optional.IsDefined(LastName))
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (RegistriesOn.HasValue)
+            if (Optional.IsDefined(RegistriesOn))
             {
                 writer.WritePropertyName("registrationDate"u8);
                 writer.WriteStringValue(RegistriesOn.Value, "O");
             }
-            if (options.Format != "W" && !(Groups is ChangeTrackingList<GroupContractProperties> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGroupUserData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementGroupUserData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementGroupUserData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementGroupUserData DeserializeApiManagementGroupUserData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             DateTimeOffset? registrationDate = default;
             IReadOnlyList<GroupContractProperties> groups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -258,10 +258,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiManagementGroupUserData(
                 id,
                 name,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementGroupUserData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementGroupUserData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementGroupUserData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementGroupUserData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementGroupUserData)} does not support reading '{options.Format}' format.");
             }
         }
 

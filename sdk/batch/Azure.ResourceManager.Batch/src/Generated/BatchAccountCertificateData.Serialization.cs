@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
@@ -18,18 +17,18 @@ namespace Azure.ResourceManager.Batch
 {
     public partial class BatchAccountCertificateData : IUtf8JsonSerializable, IJsonModel<BatchAccountCertificateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountCertificateData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountCertificateData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchAccountCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountCertificateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountCertificateData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountCertificateData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,54 +48,54 @@ namespace Azure.ResourceManager.Batch
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ThumbprintAlgorithm != null)
+            if (Optional.IsDefined(ThumbprintAlgorithm))
             {
                 writer.WritePropertyName("thumbprintAlgorithm"u8);
                 writer.WriteStringValue(ThumbprintAlgorithm);
             }
-            if (ThumbprintString != null)
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(ThumbprintString);
             }
-            if (Format.HasValue)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToSerialString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningStateTransitOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStateTransitOn))
             {
                 writer.WritePropertyName("provisioningStateTransitionTime"u8);
                 writer.WriteStringValue(ProvisioningStateTransitOn.Value, "O");
             }
-            if (options.Format != "W" && PreviousProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PreviousProvisioningState))
             {
                 writer.WritePropertyName("previousProvisioningState"u8);
                 writer.WriteStringValue(PreviousProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && PreviousProvisioningStateTransitOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PreviousProvisioningStateTransitOn))
             {
                 writer.WritePropertyName("previousProvisioningStateTransitionTime"u8);
                 writer.WriteStringValue(PreviousProvisioningStateTransitOn.Value, "O");
             }
-            if (options.Format != "W" && PublicData != null)
+            if (options.Format != "W" && Optional.IsDefined(PublicData))
             {
                 writer.WritePropertyName("publicData"u8);
                 writer.WriteStringValue(PublicData);
             }
-            if (options.Format != "W" && DeleteCertificateError != null)
+            if (options.Format != "W" && Optional.IsDefined(DeleteCertificateError))
             {
                 writer.WritePropertyName("deleteCertificateError"u8);
                 JsonSerializer.Serialize(writer, DeleteCertificateError);
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.Batch
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountCertificateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountCertificateData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountCertificateData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.Batch
 
         internal static BatchAccountCertificateData DeserializeBatchAccountCertificateData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.Batch
             string publicData = default;
             ResponseError deleteCertificateError = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -274,10 +273,10 @@ namespace Azure.ResourceManager.Batch
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchAccountCertificateData(
                 id,
                 name,
@@ -305,7 +304,7 @@ namespace Azure.ResourceManager.Batch
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountCertificateData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountCertificateData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -321,7 +320,7 @@ namespace Azure.ResourceManager.Batch
                         return DeserializeBatchAccountCertificateData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountCertificateData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountCertificateData)} does not support reading '{options.Format}' format.");
             }
         }
 

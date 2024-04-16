@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,23 +16,23 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class MyWorkbookUserAssignedIdentities : IUtf8JsonSerializable, IJsonModel<MyWorkbookUserAssignedIdentities>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MyWorkbookUserAssignedIdentities>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MyWorkbookUserAssignedIdentities>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MyWorkbookUserAssignedIdentities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MyWorkbookUserAssignedIdentities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MyWorkbookUserAssignedIdentities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MyWorkbookUserAssignedIdentities)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrincipalId != null)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<MyWorkbookUserAssignedIdentities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MyWorkbookUserAssignedIdentities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MyWorkbookUserAssignedIdentities)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static MyWorkbookUserAssignedIdentities DeserializeMyWorkbookUserAssignedIdentities(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string principalId = default;
             Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -96,11 +97,62 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MyWorkbookUserAssignedIdentities(principalId, tenantId, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
+            if (Optional.IsDefined(PrincipalId) || hasPropertyOverride)
+            {
+                builder.Append("  principalId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PrincipalId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrincipalId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrincipalId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
+            {
+                builder.Append("  tenantId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MyWorkbookUserAssignedIdentities>.Write(ModelReaderWriterOptions options)
@@ -111,8 +163,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MyWorkbookUserAssignedIdentities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MyWorkbookUserAssignedIdentities)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +182,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeMyWorkbookUserAssignedIdentities(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MyWorkbookUserAssignedIdentities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MyWorkbookUserAssignedIdentities)} does not support reading '{options.Format}' format.");
             }
         }
 

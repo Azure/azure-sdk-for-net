@@ -15,48 +15,48 @@ namespace Azure.ResourceManager.Dns.Models
 {
     public partial class DnsSoaRecordInfo : IUtf8JsonSerializable, IJsonModel<DnsSoaRecordInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsSoaRecordInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsSoaRecordInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DnsSoaRecordInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DnsSoaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (SerialNumber.HasValue)
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteNumberValue(SerialNumber.Value);
             }
-            if (RefreshTimeInSeconds.HasValue)
+            if (Optional.IsDefined(RefreshTimeInSeconds))
             {
                 writer.WritePropertyName("refreshTime"u8);
                 writer.WriteNumberValue(RefreshTimeInSeconds.Value);
             }
-            if (RetryTimeInSeconds.HasValue)
+            if (Optional.IsDefined(RetryTimeInSeconds))
             {
                 writer.WritePropertyName("retryTime"u8);
                 writer.WriteNumberValue(RetryTimeInSeconds.Value);
             }
-            if (ExpireTimeInSeconds.HasValue)
+            if (Optional.IsDefined(ExpireTimeInSeconds))
             {
                 writer.WritePropertyName("expireTime"u8);
                 writer.WriteNumberValue(ExpireTimeInSeconds.Value);
             }
-            if (MinimumTtlInSeconds.HasValue)
+            if (Optional.IsDefined(MinimumTtlInSeconds))
             {
                 writer.WritePropertyName("minimumTTL"u8);
                 writer.WriteNumberValue(MinimumTtlInSeconds.Value);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsSoaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Dns.Models
 
         internal static DnsSoaRecordInfo DeserializeDnsSoaRecordInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Dns.Models
             long? expireTime = default;
             long? minimumTTL = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("host"u8))
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Dns.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DnsSoaRecordInfo(
                 host,
                 email,
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Dns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Dns.Models
                         return DeserializeDnsSoaRecordInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

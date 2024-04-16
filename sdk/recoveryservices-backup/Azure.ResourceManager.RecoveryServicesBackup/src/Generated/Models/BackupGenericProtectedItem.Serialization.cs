@@ -15,85 +15,85 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownProtectedItem))]
     public partial class BackupGenericProtectedItem : IUtf8JsonSerializable, IJsonModel<BackupGenericProtectedItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupGenericProtectedItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupGenericProtectedItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupGenericProtectedItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("protectedItemType"u8);
             writer.WriteStringValue(ProtectedItemType);
-            if (options.Format != "W" && BackupManagementType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (options.Format != "W" && WorkloadType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType.Value.ToString());
             }
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
                 writer.WriteStringValue(ContainerName);
             }
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (LastRecoverOn.HasValue)
+            if (Optional.IsDefined(LastRecoverOn))
             {
                 writer.WritePropertyName("lastRecoveryPoint"u8);
                 writer.WriteStringValue(LastRecoverOn.Value, "O");
             }
-            if (BackupSetName != null)
+            if (Optional.IsDefined(BackupSetName))
             {
                 writer.WritePropertyName("backupSetName"u8);
                 writer.WriteStringValue(BackupSetName);
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (DeferredDeletedOn.HasValue)
+            if (Optional.IsDefined(DeferredDeletedOn))
             {
                 writer.WritePropertyName("deferredDeleteTimeInUTC"u8);
                 writer.WriteStringValue(DeferredDeletedOn.Value, "O");
             }
-            if (IsScheduledForDeferredDelete.HasValue)
+            if (Optional.IsDefined(IsScheduledForDeferredDelete))
             {
                 writer.WritePropertyName("isScheduledForDeferredDelete"u8);
                 writer.WriteBooleanValue(IsScheduledForDeferredDelete.Value);
             }
-            if (DeferredDeleteTimeRemaining != null)
+            if (Optional.IsDefined(DeferredDeleteTimeRemaining))
             {
                 writer.WritePropertyName("deferredDeleteTimeRemaining"u8);
                 writer.WriteStringValue(DeferredDeleteTimeRemaining);
             }
-            if (IsDeferredDeleteScheduleUpcoming.HasValue)
+            if (Optional.IsDefined(IsDeferredDeleteScheduleUpcoming))
             {
                 writer.WritePropertyName("isDeferredDeleteScheduleUpcoming"u8);
                 writer.WriteBooleanValue(IsDeferredDeleteScheduleUpcoming.Value);
             }
-            if (IsRehydrate.HasValue)
+            if (Optional.IsDefined(IsRehydrate))
             {
                 writer.WritePropertyName("isRehydrate"u8);
                 writer.WriteBooleanValue(IsRehydrate.Value);
             }
-            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -103,22 +103,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsArchiveEnabled.HasValue)
+            if (Optional.IsDefined(IsArchiveEnabled))
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (PolicyName != null)
+            if (Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (SoftDeleteRetentionPeriodInDays.HasValue)
+            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
             {
                 writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
             }
-            if (options.Format != "W" && VaultId != null)
+            if (options.Format != "W" && Optional.IsDefined(VaultId))
             {
                 writer.WritePropertyName("vaultId"u8);
                 writer.WriteStringValue(VaultId);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupGenericProtectedItem DeserializeBackupGenericProtectedItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureIaaSVMProtectedItem": return IaasVmProtectedItem.DeserializeIaasVmProtectedItem(element, options);
                     case "AzureVmWorkloadProtectedItem": return VmWorkloadProtectedItem.DeserializeVmWorkloadProtectedItem(element, options);
                     case "AzureVmWorkloadSAPAseDatabase": return VmWorkloadSapAseDatabaseProtectedItem.DeserializeVmWorkloadSapAseDatabaseProtectedItem(element, options);
-                    case "AzureVmWorkloadSAPHanaDBInstance": return VmWorkloadSapHanaDBInstanceProtectedItem.DeserializeVmWorkloadSapHanaDBInstanceProtectedItem(element, options);
                     case "AzureVmWorkloadSAPHanaDatabase": return VmWorkloadSapHanaDatabaseProtectedItem.DeserializeVmWorkloadSapHanaDatabaseProtectedItem(element, options);
+                    case "AzureVmWorkloadSAPHanaDBInstance": return VmWorkloadSapHanaDBInstanceProtectedItem.DeserializeVmWorkloadSapHanaDBInstanceProtectedItem(element, options);
                     case "AzureVmWorkloadSQLDatabase": return VmWorkloadSqlDatabaseProtectedItem.DeserializeVmWorkloadSqlDatabaseProtectedItem(element, options);
                     case "DPMProtectedItem": return DpmProtectedItem.DeserializeDpmProtectedItem(element, options);
                     case "GenericProtectedItem": return GenericProtectedItem.DeserializeGenericProtectedItem(element, options);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupGenericProtectedItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support reading '{options.Format}' format.");
             }
         }
 

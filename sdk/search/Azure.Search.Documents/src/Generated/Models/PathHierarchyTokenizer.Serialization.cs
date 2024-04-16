@@ -15,27 +15,27 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Delimiter.HasValue)
+            if (Optional.IsDefined(Delimiter))
             {
                 writer.WritePropertyName("delimiter"u8);
                 writer.WriteStringValue(Delimiter.Value);
             }
-            if (Replacement.HasValue)
+            if (Optional.IsDefined(Replacement))
             {
                 writer.WritePropertyName("replacement"u8);
                 writer.WriteStringValue(Replacement.Value);
             }
-            if (MaxTokenLength.HasValue)
+            if (Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (ReverseTokenOrder.HasValue)
+            if (Optional.IsDefined(ReverseTokenOrder))
             {
                 writer.WritePropertyName("reverse"u8);
                 writer.WriteBooleanValue(ReverseTokenOrder.Value);
             }
-            if (NumberOfTokensToSkip.HasValue)
+            if (Optional.IsDefined(NumberOfTokensToSkip))
             {
                 writer.WritePropertyName("skip"u8);
                 writer.WriteNumberValue(NumberOfTokensToSkip.Value);
@@ -126,6 +126,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 maxTokenLength,
                 reverse,
                 skip);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PathHierarchyTokenizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePathHierarchyTokenizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

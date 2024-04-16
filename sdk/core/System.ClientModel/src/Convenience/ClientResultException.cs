@@ -4,7 +4,6 @@
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Globalization;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,8 +12,7 @@ namespace System.ClientModel;
 /// <summary>
 /// The exception that is thrown when the processing of a client request failed.
 /// </summary>
-[Serializable]
-public class ClientResultException : Exception, ISerializable
+public class ClientResultException : Exception
 {
     private const string DefaultMessage = "Service request failed.";
 
@@ -33,6 +31,8 @@ public class ClientResultException : Exception, ISerializable
     /// created.</returns>
     public static async Task<ClientResultException> CreateAsync(PipelineResponse response, Exception? innerException = default)
     {
+        Argument.AssertNotNull(response, nameof(response));
+
         string message = await CreateMessageAsync(response).ConfigureAwait(false);
         return new ClientResultException(message, response, innerException);
     }
@@ -78,27 +78,12 @@ public class ClientResultException : Exception, ISerializable
     /// <param name="innerException">The <see cref="Exception.InnerException"/>,
     /// if any, that threw the current exception.</param>
     public ClientResultException(string message, PipelineResponse? response = default, Exception? innerException = default)
-        : base(message ?? DefaultMessage, innerException)
+        : base(message, innerException)
     {
+        Argument.AssertNotNull(message, nameof(message));
+
         _response = response;
         _status = response?.Status ?? 0;
-    }
-
-    /// <inheritdoc />
-    protected ClientResultException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
-    {
-        _status = info.GetInt32(nameof(Status));
-    }
-
-    /// <inheritdoc />
-    public override void GetObjectData(SerializationInfo info, StreamingContext context)
-    {
-        Argument.AssertNotNull(info, nameof(info));
-
-        info.AddValue(nameof(Status), Status);
-
-        base.GetObjectData(info, context);
     }
 
     /// <summary>
@@ -115,6 +100,8 @@ public class ClientResultException : Exception, ISerializable
 
     private static async ValueTask<string> CreateMessageSyncOrAsync(PipelineResponse response, bool async)
     {
+        Argument.AssertNotNull(response, nameof(response));
+
         if (async)
         {
             await response.BufferContentAsync().ConfigureAwait(false);

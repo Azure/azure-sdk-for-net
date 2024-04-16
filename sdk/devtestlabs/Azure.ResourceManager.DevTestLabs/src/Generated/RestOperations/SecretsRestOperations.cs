@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DevTestLabs.Models;
@@ -90,38 +89,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecretList>> ListAsync(string subscriptionId, string resourceGroupName, string labName, string userName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labName == null)
-            {
-                throw new ArgumentNullException(nameof(labName));
-            }
-            if (labName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (userName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, labName, userName, expand, filter, top, orderby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -153,38 +124,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecretList> List(string subscriptionId, string resourceGroupName, string labName, string userName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labName == null)
-            {
-                throw new ArgumentNullException(nameof(labName));
-            }
-            if (labName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (userName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, labName, userName, expand, filter, top, orderby);
             _pipeline.Send(message, cancellationToken);
@@ -242,46 +185,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DevTestLabSecretData>> GetAsync(string subscriptionId, string resourceGroupName, string labName, string userName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labName == null)
-            {
-                throw new ArgumentNullException(nameof(labName));
-            }
-            if (labName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (userName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, labName, userName, name, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -313,46 +221,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DevTestLabSecretData> Get(string subscriptionId, string resourceGroupName, string labName, string userName, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labName == null)
-            {
-                throw new ArgumentNullException(nameof(labName));
-            }
-            if (labName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (userName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, labName, userName, name, expand);
             _pipeline.Send(message, cancellationToken);
@@ -394,7 +267,7 @@ namespace Azure.ResourceManager.DevTestLabs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -412,50 +285,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string labName, string userName, string name, DevTestLabSecretData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labName == null)
-            {
-                throw new ArgumentNullException(nameof(labName));
-            }
-            if (labName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (userName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, labName, userName, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -481,50 +316,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string labName, string userName, string name, DevTestLabSecretData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labName == null)
-            {
-                throw new ArgumentNullException(nameof(labName));
-            }
-            if (labName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (userName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, labName, userName, name, data);
             _pipeline.Send(message, cancellationToken);
@@ -573,46 +370,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string labName, string userName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labName == null)
-            {
-                throw new ArgumentNullException(nameof(labName));
-            }
-            if (labName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (userName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, labName, userName, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -637,46 +399,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string labName, string userName, string name, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labName == null)
-            {
-                throw new ArgumentNullException(nameof(labName));
-            }
-            if (labName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (userName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, labName, userName, name);
             _pipeline.Send(message, cancellationToken);
@@ -712,7 +439,7 @@ namespace Azure.ResourceManager.DevTestLabs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -730,50 +457,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DevTestLabSecretData>> UpdateAsync(string subscriptionId, string resourceGroupName, string labName, string userName, string name, DevTestLabSecretPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labName == null)
-            {
-                throw new ArgumentNullException(nameof(labName));
-            }
-            if (labName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (userName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, labName, userName, name, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -803,50 +492,12 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/>, <paramref name="userName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DevTestLabSecretData> Update(string subscriptionId, string resourceGroupName, string labName, string userName, string name, DevTestLabSecretPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labName == null)
-            {
-                throw new ArgumentNullException(nameof(labName));
-            }
-            if (labName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (userName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userName));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, labName, userName, name, patch);
             _pipeline.Send(message, cancellationToken);
@@ -893,42 +544,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SecretList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string labName, string userName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labName == null)
-            {
-                throw new ArgumentNullException(nameof(labName));
-            }
-            if (labName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (userName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, labName, userName, expand, filter, top, orderby);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -961,42 +581,11 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="labName"/> or <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SecretList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string labName, string userName, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (labName == null)
-            {
-                throw new ArgumentNullException(nameof(labName));
-            }
-            if (labName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(labName));
-            }
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-            if (userName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(userName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, labName, userName, expand, filter, top, orderby);
             _pipeline.Send(message, cancellationToken);

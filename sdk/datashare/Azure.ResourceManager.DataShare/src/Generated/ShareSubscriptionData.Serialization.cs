@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.DataShare
 {
     public partial class ShareSubscriptionData : IUtf8JsonSerializable, IJsonModel<ShareSubscriptionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareSubscriptionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareSubscriptionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ShareSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ShareSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareSubscriptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareSubscriptionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,78 +43,78 @@ namespace Azure.ResourceManager.DataShare
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WritePropertyName("invitationId"u8);
             writer.WriteStringValue(InvitationId);
-            if (options.Format != "W" && ProviderEmail != null)
+            if (options.Format != "W" && Optional.IsDefined(ProviderEmail))
             {
                 writer.WritePropertyName("providerEmail"u8);
                 writer.WriteStringValue(ProviderEmail);
             }
-            if (options.Format != "W" && ProviderName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProviderName))
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (options.Format != "W" && ProviderTenantName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProviderTenantName))
             {
                 writer.WritePropertyName("providerTenantName"u8);
                 writer.WriteStringValue(ProviderTenantName);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ShareDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(ShareDescription))
             {
                 writer.WritePropertyName("shareDescription"u8);
                 writer.WriteStringValue(ShareDescription);
             }
-            if (options.Format != "W" && ShareKind.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ShareKind))
             {
                 writer.WritePropertyName("shareKind"u8);
                 writer.WriteStringValue(ShareKind.Value.ToString());
             }
-            if (options.Format != "W" && ShareName != null)
+            if (options.Format != "W" && Optional.IsDefined(ShareName))
             {
                 writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
             }
-            if (options.Format != "W" && ShareSubscriptionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ShareSubscriptionStatus))
             {
                 writer.WritePropertyName("shareSubscriptionStatus"u8);
                 writer.WriteStringValue(ShareSubscriptionStatus.Value.ToString());
             }
-            if (options.Format != "W" && ShareTerms != null)
+            if (options.Format != "W" && Optional.IsDefined(ShareTerms))
             {
                 writer.WritePropertyName("shareTerms"u8);
                 writer.WriteStringValue(ShareTerms);
             }
             writer.WritePropertyName("sourceShareLocation"u8);
             writer.WriteStringValue(SourceShareLocation);
-            if (options.Format != "W" && UserEmail != null)
+            if (options.Format != "W" && Optional.IsDefined(UserEmail))
             {
                 writer.WritePropertyName("userEmail"u8);
                 writer.WriteStringValue(UserEmail);
             }
-            if (options.Format != "W" && UserName != null)
+            if (options.Format != "W" && Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataShare
             var format = options.Format == "W" ? ((IPersistableModel<ShareSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareSubscriptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareSubscriptionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataShare
 
         internal static ShareSubscriptionData DeserializeShareSubscriptionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataShare
             string userEmail = default;
             string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -314,10 +314,10 @@ namespace Azure.ResourceManager.DataShare
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ShareSubscriptionData(
                 id,
                 name,
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DataShare
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ShareSubscriptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareSubscriptionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.DataShare
                         return DeserializeShareSubscriptionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ShareSubscriptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareSubscriptionData)} does not support reading '{options.Format}' format.");
             }
         }
 

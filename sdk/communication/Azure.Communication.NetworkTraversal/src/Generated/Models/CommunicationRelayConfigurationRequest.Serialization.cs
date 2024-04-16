@@ -15,22 +15,30 @@ namespace Azure.Communication.NetworkTraversal
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (RouteType.HasValue)
+            if (Optional.IsDefined(RouteType))
             {
                 writer.WritePropertyName("routeType"u8);
                 writer.WriteStringValue(RouteType.Value.ToString());
             }
-            if (Ttl.HasValue)
+            if (Optional.IsDefined(Ttl))
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(Ttl.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

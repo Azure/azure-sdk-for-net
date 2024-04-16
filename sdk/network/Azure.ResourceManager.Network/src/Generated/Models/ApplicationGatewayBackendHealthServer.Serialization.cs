@@ -10,39 +10,38 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewayBackendHealthServer : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayBackendHealthServer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayBackendHealthServer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayBackendHealthServer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewayBackendHealthServer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHealthServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthServer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (IPConfiguration != null)
+            if (Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
-                writer.WriteObjectValue(IPConfiguration);
+                writer.WriteObjectValue(IPConfiguration, options);
             }
-            if (Health.HasValue)
+            if (Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (HealthProbeLog != null)
+            if (Optional.IsDefined(HealthProbeLog))
             {
                 writer.WritePropertyName("healthProbeLog"u8);
                 writer.WriteStringValue(HealthProbeLog);
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHealthServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthServer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayBackendHealthServer DeserializeApplicationGatewayBackendHealthServer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             ApplicationGatewayBackendHealthServerHealth? health = default;
             string healthProbeLog = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -123,10 +122,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationGatewayBackendHealthServer(address, ipConfiguration, health, healthProbeLog, serializedAdditionalRawData);
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthServer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +154,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayBackendHealthServer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthServer)} does not support reading '{options.Format}' format.");
             }
         }
 

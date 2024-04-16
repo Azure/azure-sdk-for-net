@@ -15,49 +15,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class AccessControlListMatchConfiguration : IUtf8JsonSerializable, IJsonModel<AccessControlListMatchConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessControlListMatchConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessControlListMatchConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AccessControlListMatchConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MatchConfigurationName != null)
+            if (Optional.IsDefined(MatchConfigurationName))
             {
                 writer.WritePropertyName("matchConfigurationName"u8);
                 writer.WriteStringValue(MatchConfigurationName);
             }
-            if (SequenceNumber.HasValue)
+            if (Optional.IsDefined(SequenceNumber))
             {
                 writer.WritePropertyName("sequenceNumber"u8);
                 writer.WriteNumberValue(SequenceNumber.Value);
             }
-            if (IPAddressType.HasValue)
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType.Value.ToString());
             }
-            if (!(MatchConditions is ChangeTrackingList<AccessControlListMatchCondition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchConditions))
             {
                 writer.WritePropertyName("matchConditions"u8);
                 writer.WriteStartArray();
                 foreach (var item in MatchConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Actions is ChangeTrackingList<AccessControlListAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccessControlListMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static AccessControlListMatchConfiguration DeserializeAccessControlListMatchConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IList<AccessControlListMatchCondition> matchConditions = default;
             IList<AccessControlListAction> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matchConfigurationName"u8))
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AccessControlListMatchConfiguration(
                 matchConfigurationName,
                 sequenceNumber,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeAccessControlListMatchConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccessControlListMatchConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

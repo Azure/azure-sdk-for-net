@@ -16,68 +16,68 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class HyperVIPConfigDetails : IUtf8JsonSerializable, IJsonModel<HyperVIPConfigDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVIPConfigDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVIPConfigDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HyperVIPConfigDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HyperVIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (IsPrimary.HasValue)
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("isPrimary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
             }
-            if (SubnetName != null)
+            if (Optional.IsDefined(SubnetName))
             {
                 writer.WritePropertyName("subnetName"u8);
                 writer.WriteStringValue(SubnetName);
             }
-            if (StaticIPAddress != null)
+            if (Optional.IsDefined(StaticIPAddress))
             {
                 writer.WritePropertyName("staticIPAddress"u8);
                 writer.WriteStringValue(StaticIPAddress.ToString());
             }
-            if (IPAddressType != null)
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType);
             }
-            if (IsSeletedForFailover.HasValue)
+            if (Optional.IsDefined(IsSeletedForFailover))
             {
                 writer.WritePropertyName("isSeletedForFailover"u8);
                 writer.WriteBooleanValue(IsSeletedForFailover.Value);
             }
-            if (RecoverySubnetName != null)
+            if (Optional.IsDefined(RecoverySubnetName))
             {
                 writer.WritePropertyName("recoverySubnetName"u8);
                 writer.WriteStringValue(RecoverySubnetName);
             }
-            if (RecoveryStaticIPAddress != null)
+            if (Optional.IsDefined(RecoveryStaticIPAddress))
             {
                 writer.WritePropertyName("recoveryStaticIPAddress"u8);
                 writer.WriteStringValue(RecoveryStaticIPAddress.ToString());
             }
-            if (RecoveryIPAddressType != null)
+            if (Optional.IsDefined(RecoveryIPAddressType))
             {
                 writer.WritePropertyName("recoveryIPAddressType"u8);
                 writer.WriteStringValue(RecoveryIPAddressType);
             }
-            if (RecoveryPublicIPAddressId != null)
+            if (Optional.IsDefined(RecoveryPublicIPAddressId))
             {
                 writer.WritePropertyName("recoveryPublicIPAddressId"u8);
                 writer.WriteStringValue(RecoveryPublicIPAddressId);
             }
-            if (!(RecoveryLBBackendAddressPoolIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RecoveryLBBackendAddressPoolIds))
             {
                 writer.WritePropertyName("recoveryLBBackendAddressPoolIds"u8);
                 writer.WriteStartArray();
@@ -87,22 +87,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TfoSubnetName != null)
+            if (Optional.IsDefined(TfoSubnetName))
             {
                 writer.WritePropertyName("tfoSubnetName"u8);
                 writer.WriteStringValue(TfoSubnetName);
             }
-            if (TfoStaticIPAddress != null)
+            if (Optional.IsDefined(TfoStaticIPAddress))
             {
                 writer.WritePropertyName("tfoStaticIPAddress"u8);
                 writer.WriteStringValue(TfoStaticIPAddress.ToString());
             }
-            if (TfoPublicIPAddressId != null)
+            if (Optional.IsDefined(TfoPublicIPAddressId))
             {
                 writer.WritePropertyName("tfoPublicIPAddressId"u8);
                 writer.WriteStringValue(TfoPublicIPAddressId);
             }
-            if (!(TfoLBBackendAddressPoolIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TfoLBBackendAddressPoolIds))
             {
                 writer.WritePropertyName("tfoLBBackendAddressPoolIds"u8);
                 writer.WriteStartArray();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static HyperVIPConfigDetails DeserializeHyperVIPConfigDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier tfoPublicIPAddressId = default;
             IReadOnlyList<string> tfoLBBackendAddressPoolIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVIPConfigDetails(
                 name,
                 isPrimary,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeHyperVIPConfigDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

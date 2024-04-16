@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <exception cref="ArgumentNullException"> <paramref name="supportedValues"/> is null. </exception>
         public FilterableProperty(SupportedFilterType supportedFilterType, IEnumerable<string> supportedValues)
         {
-            if (supportedValues == null)
-            {
-                throw new ArgumentNullException(nameof(supportedValues));
-            }
+            Argument.AssertNotNull(supportedValues, nameof(supportedValues));
 
             SupportedFilterType = supportedFilterType;
             SupportedValues = supportedValues.ToList();

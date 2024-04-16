@@ -18,22 +18,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SessionId != null)
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (Command.HasValue)
+            if (Optional.IsDefined(Command))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStringValue(Command.Value.ToString());
             }
-            if (CommandPayload != null)
+            if (Optional.IsDefined(CommandPayload))
             {
                 writer.WritePropertyName("commandPayload"u8);
                 writer.WriteObjectValue(CommandPayload);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class DataFlowDebugCommandRequestConverter : JsonConverter<DataFlowDebugCommandRequest>
@@ -42,6 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override DataFlowDebugCommandRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();

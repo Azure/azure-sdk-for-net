@@ -15,45 +15,45 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class ServiceLoadBalancerBgpPeer : IUtf8JsonSerializable, IJsonModel<ServiceLoadBalancerBgpPeer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceLoadBalancerBgpPeer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceLoadBalancerBgpPeer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceLoadBalancerBgpPeer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceLoadBalancerBgpPeer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BfdEnabled.HasValue)
+            if (Optional.IsDefined(BfdEnabled))
             {
                 writer.WritePropertyName("bfdEnabled"u8);
                 writer.WriteStringValue(BfdEnabled.Value.ToString());
             }
-            if (BgpMultiHop.HasValue)
+            if (Optional.IsDefined(BgpMultiHop))
             {
                 writer.WritePropertyName("bgpMultiHop"u8);
                 writer.WriteStringValue(BgpMultiHop.Value.ToString());
             }
-            if (HoldTime != null)
+            if (Optional.IsDefined(HoldTime))
             {
                 writer.WritePropertyName("holdTime"u8);
                 writer.WriteStringValue(HoldTime);
             }
-            if (KeepAliveTime != null)
+            if (Optional.IsDefined(KeepAliveTime))
             {
                 writer.WritePropertyName("keepAliveTime"u8);
                 writer.WriteStringValue(KeepAliveTime);
             }
-            if (MyAsn.HasValue)
+            if (Optional.IsDefined(MyAsn))
             {
                 writer.WritePropertyName("myAsn"u8);
                 writer.WriteNumberValue(MyAsn.Value);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(PeerAddress);
             writer.WritePropertyName("peerAsn"u8);
             writer.WriteNumberValue(PeerAsn);
-            if (PeerPort.HasValue)
+            if (Optional.IsDefined(PeerPort))
             {
                 writer.WritePropertyName("peerPort"u8);
                 writer.WriteNumberValue(PeerPort.Value);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceLoadBalancerBgpPeer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static ServiceLoadBalancerBgpPeer DeserializeServiceLoadBalancerBgpPeer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             long peerAsn = default;
             long? peerPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bfdEnabled"u8))
@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceLoadBalancerBgpPeer(
                 bfdEnabled,
                 bgpMultiHop,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeServiceLoadBalancerBgpPeer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support reading '{options.Format}' format.");
             }
         }
 

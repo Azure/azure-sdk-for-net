@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class DedicatedHostGroupPatch : IUtf8JsonSerializable, IJsonModel<DedicatedHostGroupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHostGroupPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHostGroupPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DedicatedHostGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHostGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHostGroupPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PlatformFaultDomainCount.HasValue)
+            if (Optional.IsDefined(PlatformFaultDomainCount))
             {
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (options.Format != "W" && !(Hosts is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Hosts))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
@@ -65,20 +65,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue(InstanceView, options);
             }
-            if (SupportAutomaticPlacement.HasValue)
+            if (Optional.IsDefined(SupportAutomaticPlacement))
             {
                 writer.WritePropertyName("supportAutomaticPlacement"u8);
                 writer.WriteBooleanValue(SupportAutomaticPlacement.Value);
             }
-            if (AdditionalCapabilities != null)
+            if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue(AdditionalCapabilities);
+                writer.WriteObjectValue(AdditionalCapabilities, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHostGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHostGroupPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DedicatedHostGroupPatch DeserializeDedicatedHostGroupPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? supportAutomaticPlacement = default;
             DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DedicatedHostGroupPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHostGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHostGroupPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDedicatedHostGroupPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHostGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHostGroupPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

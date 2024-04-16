@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -18,18 +17,18 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsWatchlistItemData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsWatchlistItemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsWatchlistItemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsWatchlistItemData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsWatchlistItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsWatchlistItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,54 +48,54 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (WatchlistItemType != null)
+            if (Optional.IsDefined(WatchlistItemType))
             {
                 writer.WritePropertyName("watchlistItemType"u8);
                 writer.WriteStringValue(WatchlistItemType);
             }
-            if (WatchlistItemId != null)
+            if (Optional.IsDefined(WatchlistItemId))
             {
                 writer.WritePropertyName("watchlistItemId"u8);
                 writer.WriteStringValue(WatchlistItemId);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (IsDeleted.HasValue)
+            if (Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (CreatedBy != null)
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                writer.WriteObjectValue(CreatedBy, options);
             }
-            if (UpdatedBy != null)
+            if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy);
+                writer.WriteObjectValue(UpdatedBy, options);
             }
-            if (ItemsKeyValue != null)
+            if (Optional.IsDefined(ItemsKeyValue))
             {
                 writer.WritePropertyName("itemsKeyValue"u8);
 #if NET6_0_OR_GREATER
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
 #endif
             }
-            if (EntityMapping != null)
+            if (Optional.IsDefined(EntityMapping))
             {
                 writer.WritePropertyName("entityMapping"u8);
 #if NET6_0_OR_GREATER
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.SecurityInsights
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsWatchlistItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsWatchlistItemData DeserializeSecurityInsightsWatchlistItemData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -175,7 +174,7 @@ namespace Azure.ResourceManager.SecurityInsights
             BinaryData itemsKeyValue = default;
             BinaryData entityMapping = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -307,10 +306,10 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsWatchlistItemData(
                 id,
                 name,
@@ -339,7 +338,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -355,7 +354,7 @@ namespace Azure.ResourceManager.SecurityInsights
                         return DeserializeSecurityInsightsWatchlistItemData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support reading '{options.Format}' format.");
             }
         }
 

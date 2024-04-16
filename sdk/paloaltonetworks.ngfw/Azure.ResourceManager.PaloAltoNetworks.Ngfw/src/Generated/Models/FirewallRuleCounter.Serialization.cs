@@ -15,57 +15,57 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     public partial class FirewallRuleCounter : IUtf8JsonSerializable, IJsonModel<FirewallRuleCounter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallRuleCounter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallRuleCounter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallRuleCounter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleCounter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("priority"u8);
             writer.WriteStringValue(Priority);
-            if (RuleStackName != null)
+            if (Optional.IsDefined(RuleStackName))
             {
                 writer.WritePropertyName("ruleStackName"u8);
                 writer.WriteStringValue(RuleStackName);
             }
-            if (RuleListName != null)
+            if (Optional.IsDefined(RuleListName))
             {
                 writer.WritePropertyName("ruleListName"u8);
                 writer.WriteStringValue(RuleListName);
             }
-            if (FirewallName != null)
+            if (Optional.IsDefined(FirewallName))
             {
                 writer.WritePropertyName("firewallName"u8);
                 writer.WriteStringValue(FirewallName);
             }
             writer.WritePropertyName("ruleName"u8);
             writer.WriteStringValue(RuleName);
-            if (HitCount.HasValue)
+            if (Optional.IsDefined(HitCount))
             {
                 writer.WritePropertyName("hitCount"u8);
                 writer.WriteNumberValue(HitCount.Value);
             }
-            if (AppSeen != null)
+            if (Optional.IsDefined(AppSeen))
             {
                 writer.WritePropertyName("appSeen"u8);
-                writer.WriteObjectValue(AppSeen);
+                writer.WriteObjectValue(AppSeen, options);
             }
-            if (ResponseOn.HasValue)
+            if (Optional.IsDefined(ResponseOn))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(ResponseOn.Value, "O");
             }
-            if (RequestOn.HasValue)
+            if (Optional.IsDefined(RequestOn))
             {
                 writer.WritePropertyName("requestTimestamp"u8);
                 writer.WriteStringValue(RequestOn.Value, "O");
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleCounter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         internal static FirewallRuleCounter DeserializeFirewallRuleCounter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             DateTimeOffset? requestTimestamp = default;
             DateTimeOffset? lastUpdatedTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("priority"u8))
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FirewallRuleCounter(
                 priority,
                 ruleStackName,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeFirewallRuleCounter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallRuleCounter)} does not support reading '{options.Format}' format.");
             }
         }
 

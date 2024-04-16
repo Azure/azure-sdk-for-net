@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class CheckinManifestInfo : IUtf8JsonSerializable, IJsonModel<CheckinManifestInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckinManifestInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckinManifestInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CheckinManifestInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CheckinManifestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckinManifestInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckinManifestInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteBooleanValue(IsCheckedIn);
             writer.WritePropertyName("statusMessage"u8);
             writer.WriteStringValue(StatusMessage);
-            if (PullRequest != null)
+            if (Optional.IsDefined(PullRequest))
             {
                 writer.WritePropertyName("pullRequest"u8);
                 writer.WriteStringValue(PullRequest);
             }
-            if (CommitId != null)
+            if (Optional.IsDefined(CommitId))
             {
                 writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckinManifestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckinManifestInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckinManifestInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CheckinManifestInfo DeserializeCheckinManifestInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string pullRequest = default;
             string commitId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isCheckedIn"u8))
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CheckinManifestInfo(isCheckedIn, statusMessage, pullRequest, commitId, serializedAdditionalRawData);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CheckinManifestInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckinManifestInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeCheckinManifestInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CheckinManifestInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckinManifestInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

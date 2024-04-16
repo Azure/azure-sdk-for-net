@@ -19,26 +19,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ManagedVirtualNetwork != null)
+            if (Optional.IsDefined(ManagedVirtualNetwork))
             {
                 writer.WritePropertyName("managedVirtualNetwork"u8);
                 writer.WriteObjectValue(ManagedVirtualNetwork);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (ComputeProperties != null)
+            if (Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
                 writer.WriteObjectValue(ComputeProperties);
             }
-            if (SsisProperties != null)
+            if (Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
                 writer.WriteObjectValue(SsisProperties);
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -139,12 +139,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 ssisProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ManagedIntegrationRuntime FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeManagedIntegrationRuntime(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class ManagedIntegrationRuntimeConverter : JsonConverter<ManagedIntegrationRuntime>
         {
             public override void Write(Utf8JsonWriter writer, ManagedIntegrationRuntime model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ManagedIntegrationRuntime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

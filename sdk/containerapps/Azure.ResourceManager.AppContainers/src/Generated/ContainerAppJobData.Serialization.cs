@@ -17,24 +17,24 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppJobData : IUtf8JsonSerializable, IJsonModel<ContainerAppJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppJobData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,39 +62,39 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (EnvironmentId != null)
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (WorkloadProfileName != null)
+            if (Optional.IsDefined(WorkloadProfileName))
             {
                 writer.WritePropertyName("workloadProfileName"u8);
                 writer.WriteStringValue(WorkloadProfileName);
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue(Configuration, options);
             }
-            if (Template != null)
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template);
+                writer.WriteObjectValue(Template, options);
             }
-            if (options.Format != "W" && !(OutboundIPAddresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OutboundIPAddresses))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && EventStreamEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(EventStreamEndpoint))
             {
                 writer.WritePropertyName("eventStreamEndpoint"u8);
                 writer.WriteStringValue(EventStreamEndpoint);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppContainers
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppJobData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppJobData DeserializeContainerAppJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers
             IReadOnlyList<string> outboundIPAddresses = default;
             string eventStreamEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppJobData(
                 id,
                 name,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.AppContainers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.AppContainers
                         return DeserializeContainerAppJobData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppJobData)} does not support reading '{options.Format}' format.");
             }
         }
 

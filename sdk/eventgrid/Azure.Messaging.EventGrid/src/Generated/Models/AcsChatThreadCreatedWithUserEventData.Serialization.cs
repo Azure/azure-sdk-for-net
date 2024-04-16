@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -141,12 +140,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 participants ?? new ChangeTrackingList<AcsChatThreadParticipantProperties>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsChatThreadCreatedWithUserEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsChatThreadCreatedWithUserEventData(document.RootElement);
+        }
+
         internal partial class AcsChatThreadCreatedWithUserEventDataConverter : JsonConverter<AcsChatThreadCreatedWithUserEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsChatThreadCreatedWithUserEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AcsChatThreadCreatedWithUserEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -15,44 +15,44 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class MediaJobError : IUtf8JsonSerializable, IJsonModel<MediaJobError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaJobError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Code.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Category.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (options.Format != "W" && Retry.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry"u8);
                 writer.WriteStringValue(Retry.Value.ToString());
             }
-            if (options.Format != "W" && !(Details is ChangeTrackingList<MediaJobErrorDetail> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaJobError DeserializeMediaJobError(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Media.Models
             MediaJobRetry? retry = default;
             IReadOnlyList<MediaJobErrorDetail> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MediaJobError(
                 code,
                 message,
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaJobError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobError)} does not support reading '{options.Format}' format.");
             }
         }
 

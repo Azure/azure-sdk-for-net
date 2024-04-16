@@ -15,58 +15,58 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class ApplicationInsightsComponentExportRequest : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentExportRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentExportRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentExportRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationInsightsComponentExportRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecordTypes != null)
+            if (Optional.IsDefined(RecordTypes))
             {
                 writer.WritePropertyName("RecordTypes"u8);
                 writer.WriteStringValue(RecordTypes);
             }
-            if (DestinationType != null)
+            if (Optional.IsDefined(DestinationType))
             {
                 writer.WritePropertyName("DestinationType"u8);
                 writer.WriteStringValue(DestinationType);
             }
-            if (DestinationAddress != null)
+            if (Optional.IsDefined(DestinationAddress))
             {
                 writer.WritePropertyName("DestinationAddress"u8);
                 writer.WriteStringValue(DestinationAddress);
             }
-            if (IsEnabled != null)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("IsEnabled"u8);
                 writer.WriteStringValue(IsEnabled);
             }
-            if (NotificationQueueEnabled != null)
+            if (Optional.IsDefined(NotificationQueueEnabled))
             {
                 writer.WritePropertyName("NotificationQueueEnabled"u8);
                 writer.WriteStringValue(NotificationQueueEnabled);
             }
-            if (NotificationQueueUri != null)
+            if (Optional.IsDefined(NotificationQueueUri))
             {
                 writer.WritePropertyName("NotificationQueueUri"u8);
                 writer.WriteStringValue(NotificationQueueUri.AbsoluteUri);
             }
-            if (DestinationStorageSubscriptionId != null)
+            if (Optional.IsDefined(DestinationStorageSubscriptionId))
             {
                 writer.WritePropertyName("DestinationStorageSubscriptionId"u8);
                 writer.WriteStringValue(DestinationStorageSubscriptionId);
             }
-            if (DestinationStorageLocationId != null)
+            if (Optional.IsDefined(DestinationStorageLocationId))
             {
                 writer.WritePropertyName("DestinationStorageLocationId"u8);
                 writer.WriteStringValue(DestinationStorageLocationId);
             }
-            if (DestinationAccountId != null)
+            if (Optional.IsDefined(DestinationAccountId))
             {
                 writer.WritePropertyName("DestinationAccountId"u8);
                 writer.WriteStringValue(DestinationAccountId);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentExportRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static ApplicationInsightsComponentExportRequest DeserializeApplicationInsightsComponentExportRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string destinationStorageLocationId = default;
             string destinationAccountId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("RecordTypes"u8))
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationInsightsComponentExportRequest(
                 recordTypes,
                 destinationType,
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeApplicationInsightsComponentExportRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentExportRequest)} does not support reading '{options.Format}' format.");
             }
         }
 

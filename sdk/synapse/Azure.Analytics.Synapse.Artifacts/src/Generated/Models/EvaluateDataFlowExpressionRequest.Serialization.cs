@@ -18,27 +18,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SessionId != null)
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (DataFlowName != null)
+            if (Optional.IsDefined(DataFlowName))
             {
                 writer.WritePropertyName("dataFlowName"u8);
                 writer.WriteStringValue(DataFlowName);
             }
-            if (StreamName != null)
+            if (Optional.IsDefined(StreamName))
             {
                 writer.WritePropertyName("streamName"u8);
                 writer.WriteStringValue(StreamName);
             }
-            if (RowLimits.HasValue)
+            if (Optional.IsDefined(RowLimits))
             {
                 writer.WritePropertyName("rowLimits"u8);
                 writer.WriteNumberValue(RowLimits.Value);
             }
-            if (Expression != null)
+            if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
@@ -92,12 +92,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new EvaluateDataFlowExpressionRequest(sessionId, dataFlowName, streamName, rowLimits, expression);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EvaluateDataFlowExpressionRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEvaluateDataFlowExpressionRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class EvaluateDataFlowExpressionRequestConverter : JsonConverter<EvaluateDataFlowExpressionRequest>
         {
             public override void Write(Utf8JsonWriter writer, EvaluateDataFlowExpressionRequest model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override EvaluateDataFlowExpressionRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

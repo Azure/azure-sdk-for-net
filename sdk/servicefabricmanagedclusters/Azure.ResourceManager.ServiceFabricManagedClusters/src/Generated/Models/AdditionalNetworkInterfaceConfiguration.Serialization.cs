@@ -16,25 +16,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public partial class AdditionalNetworkInterfaceConfiguration : IUtf8JsonSerializable, IJsonModel<AdditionalNetworkInterfaceConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdditionalNetworkInterfaceConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdditionalNetworkInterfaceConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdditionalNetworkInterfaceConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AdditionalNetworkInterfaceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalNetworkInterfaceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdditionalNetworkInterfaceConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (EnableAcceleratedNetworking.HasValue)
+            if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
-            if (DscpConfiguration != null)
+            if (Optional.IsDefined(DscpConfiguration))
             {
                 writer.WritePropertyName("dscpConfiguration"u8);
                 JsonSerializer.Serialize(writer, DscpConfiguration);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartArray();
             foreach (var item in IPConfigurations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdditionalNetworkInterfaceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalNetworkInterfaceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdditionalNetworkInterfaceConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static AdditionalNetworkInterfaceConfiguration DeserializeAdditionalNetworkInterfaceConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             WritableSubResource dscpConfiguration = default;
             IList<ServiceFabricManagedClusterIPConfiguration> ipConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AdditionalNetworkInterfaceConfiguration(name, enableAcceleratedNetworking, dscpConfiguration, ipConfigurations, serializedAdditionalRawData);
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalNetworkInterfaceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdditionalNetworkInterfaceConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeAdditionalNetworkInterfaceConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalNetworkInterfaceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdditionalNetworkInterfaceConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.DataMigration.Models
     [PersistableModelProxy(typeof(UnknownConnectToSourceSqlServerTaskOutput))]
     public partial class ConnectToSourceSqlServerTaskOutput : IUtf8JsonSerializable, IJsonModel<ConnectToSourceSqlServerTaskOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceSqlServerTaskOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceSqlServerTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectToSourceSqlServerTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToSourceSqlServerTaskOutput DeserializeConnectToSourceSqlServerTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectToSourceSqlServerTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

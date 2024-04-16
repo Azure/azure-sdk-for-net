@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     public partial class GuestConfigurationNavigation : IUtf8JsonSerializable, IJsonModel<GuestConfigurationNavigation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationNavigation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationNavigation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GuestConfigurationNavigation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 if (Kind != null)
                 {
@@ -38,27 +38,27 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("kind");
                 }
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (ContentUri != null)
+            if (Optional.IsDefined(ContentUri))
             {
                 writer.WritePropertyName("contentUri"u8);
                 writer.WriteStringValue(ContentUri.AbsoluteUri);
             }
-            if (ContentHash != null)
+            if (Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
                 writer.WriteStringValue(ContentHash);
             }
-            if (AssignmentType.HasValue)
+            if (Optional.IsDefined(AssignmentType))
             {
                 if (AssignmentType != null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("assignmentType");
                 }
             }
-            if (options.Format != "W" && AssignmentSource != null)
+            if (options.Format != "W" && Optional.IsDefined(AssignmentSource))
             {
                 if (AssignmentSource != null)
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("assignmentSource");
                 }
             }
-            if (options.Format != "W" && ContentType != null)
+            if (options.Format != "W" && Optional.IsDefined(ContentType))
             {
                 if (ContentType != null)
                 {
@@ -94,32 +94,32 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     writer.WriteNull("contentType");
                 }
             }
-            if (!(ConfigurationParameters is ChangeTrackingList<GuestConfigurationParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationParameters))
             {
                 writer.WritePropertyName("configurationParameter"u8);
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ConfigurationProtectedParameters is ChangeTrackingList<GuestConfigurationParameter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedParameters))
             {
                 writer.WritePropertyName("configurationProtectedParameter"u8);
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationProtectedParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ConfigurationSetting != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationSetting))
             {
                 if (ConfigurationSetting != null)
                 {
                     writer.WritePropertyName("configurationSetting"u8);
-                    writer.WriteObjectValue(ConfigurationSetting);
+                    writer.WriteObjectValue(ConfigurationSetting, options);
                 }
                 else
                 {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationNavigation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationNavigation DeserializeGuestConfigurationNavigation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             IList<GuestConfigurationParameter> configurationProtectedParameter = default;
             LcmConfigurationSetting configurationSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -283,10 +283,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GuestConfigurationNavigation(
                 kind,
                 name,
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeGuestConfigurationNavigation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationNavigation)} does not support reading '{options.Format}' format.");
             }
         }
 

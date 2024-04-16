@@ -15,43 +15,43 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicApiResourceGeneralInformation : IUtf8JsonSerializable, IJsonModel<LogicApiResourceGeneralInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiResourceGeneralInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiResourceGeneralInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicApiResourceGeneralInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiResourceGeneralInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiResourceGeneralInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiResourceGeneralInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IconUri != null)
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("iconUrl"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (TermsOfUseUri != null)
+            if (Optional.IsDefined(TermsOfUseUri))
             {
                 writer.WritePropertyName("termsOfUseUrl"u8);
                 writer.WriteStringValue(TermsOfUseUri.AbsoluteUri);
             }
-            if (ReleaseTag != null)
+            if (Optional.IsDefined(ReleaseTag))
             {
                 writer.WritePropertyName("releaseTag"u8);
                 writer.WriteStringValue(ReleaseTag);
             }
-            if (Tier.HasValue)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiResourceGeneralInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiResourceGeneralInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiResourceGeneralInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicApiResourceGeneralInformation DeserializeLogicApiResourceGeneralInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Logic.Models
             string releaseTag = default;
             LogicApiTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("iconUrl"u8))
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogicApiResourceGeneralInformation(
                 iconUrl,
                 displayName,
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiResourceGeneralInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiResourceGeneralInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicApiResourceGeneralInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiResourceGeneralInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiResourceGeneralInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

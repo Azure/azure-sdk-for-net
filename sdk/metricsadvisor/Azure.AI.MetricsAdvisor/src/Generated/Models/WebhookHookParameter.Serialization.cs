@@ -18,17 +18,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(Endpoint);
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (!(Headers is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (CertificateKey != null)
+            if (Optional.IsDefined(CertificateKey))
             {
                 writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
-            if (CertificatePassword != null)
+            if (Optional.IsDefined(CertificatePassword))
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
@@ -113,6 +113,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 headers ?? new ChangeTrackingDictionary<string, string>(),
                 certificateKey,
                 certificatePassword);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebhookHookParameter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebhookHookParameter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

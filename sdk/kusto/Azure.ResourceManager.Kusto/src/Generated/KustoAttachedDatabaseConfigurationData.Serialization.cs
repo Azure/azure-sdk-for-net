@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Kusto
 {
     public partial class KustoAttachedDatabaseConfigurationData : IUtf8JsonSerializable, IJsonModel<KustoAttachedDatabaseConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoAttachedDatabaseConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoAttachedDatabaseConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoAttachedDatabaseConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KustoAttachedDatabaseConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoAttachedDatabaseConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoAttachedDatabaseConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,29 +48,29 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (ClusterResourceId != null)
+            if (Optional.IsDefined(ClusterResourceId))
             {
                 writer.WritePropertyName("clusterResourceId"u8);
                 writer.WriteStringValue(ClusterResourceId);
             }
-            if (options.Format != "W" && !(AttachedDatabaseNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedDatabaseNames))
             {
                 writer.WritePropertyName("attachedDatabaseNames"u8);
                 writer.WriteStartArray();
@@ -80,22 +80,22 @@ namespace Azure.ResourceManager.Kusto
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultPrincipalsModificationKind.HasValue)
+            if (Optional.IsDefined(DefaultPrincipalsModificationKind))
             {
                 writer.WritePropertyName("defaultPrincipalsModificationKind"u8);
                 writer.WriteStringValue(DefaultPrincipalsModificationKind.Value.ToString());
             }
-            if (TableLevelSharingProperties != null)
+            if (Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue(TableLevelSharingProperties);
+                writer.WriteObjectValue(TableLevelSharingProperties, options);
             }
-            if (DatabaseNameOverride != null)
+            if (Optional.IsDefined(DatabaseNameOverride))
             {
                 writer.WritePropertyName("databaseNameOverride"u8);
                 writer.WriteStringValue(DatabaseNameOverride);
             }
-            if (DatabaseNamePrefix != null)
+            if (Optional.IsDefined(DatabaseNamePrefix))
             {
                 writer.WritePropertyName("databaseNamePrefix"u8);
                 writer.WriteStringValue(DatabaseNamePrefix);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Kusto
             var format = options.Format == "W" ? ((IPersistableModel<KustoAttachedDatabaseConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoAttachedDatabaseConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoAttachedDatabaseConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Kusto
 
         internal static KustoAttachedDatabaseConfigurationData DeserializeKustoAttachedDatabaseConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Kusto
             string databaseNameOverride = default;
             string databaseNamePrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.Kusto
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KustoAttachedDatabaseConfigurationData(
                 id,
                 name,
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Kusto
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoAttachedDatabaseConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoAttachedDatabaseConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Kusto
                         return DeserializeKustoAttachedDatabaseConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoAttachedDatabaseConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoAttachedDatabaseConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

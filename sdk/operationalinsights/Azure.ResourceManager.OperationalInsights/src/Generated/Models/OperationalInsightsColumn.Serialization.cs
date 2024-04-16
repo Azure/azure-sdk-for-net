@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,48 +16,48 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 {
     public partial class OperationalInsightsColumn : IUtf8JsonSerializable, IJsonModel<OperationalInsightsColumn>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsColumn>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsColumn>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationalInsightsColumn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsColumn>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsColumn)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsColumn)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ColumnType.HasValue)
+            if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ColumnType.Value.ToString());
             }
-            if (DataTypeHint.HasValue)
+            if (Optional.IsDefined(DataTypeHint))
             {
                 writer.WritePropertyName("dataTypeHint"u8);
                 writer.WriteStringValue(DataTypeHint.Value.ToString());
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && IsDefaultDisplay.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDefaultDisplay))
             {
                 writer.WritePropertyName("isDefaultDisplay"u8);
                 writer.WriteBooleanValue(IsDefaultDisplay.Value);
             }
-            if (options.Format != "W" && IsHidden.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsHidden))
             {
                 writer.WritePropertyName("isHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsColumn>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsColumn)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsColumn)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsColumn DeserializeOperationalInsightsColumn(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +108,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             bool? isDefaultDisplay = default;
             bool? isHidden = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -163,10 +164,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OperationalInsightsColumn(
                 name,
                 type,
@@ -178,6 +179,145 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ColumnType), out propertyOverride);
+            if (Optional.IsDefined(ColumnType) || hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ColumnType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataTypeHint), out propertyOverride);
+            if (Optional.IsDefined(DataTypeHint) || hasPropertyOverride)
+            {
+                builder.Append("  dataTypeHint: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DataTypeHint.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (Optional.IsDefined(DisplayName) || hasPropertyOverride)
+            {
+                builder.Append("  displayName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (Optional.IsDefined(Description) || hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefaultDisplay), out propertyOverride);
+            if (Optional.IsDefined(IsDefaultDisplay) || hasPropertyOverride)
+            {
+                builder.Append("  isDefaultDisplay: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDefaultDisplay.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHidden), out propertyOverride);
+            if (Optional.IsDefined(IsHidden) || hasPropertyOverride)
+            {
+                builder.Append("  isHidden: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsHidden.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<OperationalInsightsColumn>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsColumn>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,8 +326,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsColumn)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsColumn)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +345,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsColumn(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsColumn)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsColumn)} does not support reading '{options.Format}' format.");
             }
         }
 

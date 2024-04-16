@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,14 +18,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class LongTermRetentionBackupData : IUtf8JsonSerializable, IJsonModel<LongTermRetentionBackupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LongTermRetentionBackupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LongTermRetentionBackupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LongTermRetentionBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LongTermRetentionBackupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LongTermRetentionBackupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,59 +44,59 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && ServerCreateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServerCreateOn))
             {
                 writer.WritePropertyName("serverCreateTime"u8);
                 writer.WriteStringValue(ServerCreateOn.Value, "O");
             }
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && DatabaseDeletedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseDeletedOn))
             {
                 writer.WritePropertyName("databaseDeletionTime"u8);
                 writer.WriteStringValue(DatabaseDeletedOn.Value, "O");
             }
-            if (options.Format != "W" && BackupOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupOn))
             {
                 writer.WritePropertyName("backupTime"u8);
                 writer.WriteStringValue(BackupOn.Value, "O");
             }
-            if (options.Format != "W" && BackupExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupExpireOn))
             {
                 writer.WritePropertyName("backupExpirationTime"u8);
                 writer.WriteStringValue(BackupExpireOn.Value, "O");
             }
-            if (options.Format != "W" && BackupStorageRedundancy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupStorageRedundancy))
             {
                 writer.WritePropertyName("backupStorageRedundancy"u8);
                 writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
             }
-            if (RequestedBackupStorageRedundancy.HasValue)
+            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
-            if (IsBackupImmutable.HasValue)
+            if (Optional.IsDefined(IsBackupImmutable))
             {
                 writer.WritePropertyName("isBackupImmutable"u8);
                 writer.WriteBooleanValue(IsBackupImmutable.Value);
             }
-            if (options.Format != "W" && BackupStorageAccessTier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BackupStorageAccessTier))
             {
                 writer.WritePropertyName("backupStorageAccessTier"u8);
                 writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionBackupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LongTermRetentionBackupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LongTermRetentionBackupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static LongTermRetentionBackupData DeserializeLongTermRetentionBackupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.Sql
             bool? isBackupImmutable = default;
             SqlBackupStorageAccessTier? backupStorageAccessTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -277,10 +278,10 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LongTermRetentionBackupData(
                 id,
                 name,
@@ -299,6 +300,235 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerName), out propertyOverride);
+            if (Optional.IsDefined(ServerName) || hasPropertyOverride)
+            {
+                builder.Append("    serverName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ServerName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServerName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServerName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerCreateOn), out propertyOverride);
+            if (Optional.IsDefined(ServerCreateOn) || hasPropertyOverride)
+            {
+                builder.Append("    serverCreateTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(ServerCreateOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
+            if (Optional.IsDefined(DatabaseName) || hasPropertyOverride)
+            {
+                builder.Append("    databaseName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DatabaseName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DatabaseName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DatabaseName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseDeletedOn), out propertyOverride);
+            if (Optional.IsDefined(DatabaseDeletedOn) || hasPropertyOverride)
+            {
+                builder.Append("    databaseDeletionTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(DatabaseDeletedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupOn), out propertyOverride);
+            if (Optional.IsDefined(BackupOn) || hasPropertyOverride)
+            {
+                builder.Append("    backupTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(BackupOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupExpireOn), out propertyOverride);
+            if (Optional.IsDefined(BackupExpireOn) || hasPropertyOverride)
+            {
+                builder.Append("    backupExpirationTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(BackupExpireOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageRedundancy), out propertyOverride);
+            if (Optional.IsDefined(BackupStorageRedundancy) || hasPropertyOverride)
+            {
+                builder.Append("    backupStorageRedundancy: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{BackupStorageRedundancy.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedBackupStorageRedundancy), out propertyOverride);
+            if (Optional.IsDefined(RequestedBackupStorageRedundancy) || hasPropertyOverride)
+            {
+                builder.Append("    requestedBackupStorageRedundancy: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{RequestedBackupStorageRedundancy.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsBackupImmutable), out propertyOverride);
+            if (Optional.IsDefined(IsBackupImmutable) || hasPropertyOverride)
+            {
+                builder.Append("    isBackupImmutable: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsBackupImmutable.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageAccessTier), out propertyOverride);
+            if (Optional.IsDefined(BackupStorageAccessTier) || hasPropertyOverride)
+            {
+                builder.Append("    backupStorageAccessTier: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{BackupStorageAccessTier.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<LongTermRetentionBackupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionBackupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -307,8 +537,10 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(LongTermRetentionBackupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LongTermRetentionBackupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -324,7 +556,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeLongTermRetentionBackupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LongTermRetentionBackupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LongTermRetentionBackupData)} does not support reading '{options.Format}' format.");
             }
         }
 

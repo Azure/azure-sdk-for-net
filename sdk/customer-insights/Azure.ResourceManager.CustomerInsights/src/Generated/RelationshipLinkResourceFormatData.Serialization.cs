@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class RelationshipLinkResourceFormatData : IUtf8JsonSerializable, IJsonModel<RelationshipLinkResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelationshipLinkResourceFormatData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelationshipLinkResourceFormatData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RelationshipLinkResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RelationshipLinkResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -72,62 +72,62 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (InteractionType != null)
+            if (Optional.IsDefined(InteractionType))
             {
                 writer.WritePropertyName("interactionType"u8);
                 writer.WriteStringValue(InteractionType);
             }
-            if (options.Format != "W" && LinkName != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkName))
             {
                 writer.WritePropertyName("linkName"u8);
                 writer.WriteStringValue(LinkName);
             }
-            if (!(Mappings is ChangeTrackingList<RelationshipLinkFieldMapping> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Mappings))
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in Mappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ProfilePropertyReferences))
             {
                 writer.WritePropertyName("profilePropertyReferences"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProfilePropertyReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (!(RelatedProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(RelatedProfilePropertyReferences))
             {
                 writer.WritePropertyName("relatedProfilePropertyReferences"u8);
                 writer.WriteStartArray();
                 foreach (var item in RelatedProfilePropertyReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (RelationshipName != null)
+            if (Optional.IsDefined(RelationshipName))
             {
                 writer.WritePropertyName("relationshipName"u8);
                 writer.WriteStringValue(RelationshipName);
             }
-            if (options.Format != "W" && RelationshipGuidId != null)
+            if (options.Format != "W" && Optional.IsDefined(RelationshipGuidId))
             {
                 writer.WritePropertyName("relationshipGuidId"u8);
                 writer.WriteStringValue(RelationshipGuidId);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<RelationshipLinkResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CustomerInsights
 
         internal static RelationshipLinkResourceFormatData DeserializeRelationshipLinkResourceFormatData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CustomerInsights
             string relationshipGuidId = default;
             Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -336,10 +336,10 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RelationshipLinkResourceFormatData(
                 id,
                 name,
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.CustomerInsights
                         return DeserializeRelationshipLinkResourceFormatData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelationshipLinkResourceFormatData)} does not support reading '{options.Format}' format.");
             }
         }
 

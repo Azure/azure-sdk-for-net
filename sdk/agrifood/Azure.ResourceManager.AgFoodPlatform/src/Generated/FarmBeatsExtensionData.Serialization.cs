@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     public partial class FarmBeatsExtensionData : IUtf8JsonSerializable, IJsonModel<FarmBeatsExtensionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FarmBeatsExtensionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FarmBeatsExtensionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FarmBeatsExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FarmBeatsExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FarmBeatsExtensionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FarmBeatsExtensionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,65 +43,65 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TargetResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetResourceType))
             {
                 writer.WritePropertyName("targetResourceType"u8);
                 writer.WriteStringValue(TargetResourceType);
             }
-            if (options.Format != "W" && FarmBeatsExtensionId != null)
+            if (options.Format != "W" && Optional.IsDefined(FarmBeatsExtensionId))
             {
                 writer.WritePropertyName("farmBeatsExtensionId"u8);
                 writer.WriteStringValue(FarmBeatsExtensionId);
             }
-            if (options.Format != "W" && FarmBeatsExtensionName != null)
+            if (options.Format != "W" && Optional.IsDefined(FarmBeatsExtensionName))
             {
                 writer.WritePropertyName("farmBeatsExtensionName"u8);
                 writer.WriteStringValue(FarmBeatsExtensionName);
             }
-            if (options.Format != "W" && FarmBeatsExtensionVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(FarmBeatsExtensionVersion))
             {
                 writer.WritePropertyName("farmBeatsExtensionVersion"u8);
                 writer.WriteStringValue(FarmBeatsExtensionVersion);
             }
-            if (options.Format != "W" && PublisherId != null)
+            if (options.Format != "W" && Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ExtensionCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtensionCategory))
             {
                 writer.WritePropertyName("extensionCategory"u8);
                 writer.WriteStringValue(ExtensionCategory);
             }
-            if (options.Format != "W" && ExtensionAuthLink != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtensionAuthLink))
             {
                 writer.WritePropertyName("extensionAuthLink"u8);
                 writer.WriteStringValue(ExtensionAuthLink);
             }
-            if (options.Format != "W" && ExtensionApiDocsLink != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtensionApiDocsLink))
             {
                 writer.WritePropertyName("extensionApiDocsLink"u8);
                 writer.WriteStringValue(ExtensionApiDocsLink);
             }
-            if (options.Format != "W" && !(DetailedInformation is ChangeTrackingList<DetailedInformation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DetailedInformation))
             {
                 writer.WritePropertyName("detailedInformation"u8);
                 writer.WriteStartArray();
                 foreach (var item in DetailedInformation)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             var format = options.Format == "W" ? ((IPersistableModel<FarmBeatsExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FarmBeatsExtensionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FarmBeatsExtensionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         internal static FarmBeatsExtensionData DeserializeFarmBeatsExtensionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             string extensionApiDocsLink = default;
             IReadOnlyList<DetailedInformation> detailedInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -259,10 +259,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FarmBeatsExtensionData(
                 id,
                 name,
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FarmBeatsExtensionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FarmBeatsExtensionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                         return DeserializeFarmBeatsExtensionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FarmBeatsExtensionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FarmBeatsExtensionData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -70,14 +69,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Crops.xml" path="doc/members/member[@name='GetCropAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetCropAsync(string cropId, RequestContext context)
         {
-            if (cropId == null)
-            {
-                throw new ArgumentNullException(nameof(cropId));
-            }
-            if (cropId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cropId));
-            }
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
             using var scope = ClientDiagnostics.CreateScope("Crops.GetCrop");
             scope.Start();
@@ -112,14 +104,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Crops.xml" path="doc/members/member[@name='GetCrop(string,RequestContext)']/*" />
         public virtual Response GetCrop(string cropId, RequestContext context)
         {
-            if (cropId == null)
-            {
-                throw new ArgumentNullException(nameof(cropId));
-            }
-            if (cropId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cropId));
-            }
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
             using var scope = ClientDiagnostics.CreateScope("Crops.GetCrop");
             scope.Start();
@@ -155,18 +140,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Crops.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string cropId, RequestContent content, RequestContext context = null)
         {
-            if (cropId == null)
-            {
-                throw new ArgumentNullException(nameof(cropId));
-            }
-            if (cropId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cropId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Crops.CreateOrUpdate");
             scope.Start();
@@ -202,18 +177,8 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Crops.xml" path="doc/members/member[@name='CreateOrUpdate(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string cropId, RequestContent content, RequestContext context = null)
         {
-            if (cropId == null)
-            {
-                throw new ArgumentNullException(nameof(cropId));
-            }
-            if (cropId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cropId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("Crops.CreateOrUpdate");
             scope.Start();
@@ -248,14 +213,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Crops.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string cropId, RequestContext context = null)
         {
-            if (cropId == null)
-            {
-                throw new ArgumentNullException(nameof(cropId));
-            }
-            if (cropId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cropId));
-            }
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
             using var scope = ClientDiagnostics.CreateScope("Crops.Delete");
             scope.Start();
@@ -290,14 +248,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Crops.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string cropId, RequestContext context = null)
         {
-            if (cropId == null)
-            {
-                throw new ArgumentNullException(nameof(cropId));
-            }
-            if (cropId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(cropId));
-            }
+            Argument.AssertNotNullOrEmpty(cropId, nameof(cropId));
 
             using var scope = ClientDiagnostics.CreateScope("Crops.Delete");
             scope.Start();

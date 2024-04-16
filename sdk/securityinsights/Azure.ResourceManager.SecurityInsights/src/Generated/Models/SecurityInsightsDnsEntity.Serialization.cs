@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsDnsEntity : IUtf8JsonSerializable, IJsonModel<SecurityInsightsDnsEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsDnsEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsDnsEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsDnsEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsDnsEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsDnsEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsDnsEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,27 +74,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && DnsServerIPEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(DnsServerIPEntityId))
             {
                 writer.WritePropertyName("dnsServerIpEntityId"u8);
                 writer.WriteStringValue(DnsServerIPEntityId);
             }
-            if (options.Format != "W" && DomainName != null)
+            if (options.Format != "W" && Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (options.Format != "W" && HostIPAddressEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(HostIPAddressEntityId))
             {
                 writer.WritePropertyName("hostIpAddressEntityId"u8);
                 writer.WriteStringValue(HostIPAddressEntityId);
             }
-            if (options.Format != "W" && !(IPAddressEntityIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddressEntityIds))
             {
                 writer.WritePropertyName("ipAddressEntityIds"u8);
                 writer.WriteStartArray();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsDnsEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsDnsEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsDnsEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsDnsEntity DeserializeSecurityInsightsDnsEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string hostIPAddressEntityId = default;
             IReadOnlyList<string> ipAddressEntityIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsDnsEntity(
                 id,
                 name,
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsDnsEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsDnsEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsDnsEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsDnsEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsDnsEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

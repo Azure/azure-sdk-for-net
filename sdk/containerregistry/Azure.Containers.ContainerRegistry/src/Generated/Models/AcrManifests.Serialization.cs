@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -56,6 +55,14 @@ namespace Azure.Containers.ContainerRegistry
                 }
             }
             return new AcrManifests(registry, imageName, manifests ?? new ChangeTrackingList<ManifestAttributesBase>(), link);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcrManifests FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcrManifests(document.RootElement);
         }
     }
 }

@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     [PersistableModelProxy(typeof(UnknownCustomAlertRule))]
     public partial class CustomAlertRule : IUtf8JsonSerializable, IJsonModel<CustomAlertRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomAlertRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomAlertRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomAlertRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomAlertRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomAlertRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomAlertRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomAlertRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static CustomAlertRule DeserializeCustomAlertRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,6 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "ActiveConnectionsNotInAllowedRange": return ActiveConnectionsNotInAllowedRange.DeserializeActiveConnectionsNotInAllowedRange(element, options);
                     case "AllowlistCustomAlertRule": return AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(element, options);
                     case "AmqpC2DMessagesNotInAllowedRange": return AmqpC2DMessagesNotInAllowedRange.DeserializeAmqpC2DMessagesNotInAllowedRange(element, options);
                     case "AmqpC2DRejectedMessagesNotInAllowedRange": return AmqpC2DRejectedMessagesNotInAllowedRange.DeserializeAmqpC2DRejectedMessagesNotInAllowedRange(element, options);
@@ -102,11 +103,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "MqttD2CMessagesNotInAllowedRange": return MqttD2CMessagesNotInAllowedRange.DeserializeMqttD2CMessagesNotInAllowedRange(element, options);
                     case "ProcessNotAllowed": return ProcessNotAllowed.DeserializeProcessNotAllowed(element, options);
                     case "QueuePurgesNotInAllowedRange": return QueuePurgesNotInAllowedRange.DeserializeQueuePurgesNotInAllowedRange(element, options);
+                    case "ThresholdCustomAlertRule": return ThresholdCustomAlertRule.DeserializeThresholdCustomAlertRule(element, options);
+                    case "TimeWindowCustomAlertRule": return TimeWindowCustomAlertRule.DeserializeTimeWindowCustomAlertRule(element, options);
                     case "TwinUpdatesNotInAllowedRange": return TwinUpdatesNotInAllowedRange.DeserializeTwinUpdatesNotInAllowedRange(element, options);
                     case "UnauthorizedOperationsNotInAllowedRange": return UnauthorizedOperationsNotInAllowedRange.DeserializeUnauthorizedOperationsNotInAllowedRange(element, options);
-                    case "ActiveConnectionsNotInAllowedRange": return ActiveConnectionsNotInAllowedRange.DeserializeActiveConnectionsNotInAllowedRange(element, options);
-                    case "TimeWindowCustomAlertRule": return TimeWindowCustomAlertRule.DeserializeTimeWindowCustomAlertRule(element, options);
-                    case "ThresholdCustomAlertRule": return ThresholdCustomAlertRule.DeserializeThresholdCustomAlertRule(element, options);
                 }
             }
             return UnknownCustomAlertRule.DeserializeUnknownCustomAlertRule(element, options);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomAlertRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomAlertRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeCustomAlertRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomAlertRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomAlertRule)} does not support reading '{options.Format}' format.");
             }
         }
 

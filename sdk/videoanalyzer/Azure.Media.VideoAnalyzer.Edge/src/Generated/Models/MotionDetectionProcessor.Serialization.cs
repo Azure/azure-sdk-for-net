@@ -16,17 +16,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Sensitivity.HasValue)
+            if (Optional.IsDefined(Sensitivity))
             {
                 writer.WritePropertyName("sensitivity"u8);
                 writer.WriteStringValue(Sensitivity.Value.ToString());
             }
-            if (OutputMotionRegion.HasValue)
+            if (Optional.IsDefined(OutputMotionRegion))
             {
                 writer.WritePropertyName("outputMotionRegion"u8);
                 writer.WriteBooleanValue(OutputMotionRegion.Value);
             }
-            if (EventAggregationWindow != null)
+            if (Optional.IsDefined(EventAggregationWindow))
             {
                 writer.WritePropertyName("eventAggregationWindow"u8);
                 writer.WriteStringValue(EventAggregationWindow);
@@ -110,6 +110,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 sensitivity,
                 outputMotionRegion,
                 eventAggregationWindow);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MotionDetectionProcessor FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMotionDetectionProcessor(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

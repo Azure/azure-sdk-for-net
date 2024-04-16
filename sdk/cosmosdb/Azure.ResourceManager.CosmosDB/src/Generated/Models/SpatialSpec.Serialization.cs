@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,23 +17,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class SpatialSpec : IUtf8JsonSerializable, IJsonModel<SpatialSpec>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpatialSpec>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpatialSpec>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SpatialSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SpatialSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpatialSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpatialSpec)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (!(Types is ChangeTrackingList<CosmosDBSpatialType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Types))
             {
                 writer.WritePropertyName("types"u8);
                 writer.WriteStartArray();
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpatialSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpatialSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpatialSpec)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static SpatialSpec DeserializeSpatialSpec(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string path = default;
             IList<CosmosDBSpatialType> types = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -106,11 +108,70 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SpatialSpec(path, types ?? new ChangeTrackingList<CosmosDBSpatialType>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
+            if (Optional.IsDefined(Path) || hasPropertyOverride)
+            {
+                builder.Append("  path: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Path.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Path}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Path}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Types), out propertyOverride);
+            if (Optional.IsCollectionDefined(Types) || hasPropertyOverride)
+            {
+                if (Types.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  types: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Types)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SpatialSpec>.Write(ModelReaderWriterOptions options)
@@ -121,8 +182,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SpatialSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpatialSpec)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +201,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeSpatialSpec(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpatialSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpatialSpec)} does not support reading '{options.Format}' format.");
             }
         }
 

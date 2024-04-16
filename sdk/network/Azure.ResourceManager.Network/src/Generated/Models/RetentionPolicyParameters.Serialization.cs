@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class RetentionPolicyParameters : IUtf8JsonSerializable, IJsonModel<RetentionPolicyParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RetentionPolicyParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RetentionPolicyParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RetentionPolicyParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RetentionPolicyParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RetentionPolicyParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RetentionPolicyParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Days.HasValue)
+            if (Optional.IsDefined(Days))
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteNumberValue(Days.Value);
             }
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<RetentionPolicyParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RetentionPolicyParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RetentionPolicyParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static RetentionPolicyParameters DeserializeRetentionPolicyParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             int? days = default;
             bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("days"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RetentionPolicyParameters(days, enabled, serializedAdditionalRawData);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RetentionPolicyParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RetentionPolicyParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeRetentionPolicyParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RetentionPolicyParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RetentionPolicyParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

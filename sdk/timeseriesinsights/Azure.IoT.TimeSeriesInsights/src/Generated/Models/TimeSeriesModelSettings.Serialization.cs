@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -50,6 +49,14 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
             }
             return new TimeSeriesModelSettings(name, timeSeriesIdProperties ?? new ChangeTrackingList<TimeSeriesIdProperty>(), defaultTypeId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TimeSeriesModelSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTimeSeriesModelSettings(document.RootElement);
         }
     }
 }

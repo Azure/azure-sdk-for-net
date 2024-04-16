@@ -15,39 +15,39 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 {
     public partial class ContainerInstanceView : IUtf8JsonSerializable, IJsonModel<ContainerInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerInstanceView>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RestartCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RestartCount))
             {
                 writer.WritePropertyName("restartCount"u8);
                 writer.WriteNumberValue(RestartCount.Value);
             }
-            if (options.Format != "W" && CurrentState != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentState))
             {
                 writer.WritePropertyName("currentState"u8);
-                writer.WriteObjectValue(CurrentState);
+                writer.WriteObjectValue(CurrentState, options);
             }
-            if (options.Format != "W" && PreviousState != null)
+            if (options.Format != "W" && Optional.IsDefined(PreviousState))
             {
                 writer.WritePropertyName("previousState"u8);
-                writer.WriteObjectValue(PreviousState);
+                writer.WriteObjectValue(PreviousState, options);
             }
-            if (options.Format != "W" && !(Events is ChangeTrackingList<ContainerEvent> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerInstanceView DeserializeContainerInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             ContainerState previousState = default;
             IReadOnlyList<ContainerEvent> events = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("restartCount"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerInstanceView(restartCount, currentState, previousState, events ?? new ChangeTrackingList<ContainerEvent>(), serializedAdditionalRawData);
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

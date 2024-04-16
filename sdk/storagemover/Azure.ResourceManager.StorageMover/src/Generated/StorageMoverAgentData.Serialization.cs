@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.StorageMover
 {
     public partial class StorageMoverAgentData : IUtf8JsonSerializable, IJsonModel<StorageMoverAgentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageMoverAgentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageMoverAgentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageMoverAgentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.StorageMover
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && AgentVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
@@ -64,42 +64,42 @@ namespace Azure.ResourceManager.StorageMover
             writer.WriteStringValue(ArcResourceId);
             writer.WritePropertyName("arcVmUuid"u8);
             writer.WriteStringValue(ArcVmUuid);
-            if (options.Format != "W" && AgentStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AgentStatus))
             {
                 writer.WritePropertyName("agentStatus"u8);
                 writer.WriteStringValue(AgentStatus.Value.ToString());
             }
-            if (options.Format != "W" && LastStatusUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStatusUpdate))
             {
                 writer.WritePropertyName("lastStatusUpdate"u8);
                 writer.WriteStringValue(LastStatusUpdate.Value, "O");
             }
-            if (options.Format != "W" && LocalIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(LocalIPAddress))
             {
                 writer.WritePropertyName("localIPAddress"u8);
                 writer.WriteStringValue(LocalIPAddress);
             }
-            if (options.Format != "W" && MemoryInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemoryInMB))
             {
                 writer.WritePropertyName("memoryInMB"u8);
                 writer.WriteNumberValue(MemoryInMB.Value);
             }
-            if (options.Format != "W" && NumberOfCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfCores))
             {
                 writer.WritePropertyName("numberOfCores"u8);
                 writer.WriteNumberValue(NumberOfCores.Value);
             }
-            if (options.Format != "W" && UptimeInSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UptimeInSeconds))
             {
                 writer.WritePropertyName("uptimeInSeconds"u8);
                 writer.WriteNumberValue(UptimeInSeconds.Value);
             }
-            if (options.Format != "W" && ErrorDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue(ErrorDetails);
+                writer.WriteObjectValue(ErrorDetails, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StorageMover
             var format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StorageMover
 
         internal static StorageMoverAgentData DeserializeStorageMoverAgentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.StorageMover
             StorageMoverAgentPropertiesErrorDetails errorDetails = default;
             StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.StorageMover
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageMoverAgentData(
                 id,
                 name,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StorageMover
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.StorageMover
                         return DeserializeStorageMoverAgentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support reading '{options.Format}' format.");
             }
         }
 

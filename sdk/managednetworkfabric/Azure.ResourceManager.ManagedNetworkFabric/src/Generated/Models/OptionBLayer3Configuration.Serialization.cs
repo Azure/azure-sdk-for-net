@@ -15,48 +15,48 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class OptionBLayer3Configuration : IUtf8JsonSerializable, IJsonModel<OptionBLayer3Configuration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OptionBLayer3Configuration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OptionBLayer3Configuration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OptionBLayer3Configuration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OptionBLayer3Configuration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OptionBLayer3Configuration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PeerAsn.HasValue)
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (VlanId.HasValue)
+            if (Optional.IsDefined(VlanId))
             {
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (options.Format != "W" && FabricAsn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (PrimaryIPv4Prefix != null)
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv4Prefix);
             }
-            if (PrimaryIPv6Prefix != null)
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
             {
                 writer.WritePropertyName("primaryIpv6Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv6Prefix);
             }
-            if (SecondaryIPv4Prefix != null)
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
             {
                 writer.WritePropertyName("secondaryIpv4Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv4Prefix);
             }
-            if (SecondaryIPv6Prefix != null)
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
             {
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<OptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OptionBLayer3Configuration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OptionBLayer3Configuration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static OptionBLayer3Configuration DeserializeOptionBLayer3Configuration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string secondaryIPv4Prefix = default;
             string secondaryIPv6Prefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("peerASN"u8))
@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OptionBLayer3Configuration(
                 primaryIPv4Prefix,
                 primaryIPv6Prefix,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OptionBLayer3Configuration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptionBLayer3Configuration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeOptionBLayer3Configuration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OptionBLayer3Configuration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptionBLayer3Configuration)} does not support reading '{options.Format}' format.");
             }
         }
 

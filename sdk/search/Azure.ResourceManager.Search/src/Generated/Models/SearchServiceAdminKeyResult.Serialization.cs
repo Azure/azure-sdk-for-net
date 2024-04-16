@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,23 +16,23 @@ namespace Azure.ResourceManager.Search.Models
 {
     public partial class SearchServiceAdminKeyResult : IUtf8JsonSerializable, IJsonModel<SearchServiceAdminKeyResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServiceAdminKeyResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServiceAdminKeyResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SearchServiceAdminKeyResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SearchServiceAdminKeyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchServiceAdminKeyResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceAdminKeyResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrimaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && SecondaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Search.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchServiceAdminKeyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchServiceAdminKeyResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceAdminKeyResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchServiceAdminKeyResult DeserializeSearchServiceAdminKeyResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Search.Models
             string primaryKey = default;
             string secondaryKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKey"u8))
@@ -92,11 +93,70 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SearchServiceAdminKeyResult(primaryKey, secondaryKey, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryKey), out propertyOverride);
+            if (Optional.IsDefined(PrimaryKey) || hasPropertyOverride)
+            {
+                builder.Append("  primaryKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PrimaryKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryKey), out propertyOverride);
+            if (Optional.IsDefined(SecondaryKey) || hasPropertyOverride)
+            {
+                builder.Append("  secondaryKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SecondaryKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryKey}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SearchServiceAdminKeyResult>.Write(ModelReaderWriterOptions options)
@@ -107,8 +167,10 @@ namespace Azure.ResourceManager.Search.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SearchServiceAdminKeyResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceAdminKeyResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +186,7 @@ namespace Azure.ResourceManager.Search.Models
                         return DeserializeSearchServiceAdminKeyResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchServiceAdminKeyResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceAdminKeyResult)} does not support reading '{options.Format}' format.");
             }
         }
 

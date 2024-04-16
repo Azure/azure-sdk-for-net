@@ -16,41 +16,41 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SapOdpLinkedService : IUtf8JsonSerializable, IJsonModel<SapOdpLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapOdpLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapOdpLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapOdpLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SapOdpLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -74,92 +74,92 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Server != null)
+            if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
                 JsonSerializer.Serialize(writer, Server);
             }
-            if (SystemNumber != null)
+            if (Optional.IsDefined(SystemNumber))
             {
                 writer.WritePropertyName("systemNumber"u8);
                 JsonSerializer.Serialize(writer, SystemNumber);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 JsonSerializer.Serialize(writer, ClientId);
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 JsonSerializer.Serialize(writer, Language);
             }
-            if (SystemId != null)
+            if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
                 JsonSerializer.Serialize(writer, SystemId);
             }
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 JsonSerializer.Serialize(writer, UserName);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (MessageServer != null)
+            if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
                 JsonSerializer.Serialize(writer, MessageServer);
             }
-            if (MessageServerService != null)
+            if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
                 JsonSerializer.Serialize(writer, MessageServerService);
             }
-            if (SncMode != null)
+            if (Optional.IsDefined(SncMode))
             {
                 writer.WritePropertyName("sncMode"u8);
                 JsonSerializer.Serialize(writer, SncMode);
             }
-            if (SncMyName != null)
+            if (Optional.IsDefined(SncMyName))
             {
                 writer.WritePropertyName("sncMyName"u8);
                 JsonSerializer.Serialize(writer, SncMyName);
             }
-            if (SncPartnerName != null)
+            if (Optional.IsDefined(SncPartnerName))
             {
                 writer.WritePropertyName("sncPartnerName"u8);
                 JsonSerializer.Serialize(writer, SncPartnerName);
             }
-            if (SncLibraryPath != null)
+            if (Optional.IsDefined(SncLibraryPath))
             {
                 writer.WritePropertyName("sncLibraryPath"u8);
                 JsonSerializer.Serialize(writer, SncLibraryPath);
             }
-            if (SncQop != null)
+            if (Optional.IsDefined(SncQop))
             {
                 writer.WritePropertyName("sncQop"u8);
                 JsonSerializer.Serialize(writer, SncQop);
             }
-            if (X509CertificatePath != null)
+            if (Optional.IsDefined(X509CertificatePath))
             {
                 writer.WritePropertyName("x509CertificatePath"u8);
                 JsonSerializer.Serialize(writer, X509CertificatePath);
             }
-            if (LogonGroup != null)
+            if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
                 JsonSerializer.Serialize(writer, LogonGroup);
             }
-            if (SubscriberName != null)
+            if (Optional.IsDefined(SubscriberName))
             {
                 writer.WritePropertyName("subscriberName"u8);
                 JsonSerializer.Serialize(writer, SubscriberName);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapOdpLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapOdpLinkedService DeserializeSapOdpLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> language = default;
             DataFactoryElement<string> systemId = default;
             DataFactoryElement<string> userName = default;
-            DataFactorySecretBaseDefinition password = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> messageServer = default;
             DataFactoryElement<string> messageServerService = default;
             DataFactoryElement<string> sncMode = default;
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("messageServer"u8))
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSapOdpLinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

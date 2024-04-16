@@ -17,29 +17,37 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("recognizeInputType"u8);
             writer.WriteStringValue(RecognizeInputType.ToString());
-            if (PlayPrompt != null)
+            if (Optional.IsDefined(PlayPrompt))
             {
                 writer.WritePropertyName("playPrompt"u8);
                 writer.WriteObjectValue(PlayPrompt);
             }
-            if (InterruptCallMediaOperation.HasValue)
+            if (Optional.IsDefined(InterruptCallMediaOperation))
             {
                 writer.WritePropertyName("interruptCallMediaOperation"u8);
                 writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
             }
             writer.WritePropertyName("recognizeOptions"u8);
             writer.WriteObjectValue(RecognizeOptions);
-            if (OperationContext != null)
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (OperationCallbackUri != null)
+            if (Optional.IsDefined(OperationCallbackUri))
             {
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

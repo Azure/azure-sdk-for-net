@@ -17,14 +17,14 @@ namespace Azure.AI.Translation.Document
             writer.WriteStartObject();
             writer.WritePropertyName("targetUrl"u8);
             writer.WriteStringValue(TargetUri.AbsoluteUri);
-            if (CategoryId != null)
+            if (Optional.IsDefined(CategoryId))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(CategoryId);
             }
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(LanguageCode);
-            if (!(Glossaries is ChangeTrackingList<TranslationGlossary> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Glossaries))
             {
                 writer.WritePropertyName("glossaries"u8);
                 writer.WriteStartArray();
@@ -34,12 +34,20 @@ namespace Azure.AI.Translation.Document
                 }
                 writer.WriteEndArray();
             }
-            if (StorageSource != null)
+            if (Optional.IsDefined(StorageSource))
             {
                 writer.WritePropertyName("storageSource"u8);
                 writer.WriteStringValue(StorageSource);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

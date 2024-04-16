@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class ServiceTenant : IUtf8JsonSerializable, IJsonModel<ServiceTenant>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceTenant>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceTenant>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceTenant>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTenant>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTenant)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTenant)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (TenantName != null)
+            if (Optional.IsDefined(TenantName))
             {
                 writer.WritePropertyName("tenantName"u8);
                 writer.WriteStringValue(TenantName);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTenant>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTenant)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTenant)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Subscription.Models
 
         internal static ServiceTenant DeserializeServiceTenant(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Subscription.Models
             Guid? tenantId = default;
             string tenantName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceTenant(tenantId, tenantName, serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTenant)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTenant)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         return DeserializeServiceTenant(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTenant)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTenant)} does not support reading '{options.Format}' format.");
             }
         }
 

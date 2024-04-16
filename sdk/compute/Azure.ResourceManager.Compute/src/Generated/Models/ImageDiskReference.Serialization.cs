@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ImageDiskReference : IUtf8JsonSerializable, IJsonModel<ImageDiskReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageDiskReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageDiskReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ImageDiskReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ImageDiskReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageDiskReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageDiskReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (SharedGalleryImageId != null)
+            if (Optional.IsDefined(SharedGalleryImageId))
             {
                 writer.WritePropertyName("sharedGalleryImageId"u8);
                 writer.WriteStringValue(SharedGalleryImageId);
             }
-            if (CommunityGalleryImageId != null)
+            if (Optional.IsDefined(CommunityGalleryImageId))
             {
                 writer.WritePropertyName("communityGalleryImageId"u8);
                 writer.WriteStringValue(CommunityGalleryImageId);
             }
-            if (Lun.HasValue)
+            if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageDiskReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageDiskReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageDiskReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageDiskReference DeserializeImageDiskReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             string communityGalleryImageId = default;
             int? lun = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ImageDiskReference(id, sharedGalleryImageId, communityGalleryImageId, lun, serializedAdditionalRawData);
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageDiskReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageDiskReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeImageDiskReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageDiskReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageDiskReference)} does not support reading '{options.Format}' format.");
             }
         }
 

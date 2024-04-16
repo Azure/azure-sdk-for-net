@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Encoder.HasValue)
+            if (Optional.IsDefined(Encoder))
             {
                 writer.WritePropertyName("encoder"u8);
                 writer.WriteStringValue(Encoder.Value.ToSerialString());
             }
-            if (ReplaceOriginalTokens.HasValue)
+            if (Optional.IsDefined(ReplaceOriginalTokens))
             {
                 writer.WritePropertyName("replace"u8);
                 writer.WriteBooleanValue(ReplaceOriginalTokens.Value);
@@ -74,6 +74,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new PhoneticTokenFilter(odataType, name, encoder, replace);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PhoneticTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePhoneticTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

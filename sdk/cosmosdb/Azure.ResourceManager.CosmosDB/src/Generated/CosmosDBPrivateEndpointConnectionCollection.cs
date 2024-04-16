@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CosmosDBPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, CosmosDBPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cosmosDBPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CosmosDBPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -125,7 +113,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CosmosDBPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, CosmosDBPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _cosmosDBPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CosmosDBPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -184,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<CosmosDBPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _cosmosDBPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CosmosDBPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -236,7 +207,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<CosmosDBPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _cosmosDBPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CosmosDBPrivateEndpointConnectionCollection.Get");
             scope.Start();
@@ -288,7 +252,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -317,7 +281,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -346,7 +310,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,14 +324,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _cosmosDBPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CosmosDBPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -396,7 +353,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -410,14 +367,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _cosmosDBPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CosmosDBPrivateEndpointConnectionCollection.Exists");
             scope.Start();
@@ -446,7 +396,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,14 +410,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<CosmosDBPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _cosmosDBPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CosmosDBPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();
@@ -498,7 +441,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -512,14 +455,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         public virtual NullableResponse<CosmosDBPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            if (privateEndpointConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(privateEndpointConnectionName));
-            }
-            if (privateEndpointConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateEndpointConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
             using var scope = _cosmosDBPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("CosmosDBPrivateEndpointConnectionCollection.GetIfExists");
             scope.Start();

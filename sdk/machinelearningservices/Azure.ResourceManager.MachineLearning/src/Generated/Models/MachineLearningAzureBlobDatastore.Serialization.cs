@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningAzureBlobDatastore : IUtf8JsonSerializable, IJsonModel<MachineLearningAzureBlobDatastore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAzureBlobDatastore>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAzureBlobDatastore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningAzureBlobDatastore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAzureBlobDatastore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningAzureBlobDatastore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningAzureBlobDatastore)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AccountName != null)
+            if (Optional.IsDefined(AccountName))
             {
                 if (AccountName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("accountName");
                 }
             }
-            if (ContainerName != null)
+            if (Optional.IsDefined(ContainerName))
             {
                 if (ContainerName != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("containerName");
                 }
             }
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 if (Endpoint != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endpoint");
                 }
             }
-            if (Protocol != null)
+            if (Optional.IsDefined(Protocol))
             {
                 if (Protocol != null)
                 {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("protocol");
                 }
             }
-            if (ServiceDataAccessAuthIdentity.HasValue)
+            if (Optional.IsDefined(ServiceDataAccessAuthIdentity))
             {
                 writer.WritePropertyName("serviceDataAccessAuthIdentity"u8);
                 writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
             }
-            if (ResourceGroup != null)
+            if (Optional.IsDefined(ResourceGroup))
             {
                 if (ResourceGroup != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceGroup");
                 }
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 if (SubscriptionId != null)
                 {
@@ -104,27 +104,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(Credentials);
+            writer.WriteObjectValue(Credentials, options);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
-            if (IntellectualProperty != null)
+            if (Optional.IsDefined(IntellectualProperty))
             {
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty);
+                    writer.WriteObjectValue(IntellectualProperty, options);
                 }
                 else
                 {
                     writer.WriteNull("intellectualProperty");
                 }
             }
-            if (options.Format != "W" && IsDefault.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAzureBlobDatastore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningAzureBlobDatastore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningAzureBlobDatastore)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAzureBlobDatastore DeserializeMachineLearningAzureBlobDatastore(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -368,10 +368,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningAzureBlobDatastore(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningAzureBlobDatastore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningAzureBlobDatastore)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningAzureBlobDatastore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningAzureBlobDatastore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningAzureBlobDatastore)} does not support reading '{options.Format}' format.");
             }
         }
 

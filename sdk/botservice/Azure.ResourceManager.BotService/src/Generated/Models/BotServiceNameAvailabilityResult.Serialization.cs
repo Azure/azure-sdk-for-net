@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.BotService.Models
 {
     public partial class BotServiceNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<BotServiceNameAvailabilityResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotServiceNameAvailabilityResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotServiceNameAvailabilityResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BotServiceNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BotServiceNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotServiceNameAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceNameAvailabilityResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsValid.HasValue)
+            if (Optional.IsDefined(IsValid))
             {
                 writer.WritePropertyName("valid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (AbsCode != null)
+            if (Optional.IsDefined(AbsCode))
             {
                 writer.WritePropertyName("absCode"u8);
                 writer.WriteStringValue(AbsCode);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotServiceNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotServiceNameAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotServiceNameAvailabilityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static BotServiceNameAvailabilityResult DeserializeBotServiceNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.BotService.Models
             string message = default;
             string absCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("valid"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BotServiceNameAvailabilityResult(valid, message, absCode, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotServiceNameAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceNameAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeBotServiceNameAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotServiceNameAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotServiceNameAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 

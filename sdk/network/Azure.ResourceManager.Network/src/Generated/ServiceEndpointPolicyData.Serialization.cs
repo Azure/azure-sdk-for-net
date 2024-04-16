@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -17,48 +16,48 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ServiceEndpointPolicyData : IUtf8JsonSerializable, IJsonModel<ServiceEndpointPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceEndpointPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceEndpointPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceEndpointPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceEndpointPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceEndpointPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceEndpointPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -71,42 +70,42 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(ServiceEndpointPolicyDefinitions is ChangeTrackingList<ServiceEndpointPolicyDefinitionData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceEndpointPolicyDefinitions))
             {
                 writer.WritePropertyName("serviceEndpointPolicyDefinitions"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceEndpointPolicyDefinitions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Subnets is ChangeTrackingList<SubnetData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ServiceAlias != null)
+            if (Optional.IsDefined(ServiceAlias))
             {
                 writer.WritePropertyName("serviceAlias"u8);
                 writer.WriteStringValue(ServiceAlias);
             }
-            if (!(ContextualServiceEndpointPolicies is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ContextualServiceEndpointPolicies))
             {
                 writer.WritePropertyName("contextualServiceEndpointPolicies"u8);
                 writer.WriteStartArray();
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<ServiceEndpointPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceEndpointPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceEndpointPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ServiceEndpointPolicyData DeserializeServiceEndpointPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.Network
             string serviceAlias = default;
             IList<string> contextualServiceEndpointPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -311,10 +310,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceEndpointPolicyData(
                 id,
                 name,
@@ -341,7 +340,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceEndpointPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceEndpointPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -357,7 +356,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeServiceEndpointPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceEndpointPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceEndpointPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

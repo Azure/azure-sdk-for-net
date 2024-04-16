@@ -15,48 +15,48 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class EnqueueReplicationServerProperties : IUtf8JsonSerializable, IJsonModel<EnqueueReplicationServerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnqueueReplicationServerProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnqueueReplicationServerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EnqueueReplicationServerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EnqueueReplicationServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnqueueReplicationServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnqueueReplicationServerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ErsVersion.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ErsVersion))
             {
                 writer.WritePropertyName("ersVersion"u8);
                 writer.WriteStringValue(ErsVersion.Value.ToString());
             }
-            if (options.Format != "W" && InstanceNo != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceNo))
             {
                 writer.WritePropertyName("instanceNo"u8);
                 writer.WriteStringValue(InstanceNo);
             }
-            if (options.Format != "W" && Hostname != null)
+            if (options.Format != "W" && Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (options.Format != "W" && KernelVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KernelVersion))
             {
                 writer.WritePropertyName("kernelVersion"u8);
                 writer.WriteStringValue(KernelVersion);
             }
-            if (options.Format != "W" && KernelPatch != null)
+            if (options.Format != "W" && Optional.IsDefined(KernelPatch))
             {
                 writer.WritePropertyName("kernelPatch"u8);
                 writer.WriteStringValue(KernelPatch);
             }
-            if (options.Format != "W" && IPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnqueueReplicationServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnqueueReplicationServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnqueueReplicationServerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static EnqueueReplicationServerProperties DeserializeEnqueueReplicationServerProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Workloads.Models
             string ipAddress = default;
             SapHealthState? health = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ersVersion"u8))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EnqueueReplicationServerProperties(
                 ersVersion,
                 instanceNo,
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnqueueReplicationServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnqueueReplicationServerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeEnqueueReplicationServerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnqueueReplicationServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnqueueReplicationServerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

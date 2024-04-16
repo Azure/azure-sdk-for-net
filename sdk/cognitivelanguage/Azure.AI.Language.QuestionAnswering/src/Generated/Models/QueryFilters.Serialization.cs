@@ -15,12 +15,12 @@ namespace Azure.AI.Language.QuestionAnswering
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MetadataFilter != null)
+            if (Optional.IsDefined(MetadataFilter))
             {
                 writer.WritePropertyName("metadataFilter"u8);
                 writer.WriteObjectValue(MetadataFilter);
             }
-            if (!(SourceFilter is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceFilter))
             {
                 writer.WritePropertyName("sourceFilter"u8);
                 writer.WriteStartArray();
@@ -30,12 +30,20 @@ namespace Azure.AI.Language.QuestionAnswering
                 }
                 writer.WriteEndArray();
             }
-            if (LogicalOperation.HasValue)
+            if (Optional.IsDefined(LogicalOperation))
             {
                 writer.WritePropertyName("logicalOperation"u8);
                 writer.WriteStringValue(LogicalOperation.Value.ToString());
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

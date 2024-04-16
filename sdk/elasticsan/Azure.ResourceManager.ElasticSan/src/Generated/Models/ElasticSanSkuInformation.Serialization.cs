@@ -15,30 +15,30 @@ namespace Azure.ResourceManager.ElasticSan.Models
 {
     public partial class ElasticSanSkuInformation : IUtf8JsonSerializable, IJsonModel<ElasticSanSkuInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanSkuInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanSkuInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ElasticSanSkuInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanSkuInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (Tier.HasValue)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && !(Locations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -48,23 +48,23 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(LocationInfo is ChangeTrackingList<ElasticSanSkuLocationInfo> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LocationInfo))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<ElasticSanSkuCapability> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanSkuInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         internal static ElasticSanSkuInformation DeserializeElasticSanSkuInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             IReadOnlyList<ElasticSanSkuLocationInfo> locationInfo = default;
             IReadOnlyList<ElasticSanSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ElasticSanSkuInformation(
                 name,
                 tier,
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         return DeserializeElasticSanSkuInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

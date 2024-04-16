@@ -17,12 +17,12 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceFieldName"u8);
             writer.WriteStringValue(SourceFieldName);
-            if (TargetFieldName != null)
+            if (Optional.IsDefined(TargetFieldName))
             {
                 writer.WritePropertyName("targetFieldName"u8);
                 writer.WriteStringValue(TargetFieldName);
             }
-            if (MappingFunction != null)
+            if (Optional.IsDefined(MappingFunction))
             {
                 if (MappingFunction != null)
                 {
@@ -70,6 +70,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new FieldMapping(sourceFieldName, targetFieldName, mappingFunction);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static FieldMapping FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFieldMapping(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

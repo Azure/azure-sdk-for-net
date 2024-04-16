@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Reservations.Models;
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.Reservations
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -64,10 +63,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public async Task<Response> PostAsync(Guid reservationOrderId, ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePostRequest(reservationOrderId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -88,10 +84,7 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public Response Post(Guid reservationOrderId, ReservationRefundContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePostRequest(reservationOrderId, content);
             _pipeline.Send(message, cancellationToken);

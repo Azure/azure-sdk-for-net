@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricL3IsolationDomainData : IUtf8JsonSerializable, IJsonModel<NetworkFabricL3IsolationDomainData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricL3IsolationDomainData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricL3IsolationDomainData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFabricL3IsolationDomainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,51 +56,51 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (RedistributeConnectedSubnets.HasValue)
+            if (Optional.IsDefined(RedistributeConnectedSubnets))
             {
                 writer.WritePropertyName("redistributeConnectedSubnets"u8);
                 writer.WriteStringValue(RedistributeConnectedSubnets.Value.ToString());
             }
-            if (RedistributeStaticRoutes.HasValue)
+            if (Optional.IsDefined(RedistributeStaticRoutes))
             {
                 writer.WritePropertyName("redistributeStaticRoutes"u8);
                 writer.WriteStringValue(RedistributeStaticRoutes.Value.ToString());
             }
-            if (AggregateRouteConfiguration != null)
+            if (Optional.IsDefined(AggregateRouteConfiguration))
             {
                 writer.WritePropertyName("aggregateRouteConfiguration"u8);
-                writer.WriteObjectValue(AggregateRouteConfiguration);
+                writer.WriteObjectValue(AggregateRouteConfiguration, options);
             }
-            if (ConnectedSubnetRoutePolicy != null)
+            if (Optional.IsDefined(ConnectedSubnetRoutePolicy))
             {
                 writer.WritePropertyName("connectedSubnetRoutePolicy"u8);
-                writer.WriteObjectValue(ConnectedSubnetRoutePolicy);
+                writer.WriteObjectValue(ConnectedSubnetRoutePolicy, options);
             }
             writer.WritePropertyName("networkFabricId"u8);
             writer.WriteStringValue(NetworkFabricId);
-            if (options.Format != "W" && ConfigurationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AdministrativeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricL3IsolationDomainData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         internal static NetworkFabricL3IsolationDomainData DeserializeNetworkFabricL3IsolationDomainData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -293,10 +293,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkFabricL3IsolationDomainData(
                 id,
                 name,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         return DeserializeNetworkFabricL3IsolationDomainData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricL3IsolationDomainData)} does not support reading '{options.Format}' format.");
             }
         }
 

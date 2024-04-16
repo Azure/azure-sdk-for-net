@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class VmNicUpdatesTaskDetails : IUtf8JsonSerializable, IJsonModel<VmNicUpdatesTaskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmNicUpdatesTaskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmNicUpdatesTaskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VmNicUpdatesTaskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VmNicUpdatesTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmNicUpdatesTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmNicUpdatesTaskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VmId != null)
+            if (Optional.IsDefined(VmId))
             {
                 writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
-            if (NicId != null)
+            if (Optional.IsDefined(NicId))
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmNicUpdatesTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmNicUpdatesTaskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmNicUpdatesTaskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static VmNicUpdatesTaskDetails DeserializeVmNicUpdatesTaskDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string name = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmId"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VmNicUpdatesTaskDetails(instanceType, serializedAdditionalRawData, vmId, nicId, name);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmNicUpdatesTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmNicUpdatesTaskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVmNicUpdatesTaskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmNicUpdatesTaskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmNicUpdatesTaskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class ScheduledTrigger : IUtf8JsonSerializable, IJsonModel<ScheduledTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScheduledTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledTrigger)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,38 +44,38 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("recurrenceInterval"u8);
             writer.WriteStringValue(RecurrenceInterval.ToString());
-            if (SynchronizationMode.HasValue)
+            if (Optional.IsDefined(SynchronizationMode))
             {
                 writer.WritePropertyName("synchronizationMode"u8);
                 writer.WriteStringValue(SynchronizationMode.Value.ToString());
             }
             writer.WritePropertyName("synchronizationTime"u8);
             writer.WriteStringValue(SynchronizeOn, "O");
-            if (options.Format != "W" && TriggerStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TriggerStatus))
             {
                 writer.WritePropertyName("triggerStatus"u8);
                 writer.WriteStringValue(TriggerStatus.Value.ToString());
             }
-            if (options.Format != "W" && UserName != null)
+            if (options.Format != "W" && Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledTrigger)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ScheduledTrigger DeserializeScheduledTrigger(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataShare.Models
             DataShareTriggerStatus? triggerStatus = default;
             string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ScheduledTrigger(
                 id,
                 name,
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeScheduledTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 

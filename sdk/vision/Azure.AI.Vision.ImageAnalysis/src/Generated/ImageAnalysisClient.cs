@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -57,14 +56,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public ImageAnalysisClient(Uri endpoint, AzureKeyCredential credential, ImageAnalysisClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new ImageAnalysisClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -108,17 +101,11 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
         internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromImageDataAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (imageContent == null)
-            {
-                throw new ArgumentNullException(nameof(imageContent));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(imageContent, nameof(imageContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageContent;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AnalyzeFromImageDataAsync(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context).ConfigureAwait(false);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
@@ -157,17 +144,11 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
         internal virtual Response<ImageAnalysisResult> AnalyzeFromImageData(IEnumerable<VisualFeaturesImpl> visualFeatures, BinaryData imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (imageContent == null)
-            {
-                throw new ArgumentNullException(nameof(imageContent));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(imageContent, nameof(imageContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageContent;
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AnalyzeFromImageData(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
@@ -222,14 +203,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> AnalyzeFromImageDataAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromImageData");
             scope.Start();
@@ -295,14 +270,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> The response returned from the service. </returns>
         internal virtual Response AnalyzeFromImageData(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromImageData");
             scope.Start();
@@ -352,17 +321,11 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
         internal virtual async Task<Response<ImageAnalysisResult>> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (imageContent == null)
-            {
-                throw new ArgumentNullException(nameof(imageContent));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(imageContent, nameof(imageContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AnalyzeFromUrlAsync(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context).ConfigureAwait(false);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
@@ -401,17 +364,11 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="visualFeatures"/> or <paramref name="imageContent"/> is null. </exception>
         internal virtual Response<ImageAnalysisResult> AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, ImageUrl imageContent, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, CancellationToken cancellationToken = default)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (imageContent == null)
-            {
-                throw new ArgumentNullException(nameof(imageContent));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(imageContent, nameof(imageContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AnalyzeFromUrl(visualFeatures, content, language, genderNeutralCaption, smartCropsAspectRatios, modelVersion, context);
             return Response.FromValue(ImageAnalysisResult.FromResponse(response), response);
         }
@@ -466,14 +423,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> AnalyzeFromUrlAsync(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromUrl");
             scope.Start();
@@ -539,14 +490,8 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> The response returned from the service. </returns>
         internal virtual Response AnalyzeFromUrl(IEnumerable<VisualFeaturesImpl> visualFeatures, RequestContent content, string language = null, bool? genderNeutralCaption = null, IEnumerable<float> smartCropsAspectRatios = null, string modelVersion = null, RequestContext context = null)
         {
-            if (visualFeatures == null)
-            {
-                throw new ArgumentNullException(nameof(visualFeatures));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(visualFeatures, nameof(visualFeatures));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ImageAnalysisClient.AnalyzeFromUrl");
             scope.Start();

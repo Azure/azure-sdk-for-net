@@ -15,90 +15,90 @@ namespace Azure.ResourceManager.Attestation.Models
 {
     public partial class JsonWebKey : IUtf8JsonSerializable, IJsonModel<JsonWebKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonWebKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonWebKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JsonWebKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JsonWebKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Alg != null)
+            if (Optional.IsDefined(Alg))
             {
                 writer.WritePropertyName("alg"u8);
                 writer.WriteStringValue(Alg);
             }
-            if (Crv != null)
+            if (Optional.IsDefined(Crv))
             {
                 writer.WritePropertyName("crv"u8);
                 writer.WriteStringValue(Crv);
             }
-            if (D != null)
+            if (Optional.IsDefined(D))
             {
                 writer.WritePropertyName("d"u8);
                 writer.WriteStringValue(D);
             }
-            if (Dp != null)
+            if (Optional.IsDefined(Dp))
             {
                 writer.WritePropertyName("dp"u8);
                 writer.WriteStringValue(Dp);
             }
-            if (Dq != null)
+            if (Optional.IsDefined(Dq))
             {
                 writer.WritePropertyName("dq"u8);
                 writer.WriteStringValue(Dq);
             }
-            if (E != null)
+            if (Optional.IsDefined(E))
             {
                 writer.WritePropertyName("e"u8);
                 writer.WriteStringValue(E);
             }
-            if (K != null)
+            if (Optional.IsDefined(K))
             {
                 writer.WritePropertyName("k"u8);
                 writer.WriteStringValue(K);
             }
-            if (Kid != null)
+            if (Optional.IsDefined(Kid))
             {
                 writer.WritePropertyName("kid"u8);
                 writer.WriteStringValue(Kid);
             }
             writer.WritePropertyName("kty"u8);
             writer.WriteStringValue(Kty);
-            if (N != null)
+            if (Optional.IsDefined(N))
             {
                 writer.WritePropertyName("n"u8);
                 writer.WriteStringValue(N);
             }
-            if (P != null)
+            if (Optional.IsDefined(P))
             {
                 writer.WritePropertyName("p"u8);
                 writer.WriteStringValue(P);
             }
-            if (Q != null)
+            if (Optional.IsDefined(Q))
             {
                 writer.WritePropertyName("q"u8);
                 writer.WriteStringValue(Q);
             }
-            if (Qi != null)
+            if (Optional.IsDefined(Qi))
             {
                 writer.WritePropertyName("qi"u8);
                 writer.WriteStringValue(Qi);
             }
-            if (Use != null)
+            if (Optional.IsDefined(Use))
             {
                 writer.WritePropertyName("use"u8);
                 writer.WriteStringValue(Use);
             }
-            if (X != null)
+            if (Optional.IsDefined(X))
             {
                 writer.WritePropertyName("x"u8);
                 writer.WriteStringValue(X);
             }
-            if (!(X5C is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(X5C))
             {
                 writer.WritePropertyName("x5c"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Y != null)
+            if (Optional.IsDefined(Y))
             {
                 writer.WritePropertyName("y"u8);
                 writer.WriteStringValue(Y);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Attestation.Models
             var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JsonWebKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Attestation.Models
 
         internal static JsonWebKey DeserializeJsonWebKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Attestation.Models
             IList<string> x5c = default;
             string y = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alg"u8))
@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new JsonWebKey(
                 alg,
                 crv,
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Attestation.Models
                         return DeserializeJsonWebKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,23 +17,23 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class ManagedHsmProperties : IUtf8JsonSerializable, IJsonModel<ManagedHsmProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedHsmProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedHsmProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedHsmProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (!(InitialAdminObjectIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InitialAdminObjectIds))
             {
                 writer.WritePropertyName("initialAdminObjectIds"u8);
                 writer.WriteStartArray();
@@ -41,80 +43,80 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && HsmUri != null)
+            if (options.Format != "W" && Optional.IsDefined(HsmUri))
             {
                 writer.WritePropertyName("hsmUri"u8);
                 writer.WriteStringValue(HsmUri.AbsoluteUri);
             }
-            if (EnableSoftDelete.HasValue)
+            if (Optional.IsDefined(EnableSoftDelete))
             {
                 writer.WritePropertyName("enableSoftDelete"u8);
                 writer.WriteBooleanValue(EnableSoftDelete.Value);
             }
-            if (SoftDeleteRetentionInDays.HasValue)
+            if (Optional.IsDefined(SoftDeleteRetentionInDays))
             {
                 writer.WritePropertyName("softDeleteRetentionInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionInDays.Value);
             }
-            if (EnablePurgeProtection.HasValue)
+            if (Optional.IsDefined(EnablePurgeProtection))
             {
                 writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToSerialString());
             }
-            if (options.Format != "W" && StatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (NetworkRuleSet != null)
+            if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                writer.WriteObjectValue(NetworkRuleSet, options);
             }
-            if (!(Regions is ChangeTrackingList<ManagedHsmGeoReplicatedRegion> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && ScheduledPurgeOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
             {
                 writer.WritePropertyName("scheduledPurgeDate"u8);
                 writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
-            if (options.Format != "W" && SecurityDomainProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(SecurityDomainProperties))
             {
                 writer.WritePropertyName("securityDomainProperties"u8);
-                writer.WriteObjectValue(SecurityDomainProperties);
+                writer.WriteObjectValue(SecurityDomainProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -139,7 +141,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +150,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static ManagedHsmProperties DeserializeManagedHsmProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +172,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             DateTimeOffset? scheduledPurgeDate = default;
             ManagedHSMSecurityDomainProperties securityDomainProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tenantId"u8))
@@ -321,10 +323,10 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedHsmProperties(
                 tenantId,
                 initialAdminObjectIds ?? new ChangeTrackingList<string>(),
@@ -344,6 +346,279 @@ namespace Azure.ResourceManager.KeyVault.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
+            {
+                builder.Append("  tenantId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InitialAdminObjectIds), out propertyOverride);
+            if (Optional.IsCollectionDefined(InitialAdminObjectIds) || hasPropertyOverride)
+            {
+                if (InitialAdminObjectIds.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  initialAdminObjectIds: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in InitialAdminObjectIds)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HsmUri), out propertyOverride);
+            if (Optional.IsDefined(HsmUri) || hasPropertyOverride)
+            {
+                builder.Append("  hsmUri: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{HsmUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableSoftDelete), out propertyOverride);
+            if (Optional.IsDefined(EnableSoftDelete) || hasPropertyOverride)
+            {
+                builder.Append("  enableSoftDelete: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = EnableSoftDelete.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SoftDeleteRetentionInDays), out propertyOverride);
+            if (Optional.IsDefined(SoftDeleteRetentionInDays) || hasPropertyOverride)
+            {
+                builder.Append("  softDeleteRetentionInDays: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{SoftDeleteRetentionInDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnablePurgeProtection), out propertyOverride);
+            if (Optional.IsDefined(EnablePurgeProtection) || hasPropertyOverride)
+            {
+                builder.Append("  enablePurgeProtection: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = EnablePurgeProtection.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreateMode), out propertyOverride);
+            if (Optional.IsDefined(CreateMode) || hasPropertyOverride)
+            {
+                builder.Append("  createMode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{CreateMode.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusMessage), out propertyOverride);
+            if (Optional.IsDefined(StatusMessage) || hasPropertyOverride)
+            {
+                builder.Append("  statusMessage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (StatusMessage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StatusMessage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StatusMessage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkRuleSet), out propertyOverride);
+            if (Optional.IsDefined(NetworkRuleSet) || hasPropertyOverride)
+            {
+                builder.Append("  networkAcls: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, NetworkRuleSet, options, 2, false, "  networkAcls: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Regions), out propertyOverride);
+            if (Optional.IsCollectionDefined(Regions) || hasPropertyOverride)
+            {
+                if (Regions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  regions: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Regions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  regions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnections), out propertyOverride);
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections) || hasPropertyOverride)
+            {
+                if (PrivateEndpointConnections.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  privateEndpointConnections: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateEndpointConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  privateEndpointConnections: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
+            if (Optional.IsDefined(PublicNetworkAccess) || hasPropertyOverride)
+            {
+                builder.Append("  publicNetworkAccess: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduledPurgeOn), out propertyOverride);
+            if (Optional.IsDefined(ScheduledPurgeOn) || hasPropertyOverride)
+            {
+                builder.Append("  scheduledPurgeDate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(ScheduledPurgeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecurityDomainProperties), out propertyOverride);
+            if (Optional.IsDefined(SecurityDomainProperties) || hasPropertyOverride)
+            {
+                builder.Append("  securityDomainProperties: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, SecurityDomainProperties, options, 2, false, "  securityDomainProperties: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedHsmProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -352,8 +627,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -369,7 +646,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         return DeserializeManagedHsmProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

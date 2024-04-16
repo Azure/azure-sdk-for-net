@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Models;
@@ -18,25 +17,25 @@ namespace Azure.ResourceManager.DataBox
 {
     public partial class DataBoxJobData : IUtf8JsonSerializable, IJsonModel<DataBoxJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxJobData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxJobData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
-            if (Identity != null)
+            writer.WriteObjectValue(Sku, options);
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.DataBox
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -73,72 +72,72 @@ namespace Azure.ResourceManager.DataBox
             writer.WriteStartObject();
             writer.WritePropertyName("transferType"u8);
             writer.WriteStringValue(TransferType.ToSerialString());
-            if (options.Format != "W" && IsCancellable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCancellable))
             {
                 writer.WritePropertyName("isCancellable"u8);
                 writer.WriteBooleanValue(IsCancellable.Value);
             }
-            if (options.Format != "W" && IsDeletable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDeletable))
             {
                 writer.WritePropertyName("isDeletable"u8);
                 writer.WriteBooleanValue(IsDeletable.Value);
             }
-            if (options.Format != "W" && IsShippingAddressEditable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsShippingAddressEditable))
             {
                 writer.WritePropertyName("isShippingAddressEditable"u8);
                 writer.WriteBooleanValue(IsShippingAddressEditable.Value);
             }
-            if (options.Format != "W" && ReverseShippingDetailsUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReverseShippingDetailsUpdate))
             {
                 writer.WritePropertyName("reverseShippingDetailsUpdate"u8);
                 writer.WriteStringValue(ReverseShippingDetailsUpdate.Value.ToSerialString());
             }
-            if (options.Format != "W" && ReverseTransportPreferenceUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReverseTransportPreferenceUpdate))
             {
                 writer.WritePropertyName("reverseTransportPreferenceUpdate"u8);
                 writer.WriteStringValue(ReverseTransportPreferenceUpdate.Value.ToSerialString());
             }
-            if (options.Format != "W" && IsPrepareToShipEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPrepareToShipEnabled))
             {
                 writer.WritePropertyName("isPrepareToShipEnabled"u8);
                 writer.WriteBooleanValue(IsPrepareToShipEnabled.Value);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                writer.WriteObjectValue(Details, options);
             }
-            if (options.Format != "W" && CancellationReason != null)
+            if (options.Format != "W" && Optional.IsDefined(CancellationReason))
             {
                 writer.WritePropertyName("cancellationReason"u8);
                 writer.WriteStringValue(CancellationReason);
             }
-            if (DeliveryType.HasValue)
+            if (Optional.IsDefined(DeliveryType))
             {
                 writer.WritePropertyName("deliveryType"u8);
                 writer.WriteStringValue(DeliveryType.Value.ToSerialString());
             }
-            if (DeliveryInfo != null)
+            if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
-                writer.WriteObjectValue(DeliveryInfo);
+                writer.WriteObjectValue(DeliveryInfo, options);
             }
-            if (options.Format != "W" && IsCancellableWithoutFee.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsCancellableWithoutFee))
             {
                 writer.WritePropertyName("isCancellableWithoutFee"u8);
                 writer.WriteBooleanValue(IsCancellableWithoutFee.Value);
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.DataBox
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxJobData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.DataBox
 
         internal static DataBoxJobData DeserializeDataBoxJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.DataBox
             JobDeliveryInfo deliveryInfo = default;
             bool? isCancellableWithoutFee = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -407,10 +406,10 @@ namespace Azure.ResourceManager.DataBox
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxJobData(
                 id,
                 name,
@@ -447,7 +446,7 @@ namespace Azure.ResourceManager.DataBox
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxJobData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -463,7 +462,7 @@ namespace Azure.ResourceManager.DataBox
                         return DeserializeDataBoxJobData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxJobData)} does not support reading '{options.Format}' format.");
             }
         }
 

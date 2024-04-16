@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class ImageSetting : IUtf8JsonSerializable, IJsonModel<ImageSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ImageSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ImageSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ImageType.HasValue)
+            if (Optional.IsDefined(ImageType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ImageType.Value.ToString());
             }
-            if (Reference != null)
+            if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("reference"u8);
                 writer.WriteStringValue(Reference);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageSetting DeserializeImageSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeImageSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class SessionHostMaintenanceWindowProperties : IUtf8JsonSerializable, IJsonModel<SessionHostMaintenanceWindowProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionHostMaintenanceWindowProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionHostMaintenanceWindowProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SessionHostMaintenanceWindowProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostMaintenanceWindowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionHostMaintenanceWindowProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionHostMaintenanceWindowProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Hour.HasValue)
+            if (Optional.IsDefined(Hour))
             {
                 writer.WritePropertyName("hour"u8);
                 writer.WriteNumberValue(Hour.Value);
             }
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostMaintenanceWindowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionHostMaintenanceWindowProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionHostMaintenanceWindowProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static SessionHostMaintenanceWindowProperties DeserializeSessionHostMaintenanceWindowProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             int? hour = default;
             DesktopVirtualizationDayOfWeek? dayOfWeek = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hour"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SessionHostMaintenanceWindowProperties(hour, dayOfWeek, serializedAdditionalRawData);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SessionHostMaintenanceWindowProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionHostMaintenanceWindowProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeSessionHostMaintenanceWindowProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionHostMaintenanceWindowProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionHostMaintenanceWindowProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

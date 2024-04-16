@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     public partial class DestinationAddressInfo : IUtf8JsonSerializable, IJsonModel<DestinationAddressInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DestinationAddressInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DestinationAddressInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DestinationAddressInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DestinationAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Cidrs is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Cidrs))
             {
                 writer.WritePropertyName("cidrs"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Countries is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Countries))
             {
                 writer.WritePropertyName("countries"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Feeds is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Feeds))
             {
                 writer.WritePropertyName("feeds"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PrefixLists is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(PrefixLists))
             {
                 writer.WritePropertyName("prefixLists"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(FqdnLists is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(FqdnLists))
             {
                 writer.WritePropertyName("fqdnLists"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<DestinationAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         internal static DestinationAddressInfo DeserializeDestinationAddressInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             IList<string> prefixLists = default;
             IList<string> fqdnLists = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cidrs"u8))
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DestinationAddressInfo(
                 cidrs ?? new ChangeTrackingList<string>(),
                 countries ?? new ChangeTrackingList<string>(),
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeDestinationAddressInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DestinationAddressInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

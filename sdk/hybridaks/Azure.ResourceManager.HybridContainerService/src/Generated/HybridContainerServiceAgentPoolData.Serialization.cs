@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     public partial class HybridContainerServiceAgentPoolData : IUtf8JsonSerializable, IJsonModel<HybridContainerServiceAgentPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridContainerServiceAgentPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridContainerServiceAgentPoolData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridContainerServiceAgentPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceAgentPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
                 writer.WriteEndObject();
             }
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WriteObjectValue(ExtendedLocation, options);
             }
             if (options.Format != "W")
             {
@@ -59,24 +59,24 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OSType.HasValue)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (OSSku.HasValue)
+            if (Optional.IsDefined(OSSku))
             {
                 writer.WritePropertyName("osSKU"u8);
                 writer.WriteStringValue(OSSku.Value.ToString());
             }
-            if (!(NodeLabels is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeLabels))
             {
                 writer.WritePropertyName("nodeLabels"u8);
                 writer.WriteStartObject();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
                 writer.WriteEndObject();
             }
-            if (!(NodeTaints is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeTaints))
             {
                 writer.WritePropertyName("nodeTaints"u8);
                 writer.WriteStartArray();
@@ -97,50 +97,50 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
                 writer.WriteEndArray();
             }
-            if (MaxCount.HasValue)
+            if (Optional.IsDefined(MaxCount))
             {
                 writer.WritePropertyName("maxCount"u8);
                 writer.WriteNumberValue(MaxCount.Value);
             }
-            if (MinCount.HasValue)
+            if (Optional.IsDefined(MinCount))
             {
                 writer.WritePropertyName("minCount"u8);
                 writer.WriteNumberValue(MinCount.Value);
             }
-            if (EnableAutoScaling.HasValue)
+            if (Optional.IsDefined(EnableAutoScaling))
             {
                 writer.WritePropertyName("enableAutoScaling"u8);
                 writer.WriteBooleanValue(EnableAutoScaling.Value);
             }
-            if (MaxPods.HasValue)
+            if (Optional.IsDefined(MaxPods))
             {
                 writer.WritePropertyName("maxPods"u8);
                 writer.WriteNumberValue(MaxPods.Value);
             }
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (VmSize != null)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (options.Format != "W" && KubernetesVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue(Status, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HybridContainerService
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceAgentPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.HybridContainerService
 
         internal static HybridContainerServiceAgentPoolData DeserializeHybridContainerServiceAgentPoolData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.HybridContainerService
             HybridContainerServiceResourceProvisioningState? provisioningState = default;
             AgentPoolProvisioningStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -384,10 +384,10 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HybridContainerServiceAgentPoolData(
                 id,
                 name,
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.HybridContainerService
                         return DeserializeHybridContainerServiceAgentPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

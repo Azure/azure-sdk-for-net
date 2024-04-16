@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseIntegrationRuntimeDataFlowProperties : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeDataFlowProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeDataFlowProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeDataFlowProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseIntegrationRuntimeDataFlowProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeDataFlowProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeDataFlowProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ComputeType.HasValue)
+            if (Optional.IsDefined(ComputeType))
             {
                 writer.WritePropertyName("computeType"u8);
                 writer.WriteStringValue(ComputeType.Value.ToString());
             }
-            if (CoreCount.HasValue)
+            if (Optional.IsDefined(CoreCount))
             {
                 writer.WritePropertyName("coreCount"u8);
                 writer.WriteNumberValue(CoreCount.Value);
             }
-            if (TimeToLive.HasValue)
+            if (Optional.IsDefined(TimeToLive))
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);
             }
-            if (Cleanup.HasValue)
+            if (Optional.IsDefined(Cleanup))
             {
                 writer.WritePropertyName("cleanup"u8);
                 writer.WriteBooleanValue(Cleanup.Value);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeDataFlowProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeDataFlowProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseIntegrationRuntimeDataFlowProperties DeserializeSynapseIntegrationRuntimeDataFlowProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeDataFlowProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeDataFlowProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseIntegrationRuntimeDataFlowProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeDataFlowProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeDataFlowProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

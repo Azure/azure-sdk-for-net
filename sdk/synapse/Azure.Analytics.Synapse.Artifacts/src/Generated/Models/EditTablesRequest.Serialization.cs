@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(LinkTables is ChangeTrackingList<LinkTableRequest> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkTables))
             {
                 writer.WritePropertyName("linkTables"u8);
                 writer.WriteStartArray();
@@ -59,12 +59,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new EditTablesRequest(linkTables ?? new ChangeTrackingList<LinkTableRequest>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EditTablesRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEditTablesRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class EditTablesRequestConverter : JsonConverter<EditTablesRequest>
         {
             public override void Write(Utf8JsonWriter writer, EditTablesRequest model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override EditTablesRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

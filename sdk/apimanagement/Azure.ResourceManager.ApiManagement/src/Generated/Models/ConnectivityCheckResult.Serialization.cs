@@ -15,53 +15,53 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ConnectivityCheckResult : IUtf8JsonSerializable, IJsonModel<ConnectivityCheckResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityCheckResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityCheckResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectivityCheckResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCheckResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityCheckResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityCheckResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Hops is ChangeTrackingList<ConnectivityHop> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Hops))
             {
                 writer.WritePropertyName("hops"u8);
                 writer.WriteStartArray();
                 foreach (var item in Hops)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ConnectionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
             {
                 writer.WritePropertyName("connectionStatus"u8);
                 writer.WriteStringValue(ConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && AvgLatencyInMs.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AvgLatencyInMs))
             {
                 writer.WritePropertyName("avgLatencyInMs"u8);
                 writer.WriteNumberValue(AvgLatencyInMs.Value);
             }
-            if (options.Format != "W" && MinLatencyInMs.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinLatencyInMs))
             {
                 writer.WritePropertyName("minLatencyInMs"u8);
                 writer.WriteNumberValue(MinLatencyInMs.Value);
             }
-            if (options.Format != "W" && MaxLatencyInMs.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxLatencyInMs))
             {
                 writer.WritePropertyName("maxLatencyInMs"u8);
                 writer.WriteNumberValue(MaxLatencyInMs.Value);
             }
-            if (options.Format != "W" && ProbesSent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProbesSent))
             {
                 writer.WritePropertyName("probesSent"u8);
                 writer.WriteNumberValue(ProbesSent.Value);
             }
-            if (options.Format != "W" && ProbesFailed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProbesFailed))
             {
                 writer.WritePropertyName("probesFailed"u8);
                 writer.WriteNumberValue(ProbesFailed.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCheckResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityCheckResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityCheckResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ConnectivityCheckResult DeserializeConnectivityCheckResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             long? probesSent = default;
             long? probesFailed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hops"u8))
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectivityCheckResult(
                 hops ?? new ChangeTrackingList<ConnectivityHop>(),
                 connectionStatus,
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityCheckResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityCheckResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeConnectivityCheckResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityCheckResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityCheckResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CloudServiceData : IUtf8JsonSerializable, IJsonModel<CloudServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CloudServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,69 +66,69 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PackageUri != null)
+            if (Optional.IsDefined(PackageUri))
             {
                 writer.WritePropertyName("packageUrl"u8);
                 writer.WriteStringValue(PackageUri.AbsoluteUri);
             }
-            if (Configuration != null)
+            if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
                 writer.WriteStringValue(Configuration);
             }
-            if (ConfigurationUri != null)
+            if (Optional.IsDefined(ConfigurationUri))
             {
                 writer.WritePropertyName("configurationUrl"u8);
                 writer.WriteStringValue(ConfigurationUri.AbsoluteUri);
             }
-            if (StartCloudService.HasValue)
+            if (Optional.IsDefined(StartCloudService))
             {
                 writer.WritePropertyName("startCloudService"u8);
                 writer.WriteBooleanValue(StartCloudService.Value);
             }
-            if (AllowModelOverride.HasValue)
+            if (Optional.IsDefined(AllowModelOverride))
             {
                 writer.WritePropertyName("allowModelOverride"u8);
                 writer.WriteBooleanValue(AllowModelOverride.Value);
             }
-            if (UpgradeMode.HasValue)
+            if (Optional.IsDefined(UpgradeMode))
             {
                 writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
-            if (RoleProfile != null)
+            if (Optional.IsDefined(RoleProfile))
             {
                 writer.WritePropertyName("roleProfile"u8);
-                writer.WriteObjectValue(RoleProfile);
+                writer.WriteObjectValue(RoleProfile, options);
             }
-            if (OSProfile != null)
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue(OSProfile, options);
             }
-            if (NetworkProfile != null)
+            if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
-            if (ExtensionProfile != null)
+            if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
-                writer.WriteObjectValue(ExtensionProfile);
+                writer.WriteObjectValue(ExtensionProfile, options);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && UniqueId != null)
+            if (options.Format != "W" && Optional.IsDefined(UniqueId))
             {
                 writer.WritePropertyName("uniqueId"u8);
                 writer.WriteStringValue(UniqueId);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static CloudServiceData DeserializeCloudServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute
             string provisioningState = default;
             string uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -362,10 +362,10 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CloudServiceData(
                 id,
                 name,
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeCloudServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 

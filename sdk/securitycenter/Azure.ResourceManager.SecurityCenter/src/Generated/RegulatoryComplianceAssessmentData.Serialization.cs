@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class RegulatoryComplianceAssessmentData : IUtf8JsonSerializable, IJsonModel<RegulatoryComplianceAssessmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegulatoryComplianceAssessmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegulatoryComplianceAssessmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RegulatoryComplianceAssessmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RegulatoryComplianceAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegulatoryComplianceAssessmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegulatoryComplianceAssessmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && AssessmentType != null)
+            if (options.Format != "W" && Optional.IsDefined(AssessmentType))
             {
                 writer.WritePropertyName("assessmentType"u8);
                 writer.WriteStringValue(AssessmentType);
             }
-            if (options.Format != "W" && AssessmentDetailsLink != null)
+            if (options.Format != "W" && Optional.IsDefined(AssessmentDetailsLink))
             {
                 writer.WritePropertyName("assessmentDetailsLink"u8);
                 writer.WriteStringValue(AssessmentDetailsLink);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && PassedResources.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PassedResources))
             {
                 writer.WritePropertyName("passedResources"u8);
                 writer.WriteNumberValue(PassedResources.Value);
             }
-            if (options.Format != "W" && FailedResources.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedResources))
             {
                 writer.WritePropertyName("failedResources"u8);
                 writer.WriteNumberValue(FailedResources.Value);
             }
-            if (options.Format != "W" && SkippedResources.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SkippedResources))
             {
                 writer.WritePropertyName("skippedResources"u8);
                 writer.WriteNumberValue(SkippedResources.Value);
             }
-            if (options.Format != "W" && UnsupportedResources.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UnsupportedResources))
             {
                 writer.WritePropertyName("unsupportedResources"u8);
                 writer.WriteNumberValue(UnsupportedResources.Value);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<RegulatoryComplianceAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegulatoryComplianceAssessmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegulatoryComplianceAssessmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static RegulatoryComplianceAssessmentData DeserializeRegulatoryComplianceAssessmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter
             int? skippedResources = default;
             int? unsupportedResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -243,10 +243,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RegulatoryComplianceAssessmentData(
                 id,
                 name,
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegulatoryComplianceAssessmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegulatoryComplianceAssessmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeRegulatoryComplianceAssessmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegulatoryComplianceAssessmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegulatoryComplianceAssessmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

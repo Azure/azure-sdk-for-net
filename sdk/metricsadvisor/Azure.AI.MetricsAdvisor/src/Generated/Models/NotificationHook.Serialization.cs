@@ -19,17 +19,17 @@ namespace Azure.AI.MetricsAdvisor.Administration
             writer.WriteStringValue(HookKind.ToString());
             writer.WritePropertyName("hookName"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (InternalExternalLink != null)
+            if (Optional.IsDefined(InternalExternalLink))
             {
                 writer.WritePropertyName("externalLink"u8);
                 writer.WriteStringValue(InternalExternalLink);
             }
-            if (!(Administrators is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Administrators))
             {
                 writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();
@@ -40,6 +40,22 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static NotificationHook FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotificationHook(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

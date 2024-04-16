@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Support.Models
 {
     public partial class SupportServiceLevelAgreement : IUtf8JsonSerializable, IJsonModel<SupportServiceLevelAgreement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportServiceLevelAgreement>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportServiceLevelAgreement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SupportServiceLevelAgreement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SupportServiceLevelAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportServiceLevelAgreement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportServiceLevelAgreement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && SlaInMinutes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SlaInMinutes))
             {
                 writer.WritePropertyName("slaMinutes"u8);
                 writer.WriteNumberValue(SlaInMinutes.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<SupportServiceLevelAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportServiceLevelAgreement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportServiceLevelAgreement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static SupportServiceLevelAgreement DeserializeSupportServiceLevelAgreement(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Support.Models
             DateTimeOffset? expirationTime = default;
             int? slaMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SupportServiceLevelAgreement(startTime, expirationTime, slaMinutes, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Support.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SupportServiceLevelAgreement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportServiceLevelAgreement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Support.Models
                         return DeserializeSupportServiceLevelAgreement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SupportServiceLevelAgreement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportServiceLevelAgreement)} does not support reading '{options.Format}' format.");
             }
         }
 

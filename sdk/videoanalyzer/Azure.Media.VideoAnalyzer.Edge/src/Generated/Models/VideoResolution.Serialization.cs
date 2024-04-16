@@ -15,12 +15,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Width.HasValue)
+            if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteNumberValue(Width.Value);
             }
-            if (Height.HasValue)
+            if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteNumberValue(Height.Value);
@@ -58,6 +58,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new VideoResolution(width, height);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VideoResolution FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVideoResolution(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

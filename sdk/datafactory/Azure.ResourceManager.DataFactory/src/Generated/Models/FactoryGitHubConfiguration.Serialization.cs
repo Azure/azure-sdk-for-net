@@ -15,31 +15,31 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class FactoryGitHubConfiguration : IUtf8JsonSerializable, IJsonModel<FactoryGitHubConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FactoryGitHubConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FactoryGitHubConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FactoryGitHubConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FactoryGitHubConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                writer.WriteObjectValue(ClientSecret);
+                writer.WriteObjectValue(ClientSecret, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FactoryRepoConfigurationType);
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(CollaborationBranch);
             writer.WritePropertyName("rootFolder"u8);
             writer.WriteStringValue(RootFolder);
-            if (LastCommitId != null)
+            if (Optional.IsDefined(LastCommitId))
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (DisablePublish.HasValue)
+            if (Optional.IsDefined(DisablePublish))
             {
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FactoryGitHubConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FactoryGitHubConfiguration DeserializeFactoryGitHubConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string lastCommitId = default;
             bool? disablePublish = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostName"u8))
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FactoryGitHubConfiguration(
                 type,
                 accountName,
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeFactoryGitHubConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FactoryGitHubConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

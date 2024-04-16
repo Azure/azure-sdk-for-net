@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class DevCenterPoolData : IUtf8JsonSerializable, IJsonModel<DevCenterPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterPoolData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevCenterPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,54 +56,54 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DevBoxDefinitionName != null)
+            if (Optional.IsDefined(DevBoxDefinitionName))
             {
                 writer.WritePropertyName("devBoxDefinitionName"u8);
                 writer.WriteStringValue(DevBoxDefinitionName);
             }
-            if (NetworkConnectionName != null)
+            if (Optional.IsDefined(NetworkConnectionName))
             {
                 writer.WritePropertyName("networkConnectionName"u8);
                 writer.WriteStringValue(NetworkConnectionName);
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (LocalAdministrator.HasValue)
+            if (Optional.IsDefined(LocalAdministrator))
             {
                 writer.WritePropertyName("localAdministrator"u8);
                 writer.WriteStringValue(LocalAdministrator.Value.ToString());
             }
-            if (StopOnDisconnect != null)
+            if (Optional.IsDefined(StopOnDisconnect))
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
-                writer.WriteObjectValue(StopOnDisconnect);
+                writer.WriteObjectValue(StopOnDisconnect, options);
             }
-            if (options.Format != "W" && HealthStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus.Value.ToString());
             }
-            if (options.Format != "W" && !(HealthStatusDetails is ChangeTrackingList<DevCenterHealthStatusDetail> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HealthStatusDetails))
             {
                 writer.WritePropertyName("healthStatusDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in HealthStatusDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static DevCenterPoolData DeserializeDevCenterPoolData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DevCenter
             IReadOnlyList<DevCenterHealthStatusDetail> healthStatusDetails = default;
             DevCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -291,10 +291,10 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevCenterPoolData(
                 id,
                 name,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DevCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DevCenter
                         return DeserializeDevCenterPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -53,44 +53,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (ConnectionProperties != null)
+            if (Optional.IsDefined(ConnectionProperties))
             {
                 writer.WritePropertyName("connectionProperties"u8);
-                writer.WriteObjectValue(ConnectionProperties);
+                writer.WriteObjectValue<object>(ConnectionProperties);
             }
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            writer.WriteObjectValue<object>(Endpoint);
             writer.WritePropertyName("companyId"u8);
-            writer.WriteObjectValue(CompanyId);
+            writer.WriteObjectValue<object>(CompanyId);
             writer.WritePropertyName("consumerKey"u8);
-            writer.WriteObjectValue(ConsumerKey);
+            writer.WriteObjectValue<object>(ConsumerKey);
             writer.WritePropertyName("consumerSecret"u8);
             writer.WriteObjectValue(ConsumerSecret);
             writer.WritePropertyName("accessToken"u8);
             writer.WriteObjectValue(AccessToken);
             writer.WritePropertyName("accessTokenSecret"u8);
             writer.WriteObjectValue(AccessTokenSecret);
-            if (UseEncryptedEndpoints != null)
+            if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
-                writer.WriteObjectValue(UseEncryptedEndpoints);
+                writer.WriteObjectValue<object>(UseEncryptedEndpoints);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -263,12 +263,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new QuickBooksLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeQuickBooksLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class QuickBooksLinkedServiceConverter : JsonConverter<QuickBooksLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, QuickBooksLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override QuickBooksLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -15,35 +15,35 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class IntegrationAccountKeyVaultKey : IUtf8JsonSerializable, IJsonModel<IntegrationAccountKeyVaultKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountKeyVaultKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountKeyVaultKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationAccountKeyVaultKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountKeyVaultKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (KeyId != null)
+            if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("kid"u8);
                 writer.WriteStringValue(KeyId.AbsoluteUri);
             }
             writer.WritePropertyName("attributes"u8);
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteNumberValue(CreatedOn.Value, "U");
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteNumberValue(UpdatedOn.Value, "U");
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountKeyVaultKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountKeyVaultKey DeserializeIntegrationAccountKeyVaultKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Logic.Models
             DateTimeOffset? created = default;
             DateTimeOffset? updated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kid"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IntegrationAccountKeyVaultKey(kid, enabled, created, updated, serializedAdditionalRawData);
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationAccountKeyVaultKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.AlertsManagement
 {
     public partial class SmartGroupData : IUtf8JsonSerializable, IJsonModel<SmartGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmartGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmartGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SmartGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SmartGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmartGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmartGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,114 +43,114 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AlertsCount.HasValue)
+            if (Optional.IsDefined(AlertsCount))
             {
                 writer.WritePropertyName("alertsCount"u8);
                 writer.WriteNumberValue(AlertsCount.Value);
             }
-            if (options.Format != "W" && SmartGroupState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SmartGroupState))
             {
                 writer.WritePropertyName("smartGroupState"u8);
                 writer.WriteStringValue(SmartGroupState.Value.ToString());
             }
-            if (options.Format != "W" && Severity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedUserName"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (!(Resources is ChangeTrackingList<SmartGroupAggregatedProperty> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResourceTypes is ChangeTrackingList<SmartGroupAggregatedProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResourceGroups is ChangeTrackingList<SmartGroupAggregatedProperty> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGroups))
             {
                 writer.WritePropertyName("resourceGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(MonitorServices is ChangeTrackingList<SmartGroupAggregatedProperty> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(MonitorServices))
             {
                 writer.WritePropertyName("monitorServices"u8);
                 writer.WriteStartArray();
                 foreach (var item in MonitorServices)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(MonitorConditions is ChangeTrackingList<SmartGroupAggregatedProperty> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(MonitorConditions))
             {
                 writer.WritePropertyName("monitorConditions"u8);
                 writer.WriteStartArray();
                 foreach (var item in MonitorConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AlertStates is ChangeTrackingList<SmartGroupAggregatedProperty> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(AlertStates))
             {
                 writer.WritePropertyName("alertStates"u8);
                 writer.WriteStartArray();
                 foreach (var item in AlertStates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AlertSeverities is ChangeTrackingList<SmartGroupAggregatedProperty> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(AlertSeverities))
             {
                 writer.WritePropertyName("alertSeverities"u8);
                 writer.WriteStartArray();
                 foreach (var item in AlertSeverities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AlertsManagement
             var format = options.Format == "W" ? ((IPersistableModel<SmartGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmartGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmartGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AlertsManagement
 
         internal static SmartGroupData DeserializeSmartGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AlertsManagement
             IList<SmartGroupAggregatedProperty> alertSeverities = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -407,10 +407,10 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SmartGroupData(
                 id,
                 name,
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.AlertsManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SmartGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmartGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.AlertsManagement
                         return DeserializeSmartGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SmartGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmartGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

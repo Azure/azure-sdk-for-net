@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class CheckRestrictionsResourceDetails : IUtf8JsonSerializable, IJsonModel<CheckRestrictionsResourceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckRestrictionsResourceDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckRestrictionsResourceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CheckRestrictionsResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CheckRestrictionsResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckRestrictionsResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckRestrictionsResourceDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckRestrictionsResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckRestrictionsResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckRestrictionsResourceDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static CheckRestrictionsResourceDetails DeserializeCheckRestrictionsResourceDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             string apiVersion = default;
             string scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceContent"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CheckRestrictionsResourceDetails(resourceContent, apiVersion, scope, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CheckRestrictionsResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckRestrictionsResourceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeCheckRestrictionsResourceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CheckRestrictionsResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckRestrictionsResourceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

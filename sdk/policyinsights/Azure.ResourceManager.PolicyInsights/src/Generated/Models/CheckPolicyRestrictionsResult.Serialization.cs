@@ -15,31 +15,31 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class CheckPolicyRestrictionsResult : IUtf8JsonSerializable, IJsonModel<CheckPolicyRestrictionsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckPolicyRestrictionsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckPolicyRestrictionsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CheckPolicyRestrictionsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CheckPolicyRestrictionsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckPolicyRestrictionsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckPolicyRestrictionsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(FieldRestrictions is ChangeTrackingList<FieldRestrictions> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FieldRestrictions))
             {
                 writer.WritePropertyName("fieldRestrictions"u8);
                 writer.WriteStartArray();
                 foreach (var item in FieldRestrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ContentEvaluationResult != null)
+            if (options.Format != "W" && Optional.IsDefined(ContentEvaluationResult))
             {
                 writer.WritePropertyName("contentEvaluationResult"u8);
-                writer.WriteObjectValue(ContentEvaluationResult);
+                writer.WriteObjectValue(ContentEvaluationResult, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckPolicyRestrictionsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckPolicyRestrictionsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckPolicyRestrictionsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static CheckPolicyRestrictionsResult DeserializeCheckPolicyRestrictionsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             IReadOnlyList<FieldRestrictions> fieldRestrictions = default;
             CheckRestrictionsResultContentEvaluationResult contentEvaluationResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldRestrictions"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CheckPolicyRestrictionsResult(fieldRestrictions ?? new ChangeTrackingList<FieldRestrictions>(), contentEvaluationResult, serializedAdditionalRawData);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CheckPolicyRestrictionsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckPolicyRestrictionsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeCheckPolicyRestrictionsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CheckPolicyRestrictionsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckPolicyRestrictionsResult)} does not support reading '{options.Format}' format.");
             }
         }
 

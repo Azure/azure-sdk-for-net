@@ -15,50 +15,50 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ManagedIntegrationRuntime : IUtf8JsonSerializable, IJsonModel<ManagedIntegrationRuntime>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedIntegrationRuntime>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedIntegrationRuntime>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedIntegrationRuntime>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (ManagedVirtualNetwork != null)
+            if (Optional.IsDefined(ManagedVirtualNetwork))
             {
                 writer.WritePropertyName("managedVirtualNetwork"u8);
-                writer.WriteObjectValue(ManagedVirtualNetwork);
+                writer.WriteObjectValue(ManagedVirtualNetwork, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (ComputeProperties != null)
+            if (Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
-                writer.WriteObjectValue(ComputeProperties);
+                writer.WriteObjectValue(ComputeProperties, options);
             }
-            if (SsisProperties != null)
+            if (Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
-                writer.WriteObjectValue(SsisProperties);
+                writer.WriteObjectValue(SsisProperties, options);
             }
-            if (CustomerVirtualNetwork != null)
+            if (Optional.IsDefined(CustomerVirtualNetwork))
             {
                 writer.WritePropertyName("customerVirtualNetwork"u8);
-                writer.WriteObjectValue(CustomerVirtualNetwork);
+                writer.WriteObjectValue(CustomerVirtualNetwork, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ManagedIntegrationRuntime DeserializeManagedIntegrationRuntime(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeManagedIntegrationRuntime(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntime)} does not support reading '{options.Format}' format.");
             }
         }
 

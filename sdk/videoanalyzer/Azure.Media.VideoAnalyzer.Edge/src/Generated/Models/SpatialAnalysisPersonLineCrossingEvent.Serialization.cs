@@ -15,12 +15,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Threshold != null)
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
-            if (Focus.HasValue)
+            if (Optional.IsDefined(Focus))
             {
                 writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
@@ -54,6 +54,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new SpatialAnalysisPersonLineCrossingEvent(threshold, focus);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SpatialAnalysisPersonLineCrossingEvent FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpatialAnalysisPersonLineCrossingEvent(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Resource id for which the private endpoint is created. </summary>
+        [WirePath("privateLinkServiceId")]
         public ResourceIdentifier PrivateLinkServiceId { get; }
         /// <summary> The connection name for the private endpoint. </summary>
+        [WirePath("privateEndpointConnectionName")]
         public string PrivateEndpointConnectionName { get; }
         /// <summary> Status of this private endpoint connection. </summary>
+        [WirePath("status")]
         public string Status { get; }
     }
 }

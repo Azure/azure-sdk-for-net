@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.SelfHelp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -67,22 +66,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string scope, string diagnosticsResourceName, SelfHelpDiagnosticData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (diagnosticsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsResourceName));
-            }
-            if (diagnosticsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsResourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(scope, diagnosticsResourceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -105,22 +91,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string scope, string diagnosticsResourceName, SelfHelpDiagnosticData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (diagnosticsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsResourceName));
-            }
-            if (diagnosticsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsResourceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(scope, diagnosticsResourceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -160,18 +133,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SelfHelpDiagnosticData>> GetAsync(string scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (diagnosticsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsResourceName));
-            }
-            if (diagnosticsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsResourceName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
             using var message = CreateGetRequest(scope, diagnosticsResourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -199,18 +162,8 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SelfHelpDiagnosticData> Get(string scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (diagnosticsResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(diagnosticsResourceName));
-            }
-            if (diagnosticsResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diagnosticsResourceName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
 
             using var message = CreateGetRequest(scope, diagnosticsResourceName);
             _pipeline.Send(message, cancellationToken);

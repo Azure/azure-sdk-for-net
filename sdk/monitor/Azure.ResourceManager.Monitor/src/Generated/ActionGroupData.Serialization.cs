@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class ActionGroupData : IUtf8JsonSerializable, IJsonModel<ActionGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActionGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActionGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ActionGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ActionGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,130 +56,130 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (GroupShortName != null)
+            if (Optional.IsDefined(GroupShortName))
             {
                 writer.WritePropertyName("groupShortName"u8);
                 writer.WriteStringValue(GroupShortName);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (!(EmailReceivers is ChangeTrackingList<MonitorEmailReceiver> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EmailReceivers))
             {
                 writer.WritePropertyName("emailReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in EmailReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(SmsReceivers is ChangeTrackingList<MonitorSmsReceiver> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(SmsReceivers))
             {
                 writer.WritePropertyName("smsReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in SmsReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(WebhookReceivers is ChangeTrackingList<MonitorWebhookReceiver> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(WebhookReceivers))
             {
                 writer.WritePropertyName("webhookReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in WebhookReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ItsmReceivers is ChangeTrackingList<MonitorItsmReceiver> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ItsmReceivers))
             {
                 writer.WritePropertyName("itsmReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in ItsmReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AzureAppPushReceivers is ChangeTrackingList<MonitorAzureAppPushReceiver> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(AzureAppPushReceivers))
             {
                 writer.WritePropertyName("azureAppPushReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in AzureAppPushReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AutomationRunbookReceivers is ChangeTrackingList<MonitorAutomationRunbookReceiver> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(AutomationRunbookReceivers))
             {
                 writer.WritePropertyName("automationRunbookReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in AutomationRunbookReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(VoiceReceivers is ChangeTrackingList<MonitorVoiceReceiver> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(VoiceReceivers))
             {
                 writer.WritePropertyName("voiceReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in VoiceReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(LogicAppReceivers is ChangeTrackingList<MonitorLogicAppReceiver> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(LogicAppReceivers))
             {
                 writer.WritePropertyName("logicAppReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in LogicAppReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AzureFunctionReceivers is ChangeTrackingList<MonitorAzureFunctionReceiver> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(AzureFunctionReceivers))
             {
                 writer.WritePropertyName("azureFunctionReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in AzureFunctionReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ArmRoleReceivers is ChangeTrackingList<MonitorArmRoleReceiver> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(ArmRoleReceivers))
             {
                 writer.WritePropertyName("armRoleReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in ArmRoleReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(EventHubReceivers is ChangeTrackingList<MonitorEventHubReceiver> collection10 && collection10.IsUndefined))
+            if (Optional.IsCollectionDefined(EventHubReceivers))
             {
                 writer.WritePropertyName("eventHubReceivers"u8);
                 writer.WriteStartArray();
                 foreach (var item in EventHubReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<ActionGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static ActionGroupData DeserializeActionGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Monitor
             IList<MonitorArmRoleReceiver> armRoleReceivers = default;
             IList<MonitorEventHubReceiver> eventHubReceivers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -470,10 +470,10 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ActionGroupData(
                 id,
                 name,
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Monitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActionGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Monitor
                         return DeserializeActionGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

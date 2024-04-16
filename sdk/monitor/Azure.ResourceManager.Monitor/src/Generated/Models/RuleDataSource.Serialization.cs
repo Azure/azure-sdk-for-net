@@ -15,35 +15,35 @@ namespace Azure.ResourceManager.Monitor.Models
     [PersistableModelProxy(typeof(UnknownRuleDataSource))]
     public partial class RuleDataSource : IUtf8JsonSerializable, IJsonModel<RuleDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuleDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuleDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RuleDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RuleDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (LegacyResourceId != null)
+            if (Optional.IsDefined(LegacyResourceId))
             {
                 writer.WritePropertyName("legacyResourceId"u8);
                 writer.WriteStringValue(LegacyResourceId);
             }
-            if (ResourceLocation != null)
+            if (Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
-            if (MetricNamespace != null)
+            if (Optional.IsDefined(MetricNamespace))
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RuleDataSource DeserializeRuleDataSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RuleDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeRuleDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuleDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -19,67 +19,67 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PreCopyScript != null)
+            if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
-                writer.WriteObjectValue(PreCopyScript);
+                writer.WriteObjectValue<object>(PreCopyScript);
             }
-            if (AllowPolyBase != null)
+            if (Optional.IsDefined(AllowPolyBase))
             {
                 writer.WritePropertyName("allowPolyBase"u8);
-                writer.WriteObjectValue(AllowPolyBase);
+                writer.WriteObjectValue<object>(AllowPolyBase);
             }
-            if (PolyBaseSettings != null)
+            if (Optional.IsDefined(PolyBaseSettings))
             {
                 writer.WritePropertyName("polyBaseSettings"u8);
                 writer.WriteObjectValue(PolyBaseSettings);
             }
-            if (AllowCopyCommand != null)
+            if (Optional.IsDefined(AllowCopyCommand))
             {
                 writer.WritePropertyName("allowCopyCommand"u8);
-                writer.WriteObjectValue(AllowCopyCommand);
+                writer.WriteObjectValue<object>(AllowCopyCommand);
             }
-            if (CopyCommandSettings != null)
+            if (Optional.IsDefined(CopyCommandSettings))
             {
                 writer.WritePropertyName("copyCommandSettings"u8);
                 writer.WriteObjectValue(CopyCommandSettings);
             }
-            if (TableOption != null)
+            if (Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
-                writer.WriteObjectValue(TableOption);
+                writer.WriteObjectValue<object>(TableOption);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (WriteBatchSize != null)
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
-                writer.WriteObjectValue(WriteBatchSize);
+                writer.WriteObjectValue<object>(WriteBatchSize);
             }
-            if (WriteBatchTimeout != null)
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
-                writer.WriteObjectValue(WriteBatchTimeout);
+                writer.WriteObjectValue<object>(WriteBatchTimeout);
             }
-            if (SinkRetryCount != null)
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
-                writer.WriteObjectValue(SinkRetryCount);
+                writer.WriteObjectValue<object>(SinkRetryCount);
             }
-            if (SinkRetryWait != null)
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
-                writer.WriteObjectValue(SinkRetryWait);
+                writer.WriteObjectValue<object>(SinkRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -229,12 +229,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 tableOption);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SqlDWSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlDWSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SqlDWSinkConverter : JsonConverter<SqlDWSink>
         {
             public override void Write(Utf8JsonWriter writer, SqlDWSink model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SqlDWSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

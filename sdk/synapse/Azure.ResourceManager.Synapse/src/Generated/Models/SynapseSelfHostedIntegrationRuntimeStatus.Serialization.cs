@@ -15,82 +15,82 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseSelfHostedIntegrationRuntimeStatus : IUtf8JsonSerializable, IJsonModel<SynapseSelfHostedIntegrationRuntimeStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSelfHostedIntegrationRuntimeStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSelfHostedIntegrationRuntimeStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseSelfHostedIntegrationRuntimeStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSelfHostedIntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntimeStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntimeStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RuntimeType.ToString());
-            if (options.Format != "W" && DataFactoryName != null)
+            if (options.Format != "W" && Optional.IsDefined(DataFactoryName))
             {
                 writer.WritePropertyName("dataFactoryName"u8);
                 writer.WriteStringValue(DataFactoryName);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreateOn))
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");
             }
-            if (options.Format != "W" && TaskQueueId != null)
+            if (options.Format != "W" && Optional.IsDefined(TaskQueueId))
             {
                 writer.WritePropertyName("taskQueueId"u8);
                 writer.WriteStringValue(TaskQueueId);
             }
-            if (options.Format != "W" && NodeCommunicationChannelEncryptionMode != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeCommunicationChannelEncryptionMode))
             {
                 writer.WritePropertyName("nodeCommunicationChannelEncryptionMode"u8);
                 writer.WriteStringValue(NodeCommunicationChannelEncryptionMode);
             }
-            if (options.Format != "W" && InternalChannelEncryption.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InternalChannelEncryption))
             {
                 writer.WritePropertyName("internalChannelEncryption"u8);
                 writer.WriteStringValue(InternalChannelEncryption.Value.ToString());
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (!(Nodes is ChangeTrackingList<SynapseSelfHostedIntegrationRuntimeNode> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ScheduledUpdateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScheduledUpdateOn))
             {
                 writer.WritePropertyName("scheduledUpdateDate"u8);
                 writer.WriteStringValue(ScheduledUpdateOn.Value, "O");
             }
-            if (options.Format != "W" && UpdateDelayOffset != null)
+            if (options.Format != "W" && Optional.IsDefined(UpdateDelayOffset))
             {
                 writer.WritePropertyName("updateDelayOffset"u8);
                 writer.WriteStringValue(UpdateDelayOffset);
             }
-            if (options.Format != "W" && LocalTimeZoneOffset != null)
+            if (options.Format != "W" && Optional.IsDefined(LocalTimeZoneOffset))
             {
                 writer.WritePropertyName("localTimeZoneOffset"u8);
                 writer.WriteStringValue(LocalTimeZoneOffset);
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && !(ServiceUrls is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceUrls))
             {
                 writer.WritePropertyName("serviceUrls"u8);
                 writer.WriteStartArray();
@@ -111,47 +111,47 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AutoUpdate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AutoUpdate))
             {
                 writer.WritePropertyName("autoUpdate"u8);
                 writer.WriteStringValue(AutoUpdate.Value.ToString());
             }
-            if (options.Format != "W" && VersionStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(VersionStatus))
             {
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (!(Links is ChangeTrackingList<SynapseLinkedIntegrationRuntime> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PushedVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(PushedVersion))
             {
                 writer.WritePropertyName("pushedVersion"u8);
                 writer.WriteStringValue(PushedVersion);
             }
-            if (options.Format != "W" && LatestVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(LatestVersion))
             {
                 writer.WritePropertyName("latestVersion"u8);
                 writer.WriteStringValue(LatestVersion);
             }
-            if (options.Format != "W" && AutoUpdateEta.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AutoUpdateEta))
             {
                 writer.WritePropertyName("autoUpdateETA"u8);
                 writer.WriteStringValue(AutoUpdateEta.Value, "O");
             }
-            if (ServiceRegion != null)
+            if (Optional.IsDefined(ServiceRegion))
             {
                 writer.WritePropertyName("serviceRegion"u8);
                 writer.WriteStringValue(ServiceRegion);
             }
-            if (!(NewerVersions is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(NewerVersions))
             {
                 writer.WritePropertyName("newerVersions"u8);
                 writer.WriteStartArray();
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSelfHostedIntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntimeStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntimeStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseSelfHostedIntegrationRuntimeStatus DeserializeSynapseSelfHostedIntegrationRuntimeStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntimeStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseSelfHostedIntegrationRuntimeStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntimeStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

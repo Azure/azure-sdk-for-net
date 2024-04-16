@@ -16,24 +16,24 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppAccountPatch : IUtf8JsonSerializable, IJsonModel<NetAppAccountPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppAccountPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppAccountPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppAccountPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,34 +61,34 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (!(ActiveDirectories is ChangeTrackingList<NetAppAccountActiveDirectory> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ActiveDirectories))
             {
                 writer.WritePropertyName("activeDirectories"u8);
                 writer.WriteStartArray();
                 foreach (var item in ActiveDirectories)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue(Encryption, options);
             }
-            if (options.Format != "W" && DisableShowmount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DisableShowmount))
             {
                 if (DisableShowmount != null)
                 {
@@ -98,30 +98,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 else
                 {
                     writer.WriteNull("disableShowmount");
-                }
-            }
-            if (NfsV4IdDomain != null)
-            {
-                if (NfsV4IdDomain != null)
-                {
-                    writer.WritePropertyName("nfsV4IDDomain"u8);
-                    writer.WriteStringValue(NfsV4IdDomain);
-                }
-                else
-                {
-                    writer.WriteNull("nfsV4IDDomain");
-                }
-            }
-            if (options.Format != "W" && IsMultiAdEnabled.HasValue)
-            {
-                if (IsMultiAdEnabled != null)
-                {
-                    writer.WritePropertyName("isMultiAdEnabled"u8);
-                    writer.WriteBooleanValue(IsMultiAdEnabled.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isMultiAdEnabled");
                 }
             }
             writer.WriteEndObject();
@@ -148,7 +124,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +133,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppAccountPatch DeserializeNetAppAccountPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -174,10 +150,8 @@ namespace Azure.ResourceManager.NetApp.Models
             IList<NetAppAccountActiveDirectory> activeDirectories = default;
             NetAppAccountEncryption encryption = default;
             bool? disableShowmount = default;
-            string nfsV4IdDomain = default;
-            bool? isMultiAdEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -280,35 +254,15 @@ namespace Azure.ResourceManager.NetApp.Models
                             disableShowmount = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("nfsV4IDDomain"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                nfsV4IdDomain = null;
-                                continue;
-                            }
-                            nfsV4IdDomain = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isMultiAdEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                isMultiAdEnabled = null;
-                                continue;
-                            }
-                            isMultiAdEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
                     }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetAppAccountPatch(
                 id,
                 name,
@@ -321,8 +275,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
                 encryption,
                 disableShowmount,
-                nfsV4IdDomain,
-                isMultiAdEnabled,
                 serializedAdditionalRawData);
         }
 
@@ -335,7 +287,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -351,7 +303,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppAccountPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppAccountPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

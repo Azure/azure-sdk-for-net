@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class AuthorizationActionMapping : IUtf8JsonSerializable, IJsonModel<AuthorizationActionMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizationActionMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizationActionMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AuthorizationActionMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationActionMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationActionMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationActionMapping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Original != null)
+            if (Optional.IsDefined(Original))
             {
                 writer.WritePropertyName("original"u8);
                 writer.WriteStringValue(Original);
             }
-            if (Desired != null)
+            if (Optional.IsDefined(Desired))
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteStringValue(Desired);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthorizationActionMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizationActionMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizationActionMapping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static AuthorizationActionMapping DeserializeAuthorizationActionMapping(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string original = default;
             string desired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("original"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AuthorizationActionMapping(original, desired, serializedAdditionalRawData);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationActionMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationActionMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeAuthorizationActionMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizationActionMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizationActionMapping)} does not support reading '{options.Format}' format.");
             }
         }
 

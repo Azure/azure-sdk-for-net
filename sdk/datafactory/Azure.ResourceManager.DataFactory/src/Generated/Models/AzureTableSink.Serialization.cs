@@ -16,65 +16,65 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AzureTableSink : IUtf8JsonSerializable, IJsonModel<AzureTableSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureTableSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureTableSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureTableSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureTableSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureTableSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureTableSink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AzureTableDefaultPartitionKeyValue != null)
+            if (Optional.IsDefined(AzureTableDefaultPartitionKeyValue))
             {
                 writer.WritePropertyName("azureTableDefaultPartitionKeyValue"u8);
                 JsonSerializer.Serialize(writer, AzureTableDefaultPartitionKeyValue);
             }
-            if (AzureTablePartitionKeyName != null)
+            if (Optional.IsDefined(AzureTablePartitionKeyName))
             {
                 writer.WritePropertyName("azureTablePartitionKeyName"u8);
                 JsonSerializer.Serialize(writer, AzureTablePartitionKeyName);
             }
-            if (AzureTableRowKeyName != null)
+            if (Optional.IsDefined(AzureTableRowKeyName))
             {
                 writer.WritePropertyName("azureTableRowKeyName"u8);
                 JsonSerializer.Serialize(writer, AzureTableRowKeyName);
             }
-            if (AzureTableInsertType != null)
+            if (Optional.IsDefined(AzureTableInsertType))
             {
                 writer.WritePropertyName("azureTableInsertType"u8);
                 JsonSerializer.Serialize(writer, AzureTableInsertType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (WriteBatchSize != null)
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (WriteBatchTimeout != null)
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (SinkRetryCount != null)
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (SinkRetryWait != null)
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureTableSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureTableSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureTableSink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureTableSink DeserializeAzureTableSink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureTableSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureTableSink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAzureTableSink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureTableSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureTableSink)} does not support reading '{options.Format}' format.");
             }
         }
 

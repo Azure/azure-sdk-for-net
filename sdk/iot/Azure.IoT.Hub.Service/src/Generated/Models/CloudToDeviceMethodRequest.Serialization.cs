@@ -15,22 +15,22 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MethodName != null)
+            if (Optional.IsDefined(MethodName))
             {
                 writer.WritePropertyName("methodName"u8);
                 writer.WriteStringValue(MethodName);
             }
-            if (Payload != null)
+            if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
-                writer.WriteObjectValue(Payload);
+                writer.WriteObjectValue<object>(Payload);
             }
-            if (ResponseTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(ResponseTimeoutInSeconds))
             {
                 writer.WritePropertyName("responseTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ResponseTimeoutInSeconds.Value);
             }
-            if (ConnectTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(ConnectTimeoutInSeconds))
             {
                 writer.WritePropertyName("connectTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ConnectTimeoutInSeconds.Value);
@@ -84,6 +84,22 @@ namespace Azure.IoT.Hub.Service.Models
                 }
             }
             return new CloudToDeviceMethodRequest(methodName, payload, responseTimeoutInSeconds, connectTimeoutInSeconds);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CloudToDeviceMethodRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCloudToDeviceMethodRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Resources;
 
@@ -291,10 +289,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<DataBoxJobResource>> UpdateAsync(WaitUntil waitUntil, DataBoxJobPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.Update");
             scope.Start();
@@ -341,10 +336,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<DataBoxJobResource> Update(WaitUntil waitUntil, DataBoxJobPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.Update");
             scope.Start();
@@ -389,10 +381,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> MarkDevicesShippedAsync(MarkDevicesShippedContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.MarkDevicesShipped");
             scope.Start();
@@ -434,10 +423,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response MarkDevicesShipped(MarkDevicesShippedContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.MarkDevicesShipped");
             scope.Start();
@@ -479,10 +465,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DataBoxShipmentPickUpResult>> BookShipmentPickUpAsync(ShipmentPickUpContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.BookShipmentPickUp");
             scope.Start();
@@ -524,10 +507,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DataBoxShipmentPickUpResult> BookShipmentPickUp(ShipmentPickUpContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.BookShipmentPickUp");
             scope.Start();
@@ -569,10 +549,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="cancellationReason"/> is null. </exception>
         public virtual async Task<Response> CancelAsync(DataBoxJobCancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
-            if (cancellationReason == null)
-            {
-                throw new ArgumentNullException(nameof(cancellationReason));
-            }
+            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.Cancel");
             scope.Start();
@@ -614,10 +591,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="cancellationReason"/> is null. </exception>
         public virtual Response Cancel(DataBoxJobCancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
-            if (cancellationReason == null)
-            {
-                throw new ArgumentNullException(nameof(cancellationReason));
-            }
+            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.Cancel");
             scope.Start();
@@ -713,10 +687,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> MitigateAsync(MitigateJobContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("DataBoxJobResource.Mitigate");
             scope.Start();
@@ -754,10 +725,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response Mitigate(MitigateJobContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("DataBoxJobResource.Mitigate");
             scope.Start();
@@ -800,14 +768,8 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<DataBoxJobResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.AddTag");
             scope.Start();
@@ -868,14 +830,8 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<DataBoxJobResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.AddTag");
             scope.Start();
@@ -935,10 +891,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<DataBoxJobResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.SetTags");
             scope.Start();
@@ -995,10 +948,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<DataBoxJobResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.SetTags");
             scope.Start();
@@ -1055,10 +1005,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<DataBoxJobResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.RemoveTag");
             scope.Start();
@@ -1118,10 +1065,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<DataBoxJobResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobResource.RemoveTag");
             scope.Start();

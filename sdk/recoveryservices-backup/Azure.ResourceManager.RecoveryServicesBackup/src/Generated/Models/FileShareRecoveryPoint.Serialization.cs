@@ -15,41 +15,41 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class FileShareRecoveryPoint : IUtf8JsonSerializable, IJsonModel<FileShareRecoveryPoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileShareRecoveryPoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileShareRecoveryPoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FileShareRecoveryPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FileShareRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileShareRecoveryPoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileShareRecoveryPoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointType != null)
+            if (Optional.IsDefined(RecoveryPointType))
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
-            if (RecoveryPointOn.HasValue)
+            if (Optional.IsDefined(RecoveryPointOn))
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
-            if (FileShareSnapshotUri != null)
+            if (Optional.IsDefined(FileShareSnapshotUri))
             {
                 writer.WritePropertyName("fileShareSnapshotUri"u8);
                 writer.WriteStringValue(FileShareSnapshotUri.AbsoluteUri);
             }
-            if (RecoveryPointSizeInGB.HasValue)
+            if (Optional.IsDefined(RecoveryPointSizeInGB))
             {
                 writer.WritePropertyName("recoveryPointSizeInGB"u8);
                 writer.WriteNumberValue(RecoveryPointSizeInGB.Value);
             }
-            if (RecoveryPointProperties != null)
+            if (Optional.IsDefined(RecoveryPointProperties))
             {
                 writer.WritePropertyName("recoveryPointProperties"u8);
-                writer.WriteObjectValue(RecoveryPointProperties);
+                writer.WriteObjectValue(RecoveryPointProperties, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileShareRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileShareRecoveryPoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileShareRecoveryPoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static FileShareRecoveryPoint DeserializeFileShareRecoveryPoint(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryPointProperties recoveryPointProperties = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointType"u8))
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FileShareRecoveryPoint(
                 objectType,
                 serializedAdditionalRawData,
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FileShareRecoveryPoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileShareRecoveryPoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeFileShareRecoveryPoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileShareRecoveryPoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileShareRecoveryPoint)} does not support reading '{options.Format}' format.");
             }
         }
 

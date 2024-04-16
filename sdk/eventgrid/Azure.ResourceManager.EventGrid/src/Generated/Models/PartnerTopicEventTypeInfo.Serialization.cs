@@ -15,30 +15,30 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class PartnerTopicEventTypeInfo : IUtf8JsonSerializable, IJsonModel<PartnerTopicEventTypeInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerTopicEventTypeInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerTopicEventTypeInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PartnerTopicEventTypeInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PartnerTopicEventTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerTopicEventTypeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerTopicEventTypeInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (!(InlineEventTypes is ChangeTrackingDictionary<string, InlineEventProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InlineEventTypes))
             {
                 writer.WritePropertyName("inlineEventTypes"u8);
                 writer.WriteStartObject();
                 foreach (var item in InlineEventTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartnerTopicEventTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerTopicEventTypeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerTopicEventTypeInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static PartnerTopicEventTypeInfo DeserializePartnerTopicEventTypeInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             EventDefinitionKind? kind = default;
             IDictionary<string, InlineEventProperties> inlineEventTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PartnerTopicEventTypeInfo(kind, inlineEventTypes ?? new ChangeTrackingDictionary<string, InlineEventProperties>(), serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PartnerTopicEventTypeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerTopicEventTypeInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializePartnerTopicEventTypeInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartnerTopicEventTypeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerTopicEventTypeInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

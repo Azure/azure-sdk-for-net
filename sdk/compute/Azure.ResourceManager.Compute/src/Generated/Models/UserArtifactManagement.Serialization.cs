@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class UserArtifactManagement : IUtf8JsonSerializable, IJsonModel<UserArtifactManagement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserArtifactManagement>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserArtifactManagement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserArtifactManagement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UserArtifactManagement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserArtifactManagement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserArtifactManagement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Install);
             writer.WritePropertyName("remove"u8);
             writer.WriteStringValue(Remove);
-            if (Update != null)
+            if (Optional.IsDefined(Update))
             {
                 writer.WritePropertyName("update"u8);
                 writer.WriteStringValue(Update);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserArtifactManagement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserArtifactManagement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserArtifactManagement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static UserArtifactManagement DeserializeUserArtifactManagement(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
             string @remove = default;
             string update = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("install"u8))
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UserArtifactManagement(install, @remove, update, serializedAdditionalRawData);
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserArtifactManagement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserArtifactManagement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeUserArtifactManagement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserArtifactManagement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserArtifactManagement)} does not support reading '{options.Format}' format.");
             }
         }
 

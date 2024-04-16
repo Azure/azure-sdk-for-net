@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     internal partial class RequestHeaderOptions : IUtf8JsonSerializable, IJsonModel<RequestHeaderOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestHeaderOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestHeaderOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RequestHeaderOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RequestHeaderOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestHeaderOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestHeaderOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OptInHeaders.HasValue)
+            if (Optional.IsDefined(OptInHeaders))
             {
                 writer.WritePropertyName("optInHeaders"u8);
                 writer.WriteStringValue(OptInHeaders.Value.ToString());
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestHeaderOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestHeaderOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestHeaderOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static RequestHeaderOptions DeserializeRequestHeaderOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             OptInHeaderType? optInHeaders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("optInHeaders"u8))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RequestHeaderOptions(optInHeaders, serializedAdditionalRawData);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RequestHeaderOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestHeaderOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeRequestHeaderOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequestHeaderOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestHeaderOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class DevCenterCatalogData : IUtf8JsonSerializable, IJsonModel<DevCenterCatalogData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterCatalogData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterCatalogData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevCenterCatalogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterCatalogData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterCatalogData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterCatalogData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (GitHub != null)
+            if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue(GitHub);
+                writer.WriteObjectValue(GitHub, options);
             }
-            if (AdoGit != null)
+            if (Optional.IsDefined(AdoGit))
             {
                 writer.WritePropertyName("adoGit"u8);
-                writer.WriteObjectValue(AdoGit);
+                writer.WriteObjectValue(AdoGit, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && SyncState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SyncState))
             {
                 writer.WritePropertyName("syncState"u8);
                 writer.WriteStringValue(SyncState.Value.ToString());
             }
-            if (options.Format != "W" && LastSyncOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastSyncOn))
             {
                 writer.WritePropertyName("lastSyncTime"u8);
                 writer.WriteStringValue(LastSyncOn.Value, "O");
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterCatalogData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterCatalogData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterCatalogData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static DevCenterCatalogData DeserializeDevCenterCatalogData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DevCenter
             DevCenterCatalogSyncState? syncState = default;
             DateTimeOffset? lastSyncTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -210,10 +210,10 @@ namespace Azure.ResourceManager.DevCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevCenterCatalogData(
                 id,
                 name,
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DevCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterCatalogData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterCatalogData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DevCenter
                         return DeserializeDevCenterCatalogData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterCatalogData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterCatalogData)} does not support reading '{options.Format}' format.");
             }
         }
 

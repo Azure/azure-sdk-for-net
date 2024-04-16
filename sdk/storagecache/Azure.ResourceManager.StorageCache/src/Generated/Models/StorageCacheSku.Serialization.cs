@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class StorageCacheSku : IUtf8JsonSerializable, IJsonModel<StorageCacheSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageCacheSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (!(Capabilities is ChangeTrackingList<StorageCacheSkuCapability> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Locations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -51,28 +51,28 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LocationInfo is ChangeTrackingList<StorageCacheSkuLocationInfo> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LocationInfo))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Restrictions is ChangeTrackingList<StorageCacheRestriction> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Restrictions))
             {
                 writer.WritePropertyName("restrictions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheSku DeserializeStorageCacheSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             string name = default;
             IReadOnlyList<StorageCacheRestriction> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageCacheSku(
                 resourceType,
                 capabilities ?? new ChangeTrackingList<StorageCacheSkuCapability>(),
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeStorageCacheSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheSku)} does not support reading '{options.Format}' format.");
             }
         }
 

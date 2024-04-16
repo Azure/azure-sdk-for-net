@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionModernChargeSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionModernChargeSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionModernChargeSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionModernChargeSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionModernChargeSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,64 +49,64 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && BillingPeriodId != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingPeriodId))
             {
                 writer.WritePropertyName("billingPeriodId"u8);
                 writer.WriteStringValue(BillingPeriodId);
             }
-            if (options.Format != "W" && UsageStart != null)
+            if (options.Format != "W" && Optional.IsDefined(UsageStart))
             {
                 writer.WritePropertyName("usageStart"u8);
                 writer.WriteStringValue(UsageStart);
             }
-            if (options.Format != "W" && UsageEnd != null)
+            if (options.Format != "W" && Optional.IsDefined(UsageEnd))
             {
                 writer.WritePropertyName("usageEnd"u8);
                 writer.WriteStringValue(UsageEnd);
             }
-            if (options.Format != "W" && AzureCharges != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureCharges))
             {
                 writer.WritePropertyName("azureCharges"u8);
-                writer.WriteObjectValue(AzureCharges);
+                writer.WriteObjectValue(AzureCharges, options);
             }
-            if (options.Format != "W" && ChargesBilledSeparately != null)
+            if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
             {
                 writer.WritePropertyName("chargesBilledSeparately"u8);
-                writer.WriteObjectValue(ChargesBilledSeparately);
+                writer.WriteObjectValue(ChargesBilledSeparately, options);
             }
-            if (options.Format != "W" && MarketplaceCharges != null)
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
             {
                 writer.WritePropertyName("marketplaceCharges"u8);
-                writer.WriteObjectValue(MarketplaceCharges);
+                writer.WriteObjectValue(MarketplaceCharges, options);
             }
-            if (options.Format != "W" && BillingAccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
             {
                 writer.WritePropertyName("billingAccountId"u8);
                 writer.WriteStringValue(BillingAccountId);
             }
-            if (options.Format != "W" && BillingProfileId != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (options.Format != "W" && InvoiceSectionId != null)
+            if (options.Format != "W" && Optional.IsDefined(InvoiceSectionId))
             {
                 writer.WritePropertyName("invoiceSectionId"u8);
                 writer.WriteStringValue(InvoiceSectionId);
             }
-            if (options.Format != "W" && CustomerId != null)
+            if (options.Format != "W" && Optional.IsDefined(CustomerId))
             {
                 writer.WritePropertyName("customerId"u8);
                 writer.WriteStringValue(CustomerId);
             }
-            if (options.Format != "W" && IsInvoiced.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsInvoiced))
             {
                 writer.WritePropertyName("isInvoiced"u8);
                 writer.WriteBooleanValue(IsInvoiced.Value);
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionModernChargeSummary DeserializeConsumptionModernChargeSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string customerId = default;
             bool? isInvoiced = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -295,10 +294,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionModernChargeSummary(
                 id,
                 name,
@@ -329,7 +328,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -345,7 +344,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionModernChargeSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

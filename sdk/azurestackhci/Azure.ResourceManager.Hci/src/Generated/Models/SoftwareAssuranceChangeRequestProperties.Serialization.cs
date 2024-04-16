@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Hci.Models
 {
     internal partial class SoftwareAssuranceChangeRequestProperties : IUtf8JsonSerializable, IJsonModel<SoftwareAssuranceChangeRequestProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareAssuranceChangeRequestProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareAssuranceChangeRequestProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SoftwareAssuranceChangeRequestProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareAssuranceChangeRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareAssuranceChangeRequestProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareAssuranceChangeRequestProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SoftwareAssuranceIntent.HasValue)
+            if (Optional.IsDefined(SoftwareAssuranceIntent))
             {
                 writer.WritePropertyName("softwareAssuranceIntent"u8);
                 writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToString());
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareAssuranceChangeRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareAssuranceChangeRequestProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareAssuranceChangeRequestProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static SoftwareAssuranceChangeRequestProperties DeserializeSoftwareAssuranceChangeRequestProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             SoftwareAssuranceIntent? softwareAssuranceIntent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("softwareAssuranceIntent"u8))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SoftwareAssuranceChangeRequestProperties(softwareAssuranceIntent, serializedAdditionalRawData);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareAssuranceChangeRequestProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareAssuranceChangeRequestProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeSoftwareAssuranceChangeRequestProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareAssuranceChangeRequestProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareAssuranceChangeRequestProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

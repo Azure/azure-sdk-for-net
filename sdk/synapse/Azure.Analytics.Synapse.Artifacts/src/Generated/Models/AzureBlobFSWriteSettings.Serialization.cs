@@ -19,27 +19,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BlockSizeInMB != null)
+            if (Optional.IsDefined(BlockSizeInMB))
             {
                 writer.WritePropertyName("blockSizeInMB"u8);
-                writer.WriteObjectValue(BlockSizeInMB);
+                writer.WriteObjectValue<object>(BlockSizeInMB);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
-            if (CopyBehavior != null)
+            if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
-                writer.WriteObjectValue(CopyBehavior);
+                writer.WriteObjectValue<object>(CopyBehavior);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -96,12 +96,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AzureBlobFSWriteSettings(type, maxConcurrentConnections, copyBehavior, additionalProperties, blockSizeInMB);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureBlobFSWriteSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureBlobFSWriteSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class AzureBlobFSWriteSettingsConverter : JsonConverter<AzureBlobFSWriteSettings>
         {
             public override void Write(Utf8JsonWriter writer, AzureBlobFSWriteSettings model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override AzureBlobFSWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

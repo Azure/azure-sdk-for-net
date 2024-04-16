@@ -15,12 +15,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (GovLength.HasValue)
+            if (Optional.IsDefined(GovLength))
             {
                 writer.WritePropertyName("govLength"u8);
                 writer.WriteNumberValue(GovLength.Value);
             }
-            if (Profile.HasValue)
+            if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
@@ -58,6 +58,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new Mpeg4Configuration(govLength, profile);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Mpeg4Configuration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMpeg4Configuration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

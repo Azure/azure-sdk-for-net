@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,33 +16,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CognitiveServicesKeyVaultProperties : IUtf8JsonSerializable, IJsonModel<CognitiveServicesKeyVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesKeyVaultProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesKeyVaultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CognitiveServicesKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesKeyVaultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (IdentityClientId.HasValue)
+            if (Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesKeyVaultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesKeyVaultProperties DeserializeCognitiveServicesKeyVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Uri keyVaultUri = default;
             Guid? identityClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"u8))
@@ -122,11 +123,98 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CognitiveServicesKeyVaultProperties(keyName, keyVersion, keyVaultUri, identityClientId, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyName), out propertyOverride);
+            if (Optional.IsDefined(KeyName) || hasPropertyOverride)
+            {
+                builder.Append("  keyName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (KeyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVersion), out propertyOverride);
+            if (Optional.IsDefined(KeyVersion) || hasPropertyOverride)
+            {
+                builder.Append("  keyVersion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (KeyVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KeyVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KeyVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultUri), out propertyOverride);
+            if (Optional.IsDefined(KeyVaultUri) || hasPropertyOverride)
+            {
+                builder.Append("  keyVaultUri: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{KeyVaultUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityClientId), out propertyOverride);
+            if (Optional.IsDefined(IdentityClientId) || hasPropertyOverride)
+            {
+                builder.Append("  identityClientId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{IdentityClientId.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CognitiveServicesKeyVaultProperties>.Write(ModelReaderWriterOptions options)
@@ -137,8 +225,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesKeyVaultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +244,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesKeyVaultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesKeyVaultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

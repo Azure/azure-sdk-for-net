@@ -15,36 +15,36 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicWorkflowRequestHistoryProperties : IUtf8JsonSerializable, IJsonModel<LogicWorkflowRequestHistoryProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRequestHistoryProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRequestHistoryProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicWorkflowRequestHistoryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRequestHistoryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowRequestHistoryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowRequestHistoryProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Request != null)
+            if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                writer.WriteObjectValue(Request, options);
             }
-            if (Response != null)
+            if (Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response);
+                writer.WriteObjectValue(Response, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRequestHistoryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowRequestHistoryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowRequestHistoryProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowRequestHistoryProperties DeserializeLogicWorkflowRequestHistoryProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic.Models
             LogicWorkflowRequest request = default;
             LogicWorkflowResponse response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startTime"u8))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogicWorkflowRequestHistoryProperties(startTime, endTime, request, response, serializedAdditionalRawData);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowRequestHistoryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowRequestHistoryProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicWorkflowRequestHistoryProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowRequestHistoryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowRequestHistoryProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

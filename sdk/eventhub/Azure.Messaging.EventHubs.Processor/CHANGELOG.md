@@ -10,6 +10,22 @@
 
 ### Other Changes
 
+## 5.11.2 (2024-04-10)
+
+### Bugs Fixed
+
+- The `EventProcessorClient` will now create a unique span for each event emitted to the handler for processing.  Previously a single span was created for all events in a batch.  ([#31922](https://github.com/Azure/azure-sdk-for-net/issues/31922))
+
+- Fixed a parameter ordering error in ETW 22 (EventBatchProcessingError) that caused structured data arguments to be ordered differently than the associated replacement token in the log message. 
+
+### Other Changes
+
+- Added option `EnableCheckpointing` to allow automatic checkpointing to be disabled for applications that only wish to read current data rather than tracking the state of processing.
+
+## 5.11.1 (2024-03-05)
+
+### Other Changes
+
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.5, which includes several bug fixes.  A notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
 
 ## 5.11.0 (2024-02-13)

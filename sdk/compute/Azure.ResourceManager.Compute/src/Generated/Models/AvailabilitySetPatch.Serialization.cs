@@ -16,23 +16,23 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class AvailabilitySetPatch : IUtf8JsonSerializable, IJsonModel<AvailabilitySetPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilitySetPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilitySetPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailabilitySetPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilitySetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilitySetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilitySetPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PlatformUpdateDomainCount.HasValue)
+            if (Optional.IsDefined(PlatformUpdateDomainCount))
             {
                 writer.WritePropertyName("platformUpdateDomainCount"u8);
                 writer.WriteNumberValue(PlatformUpdateDomainCount.Value);
             }
-            if (PlatformFaultDomainCount.HasValue)
+            if (Optional.IsDefined(PlatformFaultDomainCount))
             {
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (!(VirtualMachines is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
@@ -65,18 +65,18 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ProximityPlacementGroup != null)
+            if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
-            if (options.Format != "W" && !(Statuses is ChangeTrackingList<InstanceViewStatus> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilitySetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilitySetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilitySetPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AvailabilitySetPatch DeserializeAvailabilitySetPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
             WritableSubResource proximityPlacementGroup = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AvailabilitySetPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilitySetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilitySetPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeAvailabilitySetPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilitySetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilitySetPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

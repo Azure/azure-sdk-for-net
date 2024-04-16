@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class IaasVmErrorInfo : IUtf8JsonSerializable, IJsonModel<IaasVmErrorInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmErrorInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmErrorInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IaasVmErrorInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ErrorCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && ErrorTitle != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorTitle))
             {
                 writer.WritePropertyName("errorTitle"u8);
                 writer.WriteStringValue(ErrorTitle);
             }
-            if (options.Format != "W" && ErrorString != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorString))
             {
                 writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
-            if (options.Format != "W" && !(Recommendations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Recommendations))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static IaasVmErrorInfo DeserializeIaasVmErrorInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string errorString = default;
             IReadOnlyList<string> recommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IaasVmErrorInfo(errorCode, errorTitle, errorString, recommendations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeIaasVmErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

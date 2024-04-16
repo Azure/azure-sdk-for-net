@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryData : IUtf8JsonSerializable, IJsonModel<ContainerRegistryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
-            if (Identity != null)
+            writer.WriteObjectValue(Sku, options);
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,59 +63,59 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && LoginServer != null)
+            if (options.Format != "W" && Optional.IsDefined(LoginServer))
             {
                 writer.WritePropertyName("loginServer"u8);
                 writer.WriteStringValue(LoginServer);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue(Status, options);
             }
-            if (IsAdminUserEnabled.HasValue)
+            if (Optional.IsDefined(IsAdminUserEnabled))
             {
                 writer.WritePropertyName("adminUserEnabled"u8);
                 writer.WriteBooleanValue(IsAdminUserEnabled.Value);
             }
-            if (NetworkRuleSet != null)
+            if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkRuleSet"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                writer.WriteObjectValue(NetworkRuleSet, options);
             }
-            if (Policies != null)
+            if (Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
-                writer.WriteObjectValue(Policies);
+                writer.WriteObjectValue(Policies, options);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue(Encryption, options);
             }
-            if (IsDataEndpointEnabled.HasValue)
+            if (Optional.IsDefined(IsDataEndpointEnabled))
             {
                 writer.WritePropertyName("dataEndpointEnabled"u8);
                 writer.WriteBooleanValue(IsDataEndpointEnabled.Value);
             }
-            if (options.Format != "W" && !(DataEndpointHostNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataEndpointHostNames))
             {
                 writer.WritePropertyName("dataEndpointHostNames"u8);
                 writer.WriteStartArray();
@@ -125,27 +125,27 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (NetworkRuleBypassOptions.HasValue)
+            if (Optional.IsDefined(NetworkRuleBypassOptions))
             {
                 writer.WritePropertyName("networkRuleBypassOptions"u8);
                 writer.WriteStringValue(NetworkRuleBypassOptions.Value.ToString());
             }
-            if (ZoneRedundancy.HasValue)
+            if (Optional.IsDefined(ZoneRedundancy))
             {
                 writer.WritePropertyName("zoneRedundancy"u8);
                 writer.WriteStringValue(ZoneRedundancy.Value.ToString());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryData DeserializeContainerRegistryData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions = default;
             ContainerRegistryZoneRedundancy? zoneRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -418,10 +418,10 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryData(
                 id,
                 name,
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                         return DeserializeContainerRegistryData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support reading '{options.Format}' format.");
             }
         }
 

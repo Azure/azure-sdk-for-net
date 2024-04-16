@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class DevCenterNetworkConnectionPatch : IUtf8JsonSerializable, IJsonModel<DevCenterNetworkConnectionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterNetworkConnectionPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterNetworkConnectionPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevCenterNetworkConnectionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterNetworkConnectionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterNetworkConnectionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterNetworkConnectionPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,34 +37,34 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (DomainName != null)
+            if (Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (OrganizationUnit != null)
+            if (Optional.IsDefined(OrganizationUnit))
             {
                 writer.WritePropertyName("organizationUnit"u8);
                 writer.WriteStringValue(OrganizationUnit);
             }
-            if (DomainUsername != null)
+            if (Optional.IsDefined(DomainUsername))
             {
                 writer.WritePropertyName("domainUsername"u8);
                 writer.WriteStringValue(DomainUsername);
             }
-            if (DomainPassword != null)
+            if (Optional.IsDefined(DomainPassword))
             {
                 writer.WritePropertyName("domainPassword"u8);
                 writer.WriteStringValue(DomainPassword);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterNetworkConnectionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterNetworkConnectionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterNetworkConnectionPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static DevCenterNetworkConnectionPatch DeserializeDevCenterNetworkConnectionPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             string domainUsername = default;
             string domainPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevCenterNetworkConnectionPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterNetworkConnectionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterNetworkConnectionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         return DeserializeDevCenterNetworkConnectionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterNetworkConnectionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterNetworkConnectionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

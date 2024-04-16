@@ -15,46 +15,46 @@ namespace Azure.ResourceManager.PostgreSql.Models
     [PersistableModelProxy(typeof(UnknownServerPropertiesForCreate))]
     public partial class PostgreSqlServerPropertiesForCreate : IUtf8JsonSerializable, IJsonModel<PostgreSqlServerPropertiesForCreate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerPropertiesForCreate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerPropertiesForCreate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlServerPropertiesForCreate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlServerPropertiesForCreate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (SslEnforcement.HasValue)
+            if (Optional.IsDefined(SslEnforcement))
             {
                 writer.WritePropertyName("sslEnforcement"u8);
                 writer.WriteStringValue(SslEnforcement.Value.ToSerialString());
             }
-            if (MinimalTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
             }
-            if (InfrastructureEncryption.HasValue)
+            if (Optional.IsDefined(InfrastructureEncryption))
             {
                 writer.WritePropertyName("infrastructureEncryption"u8);
                 writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (StorageProfile != null)
+            if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue(StorageProfile, options);
             }
             writer.WritePropertyName("createMode"u8);
             writer.WriteStringValue(CreateMode.ToString());
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlServerPropertiesForCreate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         internal static PostgreSqlServerPropertiesForCreate DeserializePostgreSqlServerPropertiesForCreate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                         return DeserializePostgreSqlServerPropertiesForCreate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlServerPropertiesForCreate)} does not support reading '{options.Format}' format.");
             }
         }
 

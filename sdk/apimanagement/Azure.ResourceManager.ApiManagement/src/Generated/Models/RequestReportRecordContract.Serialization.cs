@@ -16,103 +16,103 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class RequestReportRecordContract : IUtf8JsonSerializable, IJsonModel<RequestReportRecordContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestReportRecordContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestReportRecordContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RequestReportRecordContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ApiId != null)
+            if (Optional.IsDefined(ApiId))
             {
                 writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
-            if (OperationId != null)
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (options.Format != "W" && ProductId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductId))
             {
                 writer.WritePropertyName("productId"u8);
                 writer.WriteStringValue(ProductId);
             }
-            if (options.Format != "W" && UserId != null)
+            if (options.Format != "W" && Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (Method.HasValue)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (BackendResponseCode != null)
+            if (Optional.IsDefined(BackendResponseCode))
             {
                 writer.WritePropertyName("backendResponseCode"u8);
-                writer.WriteStringValue(BackendResponseCode);
+                SerializeBackendResponseCodeValue(writer);
             }
-            if (ResponseCode.HasValue)
+            if (Optional.IsDefined(ResponseCode))
             {
                 writer.WritePropertyName("responseCode"u8);
                 writer.WriteNumberValue(ResponseCode.Value);
             }
-            if (ResponseSize.HasValue)
+            if (Optional.IsDefined(ResponseSize))
             {
                 writer.WritePropertyName("responseSize"u8);
                 writer.WriteNumberValue(ResponseSize.Value);
             }
-            if (Timestamp.HasValue)
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Cache != null)
+            if (Optional.IsDefined(Cache))
             {
                 writer.WritePropertyName("cache"u8);
                 writer.WriteStringValue(Cache);
             }
-            if (ApiTime.HasValue)
+            if (Optional.IsDefined(ApiTime))
             {
                 writer.WritePropertyName("apiTime"u8);
                 writer.WriteNumberValue(ApiTime.Value);
             }
-            if (ServiceTime.HasValue)
+            if (Optional.IsDefined(ServiceTime))
             {
                 writer.WritePropertyName("serviceTime"u8);
                 writer.WriteNumberValue(ServiceTime.Value);
             }
-            if (ApiRegion != null)
+            if (Optional.IsDefined(ApiRegion))
             {
                 writer.WritePropertyName("apiRegion"u8);
                 writer.WriteStringValue(ApiRegion);
             }
-            if (SubscriptionResourceId != null)
+            if (Optional.IsDefined(SubscriptionResourceId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionResourceId);
             }
-            if (RequestId != null)
+            if (Optional.IsDefined(RequestId))
             {
                 writer.WritePropertyName("requestId"u8);
                 writer.WriteStringValue(RequestId);
             }
-            if (RequestSize.HasValue)
+            if (Optional.IsDefined(RequestSize))
             {
                 writer.WritePropertyName("requestSize"u8);
                 writer.WriteNumberValue(RequestSize.Value);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static RequestReportRecordContract DeserializeRequestReportRecordContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string requestId = default;
             int? requestSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiId"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("backendResponseCode"u8))
                 {
-                    backendResponseCode = property.Value.GetString();
+                    DeserializeBackendResponseCodeValue(property, ref backendResponseCode);
                     continue;
                 }
                 if (property.NameEquals("responseCode"u8))
@@ -309,10 +309,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RequestReportRecordContract(
                 apiId,
                 operationId,
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeRequestReportRecordContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestReportRecordContract)} does not support reading '{options.Format}' format.");
             }
         }
 

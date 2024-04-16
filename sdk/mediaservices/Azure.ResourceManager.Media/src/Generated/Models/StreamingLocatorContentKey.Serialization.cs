@@ -15,46 +15,46 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class StreamingLocatorContentKey : IUtf8JsonSerializable, IJsonModel<StreamingLocatorContentKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingLocatorContentKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingLocatorContentKey>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamingLocatorContentKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StreamingLocatorContentKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (options.Format != "W" && KeyType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
             }
-            if (LabelReferenceInStreamingPolicy != null)
+            if (Optional.IsDefined(LabelReferenceInStreamingPolicy))
             {
                 writer.WritePropertyName("labelReferenceInStreamingPolicy"u8);
                 writer.WriteStringValue(LabelReferenceInStreamingPolicy);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && PolicyName != null)
+            if (options.Format != "W" && Optional.IsDefined(PolicyName))
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (options.Format != "W" && !(Tracks is ChangeTrackingList<MediaTrackSelection> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tracks))
             {
                 writer.WritePropertyName("tracks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tracks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingLocatorContentKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingLocatorContentKey DeserializeStreamingLocatorContentKey(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
             string policyName = default;
             IReadOnlyList<MediaTrackSelection> tracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StreamingLocatorContentKey(
                 id,
                 type,
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingLocatorContentKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingLocatorContentKey)} does not support reading '{options.Format}' format.");
             }
         }
 

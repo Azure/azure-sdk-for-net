@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -37,7 +36,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Statistics.HasValue)
+            if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
@@ -111,6 +110,22 @@ namespace Azure.AI.TextAnalytics.Models
                 sentiment,
                 confidenceScores,
                 sentences);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SentimentDocumentResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSentimentDocumentResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

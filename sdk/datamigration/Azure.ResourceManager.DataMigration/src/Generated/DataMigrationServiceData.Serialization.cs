@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Models;
@@ -18,33 +17,33 @@ namespace Azure.ResourceManager.DataMigration
 {
     public partial class DataMigrationServiceData : IUtf8JsonSerializable, IJsonModel<DataMigrationServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMigrationServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMigrationServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataMigrationServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataMigrationServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataMigrationServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataMigrationServiceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,39 +71,39 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (PublicKey != null)
+            if (Optional.IsDefined(PublicKey))
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (VirtualSubnetId != null)
+            if (Optional.IsDefined(VirtualSubnetId))
             {
                 writer.WritePropertyName("virtualSubnetId"u8);
                 writer.WriteStringValue(VirtualSubnetId);
             }
-            if (VirtualNicId != null)
+            if (Optional.IsDefined(VirtualNicId))
             {
                 writer.WritePropertyName("virtualNicId"u8);
                 writer.WriteStringValue(VirtualNicId);
             }
-            if (AutoStopDelay != null)
+            if (Optional.IsDefined(AutoStopDelay))
             {
                 writer.WritePropertyName("autoStopDelay"u8);
                 writer.WriteStringValue(AutoStopDelay);
             }
-            if (DeleteResourcesOnStop.HasValue)
+            if (Optional.IsDefined(DeleteResourcesOnStop))
             {
                 writer.WritePropertyName("deleteResourcesOnStop"u8);
                 writer.WriteBooleanValue(DeleteResourcesOnStop.Value);
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.DataMigration
             var format = options.Format == "W" ? ((IPersistableModel<DataMigrationServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataMigrationServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataMigrationServiceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.DataMigration
 
         internal static DataMigrationServiceData DeserializeDataMigrationServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration
             string autoStopDelay = default;
             bool? deleteResourcesOnStop = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -285,10 +284,10 @@ namespace Azure.ResourceManager.DataMigration
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataMigrationServiceData(
                 id,
                 name,
@@ -317,7 +316,7 @@ namespace Azure.ResourceManager.DataMigration
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataMigrationServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataMigrationServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.DataMigration
                         return DeserializeDataMigrationServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataMigrationServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataMigrationServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 

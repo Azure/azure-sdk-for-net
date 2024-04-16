@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     public partial class VMwareToAzStackHciProtectedItemModelCustomProperties : IUtf8JsonSerializable, IJsonModel<VMwareToAzStackHciProtectedItemModelCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHciProtectedItemModelCustomProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHciProtectedItemModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareToAzStackHciProtectedItemModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedItemModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ActiveLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActiveLocation))
             {
                 writer.WritePropertyName("activeLocation"u8);
                 writer.WriteStringValue(ActiveLocation.Value.ToString());
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(TargetHciClusterId);
             writer.WritePropertyName("targetArcClusterCustomLocationId"u8);
             writer.WriteStringValue(TargetArcClusterCustomLocationId);
-            if (options.Format != "W" && TargetAzStackHciClusterName != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetAzStackHciClusterName))
             {
                 writer.WritePropertyName("targetAzStackHciClusterName"u8);
                 writer.WriteStringValue(TargetAzStackHciClusterName);
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(StorageContainerId);
             writer.WritePropertyName("targetResourceGroupId"u8);
             writer.WriteStringValue(TargetResourceGroupId);
-            if (options.Format != "W" && TargetLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetLocation"u8);
                 writer.WriteStringValue(TargetLocation);
@@ -55,106 +55,106 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartArray();
             foreach (var item in DisksToInclude)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("nicsToInclude"u8);
             writer.WriteStartArray();
             foreach (var item in NicsToInclude)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && !(ProtectedDisks is ChangeTrackingList<VMwareToAzStackHciProtectedDiskProperties> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedDisks))
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ProtectedNics is ChangeTrackingList<VMwareToAzStackHciProtectedNicProperties> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedNics))
             {
                 writer.WritePropertyName("protectedNics"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProtectedNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && TargetVmBiosId != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetVmBiosId))
             {
                 writer.WritePropertyName("targetVmBiosId"u8);
                 writer.WriteStringValue(TargetVmBiosId);
             }
-            if (TargetVmName != null)
+            if (Optional.IsDefined(TargetVmName))
             {
                 writer.WritePropertyName("targetVmName"u8);
                 writer.WriteStringValue(TargetVmName);
             }
             writer.WritePropertyName("hyperVGeneration"u8);
             writer.WriteStringValue(HyperVGeneration);
-            if (TargetNetworkId != null)
+            if (Optional.IsDefined(TargetNetworkId))
             {
                 writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
-            if (TestNetworkId != null)
+            if (Optional.IsDefined(TestNetworkId))
             {
                 writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
-            if (TargetCpuCores.HasValue)
+            if (Optional.IsDefined(TargetCpuCores))
             {
                 writer.WritePropertyName("targetCpuCores"u8);
                 writer.WriteNumberValue(TargetCpuCores.Value);
             }
-            if (IsDynamicRam.HasValue)
+            if (Optional.IsDefined(IsDynamicRam))
             {
                 writer.WritePropertyName("isDynamicRam"u8);
                 writer.WriteBooleanValue(IsDynamicRam.Value);
             }
-            if (DynamicMemoryConfig != null)
+            if (Optional.IsDefined(DynamicMemoryConfig))
             {
                 writer.WritePropertyName("dynamicMemoryConfig"u8);
-                writer.WriteObjectValue(DynamicMemoryConfig);
+                writer.WriteObjectValue(DynamicMemoryConfig, options);
             }
-            if (TargetMemoryInMegaBytes.HasValue)
+            if (Optional.IsDefined(TargetMemoryInMegaBytes))
             {
                 writer.WritePropertyName("targetMemoryInMegaBytes"u8);
                 writer.WriteNumberValue(TargetMemoryInMegaBytes.Value);
             }
-            if (options.Format != "W" && OSType != null)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && OSName != null)
+            if (options.Format != "W" && Optional.IsDefined(OSName))
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && FirmwareType != null)
+            if (options.Format != "W" && Optional.IsDefined(FirmwareType))
             {
                 writer.WritePropertyName("firmwareType"u8);
                 writer.WriteStringValue(FirmwareType);
             }
             writer.WritePropertyName("fabricDiscoveryMachineId"u8);
             writer.WriteStringValue(FabricDiscoveryMachineId);
-            if (options.Format != "W" && SourceVmName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceVmName))
             {
                 writer.WritePropertyName("sourceVmName"u8);
                 writer.WriteStringValue(SourceVmName);
             }
-            if (options.Format != "W" && SourceCpuCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SourceCpuCores))
             {
                 writer.WritePropertyName("sourceCpuCores"u8);
                 writer.WriteNumberValue(SourceCpuCores.Value);
             }
-            if (options.Format != "W" && SourceMemoryInMegaBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SourceMemoryInMegaBytes))
             {
                 writer.WritePropertyName("sourceMemoryInMegaBytes"u8);
                 writer.WriteNumberValue(SourceMemoryInMegaBytes.Value);
@@ -165,77 +165,77 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(SourceDraName);
             writer.WritePropertyName("targetDraName"u8);
             writer.WriteStringValue(TargetDraName);
-            if (options.Format != "W" && SourceApplianceName != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceApplianceName))
             {
                 writer.WritePropertyName("sourceApplianceName"u8);
                 writer.WriteStringValue(SourceApplianceName);
             }
-            if (options.Format != "W" && TargetApplianceName != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetApplianceName))
             {
                 writer.WritePropertyName("targetApplianceName"u8);
                 writer.WriteStringValue(TargetApplianceName);
             }
-            if (options.Format != "W" && FailoverRecoveryPointId != null)
+            if (options.Format != "W" && Optional.IsDefined(FailoverRecoveryPointId))
             {
                 writer.WritePropertyName("failoverRecoveryPointId"u8);
                 writer.WriteStringValue(FailoverRecoveryPointId);
             }
-            if (options.Format != "W" && LastRecoveryPointReceived.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointReceived))
             {
                 writer.WritePropertyName("lastRecoveryPointReceived"u8);
                 writer.WriteStringValue(LastRecoveryPointReceived.Value, "O");
             }
-            if (options.Format != "W" && LastRecoveryPointId != null)
+            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointId))
             {
                 writer.WritePropertyName("lastRecoveryPointId"u8);
                 writer.WriteStringValue(LastRecoveryPointId);
             }
-            if (options.Format != "W" && InitialReplicationProgressPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InitialReplicationProgressPercentage))
             {
                 writer.WritePropertyName("initialReplicationProgressPercentage"u8);
                 writer.WriteNumberValue(InitialReplicationProgressPercentage.Value);
             }
-            if (options.Format != "W" && MigrationProgressPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MigrationProgressPercentage))
             {
                 writer.WritePropertyName("migrationProgressPercentage"u8);
                 writer.WriteNumberValue(MigrationProgressPercentage.Value);
             }
-            if (options.Format != "W" && ResumeProgressPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResumeProgressPercentage))
             {
                 writer.WritePropertyName("resumeProgressPercentage"u8);
                 writer.WriteNumberValue(ResumeProgressPercentage.Value);
             }
-            if (options.Format != "W" && ResyncProgressPercentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResyncProgressPercentage))
             {
                 writer.WritePropertyName("resyncProgressPercentage"u8);
                 writer.WriteNumberValue(ResyncProgressPercentage.Value);
             }
-            if (options.Format != "W" && ResyncRetryCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResyncRetryCount))
             {
                 writer.WritePropertyName("resyncRetryCount"u8);
                 writer.WriteNumberValue(ResyncRetryCount.Value);
             }
-            if (options.Format != "W" && ResyncRequired.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResyncRequired))
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteBooleanValue(ResyncRequired.Value);
             }
-            if (options.Format != "W" && ResyncState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResyncState))
             {
                 writer.WritePropertyName("resyncState"u8);
                 writer.WriteStringValue(ResyncState.Value.ToString());
             }
-            if (PerformAutoResync.HasValue)
+            if (Optional.IsDefined(PerformAutoResync))
             {
                 writer.WritePropertyName("performAutoResync"u8);
                 writer.WriteBooleanValue(PerformAutoResync.Value);
             }
-            if (options.Format != "W" && ResumeRetryCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResumeRetryCount))
             {
                 writer.WritePropertyName("resumeRetryCount"u8);
                 writer.WriteNumberValue(ResumeRetryCount.Value);
             }
-            if (options.Format != "W" && LastReplicationUpdateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastReplicationUpdateOn))
             {
                 writer.WritePropertyName("lastReplicationUpdateTime"u8);
                 writer.WriteStringValue(LastReplicationUpdateOn.Value, "O");
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedItemModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static VMwareToAzStackHciProtectedItemModelCustomProperties DeserializeVMwareToAzStackHciProtectedItemModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             DateTimeOffset? lastReplicationUpdateTime = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeLocation"u8))
@@ -668,10 +668,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VMwareToAzStackHciProtectedItemModelCustomProperties(
                 instanceType,
                 serializedAdditionalRawData,
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeVMwareToAzStackHciProtectedItemModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

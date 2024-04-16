@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiOperationData : IUtf8JsonSerializable, IJsonModel<ApiOperationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiOperationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiOperationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiOperationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiOperationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiOperationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiOperationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(TemplateParameters is ChangeTrackingList<ParameterContract> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TemplateParameters))
             {
                 writer.WritePropertyName("templateParameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in TemplateParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Request != null)
+            if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                writer.WriteObjectValue(Request, options);
             }
-            if (!(Responses is ChangeTrackingList<ResponseContract> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Responses))
             {
                 writer.WritePropertyName("responses"u8);
                 writer.WriteStartArray();
                 foreach (var item in Responses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Policies != null)
+            if (Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStringValue(Policies);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Method != null)
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (UriTemplate != null)
+            if (Optional.IsDefined(UriTemplate))
             {
                 writer.WritePropertyName("urlTemplate"u8);
                 writer.WriteStringValue(UriTemplate);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiOperationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiOperationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiOperationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiOperationData DeserializeApiOperationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement
             string method = default;
             string uriTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -255,10 +255,10 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiOperationData(
                 id,
                 name,
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiOperationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiOperationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiOperationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiOperationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiOperationData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class VirtualNetworkGatewayAutoScaleBounds : IUtf8JsonSerializable, IJsonModel<VirtualNetworkGatewayAutoScaleBounds>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayAutoScaleBounds>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayAutoScaleBounds>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualNetworkGatewayAutoScaleBounds>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayAutoScaleBounds>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleBounds)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleBounds)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Min.HasValue)
+            if (Optional.IsDefined(Min))
             {
                 writer.WritePropertyName("min"u8);
                 writer.WriteNumberValue(Min.Value);
             }
-            if (Max.HasValue)
+            if (Optional.IsDefined(Max))
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayAutoScaleBounds>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleBounds)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleBounds)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VirtualNetworkGatewayAutoScaleBounds DeserializeVirtualNetworkGatewayAutoScaleBounds(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             int? min = default;
             int? max = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("min"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualNetworkGatewayAutoScaleBounds(min, max, serializedAdditionalRawData);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleBounds)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleBounds)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVirtualNetworkGatewayAutoScaleBounds(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleBounds)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleBounds)} does not support reading '{options.Format}' format.");
             }
         }
 

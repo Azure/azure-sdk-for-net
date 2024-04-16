@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     public partial class DeviceUpdateAccountLocationDetail : IUtf8JsonSerializable, IJsonModel<DeviceUpdateAccountLocationDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdateAccountLocationDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdateAccountLocationDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceUpdateAccountLocationDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdateAccountLocationDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdateAccountLocationDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdateAccountLocationDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Role.HasValue)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdateAccountLocationDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdateAccountLocationDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdateAccountLocationDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static DeviceUpdateAccountLocationDetail DeserializeDeviceUpdateAccountLocationDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             string name = default;
             DeviceUpdateAccountLocationRole? role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DeviceUpdateAccountLocationDetail(name, role, serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdateAccountLocationDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdateAccountLocationDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         return DeserializeDeviceUpdateAccountLocationDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdateAccountLocationDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdateAccountLocationDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

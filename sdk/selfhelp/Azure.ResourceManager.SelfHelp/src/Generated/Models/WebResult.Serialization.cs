@@ -15,29 +15,29 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class WebResult : IUtf8JsonSerializable, IJsonModel<WebResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ReplacementKey != null)
+            if (Optional.IsDefined(ReplacementKey))
             {
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
             }
-            if (!(SearchResults is ChangeTrackingList<SearchResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SearchResults))
             {
                 writer.WritePropertyName("searchResults"u8);
                 writer.WriteStartArray();
                 foreach (var item in SearchResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static WebResult DeserializeWebResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string replacementKey = default;
             IList<SearchResult> searchResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replacementKey"u8))
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebResult(replacementKey, searchResults ?? new ChangeTrackingList<SearchResult>(), serializedAdditionalRawData);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeWebResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebResult)} does not support reading '{options.Format}' format.");
             }
         }
 

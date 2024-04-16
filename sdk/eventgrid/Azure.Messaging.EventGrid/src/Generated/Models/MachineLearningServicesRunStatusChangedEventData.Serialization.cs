@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -84,12 +83,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 runStatus);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MachineLearningServicesRunStatusChangedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMachineLearningServicesRunStatusChangedEventData(document.RootElement);
+        }
+
         internal partial class MachineLearningServicesRunStatusChangedEventDataConverter : JsonConverter<MachineLearningServicesRunStatusChangedEventData>
         {
             public override void Write(Utf8JsonWriter writer, MachineLearningServicesRunStatusChangedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override MachineLearningServicesRunStatusChangedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

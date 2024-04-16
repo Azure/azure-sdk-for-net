@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2AUnplannedFailoverContent : IUtf8JsonSerializable, IJsonModel<A2AUnplannedFailoverContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AUnplannedFailoverContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AUnplannedFailoverContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<A2AUnplannedFailoverContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<A2AUnplannedFailoverContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AUnplannedFailoverContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AUnplannedFailoverContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (CloudServiceCreationOption != null)
+            if (Optional.IsDefined(CloudServiceCreationOption))
             {
                 writer.WritePropertyName("cloudServiceCreationOption"u8);
                 writer.WriteStringValue(CloudServiceCreationOption);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AUnplannedFailoverContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AUnplannedFailoverContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AUnplannedFailoverContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static A2AUnplannedFailoverContent DeserializeA2AUnplannedFailoverContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string cloudServiceCreationOption = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointId"u8))
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new A2AUnplannedFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointId, cloudServiceCreationOption);
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2AUnplannedFailoverContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AUnplannedFailoverContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2AUnplannedFailoverContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2AUnplannedFailoverContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AUnplannedFailoverContent)} does not support reading '{options.Format}' format.");
             }
         }
 

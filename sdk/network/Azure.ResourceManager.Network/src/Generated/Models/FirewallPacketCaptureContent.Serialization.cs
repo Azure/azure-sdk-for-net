@@ -15,66 +15,66 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class FirewallPacketCaptureContent : IUtf8JsonSerializable, IJsonModel<FirewallPacketCaptureContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPacketCaptureContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPacketCaptureContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallPacketCaptureContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPacketCaptureContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPacketCaptureContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPacketCaptureContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DurationInSeconds.HasValue)
+            if (Optional.IsDefined(DurationInSeconds))
             {
                 writer.WritePropertyName("durationInSeconds"u8);
                 writer.WriteNumberValue(DurationInSeconds.Value);
             }
-            if (NumberOfPacketsToCapture.HasValue)
+            if (Optional.IsDefined(NumberOfPacketsToCapture))
             {
                 writer.WritePropertyName("numberOfPacketsToCapture"u8);
                 writer.WriteNumberValue(NumberOfPacketsToCapture.Value);
             }
-            if (SasUri != null)
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (!(Flags is ChangeTrackingList<AzureFirewallPacketCaptureFlags> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Flags))
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStartArray();
                 foreach (var item in Flags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Filters is ChangeTrackingList<AzureFirewallPacketCaptureRule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPacketCaptureContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPacketCaptureContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPacketCaptureContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPacketCaptureContent DeserializeFirewallPacketCaptureContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<AzureFirewallPacketCaptureFlags> flags = default;
             IList<AzureFirewallPacketCaptureRule> filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -221,10 +221,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FirewallPacketCaptureContent(
                 id,
                 serializedAdditionalRawData,
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPacketCaptureContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPacketCaptureContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFirewallPacketCaptureContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPacketCaptureContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPacketCaptureContent)} does not support reading '{options.Format}' format.");
             }
         }
 

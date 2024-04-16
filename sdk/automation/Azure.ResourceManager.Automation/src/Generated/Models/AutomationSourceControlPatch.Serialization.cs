@@ -15,45 +15,45 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationSourceControlPatch : IUtf8JsonSerializable, IJsonModel<AutomationSourceControlPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationSourceControlPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationSourceControlPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationSourceControlPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationSourceControlPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationSourceControlPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationSourceControlPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Branch != null)
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (IsAutoSyncEnabled.HasValue)
+            if (Optional.IsDefined(IsAutoSyncEnabled))
             {
                 writer.WritePropertyName("autoSync"u8);
                 writer.WriteBooleanValue(IsAutoSyncEnabled.Value);
             }
-            if (IsAutoPublishRunbookEnabled.HasValue)
+            if (Optional.IsDefined(IsAutoPublishRunbookEnabled))
             {
                 writer.WritePropertyName("publishRunbook"u8);
                 writer.WriteBooleanValue(IsAutoPublishRunbookEnabled.Value);
             }
-            if (SecurityToken != null)
+            if (Optional.IsDefined(SecurityToken))
             {
                 writer.WritePropertyName("securityToken"u8);
-                writer.WriteObjectValue(SecurityToken);
+                writer.WriteObjectValue(SecurityToken, options);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationSourceControlPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationSourceControlPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationSourceControlPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationSourceControlPatch DeserializeAutomationSourceControlPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Automation.Models
             SourceControlSecurityTokenProperties securityToken = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutomationSourceControlPatch(
                 branch,
                 folderPath,
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationSourceControlPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationSourceControlPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationSourceControlPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationSourceControlPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationSourceControlPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

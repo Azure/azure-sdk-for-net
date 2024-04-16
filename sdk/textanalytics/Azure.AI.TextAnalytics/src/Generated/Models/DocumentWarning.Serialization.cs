@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(Code.ToSerialString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (TargetRef != null)
+            if (Optional.IsDefined(TargetRef))
             {
                 writer.WritePropertyName("targetRef"u8);
                 writer.WriteStringValue(TargetRef);
@@ -55,6 +55,22 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new DocumentWarning(code, message, targetRef);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentWarning FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentWarning(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

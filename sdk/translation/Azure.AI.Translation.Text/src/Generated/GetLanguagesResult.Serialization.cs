@@ -9,54 +9,53 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
     public partial class GetLanguagesResult : IUtf8JsonSerializable, IJsonModel<GetLanguagesResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetLanguagesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetLanguagesResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GetLanguagesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GetLanguagesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Translation is ChangeTrackingDictionary<string, TranslationLanguage> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Translation))
             {
                 writer.WritePropertyName("translation"u8);
                 writer.WriteStartObject();
                 foreach (var item in Translation)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Transliteration is ChangeTrackingDictionary<string, TransliterationLanguage> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Transliteration))
             {
                 writer.WritePropertyName("transliteration"u8);
                 writer.WriteStartObject();
                 foreach (var item in Transliteration)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Dictionary is ChangeTrackingDictionary<string, SourceDictionaryLanguage> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Dictionary))
             {
                 writer.WritePropertyName("dictionary"u8);
                 writer.WriteStartObject();
                 foreach (var item in Dictionary)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -83,7 +82,7 @@ namespace Azure.AI.Translation.Text
             var format = options.Format == "W" ? ((IPersistableModel<GetLanguagesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,7 +91,7 @@ namespace Azure.AI.Translation.Text
 
         internal static GetLanguagesResult DeserializeGetLanguagesResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +101,7 @@ namespace Azure.AI.Translation.Text
             IReadOnlyDictionary<string, TransliterationLanguage> transliteration = default;
             IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("translation"u8))
@@ -149,10 +148,10 @@ namespace Azure.AI.Translation.Text
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GetLanguagesResult(translation ?? new ChangeTrackingDictionary<string, TranslationLanguage>(), transliteration ?? new ChangeTrackingDictionary<string, TransliterationLanguage>(), dictionary ?? new ChangeTrackingDictionary<string, SourceDictionaryLanguage>(), serializedAdditionalRawData);
         }
 
@@ -165,7 +164,7 @@ namespace Azure.AI.Translation.Text
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +180,7 @@ namespace Azure.AI.Translation.Text
                         return DeserializeGetLanguagesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetLanguagesResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -195,11 +194,11 @@ namespace Azure.AI.Translation.Text
             return DeserializeGetLanguagesResult(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

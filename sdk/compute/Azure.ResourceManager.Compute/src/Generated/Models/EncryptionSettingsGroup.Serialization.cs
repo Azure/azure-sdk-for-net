@@ -15,30 +15,30 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class EncryptionSettingsGroup : IUtf8JsonSerializable, IJsonModel<EncryptionSettingsGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionSettingsGroup>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncryptionSettingsGroup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EncryptionSettingsGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettingsGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
-            if (!(EncryptionSettings is ChangeTrackingList<EncryptionSettingsElement> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in EncryptionSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (EncryptionSettingsVersion != null)
+            if (Optional.IsDefined(EncryptionSettingsVersion))
             {
                 writer.WritePropertyName("encryptionSettingsVersion"u8);
                 writer.WriteStringValue(EncryptionSettingsVersion);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettingsGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static EncryptionSettingsGroup DeserializeEncryptionSettingsGroup(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
             IList<EncryptionSettingsElement> encryptionSettings = default;
             string encryptionSettingsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EncryptionSettingsGroup(enabled, encryptionSettings ?? new ChangeTrackingList<EncryptionSettingsElement>(), encryptionSettingsVersion, serializedAdditionalRawData);
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeEncryptionSettingsGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

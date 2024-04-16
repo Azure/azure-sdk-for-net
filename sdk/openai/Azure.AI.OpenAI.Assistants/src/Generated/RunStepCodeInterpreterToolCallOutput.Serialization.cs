@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -16,14 +15,14 @@ namespace Azure.AI.OpenAI.Assistants
     [PersistableModelProxy(typeof(UnknownRunStepCodeInterpreterToolCallOutput))]
     public partial class RunStepCodeInterpreterToolCallOutput : IUtf8JsonSerializable, IJsonModel<RunStepCodeInterpreterToolCallOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepCodeInterpreterToolCallOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepCodeInterpreterToolCallOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RunStepCodeInterpreterToolCallOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStepCodeInterpreterToolCallOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepCodeInterpreterToolCallOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunStepCodeInterpreterToolCallOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepCodeInterpreterToolCallOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -61,7 +60,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         internal static RunStepCodeInterpreterToolCallOutput DeserializeRunStepCodeInterpreterToolCallOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,8 +70,8 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 switch (discriminator.GetString())
                 {
-                    case "logs": return RunStepCodeInterpreterLogOutput.DeserializeRunStepCodeInterpreterLogOutput(element, options);
                     case "image": return RunStepCodeInterpreterImageOutput.DeserializeRunStepCodeInterpreterImageOutput(element, options);
+                    case "logs": return RunStepCodeInterpreterLogOutput.DeserializeRunStepCodeInterpreterLogOutput(element, options);
                 }
             }
             return UnknownRunStepCodeInterpreterToolCallOutput.DeserializeUnknownRunStepCodeInterpreterToolCallOutput(element, options);
@@ -87,7 +86,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunStepCodeInterpreterToolCallOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepCodeInterpreterToolCallOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +102,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeRunStepCodeInterpreterToolCallOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunStepCodeInterpreterToolCallOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepCodeInterpreterToolCallOutput)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -117,11 +116,11 @@ namespace Azure.AI.OpenAI.Assistants
             return DeserializeRunStepCodeInterpreterToolCallOutput(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -15,58 +15,58 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class ThreatIntelligenceFilteringCriteria : IUtf8JsonSerializable, IJsonModel<ThreatIntelligenceFilteringCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreatIntelligenceFilteringCriteria>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreatIntelligenceFilteringCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ThreatIntelligenceFilteringCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceFilteringCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PageSize.HasValue)
+            if (Optional.IsDefined(PageSize))
             {
                 writer.WritePropertyName("pageSize"u8);
                 writer.WriteNumberValue(PageSize.Value);
             }
-            if (MinConfidence.HasValue)
+            if (Optional.IsDefined(MinConfidence))
             {
                 writer.WritePropertyName("minConfidence"u8);
                 writer.WriteNumberValue(MinConfidence.Value);
             }
-            if (MaxConfidence.HasValue)
+            if (Optional.IsDefined(MaxConfidence))
             {
                 writer.WritePropertyName("maxConfidence"u8);
                 writer.WriteNumberValue(MaxConfidence.Value);
             }
-            if (MinValidUntil.HasValue)
+            if (Optional.IsDefined(MinValidUntil))
             {
                 writer.WritePropertyName("minValidUntil"u8);
                 writer.WriteStringValue(MinValidUntil.Value, "O");
             }
-            if (MaxValidUntil.HasValue)
+            if (Optional.IsDefined(MaxValidUntil))
             {
                 writer.WritePropertyName("maxValidUntil"u8);
                 writer.WriteStringValue(MaxValidUntil.Value, "O");
             }
-            if (IsIncludeDisabled.HasValue)
+            if (Optional.IsDefined(IsIncludeDisabled))
             {
                 writer.WritePropertyName("includeDisabled"u8);
                 writer.WriteBooleanValue(IsIncludeDisabled.Value);
             }
-            if (!(SortBy is ChangeTrackingList<ThreatIntelligenceSortingCriteria> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SortBy))
             {
                 writer.WritePropertyName("sortBy"u8);
                 writer.WriteStartArray();
                 foreach (var item in SortBy)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Sources is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Sources))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PatternTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PatternTypes))
             {
                 writer.WritePropertyName("patternTypes"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ThreatTypes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ThreatTypes))
             {
                 writer.WritePropertyName("threatTypes"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Ids is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Ids))
             {
                 writer.WritePropertyName("ids"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Keywords is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Keywords))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceFilteringCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static ThreatIntelligenceFilteringCriteria DeserializeThreatIntelligenceFilteringCriteria(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IList<string> keywords = default;
             string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pageSize"u8))
@@ -321,10 +321,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ThreatIntelligenceFilteringCriteria(
                 pageSize,
                 minConfidence,
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeThreatIntelligenceFilteringCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceFilteringCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

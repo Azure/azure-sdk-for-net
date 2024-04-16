@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class MapperDslConnectorProperties : IUtf8JsonSerializable, IJsonModel<MapperDslConnectorProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapperDslConnectorProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapperDslConnectorProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MapperDslConnectorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MapperDslConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapperDslConnectorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapperDslConnectorProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapperDslConnectorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapperDslConnectorProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapperDslConnectorProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MapperDslConnectorProperties DeserializeMapperDslConnectorProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             BinaryData value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MapperDslConnectorProperties(name, value, serializedAdditionalRawData);
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MapperDslConnectorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapperDslConnectorProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeMapperDslConnectorProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MapperDslConnectorProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapperDslConnectorProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

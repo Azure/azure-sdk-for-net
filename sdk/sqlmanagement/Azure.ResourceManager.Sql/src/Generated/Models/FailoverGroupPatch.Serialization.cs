@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class FailoverGroupPatch : IUtf8JsonSerializable, IJsonModel<FailoverGroupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FailoverGroupPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FailoverGroupPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FailoverGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FailoverGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailoverGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FailoverGroupPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ReadWriteEndpoint != null)
+            if (Optional.IsDefined(ReadWriteEndpoint))
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
-                writer.WriteObjectValue(ReadWriteEndpoint);
+                writer.WriteObjectValue(ReadWriteEndpoint, options);
             }
-            if (ReadOnlyEndpoint != null)
+            if (Optional.IsDefined(ReadOnlyEndpoint))
             {
                 writer.WritePropertyName("readOnlyEndpoint"u8);
-                writer.WriteObjectValue(ReadOnlyEndpoint);
+                writer.WriteObjectValue(ReadOnlyEndpoint, options);
             }
-            if (!(FailoverDatabases is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FailoverDatabases))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -64,13 +64,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PartnerServers is ChangeTrackingList<PartnerServerInfo> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PartnerServers))
             {
                 writer.WritePropertyName("partnerServers"u8);
                 writer.WriteStartArray();
                 foreach (var item in PartnerServers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<FailoverGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailoverGroupPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FailoverGroupPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static FailoverGroupPatch DeserializeFailoverGroupPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql.Models
             IList<ResourceIdentifier> databases = default;
             IList<PartnerServerInfo> partnerServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -203,10 +203,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FailoverGroupPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 readWriteEndpoint,
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FailoverGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FailoverGroupPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeFailoverGroupPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FailoverGroupPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FailoverGroupPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

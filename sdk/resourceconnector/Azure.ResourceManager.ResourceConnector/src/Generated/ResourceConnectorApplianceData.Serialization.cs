@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.ResourceConnector
 {
     public partial class ResourceConnectorApplianceData : IUtf8JsonSerializable, IJsonModel<ResourceConnectorApplianceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceConnectorApplianceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceConnectorApplianceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceConnectorApplianceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceConnectorApplianceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,39 +61,39 @@ namespace Azure.ResourceManager.ResourceConnector
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Distro.HasValue)
+            if (Optional.IsDefined(Distro))
             {
                 writer.WritePropertyName("distro"u8);
                 writer.WriteStringValue(Distro.Value.ToString());
             }
-            if (InfrastructureConfig != null)
+            if (Optional.IsDefined(InfrastructureConfig))
             {
                 writer.WritePropertyName("infrastructureConfig"u8);
-                writer.WriteObjectValue(InfrastructureConfig);
+                writer.WriteObjectValue(InfrastructureConfig, options);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (PublicKey != null)
+            if (Optional.IsDefined(PublicKey))
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceConnector
             var format = options.Format == "W" ? ((IPersistableModel<ResourceConnectorApplianceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ResourceConnector
 
         internal static ResourceConnectorApplianceData DeserializeResourceConnectorApplianceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ResourceConnector
             ResourceConnectorStatus? status = default;
             string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -262,10 +262,10 @@ namespace Azure.ResourceManager.ResourceConnector
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceConnectorApplianceData(
                 id,
                 name,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ResourceConnector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ResourceConnector
                         return DeserializeResourceConnectorApplianceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support reading '{options.Format}' format.");
             }
         }
 

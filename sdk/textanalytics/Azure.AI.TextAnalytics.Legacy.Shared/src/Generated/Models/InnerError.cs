@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -21,10 +20,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal InnerError(InnerErrorCodeValue code, string message)
         {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(message, nameof(message));
 
             Code = code;
             Message = message;

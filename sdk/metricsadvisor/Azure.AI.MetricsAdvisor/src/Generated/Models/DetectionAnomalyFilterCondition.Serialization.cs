@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(DimensionFilter is ChangeTrackingList<DimensionKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteStartArray();
@@ -25,12 +25,20 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SeverityFilter != null)
+            if (Optional.IsDefined(SeverityFilter))
             {
                 writer.WritePropertyName("severityFilter"u8);
                 writer.WriteObjectValue(SeverityFilter);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

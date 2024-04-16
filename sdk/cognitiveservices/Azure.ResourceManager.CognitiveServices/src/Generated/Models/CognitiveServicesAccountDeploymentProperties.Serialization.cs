@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,33 +17,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CognitiveServicesAccountDeploymentProperties : IUtf8JsonSerializable, IJsonModel<CognitiveServicesAccountDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesAccountDeploymentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesAccountDeploymentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CognitiveServicesAccountDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Model != null)
+            if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteObjectValue(Model);
+                writer.WriteObjectValue(Model, options);
             }
-            if (ScaleSettings != null)
+            if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings);
+                writer.WriteObjectValue(ScaleSettings, options);
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -52,27 +54,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (RaiPolicyName != null)
+            if (Optional.IsDefined(RaiPolicyName))
             {
                 writer.WritePropertyName("raiPolicyName"u8);
                 writer.WriteStringValue(RaiPolicyName);
             }
-            if (options.Format != "W" && CallRateLimit != null)
+            if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
-                writer.WriteObjectValue(CallRateLimit);
+                writer.WriteObjectValue(CallRateLimit, options);
             }
-            if (options.Format != "W" && !(RateLimits is ChangeTrackingList<ServiceAccountThrottlingRule> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RateLimits))
             {
                 writer.WritePropertyName("rateLimits"u8);
                 writer.WriteStartArray();
                 foreach (var item in RateLimits)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (VersionUpgradeOption.HasValue)
+            if (Optional.IsDefined(VersionUpgradeOption))
             {
                 writer.WritePropertyName("versionUpgradeOption"u8);
                 writer.WriteStringValue(VersionUpgradeOption.Value.ToString());
@@ -100,7 +102,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +111,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesAccountDeploymentProperties DeserializeCognitiveServicesAccountDeploymentProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +126,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IReadOnlyList<ServiceAccountThrottlingRule> rateLimits = default;
             DeploymentModelVersionUpgradeOption? versionUpgradeOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -207,10 +209,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CognitiveServicesAccountDeploymentProperties(
                 provisioningState,
                 model,
@@ -223,6 +225,171 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Model), out propertyOverride);
+            if (Optional.IsDefined(Model) || hasPropertyOverride)
+            {
+                builder.Append("  model: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Model, options, 2, false, "  model: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScaleSettings), out propertyOverride);
+            if (Optional.IsDefined(ScaleSettings) || hasPropertyOverride)
+            {
+                builder.Append("  scaleSettings: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, ScaleSettings, options, 2, false, "  scaleSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capabilities), out propertyOverride);
+            if (Optional.IsCollectionDefined(Capabilities) || hasPropertyOverride)
+            {
+                if (Capabilities.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  capabilities: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in Capabilities)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RaiPolicyName), out propertyOverride);
+            if (Optional.IsDefined(RaiPolicyName) || hasPropertyOverride)
+            {
+                builder.Append("  raiPolicyName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RaiPolicyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RaiPolicyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RaiPolicyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CallRateLimit), out propertyOverride);
+            if (Optional.IsDefined(CallRateLimit) || hasPropertyOverride)
+            {
+                builder.Append("  callRateLimit: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, CallRateLimit, options, 2, false, "  callRateLimit: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RateLimits), out propertyOverride);
+            if (Optional.IsCollectionDefined(RateLimits) || hasPropertyOverride)
+            {
+                if (RateLimits.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  rateLimits: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in RateLimits)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  rateLimits: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VersionUpgradeOption), out propertyOverride);
+            if (Optional.IsDefined(VersionUpgradeOption) || hasPropertyOverride)
+            {
+                builder.Append("  versionUpgradeOption: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{VersionUpgradeOption.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CognitiveServicesAccountDeploymentProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -231,8 +398,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +417,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesAccountDeploymentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

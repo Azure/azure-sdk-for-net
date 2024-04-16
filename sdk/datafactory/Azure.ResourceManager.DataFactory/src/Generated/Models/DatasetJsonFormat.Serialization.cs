@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class DatasetJsonFormat : IUtf8JsonSerializable, IJsonModel<DatasetJsonFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetJsonFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetJsonFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatasetJsonFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DatasetJsonFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FilePattern != null)
+            if (Optional.IsDefined(FilePattern))
             {
                 writer.WritePropertyName("filePattern"u8);
 #if NET6_0_OR_GREATER
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (NestingSeparator != null)
+            if (Optional.IsDefined(NestingSeparator))
             {
                 writer.WritePropertyName("nestingSeparator"u8);
                 JsonSerializer.Serialize(writer, NestingSeparator);
             }
-            if (EncodingName != null)
+            if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
                 JsonSerializer.Serialize(writer, EncodingName);
             }
-            if (JsonNodeReference != null)
+            if (Optional.IsDefined(JsonNodeReference))
             {
                 writer.WritePropertyName("jsonNodeReference"u8);
                 JsonSerializer.Serialize(writer, JsonNodeReference);
             }
-            if (JsonPathDefinition != null)
+            if (Optional.IsDefined(JsonPathDefinition))
             {
                 writer.WritePropertyName("jsonPathDefinition"u8);
 #if NET6_0_OR_GREATER
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
-            if (Serializer != null)
+            if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
                 JsonSerializer.Serialize(writer, Serializer);
             }
-            if (Deserializer != null)
+            if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
                 JsonSerializer.Serialize(writer, Deserializer);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatasetJsonFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DatasetJsonFormat DeserializeDatasetJsonFormat(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDatasetJsonFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatasetJsonFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

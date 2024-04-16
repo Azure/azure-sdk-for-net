@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -192,14 +191,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (key.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
             scope.Start();
@@ -237,14 +229,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetConfigurationSetting(string key, string label, string acceptDatetime, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (key.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
             scope.Start();
@@ -282,14 +267,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> SetConfigurationSettingAsync(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (key.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
             scope.Start();
@@ -327,14 +305,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response SetConfigurationSetting(string key, RequestContent content, ContentType contentType, string label = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (key.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
             scope.Start();
@@ -370,14 +341,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label, ETag? ifMatch, RequestContext context)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (key.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
             scope.Start();
@@ -413,14 +377,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response DeleteConfigurationSetting(string key, string label, ETag? ifMatch, RequestContext context)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (key.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
             scope.Start();
@@ -458,14 +415,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CheckKeyValueAsync(string key, string label = null, string acceptDatetime = null, IEnumerable<string> select = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (key.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeyValue");
             scope.Start();
@@ -503,14 +453,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CheckKeyValue(string key, string label = null, string acceptDatetime = null, IEnumerable<string> select = null, MatchConditions matchConditions = null, RequestContext context = null)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (key.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckKeyValue");
             scope.Start();
@@ -606,14 +549,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
             scope.Start();
@@ -649,14 +585,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetSnapshot(string name, IEnumerable<string> select, MatchConditions matchConditions, RequestContext context)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
             scope.Start();
@@ -693,18 +622,8 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> UpdateSnapshotStatusAsync(string name, RequestContent content, ContentType contentType, MatchConditions matchConditions = null, RequestContext context = null)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshotStatus");
             scope.Start();
@@ -741,18 +660,8 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response UpdateSnapshotStatus(string name, RequestContent content, ContentType contentType, MatchConditions matchConditions = null, RequestContext context = null)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshotStatus");
             scope.Start();
@@ -787,14 +696,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CheckSnapshotAsync(string name, MatchConditions matchConditions = null, RequestContext context = null)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshot");
             scope.Start();
@@ -829,14 +731,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CheckSnapshot(string name, MatchConditions matchConditions = null, RequestContext context = null)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CheckSnapshot");
             scope.Start();
@@ -938,14 +833,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label, MatchConditions matchConditions, RequestContext context)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (key.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateReadOnlyLock");
             scope.Start();
@@ -981,14 +869,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateReadOnlyLock(string key, string label, MatchConditions matchConditions, RequestContext context)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (key.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateReadOnlyLock");
             scope.Start();
@@ -1024,14 +905,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label, MatchConditions matchConditions, RequestContext context)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (key.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteReadOnlyLock");
             scope.Start();
@@ -1067,14 +941,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response DeleteReadOnlyLock(string key, string label, MatchConditions matchConditions, RequestContext context)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (key.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(key));
-            }
+            Argument.AssertNotNullOrEmpty(key, nameof(key));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteReadOnlyLock");
             scope.Start();
@@ -1175,10 +1042,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetOperationDetailsAsync(string snapshot, RequestContext context)
         {
-            if (snapshot == null)
-            {
-                throw new ArgumentNullException(nameof(snapshot));
-            }
+            Argument.AssertNotNull(snapshot, nameof(snapshot));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetOperationDetails");
             scope.Start();
@@ -1211,10 +1075,7 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetOperationDetails(string snapshot, RequestContext context)
         {
-            if (snapshot == null)
-            {
-                throw new ArgumentNullException(nameof(snapshot));
-            }
+            Argument.AssertNotNull(snapshot, nameof(snapshot));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetOperationDetails");
             scope.Start();
@@ -1497,18 +1358,8 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         internal virtual async Task<Operation<BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, RequestContent content, ContentType contentType, RequestContext context = null)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
             scope.Start();
@@ -1545,18 +1396,8 @@ namespace Azure.Data.AppConfiguration
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         internal virtual Operation<BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, RequestContent content, ContentType contentType, RequestContext context = null)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
             scope.Start();

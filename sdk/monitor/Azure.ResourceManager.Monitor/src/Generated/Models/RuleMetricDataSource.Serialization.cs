@@ -15,40 +15,40 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class RuleMetricDataSource : IUtf8JsonSerializable, IJsonModel<RuleMetricDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuleMetricDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuleMetricDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RuleMetricDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RuleMetricDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MetricName != null)
+            if (Optional.IsDefined(MetricName))
             {
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (LegacyResourceId != null)
+            if (Optional.IsDefined(LegacyResourceId))
             {
                 writer.WritePropertyName("legacyResourceId"u8);
                 writer.WriteStringValue(LegacyResourceId);
             }
-            if (ResourceLocation != null)
+            if (Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
-            if (MetricNamespace != null)
+            if (Optional.IsDefined(MetricNamespace))
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleMetricDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RuleMetricDataSource DeserializeRuleMetricDataSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string resourceLocation = default;
             string metricNamespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricName"u8))
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RuleMetricDataSource(
                 odataType,
                 resourceUri,
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeRuleMetricDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

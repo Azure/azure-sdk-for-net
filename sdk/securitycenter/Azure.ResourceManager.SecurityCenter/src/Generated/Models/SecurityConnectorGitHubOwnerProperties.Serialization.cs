@@ -15,43 +15,43 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecurityConnectorGitHubOwnerProperties : IUtf8JsonSerializable, IJsonModel<SecurityConnectorGitHubOwnerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityConnectorGitHubOwnerProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityConnectorGitHubOwnerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityConnectorGitHubOwnerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityConnectorGitHubOwnerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityConnectorGitHubOwnerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityConnectorGitHubOwnerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && ProvisioningStatusUpdateTimeUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdateTimeUtc.Value, "O");
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && OwnerUri != null)
+            if (options.Format != "W" && Optional.IsDefined(OwnerUri))
             {
                 writer.WritePropertyName("ownerUrl"u8);
                 writer.WriteStringValue(OwnerUri.AbsoluteUri);
             }
-            if (options.Format != "W" && GitHubInternalId != null)
+            if (options.Format != "W" && Optional.IsDefined(GitHubInternalId))
             {
                 writer.WritePropertyName("gitHubInternalId"u8);
                 writer.WriteStringValue(GitHubInternalId);
             }
-            if (OnboardingState.HasValue)
+            if (Optional.IsDefined(OnboardingState))
             {
                 writer.WritePropertyName("onboardingState"u8);
                 writer.WriteStringValue(OnboardingState.Value.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityConnectorGitHubOwnerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityConnectorGitHubOwnerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityConnectorGitHubOwnerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityConnectorGitHubOwnerProperties DeserializeSecurityConnectorGitHubOwnerProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string gitHubInternalId = default;
             ResourceOnboardingState? onboardingState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningStatusMessage"u8))
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityConnectorGitHubOwnerProperties(
                 provisioningStatusMessage,
                 provisioningStatusUpdateTimeUtc,
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityConnectorGitHubOwnerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityConnectorGitHubOwnerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityConnectorGitHubOwnerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityConnectorGitHubOwnerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityConnectorGitHubOwnerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

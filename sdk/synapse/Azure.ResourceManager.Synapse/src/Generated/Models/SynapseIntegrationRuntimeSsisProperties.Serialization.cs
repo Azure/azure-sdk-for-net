@@ -15,49 +15,49 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseIntegrationRuntimeSsisProperties : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeSsisProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeSsisProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeSsisProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseIntegrationRuntimeSsisProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeSsisProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CatalogInfo != null)
+            if (Optional.IsDefined(CatalogInfo))
             {
                 writer.WritePropertyName("catalogInfo"u8);
-                writer.WriteObjectValue(CatalogInfo);
+                writer.WriteObjectValue(CatalogInfo, options);
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (CustomSetupScriptProperties != null)
+            if (Optional.IsDefined(CustomSetupScriptProperties))
             {
                 writer.WritePropertyName("customSetupScriptProperties"u8);
-                writer.WriteObjectValue(CustomSetupScriptProperties);
+                writer.WriteObjectValue(CustomSetupScriptProperties, options);
             }
-            if (DataProxyProperties != null)
+            if (Optional.IsDefined(DataProxyProperties))
             {
                 writer.WritePropertyName("dataProxyProperties"u8);
-                writer.WriteObjectValue(DataProxyProperties);
+                writer.WriteObjectValue(DataProxyProperties, options);
             }
-            if (Edition.HasValue)
+            if (Optional.IsDefined(Edition))
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition.Value.ToString());
             }
-            if (!(ExpressCustomSetupProperties is ChangeTrackingList<SynapseCustomSetupBase> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExpressCustomSetupProperties))
             {
                 writer.WritePropertyName("expressCustomSetupProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExpressCustomSetupProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeSsisProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseIntegrationRuntimeSsisProperties DeserializeSynapseIntegrationRuntimeSsisProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseIntegrationRuntimeSsisProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeSsisProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

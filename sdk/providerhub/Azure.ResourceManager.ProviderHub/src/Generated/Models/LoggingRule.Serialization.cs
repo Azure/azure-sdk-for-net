@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class LoggingRule : IUtf8JsonSerializable, IJsonModel<LoggingRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoggingRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoggingRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LoggingRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LoggingRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoggingRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoggingRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStringValue(Direction.ToString());
             writer.WritePropertyName("detailLevel"u8);
             writer.WriteStringValue(DetailLevel.ToString());
-            if (HiddenPropertyPaths != null)
+            if (Optional.IsDefined(HiddenPropertyPaths))
             {
                 writer.WritePropertyName("hiddenPropertyPaths"u8);
-                writer.WriteObjectValue(HiddenPropertyPaths);
+                writer.WriteObjectValue(HiddenPropertyPaths, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoggingRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoggingRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoggingRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static LoggingRule DeserializeLoggingRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             LoggingDetail detailLevel = default;
             LoggingHiddenPropertyPaths hiddenPropertyPaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LoggingRule(action, direction, detailLevel, hiddenPropertyPaths, serializedAdditionalRawData);
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoggingRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoggingRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeLoggingRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoggingRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoggingRule)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabPolicyData : IUtf8JsonSerializable, IJsonModel<DevTestLabPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,54 +56,54 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (FactName.HasValue)
+            if (Optional.IsDefined(FactName))
             {
                 writer.WritePropertyName("factName"u8);
                 writer.WriteStringValue(FactName.Value.ToString());
             }
-            if (FactData != null)
+            if (Optional.IsDefined(FactData))
             {
                 writer.WritePropertyName("factData"u8);
                 writer.WriteStringValue(FactData);
             }
-            if (Threshold != null)
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
-            if (EvaluatorType.HasValue)
+            if (Optional.IsDefined(EvaluatorType))
             {
                 writer.WritePropertyName("evaluatorType"u8);
                 writer.WriteStringValue(EvaluatorType.Value.ToString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && UniqueIdentifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static DevTestLabPolicyData DeserializeDevTestLabPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DevTestLabs
             string provisioningState = default;
             Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -288,10 +288,10 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevTestLabPolicyData(
                 id,
                 name,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.DevTestLabs
                         return DeserializeDevTestLabPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

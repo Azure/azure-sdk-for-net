@@ -16,41 +16,41 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class LakeHouseLinkedService : IUtf8JsonSerializable, IJsonModel<LakeHouseLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LakeHouseLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LakeHouseLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LakeHouseLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LakeHouseLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LakeHouseLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LakeHouseLinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -74,42 +74,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (WorkspaceId != null)
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 JsonSerializer.Serialize(writer, WorkspaceId);
             }
-            if (ArtifactId != null)
+            if (Optional.IsDefined(ArtifactId))
             {
                 writer.WritePropertyName("artifactId"u8);
                 JsonSerializer.Serialize(writer, ArtifactId);
             }
-            if (ServicePrincipalId != null)
+            if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalId);
             }
-            if (ServicePrincipalKey != null)
+            if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
-            if (Tenant != null)
+            if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
                 JsonSerializer.Serialize(writer, Tenant);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
             }
-            if (ServicePrincipalCredentialType != null)
+            if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalCredentialType);
             }
-            if (ServicePrincipalCredential != null)
+            if (Optional.IsDefined(ServicePrincipalCredential))
             {
                 writer.WritePropertyName("servicePrincipalCredential"u8);
                 JsonSerializer.Serialize(writer, ServicePrincipalCredential);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<LakeHouseLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LakeHouseLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LakeHouseLinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static LakeHouseLinkedService DeserializeLakeHouseLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> workspaceId = default;
             DataFactoryElement<string> artifactId = default;
             DataFactoryElement<string> servicePrincipalId = default;
-            DataFactorySecretBaseDefinition servicePrincipalKey = default;
+            DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             string encryptedCredential = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
-            DataFactorySecretBaseDefinition servicePrincipalCredential = default;
+            DataFactorySecret servicePrincipalCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalCredential = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            servicePrincipalCredential = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                     }
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LakeHouseLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LakeHouseLinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeLakeHouseLinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LakeHouseLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LakeHouseLinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

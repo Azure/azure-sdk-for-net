@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class HostPoolPatch : IUtf8JsonSerializable, IJsonModel<HostPoolPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostPoolPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostPoolPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HostPoolPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -53,102 +53,102 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (CustomRdpProperty != null)
+            if (Optional.IsDefined(CustomRdpProperty))
             {
                 writer.WritePropertyName("customRdpProperty"u8);
                 writer.WriteStringValue(CustomRdpProperty);
             }
-            if (MaxSessionLimit.HasValue)
+            if (Optional.IsDefined(MaxSessionLimit))
             {
                 writer.WritePropertyName("maxSessionLimit"u8);
                 writer.WriteNumberValue(MaxSessionLimit.Value);
             }
-            if (PersonalDesktopAssignmentType.HasValue)
+            if (Optional.IsDefined(PersonalDesktopAssignmentType))
             {
                 writer.WritePropertyName("personalDesktopAssignmentType"u8);
                 writer.WriteStringValue(PersonalDesktopAssignmentType.Value.ToString());
             }
-            if (LoadBalancerType.HasValue)
+            if (Optional.IsDefined(LoadBalancerType))
             {
                 writer.WritePropertyName("loadBalancerType"u8);
                 writer.WriteStringValue(LoadBalancerType.Value.ToString());
             }
-            if (Ring.HasValue)
+            if (Optional.IsDefined(Ring))
             {
                 writer.WritePropertyName("ring"u8);
                 writer.WriteNumberValue(Ring.Value);
             }
-            if (IsValidationEnvironment.HasValue)
+            if (Optional.IsDefined(IsValidationEnvironment))
             {
                 writer.WritePropertyName("validationEnvironment"u8);
                 writer.WriteBooleanValue(IsValidationEnvironment.Value);
             }
-            if (RegistrationInfo != null)
+            if (Optional.IsDefined(RegistrationInfo))
             {
                 writer.WritePropertyName("registrationInfo"u8);
-                writer.WriteObjectValue(RegistrationInfo);
+                writer.WriteObjectValue(RegistrationInfo, options);
             }
-            if (VmTemplate != null)
+            if (Optional.IsDefined(VmTemplate))
             {
                 writer.WritePropertyName("vmTemplate"u8);
                 writer.WriteStringValue(VmTemplate);
             }
-            if (SsoAdfsAuthority != null)
+            if (Optional.IsDefined(SsoAdfsAuthority))
             {
                 writer.WritePropertyName("ssoadfsAuthority"u8);
                 writer.WriteStringValue(SsoAdfsAuthority);
             }
-            if (SsoClientId != null)
+            if (Optional.IsDefined(SsoClientId))
             {
                 writer.WritePropertyName("ssoClientId"u8);
                 writer.WriteStringValue(SsoClientId);
             }
-            if (SsoClientSecretKeyVaultPath != null)
+            if (Optional.IsDefined(SsoClientSecretKeyVaultPath))
             {
                 writer.WritePropertyName("ssoClientSecretKeyVaultPath"u8);
                 writer.WriteStringValue(SsoClientSecretKeyVaultPath);
             }
-            if (SsoSecretType.HasValue)
+            if (Optional.IsDefined(SsoSecretType))
             {
                 writer.WritePropertyName("ssoSecretType"u8);
                 writer.WriteStringValue(SsoSecretType.Value.ToString());
             }
-            if (PreferredAppGroupType.HasValue)
+            if (Optional.IsDefined(PreferredAppGroupType))
             {
                 writer.WritePropertyName("preferredAppGroupType"u8);
                 writer.WriteStringValue(PreferredAppGroupType.Value.ToString());
             }
-            if (StartVmOnConnect.HasValue)
+            if (Optional.IsDefined(StartVmOnConnect))
             {
                 writer.WritePropertyName("startVMOnConnect"u8);
                 writer.WriteBooleanValue(StartVmOnConnect.Value);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (AgentUpdate != null)
+            if (Optional.IsDefined(AgentUpdate))
             {
                 writer.WritePropertyName("agentUpdate"u8);
-                writer.WriteObjectValue(AgentUpdate);
+                writer.WriteObjectValue(AgentUpdate, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static HostPoolPatch DeserializeHostPoolPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             HostPoolPublicNetworkAccess? publicNetworkAccess = default;
             SessionHostAgentUpdatePatchProperties agentUpdate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -402,10 +402,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HostPoolPatch(
                 id,
                 name,
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeHostPoolPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

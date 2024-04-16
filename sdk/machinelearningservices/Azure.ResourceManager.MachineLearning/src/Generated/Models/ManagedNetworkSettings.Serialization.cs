@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class ManagedNetworkSettings : IUtf8JsonSerializable, IJsonModel<ManagedNetworkSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedNetworkSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedNetworkSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedNetworkSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsolationMode.HasValue)
+            if (Optional.IsDefined(IsolationMode))
             {
                 writer.WritePropertyName("isolationMode"u8);
                 writer.WriteStringValue(IsolationMode.Value.ToString());
             }
-            if (options.Format != "W" && NetworkId != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkId))
             {
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
-            if (!(OutboundRules is ChangeTrackingDictionary<string, MachineLearningOutboundRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(OutboundRules))
             {
                 if (OutboundRules != null)
                 {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in OutboundRules)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("outboundRules");
                 }
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ManagedNetworkSettings DeserializeManagedNetworkSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, MachineLearningOutboundRule> outboundRules = default;
             ManagedNetworkProvisionStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isolationMode"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedNetworkSettings(isolationMode, networkId, outboundRules ?? new ChangeTrackingDictionary<string, MachineLearningOutboundRule>(), status, serializedAdditionalRawData);
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeManagedNetworkSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

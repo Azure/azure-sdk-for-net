@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class ProviderResourceType : IUtf8JsonSerializable, IJsonModel<ProviderResourceType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderResourceType>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderResourceType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProviderResourceType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProviderResourceType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (RoutingType.HasValue)
+            if (Optional.IsDefined(RoutingType))
             {
                 writer.WritePropertyName("routingType"u8);
                 writer.WriteStringValue(RoutingType.Value.ToString());
             }
-            if (ResourceValidation.HasValue)
+            if (Optional.IsDefined(ResourceValidation))
             {
                 writer.WritePropertyName("resourceValidation"u8);
                 writer.WriteStringValue(ResourceValidation.Value.ToString());
             }
-            if (!(AllowedUnauthorizedActions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedUnauthorizedActions))
             {
                 writer.WritePropertyName("allowedUnauthorizedActions"u8);
                 writer.WriteStartArray();
@@ -51,72 +51,72 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AuthorizationActionMappings is ChangeTrackingList<AuthorizationActionMapping> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AuthorizationActionMappings))
             {
                 writer.WritePropertyName("authorizationActionMappings"u8);
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationActionMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(LinkedAccessChecks is ChangeTrackingList<LinkedAccessCheck> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkedAccessChecks))
             {
                 writer.WritePropertyName("linkedAccessChecks"u8);
                 writer.WriteStartArray();
                 foreach (var item in LinkedAccessChecks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultApiVersion != null)
+            if (Optional.IsDefined(DefaultApiVersion))
             {
                 writer.WritePropertyName("defaultApiVersion"u8);
                 writer.WriteStringValue(DefaultApiVersion);
             }
-            if (!(LoggingRules is ChangeTrackingList<LoggingRule> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(LoggingRules))
             {
                 writer.WritePropertyName("loggingRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoggingRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ThrottlingRules is ChangeTrackingList<ThrottlingRule> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ThrottlingRules))
             {
                 writer.WritePropertyName("throttlingRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in ThrottlingRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Endpoints is ChangeTrackingList<ResourceProviderEndpoint> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (MarketplaceType.HasValue)
+            if (Optional.IsDefined(MarketplaceType))
             {
                 writer.WritePropertyName("marketplaceType"u8);
                 writer.WriteStringValue(MarketplaceType.Value.ToSerialString());
             }
-            if (IdentityManagement != null)
+            if (Optional.IsDefined(IdentityManagement))
             {
                 writer.WritePropertyName("identityManagement"u8);
-                writer.WriteObjectValue(IdentityManagement);
+                writer.WriteObjectValue(IdentityManagement, options);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
 #endif
             }
-            if (!(RequiredFeatures is ChangeTrackingList<string> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -138,42 +138,42 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FeaturesRule != null)
+            if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue(FeaturesRule);
+                writer.WriteObjectValue(FeaturesRule, options);
             }
-            if (!(SubscriptionStateRules is ChangeTrackingList<ProviderSubscriptionStateRule> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(SubscriptionStateRules))
             {
                 writer.WritePropertyName("subscriptionStateRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubscriptionStateRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceTreeInfos is ChangeTrackingList<ServiceTreeInfo> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceTreeInfos))
             {
                 writer.WritePropertyName("serviceTreeInfos"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceTreeInfos)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (RequestHeaderOptions != null)
+            if (Optional.IsDefined(RequestHeaderOptions))
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
-                writer.WriteObjectValue(RequestHeaderOptions);
+                writer.WriteObjectValue(RequestHeaderOptions, options);
             }
-            if (SkuLink != null)
+            if (Optional.IsDefined(SkuLink))
             {
                 writer.WritePropertyName("skuLink"u8);
                 writer.WriteStringValue(SkuLink);
             }
-            if (!(DisallowedActionVerbs is ChangeTrackingList<string> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(DisallowedActionVerbs))
             {
                 writer.WritePropertyName("disallowedActionVerbs"u8);
                 writer.WriteStartArray();
@@ -183,32 +183,32 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TemplateDeploymentPolicy != null)
+            if (Optional.IsDefined(TemplateDeploymentPolicy))
             {
                 writer.WritePropertyName("templateDeploymentPolicy"u8);
-                writer.WriteObjectValue(TemplateDeploymentPolicy);
+                writer.WriteObjectValue(TemplateDeploymentPolicy, options);
             }
-            if (!(ExtendedLocations is ChangeTrackingList<ProviderHubExtendedLocationOptions> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtendedLocations))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExtendedLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(LinkedOperationRules is ChangeTrackingList<LinkedOperationRule> collection10 && collection10.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkedOperationRules))
             {
                 writer.WritePropertyName("linkedOperationRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in LinkedOperationRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ResourceDeletionPolicy.HasValue)
+            if (Optional.IsDefined(ResourceDeletionPolicy))
             {
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
                 writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderResourceType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderResourceType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IReadOnlyList<LinkedOperationRule> linkedOperationRules = default;
             ManifestResourceDeletionPolicy? resourceDeletionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -545,10 +545,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProviderResourceType(
                 name,
                 routingType,
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeProviderResourceType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderResourceType)} does not support reading '{options.Format}' format.");
             }
         }
 

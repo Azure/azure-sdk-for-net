@@ -15,69 +15,69 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryFileTaskRunContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryFileTaskRunContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryFileTaskRunContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryFileTaskRunContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryFileTaskRunContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryFileTaskRunContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("taskFilePath"u8);
             writer.WriteStringValue(TaskFilePath);
-            if (ValuesFilePath != null)
+            if (Optional.IsDefined(ValuesFilePath))
             {
                 writer.WritePropertyName("valuesFilePath"u8);
                 writer.WriteStringValue(ValuesFilePath);
             }
-            if (!(Values is ChangeTrackingList<ContainerRegistryTaskOverridableValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             writer.WritePropertyName("platform"u8);
-            writer.WriteObjectValue(Platform);
-            if (AgentConfiguration != null)
+            writer.WriteObjectValue(Platform, options);
+            if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                writer.WriteObjectValue(AgentConfiguration, options);
             }
-            if (SourceLocation != null)
+            if (Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
                 writer.WriteStringValue(SourceLocation);
             }
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue(Credentials, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
-            if (IsArchiveEnabled.HasValue)
+            if (Optional.IsDefined(IsArchiveEnabled))
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (AgentPoolName != null)
+            if (Optional.IsDefined(AgentPoolName))
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (LogTemplate != null)
+            if (Optional.IsDefined(LogTemplate))
             {
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryFileTaskRunContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryFileTaskRunContent DeserializeContainerRegistryFileTaskRunContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string agentPoolName = default;
             string logTemplate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("taskFilePath"u8))
@@ -223,10 +223,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryFileTaskRunContent(
                 type,
                 isArchiveEnabled,
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryFileTaskRunContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support reading '{options.Format}' format.");
             }
         }
 

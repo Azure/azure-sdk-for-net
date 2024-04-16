@@ -15,12 +15,12 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PrimaryThumbprint != null)
+            if (Optional.IsDefined(PrimaryThumbprint))
             {
                 writer.WritePropertyName("primaryThumbprint"u8);
                 writer.WriteStringValue(PrimaryThumbprint);
             }
-            if (SecondaryThumbprint != null)
+            if (Optional.IsDefined(SecondaryThumbprint))
             {
                 writer.WritePropertyName("secondaryThumbprint"u8);
                 writer.WriteStringValue(SecondaryThumbprint);
@@ -50,6 +50,22 @@ namespace Azure.IoT.Hub.Service.Models
                 }
             }
             return new X509Thumbprint(primaryThumbprint, secondaryThumbprint);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static X509Thumbprint FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeX509Thumbprint(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class ReplaceAllIPFirewallRulesContent : IUtf8JsonSerializable, IJsonModel<ReplaceAllIPFirewallRulesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplaceAllIPFirewallRulesContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplaceAllIPFirewallRulesContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReplaceAllIPFirewallRulesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReplaceAllIPFirewallRulesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplaceAllIPFirewallRulesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplaceAllIPFirewallRulesContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(IPFirewallRules is ChangeTrackingDictionary<string, SynapseIPFirewallRuleProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPFirewallRules))
             {
                 writer.WritePropertyName("ipFirewallRules"u8);
                 writer.WriteStartObject();
                 foreach (var item in IPFirewallRules)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplaceAllIPFirewallRulesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplaceAllIPFirewallRulesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplaceAllIPFirewallRulesContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static ReplaceAllIPFirewallRulesContent DeserializeReplaceAllIPFirewallRulesContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             IDictionary<string, SynapseIPFirewallRuleProperties> ipFirewallRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipFirewallRules"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReplaceAllIPFirewallRulesContent(ipFirewallRules ?? new ChangeTrackingDictionary<string, SynapseIPFirewallRuleProperties>(), serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplaceAllIPFirewallRulesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplaceAllIPFirewallRulesContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeReplaceAllIPFirewallRulesContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplaceAllIPFirewallRulesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplaceAllIPFirewallRulesContent)} does not support reading '{options.Format}' format.");
             }
         }
 

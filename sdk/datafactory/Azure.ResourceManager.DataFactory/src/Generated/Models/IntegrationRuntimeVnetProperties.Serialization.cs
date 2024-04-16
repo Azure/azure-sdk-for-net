@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class IntegrationRuntimeVnetProperties : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeVnetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeVnetProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeVnetProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationRuntimeVnetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeVnetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationRuntimeVnetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationRuntimeVnetProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VnetId.HasValue)
+            if (Optional.IsDefined(VnetId))
             {
                 writer.WritePropertyName("vNetId"u8);
                 writer.WriteStringValue(VnetId.Value);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (!(PublicIPs is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PublicIPs))
             {
                 writer.WritePropertyName("publicIPs"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeVnetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationRuntimeVnetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationRuntimeVnetProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeVnetProperties DeserializeIntegrationRuntimeVnetProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeVnetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeVnetProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeIntegrationRuntimeVnetProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationRuntimeVnetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeVnetProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

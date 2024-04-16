@@ -19,6 +19,7 @@ public static partial class AzureOpenAIModelFactory
 
     /// <summary> Initializes a new instance of ChatChoice. </summary>
     /// <param name="message"> The chat message associated with this chat completions choice. </param>
+    /// <param name="logProbabilityInfo"> The log probability information for this choice, as enabled via the 'logprobs' request option. </param>
     /// <param name="index"> The ordered index associated with this chat completions choice. </param>
     /// <param name="finishReason"> The reason that this chat completions choice completed. </param>
     /// <param name="finishDetails"> The reason, with details, that this choice completed. </param>
@@ -28,6 +29,7 @@ public static partial class AzureOpenAIModelFactory
     /// <returns> A new <see cref="OpenAI.ChatChoice"/> instance for mocking. </returns>
     public static ChatChoice ChatChoice(
         ChatResponseMessage message = null,
+        ChatChoiceLogProbabilityInfo logProbabilityInfo = null,
         int index = default,
         CompletionsFinishReason? finishReason = null,
         ChatFinishDetails finishDetails = null,
@@ -35,17 +37,19 @@ public static partial class AzureOpenAIModelFactory
         ContentFilterResultsForChoice contentFilterResults = null,
         AzureChatEnhancements enhancements = null)
     {
-        return new ChatChoice(message, index, finishReason, finishDetails, deltaMessage, contentFilterResults, enhancements, serializedAdditionalRawData: null);
+        return new ChatChoice(message, logProbabilityInfo, index, finishReason, finishDetails, deltaMessage, contentFilterResults, enhancements, serializedAdditionalRawData: null);
     }
 
     public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(
         string id,
+        string model,
         DateTimeOffset created,
         string systemFingerprint,
         int? choiceIndex = null,
         ChatRole? role = null,
         string authorName = null,
         string contentUpdate = null,
+        ChatChoiceLogProbabilityInfo logProbabilityInfo = null,
         CompletionsFinishReason? finishReason = null,
         string functionName = null,
         string functionArgumentsUpdate = null,
@@ -54,12 +58,14 @@ public static partial class AzureOpenAIModelFactory
     {
         return new StreamingChatCompletionsUpdate(
             id,
+            model,
             created,
             systemFingerprint,
             choiceIndex,
             role,
             authorName,
             contentUpdate,
+            logProbabilityInfo,
             finishReason,
             functionName,
             functionArgumentsUpdate,
@@ -85,10 +91,11 @@ public static partial class AzureOpenAIModelFactory
     /// <param name="language"> Language detected in the source audio file. </param>
     /// <param name="duration"> Duration. </param>
     /// <param name="segments"> Segments. </param>
+    /// <param name="words"> Words. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-    public static AudioTranscription AudioTranscription(string text, string language, TimeSpan duration, IReadOnlyList<AudioTranscriptionSegment> segments)
+    public static AudioTranscription AudioTranscription(string text, string language, TimeSpan duration, IReadOnlyList<AudioTranscriptionSegment> segments, IReadOnlyList<AudioTranscriptionWord> words)
     {
-        return new AudioTranscription(text, default, language, duration, segments, serializedAdditionalRawData: null);
+        return new AudioTranscription(text, default, language, duration, segments, words, serializedAdditionalRawData: null);
     }
 
     // CUSTOM CODE NOTE:

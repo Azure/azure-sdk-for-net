@@ -16,93 +16,93 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class CopyActivity : IUtf8JsonSerializable, IJsonModel<CopyActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CopyActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CopyActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Inputs is ChangeTrackingList<DatasetReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Outputs is ChangeTrackingList<DatasetReference> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Outputs))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue(Source, options);
             writer.WritePropertyName("sink"u8);
-            writer.WriteObjectValue(Sink);
-            if (Translator != null)
+            writer.WriteObjectValue(Sink, options);
+            if (Optional.IsDefined(Translator))
             {
                 writer.WritePropertyName("translator"u8);
 #if NET6_0_OR_GREATER
@@ -114,47 +114,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (EnableStaging != null)
+            if (Optional.IsDefined(EnableStaging))
             {
                 writer.WritePropertyName("enableStaging"u8);
                 JsonSerializer.Serialize(writer, EnableStaging);
             }
-            if (StagingSettings != null)
+            if (Optional.IsDefined(StagingSettings))
             {
                 writer.WritePropertyName("stagingSettings"u8);
-                writer.WriteObjectValue(StagingSettings);
+                writer.WriteObjectValue(StagingSettings, options);
             }
-            if (ParallelCopies != null)
+            if (Optional.IsDefined(ParallelCopies))
             {
                 writer.WritePropertyName("parallelCopies"u8);
                 JsonSerializer.Serialize(writer, ParallelCopies);
             }
-            if (DataIntegrationUnits != null)
+            if (Optional.IsDefined(DataIntegrationUnits))
             {
                 writer.WritePropertyName("dataIntegrationUnits"u8);
                 JsonSerializer.Serialize(writer, DataIntegrationUnits);
             }
-            if (EnableSkipIncompatibleRow != null)
+            if (Optional.IsDefined(EnableSkipIncompatibleRow))
             {
                 writer.WritePropertyName("enableSkipIncompatibleRow"u8);
                 JsonSerializer.Serialize(writer, EnableSkipIncompatibleRow);
             }
-            if (RedirectIncompatibleRowSettings != null)
+            if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
                 writer.WritePropertyName("redirectIncompatibleRowSettings"u8);
-                writer.WriteObjectValue(RedirectIncompatibleRowSettings);
+                writer.WriteObjectValue(RedirectIncompatibleRowSettings, options);
             }
-            if (LogStorageSettings != null)
+            if (Optional.IsDefined(LogStorageSettings))
             {
                 writer.WritePropertyName("logStorageSettings"u8);
-                writer.WriteObjectValue(LogStorageSettings);
+                writer.WriteObjectValue(LogStorageSettings, options);
             }
-            if (LogSettings != null)
+            if (Optional.IsDefined(LogSettings))
             {
                 writer.WritePropertyName("logSettings"u8);
-                writer.WriteObjectValue(LogSettings);
+                writer.WriteObjectValue(LogSettings, options);
             }
-            if (!(PreserveRules is ChangeTrackingList<BinaryData> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(PreserveRules))
             {
                 writer.WritePropertyName("preserveRules"u8);
                 writer.WriteStartArray();
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Preserve is ChangeTrackingList<BinaryData> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Preserve))
             {
                 writer.WritePropertyName("preserve"u8);
                 writer.WriteStartArray();
@@ -198,15 +198,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ValidateDataConsistency != null)
+            if (Optional.IsDefined(ValidateDataConsistency))
             {
                 writer.WritePropertyName("validateDataConsistency"u8);
                 JsonSerializer.Serialize(writer, ValidateDataConsistency);
             }
-            if (SkipErrorFile != null)
+            if (Optional.IsDefined(SkipErrorFile))
             {
                 writer.WritePropertyName("skipErrorFile"u8);
-                writer.WriteObjectValue(SkipErrorFile);
+                writer.WriteObjectValue(SkipErrorFile, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<CopyActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CopyActivity DeserializeCopyActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CopyActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeCopyActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CopyActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

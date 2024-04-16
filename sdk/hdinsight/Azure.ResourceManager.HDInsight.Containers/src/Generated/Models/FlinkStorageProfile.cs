@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageUriString"/> is null. </exception>
         public FlinkStorageProfile(string storageUriString)
         {
-            if (storageUriString == null)
-            {
-                throw new ArgumentNullException(nameof(storageUriString));
-            }
+            Argument.AssertNotNull(storageUriString, nameof(storageUriString));
 
             StorageUriString = storageUriString;
         }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,28 +16,28 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class WebAppMSDeployLogEntry : IUtf8JsonSerializable, IJsonModel<WebAppMSDeployLogEntry>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppMSDeployLogEntry>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppMSDeployLogEntry>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebAppMSDeployLogEntry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebAppMSDeployLogEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Time.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
-            if (options.Format != "W" && EntryType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EntryType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EntryType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebAppMSDeployLogEntry>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppMSDeployLogEntry DeserializeWebAppMSDeployLogEntry(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
             WebAppMSDeployLogEntryType? type = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -111,11 +112,77 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebAppMSDeployLogEntry(time, type, message, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Time), out propertyOverride);
+            if (Optional.IsDefined(Time) || hasPropertyOverride)
+            {
+                builder.Append("  time: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(Time.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EntryType), out propertyOverride);
+            if (Optional.IsDefined(EntryType) || hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{EntryType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Message), out propertyOverride);
+            if (Optional.IsDefined(Message) || hasPropertyOverride)
+            {
+                builder.Append("  message: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Message.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Message}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Message}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<WebAppMSDeployLogEntry>.Write(ModelReaderWriterOptions options)
@@ -126,8 +193,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +212,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeWebAppMSDeployLogEntry(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebAppMSDeployLogEntry)} does not support reading '{options.Format}' format.");
             }
         }
 

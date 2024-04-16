@@ -19,35 +19,35 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(DetectionConfigurationId);
             writer.WritePropertyName("anomalyScopeType"u8);
             writer.WriteStringValue(AnomalyScopeType.ToString());
-            if (UseDetectionResultToFilterAnomalies.HasValue)
+            if (Optional.IsDefined(UseDetectionResultToFilterAnomalies))
             {
                 writer.WritePropertyName("negationOperation"u8);
                 writer.WriteBooleanValue(UseDetectionResultToFilterAnomalies.Value);
             }
-            if (DimensionAnomalyScope != null)
+            if (Optional.IsDefined(DimensionAnomalyScope))
             {
                 writer.WritePropertyName("dimensionAnomalyScope"u8);
-                writer.WriteObjectValue(DimensionAnomalyScope);
+                writer.WriteObjectValue<DimensionKey>(DimensionAnomalyScope);
             }
-            if (TopNAnomalyScope != null)
+            if (Optional.IsDefined(TopNAnomalyScope))
             {
                 writer.WritePropertyName("topNAnomalyScope"u8);
-                writer.WriteObjectValue(TopNAnomalyScope);
+                writer.WriteObjectValue<TopNGroupScope>(TopNAnomalyScope);
             }
-            if (SeverityFilter != null)
+            if (Optional.IsDefined(SeverityFilter))
             {
                 writer.WritePropertyName("severityFilter"u8);
-                writer.WriteObjectValue(SeverityFilter);
+                writer.WriteObjectValue<SeverityCondition>(SeverityFilter);
             }
-            if (AlertSnoozeCondition != null)
+            if (Optional.IsDefined(AlertSnoozeCondition))
             {
                 writer.WritePropertyName("snoozeFilter"u8);
-                writer.WriteObjectValue(AlertSnoozeCondition);
+                writer.WriteObjectValue<MetricAnomalyAlertSnoozeCondition>(AlertSnoozeCondition);
             }
-            if (ValueFilter != null)
+            if (Optional.IsDefined(ValueFilter))
             {
                 writer.WritePropertyName("valueFilter"u8);
-                writer.WriteObjectValue(ValueFilter);
+                writer.WriteObjectValue<MetricBoundaryCondition>(ValueFilter);
             }
             writer.WriteEndObject();
         }
@@ -142,6 +142,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 severityFilter,
                 snoozeFilter,
                 valueFilter);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricAlertConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricAlertConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

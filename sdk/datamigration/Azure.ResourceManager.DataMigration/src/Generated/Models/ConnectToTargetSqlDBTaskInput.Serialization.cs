@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class ConnectToTargetSqlDBTaskInput : IUtf8JsonSerializable, IJsonModel<ConnectToTargetSqlDBTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToTargetSqlDBTaskInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToTargetSqlDBTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectToTargetSqlDBTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlDBTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
-            if (QueryObjectCounts.HasValue)
+            writer.WriteObjectValue(TargetConnectionInfo, options);
+            if (Optional.IsDefined(QueryObjectCounts))
             {
                 writer.WritePropertyName("queryObjectCounts"u8);
                 writer.WriteBooleanValue(QueryObjectCounts.Value);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlDBTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToTargetSqlDBTaskInput DeserializeConnectToTargetSqlDBTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SqlConnectionInfo targetConnectionInfo = default;
             bool? queryObjectCounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectToTargetSqlDBTaskInput(targetConnectionInfo, queryObjectCounts, serializedAdditionalRawData);
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectToTargetSqlDBTaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

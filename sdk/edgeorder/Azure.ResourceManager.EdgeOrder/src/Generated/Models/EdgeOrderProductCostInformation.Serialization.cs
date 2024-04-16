@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class EdgeOrderProductCostInformation : IUtf8JsonSerializable, IJsonModel<EdgeOrderProductCostInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderProductCostInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderProductCostInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeOrderProductCostInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderProductCostInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderProductCostInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderProductCostInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(BillingMeterDetails is ChangeTrackingList<EdgeOrderProductBillingMeterDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(BillingMeterDetails))
             {
                 writer.WritePropertyName("billingMeterDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in BillingMeterDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && BillingInfoUri != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingInfoUri))
             {
                 writer.WritePropertyName("billingInfoUrl"u8);
                 writer.WriteStringValue(BillingInfoUri.AbsoluteUri);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderProductCostInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderProductCostInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderProductCostInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderProductCostInformation DeserializeEdgeOrderProductCostInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             IReadOnlyList<EdgeOrderProductBillingMeterDetails> billingMeterDetails = default;
             Uri billingInfoUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingMeterDetails"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeOrderProductCostInformation(billingMeterDetails ?? new ChangeTrackingList<EdgeOrderProductBillingMeterDetails>(), billingInfoUrl, serializedAdditionalRawData);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderProductCostInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderProductCostInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeEdgeOrderProductCostInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderProductCostInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderProductCostInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

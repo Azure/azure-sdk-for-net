@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Consumption.Models;
@@ -60,10 +59,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<BudgetsListResult>> ListAsync(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -87,10 +83,7 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<BudgetsListResult> List(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             _pipeline.Send(message, cancellationToken);
@@ -134,18 +127,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConsumptionBudgetData>> GetAsync(string scope, string budgetName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
             using var message = CreateGetRequest(scope, budgetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -173,18 +156,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConsumptionBudgetData> Get(string scope, string budgetName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
             using var message = CreateGetRequest(scope, budgetName);
             _pipeline.Send(message, cancellationToken);
@@ -220,7 +193,7 @@ namespace Azure.ResourceManager.Consumption
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -235,22 +208,9 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConsumptionBudgetData>> CreateOrUpdateAsync(string scope, string budgetName, ConsumptionBudgetData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(scope, budgetName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -278,22 +238,9 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConsumptionBudgetData> CreateOrUpdate(string scope, string budgetName, ConsumptionBudgetData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(scope, budgetName, data);
             _pipeline.Send(message, cancellationToken);
@@ -338,18 +285,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string scope, string budgetName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
             using var message = CreateDeleteRequest(scope, budgetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -370,18 +307,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentException"> <paramref name="budgetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string scope, string budgetName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (budgetName == null)
-            {
-                throw new ArgumentNullException(nameof(budgetName));
-            }
-            if (budgetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(budgetName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(budgetName, nameof(budgetName));
 
             using var message = CreateDeleteRequest(scope, budgetName);
             _pipeline.Send(message, cancellationToken);
@@ -415,14 +342,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<BudgetsListResult>> ListNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -447,14 +368,8 @@ namespace Azure.ResourceManager.Consumption
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<BudgetsListResult> ListNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListNextPageRequest(nextLink, scope);
             _pipeline.Send(message, cancellationToken);

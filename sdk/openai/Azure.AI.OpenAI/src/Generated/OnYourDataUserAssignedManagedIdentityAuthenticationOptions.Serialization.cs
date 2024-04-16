@@ -9,25 +9,24 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     public partial class OnYourDataUserAssignedManagedIdentityAuthenticationOptions : IUtf8JsonSerializable, IJsonModel<OnYourDataUserAssignedManagedIdentityAuthenticationOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OnYourDataUserAssignedManagedIdentityAuthenticationOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OnYourDataUserAssignedManagedIdentityAuthenticationOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OnYourDataUserAssignedManagedIdentityAuthenticationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OnYourDataUserAssignedManagedIdentityAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("managedIdentityResourceId"u8);
+            writer.WritePropertyName("managed_identity_resource_id"u8);
             writer.WriteStringValue(ManagedIdentityResourceId);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -54,7 +53,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<OnYourDataUserAssignedManagedIdentityAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,7 +62,7 @@ namespace Azure.AI.OpenAI
 
         internal static OnYourDataUserAssignedManagedIdentityAuthenticationOptions DeserializeOnYourDataUserAssignedManagedIdentityAuthenticationOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -72,10 +71,10 @@ namespace Azure.AI.OpenAI
             string managedIdentityResourceId = default;
             OnYourDataAuthenticationType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("managedIdentityResourceId"u8))
+                if (property.NameEquals("managed_identity_resource_id"u8))
                 {
                     managedIdentityResourceId = property.Value.GetString();
                     continue;
@@ -87,10 +86,10 @@ namespace Azure.AI.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OnYourDataUserAssignedManagedIdentityAuthenticationOptions(type, serializedAdditionalRawData, managedIdentityResourceId);
         }
 
@@ -103,7 +102,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -119,7 +118,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeOnYourDataUserAssignedManagedIdentityAuthenticationOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnYourDataUserAssignedManagedIdentityAuthenticationOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -133,11 +132,11 @@ namespace Azure.AI.OpenAI
             return DeserializeOnYourDataUserAssignedManagedIdentityAuthenticationOptions(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

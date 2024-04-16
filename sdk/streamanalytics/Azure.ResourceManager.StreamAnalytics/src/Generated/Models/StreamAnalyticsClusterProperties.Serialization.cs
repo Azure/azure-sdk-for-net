@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class StreamAnalyticsClusterProperties : IUtf8JsonSerializable, IJsonModel<StreamAnalyticsClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsClusterProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamAnalyticsClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsClusterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsClusterProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ClusterId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && CapacityAllocated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityAllocated))
             {
                 writer.WritePropertyName("capacityAllocated"u8);
                 writer.WriteNumberValue(CapacityAllocated.Value);
             }
-            if (options.Format != "W" && CapacityAssigned.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityAssigned))
             {
                 writer.WritePropertyName("capacityAssigned"u8);
                 writer.WriteNumberValue(CapacityAssigned.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsClusterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsClusterProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamAnalyticsClusterProperties DeserializeStreamAnalyticsClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             int? capacityAllocated = default;
             int? capacityAssigned = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdDate"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StreamAnalyticsClusterProperties(
                 createdDate,
                 clusterId,
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsClusterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsClusterProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamAnalyticsClusterProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsClusterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsClusterProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

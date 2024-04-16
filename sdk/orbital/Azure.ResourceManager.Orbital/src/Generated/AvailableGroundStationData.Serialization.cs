@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Orbital
 {
     public partial class AvailableGroundStationData : IUtf8JsonSerializable, IJsonModel<AvailableGroundStationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableGroundStationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableGroundStationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailableGroundStationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvailableGroundStationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableGroundStationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableGroundStationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,39 +48,39 @@ namespace Azure.ResourceManager.Orbital
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (ProviderName != null)
+            if (Optional.IsDefined(ProviderName))
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (LongitudeDegrees.HasValue)
+            if (Optional.IsDefined(LongitudeDegrees))
             {
                 writer.WritePropertyName("longitudeDegrees"u8);
                 writer.WriteNumberValue(LongitudeDegrees.Value);
             }
-            if (LatitudeDegrees.HasValue)
+            if (Optional.IsDefined(LatitudeDegrees))
             {
                 writer.WritePropertyName("latitudeDegrees"u8);
                 writer.WriteNumberValue(LatitudeDegrees.Value);
             }
-            if (AltitudeMeters.HasValue)
+            if (Optional.IsDefined(AltitudeMeters))
             {
                 writer.WritePropertyName("altitudeMeters"u8);
                 writer.WriteNumberValue(AltitudeMeters.Value);
             }
-            if (ReleaseMode.HasValue)
+            if (Optional.IsDefined(ReleaseMode))
             {
                 writer.WritePropertyName("releaseMode"u8);
                 writer.WriteStringValue(ReleaseMode.Value.ToString());
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Orbital
             var format = options.Format == "W" ? ((IPersistableModel<AvailableGroundStationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableGroundStationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableGroundStationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Orbital
 
         internal static AvailableGroundStationData DeserializeAvailableGroundStationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Orbital
             float? altitudeMeters = default;
             GroundStationReleaseMode? releaseMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.Orbital
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AvailableGroundStationData(
                 id,
                 name,
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Orbital
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableGroundStationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableGroundStationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Orbital
                         return DeserializeAvailableGroundStationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableGroundStationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableGroundStationData)} does not support reading '{options.Format}' format.");
             }
         }
 

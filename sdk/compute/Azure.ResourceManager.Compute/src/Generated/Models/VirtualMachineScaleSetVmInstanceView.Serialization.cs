@@ -15,108 +15,108 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineScaleSetVmInstanceView : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetVmInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetVmInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetVmInstanceView>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetVmInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PlatformUpdateDomain.HasValue)
+            if (Optional.IsDefined(PlatformUpdateDomain))
             {
                 writer.WritePropertyName("platformUpdateDomain"u8);
                 writer.WriteNumberValue(PlatformUpdateDomain.Value);
             }
-            if (PlatformFaultDomain.HasValue)
+            if (Optional.IsDefined(PlatformFaultDomain))
             {
                 writer.WritePropertyName("platformFaultDomain"u8);
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
             }
-            if (RdpThumbPrint != null)
+            if (Optional.IsDefined(RdpThumbPrint))
             {
                 writer.WritePropertyName("rdpThumbPrint"u8);
                 writer.WriteStringValue(RdpThumbPrint);
             }
-            if (VmAgent != null)
+            if (Optional.IsDefined(VmAgent))
             {
                 writer.WritePropertyName("vmAgent"u8);
-                writer.WriteObjectValue(VmAgent);
+                writer.WriteObjectValue(VmAgent, options);
             }
-            if (MaintenanceRedeployStatus != null)
+            if (Optional.IsDefined(MaintenanceRedeployStatus))
             {
                 writer.WritePropertyName("maintenanceRedeployStatus"u8);
-                writer.WriteObjectValue(MaintenanceRedeployStatus);
+                writer.WriteObjectValue(MaintenanceRedeployStatus, options);
             }
-            if (!(Disks is ChangeTrackingList<DiskInstanceView> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Extensions is ChangeTrackingList<VirtualMachineExtensionInstanceView> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && VmHealth != null)
+            if (options.Format != "W" && Optional.IsDefined(VmHealth))
             {
                 writer.WritePropertyName("vmHealth"u8);
-                writer.WriteObjectValue(VmHealth);
+                writer.WriteObjectValue(VmHealth, options);
             }
-            if (BootDiagnostics != null)
+            if (Optional.IsDefined(BootDiagnostics))
             {
                 writer.WritePropertyName("bootDiagnostics"u8);
-                writer.WriteObjectValue(BootDiagnostics);
+                writer.WriteObjectValue(BootDiagnostics, options);
             }
-            if (!(Statuses is ChangeTrackingList<InstanceViewStatus> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AssignedHost != null)
+            if (options.Format != "W" && Optional.IsDefined(AssignedHost))
             {
                 writer.WritePropertyName("assignedHost"u8);
                 writer.WriteStringValue(AssignedHost);
             }
-            if (PlacementGroupId != null)
+            if (Optional.IsDefined(PlacementGroupId))
             {
                 writer.WritePropertyName("placementGroupId"u8);
                 writer.WriteStringValue(PlacementGroupId);
             }
-            if (ComputerName != null)
+            if (Optional.IsDefined(ComputerName))
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (OSName != null)
+            if (Optional.IsDefined(OSName))
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (OSVersion != null)
+            if (Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (HyperVGeneration.HasValue)
+            if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetVmInstanceView DeserializeVirtualMachineScaleSetVmInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
             string osVersion = default;
             HyperVGeneration? hyperVGeneration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("platformUpdateDomain"u8))
@@ -320,10 +320,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineScaleSetVmInstanceView(
                 platformUpdateDomain,
                 platformFaultDomain,
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineScaleSetVmInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

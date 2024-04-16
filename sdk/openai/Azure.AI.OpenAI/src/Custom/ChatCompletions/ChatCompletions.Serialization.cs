@@ -26,10 +26,10 @@ public partial class ChatCompletions
         string id = default;
         DateTimeOffset created = default;
         IReadOnlyList<ChatChoice> choices = default;
-        Optional<IReadOnlyList<ContentFilterResultsForPrompt>> promptFilterResults = default;
-        Optional<string> systemFingerprint = default;
+        string model = default;
+        IReadOnlyList<ContentFilterResultsForPrompt> promptFilterResults = default;
+        string systemFingerprint = default;
         CompletionsUsage usage = default;
-        IDictionary<string, BinaryData> serializedAdditionalRawData = default;
         Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
         foreach (var property in element.EnumerateObject())
         {
@@ -52,6 +52,10 @@ public partial class ChatCompletions
                 }
                 choices = array;
                 continue;
+            }
+            if (property.NameEquals("model"u8))
+            {
+                model = property.Value.GetString();
             }
             // CUSTOM CODE NOTE: temporary, custom handling of forked keys for prompt filter results
             if (property.NameEquals("prompt_annotations"u8) || property.NameEquals("prompt_filter_results"u8))
@@ -83,7 +87,6 @@ public partial class ChatCompletions
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
         }
-        serializedAdditionalRawData = additionalPropertiesDictionary;
-        return new ChatCompletions(id, created, choices, Optional.ToList(promptFilterResults), systemFingerprint.Value, usage, serializedAdditionalRawData);
+        return new ChatCompletions(id, created, choices, model, promptFilterResults ?? new ChangeTrackingList<ContentFilterResultsForPrompt>(), systemFingerprint, usage, additionalPropertiesDictionary);
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(LinkedServices is ChangeTrackingList<LinkedServiceReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkedServices))
             {
                 writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Datasets is ChangeTrackingList<DatasetReference> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Datasets))
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
@@ -84,12 +84,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new CustomActivityReferenceObject(linkedServices ?? new ChangeTrackingList<LinkedServiceReference>(), datasets ?? new ChangeTrackingList<DatasetReference>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CustomActivityReferenceObject FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomActivityReferenceObject(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class CustomActivityReferenceObjectConverter : JsonConverter<CustomActivityReferenceObject>
         {
             public override void Write(Utf8JsonWriter writer, CustomActivityReferenceObject model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override CustomActivityReferenceObject Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

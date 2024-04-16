@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -18,33 +17,33 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class DataCollectionEndpointData : IUtf8JsonSerializable, IJsonModel<DataCollectionEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataCollectionEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionEndpointData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,67 +71,67 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ImmutableId != null)
+            if (Optional.IsDefined(ImmutableId))
             {
                 writer.WritePropertyName("immutableId"u8);
                 writer.WriteStringValue(ImmutableId);
             }
-            if (ConfigurationAccess != null)
+            if (Optional.IsDefined(ConfigurationAccess))
             {
                 writer.WritePropertyName("configurationAccess"u8);
-                writer.WriteObjectValue(ConfigurationAccess);
+                writer.WriteObjectValue(ConfigurationAccess, options);
             }
-            if (LogsIngestion != null)
+            if (Optional.IsDefined(LogsIngestion))
             {
                 writer.WritePropertyName("logsIngestion"u8);
-                writer.WriteObjectValue(LogsIngestion);
+                writer.WriteObjectValue(LogsIngestion, options);
             }
-            if (MetricsIngestion != null)
+            if (Optional.IsDefined(MetricsIngestion))
             {
                 writer.WritePropertyName("metricsIngestion"u8);
-                writer.WriteObjectValue(MetricsIngestion);
+                writer.WriteObjectValue(MetricsIngestion, options);
             }
-            if (NetworkAcls != null)
+            if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls);
+                writer.WriteObjectValue(NetworkAcls, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(PrivateLinkScopedResources is ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateLinkScopedResources))
             {
                 writer.WritePropertyName("privateLinkScopedResources"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkScopedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && FailoverConfiguration != null)
+            if (options.Format != "W" && Optional.IsDefined(FailoverConfiguration))
             {
                 writer.WritePropertyName("failoverConfiguration"u8);
-                writer.WriteObjectValue(FailoverConfiguration);
+                writer.WriteObjectValue(FailoverConfiguration, options);
             }
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue(Metadata, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionEndpointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static DataCollectionEndpointData DeserializeDataCollectionEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.Monitor
             DataCollectionEndpointFailoverConfiguration failoverConfiguration = default;
             DataCollectionEndpointMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -367,10 +366,10 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataCollectionEndpointData(
                 id,
                 name,
@@ -403,7 +402,7 @@ namespace Azure.ResourceManager.Monitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionEndpointData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -419,7 +418,7 @@ namespace Azure.ResourceManager.Monitor
                         return DeserializeDataCollectionEndpointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionEndpointData)} does not support reading '{options.Format}' format.");
             }
         }
 

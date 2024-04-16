@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppAvailableWorkloadProfileProperties : IUtf8JsonSerializable, IJsonModel<ContainerAppAvailableWorkloadProfileProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppAvailableWorkloadProfileProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppAvailableWorkloadProfileProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppAvailableWorkloadProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Applicability.HasValue)
+            if (Optional.IsDefined(Applicability))
             {
                 writer.WritePropertyName("applicability"u8);
                 writer.WriteStringValue(Applicability.Value.ToString());
             }
-            if (Cores.HasValue)
+            if (Optional.IsDefined(Cores))
             {
                 writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
-            if (MemoryInGiB.HasValue)
+            if (Optional.IsDefined(MemoryInGiB))
             {
                 writer.WritePropertyName("memoryGiB"u8);
                 writer.WriteNumberValue(MemoryInGiB.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAvailableWorkloadProfileProperties DeserializeContainerAppAvailableWorkloadProfileProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             int? memoryGiB = default;
             string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppAvailableWorkloadProfileProperties(
                 category,
                 applicability,
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppAvailableWorkloadProfileProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

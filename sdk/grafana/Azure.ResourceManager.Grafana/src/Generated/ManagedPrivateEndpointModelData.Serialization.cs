@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Grafana
 {
     public partial class ManagedPrivateEndpointModelData : IUtf8JsonSerializable, IJsonModel<ManagedPrivateEndpointModelData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedPrivateEndpointModelData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedPrivateEndpointModelData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedPrivateEndpointModelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,29 +56,29 @@ namespace Azure.ResourceManager.Grafana
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (PrivateLinkResourceId != null)
+            if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (PrivateLinkResourceRegion != null)
+            if (Optional.IsDefined(PrivateLinkResourceRegion))
             {
                 writer.WritePropertyName("privateLinkResourceRegion"u8);
                 writer.WriteStringValue(PrivateLinkResourceRegion);
             }
-            if (!(GroupIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -88,22 +88,22 @@ namespace Azure.ResourceManager.Grafana
                 }
                 writer.WriteEndArray();
             }
-            if (RequestMessage != null)
+            if (Optional.IsDefined(RequestMessage))
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (options.Format != "W" && ConnectionState != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue(ConnectionState, options);
             }
-            if (PrivateLinkServiceUri != null)
+            if (Optional.IsDefined(PrivateLinkServiceUri))
             {
                 writer.WritePropertyName("privateLinkServiceUrl"u8);
                 writer.WriteStringValue(PrivateLinkServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && PrivateLinkServicePrivateIP != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkServicePrivateIP))
             {
                 writer.WritePropertyName("privateLinkServicePrivateIP"u8);
                 writer.WriteStringValue(PrivateLinkServicePrivateIP);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Grafana
             var format = options.Format == "W" ? ((IPersistableModel<ManagedPrivateEndpointModelData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Grafana
 
         internal static ManagedPrivateEndpointModelData DeserializeManagedPrivateEndpointModelData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Grafana
             Uri privateLinkServiceUrl = default;
             string privateLinkServicePrivateIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -287,10 +287,10 @@ namespace Azure.ResourceManager.Grafana
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedPrivateEndpointModelData(
                 id,
                 name,
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Grafana
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Grafana
                         return DeserializeManagedPrivateEndpointModelData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedPrivateEndpointModelData)} does not support reading '{options.Format}' format.");
             }
         }
 

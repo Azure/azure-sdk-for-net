@@ -15,40 +15,40 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class NetworkSecurityPerimeterProfileAccessRule : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterProfileAccessRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterProfileAccessRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterProfileAccessRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkSecurityPerimeterProfileAccessRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProfileAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProfileAccessRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProfileAccessRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FullyQualifiedArmId != null)
+            if (Optional.IsDefined(FullyQualifiedArmId))
             {
                 writer.WritePropertyName("fullyQualifiedArmId"u8);
                 writer.WriteStringValue(FullyQualifiedArmId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (NetworkSecurityPerimeterProfileAccessRuleType != null)
+            if (Optional.IsDefined(NetworkSecurityPerimeterProfileAccessRuleType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(NetworkSecurityPerimeterProfileAccessRuleType);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Direction.HasValue)
+            if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (!(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AddressPrefixes))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Subscriptions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(NetworkSecurityPerimeters is ChangeTrackingList<NetworkSecurityPerimeterInfo> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkSecurityPerimeters))
             {
                 writer.WritePropertyName("networkSecurityPerimeters"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityPerimeters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(FullyQualifiedDomainNames is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(FullyQualifiedDomainNames))
             {
                 writer.WritePropertyName("fullyQualifiedDomainNames"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(EmailAddresses is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(EmailAddresses))
             {
                 writer.WritePropertyName("emailAddresses"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PhoneNumbers is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(PhoneNumbers))
             {
                 writer.WritePropertyName("phoneNumbers"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProfileAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProfileAccessRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProfileAccessRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static NetworkSecurityPerimeterProfileAccessRule DeserializeNetworkSecurityPerimeterProfileAccessRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             IList<string> emailAddresses = default;
             IList<string> phoneNumbers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fullyQualifiedArmId"u8))
@@ -283,10 +283,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkSecurityPerimeterProfileAccessRule(
                 fullyQualifiedArmId,
                 name,
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProfileAccessRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProfileAccessRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeNetworkSecurityPerimeterProfileAccessRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProfileAccessRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProfileAccessRule)} does not support reading '{options.Format}' format.");
             }
         }
 

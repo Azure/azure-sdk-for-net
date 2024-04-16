@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ManagedHsmNameAvailabilityContent(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
@@ -73,6 +70,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The managed hsm name. </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

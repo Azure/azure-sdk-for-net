@@ -16,7 +16,7 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Desired is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Desired))
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteStartObject();
@@ -28,11 +28,11 @@ namespace Azure.IoT.Hub.Service.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Reported is ChangeTrackingDictionary<string, object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Reported))
             {
                 writer.WritePropertyName("reported"u8);
                 writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.IoT.Hub.Service.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -105,6 +105,22 @@ namespace Azure.IoT.Hub.Service.Models
                 }
             }
             return new TwinProperties(desired ?? new ChangeTrackingDictionary<string, object>(), reported ?? new ChangeTrackingDictionary<string, object>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TwinProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTwinProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

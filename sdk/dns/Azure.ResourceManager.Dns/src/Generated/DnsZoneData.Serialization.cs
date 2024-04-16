@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
@@ -19,23 +18,23 @@ namespace Azure.ResourceManager.Dns
 {
     public partial class DnsZoneData : IUtf8JsonSerializable, IJsonModel<DnsZoneData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsZoneData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsZoneData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DnsZoneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DnsZoneData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsZoneData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsZoneData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,19 +62,19 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && MaxNumberOfRecords.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfRecords))
             {
                 writer.WritePropertyName("maxNumberOfRecordSets"u8);
                 writer.WriteNumberValue(MaxNumberOfRecords.Value);
             }
-            if (options.Format != "W" && MaxNumberOfRecordsPerRecord.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfRecordsPerRecord))
             {
                 if (MaxNumberOfRecordsPerRecord != null)
                 {
@@ -87,12 +86,12 @@ namespace Azure.ResourceManager.Dns
                     writer.WriteNull("maxNumberOfRecordsPerRecordSet");
                 }
             }
-            if (options.Format != "W" && NumberOfRecords.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfRecords))
             {
                 writer.WritePropertyName("numberOfRecordSets"u8);
                 writer.WriteNumberValue(NumberOfRecords.Value);
             }
-            if (options.Format != "W" && !(NameServers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NameServers))
             {
                 writer.WritePropertyName("nameServers"u8);
                 writer.WriteStartArray();
@@ -102,12 +101,12 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (ZoneType.HasValue)
+            if (Optional.IsDefined(ZoneType))
             {
                 writer.WritePropertyName("zoneType"u8);
                 writer.WriteStringValue(ZoneType.Value.ToSerialString());
             }
-            if (!(RegistrationVirtualNetworks is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistrationVirtualNetworks))
             {
                 writer.WritePropertyName("registrationVirtualNetworks"u8);
                 writer.WriteStartArray();
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResolutionVirtualNetworks is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ResolutionVirtualNetworks))
             {
                 writer.WritePropertyName("resolutionVirtualNetworks"u8);
                 writer.WriteStartArray();
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.Dns
             var format = options.Format == "W" ? ((IPersistableModel<DnsZoneData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsZoneData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsZoneData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.Dns
 
         internal static DnsZoneData DeserializeDnsZoneData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.Dns
             IList<WritableSubResource> registrationVirtualNetworks = default;
             IList<WritableSubResource> resolutionVirtualNetworks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -329,10 +328,10 @@ namespace Azure.ResourceManager.Dns
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DnsZoneData(
                 id,
                 name,
@@ -360,7 +359,7 @@ namespace Azure.ResourceManager.Dns
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsZoneData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsZoneData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -376,7 +375,7 @@ namespace Azure.ResourceManager.Dns
                         return DeserializeDnsZoneData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsZoneData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsZoneData)} does not support reading '{options.Format}' format.");
             }
         }
 

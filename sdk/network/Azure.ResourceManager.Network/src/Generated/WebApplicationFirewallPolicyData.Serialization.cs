@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,43 +17,43 @@ namespace Azure.ResourceManager.Network
 {
     public partial class WebApplicationFirewallPolicyData : IUtf8JsonSerializable, IJsonModel<WebApplicationFirewallPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApplicationFirewallPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApplicationFirewallPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebApplicationFirewallPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,47 +66,47 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PolicySettings != null)
+            if (Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
-                writer.WriteObjectValue(PolicySettings);
+                writer.WriteObjectValue(PolicySettings, options);
             }
-            if (!(CustomRules is ChangeTrackingList<WebApplicationFirewallCustomRule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomRules))
             {
                 writer.WritePropertyName("customRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ApplicationGateways is ChangeTrackingList<ApplicationGatewayData> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApplicationGateways))
             {
                 writer.WritePropertyName("applicationGateways"u8);
                 writer.WriteStartArray();
                 foreach (var item in ApplicationGateways)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (ManagedRules != null)
+            if (Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
-                writer.WriteObjectValue(ManagedRules);
+                writer.WriteObjectValue(ManagedRules, options);
             }
-            if (options.Format != "W" && !(HttpListeners is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HttpListeners))
             {
                 writer.WritePropertyName("httpListeners"u8);
                 writer.WriteStartArray();
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(PathBasedRules is ChangeTrackingList<WritableSubResource> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PathBasedRules))
             {
                 writer.WritePropertyName("pathBasedRules"u8);
                 writer.WriteStartArray();
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.Network
 
         internal static WebApplicationFirewallPolicyData DeserializeWebApplicationFirewallPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.Network
             IReadOnlyList<WritableSubResource> httpListeners = default;
             IReadOnlyList<WritableSubResource> pathBasedRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -345,10 +344,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebApplicationFirewallPolicyData(
                 id,
                 name,
@@ -376,7 +375,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -392,7 +391,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeWebApplicationFirewallPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebApplicationFirewallPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

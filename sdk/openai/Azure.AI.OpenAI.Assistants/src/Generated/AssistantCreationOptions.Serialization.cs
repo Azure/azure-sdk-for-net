@@ -9,27 +9,26 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
     public partial class AssistantCreationOptions : IUtf8JsonSerializable, IJsonModel<AssistantCreationOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssistantCreationOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssistantCreationOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AssistantCreationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AssistantCreationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssistantCreationOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssistantCreationOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 if (Name != null)
                 {
@@ -41,7 +40,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("name");
                 }
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -53,7 +52,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("description");
                 }
             }
-            if (Instructions != null)
+            if (Optional.IsDefined(Instructions))
             {
                 if (Instructions != null)
                 {
@@ -65,17 +64,17 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("instructions");
                 }
             }
-            if (!(Tools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(FileIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FileIds))
             {
                 writer.WritePropertyName("file_ids"u8);
                 writer.WriteStartArray();
@@ -85,7 +84,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 if (Metadata != null)
                 {
@@ -126,7 +125,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<AssistantCreationOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssistantCreationOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssistantCreationOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +134,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         internal static AssistantCreationOptions DeserializeAssistantCreationOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,7 +148,7 @@ namespace Azure.AI.OpenAI.Assistants
             IList<string> fileIds = default;
             IDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("model"u8))
@@ -231,10 +230,10 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AssistantCreationOptions(
                 model,
                 name,
@@ -255,7 +254,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssistantCreationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssistantCreationOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -271,7 +270,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeAssistantCreationOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssistantCreationOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssistantCreationOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -285,11 +284,11 @@ namespace Azure.AI.OpenAI.Assistants
             return DeserializeAssistantCreationOptions(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue(Value);
-            if (Interpolation != null)
+            if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
                 writer.WriteObjectValue(Interpolation);
@@ -26,7 +26,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteObjectValue(Aggregation);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
@@ -82,6 +82,22 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
             }
             return new NumericVariable(kind, filter, value, interpolation, aggregation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new NumericVariable FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNumericVariable(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

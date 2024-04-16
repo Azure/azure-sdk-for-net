@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsFusionAlertRuleTemplate : IUtf8JsonSerializable, IJsonModel<SecurityInsightsFusionAlertRuleTemplate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsFusionAlertRuleTemplate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsFusionAlertRuleTemplate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsFusionAlertRuleTemplate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsFusionAlertRuleTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRuleTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRuleTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,59 +44,59 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AlertRulesCreatedByTemplateCount.HasValue)
+            if (Optional.IsDefined(AlertRulesCreatedByTemplateCount))
             {
                 writer.WritePropertyName("alertRulesCreatedByTemplateCount"u8);
                 writer.WriteNumberValue(AlertRulesCreatedByTemplateCount.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateUTC"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedDateUTC"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(RequiredDataConnectors is ChangeTrackingList<AlertRuleTemplateDataSource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredDataConnectors))
             {
                 writer.WritePropertyName("requiredDataConnectors"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequiredDataConnectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (!(Tactics is ChangeTrackingList<SecurityInsightsAttackTactic> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tactics))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Techniques is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Techniques))
             {
                 writer.WritePropertyName("techniques"u8);
                 writer.WriteStartArray();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsFusionAlertRuleTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRuleTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRuleTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsFusionAlertRuleTemplate DeserializeSecurityInsightsFusionAlertRuleTemplate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IList<SecurityInsightsAttackTactic> tactics = default;
             IList<string> techniques = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -314,10 +314,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsFusionAlertRuleTemplate(
                 id,
                 name,
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRuleTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRuleTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsFusionAlertRuleTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRuleTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsFusionAlertRuleTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

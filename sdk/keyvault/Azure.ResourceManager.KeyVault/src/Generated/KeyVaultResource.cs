@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.KeyVault.Models;
 using Azure.ResourceManager.Resources;
 
@@ -425,10 +423,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<KeyVaultResource>> UpdateAsync(KeyVaultPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.Update");
             scope.Start();
@@ -470,10 +465,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<KeyVaultResource> Update(KeyVaultPatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.Update");
             scope.Start();
@@ -512,10 +504,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultAccessPolicyParameters"/> is null. </exception>
         public virtual async Task<Response<KeyVaultAccessPolicyParameters>> UpdateAccessPolicyAsync(AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters keyVaultAccessPolicyParameters, CancellationToken cancellationToken = default)
         {
-            if (keyVaultAccessPolicyParameters == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultAccessPolicyParameters));
-            }
+            Argument.AssertNotNull(keyVaultAccessPolicyParameters, nameof(keyVaultAccessPolicyParameters));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.UpdateAccessPolicy");
             scope.Start();
@@ -554,10 +543,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultAccessPolicyParameters"/> is null. </exception>
         public virtual Response<KeyVaultAccessPolicyParameters> UpdateAccessPolicy(AccessPolicyUpdateKind operationKind, KeyVaultAccessPolicyParameters keyVaultAccessPolicyParameters, CancellationToken cancellationToken = default)
         {
-            if (keyVaultAccessPolicyParameters == null)
-            {
-                throw new ArgumentNullException(nameof(keyVaultAccessPolicyParameters));
-            }
+            Argument.AssertNotNull(keyVaultAccessPolicyParameters, nameof(keyVaultAccessPolicyParameters));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.UpdateAccessPolicy");
             scope.Start();
@@ -650,14 +636,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<KeyVaultResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.AddTag");
             scope.Start();
@@ -718,14 +698,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<KeyVaultResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.AddTag");
             scope.Start();
@@ -785,10 +759,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<KeyVaultResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.SetTags");
             scope.Start();
@@ -845,10 +816,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<KeyVaultResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.SetTags");
             scope.Start();
@@ -905,10 +873,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<KeyVaultResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.RemoveTag");
             scope.Start();
@@ -968,10 +933,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<KeyVaultResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _keyVaultVaultsClientDiagnostics.CreateScope("KeyVaultResource.RemoveTag");
             scope.Start();

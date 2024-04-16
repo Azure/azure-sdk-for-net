@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,68 +16,68 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class TriggeredJobRun : IUtf8JsonSerializable, IJsonModel<TriggeredJobRun>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggeredJobRun>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggeredJobRun>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TriggeredJobRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TriggeredJobRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WebJobId != null)
+            if (Optional.IsDefined(WebJobId))
             {
                 writer.WritePropertyName("web_job_id"u8);
                 writer.WriteStringValue(WebJobId);
             }
-            if (WebJobName != null)
+            if (Optional.IsDefined(WebJobName))
             {
                 writer.WritePropertyName("web_job_name"u8);
                 writer.WriteStringValue(WebJobName);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("start_time"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("end_time"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "c");
             }
-            if (OutputUri != null)
+            if (Optional.IsDefined(OutputUri))
             {
                 writer.WritePropertyName("output_url"u8);
                 writer.WriteStringValue(OutputUri.AbsoluteUri);
             }
-            if (ErrorUri != null)
+            if (Optional.IsDefined(ErrorUri))
             {
                 writer.WritePropertyName("error_url"u8);
                 writer.WriteStringValue(ErrorUri.AbsoluteUri);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (JobName != null)
+            if (Optional.IsDefined(JobName))
             {
                 writer.WritePropertyName("job_name"u8);
                 writer.WriteStringValue(JobName);
             }
-            if (Trigger != null)
+            if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger);
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<TriggeredJobRun>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static TriggeredJobRun DeserializeTriggeredJobRun(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
             string jobName = default;
             string trigger = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("web_job_id"u8))
@@ -219,10 +220,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TriggeredJobRun(
                 webJobId,
                 webJobName,
@@ -238,6 +239,210 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebJobId), out propertyOverride);
+            if (Optional.IsDefined(WebJobId) || hasPropertyOverride)
+            {
+                builder.Append("  web_job_id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (WebJobId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WebJobId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WebJobId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebJobName), out propertyOverride);
+            if (Optional.IsDefined(WebJobName) || hasPropertyOverride)
+            {
+                builder.Append("  web_job_name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (WebJobName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WebJobName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WebJobName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (Optional.IsDefined(StartOn) || hasPropertyOverride)
+            {
+                builder.Append("  start_time: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
+            if (Optional.IsDefined(EndOn) || hasPropertyOverride)
+            {
+                builder.Append("  end_time: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Duration), out propertyOverride);
+            if (Optional.IsDefined(Duration) || hasPropertyOverride)
+            {
+                builder.Append("  duration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedTimeSpan = TypeFormatters.ToString(Duration.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutputUri), out propertyOverride);
+            if (Optional.IsDefined(OutputUri) || hasPropertyOverride)
+            {
+                builder.Append("  output_url: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{OutputUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorUri), out propertyOverride);
+            if (Optional.IsDefined(ErrorUri) || hasPropertyOverride)
+            {
+                builder.Append("  error_url: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ErrorUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            if (Optional.IsDefined(Uri) || hasPropertyOverride)
+            {
+                builder.Append("  url: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JobName), out propertyOverride);
+            if (Optional.IsDefined(JobName) || hasPropertyOverride)
+            {
+                builder.Append("  job_name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (JobName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{JobName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{JobName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Trigger), out propertyOverride);
+            if (Optional.IsDefined(Trigger) || hasPropertyOverride)
+            {
+                builder.Append("  trigger: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Trigger.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Trigger}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Trigger}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TriggeredJobRun>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TriggeredJobRun>)this).GetFormatFromOptions(options) : options.Format;
@@ -246,8 +451,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +470,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeTriggeredJobRun(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggeredJobRun)} does not support reading '{options.Format}' format.");
             }
         }
 

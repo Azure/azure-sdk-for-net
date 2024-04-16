@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class SystemTopicData : IUtf8JsonSerializable, IJsonModel<SystemTopicData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemTopicData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemTopicData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SystemTopicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SystemTopicData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemTopicData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemTopicData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,29 +61,29 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (TopicType != null)
+            if (Optional.IsDefined(TopicType))
             {
                 writer.WritePropertyName("topicType"u8);
                 writer.WriteStringValue(TopicType);
             }
-            if (options.Format != "W" && MetricResourceId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MetricResourceId))
             {
                 writer.WritePropertyName("metricResourceId"u8);
                 writer.WriteStringValue(MetricResourceId.Value);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<SystemTopicData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemTopicData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemTopicData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static SystemTopicData DeserializeSystemTopicData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EventGrid
             string topicType = default;
             Guid? metricResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -240,10 +240,10 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SystemTopicData(
                 id,
                 name,
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.EventGrid
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SystemTopicData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemTopicData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.EventGrid
                         return DeserializeSystemTopicData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SystemTopicData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemTopicData)} does not support reading '{options.Format}' format.");
             }
         }
 

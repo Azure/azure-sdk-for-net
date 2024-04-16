@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class CustomAssessmentAutomationCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<CustomAssessmentAutomationCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomAssessmentAutomationCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomAssessmentAutomationCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomAssessmentAutomationCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomAssessmentAutomationCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomAssessmentAutomationCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomAssessmentAutomationCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CompressedQuery != null)
+            if (Optional.IsDefined(CompressedQuery))
             {
                 writer.WritePropertyName("compressedQuery"u8);
                 writer.WriteStringValue(CompressedQuery);
             }
-            if (SupportedCloud.HasValue)
+            if (Optional.IsDefined(SupportedCloud))
             {
                 writer.WritePropertyName("supportedCloud"u8);
                 writer.WriteStringValue(SupportedCloud.Value.ToString());
             }
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (RemediationDescription != null)
+            if (Optional.IsDefined(RemediationDescription))
             {
                 writer.WritePropertyName("remediationDescription"u8);
                 writer.WriteStringValue(RemediationDescription);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomAssessmentAutomationCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomAssessmentAutomationCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomAssessmentAutomationCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static CustomAssessmentAutomationCreateOrUpdateContent DeserializeCustomAssessmentAutomationCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string description = default;
             string remediationDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -208,10 +208,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CustomAssessmentAutomationCreateOrUpdateContent(
                 id,
                 name,
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomAssessmentAutomationCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomAssessmentAutomationCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeCustomAssessmentAutomationCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomAssessmentAutomationCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomAssessmentAutomationCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

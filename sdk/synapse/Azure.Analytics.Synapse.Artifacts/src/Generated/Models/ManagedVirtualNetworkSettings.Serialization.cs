@@ -19,17 +19,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PreventDataExfiltration.HasValue)
+            if (Optional.IsDefined(PreventDataExfiltration))
             {
                 writer.WritePropertyName("preventDataExfiltration"u8);
                 writer.WriteBooleanValue(PreventDataExfiltration.Value);
             }
-            if (LinkedAccessCheckOnTargetResource.HasValue)
+            if (Optional.IsDefined(LinkedAccessCheckOnTargetResource))
             {
                 writer.WritePropertyName("linkedAccessCheckOnTargetResource"u8);
                 writer.WriteBooleanValue(LinkedAccessCheckOnTargetResource.Value);
             }
-            if (!(AllowedAadTenantIdsForLinking is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedAadTenantIdsForLinking))
             {
                 writer.WritePropertyName("allowedAadTenantIdsForLinking"u8);
                 writer.WriteStartArray();
@@ -89,12 +89,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ManagedVirtualNetworkSettings(preventDataExfiltration, linkedAccessCheckOnTargetResource, allowedAadTenantIdsForLinking ?? new ChangeTrackingList<string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ManagedVirtualNetworkSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeManagedVirtualNetworkSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class ManagedVirtualNetworkSettingsConverter : JsonConverter<ManagedVirtualNetworkSettings>
         {
             public override void Write(Utf8JsonWriter writer, ManagedVirtualNetworkSettings model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ManagedVirtualNetworkSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

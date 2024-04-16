@@ -15,68 +15,68 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class PipelineActivityRunInformation : IUtf8JsonSerializable, IJsonModel<PipelineActivityRunInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineActivityRunInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineActivityRunInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PipelineActivityRunInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PipelineActivityRunInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PipelineActivityRunInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineActivityRunInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PipelineName != null)
+            if (options.Format != "W" && Optional.IsDefined(PipelineName))
             {
                 writer.WritePropertyName("pipelineName"u8);
                 writer.WriteStringValue(PipelineName);
             }
-            if (options.Format != "W" && PipelineRunId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PipelineRunId))
             {
                 writer.WritePropertyName("pipelineRunId"u8);
                 writer.WriteStringValue(PipelineRunId.Value);
             }
-            if (options.Format != "W" && ActivityName != null)
+            if (options.Format != "W" && Optional.IsDefined(ActivityName))
             {
                 writer.WritePropertyName("activityName"u8);
                 writer.WriteStringValue(ActivityName);
             }
-            if (options.Format != "W" && ActivityType != null)
+            if (options.Format != "W" && Optional.IsDefined(ActivityType))
             {
                 writer.WritePropertyName("activityType"u8);
                 writer.WriteStringValue(ActivityType);
             }
-            if (options.Format != "W" && ActivityRunId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActivityRunId))
             {
                 writer.WritePropertyName("activityRunId"u8);
                 writer.WriteStringValue(ActivityRunId.Value);
             }
-            if (options.Format != "W" && LinkedServiceName != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteStringValue(LinkedServiceName);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("activityRunStart"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("activityRunEnd"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && DurationInMs.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DurationInMs))
             {
                 writer.WritePropertyName("durationInMs"u8);
                 writer.WriteNumberValue(DurationInMs.Value);
             }
-            if (options.Format != "W" && Input != null)
+            if (options.Format != "W" && Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
 #if NET6_0_OR_GREATER
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Output != null)
+            if (options.Format != "W" && Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
 #if NET6_0_OR_GREATER
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<PipelineActivityRunInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PipelineActivityRunInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PipelineActivityRunInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PipelineActivityRunInformation DeserializePipelineActivityRunInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PipelineActivityRunInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineActivityRunInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializePipelineActivityRunInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PipelineActivityRunInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PipelineActivityRunInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     public partial class BackupProperties : IUtf8JsonSerializable, IJsonModel<BackupProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AzureStorageResourceUri != null)
+            if (Optional.IsDefined(AzureStorageResourceUri))
             {
                 writer.WritePropertyName("azureStorageResourceUri"u8);
                 writer.WriteStringValue(AzureStorageResourceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && LastBackupOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastBackupOn))
             {
                 writer.WritePropertyName("lastBackupDateTime"u8);
                 writer.WriteStringValue(LastBackupOn.Value, "O");
             }
-            if (options.Format != "W" && LastBackupStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(LastBackupStatus))
             {
                 writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 
         internal static BackupProperties DeserializeBackupProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             DateTimeOffset? lastBackupDateTime = default;
             string lastBackupStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureStorageResourceUri"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BackupProperties(azureStorageResourceUri, lastBackupDateTime, lastBackupStatus, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                         return DeserializeBackupProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

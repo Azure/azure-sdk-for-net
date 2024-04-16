@@ -17,12 +17,20 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             writer.WritePropertyName("searchString"u8);
             writer.WriteStringValue(SearchString);
-            if (Take.HasValue)
+            if (Optional.IsDefined(Take))
             {
                 writer.WritePropertyName("take"u8);
                 writer.WriteNumberValue(Take.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

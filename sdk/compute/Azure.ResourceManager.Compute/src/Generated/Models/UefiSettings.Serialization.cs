@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class UefiSettings : IUtf8JsonSerializable, IJsonModel<UefiSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UefiSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UefiSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UefiSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UefiSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UefiSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UefiSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsSecureBootEnabled.HasValue)
+            if (Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
                 writer.WriteBooleanValue(IsSecureBootEnabled.Value);
             }
-            if (IsVirtualTpmEnabled.HasValue)
+            if (Optional.IsDefined(IsVirtualTpmEnabled))
             {
                 writer.WritePropertyName("vTpmEnabled"u8);
                 writer.WriteBooleanValue(IsVirtualTpmEnabled.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UefiSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UefiSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UefiSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static UefiSettings DeserializeUefiSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? secureBootEnabled = default;
             bool? vTpmEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secureBootEnabled"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UefiSettings(secureBootEnabled, vTpmEnabled, serializedAdditionalRawData);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UefiSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UefiSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeUefiSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UefiSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UefiSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

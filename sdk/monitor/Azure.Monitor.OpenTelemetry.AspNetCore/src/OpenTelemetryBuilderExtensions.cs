@@ -4,6 +4,7 @@
 #nullable enable
 
 using System.Reflection;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
@@ -48,7 +49,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
+#pragma warning disable CS0618 // Type or member is obsolete
+        // Note: OpenTelemetryBuilder is obsolete because users should target
+        // IOpenTelemetryBuilder for extensions but this method is valid and
+        // expected to be called to obtain a root builder.
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder)
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             builder.Services.TryAddSingleton<IConfigureOptions<AzureMonitorOptions>,
                         DefaultAzureMonitorOptions>();
@@ -75,7 +81,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
+#pragma warning disable CS0618 // Type or member is obsolete
+        // Note: OpenTelemetryBuilder is obsolete because users should target
+        // IOpenTelemetryBuilder for extensions but this method is valid and
+        // expected to be called to obtain a root builder.
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions> configureAzureMonitor)
+#pragma warning restore CS0618 // Type or member is obsolete
         {
             if (builder.Services == null)
             {
@@ -118,18 +129,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
+                            .AddHttpClientAndServerMetrics()
                             .AddAzureMonitorMetricExporter());
 
             builder.Services.AddLogging(logging =>
             {
                 logging.AddOpenTelemetry(builderOptions =>
                 {
-                    var resourceBuilder = ResourceBuilder.CreateDefault();
-                    configureResource(resourceBuilder);
-                    builderOptions.SetResourceBuilder(resourceBuilder);
-
                     builderOptions.IncludeFormattedMessage = true;
-                    builderOptions.IncludeScopes = false;
                 });
             });
 
@@ -184,38 +191,46 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         azureMonitorOptions.Get(Options.DefaultName).SetValueToLiveMetricsExporterOptions(exporterOptions);
                     });
 
+            // Register Azure SDK log forwarder in the case it was not registered by the user application.
+            builder.Services.AddHostedService(sp =>
+            {
+                var logForwarderType = Type.GetType("Microsoft.Extensions.Azure.AzureEventSourceLogForwarder, Microsoft.Extensions.Azure", false);
+
+                if (logForwarderType != null && sp.GetService(logForwarderType) != null)
+                {
+                    AzureMonitorAspNetCoreEventSource.Log.LogForwarderIsAlreadyRegistered();
+                    return AzureEventSourceLogForwarder.Noop;
+                }
+
+                var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
+                return new AzureEventSourceLogForwarder(loggerFactory);
+            });
+
             return builder;
         }
 
         private static TracerProviderBuilder AddVendorInstrumentationIfPackageNotReferenced(this TracerProviderBuilder tracerProviderBuilder)
         {
-            var vendorInstrumentationActions = new Dictionary<string, Action>
+            try
             {
-                { SqlClientInstrumentationPackageName, () => tracerProviderBuilder.AddSqlClientInstrumentation() },
-            };
-
-            foreach (var packageActionPair in vendorInstrumentationActions)
+                var instrumentationAssembly = Assembly.Load(SqlClientInstrumentationPackageName);
+                AzureMonitorAspNetCoreEventSource.Log.FoundInstrumentationPackageReference(SqlClientInstrumentationPackageName);
+            }
+            catch
             {
-                Assembly? instrumentationAssembly = null;
-
-                try
-                {
-                    instrumentationAssembly = Assembly.Load(packageActionPair.Key);
-                    AzureMonitorAspNetCoreEventSource.Log.FoundInstrumentationPackageReference(packageActionPair.Key);
-                }
-                catch
-                {
-                    AzureMonitorAspNetCoreEventSource.Log.NoInstrumentationPackageReference(packageActionPair.Key);
-                }
-
-                if (instrumentationAssembly == null)
-                {
-                    packageActionPair.Value.Invoke();
-                    AzureMonitorAspNetCoreEventSource.Log.VendorInstrumentationAdded(packageActionPair.Key);
-                }
+                AzureMonitorAspNetCoreEventSource.Log.NoInstrumentationPackageReference(SqlClientInstrumentationPackageName);
+                tracerProviderBuilder.AddSqlClientInstrumentation();
+                AzureMonitorAspNetCoreEventSource.Log.VendorInstrumentationAdded(SqlClientInstrumentationPackageName);
             }
 
             return tracerProviderBuilder;
+        }
+
+        private static MeterProviderBuilder AddHttpClientAndServerMetrics(this MeterProviderBuilder meterProviderBuilder)
+        {
+            return Environment.Version.Major >= 8 ?
+                meterProviderBuilder.AddMeter("Microsoft.AspNetCore.Hosting").AddMeter("System.Net.Http")
+                : meterProviderBuilder.AddAspNetCoreInstrumentation().AddHttpClientInstrumentation();
         }
     }
 }

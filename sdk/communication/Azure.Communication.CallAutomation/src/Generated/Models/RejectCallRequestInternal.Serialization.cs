@@ -17,12 +17,20 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("incomingCallContext"u8);
             writer.WriteStringValue(IncomingCallContext);
-            if (CallRejectReason.HasValue)
+            if (Optional.IsDefined(CallRejectReason))
             {
                 writer.WritePropertyName("callRejectReason"u8);
                 writer.WriteStringValue(CallRejectReason.Value.ToString());
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

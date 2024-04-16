@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.Communication.Models
 {
     public partial class VerificationDnsRecord : IUtf8JsonSerializable, IJsonModel<VerificationDnsRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VerificationDnsRecord>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VerificationDnsRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VerificationDnsRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VerificationDnsRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VerificationDnsRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VerificationDnsRecord)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DnsRecordType != null)
+            if (options.Format != "W" && Optional.IsDefined(DnsRecordType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DnsRecordType);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && TimeToLiveInSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeToLiveInSeconds))
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(TimeToLiveInSeconds.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Communication.Models
             var format = options.Format == "W" ? ((IPersistableModel<VerificationDnsRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VerificationDnsRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VerificationDnsRecord)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         internal static VerificationDnsRecord DeserializeVerificationDnsRecord(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Communication.Models
             string value = default;
             int? ttl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VerificationDnsRecord(type, name, value, ttl, serializedAdditionalRawData);
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Communication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VerificationDnsRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VerificationDnsRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Communication.Models
                         return DeserializeVerificationDnsRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VerificationDnsRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VerificationDnsRecord)} does not support reading '{options.Format}' format.");
             }
         }
 

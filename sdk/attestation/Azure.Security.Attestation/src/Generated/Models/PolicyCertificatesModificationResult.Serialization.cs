@@ -18,12 +18,12 @@ namespace Azure.Security.Attestation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CertificateThumbprint != null)
+            if (Optional.IsDefined(CertificateThumbprint))
             {
                 writer.WritePropertyName("x-ms-certificate-thumbprint"u8);
                 writer.WriteStringValue(CertificateThumbprint);
             }
-            if (CertificateResolution.HasValue)
+            if (Optional.IsDefined(CertificateResolution))
             {
                 writer.WritePropertyName("x-ms-policycertificates-result"u8);
                 writer.WriteStringValue(CertificateResolution.Value.ToString());
@@ -59,12 +59,29 @@ namespace Azure.Security.Attestation
             return new PolicyCertificatesModificationResult(xMsCertificateThumbprint, xMsPolicycertificatesResult);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PolicyCertificatesModificationResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePolicyCertificatesModificationResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class PolicyCertificatesModificationResultConverter : JsonConverter<PolicyCertificatesModificationResult>
         {
             public override void Write(Utf8JsonWriter writer, PolicyCertificatesModificationResult model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override PolicyCertificatesModificationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityDevOps
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<GitHubConnectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gitHubConnectorName, GitHubConnectorData data, CancellationToken cancellationToken = default)
         {
-            if (gitHubConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubConnectorName));
-            }
-            if (gitHubConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _gitHubConnectorClientDiagnostics.CreateScope("GitHubConnectorCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<GitHubConnectorResource> CreateOrUpdate(WaitUntil waitUntil, string gitHubConnectorName, GitHubConnectorData data, CancellationToken cancellationToken = default)
         {
-            if (gitHubConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubConnectorName));
-            }
-            if (gitHubConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _gitHubConnectorClientDiagnostics.CreateScope("GitHubConnectorCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
         public virtual async Task<Response<GitHubConnectorResource>> GetAsync(string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            if (gitHubConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubConnectorName));
-            }
-            if (gitHubConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
 
             using var scope = _gitHubConnectorClientDiagnostics.CreateScope("GitHubConnectorCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
         public virtual Response<GitHubConnectorResource> Get(string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            if (gitHubConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubConnectorName));
-            }
-            if (gitHubConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
 
             using var scope = _gitHubConnectorClientDiagnostics.CreateScope("GitHubConnectorCollection.Get");
             scope.Start();
@@ -361,14 +325,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            if (gitHubConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubConnectorName));
-            }
-            if (gitHubConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
 
             using var scope = _gitHubConnectorClientDiagnostics.CreateScope("GitHubConnectorCollection.Exists");
             scope.Start();
@@ -411,14 +368,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            if (gitHubConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubConnectorName));
-            }
-            if (gitHubConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
 
             using var scope = _gitHubConnectorClientDiagnostics.CreateScope("GitHubConnectorCollection.Exists");
             scope.Start();
@@ -461,14 +411,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<GitHubConnectorResource>> GetIfExistsAsync(string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            if (gitHubConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubConnectorName));
-            }
-            if (gitHubConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
 
             using var scope = _gitHubConnectorClientDiagnostics.CreateScope("GitHubConnectorCollection.GetIfExists");
             scope.Start();
@@ -513,14 +456,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
         public virtual NullableResponse<GitHubConnectorResource> GetIfExists(string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            if (gitHubConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubConnectorName));
-            }
-            if (gitHubConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
 
             using var scope = _gitHubConnectorClientDiagnostics.CreateScope("GitHubConnectorCollection.GetIfExists");
             scope.Start();

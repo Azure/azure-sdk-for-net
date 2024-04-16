@@ -15,53 +15,53 @@ namespace Azure.ResourceManager.Datadog.Models
 {
     public partial class DatadogOrganizationProperties : IUtf8JsonSerializable, IJsonModel<DatadogOrganizationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogOrganizationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogOrganizationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatadogOrganizationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DatadogOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogOrganizationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogOrganizationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (LinkingAuthCode != null)
+            if (Optional.IsDefined(LinkingAuthCode))
             {
                 writer.WritePropertyName("linkingAuthCode"u8);
                 writer.WriteStringValue(LinkingAuthCode);
             }
-            if (LinkingClientId != null)
+            if (Optional.IsDefined(LinkingClientId))
             {
                 writer.WritePropertyName("linkingClientId"u8);
                 writer.WriteStringValue(LinkingClientId);
             }
-            if (RedirectUri != null)
+            if (Optional.IsDefined(RedirectUri))
             {
                 writer.WritePropertyName("redirectUri"u8);
                 writer.WriteStringValue(RedirectUri.AbsoluteUri);
             }
-            if (ApiKey != null)
+            if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (ApplicationKey != null)
+            if (Optional.IsDefined(ApplicationKey))
             {
                 writer.WritePropertyName("applicationKey"u8);
                 writer.WriteStringValue(ApplicationKey);
             }
-            if (EnterpriseAppId != null)
+            if (Optional.IsDefined(EnterpriseAppId))
             {
                 writer.WritePropertyName("enterpriseAppId"u8);
                 writer.WriteStringValue(EnterpriseAppId);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogOrganizationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogOrganizationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogOrganizationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogOrganizationProperties DeserializeDatadogOrganizationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Datadog.Models
             string applicationKey = default;
             string enterpriseAppId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DatadogOrganizationProperties(
                 name,
                 id,
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogOrganizationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogOrganizationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeDatadogOrganizationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogOrganizationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogOrganizationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

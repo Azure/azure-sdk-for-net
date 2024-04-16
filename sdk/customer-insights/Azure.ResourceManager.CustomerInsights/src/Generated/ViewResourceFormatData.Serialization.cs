@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class ViewResourceFormatData : IUtf8JsonSerializable, IJsonModel<ViewResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ViewResourceFormatData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ViewResourceFormatData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ViewResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ViewResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ViewResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ViewResourceFormatData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ViewName != null)
+            if (options.Format != "W" && Optional.IsDefined(ViewName))
             {
                 writer.WritePropertyName("viewName"u8);
                 writer.WriteStringValue(ViewName);
             }
-            if (UserId != null)
+            if (Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("userId"u8);
                 writer.WriteStringValue(UserId);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (Definition != null)
+            if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteStringValue(Definition);
             }
-            if (options.Format != "W" && Changed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Changed))
             {
                 writer.WritePropertyName("changed"u8);
                 writer.WriteStringValue(Changed.Value, "O");
             }
-            if (options.Format != "W" && Created.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<ViewResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ViewResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ViewResourceFormatData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CustomerInsights
 
         internal static ViewResourceFormatData DeserializeViewResourceFormatData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CustomerInsights
             DateTimeOffset? changed = default;
             DateTimeOffset? created = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ViewResourceFormatData(
                 id,
                 name,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ViewResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ViewResourceFormatData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CustomerInsights
                         return DeserializeViewResourceFormatData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ViewResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ViewResourceFormatData)} does not support reading '{options.Format}' format.");
             }
         }
 

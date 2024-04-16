@@ -17,12 +17,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
+            AcsCommunicationIdentifierKind? kind = default;
             string rawId = default;
             CommunicationUserIdentifierModel communicationUser = default;
             PhoneNumberIdentifierModel phoneNumber = default;
             MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default;
+            AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new AcsCommunicationIdentifierKind(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("rawId"u8))
                 {
                     rawId = property.Value.GetString();
@@ -55,8 +66,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     microsoftTeamsUser = MicrosoftTeamsUserIdentifierModel.DeserializeMicrosoftTeamsUserIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("microsoftTeamsApp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    microsoftTeamsApp = AcsMicrosoftTeamsAppIdentifier.DeserializeAcsMicrosoftTeamsAppIdentifier(property.Value);
+                    continue;
+                }
             }
-            return new CommunicationIdentifierModel(rawId, communicationUser, phoneNumber, microsoftTeamsUser);
+            return new CommunicationIdentifierModel(
+                kind,
+                rawId,
+                communicationUser,
+                phoneNumber,
+                microsoftTeamsUser,
+                microsoftTeamsApp);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CommunicationIdentifierModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCommunicationIdentifierModel(document.RootElement);
         }
     }
 }

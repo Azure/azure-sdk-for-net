@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 {
     public partial class DataLakeStoreCapabilityInformation : IUtf8JsonSerializable, IJsonModel<DataLakeStoreCapabilityInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreCapabilityInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreCapabilityInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataLakeStoreCapabilityInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreCapabilityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SubscriptionId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId.Value);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && MaxAccountCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxAccountCount))
             {
                 writer.WritePropertyName("maxAccountCount"u8);
                 writer.WriteNumberValue(MaxAccountCount.Value);
             }
-            if (options.Format != "W" && AccountCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AccountCount))
             {
                 writer.WritePropertyName("accountCount"u8);
                 writer.WriteNumberValue(AccountCount.Value);
             }
-            if (options.Format != "W" && IsUnderMigrationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsUnderMigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteBooleanValue(IsUnderMigrationState.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreCapabilityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         internal static DataLakeStoreCapabilityInformation DeserializeDataLakeStoreCapabilityInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             int? accountCount = default;
             bool? migrationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataLakeStoreCapabilityInformation(
                 subscriptionId,
                 state,
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                         return DeserializeDataLakeStoreCapabilityInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreCapabilityInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

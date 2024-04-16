@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class NodeMonitoringData : IUtf8JsonSerializable, IJsonModel<NodeMonitoringData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NodeMonitoringData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NodeMonitoringData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NodeMonitoringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NodeMonitoringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodeMonitoringData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NodeMonitoringData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalProperties is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteStartObject();
@@ -49,42 +49,42 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && NodeName != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeName))
             {
                 writer.WritePropertyName("nodeName"u8);
                 writer.WriteStringValue(NodeName);
             }
-            if (options.Format != "W" && AvailableMemoryInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AvailableMemoryInMB))
             {
                 writer.WritePropertyName("availableMemoryInMB"u8);
                 writer.WriteNumberValue(AvailableMemoryInMB.Value);
             }
-            if (options.Format != "W" && CpuUtilization.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuUtilization))
             {
                 writer.WritePropertyName("cpuUtilization"u8);
                 writer.WriteNumberValue(CpuUtilization.Value);
             }
-            if (options.Format != "W" && ConcurrentJobsLimit.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConcurrentJobsLimit))
             {
                 writer.WritePropertyName("concurrentJobsLimit"u8);
                 writer.WriteNumberValue(ConcurrentJobsLimit.Value);
             }
-            if (options.Format != "W" && ConcurrentJobsRunning.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConcurrentJobsRunning))
             {
                 writer.WritePropertyName("concurrentJobsRunning"u8);
                 writer.WriteNumberValue(ConcurrentJobsRunning.Value);
             }
-            if (options.Format != "W" && MaxConcurrentJobs.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxConcurrentJobs))
             {
                 writer.WritePropertyName("maxConcurrentJobs"u8);
                 writer.WriteNumberValue(MaxConcurrentJobs.Value);
             }
-            if (options.Format != "W" && SentBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SentBytes))
             {
                 writer.WritePropertyName("sentBytes"u8);
                 writer.WriteNumberValue(SentBytes.Value);
             }
-            if (options.Format != "W" && ReceivedBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReceivedBytes))
             {
                 writer.WritePropertyName("receivedBytes"u8);
                 writer.WriteNumberValue(ReceivedBytes.Value);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<NodeMonitoringData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NodeMonitoringData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NodeMonitoringData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static NodeMonitoringData DeserializeNodeMonitoringData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             double? sentBytes = default;
             double? receivedBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("additionalProperties"u8))
@@ -231,10 +231,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NodeMonitoringData(
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 nodeName,
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NodeMonitoringData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NodeMonitoringData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeNodeMonitoringData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NodeMonitoringData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NodeMonitoringData)} does not support reading '{options.Format}' format.");
             }
         }
 

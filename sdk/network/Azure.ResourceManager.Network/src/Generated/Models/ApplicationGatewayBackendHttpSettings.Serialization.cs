@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -17,65 +16,65 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewayBackendHttpSettings : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayBackendHttpSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayBackendHttpSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayBackendHttpSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewayBackendHttpSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (CookieBasedAffinity.HasValue)
+            if (Optional.IsDefined(CookieBasedAffinity))
             {
                 writer.WritePropertyName("cookieBasedAffinity"u8);
                 writer.WriteStringValue(CookieBasedAffinity.Value.ToString());
             }
-            if (RequestTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(RequestTimeoutInSeconds))
             {
                 writer.WritePropertyName("requestTimeout"u8);
                 writer.WriteNumberValue(RequestTimeoutInSeconds.Value);
             }
-            if (Probe != null)
+            if (Optional.IsDefined(Probe))
             {
                 writer.WritePropertyName("probe"u8);
                 JsonSerializer.Serialize(writer, Probe);
             }
-            if (!(AuthenticationCertificates is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AuthenticationCertificates))
             {
                 writer.WritePropertyName("authenticationCertificates"u8);
                 writer.WriteStartArray();
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TrustedRootCertificates is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TrustedRootCertificates))
             {
                 writer.WritePropertyName("trustedRootCertificates"u8);
                 writer.WriteStartArray();
@@ -95,37 +94,37 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ConnectionDraining != null)
+            if (Optional.IsDefined(ConnectionDraining))
             {
                 writer.WritePropertyName("connectionDraining"u8);
-                writer.WriteObjectValue(ConnectionDraining);
+                writer.WriteObjectValue(ConnectionDraining, options);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (PickHostNameFromBackendAddress.HasValue)
+            if (Optional.IsDefined(PickHostNameFromBackendAddress))
             {
                 writer.WritePropertyName("pickHostNameFromBackendAddress"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendAddress.Value);
             }
-            if (AffinityCookieName != null)
+            if (Optional.IsDefined(AffinityCookieName))
             {
                 writer.WritePropertyName("affinityCookieName"u8);
                 writer.WriteStringValue(AffinityCookieName);
             }
-            if (ProbeEnabled.HasValue)
+            if (Optional.IsDefined(ProbeEnabled))
             {
                 writer.WritePropertyName("probeEnabled"u8);
                 writer.WriteBooleanValue(ProbeEnabled.Value);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayBackendHttpSettings DeserializeApplicationGatewayBackendHttpSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
             string path = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -361,10 +360,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationGatewayBackendHttpSettings(
                 id,
                 name,
@@ -396,7 +395,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -412,7 +411,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayBackendHttpSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHttpSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

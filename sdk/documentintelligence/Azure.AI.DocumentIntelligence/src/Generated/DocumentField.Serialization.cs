@@ -9,133 +9,142 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
     public partial class DocumentField : IUtf8JsonSerializable, IJsonModel<DocumentField>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentField>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentField>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DocumentField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentField>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentField)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentField)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (ValueString != null)
+            if (Optional.IsDefined(ValueString))
             {
                 writer.WritePropertyName("valueString"u8);
                 writer.WriteStringValue(ValueString);
             }
-            if (ValueDate.HasValue)
+            if (Optional.IsDefined(ValueDate))
             {
                 writer.WritePropertyName("valueDate"u8);
                 writer.WriteStringValue(ValueDate.Value, "D");
             }
-            if (ValueTime.HasValue)
+            if (Optional.IsDefined(ValueTime))
             {
                 writer.WritePropertyName("valueTime"u8);
                 writer.WriteStringValue(ValueTime.Value, "T");
             }
-            if (ValuePhoneNumber != null)
+            if (Optional.IsDefined(ValuePhoneNumber))
             {
                 writer.WritePropertyName("valuePhoneNumber"u8);
                 writer.WriteStringValue(ValuePhoneNumber);
             }
-            if (ValueNumber.HasValue)
+            if (Optional.IsDefined(ValueDouble))
             {
                 writer.WritePropertyName("valueNumber"u8);
-                writer.WriteNumberValue(ValueNumber.Value);
+                writer.WriteNumberValue(ValueDouble.Value);
             }
-            if (ValueInteger.HasValue)
+            if (Optional.IsDefined(ValueLong))
             {
                 writer.WritePropertyName("valueInteger"u8);
-                writer.WriteNumberValue(ValueInteger.Value);
+                writer.WriteNumberValue(ValueLong.Value);
             }
-            if (ValueSelectionMark.HasValue)
+            if (Optional.IsDefined(ValueSelectionMark))
             {
                 writer.WritePropertyName("valueSelectionMark"u8);
                 writer.WriteStringValue(ValueSelectionMark.Value.ToString());
             }
-            if (ValueSignature.HasValue)
+            if (Optional.IsDefined(ValueSignature))
             {
                 writer.WritePropertyName("valueSignature"u8);
                 writer.WriteStringValue(ValueSignature.Value.ToString());
             }
-            if (ValueCountryRegion != null)
+            if (Optional.IsDefined(ValueCountryRegion))
             {
                 writer.WritePropertyName("valueCountryRegion"u8);
                 writer.WriteStringValue(ValueCountryRegion);
             }
-            if (!(ValueArray is ChangeTrackingList<DocumentField> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ValueList))
             {
                 writer.WritePropertyName("valueArray"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValueArray)
+                foreach (var item in ValueList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValueObject is ChangeTrackingDictionary<string, DocumentField> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ValueDictionary))
             {
                 writer.WritePropertyName("valueObject"u8);
                 writer.WriteStartObject();
-                foreach (var item in ValueObject)
+                foreach (var item in ValueDictionary)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (ValueCurrency != null)
+            if (Optional.IsDefined(ValueCurrency))
             {
                 writer.WritePropertyName("valueCurrency"u8);
-                writer.WriteObjectValue(ValueCurrency);
+                writer.WriteObjectValue(ValueCurrency, options);
             }
-            if (ValueAddress != null)
+            if (Optional.IsDefined(ValueAddress))
             {
                 writer.WritePropertyName("valueAddress"u8);
-                writer.WriteObjectValue(ValueAddress);
+                writer.WriteObjectValue(ValueAddress, options);
             }
-            if (ValueBoolean.HasValue)
+            if (Optional.IsDefined(ValueBoolean))
             {
                 writer.WritePropertyName("valueBoolean"u8);
                 writer.WriteBooleanValue(ValueBoolean.Value);
             }
-            if (Content != null)
+            if (Optional.IsCollectionDefined(ValueSelectionGroup))
+            {
+                writer.WritePropertyName("valueSelectionGroup"u8);
+                writer.WriteStartArray();
+                foreach (var item in ValueSelectionGroup)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(BoundingRegions))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in BoundingRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Spans is ChangeTrackingList<DocumentSpan> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Spans))
             {
                 writer.WritePropertyName("spans"u8);
                 writer.WriteStartArray();
                 foreach (var item in Spans)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Confidence.HasValue)
+            if (Optional.IsDefined(Confidence))
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
@@ -163,7 +172,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentField>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentField)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentField)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +181,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal static DocumentField DeserializeDocumentField(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -193,12 +202,13 @@ namespace Azure.AI.DocumentIntelligence
             CurrencyValue valueCurrency = default;
             AddressValue valueAddress = default;
             bool? valueBoolean = default;
+            IReadOnlyList<string> valueSelectionGroup = default;
             string content = default;
             IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
             float? confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -330,6 +340,20 @@ namespace Azure.AI.DocumentIntelligence
                     valueBoolean = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("valueSelectionGroup"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    valueSelectionGroup = array;
+                    continue;
+                }
                 if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
@@ -374,10 +398,10 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DocumentField(
                 type,
                 valueString,
@@ -394,6 +418,7 @@ namespace Azure.AI.DocumentIntelligence
                 valueCurrency,
                 valueAddress,
                 valueBoolean,
+                valueSelectionGroup ?? new ChangeTrackingList<string>(),
                 content,
                 boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
                 spans ?? new ChangeTrackingList<DocumentSpan>(),
@@ -410,7 +435,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentField)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentField)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -426,7 +451,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentField(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentField)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentField)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -440,11 +465,11 @@ namespace Azure.AI.DocumentIntelligence
             return DeserializeDocumentField(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

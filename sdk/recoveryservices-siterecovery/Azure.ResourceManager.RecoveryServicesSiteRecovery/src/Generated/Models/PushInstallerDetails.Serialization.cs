@@ -15,64 +15,64 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class PushInstallerDetails : IUtf8JsonSerializable, IJsonModel<PushInstallerDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PushInstallerDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PushInstallerDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PushInstallerDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PushInstallerDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PushInstallerDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PushInstallerDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && BiosId != null)
+            if (options.Format != "W" && Optional.IsDefined(BiosId))
             {
                 writer.WritePropertyName("biosId"u8);
                 writer.WriteStringValue(BiosId);
             }
-            if (options.Format != "W" && FabricObjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(FabricObjectId))
             {
                 writer.WritePropertyName("fabricObjectId"u8);
                 writer.WriteStringValue(FabricObjectId);
             }
-            if (options.Format != "W" && Fqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && LastHeartbeatReceivedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastHeartbeatReceivedOn))
             {
                 writer.WritePropertyName("lastHeartbeatUtc"u8);
                 writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<PushInstallerDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PushInstallerDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PushInstallerDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static PushInstallerDetails DeserializePushInstallerDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SiteRecoveryProtectionHealth? health = default;
             IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PushInstallerDetails(
                 id,
                 name,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PushInstallerDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PushInstallerDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializePushInstallerDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PushInstallerDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PushInstallerDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> or <paramref name="template"/> is null. </exception>
         public LinkedTemplateArtifact(string path, BinaryData template)
         {
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
-            if (template == null)
-            {
-                throw new ArgumentNullException(nameof(template));
-            }
+            Argument.AssertNotNull(path, nameof(path));
+            Argument.AssertNotNull(template, nameof(template));
 
             Path = path;
             Template = template;
@@ -81,6 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> A filesystem safe relative path of the artifact. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary>
         /// The Azure Resource Manager template.
@@ -112,6 +107,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("template")]
         public BinaryData Template { get; set; }
     }
 }

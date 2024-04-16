@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     public partial class MySqlFlexibleServerSkuCapability : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerSkuCapability>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerSkuCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerSkuCapability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlFlexibleServerSkuCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerSkuCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerSkuCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerSkuCapability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && VCores.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (options.Format != "W" && SupportedIops.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportedIops))
             {
                 writer.WritePropertyName("supportedIops"u8);
                 writer.WriteNumberValue(SupportedIops.Value);
             }
-            if (options.Format != "W" && SupportedMemoryPerVCoreInMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportedMemoryPerVCoreInMB))
             {
                 writer.WritePropertyName("supportedMemoryPerVCoreMB"u8);
                 writer.WriteNumberValue(SupportedMemoryPerVCoreInMB.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerSkuCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerSkuCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerSkuCapability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerSkuCapability DeserializeMySqlFlexibleServerSkuCapability(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             long? supportedIops = default;
             long? supportedMemoryPerVCoreMB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlFlexibleServerSkuCapability(name, vCores, supportedIops, supportedMemoryPerVCoreMB, serializedAdditionalRawData);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerSkuCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerSkuCapability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         return DeserializeMySqlFlexibleServerSkuCapability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerSkuCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerSkuCapability)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,41 +15,41 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ResponseContract : IUtf8JsonSerializable, IJsonModel<ResponseContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResponseContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResponseContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResponseContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResponseContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponseContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("statusCode"u8);
             writer.WriteNumberValue(StatusCode);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Representations is ChangeTrackingList<RepresentationContract> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Representations))
             {
                 writer.WritePropertyName("representations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Representations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Headers is ChangeTrackingList<ParameterContract> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResponseContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponseContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ResponseContract DeserializeResponseContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IList<RepresentationContract> representations = default;
             IList<ParameterContract> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))
@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResponseContract(statusCode, description, representations ?? new ChangeTrackingList<RepresentationContract>(), headers ?? new ChangeTrackingList<ParameterContract>(), serializedAdditionalRawData);
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResponseContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponseContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeResponseContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponseContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponseContract)} does not support reading '{options.Format}' format.");
             }
         }
 

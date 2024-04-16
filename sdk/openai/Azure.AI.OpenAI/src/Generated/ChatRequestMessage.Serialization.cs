@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -16,14 +15,14 @@ namespace Azure.AI.OpenAI
     [PersistableModelProxy(typeof(UnknownChatRequestMessage))]
     public partial class ChatRequestMessage : IUtf8JsonSerializable, IJsonModel<ChatRequestMessage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatRequestMessage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatRequestMessage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChatRequestMessage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChatRequestMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatRequestMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatRequestMessage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatRequestMessage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatRequestMessage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatRequestMessage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -61,7 +60,7 @@ namespace Azure.AI.OpenAI
 
         internal static ChatRequestMessage DeserializeChatRequestMessage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,11 +70,11 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "system": return ChatRequestSystemMessage.DeserializeChatRequestSystemMessage(element, options);
-                    case "user": return ChatRequestUserMessage.DeserializeChatRequestUserMessage(element, options);
                     case "assistant": return ChatRequestAssistantMessage.DeserializeChatRequestAssistantMessage(element, options);
-                    case "tool": return ChatRequestToolMessage.DeserializeChatRequestToolMessage(element, options);
                     case "function": return ChatRequestFunctionMessage.DeserializeChatRequestFunctionMessage(element, options);
+                    case "system": return ChatRequestSystemMessage.DeserializeChatRequestSystemMessage(element, options);
+                    case "tool": return ChatRequestToolMessage.DeserializeChatRequestToolMessage(element, options);
+                    case "user": return ChatRequestUserMessage.DeserializeChatRequestUserMessage(element, options);
                 }
             }
             return UnknownChatRequestMessage.DeserializeUnknownChatRequestMessage(element, options);
@@ -90,7 +89,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChatRequestMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatRequestMessage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -106,7 +105,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeChatRequestMessage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatRequestMessage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatRequestMessage)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -120,11 +119,11 @@ namespace Azure.AI.OpenAI
             return DeserializeChatRequestMessage(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

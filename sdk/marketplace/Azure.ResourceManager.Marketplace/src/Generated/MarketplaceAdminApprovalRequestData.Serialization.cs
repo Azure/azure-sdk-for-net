@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Marketplace
 {
     public partial class MarketplaceAdminApprovalRequestData : IUtf8JsonSerializable, IJsonModel<MarketplaceAdminApprovalRequestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceAdminApprovalRequestData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceAdminApprovalRequestData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MarketplaceAdminApprovalRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceAdminApprovalRequestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OfferId != null)
+            if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (PublisherId != null)
+            if (Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (AdminAction.HasValue)
+            if (Optional.IsDefined(AdminAction))
             {
                 writer.WritePropertyName("adminAction"u8);
                 writer.WriteStringValue(AdminAction.Value.ToString());
             }
-            if (!(ApprovedPlans is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ApprovedPlans))
             {
                 writer.WritePropertyName("approvedPlans"u8);
                 writer.WriteStartArray();
@@ -80,27 +80,27 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Comment != null)
+            if (Optional.IsDefined(Comment))
             {
                 writer.WritePropertyName("comment"u8);
                 writer.WriteStringValue(Comment);
             }
-            if (Administrator != null)
+            if (Optional.IsDefined(Administrator))
             {
                 writer.WritePropertyName("administrator"u8);
                 writer.WriteStringValue(Administrator);
             }
-            if (options.Format != "W" && !(Plans is ChangeTrackingList<PlanRequesterDetails> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Plans))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();
                 foreach (var item in Plans)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(CollectionIds is ChangeTrackingList<Guid> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(CollectionIds))
             {
                 writer.WritePropertyName("collectionIds"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IconUri != null)
+            if (options.Format != "W" && Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Marketplace
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceAdminApprovalRequestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Marketplace
 
         internal static MarketplaceAdminApprovalRequestData DeserializeMarketplaceAdminApprovalRequestData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Marketplace
             IList<Guid> collectionIds = default;
             Uri icon = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -295,10 +295,10 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MarketplaceAdminApprovalRequestData(
                 id,
                 name,
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Marketplace
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Marketplace
                         return DeserializeMarketplaceAdminApprovalRequestData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support reading '{options.Format}' format.");
             }
         }
 

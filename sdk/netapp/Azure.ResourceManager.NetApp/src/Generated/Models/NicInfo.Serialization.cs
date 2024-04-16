@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NicInfo : IUtf8JsonSerializable, IJsonModel<NicInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NicInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NicInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NicInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NicInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NicInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NicInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (!(VolumeResourceIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VolumeResourceIds))
             {
                 writer.WritePropertyName("volumeResourceIds"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NicInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NicInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NicInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NicInfo DeserializeNicInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NetApp.Models
             string ipAddress = default;
             IReadOnlyList<ResourceIdentifier> volumeResourceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipAddress"u8))
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NicInfo(ipAddress, volumeResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NicInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NicInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNicInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NicInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NicInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

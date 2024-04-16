@@ -15,43 +15,43 @@ namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class CloudTieringSpaceSavings : IUtf8JsonSerializable, IJsonModel<CloudTieringSpaceSavings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudTieringSpaceSavings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudTieringSpaceSavings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CloudTieringSpaceSavings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CloudTieringSpaceSavings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudTieringSpaceSavings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudTieringSpaceSavings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && VolumeSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VolumeSizeInBytes))
             {
                 writer.WritePropertyName("volumeSizeBytes"u8);
                 writer.WriteNumberValue(VolumeSizeInBytes.Value);
             }
-            if (options.Format != "W" && CloudTotalSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CloudTotalSizeInBytes))
             {
                 writer.WritePropertyName("totalSizeCloudBytes"u8);
                 writer.WriteNumberValue(CloudTotalSizeInBytes.Value);
             }
-            if (options.Format != "W" && CachedSizeInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CachedSizeInBytes))
             {
                 writer.WritePropertyName("cachedSizeBytes"u8);
                 writer.WriteNumberValue(CachedSizeInBytes.Value);
             }
-            if (options.Format != "W" && SpaceSavingsPercent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SpaceSavingsPercent))
             {
                 writer.WritePropertyName("spaceSavingsPercent"u8);
                 writer.WriteNumberValue(SpaceSavingsPercent.Value);
             }
-            if (options.Format != "W" && SpaceSavingsInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SpaceSavingsInBytes))
             {
                 writer.WritePropertyName("spaceSavingsBytes"u8);
                 writer.WriteNumberValue(SpaceSavingsInBytes.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudTieringSpaceSavings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudTieringSpaceSavings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudTieringSpaceSavings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         internal static CloudTieringSpaceSavings DeserializeCloudTieringSpaceSavings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             int? spaceSavingsPercent = default;
             long? spaceSavingsBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CloudTieringSpaceSavings(
                 lastUpdatedTimestamp,
                 volumeSizeBytes,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudTieringSpaceSavings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudTieringSpaceSavings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeCloudTieringSpaceSavings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudTieringSpaceSavings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudTieringSpaceSavings)} does not support reading '{options.Format}' format.");
             }
         }
 

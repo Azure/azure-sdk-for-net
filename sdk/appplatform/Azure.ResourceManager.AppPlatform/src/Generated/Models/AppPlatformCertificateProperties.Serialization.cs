@@ -15,50 +15,50 @@ namespace Azure.ResourceManager.AppPlatform.Models
     [PersistableModelProxy(typeof(UnknownCertificateProperties))]
     public partial class AppPlatformCertificateProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformCertificateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformCertificateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformCertificateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CertificatePropertiesType);
-            if (options.Format != "W" && Thumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && Issuer != null)
+            if (options.Format != "W" && Optional.IsDefined(Issuer))
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (options.Format != "W" && IssuedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IssuedOn))
             {
                 writer.WritePropertyName("issuedDate"u8);
                 writer.WriteStringValue(IssuedOn.Value, "O");
             }
-            if (options.Format != "W" && ExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && ActivateOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ActivateOn))
             {
                 writer.WritePropertyName("activateDate"u8);
                 writer.WriteStringValue(ActivateOn.Value, "O");
             }
-            if (options.Format != "W" && SubjectName != null)
+            if (options.Format != "W" && Optional.IsDefined(SubjectName))
             {
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
             }
-            if (options.Format != "W" && !(DnsNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DnsNames))
             {
                 writer.WritePropertyName("dnsNames"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformCertificateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformCertificateProperties DeserializeAppPlatformCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformCertificateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformCertificateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformCertificateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

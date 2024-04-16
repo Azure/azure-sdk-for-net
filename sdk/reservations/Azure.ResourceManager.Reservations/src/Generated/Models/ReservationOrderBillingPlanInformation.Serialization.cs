@@ -15,39 +15,39 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationOrderBillingPlanInformation : IUtf8JsonSerializable, IJsonModel<ReservationOrderBillingPlanInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationOrderBillingPlanInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationOrderBillingPlanInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationOrderBillingPlanInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReservationOrderBillingPlanInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationOrderBillingPlanInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationOrderBillingPlanInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PricingCurrencyTotal != null)
+            if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal);
+                writer.WriteObjectValue(PricingCurrencyTotal, options);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "D");
             }
-            if (NextPaymentDueOn.HasValue)
+            if (Optional.IsDefined(NextPaymentDueOn))
             {
                 writer.WritePropertyName("nextPaymentDueDate"u8);
                 writer.WriteStringValue(NextPaymentDueOn.Value, "D");
             }
-            if (!(Transactions is ChangeTrackingList<PaymentDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Transactions))
             {
                 writer.WritePropertyName("transactions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Transactions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationOrderBillingPlanInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationOrderBillingPlanInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationOrderBillingPlanInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationOrderBillingPlanInformation DeserializeReservationOrderBillingPlanInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Reservations.Models
             DateTimeOffset? nextPaymentDueDate = default;
             IReadOnlyList<PaymentDetail> transactions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pricingCurrencyTotal"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal, startDate, nextPaymentDueDate, transactions ?? new ChangeTrackingList<PaymentDetail>(), serializedAdditionalRawData);
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationOrderBillingPlanInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationOrderBillingPlanInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationOrderBillingPlanInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationOrderBillingPlanInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationOrderBillingPlanInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

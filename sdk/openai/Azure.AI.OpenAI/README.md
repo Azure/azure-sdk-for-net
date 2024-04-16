@@ -9,6 +9,7 @@ Use the client library for Azure OpenAI to:
 * [Create chat completions using models like gpt-4 and gpt-35-turbo][msdocs_openai_chat_quickstart]
 * [Generate images with dall-e-3][msdocs_openai_dalle_quickstart]
 * [Transcribe or translate audio into text with whisper][msdocs_openai_whisper_quickstart]
+* [Generate speech audio from text using tts model][msdocs_openai_tts_quickstart]
 * [Create a text embedding for comparisons][msdocs_openai_embedding]
 * [Create a legacy completion for text using models like text-davinci-002][msdocs_openai_completion]
 
@@ -573,7 +574,7 @@ See [the Azure OpenAI using your own data quickstart](https://learn.microsoft.co
 **NOTE:** The concurrent use of [Chat Functions](#use-chat-functions) and Azure Chat Extensions on a single request is not yet supported. Supplying both will result in the Chat Functions information being ignored and the operation behaving as if only the Azure Chat Extensions were provided. To address this limitation, consider separating the evaluation of Chat Functions and Azure Chat Extensions across multiple requests in your solution design.
 
 ```C# Snippet:ChatUsingYourOwnData
-AzureCognitiveSearchChatExtensionConfiguration contosoExtensionConfig = new()
+AzureSearchChatExtensionConfiguration contosoExtensionConfig = new()
 {
     SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
     Authentication = new OnYourDataApiKeyAuthenticationOptions("<your Cognitive Search resource API key>"),
@@ -604,16 +605,15 @@ ChatResponseMessage message = response.Value.Choices[0].Message;
 // The final, data-informed response still appears in the ChatMessages as usual
 Console.WriteLine($"{message.Role}: {message.Content}");
 
-// Responses that used extensions will also have Context information that includes special Tool messages
-// to explain extension activity and provide supplemental information like citations.
+// Responses that used extensions will also have Context information to explain extension activity
+// and provide supplemental information like citations.
 Console.WriteLine($"Citations and other information:");
 
-foreach (ChatResponseMessage contextMessage in message.AzureExtensionsContext.Messages)
+foreach (AzureChatExtensionDataSourceResponseCitation citation in message.AzureExtensionsContext.Citations)
 {
-    // Note: citations and other extension payloads from the "tool" role are often encoded JSON documents
-    // and need to be parsed as such; that step is omitted here for brevity.
-    Console.WriteLine($"{contextMessage.Role}: {contextMessage.Content}");
+    Console.WriteLine($"Citation: {citation.Content}");
 }
+Console.WriteLine($"Intent: {message.AzureExtensionsContext.Intent}");
 ```
 
 ### Generate embeddings
@@ -653,6 +653,10 @@ Console.WriteLine($"Generated image available at: {generatedImage.Url.AbsoluteUr
 
 ### Transcribe audio data with Whisper speech models
 
+Audio data is provided to `GetAudioTranscription()` as `BinaryData`, which may originate from a file, stream, or other
+source. By default, the `Filename` property will be inferred as `test.wav` for the purpose of identifying the audio
+format. For formats other than WAV, specify a matching file extension via `Filename`, e.g. `placeholder.mp3`.
+
 ```C# Snippet:TranscribeAudio
 using Stream audioStreamFromFile = File.OpenRead("myAudioFile.mp3");
 
@@ -660,6 +664,7 @@ var transcriptionOptions = new AudioTranscriptionOptions()
 {
     DeploymentName = "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
     AudioData = BinaryData.FromStream(audioStreamFromFile),
+    Filename = "test.mp3",
     ResponseFormat = AudioTranscriptionFormat.Verbose,
 };
 
@@ -670,6 +675,27 @@ AudioTranscription transcription = transcriptionResponse.Value;
 // When using Simple, SRT, or VTT formats, only transcription.Text will be populated
 Console.WriteLine($"Transcription ({transcription.Duration.Value.TotalSeconds}s):");
 Console.WriteLine(transcription.Text);
+```
+
+Transcriptions can also provide timing information for audio processing segments and/or individual words. The `Verbose`
+response format must be used for timestamp information to be populated.
+
+- Segment-level information is provided by default and incurs no additional latency when processing audio
+- Word-level information incurs non-negligible, additional computational latency while processing audio
+- Options can request word-level timing, segment-level timing, or both via the granularities flags
+
+```C# Snippet:RequestAudioTimestamps
+// To request timestamps for segments and/or words, specify the Verbose response format and provide the desired
+// combination of enum flags for the available timestamp granularities. If not otherwise specified, segments
+// will be provided. Note that words, unlike segments, will introduce additional processing latency to compute.
+AudioTranscriptionOptions optionsForTimestamps = new()
+{
+    DeploymentName = "my-whisper-deployment",
+    AudioData = BinaryData.FromStream(audioDataStream),
+    Filename = "hello-world.mp3",
+    ResponseFormat = AudioTranscriptionFormat.Verbose,
+    TimestampGranularityFlags = AudioTimestampGranularity.Word | AudioTimestampGranularity.Segment,
+};
 ```
 
 ### Translate audio data to English with Whisper speech models
@@ -691,6 +717,22 @@ AudioTranslation translation = translationResponse.Value;
 Console.WriteLine($"Translation ({translation.Duration.Value.TotalSeconds}s):");
 // .Text will be translated to English (ISO-639-1 "en")
 Console.WriteLine(translation.Text);
+```
+
+### Generate Speech with Text-to-Speech (TTS) models
+
+```C# Snippet:SpeechGeneration
+SpeechGenerationOptions speechOptions = new()
+{
+    Input = "Hello World",
+    DeploymentName = usingAzure ? "my-azure-openai-tts-deployment" : "tts-1",
+    Voice = SpeechVoice.Alloy,
+    ResponseFormat = SpeechGenerationResponseFormat.Mp3,
+    Speed = 1.0f
+};
+
+Response<BinaryData> response = await client.GenerateSpeechFromTextAsync(speechOptions);
+File.WriteAllBytes("myAudioFile.mp3", response.Value.ToArray());
 ```
 
 ### Chat with images using gpt-4-vision-preview
@@ -801,6 +843,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [msdocs_openai_chat_quickstart]: https://learn.microsoft.com/azure/ai-services/openai/chatgpt-quickstart?pivots=programming-language-csharp
 [msdocs_openai_dalle_quickstart]: https://learn.microsoft.com/azure/ai-services/openai/dall-e-quickstart?pivots=programming-language-csharp
 [msdocs_openai_whisper_quickstart]: https://learn.microsoft.com/azure/ai-services/openai/whisper-quickstart
+[msdocs_openai_tts_quickstart]: https://learn.microsoft.com/azure/ai-services/openai/text-to-speech-quickstart
 [msdocs_openai_completion]: https://learn.microsoft.com/azure/cognitive-services/openai/how-to/completions
 [msdocs_openai_embedding]: https://learn.microsoft.com/azure/cognitive-services/openai/concepts/understand-embeddings
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization

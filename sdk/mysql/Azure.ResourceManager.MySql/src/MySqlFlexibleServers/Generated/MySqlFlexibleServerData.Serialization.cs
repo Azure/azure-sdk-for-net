@@ -17,28 +17,28 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     public partial class MySqlFlexibleServerData : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlFlexibleServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -66,112 +66,112 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AdministratorLogin != null)
+            if (Optional.IsDefined(AdministratorLogin))
             {
                 writer.WritePropertyName("administratorLogin"u8);
                 writer.WriteStringValue(AdministratorLogin);
             }
-            if (AdministratorLoginPassword != null)
+            if (Optional.IsDefined(AdministratorLoginPassword))
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
-            if (Version.HasValue)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (AvailabilityZone != null)
+            if (Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
                 writer.WriteStringValue(AvailabilityZone);
             }
-            if (CreateMode.HasValue)
+            if (Optional.IsDefined(CreateMode))
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (SourceServerResourceId != null)
+            if (Optional.IsDefined(SourceServerResourceId))
             {
                 writer.WritePropertyName("sourceServerResourceId"u8);
                 writer.WriteStringValue(SourceServerResourceId);
             }
-            if (RestorePointInTime.HasValue)
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (ReplicationRole.HasValue)
+            if (Optional.IsDefined(ReplicationRole))
             {
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
-            if (options.Format != "W" && ReplicaCapacity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReplicaCapacity))
             {
                 writer.WritePropertyName("replicaCapacity"u8);
                 writer.WriteNumberValue(ReplicaCapacity.Value);
             }
-            if (DataEncryption != null)
+            if (Optional.IsDefined(DataEncryption))
             {
                 writer.WritePropertyName("dataEncryption"u8);
-                writer.WriteObjectValue(DataEncryption);
+                writer.WriteObjectValue(DataEncryption, options);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && FullyQualifiedDomainName != null)
+            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
             {
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);
             }
-            if (Storage != null)
+            if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage);
+                writer.WriteObjectValue(Storage, options);
             }
-            if (Backup != null)
+            if (Optional.IsDefined(Backup))
             {
                 writer.WritePropertyName("backup"u8);
-                writer.WriteObjectValue(Backup);
+                writer.WriteObjectValue(Backup, options);
             }
-            if (HighAvailability != null)
+            if (Optional.IsDefined(HighAvailability))
             {
                 writer.WritePropertyName("highAvailability"u8);
-                writer.WriteObjectValue(HighAvailability);
+                writer.WriteObjectValue(HighAvailability, options);
             }
-            if (Network != null)
+            if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network);
+                writer.WriteObjectValue(Network, options);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnection> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (MaintenanceWindow != null)
+            if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow);
+                writer.WriteObjectValue(MaintenanceWindow, options);
             }
-            if (ImportSourceProperties != null)
+            if (Optional.IsDefined(ImportSourceProperties))
             {
                 writer.WritePropertyName("importSourceProperties"u8);
-                writer.WriteObjectValue(ImportSourceProperties);
+                writer.WriteObjectValue(ImportSourceProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         internal static MySqlFlexibleServerData DeserializeMySqlFlexibleServerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             MySqlFlexibleServerMaintenanceWindow maintenanceWindow = default;
             ImportSourceProperties importSourceProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -478,10 +478,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MySqlFlexibleServerData(
                 id,
                 name,
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                         return DeserializeMySqlFlexibleServerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerData)} does not support reading '{options.Format}' format.");
             }
         }
 

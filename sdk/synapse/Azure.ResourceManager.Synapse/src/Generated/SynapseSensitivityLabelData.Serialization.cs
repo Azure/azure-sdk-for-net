@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseSensitivityLabelData : IUtf8JsonSerializable, IJsonModel<SynapseSensitivityLabelData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSensitivityLabelData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSensitivityLabelData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseSensitivityLabelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSensitivityLabelData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSensitivityLabelData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSensitivityLabelData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ManagedBy != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
@@ -48,54 +48,54 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && SchemaName != null)
+            if (options.Format != "W" && Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
-            if (options.Format != "W" && TableName != null)
+            if (options.Format != "W" && Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (options.Format != "W" && ColumnName != null)
+            if (options.Format != "W" && Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
             }
-            if (LabelName != null)
+            if (Optional.IsDefined(LabelName))
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
             }
-            if (LabelId.HasValue)
+            if (Optional.IsDefined(LabelId))
             {
                 writer.WritePropertyName("labelId"u8);
                 writer.WriteStringValue(LabelId.Value);
             }
-            if (InformationType != null)
+            if (Optional.IsDefined(InformationType))
             {
                 writer.WritePropertyName("informationType"u8);
                 writer.WriteStringValue(InformationType);
             }
-            if (InformationTypeId.HasValue)
+            if (Optional.IsDefined(InformationTypeId))
             {
                 writer.WritePropertyName("informationTypeId"u8);
                 writer.WriteStringValue(InformationTypeId.Value);
             }
-            if (options.Format != "W" && IsDisabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDisabled))
             {
                 writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
-            if (Rank.HasValue)
+            if (Optional.IsDefined(Rank))
             {
                 writer.WritePropertyName("rank"u8);
                 writer.WriteStringValue(Rank.Value.ToSerialString());
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSensitivityLabelData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSensitivityLabelData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSensitivityLabelData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseSensitivityLabelData DeserializeSynapseSensitivityLabelData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Synapse
             bool? isDisabled = default;
             SynapseSensitivityLabelRank? rank = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -261,10 +261,10 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SynapseSensitivityLabelData(
                 id,
                 name,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Synapse
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSensitivityLabelData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSensitivityLabelData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Synapse
                         return DeserializeSynapseSensitivityLabelData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSensitivityLabelData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSensitivityLabelData)} does not support reading '{options.Format}' format.");
             }
         }
 

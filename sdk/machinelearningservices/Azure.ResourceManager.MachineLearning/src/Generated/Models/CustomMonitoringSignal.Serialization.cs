@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class CustomMonitoringSignal : IUtf8JsonSerializable, IJsonModel<CustomMonitoringSignal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomMonitoringSignal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomMonitoringSignal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomMonitoringSignal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("componentId"u8);
             writer.WriteStringValue(ComponentId);
-            if (!(InputAssets is ChangeTrackingDictionary<string, MonitoringInputDataBase> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InputAssets))
             {
                 if (InputAssets != null)
                 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in InputAssets)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputAssets");
                 }
             }
-            if (!(Inputs is ChangeTrackingDictionary<string, MachineLearningJobInput> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Inputs))
             {
                 if (Inputs != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Inputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("workspaceConnection"u8);
-            writer.WriteObjectValue(WorkspaceConnection);
-            if (Mode.HasValue)
+            writer.WriteObjectValue(WorkspaceConnection, options);
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static CustomMonitoringSignal DeserializeCustomMonitoringSignal(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("componentId"u8))
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CustomMonitoringSignal(
                 mode,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeCustomMonitoringSignal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support reading '{options.Format}' format.");
             }
         }
 

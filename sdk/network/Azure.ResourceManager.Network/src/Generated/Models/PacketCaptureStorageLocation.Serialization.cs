@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class PacketCaptureStorageLocation : IUtf8JsonSerializable, IJsonModel<PacketCaptureStorageLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCaptureStorageLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCaptureStorageLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PacketCaptureStorageLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCaptureStorageLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCaptureStorageLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (StorageId != null)
+            if (Optional.IsDefined(StorageId))
             {
                 writer.WritePropertyName("storageId"u8);
                 writer.WriteStringValue(StorageId);
             }
-            if (StoragePath != null)
+            if (Optional.IsDefined(StoragePath))
             {
                 writer.WritePropertyName("storagePath"u8);
                 writer.WriteStringValue(StoragePath);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCaptureStorageLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCaptureStorageLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PacketCaptureStorageLocation DeserializePacketCaptureStorageLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
             string storagePath = default;
             string filePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageId"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PacketCaptureStorageLocation(storageId, storagePath, filePath, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PacketCaptureStorageLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCaptureStorageLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePacketCaptureStorageLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PacketCaptureStorageLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCaptureStorageLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

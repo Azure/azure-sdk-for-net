@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationJobData : IUtf8JsonSerializable, IJsonModel<AutomationJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationJobData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Runbook != null)
+            if (Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
-                writer.WriteObjectValue(Runbook);
+                writer.WriteObjectValue(Runbook, options);
             }
-            if (StartedBy != null)
+            if (Optional.IsDefined(StartedBy))
             {
                 writer.WritePropertyName("startedBy"u8);
                 writer.WriteStringValue(StartedBy);
             }
-            if (RunOn != null)
+            if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
             }
-            if (JobId.HasValue)
+            if (Optional.IsDefined(JobId))
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId.Value);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (StatusDetails != null)
+            if (Optional.IsDefined(StatusDetails))
             {
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 if (StartOn != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("startTime");
                 }
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
                 {
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("endTime");
                 }
             }
-            if (Exception != null)
+            if (Optional.IsDefined(Exception))
             {
                 writer.WritePropertyName("exception"u8);
                 writer.WriteStringValue(Exception);
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 if (LastModifiedOn != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("lastModifiedTime");
                 }
             }
-            if (LastStatusModifiedOn.HasValue)
+            if (Optional.IsDefined(LastStatusModifiedOn))
             {
                 if (LastStatusModifiedOn != null)
                 {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Automation
                     writer.WriteNull("lastStatusModifiedTime");
                 }
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Automation
                 }
                 writer.WriteEndObject();
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Automation
 
         internal static AutomationJobData DeserializeAutomationJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Automation
             IDictionary<string, string> parameters = default;
             JobProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -372,10 +372,10 @@ namespace Azure.ResourceManager.Automation
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutomationJobData(
                 id,
                 name,
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeAutomationJobData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobData)} does not support reading '{options.Format}' format.");
             }
         }
 

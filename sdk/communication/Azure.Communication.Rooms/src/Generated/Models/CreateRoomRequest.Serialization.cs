@@ -15,22 +15,22 @@ namespace Azure.Communication.Rooms
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ValidFrom.HasValue)
+            if (Optional.IsDefined(ValidFrom))
             {
                 writer.WritePropertyName("validFrom"u8);
                 writer.WriteStringValue(ValidFrom.Value, "O");
             }
-            if (ValidUntil.HasValue)
+            if (Optional.IsDefined(ValidUntil))
             {
                 writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");
             }
-            if (PstnDialOutEnabled.HasValue)
+            if (Optional.IsDefined(PstnDialOutEnabled))
             {
                 writer.WritePropertyName("pstnDialOutEnabled"u8);
                 writer.WriteBooleanValue(PstnDialOutEnabled.Value);
             }
-            if (!(Participants is ChangeTrackingDictionary<string, ParticipantProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Participants))
             {
                 writer.WritePropertyName("participants"u8);
                 writer.WriteStartObject();
@@ -42,6 +42,14 @@ namespace Azure.Communication.Rooms
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -15,30 +15,30 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class EdgeOrderItemReturnContent : IUtf8JsonSerializable, IJsonModel<EdgeOrderItemReturnContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemReturnContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemReturnContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeOrderItemReturnContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemReturnContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderItemReturnContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderItemReturnContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ReturnAddress != null)
+            if (Optional.IsDefined(ReturnAddress))
             {
                 writer.WritePropertyName("returnAddress"u8);
-                writer.WriteObjectValue(ReturnAddress);
+                writer.WriteObjectValue(ReturnAddress, options);
             }
             writer.WritePropertyName("returnReason"u8);
             writer.WriteStringValue(ReturnReason);
-            if (ServiceTag != null)
+            if (Optional.IsDefined(ServiceTag))
             {
                 writer.WritePropertyName("serviceTag"u8);
                 writer.WriteStringValue(ServiceTag);
             }
-            if (IsShippingBoxRequired.HasValue)
+            if (Optional.IsDefined(IsShippingBoxRequired))
             {
                 writer.WritePropertyName("shippingBoxRequired"u8);
                 writer.WriteBooleanValue(IsShippingBoxRequired.Value);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemReturnContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderItemReturnContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderItemReturnContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderItemReturnContent DeserializeEdgeOrderItemReturnContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             string serviceTag = default;
             bool? shippingBoxRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("returnAddress"u8))
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EdgeOrderItemReturnContent(returnAddress, returnReason, serviceTag, shippingBoxRequired, serializedAdditionalRawData);
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemReturnContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderItemReturnContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeEdgeOrderItemReturnContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderItemReturnContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderItemReturnContent)} does not support reading '{options.Format}' format.");
             }
         }
 

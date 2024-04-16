@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AzureCloud != null)
+            if (Optional.IsDefined(AzureCloud))
             {
                 if (AzureCloud != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("azureCloud");
                 }
             }
-            if (ApplicationId != null)
+            if (Optional.IsDefined(ApplicationId))
             {
                 if (ApplicationId != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("applicationId");
                 }
             }
-            if (ApiKey != null)
+            if (Optional.IsDefined(ApiKey))
             {
                 if (ApiKey != null)
                 {
@@ -117,6 +117,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
             }
             return new AzureApplicationInsightsParameter(azureCloud, applicationId, apiKey, query);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AzureApplicationInsightsParameter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureApplicationInsightsParameter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

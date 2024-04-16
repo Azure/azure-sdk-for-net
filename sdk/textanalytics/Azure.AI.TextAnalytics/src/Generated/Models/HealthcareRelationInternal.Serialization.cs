@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -19,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("relationType"u8);
             writer.WriteStringValue(RelationType.ToString());
-            if (ConfidenceScore.HasValue)
+            if (Optional.IsDefined(ConfidenceScore))
             {
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
@@ -71,6 +70,22 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new HealthcareRelationInternal(relationType, confidenceScore, entities);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareRelationInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareRelationInternal(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

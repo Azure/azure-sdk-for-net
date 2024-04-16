@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsIncidentAdditionalInfo : IUtf8JsonSerializable, IJsonModel<SecurityInsightsIncidentAdditionalInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentAdditionalInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentAdditionalInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsIncidentAdditionalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentAdditionalInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentAdditionalInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AlertsCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AlertsCount))
             {
                 writer.WritePropertyName("alertsCount"u8);
                 writer.WriteNumberValue(AlertsCount.Value);
             }
-            if (options.Format != "W" && BookmarksCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BookmarksCount))
             {
                 writer.WritePropertyName("bookmarksCount"u8);
                 writer.WriteNumberValue(BookmarksCount.Value);
             }
-            if (options.Format != "W" && CommentsCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CommentsCount))
             {
                 writer.WritePropertyName("commentsCount"u8);
                 writer.WriteNumberValue(CommentsCount.Value);
             }
-            if (options.Format != "W" && !(AlertProductNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AlertProductNames))
             {
                 writer.WritePropertyName("alertProductNames"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Tactics is ChangeTrackingList<SecurityInsightsAttackTactic> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tactics))
             {
                 writer.WritePropertyName("tactics"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentAdditionalInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentAdditionalInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsIncidentAdditionalInfo DeserializeSecurityInsightsIncidentAdditionalInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IReadOnlyList<string> alertProductNames = default;
             IReadOnlyList<SecurityInsightsAttackTactic> tactics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertsCount"u8))
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsIncidentAdditionalInfo(
                 alertsCount,
                 bookmarksCount,
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentAdditionalInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentAdditionalInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsIncidentAdditionalInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentAdditionalInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentAdditionalInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

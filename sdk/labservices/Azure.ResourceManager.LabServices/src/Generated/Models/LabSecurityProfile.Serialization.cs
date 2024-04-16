@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class LabSecurityProfile : IUtf8JsonSerializable, IJsonModel<LabSecurityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabSecurityProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabSecurityProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LabSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabSecurityProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RegistrationCode != null)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationCode))
             {
                 writer.WritePropertyName("registrationCode"u8);
                 writer.WriteStringValue(RegistrationCode);
             }
-            if (OpenAccess.HasValue)
+            if (Optional.IsDefined(OpenAccess))
             {
                 writer.WritePropertyName("openAccess"u8);
                 writer.WriteStringValue(OpenAccess.Value.ToSerialString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabSecurityProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabSecurityProfile DeserializeLabSecurityProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.LabServices.Models
             string registrationCode = default;
             LabServicesEnableState? openAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registrationCode"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LabSecurityProfile(registrationCode, openAccess, serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabSecurityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabSecurityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabSecurityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

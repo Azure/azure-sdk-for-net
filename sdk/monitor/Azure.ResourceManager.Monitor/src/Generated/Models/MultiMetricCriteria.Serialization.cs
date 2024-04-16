@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MultiMetricCriteria : IUtf8JsonSerializable, IJsonModel<MultiMetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiMetricCriteria>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiMetricCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MultiMetricCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MultiMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,24 +31,24 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
-            if (MetricNamespace != null)
+            if (Optional.IsDefined(MetricNamespace))
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WritePropertyName("timeAggregation"u8);
             writer.WriteStringValue(TimeAggregation.ToString());
-            if (!(Dimensions is ChangeTrackingList<MetricDimension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (SkipMetricValidation.HasValue)
+            if (Optional.IsDefined(SkipMetricValidation))
             {
                 writer.WritePropertyName("skipMetricValidation"u8);
                 writer.WriteBooleanValue(SkipMetricValidation.Value);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MultiMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MultiMetricCriteria DeserializeMultiMetricCriteria(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMultiMetricCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

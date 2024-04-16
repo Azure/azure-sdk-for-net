@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -16,14 +15,14 @@ namespace Azure.AI.OpenAI
     [PersistableModelProxy(typeof(UnknownAzureChatExtensionConfiguration))]
     public partial class AzureChatExtensionConfiguration : IUtf8JsonSerializable, IJsonModel<AzureChatExtensionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureChatExtensionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureChatExtensionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureChatExtensionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureChatExtensionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureChatExtensionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureChatExtensionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AzureChatExtensionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureChatExtensionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureChatExtensionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -61,7 +60,7 @@ namespace Azure.AI.OpenAI
 
         internal static AzureChatExtensionConfiguration DeserializeAzureChatExtensionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,11 +70,11 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureCognitiveSearch": return AzureCognitiveSearchChatExtensionConfiguration.DeserializeAzureCognitiveSearchChatExtensionConfiguration(element, options);
-                    case "AzureMLIndex": return AzureMachineLearningIndexChatExtensionConfiguration.DeserializeAzureMachineLearningIndexChatExtensionConfiguration(element, options);
-                    case "AzureCosmosDB": return AzureCosmosDBChatExtensionConfiguration.DeserializeAzureCosmosDBChatExtensionConfiguration(element, options);
-                    case "Elasticsearch": return ElasticsearchChatExtensionConfiguration.DeserializeElasticsearchChatExtensionConfiguration(element, options);
-                    case "Pinecone": return PineconeChatExtensionConfiguration.DeserializePineconeChatExtensionConfiguration(element, options);
+                    case "azure_cosmos_db": return AzureCosmosDBChatExtensionConfiguration.DeserializeAzureCosmosDBChatExtensionConfiguration(element, options);
+                    case "azure_ml_index": return AzureMachineLearningIndexChatExtensionConfiguration.DeserializeAzureMachineLearningIndexChatExtensionConfiguration(element, options);
+                    case "azure_search": return AzureSearchChatExtensionConfiguration.DeserializeAzureSearchChatExtensionConfiguration(element, options);
+                    case "elasticsearch": return ElasticsearchChatExtensionConfiguration.DeserializeElasticsearchChatExtensionConfiguration(element, options);
+                    case "pinecone": return PineconeChatExtensionConfiguration.DeserializePineconeChatExtensionConfiguration(element, options);
                 }
             }
             return UnknownAzureChatExtensionConfiguration.DeserializeUnknownAzureChatExtensionConfiguration(element, options);
@@ -90,7 +89,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureChatExtensionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureChatExtensionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -106,7 +105,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeAzureChatExtensionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureChatExtensionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureChatExtensionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -120,11 +119,11 @@ namespace Azure.AI.OpenAI
             return DeserializeAzureChatExtensionConfiguration(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

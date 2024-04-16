@@ -19,17 +19,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SessionId != null)
+            if (Optional.IsDefined(SessionId))
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (DataFlow != null)
+            if (Optional.IsDefined(DataFlow))
             {
                 writer.WritePropertyName("dataFlow"u8);
                 writer.WriteObjectValue(DataFlow);
             }
-            if (!(DataFlows is ChangeTrackingList<DataFlowResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataFlows))
             {
                 writer.WritePropertyName("dataFlows"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Datasets is ChangeTrackingList<DatasetResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Datasets))
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LinkedServices is ChangeTrackingList<LinkedServiceResource> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkedServices))
             {
                 writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
@@ -59,17 +59,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Staging != null)
+            if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
-                writer.WriteObjectValue(Staging);
+                writer.WriteObjectValue<object>(Staging);
             }
-            if (DebugSettings != null)
+            if (Optional.IsDefined(DebugSettings))
             {
                 writer.WritePropertyName("debugSettings"u8);
-                writer.WriteObjectValue(DebugSettings);
+                writer.WriteObjectValue<object>(DebugSettings);
             }
-            if (IncrementalDebug.HasValue)
+            if (Optional.IsDefined(IncrementalDebug))
             {
                 writer.WritePropertyName("incrementalDebug"u8);
                 writer.WriteBooleanValue(IncrementalDebug.Value);
@@ -188,12 +188,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 incrementalDebug);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StartDataFlowDebugSessionRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStartDataFlowDebugSessionRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class StartDataFlowDebugSessionRequestConverter : JsonConverter<StartDataFlowDebugSessionRequest>
         {
             public override void Write(Utf8JsonWriter writer, StartDataFlowDebugSessionRequest model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override StartDataFlowDebugSessionRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

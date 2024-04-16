@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DataBoxEdgeOrderData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeOrderData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeOrderData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeOrderData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxEdgeOrderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeOrderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,69 +48,69 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && OrderId != null)
+            if (options.Format != "W" && Optional.IsDefined(OrderId))
             {
                 writer.WritePropertyName("orderId"u8);
                 writer.WriteStringValue(OrderId);
             }
-            if (ContactInformation != null)
+            if (Optional.IsDefined(ContactInformation))
             {
                 writer.WritePropertyName("contactInformation"u8);
-                writer.WriteObjectValue(ContactInformation);
+                writer.WriteObjectValue(ContactInformation, options);
             }
-            if (ShippingAddress != null)
+            if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                writer.WriteObjectValue(ShippingAddress, options);
             }
-            if (options.Format != "W" && CurrentStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentStatus))
             {
                 writer.WritePropertyName("currentStatus"u8);
-                writer.WriteObjectValue(CurrentStatus);
+                writer.WriteObjectValue(CurrentStatus, options);
             }
-            if (options.Format != "W" && !(OrderHistory is ChangeTrackingList<DataBoxEdgeOrderStatus> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OrderHistory))
             {
                 writer.WritePropertyName("orderHistory"u8);
                 writer.WriteStartArray();
                 foreach (var item in OrderHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SerialNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (options.Format != "W" && !(DeliveryTrackingInfo is ChangeTrackingList<DataBoxEdgeTrackingInfo> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DeliveryTrackingInfo))
             {
                 writer.WritePropertyName("deliveryTrackingInfo"u8);
                 writer.WriteStartArray();
                 foreach (var item in DeliveryTrackingInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ReturnTrackingInfo is ChangeTrackingList<DataBoxEdgeTrackingInfo> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ReturnTrackingInfo))
             {
                 writer.WritePropertyName("returnTrackingInfo"u8);
                 writer.WriteStartArray();
                 foreach (var item in ReturnTrackingInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ShipmentType.HasValue)
+            if (Optional.IsDefined(ShipmentType))
             {
                 writer.WritePropertyName("shipmentType"u8);
                 writer.WriteStringValue(ShipmentType.Value.ToString());
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeOrderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DataBoxEdgeOrderData DeserializeDataBoxEdgeOrderData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             IReadOnlyList<DataBoxEdgeTrackingInfo> returnTrackingInfo = default;
             DataBoxEdgeShipmentType? shipmentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -303,10 +303,10 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxEdgeOrderData(
                 id,
                 name,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                         return DeserializeDataBoxEdgeOrderData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support reading '{options.Format}' format.");
             }
         }
 

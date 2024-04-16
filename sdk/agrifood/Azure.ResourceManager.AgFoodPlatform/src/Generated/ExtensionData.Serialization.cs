@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,18 +16,18 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     public partial class ExtensionData : IUtf8JsonSerializable, IJsonModel<ExtensionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtensionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtensionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtensionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,34 +47,34 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ExtensionId != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtensionId))
             {
                 writer.WritePropertyName("extensionId"u8);
                 writer.WriteStringValue(ExtensionId);
             }
-            if (options.Format != "W" && ExtensionCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtensionCategory))
             {
                 writer.WritePropertyName("extensionCategory"u8);
                 writer.WriteStringValue(ExtensionCategory);
             }
-            if (options.Format != "W" && InstalledExtensionVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(InstalledExtensionVersion))
             {
                 writer.WritePropertyName("installedExtensionVersion"u8);
                 writer.WriteStringValue(InstalledExtensionVersion);
             }
-            if (options.Format != "W" && ExtensionAuthLink != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtensionAuthLink))
             {
                 writer.WritePropertyName("extensionAuthLink"u8);
                 writer.WriteStringValue(ExtensionAuthLink);
             }
-            if (options.Format != "W" && ExtensionApiDocsLink != null)
+            if (options.Format != "W" && Optional.IsDefined(ExtensionApiDocsLink))
             {
                 writer.WritePropertyName("extensionApiDocsLink"u8);
                 writer.WriteStringValue(ExtensionApiDocsLink);
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             var format = options.Format == "W" ? ((IPersistableModel<ExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtensionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         internal static ExtensionData DeserializeExtensionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             string extensionAuthLink = default;
             string extensionApiDocsLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -205,10 +204,10 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExtensionData(
                 id,
                 name,
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtensionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                         return DeserializeExtensionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtensionData)} does not support reading '{options.Format}' format.");
             }
         }
 

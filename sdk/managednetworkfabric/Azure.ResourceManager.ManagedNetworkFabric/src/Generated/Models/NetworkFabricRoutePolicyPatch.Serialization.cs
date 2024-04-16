@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class NetworkFabricRoutePolicyPatch : IUtf8JsonSerializable, IJsonModel<NetworkFabricRoutePolicyPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricRoutePolicyPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricRoutePolicyPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFabricRoutePolicyPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricRoutePolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricRoutePolicyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricRoutePolicyPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,18 +39,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (!(Statements is ChangeTrackingList<RoutePolicyStatementProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Statements))
             {
                 writer.WritePropertyName("statements"u8);
                 writer.WriteStartArray();
                 foreach (var item in Statements)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricRoutePolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricRoutePolicyPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricRoutePolicyPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static NetworkFabricRoutePolicyPatch DeserializeNetworkFabricRoutePolicyPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             CommunityActionType? defaultAction = default;
             IList<RoutePolicyStatementProperties> statements = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkFabricRoutePolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, defaultAction, statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>());
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricRoutePolicyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricRoutePolicyPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkFabricRoutePolicyPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricRoutePolicyPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricRoutePolicyPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

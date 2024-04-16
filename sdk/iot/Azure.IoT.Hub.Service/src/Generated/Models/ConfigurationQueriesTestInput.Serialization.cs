@@ -15,12 +15,12 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TargetCondition != null)
+            if (Optional.IsDefined(TargetCondition))
             {
                 writer.WritePropertyName("targetCondition"u8);
                 writer.WriteStringValue(TargetCondition);
             }
-            if (!(CustomMetricQueries is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomMetricQueries))
             {
                 writer.WritePropertyName("customMetricQueries"u8);
                 writer.WriteStartObject();
@@ -32,6 +32,14 @@ namespace Azure.IoT.Hub.Service.Models
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -15,49 +15,49 @@ namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class RequestApprovalsDetails : IUtf8JsonSerializable, IJsonModel<RequestApprovalsDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestApprovalsDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestApprovalsDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RequestApprovalsDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RequestApprovalsDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OfferId != null)
+            if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (PublisherId != null)
+            if (Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (MessageCode.HasValue)
+            if (Optional.IsDefined(MessageCode))
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
             }
-            if (IconUri != null)
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (!(Plans is ChangeTrackingList<PlanNotificationDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Plans))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();
                 foreach (var item in Plans)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestApprovalsDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static RequestApprovalsDetails DeserializeRequestApprovalsDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Uri icon = default;
             IReadOnlyList<PlanNotificationDetails> plans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerId"u8))
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RequestApprovalsDetails(
                 offerId,
                 displayName,
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeRequestApprovalsDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

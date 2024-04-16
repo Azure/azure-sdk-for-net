@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class NetworkFabricPatch : IUtf8JsonSerializable, IJsonModel<NetworkFabricPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFabricPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,45 +39,45 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (RackCount.HasValue)
+            if (Optional.IsDefined(RackCount))
             {
                 writer.WritePropertyName("rackCount"u8);
                 writer.WriteNumberValue(RackCount.Value);
             }
-            if (ServerCountPerRack.HasValue)
+            if (Optional.IsDefined(ServerCountPerRack))
             {
                 writer.WritePropertyName("serverCountPerRack"u8);
                 writer.WriteNumberValue(ServerCountPerRack.Value);
             }
-            if (IPv4Prefix != null)
+            if (Optional.IsDefined(IPv4Prefix))
             {
                 writer.WritePropertyName("ipv4Prefix"u8);
                 writer.WriteStringValue(IPv4Prefix);
             }
-            if (IPv6Prefix != null)
+            if (Optional.IsDefined(IPv6Prefix))
             {
                 writer.WritePropertyName("ipv6Prefix"u8);
                 writer.WriteStringValue(IPv6Prefix);
             }
-            if (FabricAsn.HasValue)
+            if (Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (TerminalServerConfiguration != null)
+            if (Optional.IsDefined(TerminalServerConfiguration))
             {
                 writer.WritePropertyName("terminalServerConfiguration"u8);
-                writer.WriteObjectValue(TerminalServerConfiguration);
+                writer.WriteObjectValue(TerminalServerConfiguration, options);
             }
-            if (ManagementNetworkConfiguration != null)
+            if (Optional.IsDefined(ManagementNetworkConfiguration))
             {
                 writer.WritePropertyName("managementNetworkConfiguration"u8);
-                writer.WriteObjectValue(ManagementNetworkConfiguration);
+                writer.WriteObjectValue(ManagementNetworkConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static NetworkFabricPatch DeserializeNetworkFabricPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration = default;
             ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -219,10 +219,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkFabricPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkFabricPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

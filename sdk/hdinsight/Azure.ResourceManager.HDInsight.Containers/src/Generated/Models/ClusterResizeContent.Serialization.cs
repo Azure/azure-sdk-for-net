@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     public partial class ClusterResizeContent : IUtf8JsonSerializable, IJsonModel<ClusterResizeContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterResizeContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterResizeContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterResizeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterResizeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterResizeContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterResizeContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (TargetWorkerNodeCount.HasValue)
+            if (Optional.IsDefined(TargetWorkerNodeCount))
             {
                 writer.WritePropertyName("targetWorkerNodeCount"u8);
                 writer.WriteNumberValue(TargetWorkerNodeCount.Value);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterResizeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterResizeContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterResizeContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static ClusterResizeContent DeserializeClusterResizeContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             SystemData systemData = default;
             int? targetWorkerNodeCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClusterResizeContent(
                 id,
                 name,
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterResizeContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterResizeContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeClusterResizeContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterResizeContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterResizeContent)} does not support reading '{options.Format}' format.");
             }
         }
 

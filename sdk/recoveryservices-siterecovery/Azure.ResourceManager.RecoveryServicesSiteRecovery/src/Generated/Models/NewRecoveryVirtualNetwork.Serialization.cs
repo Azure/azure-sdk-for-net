@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class NewRecoveryVirtualNetwork : IUtf8JsonSerializable, IJsonModel<NewRecoveryVirtualNetwork>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRecoveryVirtualNetwork>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRecoveryVirtualNetwork>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NewRecoveryVirtualNetwork>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NewRecoveryVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRecoveryVirtualNetwork)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRecoveryVirtualNetwork)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryVirtualNetworkResourceGroupName != null)
+            if (Optional.IsDefined(RecoveryVirtualNetworkResourceGroupName))
             {
                 writer.WritePropertyName("recoveryVirtualNetworkResourceGroupName"u8);
                 writer.WriteStringValue(RecoveryVirtualNetworkResourceGroupName);
             }
-            if (RecoveryVirtualNetworkName != null)
+            if (Optional.IsDefined(RecoveryVirtualNetworkName))
             {
                 writer.WritePropertyName("recoveryVirtualNetworkName"u8);
                 writer.WriteStringValue(RecoveryVirtualNetworkName);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRecoveryVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRecoveryVirtualNetwork)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRecoveryVirtualNetwork)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static NewRecoveryVirtualNetwork DeserializeNewRecoveryVirtualNetwork(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string recoveryVirtualNetworkName = default;
             string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryVirtualNetworkResourceGroupName"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NewRecoveryVirtualNetwork(resourceType, serializedAdditionalRawData, recoveryVirtualNetworkResourceGroupName, recoveryVirtualNetworkName);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NewRecoveryVirtualNetwork)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRecoveryVirtualNetwork)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeNewRecoveryVirtualNetwork(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewRecoveryVirtualNetwork)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRecoveryVirtualNetwork)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     public partial class AzureDevOpsConnectorStatsProperties : IUtf8JsonSerializable, IJsonModel<AzureDevOpsConnectorStatsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDevOpsConnectorStatsProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDevOpsConnectorStatsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureDevOpsConnectorStatsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsConnectorStatsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (OrgsCount.HasValue)
+            if (Optional.IsDefined(OrgsCount))
             {
                 writer.WritePropertyName("orgsCount"u8);
                 writer.WriteNumberValue(OrgsCount.Value);
             }
-            if (ProjectsCount.HasValue)
+            if (Optional.IsDefined(ProjectsCount))
             {
                 writer.WritePropertyName("projectsCount"u8);
                 writer.WriteNumberValue(ProjectsCount.Value);
             }
-            if (ReposCount.HasValue)
+            if (Optional.IsDefined(ReposCount))
             {
                 writer.WritePropertyName("reposCount"u8);
                 writer.WriteNumberValue(ReposCount.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsConnectorStatsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsConnectorStatsProperties DeserializeAzureDevOpsConnectorStatsProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             long? projectsCount = default;
             long? reposCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureDevOpsConnectorStatsProperties(provisioningState, orgsCount, projectsCount, reposCount, serializedAdditionalRawData);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                         return DeserializeAzureDevOpsConnectorStatsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsConnectorStatsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

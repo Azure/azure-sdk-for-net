@@ -15,53 +15,53 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppCustomHostnameAnalysisResult : IUtf8JsonSerializable, IJsonModel<ContainerAppCustomHostnameAnalysisResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCustomHostnameAnalysisResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCustomHostnameAnalysisResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppCustomHostnameAnalysisResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomHostnameAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && HostName != null)
+            if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (options.Format != "W" && IsHostnameAlreadyVerified.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsHostnameAlreadyVerified))
             {
                 writer.WritePropertyName("isHostnameAlreadyVerified"u8);
                 writer.WriteBooleanValue(IsHostnameAlreadyVerified.Value);
             }
-            if (options.Format != "W" && CustomDomainVerificationTest.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationTest))
             {
                 writer.WritePropertyName("customDomainVerificationTest"u8);
                 writer.WriteStringValue(CustomDomainVerificationTest.Value.ToSerialString());
             }
-            if (options.Format != "W" && CustomDomainVerificationFailureInfo != null)
+            if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationFailureInfo))
             {
                 writer.WritePropertyName("customDomainVerificationFailureInfo"u8);
-                writer.WriteObjectValue(CustomDomainVerificationFailureInfo);
+                writer.WriteObjectValue(CustomDomainVerificationFailureInfo, options);
             }
-            if (options.Format != "W" && HasConflictOnManagedEnvironment.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HasConflictOnManagedEnvironment))
             {
                 writer.WritePropertyName("hasConflictOnManagedEnvironment"u8);
                 writer.WriteBooleanValue(HasConflictOnManagedEnvironment.Value);
             }
-            if (options.Format != "W" && ConflictWithEnvironmentCustomDomain.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConflictWithEnvironmentCustomDomain))
             {
                 writer.WritePropertyName("conflictWithEnvironmentCustomDomain"u8);
                 writer.WriteBooleanValue(ConflictWithEnvironmentCustomDomain.Value);
             }
-            if (options.Format != "W" && ConflictingContainerAppResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ConflictingContainerAppResourceId))
             {
                 writer.WritePropertyName("conflictingContainerAppResourceId"u8);
                 writer.WriteStringValue(ConflictingContainerAppResourceId);
             }
-            if (!(CNameRecords is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CNameRecords))
             {
                 writer.WritePropertyName("cNameRecords"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TxtRecords is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TxtRecords))
             {
                 writer.WritePropertyName("txtRecords"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ARecords is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ARecords))
             {
                 writer.WritePropertyName("aRecords"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AlternateCNameRecords is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(AlternateCNameRecords))
             {
                 writer.WritePropertyName("alternateCNameRecords"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AlternateTxtRecords is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(AlternateTxtRecords))
             {
                 writer.WritePropertyName("alternateTxtRecords"u8);
                 writer.WriteStartArray();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomHostnameAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCustomHostnameAnalysisResult DeserializeContainerAppCustomHostnameAnalysisResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             IReadOnlyList<string> alternateCNameRecords = default;
             IReadOnlyList<string> alternateTxtRecords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostName"u8))
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppCustomHostnameAnalysisResult(
                 hostName,
                 isHostnameAlreadyVerified,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppCustomHostnameAnalysisResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCustomHostnameAnalysisResult)} does not support reading '{options.Format}' format.");
             }
         }
 

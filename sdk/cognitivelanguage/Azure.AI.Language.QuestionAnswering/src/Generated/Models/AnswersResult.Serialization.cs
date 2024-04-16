@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
@@ -38,6 +37,14 @@ namespace Azure.AI.Language.QuestionAnswering
                 }
             }
             return new AnswersResult(answers ?? new ChangeTrackingList<KnowledgeBaseAnswer>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnswersResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnswersResult(document.RootElement);
         }
     }
 }

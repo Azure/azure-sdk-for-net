@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 {
     public partial class ClusterCodeVersionsResult : IUtf8JsonSerializable, IJsonModel<ClusterCodeVersionsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterCodeVersionsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterCodeVersionsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterCodeVersionsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterCodeVersionsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterCodeVersionsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCodeVersionsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CodeVersion != null)
+            if (Optional.IsDefined(CodeVersion))
             {
                 writer.WritePropertyName("codeVersion"u8);
                 writer.WriteStringValue(CodeVersion);
             }
-            if (SupportExpireOn.HasValue)
+            if (Optional.IsDefined(SupportExpireOn))
             {
                 writer.WritePropertyName("supportExpiryUtc"u8);
                 writer.WriteStringValue(SupportExpireOn.Value, "O");
             }
-            if (Environment.HasValue)
+            if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
                 writer.WriteStringValue(Environment.Value.ToString());
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterCodeVersionsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterCodeVersionsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCodeVersionsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterCodeVersionsResult DeserializeClusterCodeVersionsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             DateTimeOffset? supportExpiryUtc = default;
             ClusterEnvironment? environment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClusterCodeVersionsResult(
                 id,
                 name,
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterCodeVersionsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCodeVersionsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeClusterCodeVersionsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterCodeVersionsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCodeVersionsResult)} does not support reading '{options.Format}' format.");
             }
         }
 

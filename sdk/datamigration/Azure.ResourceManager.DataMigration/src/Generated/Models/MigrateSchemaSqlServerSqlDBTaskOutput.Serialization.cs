@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.DataMigration.Models
     [PersistableModelProxy(typeof(UnknownMigrateSchemaSqlServerSqlDBTaskOutput))]
     public partial class MigrateSchemaSqlServerSqlDBTaskOutput : IUtf8JsonSerializable, IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSchemaSqlServerSqlDBTaskOutput DeserializeMigrateSchemaSqlServerSqlDBTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSchemaSqlServerSqlDBTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

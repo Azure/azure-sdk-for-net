@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaServicesPrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<MediaServicesPrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaServicesPrivateLinkResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaServicesPrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaServicesPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MediaServicesPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaServicesPrivateLinkResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaServicesPrivateLinkResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && !(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredMembers))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (!(RequiredZoneNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<MediaServicesPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaServicesPrivateLinkResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaServicesPrivateLinkResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media
 
         internal static MediaServicesPrivateLinkResourceData DeserializeMediaServicesPrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Media
             IReadOnlyList<string> requiredMembers = default;
             IList<string> requiredZoneNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.Media
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MediaServicesPrivateLinkResourceData(
                 id,
                 name,
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Media
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaServicesPrivateLinkResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaServicesPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Media
                         return DeserializeMediaServicesPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaServicesPrivateLinkResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaServicesPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

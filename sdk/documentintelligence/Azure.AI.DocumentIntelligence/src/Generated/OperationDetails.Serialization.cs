@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -16,14 +15,14 @@ namespace Azure.AI.DocumentIntelligence
     [PersistableModelProxy(typeof(UnknownOperationDetails))]
     public partial class OperationDetails : IUtf8JsonSerializable, IJsonModel<OperationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,25 +30,25 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStringValue(OperationId);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (PercentCompleted.HasValue)
+            if (Optional.IsDefined(PercentCompleted))
             {
                 writer.WritePropertyName("percentCompleted"u8);
                 writer.WriteNumberValue(PercentCompleted.Value);
             }
             writer.WritePropertyName("createdDateTime"u8);
-            writer.WriteStringValue(CreatedDateTime, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             writer.WritePropertyName("lastUpdatedDateTime"u8);
-            writer.WriteStringValue(LastUpdatedDateTime, "O");
+            writer.WriteStringValue(LastUpdatedOn, "O");
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("resourceLocation"u8);
             writer.WriteStringValue(ResourceLocation.AbsoluteUri);
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,10 +59,10 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 writer.WriteEndObject();
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +87,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<OperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +96,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal static OperationDetails DeserializeOperationDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,10 +106,10 @@ namespace Azure.AI.DocumentIntelligence
             {
                 switch (discriminator.GetString())
                 {
+                    case "documentClassifierBuild": return DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element, options);
                     case "documentModelBuild": return DocumentModelBuildOperationDetails.DeserializeDocumentModelBuildOperationDetails(element, options);
                     case "documentModelCompose": return DocumentModelComposeOperationDetails.DeserializeDocumentModelComposeOperationDetails(element, options);
                     case "documentModelCopyTo": return DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element, options);
-                    case "documentClassifierBuild": return DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element, options);
                 }
             }
             return UnknownOperationDetails.DeserializeUnknownOperationDetails(element, options);
@@ -125,7 +124,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +140,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeOperationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -155,11 +154,11 @@ namespace Azure.AI.DocumentIntelligence
             return DeserializeOperationDetails(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

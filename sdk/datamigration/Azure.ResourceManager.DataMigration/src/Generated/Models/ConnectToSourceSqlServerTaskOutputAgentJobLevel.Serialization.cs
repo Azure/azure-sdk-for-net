@@ -15,58 +15,58 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class ConnectToSourceSqlServerTaskOutputAgentJobLevel : IUtf8JsonSerializable, IJsonModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputAgentJobLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputAgentJobLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && JobCategory != null)
+            if (options.Format != "W" && Optional.IsDefined(JobCategory))
             {
                 writer.WritePropertyName("jobCategory"u8);
                 writer.WriteStringValue(JobCategory);
             }
-            if (options.Format != "W" && IsEnabled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && JobOwner != null)
+            if (options.Format != "W" && Optional.IsDefined(JobOwner))
             {
                 writer.WritePropertyName("jobOwner"u8);
                 writer.WriteStringValue(JobOwner);
             }
-            if (options.Format != "W" && LastExecutedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastExecutedOn))
             {
                 writer.WritePropertyName("lastExecutedOn"u8);
                 writer.WriteStringValue(LastExecutedOn.Value, "O");
             }
-            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && MigrationEligibility != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationEligibility))
             {
                 writer.WritePropertyName("migrationEligibility"u8);
-                writer.WriteObjectValue(MigrationEligibility);
+                writer.WriteObjectValue(MigrationEligibility, options);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputAgentJobLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputAgentJobLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToSourceSqlServerTaskOutputAgentJobLevel DeserializeConnectToSourceSqlServerTaskOutputAgentJobLevel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConnectToSourceSqlServerTaskOutputAgentJobLevel(
                 id,
                 resultType,
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputAgentJobLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputAgentJobLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectToSourceSqlServerTaskOutputAgentJobLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputAgentJobLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputAgentJobLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

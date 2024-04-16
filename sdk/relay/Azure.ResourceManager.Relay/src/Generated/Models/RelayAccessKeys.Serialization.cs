@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.Relay.Models
 {
     public partial class RelayAccessKeys : IUtf8JsonSerializable, IJsonModel<RelayAccessKeys>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelayAccessKeys>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelayAccessKeys>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RelayAccessKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RelayAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayAccessKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayAccessKeys)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrimaryConnectionString != null)
+            if (Optional.IsDefined(PrimaryConnectionString))
             {
                 writer.WritePropertyName("primaryConnectionString"u8);
                 writer.WriteStringValue(PrimaryConnectionString);
             }
-            if (SecondaryConnectionString != null)
+            if (Optional.IsDefined(SecondaryConnectionString))
             {
                 writer.WritePropertyName("secondaryConnectionString"u8);
                 writer.WriteStringValue(SecondaryConnectionString);
             }
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Relay.Models
             var format = options.Format == "W" ? ((IPersistableModel<RelayAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayAccessKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayAccessKeys)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Relay.Models
 
         internal static RelayAccessKeys DeserializeRelayAccessKeys(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Relay.Models
             string secondaryKey = default;
             string keyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryConnectionString"u8))
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Relay.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RelayAccessKeys(
                 primaryConnectionString,
                 secondaryConnectionString,
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Relay.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RelayAccessKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayAccessKeys)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Relay.Models
                         return DeserializeRelayAccessKeys(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelayAccessKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayAccessKeys)} does not support reading '{options.Format}' format.");
             }
         }
 

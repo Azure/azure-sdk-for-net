@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Actions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (!(NotActions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NotActions))
             {
                 writer.WritePropertyName("notActions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataActions is ChangeTrackingList<KeyVaultDataAction> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DataActions))
             {
                 writer.WritePropertyName("dataActions"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 writer.WriteEndArray();
             }
-            if (!(NotDataActions is ChangeTrackingList<KeyVaultDataAction> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(NotDataActions))
             {
                 writer.WritePropertyName("notDataActions"u8);
                 writer.WriteStartArray();
@@ -129,6 +129,22 @@ namespace Azure.Security.KeyVault.Administration
                 }
             }
             return new KeyVaultPermission(actions ?? new ChangeTrackingList<string>(), notActions ?? new ChangeTrackingList<string>(), dataActions ?? new ChangeTrackingList<KeyVaultDataAction>(), notDataActions ?? new ChangeTrackingList<KeyVaultDataAction>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyVaultPermission FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyVaultPermission(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -16,75 +16,75 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AzureFileStorageReadSettings : IUtf8JsonSerializable, IJsonModel<AzureFileStorageReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFileStorageReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFileStorageReadSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureFileStorageReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureFileStorageReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFileStorageReadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFileStorageReadSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Recursive != null)
+            if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
                 JsonSerializer.Serialize(writer, Recursive);
             }
-            if (WildcardFolderPath != null)
+            if (Optional.IsDefined(WildcardFolderPath))
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
                 JsonSerializer.Serialize(writer, WildcardFolderPath);
             }
-            if (WildcardFileName != null)
+            if (Optional.IsDefined(WildcardFileName))
             {
                 writer.WritePropertyName("wildcardFileName"u8);
                 JsonSerializer.Serialize(writer, WildcardFileName);
             }
-            if (Prefix != null)
+            if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
                 JsonSerializer.Serialize(writer, Prefix);
             }
-            if (FileListPath != null)
+            if (Optional.IsDefined(FileListPath))
             {
                 writer.WritePropertyName("fileListPath"u8);
                 JsonSerializer.Serialize(writer, FileListPath);
             }
-            if (EnablePartitionDiscovery != null)
+            if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
                 JsonSerializer.Serialize(writer, EnablePartitionDiscovery);
             }
-            if (PartitionRootPath != null)
+            if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
                 JsonSerializer.Serialize(writer, PartitionRootPath);
             }
-            if (DeleteFilesAfterCompletion != null)
+            if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
                 JsonSerializer.Serialize(writer, DeleteFilesAfterCompletion);
             }
-            if (ModifiedDatetimeStart != null)
+            if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeStart);
             }
-            if (ModifiedDatetimeEnd != null)
+            if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
                 JsonSerializer.Serialize(writer, ModifiedDatetimeEnd);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureFileStorageReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFileStorageReadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFileStorageReadSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureFileStorageReadSettings DeserializeAzureFileStorageReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureFileStorageReadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFileStorageReadSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAzureFileStorageReadSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureFileStorageReadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFileStorageReadSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

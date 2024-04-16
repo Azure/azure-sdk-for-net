@@ -15,51 +15,51 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class DevOpsProjectProperties : IUtf8JsonSerializable, IJsonModel<DevOpsProjectProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevOpsProjectProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevOpsProjectProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevOpsProjectProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevOpsProjectProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusMessage))
             {
                 writer.WritePropertyName("provisioningStatusMessage"u8);
                 writer.WriteStringValue(ProvisioningStatusMessage);
             }
-            if (options.Format != "W" && ProvisioningStatusUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatusUpdatedOn))
             {
                 writer.WritePropertyName("provisioningStatusUpdateTimeUtc"u8);
                 writer.WriteStringValue(ProvisioningStatusUpdatedOn.Value, "O");
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ParentOrgName != null)
+            if (Optional.IsDefined(ParentOrgName))
             {
                 writer.WritePropertyName("parentOrgName"u8);
                 writer.WriteStringValue(ParentOrgName);
             }
-            if (options.Format != "W" && ProjectId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProjectId))
             {
                 writer.WritePropertyName("projectId"u8);
                 writer.WriteStringValue(ProjectId);
             }
-            if (OnboardingState.HasValue)
+            if (Optional.IsDefined(OnboardingState))
             {
                 writer.WritePropertyName("onboardingState"u8);
                 writer.WriteStringValue(OnboardingState.Value.ToString());
             }
-            if (ActionableRemediation != null)
+            if (Optional.IsDefined(ActionableRemediation))
             {
                 writer.WritePropertyName("actionableRemediation"u8);
-                writer.WriteObjectValue(ActionableRemediation);
+                writer.WriteObjectValue(ActionableRemediation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevOpsProjectProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DevOpsProjectProperties DeserializeDevOpsProjectProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceOnboardingState? onboardingState = default;
             ActionableRemediation actionableRemediation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningStatusMessage"u8))
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevOpsProjectProperties(
                 provisioningStatusMessage,
                 provisioningStatusUpdateTimeUtc,
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDevOpsProjectProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevOpsProjectProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

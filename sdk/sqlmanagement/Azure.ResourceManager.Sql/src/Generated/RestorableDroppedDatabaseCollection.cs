@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -82,14 +80,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         public virtual async Task<Response<RestorableDroppedDatabaseResource>> GetAsync(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (restorableDroppedDatabaseId == null)
-            {
-                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
-            }
-            if (restorableDroppedDatabaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
-            }
+            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
 
             using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.Get");
             scope.Start();
@@ -136,14 +127,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         public virtual Response<RestorableDroppedDatabaseResource> Get(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (restorableDroppedDatabaseId == null)
-            {
-                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
-            }
-            if (restorableDroppedDatabaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
-            }
+            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
 
             using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.Get");
             scope.Start();
@@ -250,14 +234,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (restorableDroppedDatabaseId == null)
-            {
-                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
-            }
-            if (restorableDroppedDatabaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
-            }
+            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
 
             using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.Exists");
             scope.Start();
@@ -302,14 +279,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         public virtual Response<bool> Exists(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (restorableDroppedDatabaseId == null)
-            {
-                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
-            }
-            if (restorableDroppedDatabaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
-            }
+            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
 
             using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.Exists");
             scope.Start();
@@ -354,14 +324,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         public virtual async Task<NullableResponse<RestorableDroppedDatabaseResource>> GetIfExistsAsync(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (restorableDroppedDatabaseId == null)
-            {
-                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
-            }
-            if (restorableDroppedDatabaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
-            }
+            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
 
             using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.GetIfExists");
             scope.Start();
@@ -408,14 +371,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
         public virtual NullableResponse<RestorableDroppedDatabaseResource> GetIfExists(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (restorableDroppedDatabaseId == null)
-            {
-                throw new ArgumentNullException(nameof(restorableDroppedDatabaseId));
-            }
-            if (restorableDroppedDatabaseId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorableDroppedDatabaseId));
-            }
+            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
 
             using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.GetIfExists");
             scope.Start();

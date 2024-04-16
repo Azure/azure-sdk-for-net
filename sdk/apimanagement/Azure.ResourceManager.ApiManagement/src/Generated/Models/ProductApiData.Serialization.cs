@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ProductApiData : IUtf8JsonSerializable, IJsonModel<ProductApiData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductApiData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductApiData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProductApiData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProductApiData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductApiData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductApiData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,109 +42,109 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (AuthenticationSettings != null)
+            if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue(AuthenticationSettings);
+                writer.WriteObjectValue(AuthenticationSettings, options);
             }
-            if (SubscriptionKeyParameterNames != null)
+            if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue(SubscriptionKeyParameterNames);
+                writer.WriteObjectValue(SubscriptionKeyParameterNames, options);
             }
-            if (ApiType.HasValue)
+            if (Optional.IsDefined(ApiType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiType.Value.ToString());
             }
-            if (ApiRevision != null)
+            if (Optional.IsDefined(ApiRevision))
             {
                 writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (IsCurrent.HasValue)
+            if (Optional.IsDefined(IsCurrent))
             {
                 writer.WritePropertyName("isCurrent"u8);
                 writer.WriteBooleanValue(IsCurrent.Value);
             }
-            if (options.Format != "W" && IsOnline.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsOnline))
             {
                 writer.WritePropertyName("isOnline"u8);
                 writer.WriteBooleanValue(IsOnline.Value);
             }
-            if (ApiRevisionDescription != null)
+            if (Optional.IsDefined(ApiRevisionDescription))
             {
                 writer.WritePropertyName("apiRevisionDescription"u8);
                 writer.WriteStringValue(ApiRevisionDescription);
             }
-            if (ApiVersionDescription != null)
+            if (Optional.IsDefined(ApiVersionDescription))
             {
                 writer.WritePropertyName("apiVersionDescription"u8);
                 writer.WriteStringValue(ApiVersionDescription);
             }
-            if (ApiVersionSetId != null)
+            if (Optional.IsDefined(ApiVersionSetId))
             {
                 writer.WritePropertyName("apiVersionSetId"u8);
                 writer.WriteStringValue(ApiVersionSetId);
             }
-            if (IsSubscriptionRequired.HasValue)
+            if (Optional.IsDefined(IsSubscriptionRequired))
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
-            if (TermsOfServiceUri != null)
+            if (Optional.IsDefined(TermsOfServiceUri))
             {
                 writer.WritePropertyName("termsOfServiceUrl"u8);
                 writer.WriteStringValue(TermsOfServiceUri.AbsoluteUri);
             }
-            if (Contact != null)
+            if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue(Contact);
+                writer.WriteObjectValue(Contact, options);
             }
-            if (License != null)
+            if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue(License);
+                writer.WriteObjectValue(License, options);
             }
-            if (SourceApiId != null)
+            if (Optional.IsDefined(SourceApiId))
             {
                 writer.WritePropertyName("sourceApiId"u8);
                 writer.WriteStringValue(SourceApiId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (ServiceUri != null)
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (!(Protocols is ChangeTrackingList<ApiOperationInvokableProtocol> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Protocols))
             {
                 writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ApiVersionSet != null)
+            if (Optional.IsDefined(ApiVersionSet))
             {
                 writer.WritePropertyName("apiVersionSet"u8);
-                writer.WriteObjectValue(ApiVersionSet);
+                writer.WriteObjectValue(ApiVersionSet, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProductApiData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductApiData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductApiData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ProductApiData DeserializeProductApiData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IList<ApiOperationInvokableProtocol> protocols = default;
             ApiVersionSetContractDetails apiVersionSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -431,10 +431,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProductApiData(
                 id,
                 name,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProductApiData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductApiData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeProductApiData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProductApiData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductApiData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class ConfigServerGitPatternRepository : IUtf8JsonSerializable, IJsonModel<ConfigServerGitPatternRepository>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigServerGitPatternRepository>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigServerGitPatternRepository>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConfigServerGitPatternRepository>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConfigServerGitPatternRepository>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigServerGitPatternRepository)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigServerGitPatternRepository)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (!(Pattern is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStartArray();
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (!(SearchPaths is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SearchPaths))
             {
                 writer.WritePropertyName("searchPaths"u8);
                 writer.WriteStartArray();
@@ -55,32 +55,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (HostKey != null)
+            if (Optional.IsDefined(HostKey))
             {
                 writer.WritePropertyName("hostKey"u8);
                 writer.WriteStringValue(HostKey);
             }
-            if (HostKeyAlgorithm != null)
+            if (Optional.IsDefined(HostKeyAlgorithm))
             {
                 writer.WritePropertyName("hostKeyAlgorithm"u8);
                 writer.WriteStringValue(HostKeyAlgorithm);
             }
-            if (PrivateKey != null)
+            if (Optional.IsDefined(PrivateKey))
             {
                 writer.WritePropertyName("privateKey"u8);
                 writer.WriteStringValue(PrivateKey);
             }
-            if (IsHostKeyCheckingStrict.HasValue)
+            if (Optional.IsDefined(IsHostKeyCheckingStrict))
             {
                 writer.WritePropertyName("strictHostKeyChecking"u8);
                 writer.WriteBooleanValue(IsHostKeyCheckingStrict.Value);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigServerGitPatternRepository>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigServerGitPatternRepository)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigServerGitPatternRepository)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static ConfigServerGitPatternRepository DeserializeConfigServerGitPatternRepository(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             string privateKey = default;
             bool? strictHostKeyChecking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -217,10 +217,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConfigServerGitPatternRepository(
                 name,
                 pattern ?? new ChangeTrackingList<string>(),
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigServerGitPatternRepository)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigServerGitPatternRepository)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeConfigServerGitPatternRepository(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigServerGitPatternRepository)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigServerGitPatternRepository)} does not support reading '{options.Format}' format.");
             }
         }
 

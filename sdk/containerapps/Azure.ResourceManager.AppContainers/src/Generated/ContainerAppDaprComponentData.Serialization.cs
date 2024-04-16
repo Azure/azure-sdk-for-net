@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppDaprComponentData : IUtf8JsonSerializable, IJsonModel<ContainerAppDaprComponentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppDaprComponentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppDaprComponentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppDaprComponentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDaprComponentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDaprComponentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDaprComponentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ComponentType != null)
+            if (Optional.IsDefined(ComponentType))
             {
                 writer.WritePropertyName("componentType"u8);
                 writer.WriteStringValue(ComponentType);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (IgnoreErrors.HasValue)
+            if (Optional.IsDefined(IgnoreErrors))
             {
                 writer.WritePropertyName("ignoreErrors"u8);
                 writer.WriteBooleanValue(IgnoreErrors.Value);
             }
-            if (InitTimeout != null)
+            if (Optional.IsDefined(InitTimeout))
             {
                 writer.WritePropertyName("initTimeout"u8);
                 writer.WriteStringValue(InitTimeout);
             }
-            if (!(Secrets is ChangeTrackingList<ContainerAppWritableSecret> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Secrets))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (SecretStoreComponent != null)
+            if (Optional.IsDefined(SecretStoreComponent))
             {
                 writer.WritePropertyName("secretStoreComponent"u8);
                 writer.WriteStringValue(SecretStoreComponent);
             }
-            if (!(Metadata is ChangeTrackingList<ContainerAppDaprMetadata> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Scopes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDaprComponentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDaprComponentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDaprComponentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppDaprComponentData DeserializeContainerAppDaprComponentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppContainers
             IList<ContainerAppDaprMetadata> metadata = default;
             IList<string> scopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -269,10 +269,10 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppDaprComponentData(
                 id,
                 name,
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.AppContainers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDaprComponentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDaprComponentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.AppContainers
                         return DeserializeContainerAppDaprComponentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDaprComponentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDaprComponentData)} does not support reading '{options.Format}' format.");
             }
         }
 

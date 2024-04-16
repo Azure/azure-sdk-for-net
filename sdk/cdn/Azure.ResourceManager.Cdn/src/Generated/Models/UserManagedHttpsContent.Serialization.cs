@@ -15,24 +15,24 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class UserManagedHttpsContent : IUtf8JsonSerializable, IJsonModel<UserManagedHttpsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserManagedHttpsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserManagedHttpsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserManagedHttpsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UserManagedHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserManagedHttpsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserManagedHttpsContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("certificateSourceParameters"u8);
-            writer.WriteObjectValue(CertificateSourceParameters);
+            writer.WriteObjectValue(CertificateSourceParameters, options);
             writer.WritePropertyName("certificateSource"u8);
             writer.WriteStringValue(CertificateSource.ToString());
             writer.WritePropertyName("protocolType"u8);
             writer.WriteStringValue(ProtocolType.ToString());
-            if (MinimumTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserManagedHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserManagedHttpsContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserManagedHttpsContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UserManagedHttpsContent DeserializeUserManagedHttpsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
             SecureDeliveryProtocolType protocolType = default;
             CdnMinimumTlsVersion? minimumTlsVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateSourceParameters"u8))
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UserManagedHttpsContent(certificateSource, protocolType, minimumTlsVersion, serializedAdditionalRawData, certificateSourceParameters);
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserManagedHttpsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserManagedHttpsContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeUserManagedHttpsContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserManagedHttpsContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserManagedHttpsContent)} does not support reading '{options.Format}' format.");
             }
         }
 

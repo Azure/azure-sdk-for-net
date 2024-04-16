@@ -15,27 +15,27 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class CustomRuleMatchCondition : IUtf8JsonSerializable, IJsonModel<CustomRuleMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomRuleMatchCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomRuleMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomRuleMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomRuleMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomRuleMatchCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("matchVariable"u8);
             writer.WriteStringValue(MatchVariable.ToString());
-            if (Selector != null)
+            if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(MatchOperator.ToString());
-            if (NegateCondition.HasValue)
+            if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(NegateCondition.Value);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(Transforms is ChangeTrackingList<TransformType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomRuleMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomRuleMatchCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CustomRuleMatchCondition DeserializeCustomRuleMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn.Models
             IList<string> matchValue = default;
             IList<TransformType> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matchVariable"u8))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CustomRuleMatchCondition(
                 matchVariable,
                 selector,
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomRuleMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomRuleMatchCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeCustomRuleMatchCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomRuleMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomRuleMatchCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,53 +15,53 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class RollingUpgradePolicy : IUtf8JsonSerializable, IJsonModel<RollingUpgradePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RollingUpgradePolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RollingUpgradePolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RollingUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MaxBatchInstancePercent.HasValue)
+            if (Optional.IsDefined(MaxBatchInstancePercent))
             {
                 writer.WritePropertyName("maxBatchInstancePercent"u8);
                 writer.WriteNumberValue(MaxBatchInstancePercent.Value);
             }
-            if (MaxUnhealthyInstancePercent.HasValue)
+            if (Optional.IsDefined(MaxUnhealthyInstancePercent))
             {
                 writer.WritePropertyName("maxUnhealthyInstancePercent"u8);
                 writer.WriteNumberValue(MaxUnhealthyInstancePercent.Value);
             }
-            if (MaxUnhealthyUpgradedInstancePercent.HasValue)
+            if (Optional.IsDefined(MaxUnhealthyUpgradedInstancePercent))
             {
                 writer.WritePropertyName("maxUnhealthyUpgradedInstancePercent"u8);
                 writer.WriteNumberValue(MaxUnhealthyUpgradedInstancePercent.Value);
             }
-            if (PauseTimeBetweenBatches != null)
+            if (Optional.IsDefined(PauseTimeBetweenBatches))
             {
                 writer.WritePropertyName("pauseTimeBetweenBatches"u8);
                 writer.WriteStringValue(PauseTimeBetweenBatches);
             }
-            if (EnableCrossZoneUpgrade.HasValue)
+            if (Optional.IsDefined(EnableCrossZoneUpgrade))
             {
                 writer.WritePropertyName("enableCrossZoneUpgrade"u8);
                 writer.WriteBooleanValue(EnableCrossZoneUpgrade.Value);
             }
-            if (PrioritizeUnhealthyInstances.HasValue)
+            if (Optional.IsDefined(PrioritizeUnhealthyInstances))
             {
                 writer.WritePropertyName("prioritizeUnhealthyInstances"u8);
                 writer.WriteBooleanValue(PrioritizeUnhealthyInstances.Value);
             }
-            if (RollbackFailedInstancesOnPolicyBreach.HasValue)
+            if (Optional.IsDefined(RollbackFailedInstancesOnPolicyBreach))
             {
                 writer.WritePropertyName("rollbackFailedInstancesOnPolicyBreach"u8);
                 writer.WriteBooleanValue(RollbackFailedInstancesOnPolicyBreach.Value);
             }
-            if (IsMaxSurgeEnabled.HasValue)
+            if (Optional.IsDefined(IsMaxSurgeEnabled))
             {
                 writer.WritePropertyName("maxSurge"u8);
                 writer.WriteBooleanValue(IsMaxSurgeEnabled.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RollingUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RollingUpgradePolicy DeserializeRollingUpgradePolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? rollbackFailedInstancesOnPolicyBreach = default;
             bool? maxSurge = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxBatchInstancePercent"u8))
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RollingUpgradePolicy(
                 maxBatchInstancePercent,
                 maxUnhealthyInstancePercent,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRollingUpgradePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RollingUpgradePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2ARemoveDisksContent : IUtf8JsonSerializable, IJsonModel<A2ARemoveDisksContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2ARemoveDisksContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2ARemoveDisksContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<A2ARemoveDisksContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<A2ARemoveDisksContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(VmDisksUris is ChangeTrackingList<Uri> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmDisksUris))
             {
                 writer.WritePropertyName("vmDisksUris"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VmManagedDisksIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VmManagedDisksIds))
             {
                 writer.WritePropertyName("vmManagedDisksIds"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2ARemoveDisksContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static A2ARemoveDisksContent DeserializeA2ARemoveDisksContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<string> vmManagedDisksIds = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmDisksUris"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new A2ARemoveDisksContent(instanceType, serializedAdditionalRawData, vmDisksUris ?? new ChangeTrackingList<Uri>(), vmManagedDisksIds ?? new ChangeTrackingList<string>());
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2ARemoveDisksContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ARemoveDisksContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -149,12 +148,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 failureReason);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsRouterJobSchedulingFailedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterJobSchedulingFailedEventData(document.RootElement);
+        }
+
         internal partial class AcsRouterJobSchedulingFailedEventDataConverter : JsonConverter<AcsRouterJobSchedulingFailedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterJobSchedulingFailedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AcsRouterJobSchedulingFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

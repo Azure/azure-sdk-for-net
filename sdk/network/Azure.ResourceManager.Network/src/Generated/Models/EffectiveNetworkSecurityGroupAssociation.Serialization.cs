@@ -16,28 +16,28 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class EffectiveNetworkSecurityGroupAssociation : IUtf8JsonSerializable, IJsonModel<EffectiveNetworkSecurityGroupAssociation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveNetworkSecurityGroupAssociation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveNetworkSecurityGroupAssociation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EffectiveNetworkSecurityGroupAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityGroupAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroupAssociation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroupAssociation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NetworkManager != null)
+            if (Optional.IsDefined(NetworkManager))
             {
                 writer.WritePropertyName("networkManager"u8);
                 JsonSerializer.Serialize(writer, NetworkManager);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (NetworkInterface != null)
+            if (Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
                 JsonSerializer.Serialize(writer, NetworkInterface);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityGroupAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroupAssociation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroupAssociation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static EffectiveNetworkSecurityGroupAssociation DeserializeEffectiveNetworkSecurityGroupAssociation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             WritableSubResource subnet = default;
             WritableSubResource networkInterface = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkManager"u8))
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EffectiveNetworkSecurityGroupAssociation(networkManager, subnet, networkInterface, serializedAdditionalRawData);
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroupAssociation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroupAssociation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeEffectiveNetworkSecurityGroupAssociation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroupAssociation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroupAssociation)} does not support reading '{options.Format}' format.");
             }
         }
 

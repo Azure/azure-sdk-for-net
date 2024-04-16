@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Elastic.Models
 {
     public partial class MonitoredResourceContent : IUtf8JsonSerializable, IJsonModel<MonitoredResourceContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoredResourceContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoredResourceContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitoredResourceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (SendingLogs.HasValue)
+            if (Optional.IsDefined(SendingLogs))
             {
                 writer.WritePropertyName("sendingLogs"u8);
                 writer.WriteStringValue(SendingLogs.Value.ToString());
             }
-            if (ReasonForLogsStatus != null)
+            if (Optional.IsDefined(ReasonForLogsStatus))
             {
                 writer.WritePropertyName("reasonForLogsStatus"u8);
                 writer.WriteStringValue(ReasonForLogsStatus);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static MonitoredResourceContent DeserializeMonitoredResourceContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Elastic.Models
             SendingLog? sendingLogs = default;
             string reasonForLogsStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MonitoredResourceContent(id, sendingLogs, reasonForLogsStatus, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeMonitoredResourceContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support reading '{options.Format}' format.");
             }
         }
 

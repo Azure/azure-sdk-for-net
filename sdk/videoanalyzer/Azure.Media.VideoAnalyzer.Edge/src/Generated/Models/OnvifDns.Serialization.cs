@@ -16,12 +16,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (FromDhcp.HasValue)
+            if (Optional.IsDefined(FromDhcp))
             {
                 writer.WritePropertyName("fromDhcp"u8);
                 writer.WriteBooleanValue(FromDhcp.Value);
             }
-            if (!(Ipv4Address is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Ipv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Ipv6Address is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Ipv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStartArray();
@@ -94,6 +94,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new OnvifDns(fromDhcp, ipv4Address ?? new ChangeTrackingList<string>(), ipv6Address ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OnvifDns FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOnvifDns(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

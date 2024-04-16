@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SingleServerConfiguration : IUtf8JsonSerializable, IJsonModel<SingleServerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleServerConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleServerConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SingleServerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NetworkConfiguration != null)
+            if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                writer.WriteObjectValue(NetworkConfiguration, options);
             }
-            if (DatabaseType.HasValue)
+            if (Optional.IsDefined(DatabaseType))
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
             writer.WritePropertyName("virtualMachineConfiguration"u8);
-            writer.WriteObjectValue(VirtualMachineConfiguration);
-            if (DBDiskConfiguration != null)
+            writer.WriteObjectValue(VirtualMachineConfiguration, options);
+            if (Optional.IsDefined(DBDiskConfiguration))
             {
                 writer.WritePropertyName("dbDiskConfiguration"u8);
-                writer.WriteObjectValue(DBDiskConfiguration);
+                writer.WriteObjectValue(DBDiskConfiguration, options);
             }
-            if (CustomResourceNames != null)
+            if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
-                writer.WriteObjectValue(CustomResourceNames);
+                writer.WriteObjectValue(CustomResourceNames, options);
             }
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SingleServerConfiguration DeserializeSingleServerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Workloads.Models
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkConfiguration"u8))
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SingleServerConfiguration(
                 deploymentType,
                 appResourceGroup,
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSingleServerConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

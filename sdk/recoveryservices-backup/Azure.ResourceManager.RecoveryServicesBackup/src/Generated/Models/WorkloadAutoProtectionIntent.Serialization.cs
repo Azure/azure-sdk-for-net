@@ -15,40 +15,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class WorkloadAutoProtectionIntent : IUtf8JsonSerializable, IJsonModel<WorkloadAutoProtectionIntent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadAutoProtectionIntent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadAutoProtectionIntent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkloadAutoProtectionIntent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadAutoProtectionIntent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadAutoProtectionIntent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadAutoProtectionIntent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("protectionIntentItemType"u8);
             writer.WriteStringValue(ProtectionIntentItemType.ToString());
-            if (BackupManagementType.HasValue)
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (ItemId != null)
+            if (Optional.IsDefined(ItemId))
             {
                 writer.WritePropertyName("itemId"u8);
                 writer.WriteStringValue(ItemId);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (ProtectionState.HasValue)
+            if (Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadAutoProtectionIntent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadAutoProtectionIntent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadAutoProtectionIntent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WorkloadAutoProtectionIntent DeserializeWorkloadAutoProtectionIntent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ResourceIdentifier policyId = default;
             BackupProtectionStatus? protectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectionIntentItemType"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WorkloadAutoProtectionIntent(
                 protectionIntentItemType,
                 backupManagementType,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadAutoProtectionIntent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadAutoProtectionIntent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeWorkloadAutoProtectionIntent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadAutoProtectionIntent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadAutoProtectionIntent)} does not support reading '{options.Format}' format.");
             }
         }
 

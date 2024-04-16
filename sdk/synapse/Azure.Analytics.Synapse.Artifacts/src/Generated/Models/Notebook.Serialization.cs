@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (BigDataPool != null)
+            if (Optional.IsDefined(BigDataPool))
             {
                 if (BigDataPool != null)
                 {
@@ -36,12 +36,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteNull("bigDataPool");
                 }
             }
-            if (TargetSparkConfiguration != null)
+            if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
                 writer.WriteObjectValue(TargetSparkConfiguration);
             }
-            if (SessionProperties != null)
+            if (Optional.IsDefined(SessionProperties))
             {
                 if (SessionProperties != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 if (Folder != null)
                 {
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -190,12 +190,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Notebook FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotebook(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class NotebookConverter : JsonConverter<Notebook>
         {
             public override void Write(Utf8JsonWriter writer, Notebook model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override Notebook Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

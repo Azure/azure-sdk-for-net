@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseSsisObjectMetadataStatusResult : IUtf8JsonSerializable, IJsonModel<SynapseSsisObjectMetadataStatusResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSsisObjectMetadataStatusResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSsisObjectMetadataStatusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseSsisObjectMetadataStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSsisObjectMetadataStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSsisObjectMetadataStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSsisObjectMetadataStatusResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStringValue(Properties);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSsisObjectMetadataStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSsisObjectMetadataStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSsisObjectMetadataStatusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseSsisObjectMetadataStatusResult DeserializeSynapseSsisObjectMetadataStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
             string properties = default;
             string error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SynapseSsisObjectMetadataStatusResult(status, name, properties, error, serializedAdditionalRawData);
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSsisObjectMetadataStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSsisObjectMetadataStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseSsisObjectMetadataStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSsisObjectMetadataStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSsisObjectMetadataStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -19,24 +19,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("file"u8);
             writer.WriteStringValue(File);
-            if (ClassName != null)
+            if (Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className"u8);
                 writer.WriteStringValue(ClassName);
             }
-            if (Conf != null)
+            if (Optional.IsDefined(Conf))
             {
                 writer.WritePropertyName("conf"u8);
-                writer.WriteObjectValue(Conf);
+                writer.WriteObjectValue<object>(Conf);
             }
-            if (!(Args is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Args))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Jars is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Jars))
             {
                 writer.WritePropertyName("jars"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Files is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Archives is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Archives))
             {
                 writer.WritePropertyName("archives"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -242,12 +242,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkJobProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkJobProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SparkJobPropertiesConverter : JsonConverter<SparkJobProperties>
         {
             public override void Write(Utf8JsonWriter writer, SparkJobProperties model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SparkJobProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

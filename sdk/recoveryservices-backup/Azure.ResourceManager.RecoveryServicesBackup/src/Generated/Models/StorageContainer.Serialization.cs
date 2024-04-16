@@ -15,65 +15,65 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class StorageContainer : IUtf8JsonSerializable, IJsonModel<StorageContainer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageContainer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageContainer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageContainer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (StorageAccountVersion != null)
+            if (Optional.IsDefined(StorageAccountVersion))
             {
                 writer.WritePropertyName("storageAccountVersion"u8);
                 writer.WriteStringValue(StorageAccountVersion);
             }
-            if (ResourceGroup != null)
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (ProtectedItemCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemCount))
             {
                 writer.WritePropertyName("protectedItemCount"u8);
                 writer.WriteNumberValue(ProtectedItemCount.Value);
             }
-            if (AcquireStorageAccountLock.HasValue)
+            if (Optional.IsDefined(AcquireStorageAccountLock))
             {
                 writer.WritePropertyName("acquireStorageAccountLock"u8);
                 writer.WriteStringValue(AcquireStorageAccountLock.Value.ToString());
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (BackupManagementType.HasValue)
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (RegistrationStatus != null)
+            if (Optional.IsDefined(RegistrationStatus))
             {
                 writer.WritePropertyName("registrationStatus"u8);
                 writer.WriteStringValue(RegistrationStatus);
             }
-            if (HealthStatus != null)
+            if (Optional.IsDefined(HealthStatus))
             {
                 writer.WritePropertyName("healthStatus"u8);
                 writer.WriteStringValue(HealthStatus);
             }
             writer.WritePropertyName("containerType"u8);
             writer.WriteStringValue(ContainerType.ToSerialString());
-            if (ProtectableObjectType != null)
+            if (Optional.IsDefined(ProtectableObjectType))
             {
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static StorageContainer DeserializeStorageContainer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceResourceId"u8))
@@ -204,10 +204,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageContainer(
                 friendlyName,
                 backupManagementType,
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeStorageContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

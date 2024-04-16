@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
-            if (!(HttpHeaders is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HttpHeaders))
             {
                 if (HttpHeaders != null)
                 {
@@ -37,12 +37,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("httpHeaders");
                 }
             }
-            if (HttpMethod != null)
+            if (Optional.IsDefined(HttpMethod))
             {
                 writer.WritePropertyName("httpMethod"u8);
                 writer.WriteStringValue(HttpMethod);
             }
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 if (Timeout != null)
                 {
@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("timeout");
                 }
             }
-            if (BatchSize.HasValue)
+            if (Optional.IsDefined(BatchSize))
             {
                 if (BatchSize != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("batchSize");
                 }
             }
-            if (DegreeOfParallelism.HasValue)
+            if (Optional.IsDefined(DegreeOfParallelism))
             {
                 if (DegreeOfParallelism != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("degreeOfParallelism");
                 }
             }
-            if (AuthResourceId != null)
+            if (Optional.IsDefined(AuthResourceId))
             {
                 if (AuthResourceId != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("authResourceId");
                 }
             }
-            if (AuthIdentity != null)
+            if (Optional.IsDefined(AuthIdentity))
             {
                 if (AuthIdentity != null)
                 {
@@ -104,17 +104,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Context != null)
+            if (Optional.IsDefined(Context))
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -123,14 +123,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<InputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -289,6 +289,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 degreeOfParallelism,
                 authResourceId,
                 authIdentity);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new WebApiSkill FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebApiSkill(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

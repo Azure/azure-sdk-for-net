@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.IO;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI;
@@ -36,13 +37,19 @@ public partial class AudioTranscriptionOptions
         {
             content.Add(MultipartContent.Create(Language), "language", new Dictionary<string, string>());
         }
-
-        string filename = Optional.IsDefined(Filename) ? Filename : "file";
-        content.Add(MultipartContent.Create(AudioData), new Dictionary<string, string>()
+        if (TimestampGranularityFlags.HasFlag(AudioTimestampGranularity.Segment))
         {
-            ["Content-Disposition"] = $"form-data; name=file; filename={filename}",
-            ["Content-Type"] = "text/plain",
-        });
+            content.Add(MultipartContent.Create("segment"), @"""timestamp_granularities[]""", new Dictionary<string, string>());
+        }
+        if (TimestampGranularityFlags.HasFlag(AudioTimestampGranularity.Word))
+        {
+            content.Add(MultipartContent.Create("word"), @"""timestamp_granularities[]""", new Dictionary<string, string>());
+        }
+        content.Add(
+            MultipartContent.Create(AudioData),
+            name: "file",
+            fileName: string.IsNullOrEmpty(Filename) ? "file.wav" : Filename,
+            headers: new Dictionary<string, string>());
 
         return content;
     }

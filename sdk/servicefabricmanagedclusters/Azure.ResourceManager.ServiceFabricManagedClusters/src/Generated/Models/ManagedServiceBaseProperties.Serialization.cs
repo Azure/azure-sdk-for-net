@@ -15,64 +15,64 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public partial class ManagedServiceBaseProperties : IUtf8JsonSerializable, IJsonModel<ManagedServiceBaseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServiceBaseProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServiceBaseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedServiceBaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServiceBaseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceBaseProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PlacementConstraints != null)
+            if (Optional.IsDefined(PlacementConstraints))
             {
                 writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
-            if (!(CorrelationScheme is ChangeTrackingList<ManagedServiceCorrelation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CorrelationScheme))
             {
                 writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
                 foreach (var item in CorrelationScheme)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceLoadMetrics is ChangeTrackingList<ManagedServiceLoadMetric> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
             {
                 writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceLoadMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServicePlacementPolicies is ChangeTrackingList<ManagedServicePlacementPolicy> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
             {
                 writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServicePlacementPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultMoveCost.HasValue)
+            if (Optional.IsDefined(DefaultMoveCost))
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
-            if (!(ScalingPolicies is ChangeTrackingList<ManagedServiceScalingPolicy> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ScalingPolicies))
             {
                 writer.WritePropertyName("scalingPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScalingPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServiceBaseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceBaseProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedServiceBaseProperties DeserializeManagedServiceBaseProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ServiceFabricManagedServiceMoveCost? defaultMoveCost = default;
             IList<ManagedServiceScalingPolicy> scalingPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("placementConstraints"u8))
@@ -196,10 +196,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedServiceBaseProperties(
                 placementConstraints,
                 correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(),
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceBaseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceBaseProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedServiceBaseProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceBaseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceBaseProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

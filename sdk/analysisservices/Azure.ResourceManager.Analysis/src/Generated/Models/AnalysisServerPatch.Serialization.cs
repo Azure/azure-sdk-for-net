@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Analysis.Models
 {
     public partial class AnalysisServerPatch : IUtf8JsonSerializable, IJsonModel<AnalysisServerPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisServerPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisServerPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AnalysisServerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisServerPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisServerPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,37 +44,37 @@ namespace Azure.ResourceManager.Analysis.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AsAdministrators != null)
+            if (Optional.IsDefined(AsAdministrators))
             {
                 writer.WritePropertyName("asAdministrators"u8);
-                writer.WriteObjectValue(AsAdministrators);
+                writer.WriteObjectValue(AsAdministrators, options);
             }
-            if (BackupBlobContainerUri != null)
+            if (Optional.IsDefined(BackupBlobContainerUri))
             {
                 writer.WritePropertyName("backupBlobContainerUri"u8);
                 writer.WriteStringValue(BackupBlobContainerUri.AbsoluteUri);
             }
-            if (GatewayDetails != null)
+            if (Optional.IsDefined(GatewayDetails))
             {
                 writer.WritePropertyName("gatewayDetails"u8);
-                writer.WriteObjectValue(GatewayDetails);
+                writer.WriteObjectValue(GatewayDetails, options);
             }
-            if (IPV4FirewallSettings != null)
+            if (Optional.IsDefined(IPV4FirewallSettings))
             {
                 writer.WritePropertyName("ipV4FirewallSettings"u8);
-                writer.WriteObjectValue(IPV4FirewallSettings);
+                writer.WriteObjectValue(IPV4FirewallSettings, options);
             }
-            if (QuerypoolConnectionMode.HasValue)
+            if (Optional.IsDefined(QuerypoolConnectionMode))
             {
                 writer.WritePropertyName("querypoolConnectionMode"u8);
                 writer.WriteStringValue(QuerypoolConnectionMode.Value.ToSerialString());
             }
-            if (ManagedMode.HasValue)
+            if (Optional.IsDefined(ManagedMode))
             {
                 writer.WritePropertyName("managedMode"u8);
                 writer.WriteNumberValue(ManagedMode.Value.ToSerialInt32());
             }
-            if (ServerMonitorMode.HasValue)
+            if (Optional.IsDefined(ServerMonitorMode))
             {
                 writer.WritePropertyName("serverMonitorMode"u8);
                 writer.WriteNumberValue(ServerMonitorMode.Value.ToSerialInt32());
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisServerPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisServerPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Analysis.Models
 
         internal static AnalysisServerPatch DeserializeAnalysisServerPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Analysis.Models
             AnalysisManagedMode? managedMode = default;
             ServerMonitorMode? serverMonitorMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -231,10 +231,10 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AnalysisServerPatch(
                 sku,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisServerPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisServerPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Analysis.Models
                         return DeserializeAnalysisServerPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisServerPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisServerPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

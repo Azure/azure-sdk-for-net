@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class AlertPropertiesDetails : IUtf8JsonSerializable, IJsonModel<AlertPropertiesDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertPropertiesDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertPropertiesDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AlertPropertiesDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TimeGrainType.HasValue)
+            if (Optional.IsDefined(TimeGrainType))
             {
                 writer.WritePropertyName("timeGrainType"u8);
                 writer.WriteStringValue(TimeGrainType.Value.ToString());
             }
-            if (PeriodStartDate != null)
+            if (Optional.IsDefined(PeriodStartDate))
             {
                 writer.WritePropertyName("periodStartDate"u8);
                 writer.WriteStringValue(PeriodStartDate);
             }
-            if (TriggeredBy != null)
+            if (Optional.IsDefined(TriggeredBy))
             {
                 writer.WritePropertyName("triggeredBy"u8);
                 writer.WriteStringValue(TriggeredBy);
             }
-            if (!(ResourceGroupFilter is ChangeTrackingList<BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGroupFilter))
             {
                 writer.WritePropertyName("resourceGroupFilter"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResourceFilter is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceFilter))
             {
                 writer.WritePropertyName("resourceFilter"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(MeterFilter is ChangeTrackingList<BinaryData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(MeterFilter))
             {
                 writer.WritePropertyName("meterFilter"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (TagFilter != null)
+            if (Optional.IsDefined(TagFilter))
             {
                 writer.WritePropertyName("tagFilter"u8);
 #if NET6_0_OR_GREATER
@@ -119,32 +119,32 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
 #endif
             }
-            if (Threshold.HasValue)
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
-            if (Operator.HasValue)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
-            if (Amount.HasValue)
+            if (Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (CurrentSpend.HasValue)
+            if (Optional.IsDefined(CurrentSpend))
             {
                 writer.WritePropertyName("currentSpend"u8);
                 writer.WriteNumberValue(CurrentSpend.Value);
             }
-            if (!(ContactEmails is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ContactEmails))
             {
                 writer.WritePropertyName("contactEmails"u8);
                 writer.WriteStartArray();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ContactGroups is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ContactGroups))
             {
                 writer.WritePropertyName("contactGroups"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ContactRoles is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(ContactRoles))
             {
                 writer.WritePropertyName("contactRoles"u8);
                 writer.WriteStartArray();
@@ -174,37 +174,37 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OverridingAlert != null)
+            if (Optional.IsDefined(OverridingAlert))
             {
                 writer.WritePropertyName("overridingAlert"u8);
                 writer.WriteStringValue(OverridingAlert);
             }
-            if (DepartmentName != null)
+            if (Optional.IsDefined(DepartmentName))
             {
                 writer.WritePropertyName("departmentName"u8);
                 writer.WriteStringValue(DepartmentName);
             }
-            if (CompanyName != null)
+            if (Optional.IsDefined(CompanyName))
             {
                 writer.WritePropertyName("companyName"u8);
                 writer.WriteStringValue(CompanyName);
             }
-            if (EnrollmentNumber != null)
+            if (Optional.IsDefined(EnrollmentNumber))
             {
                 writer.WritePropertyName("enrollmentNumber"u8);
                 writer.WriteStringValue(EnrollmentNumber);
             }
-            if (EnrollmentStartDate != null)
+            if (Optional.IsDefined(EnrollmentStartDate))
             {
                 writer.WritePropertyName("enrollmentStartDate"u8);
                 writer.WriteStringValue(EnrollmentStartDate);
             }
-            if (EnrollmentEndDate != null)
+            if (Optional.IsDefined(EnrollmentEndDate))
             {
                 writer.WritePropertyName("enrollmentEndDate"u8);
                 writer.WriteStringValue(EnrollmentEndDate);
             }
-            if (InvoicingThreshold.HasValue)
+            if (Optional.IsDefined(InvoicingThreshold))
             {
                 writer.WritePropertyName("invoicingThreshold"u8);
                 writer.WriteNumberValue(InvoicingThreshold.Value);
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static AlertPropertiesDetails DeserializeAlertPropertiesDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             string enrollmentEndDate = default;
             decimal? invoicingThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeGrainType"u8))
@@ -488,10 +488,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AlertPropertiesDetails(
                 timeGrainType,
                 periodStartDate,
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeAlertPropertiesDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

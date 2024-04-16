@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Orbital.Models
 {
     public partial class OrbitalSpacecraftLink : IUtf8JsonSerializable, IJsonModel<OrbitalSpacecraftLink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalSpacecraftLink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalSpacecraftLink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OrbitalSpacecraftLink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalSpacecraftLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrbitalSpacecraftLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrbitalSpacecraftLink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WriteStringValue(Direction.ToString());
             writer.WritePropertyName("polarization"u8);
             writer.WriteStringValue(Polarization.ToString());
-            if (options.Format != "W" && !(Authorizations is ChangeTrackingList<AuthorizedGroundStation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Authorizations))
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Orbital.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalSpacecraftLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrbitalSpacecraftLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrbitalSpacecraftLink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Orbital.Models
 
         internal static OrbitalSpacecraftLink DeserializeOrbitalSpacecraftLink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Orbital.Models
             OrbitalLinkPolarization polarization = default;
             IReadOnlyList<AuthorizedGroundStation> authorizations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OrbitalSpacecraftLink(
                 name,
                 centerFrequencyMHz,
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrbitalSpacecraftLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrbitalSpacecraftLink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Orbital.Models
                         return DeserializeOrbitalSpacecraftLink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrbitalSpacecraftLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrbitalSpacecraftLink)} does not support reading '{options.Format}' format.");
             }
         }
 

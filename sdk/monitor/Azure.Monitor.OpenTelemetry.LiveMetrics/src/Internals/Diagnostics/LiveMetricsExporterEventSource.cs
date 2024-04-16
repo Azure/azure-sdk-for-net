@@ -185,7 +185,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         public void StateMachineFailedWithUnknownException(string exceptionMessage) => WriteEvent(11, exceptionMessage);
 
         [NonEvent]
-        public void DroppedDocument(DocumentIngressDocumentType documentType)
+        public void DroppedDocument(DocumentType documentType)
         {
             if (IsEnabled(EventLevel.Warning))
             {
@@ -195,5 +195,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
 
         [Event(12, Message = "Document was dropped. DocumentType: {0}. Not user actionable.", Level = EventLevel.Warning)]
         public void DroppedDocument(string documentType) => WriteEvent(12, documentType);
+
+        [Event(13, Message = "Failure to calculate CPU Counter. Unexpected negative timespan: PreviousCollectedTime: {0}. RecentCollectedTime: {0}. Not user actionable.", Level = EventLevel.Error)]
+        public void ProcessCountersUnexpectedNegativeTimeSpan(long previousCollectedTime, long recentCollectedTime) => WriteEvent(13, previousCollectedTime, recentCollectedTime);
+
+        [Event(14, Message = "Failure to calculate CPU Counter. Unexpected negative value: PreviousCollectedValue: {0}. RecentCollectedValue: {0}. Not user actionable.", Level = EventLevel.Error)]
+        public void ProcessCountersUnexpectedNegativeValue(long previousCollectedValue, long recentCollectedValue) => WriteEvent(14, previousCollectedValue, recentCollectedValue);
+
+        [Event(15, Message = "Calculated Cpu Counter: Period: {0}. DiffValue: {1}. CalculatedValue: {2}. ProcessorCount: {3}. NormalizedValue: {4}", Level = EventLevel.Verbose)]
+        public void ProcessCountersCpuCounter(long period, long diffValue, double calculatedValue, int processorCount, double normalizedValue) => WriteEvent(15, period, diffValue, calculatedValue, processorCount, normalizedValue);
     }
 }

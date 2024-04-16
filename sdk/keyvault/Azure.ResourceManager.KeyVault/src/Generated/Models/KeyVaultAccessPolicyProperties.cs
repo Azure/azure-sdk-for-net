@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicies"/> is null. </exception>
         public KeyVaultAccessPolicyProperties(IEnumerable<KeyVaultAccessPolicy> accessPolicies)
         {
-            if (accessPolicies == null)
-            {
-                throw new ArgumentNullException(nameof(accessPolicies));
-            }
+            Argument.AssertNotNull(accessPolicies, nameof(accessPolicies));
 
             AccessPolicies = accessPolicies.ToList();
         }
@@ -74,6 +71,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </summary>
+        [WirePath("accessPolicies")]
         public IList<KeyVaultAccessPolicy> AccessPolicies { get; }
     }
 }

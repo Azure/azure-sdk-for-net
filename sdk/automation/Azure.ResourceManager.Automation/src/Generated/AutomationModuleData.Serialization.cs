@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
@@ -18,23 +17,23 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationModuleData : IUtf8JsonSerializable, IJsonModel<AutomationModuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationModuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationModuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationModuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationModuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationModuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationModuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,64 +61,64 @@ namespace Azure.ResourceManager.Automation
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsGlobal.HasValue)
+            if (Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteBooleanValue(IsGlobal.Value);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (SizeInBytes.HasValue)
+            if (Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("sizeInBytes"u8);
                 writer.WriteNumberValue(SizeInBytes.Value);
             }
-            if (ActivityCount.HasValue)
+            if (Optional.IsDefined(ActivityCount))
             {
                 writer.WritePropertyName("activityCount"u8);
                 writer.WriteNumberValue(ActivityCount.Value);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (ContentLink != null)
+            if (Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink);
+                writer.WriteObjectValue(ContentLink, options);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue(Error, options);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (IsComposite.HasValue)
+            if (Optional.IsDefined(IsComposite))
             {
                 writer.WritePropertyName("isComposite"u8);
                 writer.WriteBooleanValue(IsComposite.Value);
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<AutomationModuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationModuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationModuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.Automation
 
         internal static AutomationModuleData DeserializeAutomationModuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -182,7 +181,7 @@ namespace Azure.ResourceManager.Automation
             string description = default;
             bool? isComposite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -342,10 +341,10 @@ namespace Azure.ResourceManager.Automation
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AutomationModuleData(
                 id,
                 name,
@@ -377,7 +376,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationModuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationModuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -393,7 +392,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeAutomationModuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationModuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationModuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

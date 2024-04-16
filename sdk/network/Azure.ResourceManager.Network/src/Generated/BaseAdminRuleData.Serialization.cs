@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.Network
 {
     public partial class BaseAdminRuleData : IUtf8JsonSerializable, IJsonModel<BaseAdminRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaseAdminRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaseAdminRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BaseAdminRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BaseAdminRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaseAdminRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BaseAdminRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<BaseAdminRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaseAdminRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BaseAdminRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network
 
         internal static BaseAdminRuleData DeserializeBaseAdminRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BaseAdminRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BaseAdminRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeBaseAdminRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BaseAdminRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BaseAdminRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

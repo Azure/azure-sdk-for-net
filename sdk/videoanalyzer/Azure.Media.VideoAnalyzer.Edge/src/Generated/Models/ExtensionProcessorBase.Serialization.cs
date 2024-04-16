@@ -20,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteObjectValue(Endpoint);
             writer.WritePropertyName("image"u8);
             writer.WriteObjectValue(Image);
-            if (SamplingOptions != null)
+            if (Optional.IsDefined(SamplingOptions))
             {
                 writer.WritePropertyName("samplingOptions"u8);
                 writer.WriteObjectValue(SamplingOptions);
@@ -108,6 +108,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 endpoint,
                 image,
                 samplingOptions);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExtensionProcessorBase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExtensionProcessorBase(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

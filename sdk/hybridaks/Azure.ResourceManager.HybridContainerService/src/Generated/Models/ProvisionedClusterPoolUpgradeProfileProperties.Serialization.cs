@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 {
     public partial class ProvisionedClusterPoolUpgradeProfileProperties : IUtf8JsonSerializable, IJsonModel<ProvisionedClusterPoolUpgradeProfileProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterPoolUpgradeProfileProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterPoolUpgradeProfileProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProvisionedClusterPoolUpgradeProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterPoolUpgradeProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterPoolUpgradeProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterPoolUpgradeProfileProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && KubernetesVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (options.Format != "W" && IsPreview.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterPoolUpgradeProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterPoolUpgradeProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterPoolUpgradeProfileProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ProvisionedClusterPoolUpgradeProfileProperties DeserializeProvisionedClusterPoolUpgradeProfileProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             string kubernetesVersion = default;
             bool? isPreview = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kubernetesVersion"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProvisionedClusterPoolUpgradeProfileProperties(kubernetesVersion, isPreview, serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterPoolUpgradeProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterPoolUpgradeProfileProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeProvisionedClusterPoolUpgradeProfileProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterPoolUpgradeProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterPoolUpgradeProfileProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

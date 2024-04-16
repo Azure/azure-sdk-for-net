@@ -16,70 +16,70 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class FtpReadSettings : IUtf8JsonSerializable, IJsonModel<FtpReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FtpReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FtpReadSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FtpReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FtpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FtpReadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FtpReadSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Recursive != null)
+            if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
                 JsonSerializer.Serialize(writer, Recursive);
             }
-            if (WildcardFolderPath != null)
+            if (Optional.IsDefined(WildcardFolderPath))
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
                 JsonSerializer.Serialize(writer, WildcardFolderPath);
             }
-            if (WildcardFileName != null)
+            if (Optional.IsDefined(WildcardFileName))
             {
                 writer.WritePropertyName("wildcardFileName"u8);
                 JsonSerializer.Serialize(writer, WildcardFileName);
             }
-            if (EnablePartitionDiscovery != null)
+            if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
                 JsonSerializer.Serialize(writer, EnablePartitionDiscovery);
             }
-            if (PartitionRootPath != null)
+            if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
                 JsonSerializer.Serialize(writer, PartitionRootPath);
             }
-            if (DeleteFilesAfterCompletion != null)
+            if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
                 JsonSerializer.Serialize(writer, DeleteFilesAfterCompletion);
             }
-            if (FileListPath != null)
+            if (Optional.IsDefined(FileListPath))
             {
                 writer.WritePropertyName("fileListPath"u8);
                 JsonSerializer.Serialize(writer, FileListPath);
             }
-            if (UseBinaryTransfer != null)
+            if (Optional.IsDefined(UseBinaryTransfer))
             {
                 writer.WritePropertyName("useBinaryTransfer"u8);
                 JsonSerializer.Serialize(writer, UseBinaryTransfer);
             }
-            if (DisableChunking != null)
+            if (Optional.IsDefined(DisableChunking))
             {
                 writer.WritePropertyName("disableChunking"u8);
                 JsonSerializer.Serialize(writer, DisableChunking);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FtpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FtpReadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FtpReadSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FtpReadSettings DeserializeFtpReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FtpReadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FtpReadSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeFtpReadSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FtpReadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FtpReadSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

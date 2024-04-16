@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaLiveEventData : IUtf8JsonSerializable, IJsonModel<MediaLiveEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaLiveEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MediaLiveEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaLiveEventData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaLiveEventData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,69 +56,69 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Input != null)
+            if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
+                writer.WriteObjectValue(Input, options);
             }
-            if (Preview != null)
+            if (Optional.IsDefined(Preview))
             {
                 writer.WritePropertyName("preview"u8);
-                writer.WriteObjectValue(Preview);
+                writer.WriteObjectValue(Preview, options);
             }
-            if (Encoding != null)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
-                writer.WriteObjectValue(Encoding);
+                writer.WriteObjectValue(Encoding, options);
             }
-            if (!(Transcriptions is ChangeTrackingList<LiveEventTranscription> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Transcriptions))
             {
                 writer.WritePropertyName("transcriptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Transcriptions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && ResourceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
             }
-            if (CrossSiteAccessPolicies != null)
+            if (Optional.IsDefined(CrossSiteAccessPolicies))
             {
                 writer.WritePropertyName("crossSiteAccessPolicies"u8);
-                writer.WriteObjectValue(CrossSiteAccessPolicies);
+                writer.WriteObjectValue(CrossSiteAccessPolicies, options);
             }
-            if (UseStaticHostname.HasValue)
+            if (Optional.IsDefined(UseStaticHostname))
             {
                 writer.WritePropertyName("useStaticHostname"u8);
                 writer.WriteBooleanValue(UseStaticHostname.Value);
             }
-            if (HostnamePrefix != null)
+            if (Optional.IsDefined(HostnamePrefix))
             {
                 writer.WritePropertyName("hostnamePrefix"u8);
                 writer.WriteStringValue(HostnamePrefix);
             }
-            if (!(StreamOptions is ChangeTrackingList<StreamOptionsFlag> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(StreamOptions))
             {
                 writer.WritePropertyName("streamOptions"u8);
                 writer.WriteStartArray();
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Media
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Media
             var format = options.Format == "W" ? ((IPersistableModel<MediaLiveEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaLiveEventData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaLiveEventData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Media
 
         internal static MediaLiveEventData DeserializeMediaLiveEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Media
             DateTimeOffset? created = default;
             DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -372,10 +372,10 @@ namespace Azure.ResourceManager.Media
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MediaLiveEventData(
                 id,
                 name,
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Media
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaLiveEventData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaLiveEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Media
                         return DeserializeMediaLiveEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaLiveEventData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaLiveEventData)} does not support reading '{options.Format}' format.");
             }
         }
 

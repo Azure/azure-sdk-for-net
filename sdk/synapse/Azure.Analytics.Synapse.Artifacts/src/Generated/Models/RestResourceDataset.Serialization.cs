@@ -21,24 +21,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Structure != null)
+            if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
-                writer.WriteObjectValue(Structure);
+                writer.WriteObjectValue<object>(Structure);
             }
-            if (Schema != null)
+            if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue(Schema);
+                writer.WriteObjectValue<object>(Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
-            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -60,47 +60,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Folder != null)
+            if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (RelativeUrl != null)
+            if (Optional.IsDefined(RelativeUrl))
             {
                 writer.WritePropertyName("relativeUrl"u8);
-                writer.WriteObjectValue(RelativeUrl);
+                writer.WriteObjectValue<object>(RelativeUrl);
             }
-            if (RequestMethod != null)
+            if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
-                writer.WriteObjectValue(RequestMethod);
+                writer.WriteObjectValue<object>(RequestMethod);
             }
-            if (RequestBody != null)
+            if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
-                writer.WriteObjectValue(RequestBody);
+                writer.WriteObjectValue<object>(RequestBody);
             }
-            if (AdditionalHeaders != null)
+            if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
-                writer.WriteObjectValue(AdditionalHeaders);
+                writer.WriteObjectValue<object>(AdditionalHeaders);
             }
-            if (PaginationRules != null)
+            if (Optional.IsDefined(PaginationRules))
             {
                 writer.WritePropertyName("paginationRules"u8);
-                writer.WriteObjectValue(PaginationRules);
+                writer.WriteObjectValue<object>(PaginationRules);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -282,12 +282,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 paginationRules);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RestResourceDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRestResourceDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class RestResourceDatasetConverter : JsonConverter<RestResourceDataset>
         {
             public override void Write(Utf8JsonWriter writer, RestResourceDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override RestResourceDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

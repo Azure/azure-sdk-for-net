@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WriteStartObject();
             writer.WritePropertyName("classifierId"u8);
             writer.WriteStringValue(ClassifierId);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -31,6 +31,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

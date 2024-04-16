@@ -15,57 +15,33 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Version != null)
-            {
-                writer.WritePropertyName("Version"u8);
-                writer.WriteStringValue(Version);
-            }
-            if (InvariantVersion.HasValue)
-            {
-                writer.WritePropertyName("InvariantVersion"u8);
-                writer.WriteNumberValue(InvariantVersion.Value);
-            }
-            if (Instance != null)
-            {
-                writer.WritePropertyName("Instance"u8);
-                writer.WriteStringValue(Instance);
-            }
-            if (RoleName != null)
-            {
-                writer.WritePropertyName("RoleName"u8);
-                writer.WriteStringValue(RoleName);
-            }
-            if (MachineName != null)
-            {
-                writer.WritePropertyName("MachineName"u8);
-                writer.WriteStringValue(MachineName);
-            }
-            if (StreamId != null)
-            {
-                writer.WritePropertyName("StreamId"u8);
-                writer.WriteStringValue(StreamId);
-            }
-            if (Timestamp.HasValue)
+            writer.WritePropertyName("Version"u8);
+            writer.WriteStringValue(Version);
+            writer.WritePropertyName("InvariantVersion"u8);
+            writer.WriteNumberValue(InvariantVersion);
+            writer.WritePropertyName("Instance"u8);
+            writer.WriteStringValue(Instance);
+            writer.WritePropertyName("RoleName"u8);
+            writer.WriteStringValue(RoleName);
+            writer.WritePropertyName("MachineName"u8);
+            writer.WriteStringValue(MachineName);
+            writer.WritePropertyName("StreamId"u8);
+            writer.WriteStringValue(StreamId);
+            if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("Timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (TransmissionTime.HasValue)
+            if (Optional.IsDefined(TransmissionTime))
             {
                 writer.WritePropertyName("TransmissionTime"u8);
                 writer.WriteStringValue(TransmissionTime.Value, "O");
             }
-            if (IsWebApp.HasValue)
-            {
-                writer.WritePropertyName("IsWebApp"u8);
-                writer.WriteBooleanValue(IsWebApp.Value);
-            }
-            if (PerformanceCollectionSupported.HasValue)
-            {
-                writer.WritePropertyName("PerformanceCollectionSupported"u8);
-                writer.WriteBooleanValue(PerformanceCollectionSupported.Value);
-            }
-            if (!(Metrics is ChangeTrackingList<MetricPoint> collection && collection.IsUndefined))
+            writer.WritePropertyName("IsWebApp"u8);
+            writer.WriteBooleanValue(IsWebApp);
+            writer.WritePropertyName("PerformanceCollectionSupported"u8);
+            writer.WriteBooleanValue(PerformanceCollectionSupported);
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("Metrics"u8);
                 writer.WriteStartArray();
@@ -75,7 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Documents is ChangeTrackingList<DocumentIngress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Documents))
             {
                 writer.WritePropertyName("Documents"u8);
                 writer.WriteStartArray();
@@ -85,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(TopCpuProcesses is ChangeTrackingList<ProcessCpuData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TopCpuProcesses))
             {
                 writer.WritePropertyName("TopCpuProcesses"u8);
                 writer.WriteStartArray();
@@ -95,7 +71,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(CollectionConfigurationErrors is ChangeTrackingList<CollectionConfigurationError> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(CollectionConfigurationErrors))
             {
                 writer.WritePropertyName("CollectionConfigurationErrors"u8);
                 writer.WriteStartArray();
@@ -106,6 +82,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

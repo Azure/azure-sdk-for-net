@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class DataProtectionIdentityDetails : IUtf8JsonSerializable, IJsonModel<DataProtectionIdentityDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionIdentityDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionIdentityDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataProtectionIdentityDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UseSystemAssignedIdentity.HasValue)
+            if (Optional.IsDefined(UseSystemAssignedIdentity))
             {
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(UseSystemAssignedIdentity.Value);
             }
-            if (UserAssignedIdentityArmUri != null)
+            if (Optional.IsDefined(UserAssignedIdentityArmUri))
             {
                 writer.WritePropertyName("userAssignedIdentityArmUrl"u8);
                 writer.WriteStringValue(UserAssignedIdentityArmUri.AbsoluteUri);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionIdentityDetails DeserializeDataProtectionIdentityDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             bool? useSystemAssignedIdentity = default;
             Uri userAssignedIdentityArmUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("useSystemAssignedIdentity"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataProtectionIdentityDetails(useSystemAssignedIdentity, userAssignedIdentityArmUrl, serializedAdditionalRawData);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionIdentityDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionIdentityDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

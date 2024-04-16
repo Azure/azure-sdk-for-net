@@ -18,28 +18,28 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class VMwareClusterData : IUtf8JsonSerializable, IJsonModel<VMwareClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareClusterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,74 +67,74 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Uuid != null)
+            if (options.Format != "W" && Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (VCenterId != null)
+            if (Optional.IsDefined(VCenterId))
             {
                 writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
-            if (MoRefId != null)
+            if (Optional.IsDefined(MoRefId))
             {
                 writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
-            if (InventoryItemId != null)
+            if (Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (options.Format != "W" && MoName != null)
+            if (options.Format != "W" && Optional.IsDefined(MoName))
             {
                 writer.WritePropertyName("moName"u8);
                 writer.WriteStringValue(MoName);
             }
-            if (options.Format != "W" && !(Statuses is ChangeTrackingList<VMwareResourceStatus> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CustomResourceName != null)
+            if (options.Format != "W" && Optional.IsDefined(CustomResourceName))
             {
                 writer.WritePropertyName("customResourceName"u8);
                 writer.WriteStringValue(CustomResourceName);
             }
-            if (options.Format != "W" && UsedMemoryGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsedMemoryGB))
             {
                 writer.WritePropertyName("usedMemoryGB"u8);
                 writer.WriteNumberValue(UsedMemoryGB.Value);
             }
-            if (options.Format != "W" && TotalMemoryGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalMemoryGB))
             {
                 writer.WritePropertyName("totalMemoryGB"u8);
                 writer.WriteNumberValue(TotalMemoryGB.Value);
             }
-            if (options.Format != "W" && UsedCpuMHz.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsedCpuMHz))
             {
                 writer.WritePropertyName("usedCpuMHz"u8);
                 writer.WriteNumberValue(UsedCpuMHz.Value);
             }
-            if (options.Format != "W" && TotalCpuMHz.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalCpuMHz))
             {
                 writer.WritePropertyName("totalCpuMHz"u8);
                 writer.WriteNumberValue(TotalCpuMHz.Value);
             }
-            if (options.Format != "W" && !(DatastoreIds is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DatastoreIds))
             {
                 writer.WritePropertyName("datastoreIds"u8);
                 writer.WriteStartArray();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(NetworkIds is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkIds))
             {
                 writer.WritePropertyName("networkIds"u8);
                 writer.WriteStartArray();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var format = options.Format == "W" ? ((IPersistableModel<VMwareClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareClusterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static VMwareClusterData DeserializeVMwareClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             IReadOnlyList<string> networkIds = default;
             VMwareResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -412,10 +412,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VMwareClusterData(
                 id,
                 name,
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return DeserializeVMwareClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 

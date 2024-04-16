@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class DiskEncryptionSetData : IUtf8JsonSerializable, IJsonModel<DiskEncryptionSetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskEncryptionSetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskEncryptionSetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskEncryptionSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,54 +61,54 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EncryptionType.HasValue)
+            if (Optional.IsDefined(EncryptionType))
             {
                 writer.WritePropertyName("encryptionType"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToString());
             }
-            if (ActiveKey != null)
+            if (Optional.IsDefined(ActiveKey))
             {
                 writer.WritePropertyName("activeKey"u8);
-                writer.WriteObjectValue(ActiveKey);
+                writer.WriteObjectValue(ActiveKey, options);
             }
-            if (options.Format != "W" && !(PreviousKeys is ChangeTrackingList<KeyForDiskEncryptionSet> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PreviousKeys))
             {
                 writer.WritePropertyName("previousKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in PreviousKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (RotationToLatestKeyVersionEnabled.HasValue)
+            if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
             {
                 writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
                 writer.WriteBooleanValue(RotationToLatestKeyVersionEnabled.Value);
             }
-            if (options.Format != "W" && LastKeyRotationTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastKeyRotationTimestamp))
             {
                 writer.WritePropertyName("lastKeyRotationTimestamp"u8);
                 writer.WriteStringValue(LastKeyRotationTimestamp.Value, "O");
             }
-            if (options.Format != "W" && AutoKeyRotationError != null)
+            if (options.Format != "W" && Optional.IsDefined(AutoKeyRotationError))
             {
                 writer.WritePropertyName("autoKeyRotationError"u8);
-                writer.WriteObjectValue(AutoKeyRotationError);
+                writer.WriteObjectValue(AutoKeyRotationError, options);
             }
-            if (FederatedClientId != null)
+            if (Optional.IsDefined(FederatedClientId))
             {
                 writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static DiskEncryptionSetData DeserializeDiskEncryptionSetData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute
             ComputeApiError autoKeyRotationError = default;
             string federatedClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -306,10 +306,10 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DiskEncryptionSetData(
                 id,
                 name,
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeDiskEncryptionSetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -16,50 +16,50 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class MicrosoftAccessSink : IUtf8JsonSerializable, IJsonModel<MicrosoftAccessSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MicrosoftAccessSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MicrosoftAccessSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MicrosoftAccessSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MicrosoftAccessSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MicrosoftAccessSink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PreCopyScript != null)
+            if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
                 JsonSerializer.Serialize(writer, PreCopyScript);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
-            if (WriteBatchSize != null)
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 JsonSerializer.Serialize(writer, WriteBatchSize);
             }
-            if (WriteBatchTimeout != null)
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
-            if (SinkRetryCount != null)
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 JsonSerializer.Serialize(writer, SinkRetryCount);
             }
-            if (SinkRetryWait != null)
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 JsonSerializer.Serialize(writer, SinkRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (DisableMetricsCollection != null)
+            if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MicrosoftAccessSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MicrosoftAccessSink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MicrosoftAccessSink DeserializeMicrosoftAccessSink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MicrosoftAccessSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MicrosoftAccessSink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeMicrosoftAccessSink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MicrosoftAccessSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MicrosoftAccessSink)} does not support reading '{options.Format}' format.");
             }
         }
 

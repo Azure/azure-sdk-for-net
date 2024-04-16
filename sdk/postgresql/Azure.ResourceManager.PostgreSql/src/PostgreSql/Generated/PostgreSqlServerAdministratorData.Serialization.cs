@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,14 +18,14 @@ namespace Azure.ResourceManager.PostgreSql
 {
     public partial class PostgreSqlServerAdministratorData : IUtf8JsonSerializable, IJsonModel<PostgreSqlServerAdministratorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerAdministratorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerAdministratorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlServerAdministratorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlServerAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlServerAdministratorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlServerAdministratorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,29 +44,29 @@ namespace Azure.ResourceManager.PostgreSql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AdministratorType.HasValue)
+            if (Optional.IsDefined(AdministratorType))
             {
                 writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType.Value.ToString());
             }
-            if (LoginAccountName != null)
+            if (Optional.IsDefined(LoginAccountName))
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(LoginAccountName);
             }
-            if (SecureId.HasValue)
+            if (Optional.IsDefined(SecureId))
             {
                 writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(SecureId.Value);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlServerAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlServerAdministratorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlServerAdministratorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.PostgreSql
 
         internal static PostgreSqlServerAdministratorData DeserializePostgreSqlServerAdministratorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.PostgreSql
             Guid? sid = default;
             Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -191,10 +192,10 @@ namespace Azure.ResourceManager.PostgreSql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostgreSqlServerAdministratorData(
                 id,
                 name,
@@ -207,6 +208,138 @@ namespace Azure.ResourceManager.PostgreSql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdministratorType), out propertyOverride);
+            if (Optional.IsDefined(AdministratorType) || hasPropertyOverride)
+            {
+                builder.Append("    administratorType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AdministratorType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LoginAccountName), out propertyOverride);
+            if (Optional.IsDefined(LoginAccountName) || hasPropertyOverride)
+            {
+                builder.Append("    login: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (LoginAccountName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LoginAccountName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LoginAccountName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecureId), out propertyOverride);
+            if (Optional.IsDefined(SecureId) || hasPropertyOverride)
+            {
+                builder.Append("    sid: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SecureId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
+            {
+                builder.Append("    tenantId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PostgreSqlServerAdministratorData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlServerAdministratorData>)this).GetFormatFromOptions(options) : options.Format;
@@ -215,8 +348,10 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlServerAdministratorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlServerAdministratorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +367,7 @@ namespace Azure.ResourceManager.PostgreSql
                         return DeserializePostgreSqlServerAdministratorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlServerAdministratorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlServerAdministratorData)} does not support reading '{options.Format}' format.");
             }
         }
 

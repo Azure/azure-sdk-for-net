@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
     public partial class SpringBootSiteSummariesProperties : IUtf8JsonSerializable, IJsonModel<SpringBootSiteSummariesProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootSiteSummariesProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootSiteSummariesProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SpringBootSiteSummariesProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteSummariesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DiscoveredServers.HasValue)
+            if (Optional.IsDefined(DiscoveredServers))
             {
                 writer.WritePropertyName("discoveredServers"u8);
                 writer.WriteNumberValue(DiscoveredServers.Value);
             }
-            if (DiscoveredApps.HasValue)
+            if (Optional.IsDefined(DiscoveredApps))
             {
                 writer.WritePropertyName("discoveredApps"u8);
                 writer.WriteNumberValue(DiscoveredApps.Value);
             }
-            if (!(Errors is ChangeTrackingList<SpringBootSiteError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteSummariesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
 
         internal static SpringBootSiteSummariesProperties DeserializeSpringBootSiteSummariesProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             IList<SpringBootSiteError> errors = default;
             SpringAppDiscoveryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("discoveredServers"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SpringBootSiteSummariesProperties(discoveredServers, discoveredApps, errors ?? new ChangeTrackingList<SpringBootSiteError>(), provisioningState, serializedAdditionalRawData);
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         return DeserializeSpringBootSiteSummariesProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

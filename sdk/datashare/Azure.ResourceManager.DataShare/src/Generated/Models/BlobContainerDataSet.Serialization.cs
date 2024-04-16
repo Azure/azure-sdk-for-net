@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class BlobContainerDataSet : IUtf8JsonSerializable, IJsonModel<BlobContainerDataSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobContainerDataSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobContainerDataSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BlobContainerDataSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BlobContainerDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobContainerDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobContainerDataSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStartObject();
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (options.Format != "W" && DataSetId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataSetId))
             {
                 writer.WritePropertyName("dataSetId"u8);
                 writer.WriteStringValue(DataSetId.Value);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobContainerDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobContainerDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobContainerDataSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static BlobContainerDataSet DeserializeBlobContainerDataSet(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataShare.Models
             string storageAccountName = default;
             string subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -189,10 +189,10 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BlobContainerDataSet(
                 id,
                 name,
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BlobContainerDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobContainerDataSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeBlobContainerDataSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlobContainerDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobContainerDataSet)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecureScoreControlDetails : IUtf8JsonSerializable, IJsonModel<SecureScoreControlDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecureScoreControlDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecureScoreControlDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecureScoreControlDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecureScoreControlDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecureScoreControlDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,56 +42,56 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && HealthyResourceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HealthyResourceCount))
             {
                 writer.WritePropertyName("healthyResourceCount"u8);
                 writer.WriteNumberValue(HealthyResourceCount.Value);
             }
-            if (options.Format != "W" && UnhealthyResourceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UnhealthyResourceCount))
             {
                 writer.WritePropertyName("unhealthyResourceCount"u8);
                 writer.WriteNumberValue(UnhealthyResourceCount.Value);
             }
-            if (options.Format != "W" && NotApplicableResourceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NotApplicableResourceCount))
             {
                 writer.WritePropertyName("notApplicableResourceCount"u8);
                 writer.WriteNumberValue(NotApplicableResourceCount.Value);
             }
-            if (options.Format != "W" && Weight.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Definition != null)
+            if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition);
+                writer.WriteObjectValue(Definition, options);
             }
             writer.WritePropertyName("score"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Max.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Max))
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
             }
-            if (options.Format != "W" && Current.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Current))
             {
                 writer.WritePropertyName("current"u8);
                 writer.WriteNumberValue(Current.Value);
             }
-            if (options.Format != "W" && Percentage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Percentage))
             {
                 writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecureScoreControlDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecureScoreControlDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecureScoreControlDetails DeserializeSecureScoreControlDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             double? current = default;
             double? percentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -280,10 +280,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecureScoreControlDetails(
                 id,
                 name,
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecureScoreControlDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecureScoreControlDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecureScoreControlDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecureScoreControlDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecureScoreControlDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

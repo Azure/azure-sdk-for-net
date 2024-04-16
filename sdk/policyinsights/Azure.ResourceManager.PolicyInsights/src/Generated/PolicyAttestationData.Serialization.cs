@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.PolicyInsights
 {
     public partial class PolicyAttestationData : IUtf8JsonSerializable, IJsonModel<PolicyAttestationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyAttestationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyAttestationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicyAttestationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAttestationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -52,57 +52,57 @@ namespace Azure.ResourceManager.PolicyInsights
             writer.WriteStartObject();
             writer.WritePropertyName("policyAssignmentId"u8);
             writer.WriteStringValue(PolicyAssignmentId);
-            if (PolicyDefinitionReferenceId != null)
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (ComplianceState.HasValue)
+            if (Optional.IsDefined(ComplianceState))
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiresOn"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Owner != null)
+            if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (Comments != null)
+            if (Optional.IsDefined(Comments))
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (!(Evidence is ChangeTrackingList<AttestationEvidence> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Evidence))
             {
                 writer.WritePropertyName("evidence"u8);
                 writer.WriteStartArray();
                 foreach (var item in Evidence)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && LastComplianceStateChangeOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastComplianceStateChangeOn))
             {
                 writer.WritePropertyName("lastComplianceStateChangeAt"u8);
                 writer.WriteStringValue(LastComplianceStateChangeOn.Value, "O");
             }
-            if (AssessOn.HasValue)
+            if (Optional.IsDefined(AssessOn))
             {
                 writer.WritePropertyName("assessmentDate"u8);
                 writer.WriteStringValue(AssessOn.Value, "O");
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PolicyInsights
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAttestationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         internal static PolicyAttestationData DeserializePolicyAttestationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PolicyInsights
             DateTimeOffset? assessmentDate = default;
             BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -294,10 +294,10 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PolicyAttestationData(
                 id,
                 name,
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.PolicyInsights
                         return DeserializePolicyAttestationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAttestationData)} does not support reading '{options.Format}' format.");
             }
         }
 

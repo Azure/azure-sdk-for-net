@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Quota
 {
     public partial class QuotaRequestDetailData : IUtf8JsonSerializable, IJsonModel<QuotaRequestDetailData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaRequestDetailData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaRequestDetailData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuotaRequestDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QuotaRequestDetailData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,40 +43,40 @@ namespace Azure.ResourceManager.Quota
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue(Error, options);
             }
-            if (options.Format != "W" && RequestSubmitOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RequestSubmitOn))
             {
                 writer.WritePropertyName("requestSubmitTime"u8);
                 writer.WriteStringValue(RequestSubmitOn.Value, "O");
             }
-            if (!(Value is ChangeTrackingList<QuotaSubRequestDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Quota
             var format = options.Format == "W" ? ((IPersistableModel<QuotaRequestDetailData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Quota
 
         internal static QuotaRequestDetailData DeserializeQuotaRequestDetailData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Quota
             DateTimeOffset? requestSubmitTime = default;
             IReadOnlyList<QuotaSubRequestDetail> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -216,10 +216,10 @@ namespace Azure.ResourceManager.Quota
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new QuotaRequestDetailData(
                 id,
                 name,
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Quota
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Quota
                         return DeserializeQuotaRequestDetailData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaRequestDetailData)} does not support reading '{options.Format}' format.");
             }
         }
 

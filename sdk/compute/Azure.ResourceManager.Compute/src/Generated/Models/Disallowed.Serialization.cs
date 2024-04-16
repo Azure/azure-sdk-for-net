@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class Disallowed : IUtf8JsonSerializable, IJsonModel<Disallowed>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Disallowed>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Disallowed>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<Disallowed>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<Disallowed>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Disallowed)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Disallowed)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(DiskTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskTypes))
             {
                 writer.WritePropertyName("diskTypes"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<Disallowed>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Disallowed)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Disallowed)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static Disallowed DeserializeDisallowed(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             IList<string> diskTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskTypes"u8))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new Disallowed(diskTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Disallowed)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Disallowed)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDisallowed(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Disallowed)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Disallowed)} does not support reading '{options.Format}' format.");
             }
         }
 

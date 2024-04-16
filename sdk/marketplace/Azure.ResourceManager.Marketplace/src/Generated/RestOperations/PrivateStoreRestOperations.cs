@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Marketplace.Models;
@@ -174,7 +173,7 @@ namespace Azure.ResourceManager.Marketplace
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -187,10 +186,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(Guid privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(privateStoreId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -210,10 +206,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public Response CreateOrUpdate(Guid privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(privateStoreId, data);
             _pipeline.Send(message, cancellationToken);
@@ -411,7 +404,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -538,7 +531,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -606,7 +599,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -674,7 +667,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -810,14 +803,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MarketplaceApprovalRequestData>> GetRequestApprovalAsync(Guid privateStoreId, string requestApprovalId, CancellationToken cancellationToken = default)
         {
-            if (requestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(requestApprovalId));
-            }
-            if (requestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestApprovalId));
-            }
+            Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
             using var message = CreateGetRequestApprovalRequest(privateStoreId, requestApprovalId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -845,14 +831,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MarketplaceApprovalRequestData> GetRequestApproval(Guid privateStoreId, string requestApprovalId, CancellationToken cancellationToken = default)
         {
-            if (requestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(requestApprovalId));
-            }
-            if (requestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestApprovalId));
-            }
+            Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
             using var message = CreateGetRequestApprovalRequest(privateStoreId, requestApprovalId);
             _pipeline.Send(message, cancellationToken);
@@ -888,7 +867,7 @@ namespace Azure.ResourceManager.Marketplace
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -903,18 +882,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MarketplaceApprovalRequestData>> CreateApprovalRequestAsync(Guid privateStoreId, string requestApprovalId, MarketplaceApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            if (requestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(requestApprovalId));
-            }
-            if (requestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestApprovalId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateApprovalRequestRequest(privateStoreId, requestApprovalId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -941,18 +910,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MarketplaceApprovalRequestData> CreateApprovalRequest(Guid privateStoreId, string requestApprovalId, MarketplaceApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            if (requestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(requestApprovalId));
-            }
-            if (requestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestApprovalId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateApprovalRequestRequest(privateStoreId, requestApprovalId, data);
             _pipeline.Send(message, cancellationToken);
@@ -989,7 +948,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -1005,14 +964,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<QueryApprovalRequestResult>> QueryRequestApprovalAsync(Guid privateStoreId, string requestApprovalId, QueryApprovalRequestContent content = null, CancellationToken cancellationToken = default)
         {
-            if (requestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(requestApprovalId));
-            }
-            if (requestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestApprovalId));
-            }
+            Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
             using var message = CreateQueryRequestApprovalRequest(privateStoreId, requestApprovalId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1039,14 +991,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<QueryApprovalRequestResult> QueryRequestApproval(Guid privateStoreId, string requestApprovalId, QueryApprovalRequestContent content = null, CancellationToken cancellationToken = default)
         {
-            if (requestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(requestApprovalId));
-            }
-            if (requestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestApprovalId));
-            }
+            Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
             using var message = CreateQueryRequestApprovalRequest(privateStoreId, requestApprovalId, content);
             _pipeline.Send(message, cancellationToken);
@@ -1151,18 +1096,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MarketplaceAdminApprovalRequestData>> GetAdminRequestApprovalAsync(Guid privateStoreId, string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
-            if (adminRequestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(adminRequestApprovalId));
-            }
-            if (adminRequestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adminRequestApprovalId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
+            Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
             using var message = CreateGetAdminRequestApprovalRequest(privateStoreId, adminRequestApprovalId, publisherId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1191,18 +1126,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MarketplaceAdminApprovalRequestData> GetAdminRequestApproval(Guid privateStoreId, string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
-            if (adminRequestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(adminRequestApprovalId));
-            }
-            if (adminRequestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adminRequestApprovalId));
-            }
-            if (publisherId == null)
-            {
-                throw new ArgumentNullException(nameof(publisherId));
-            }
+            Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(publisherId, nameof(publisherId));
 
             using var message = CreateGetAdminRequestApprovalRequest(privateStoreId, adminRequestApprovalId, publisherId);
             _pipeline.Send(message, cancellationToken);
@@ -1238,7 +1163,7 @@ namespace Azure.ResourceManager.Marketplace
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1253,18 +1178,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MarketplaceAdminApprovalRequestData>> UpdateAdminRequestApprovalAsync(Guid privateStoreId, string adminRequestApprovalId, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            if (adminRequestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(adminRequestApprovalId));
-            }
-            if (adminRequestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adminRequestApprovalId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateAdminRequestApprovalRequest(privateStoreId, adminRequestApprovalId, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1291,18 +1206,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MarketplaceAdminApprovalRequestData> UpdateAdminRequestApproval(Guid privateStoreId, string adminRequestApprovalId, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            if (adminRequestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(adminRequestApprovalId));
-            }
-            if (adminRequestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(adminRequestApprovalId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateAdminRequestApprovalRequest(privateStoreId, adminRequestApprovalId, data);
             _pipeline.Send(message, cancellationToken);
@@ -1398,7 +1303,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -1414,14 +1319,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> AcknowledgeOfferNotificationAsync(Guid privateStoreId, string offerId, AcknowledgeOfferNotificationContent content = null, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             using var message = CreateAcknowledgeOfferNotificationRequest(privateStoreId, offerId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1443,14 +1341,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response AcknowledgeOfferNotification(Guid privateStoreId, string offerId, AcknowledgeOfferNotificationContent content = null, CancellationToken cancellationToken = default)
         {
-            if (offerId == null)
-            {
-                throw new ArgumentNullException(nameof(offerId));
-            }
-            if (offerId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(offerId));
-            }
+            Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
             using var message = CreateAcknowledgeOfferNotificationRequest(privateStoreId, offerId, content);
             _pipeline.Send(message, cancellationToken);
@@ -1482,7 +1373,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -1498,14 +1389,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> WithdrawPlanAsync(Guid privateStoreId, string requestApprovalId, WithdrawPlanContent content = null, CancellationToken cancellationToken = default)
         {
-            if (requestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(requestApprovalId));
-            }
-            if (requestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestApprovalId));
-            }
+            Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
             using var message = CreateWithdrawPlanRequest(privateStoreId, requestApprovalId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1527,14 +1411,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response WithdrawPlan(Guid privateStoreId, string requestApprovalId, WithdrawPlanContent content = null, CancellationToken cancellationToken = default)
         {
-            if (requestApprovalId == null)
-            {
-                throw new ArgumentNullException(nameof(requestApprovalId));
-            }
-            if (requestApprovalId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestApprovalId));
-            }
+            Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
             using var message = CreateWithdrawPlanRequest(privateStoreId, requestApprovalId, content);
             _pipeline.Send(message, cancellationToken);
@@ -1688,7 +1565,7 @@ namespace Azure.ResourceManager.Marketplace
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(stopSellSubscriptions);
+                content.JsonWriter.WriteObjectValue(stopSellSubscriptions, ModelSerializationExtensions.WireOptions);
                 request.Content = content;
             }
             _userAgent.Apply(message);
@@ -1819,10 +1696,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<PrivateStoreList>> ListNextPageAsync(string nextLink, string useCache = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, useCache);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1847,10 +1721,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<PrivateStoreList> ListNextPage(string nextLink, string useCache = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
 
             using var message = CreateListNextPageRequest(nextLink, useCache);
             _pipeline.Send(message, cancellationToken);

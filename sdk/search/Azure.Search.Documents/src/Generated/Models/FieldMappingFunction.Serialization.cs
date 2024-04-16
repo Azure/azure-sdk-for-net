@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (!(Parameters is ChangeTrackingDictionary<string, object> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 if (Parameters != null)
                 {
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                             writer.WriteNullValue();
                             continue;
                         }
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<object>(item.Value);
                     }
                     writer.WriteEndObject();
                 }
@@ -83,6 +83,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new FieldMappingFunction(name, parameters ?? new ChangeTrackingDictionary<string, object>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static FieldMappingFunction FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFieldMappingFunction(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

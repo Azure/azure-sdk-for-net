@@ -15,54 +15,54 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsIncidentActionConfiguration : IUtf8JsonSerializable, IJsonModel<SecurityInsightsIncidentActionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentActionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentActionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsIncidentActionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Severity.HasValue)
+            if (Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Classification.HasValue)
+            if (Optional.IsDefined(Classification))
             {
                 writer.WritePropertyName("classification"u8);
                 writer.WriteStringValue(Classification.Value.ToString());
             }
-            if (ClassificationReason.HasValue)
+            if (Optional.IsDefined(ClassificationReason))
             {
                 writer.WritePropertyName("classificationReason"u8);
                 writer.WriteStringValue(ClassificationReason.Value.ToString());
             }
-            if (ClassificationComment != null)
+            if (Optional.IsDefined(ClassificationComment))
             {
                 writer.WritePropertyName("classificationComment"u8);
                 writer.WriteStringValue(ClassificationComment);
             }
-            if (Owner != null)
+            if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue(Owner);
+                writer.WriteObjectValue(Owner, options);
             }
-            if (!(Labels is ChangeTrackingList<SecurityInsightsIncidentLabel> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsIncidentActionConfiguration DeserializeSecurityInsightsIncidentActionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SecurityInsightsIncidentOwnerInfo owner = default;
             IList<SecurityInsightsIncidentLabel> labels = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("severity"u8))
@@ -181,10 +181,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsIncidentActionConfiguration(
                 severity,
                 status,
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsIncidentActionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

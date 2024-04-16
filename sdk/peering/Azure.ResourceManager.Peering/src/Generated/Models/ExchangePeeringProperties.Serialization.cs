@@ -16,28 +16,28 @@ namespace Azure.ResourceManager.Peering.Models
 {
     public partial class ExchangePeeringProperties : IUtf8JsonSerializable, IJsonModel<ExchangePeeringProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExchangePeeringProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExchangePeeringProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExchangePeeringProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExchangePeeringProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExchangePeeringProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Connections is ChangeTrackingList<PeeringExchangeConnection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Connections))
             {
                 writer.WritePropertyName("connections"u8);
                 writer.WriteStartArray();
                 foreach (var item in Connections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (PeerAsn != null)
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
                 JsonSerializer.Serialize(writer, PeerAsn);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExchangePeeringProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExchangePeeringProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExchangePeeringProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static ExchangePeeringProperties DeserializeExchangePeeringProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Peering.Models
             IList<PeeringExchangeConnection> connections = default;
             WritableSubResource peerAsn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connections"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExchangePeeringProperties(connections ?? new ChangeTrackingList<PeeringExchangeConnection>(), peerAsn, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExchangePeeringProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExchangePeeringProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializeExchangePeeringProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExchangePeeringProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExchangePeeringProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -21,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(Text);
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category.ToString());
-            if (Subcategory != null)
+            if (Optional.IsDefined(Subcategory))
             {
                 writer.WritePropertyName("subcategory"u8);
                 writer.WriteStringValue(Subcategory);
@@ -32,17 +31,17 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteNumberValue(Length);
             writer.WritePropertyName("confidenceScore"u8);
             writer.WriteNumberValue(ConfidenceScore);
-            if (Assertion != null)
+            if (Optional.IsDefined(Assertion))
             {
                 writer.WritePropertyName("assertion"u8);
                 writer.WriteObjectValue(Assertion);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Links is ChangeTrackingList<EntityDataSource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -141,6 +140,22 @@ namespace Azure.AI.TextAnalytics.Models
                 assertion,
                 name,
                 links ?? new ChangeTrackingList<EntityDataSource>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareEntityInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareEntityInternal(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

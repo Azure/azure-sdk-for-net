@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class SecretStoreResourceInfo : IUtf8JsonSerializable, IJsonModel<SecretStoreResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretStoreResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretStoreResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecretStoreResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecretStoreResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretStoreResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretStoreResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
             writer.WritePropertyName("secretStoreType"u8);
             writer.WriteStringValue(SecretStoreType.ToString());
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecretStoreResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretStoreResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretStoreResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static SecretStoreResourceInfo DeserializeSecretStoreResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             SecretStoreType secretStoreType = default;
             string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecretStoreResourceInfo(uri, secretStoreType, value, serializedAdditionalRawData);
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecretStoreResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretStoreResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeSecretStoreResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecretStoreResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretStoreResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

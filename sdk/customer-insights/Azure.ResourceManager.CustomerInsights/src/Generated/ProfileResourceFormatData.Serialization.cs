@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class ProfileResourceFormatData : IUtf8JsonSerializable, IJsonModel<ProfileResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProfileResourceFormatData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProfileResourceFormatData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProfileResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProfileResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfileResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfileResourceFormatData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Attributes is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (!(Description is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (!(DisplayName is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (!(LocalizedAttributes is ChangeTrackingDictionary<string, IDictionary<string, string>> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(LocalizedAttributes))
             {
                 writer.WritePropertyName("localizedAttributes"u8);
                 writer.WriteStartObject();
@@ -115,83 +115,83 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 writer.WriteEndObject();
             }
-            if (SmallImage != null)
+            if (Optional.IsDefined(SmallImage))
             {
                 writer.WritePropertyName("smallImage"u8);
                 writer.WriteStringValue(SmallImage);
             }
-            if (MediumImage != null)
+            if (Optional.IsDefined(MediumImage))
             {
                 writer.WritePropertyName("mediumImage"u8);
                 writer.WriteStringValue(MediumImage);
             }
-            if (LargeImage != null)
+            if (Optional.IsDefined(LargeImage))
             {
                 writer.WritePropertyName("largeImage"u8);
                 writer.WriteStringValue(LargeImage);
             }
-            if (ApiEntitySetName != null)
+            if (Optional.IsDefined(ApiEntitySetName))
             {
                 writer.WritePropertyName("apiEntitySetName"u8);
                 writer.WriteStringValue(ApiEntitySetName);
             }
-            if (EntityType.HasValue)
+            if (Optional.IsDefined(EntityType))
             {
                 writer.WritePropertyName("entityType"u8);
                 writer.WriteStringValue(EntityType.Value.ToSerialString());
             }
-            if (!(Fields is ChangeTrackingList<PropertyDefinition> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Fields))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (InstancesCount.HasValue)
+            if (Optional.IsDefined(InstancesCount))
             {
                 writer.WritePropertyName("instancesCount"u8);
                 writer.WriteNumberValue(InstancesCount.Value);
             }
-            if (options.Format != "W" && LastChangedUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastChangedUtc))
             {
                 writer.WritePropertyName("lastChangedUtc"u8);
                 writer.WriteStringValue(LastChangedUtc.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SchemaItemTypeLink != null)
+            if (Optional.IsDefined(SchemaItemTypeLink))
             {
                 writer.WritePropertyName("schemaItemTypeLink"u8);
                 writer.WriteStringValue(SchemaItemTypeLink);
             }
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (TimestampFieldName != null)
+            if (Optional.IsDefined(TimestampFieldName))
             {
                 writer.WritePropertyName("timestampFieldName"u8);
                 writer.WriteStringValue(TimestampFieldName);
             }
-            if (TypeName != null)
+            if (Optional.IsDefined(TypeName))
             {
                 writer.WritePropertyName("typeName"u8);
                 writer.WriteStringValue(TypeName);
             }
-            if (!(StrongIds is ChangeTrackingList<StrongId> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(StrongIds))
             {
                 writer.WritePropertyName("strongIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in StrongIds)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<ProfileResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfileResourceFormatData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfileResourceFormatData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CustomerInsights
 
         internal static ProfileResourceFormatData DeserializeProfileResourceFormatData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.CustomerInsights
             string typeName = default;
             IList<StrongId> strongIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -486,10 +486,10 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProfileResourceFormatData(
                 id,
                 name,
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProfileResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfileResourceFormatData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.CustomerInsights
                         return DeserializeProfileResourceFormatData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProfileResourceFormatData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfileResourceFormatData)} does not support reading '{options.Format}' format.");
             }
         }
 

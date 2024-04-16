@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Peering.Models
 {
     public partial class PeerAsnContactDetail : IUtf8JsonSerializable, IJsonModel<PeerAsnContactDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeerAsnContactDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeerAsnContactDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PeerAsnContactDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PeerAsnContactDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeerAsnContactDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeerAsnContactDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Role.HasValue)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (Email != null)
+            if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Phone != null)
+            if (Optional.IsDefined(Phone))
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeerAsnContactDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeerAsnContactDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeerAsnContactDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeerAsnContactDetail DeserializePeerAsnContactDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Peering.Models
             string email = default;
             string phone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("role"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PeerAsnContactDetail(role, email, phone, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeerAsnContactDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeerAsnContactDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeerAsnContactDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeerAsnContactDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeerAsnContactDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

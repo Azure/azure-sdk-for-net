@@ -15,12 +15,12 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SentenceCount.HasValue)
+            if (Optional.IsDefined(SentenceCount))
             {
                 writer.WritePropertyName("sentenceCount"u8);
                 writer.WriteNumberValue(SentenceCount.Value);
             }
-            if (StringIndexType.HasValue)
+            if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
@@ -58,6 +58,22 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new AbstractiveSummarizationTaskParametersBase(sentenceCount, stringIndexType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AbstractiveSummarizationTaskParametersBase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAbstractiveSummarizationTaskParametersBase(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

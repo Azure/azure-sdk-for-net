@@ -18,34 +18,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SchemaLinkedService != null)
+            if (Optional.IsDefined(SchemaLinkedService))
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
                 writer.WriteObjectValue(SchemaLinkedService);
             }
-            if (RejectedDataLinkedService != null)
+            if (Optional.IsDefined(RejectedDataLinkedService))
             {
                 writer.WritePropertyName("rejectedDataLinkedService"u8);
                 writer.WriteObjectValue(RejectedDataLinkedService);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Dataset != null)
+            if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteObjectValue(Dataset);
             }
-            if (LinkedService != null)
+            if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
-            if (Flowlet != null)
+            if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
                 writer.WriteObjectValue(Flowlet);
@@ -134,12 +134,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 rejectedDataLinkedService);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DataFlowSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFlowSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class DataFlowSinkConverter : JsonConverter<DataFlowSink>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowSink model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override DataFlowSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

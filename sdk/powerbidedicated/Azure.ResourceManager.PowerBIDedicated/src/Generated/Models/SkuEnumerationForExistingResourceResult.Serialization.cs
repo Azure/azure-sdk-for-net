@@ -15,24 +15,24 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     internal partial class SkuEnumerationForExistingResourceResult : IUtf8JsonSerializable, IJsonModel<SkuEnumerationForExistingResourceResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuEnumerationForExistingResourceResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuEnumerationForExistingResourceResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SkuEnumerationForExistingResourceResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SkuEnumerationForExistingResourceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<SkuDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkuEnumerationForExistingResourceResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         internal static SkuEnumerationForExistingResourceResult DeserializeSkuEnumerationForExistingResourceResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
             IReadOnlyList<SkuDetails> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SkuEnumerationForExistingResourceResult(value ?? new ChangeTrackingList<SkuDetails>(), serializedAdditionalRawData);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                         return DeserializeSkuEnumerationForExistingResourceResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuEnumerationForExistingResourceResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudKubernetesClusterData : IUtf8JsonSerializable, IJsonModel<NetworkCloudKubernetesClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudKubernetesClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudKubernetesClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkCloudKubernetesClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudKubernetesClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            writer.WriteObjectValue(ExtendedLocation, options);
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,24 +58,24 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AadConfiguration != null)
+            if (Optional.IsDefined(AadConfiguration))
             {
                 writer.WritePropertyName("aadConfiguration"u8);
-                writer.WriteObjectValue(AadConfiguration);
+                writer.WriteObjectValue(AadConfiguration, options);
             }
-            if (AdministratorConfiguration != null)
+            if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration);
+                writer.WriteObjectValue(AdministratorConfiguration, options);
             }
-            if (options.Format != "W" && !(AttachedNetworkIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedNetworkIds))
             {
                 writer.WritePropertyName("attachedNetworkIds"u8);
                 writer.WriteStartArray();
@@ -90,50 +90,50 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AvailableUpgrades is ChangeTrackingList<AvailableUpgrade> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableUpgrades))
             {
                 writer.WritePropertyName("availableUpgrades"u8);
                 writer.WriteStartArray();
                 foreach (var item in AvailableUpgrades)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ClusterId != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (options.Format != "W" && ConnectedClusterId != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectedClusterId))
             {
                 writer.WritePropertyName("connectedClusterId"u8);
                 writer.WriteStringValue(ConnectedClusterId);
             }
-            if (options.Format != "W" && ControlPlaneKubernetesVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ControlPlaneKubernetesVersion))
             {
                 writer.WritePropertyName("controlPlaneKubernetesVersion"u8);
                 writer.WriteStringValue(ControlPlaneKubernetesVersion);
             }
             writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
-            writer.WriteObjectValue(ControlPlaneNodeConfiguration);
-            if (options.Format != "W" && DetailedStatus.HasValue)
+            writer.WriteObjectValue(ControlPlaneNodeConfiguration, options);
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && DetailedStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && !(FeatureStatuses is ChangeTrackingList<FeatureStatus> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FeatureStatuses))
             {
                 writer.WritePropertyName("featureStatuses"u8);
                 writer.WriteStartArray();
                 foreach (var item in FeatureStatuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -141,29 +141,29 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartArray();
             foreach (var item in InitialAgentPoolConfigurations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kubernetesVersion"u8);
             writer.WriteStringValue(KubernetesVersion);
-            if (ManagedResourceGroupConfiguration != null)
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
             }
             writer.WritePropertyName("networkConfiguration"u8);
-            writer.WriteObjectValue(NetworkConfiguration);
-            if (options.Format != "W" && !(Nodes is ChangeTrackingList<KubernetesClusterNode> collection3 && collection3.IsUndefined))
+            writer.WriteObjectValue(NetworkConfiguration, options);
+            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudKubernetesClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
         internal static NetworkCloudKubernetesClusterData DeserializeNetworkCloudKubernetesClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NetworkCloud
             IReadOnlyList<KubernetesClusterNode> nodes = default;
             KubernetesClusterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -458,10 +458,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudKubernetesClusterData(
                 id,
                 name,
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         return DeserializeNetworkCloudKubernetesClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudKubernetesClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 

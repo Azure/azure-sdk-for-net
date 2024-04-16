@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class ExpressionEvaluationDetails : IUtf8JsonSerializable, IJsonModel<ExpressionEvaluationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressionEvaluationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressionEvaluationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExpressionEvaluationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressionEvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressionEvaluationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressionEvaluationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Result != null)
+            if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result);
             }
-            if (Expression != null)
+            if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
             }
-            if (options.Format != "W" && ExpressionKind != null)
+            if (options.Format != "W" && Optional.IsDefined(ExpressionKind))
             {
                 writer.WritePropertyName("expressionKind"u8);
                 writer.WriteStringValue(ExpressionKind);
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (ExpressionValue != null)
+            if (Optional.IsDefined(ExpressionValue))
             {
                 writer.WritePropertyName("expressionValue"u8);
 #if NET6_0_OR_GREATER
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
 #endif
             }
-            if (TargetValue != null)
+            if (Optional.IsDefined(TargetValue))
             {
                 writer.WritePropertyName("targetValue"u8);
 #if NET6_0_OR_GREATER
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
 #endif
             }
-            if (Operator != null)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressionEvaluationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressionEvaluationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressionEvaluationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static ExpressionEvaluationDetails DeserializeExpressionEvaluationDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             BinaryData targetValue = default;
             string @operator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExpressionEvaluationDetails(
                 result,
                 expression,
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressionEvaluationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressionEvaluationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeExpressionEvaluationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressionEvaluationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressionEvaluationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

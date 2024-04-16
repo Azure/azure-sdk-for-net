@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiIssueAttachmentData : IUtf8JsonSerializable, IJsonModel<ApiIssueAttachmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiIssueAttachmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiIssueAttachmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiIssueAttachmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiIssueAttachmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiIssueAttachmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiIssueAttachmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (ContentFormat != null)
+            if (Optional.IsDefined(ContentFormat))
             {
                 writer.WritePropertyName("contentFormat"u8);
                 writer.WriteStringValue(ContentFormat);
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiIssueAttachmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiIssueAttachmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiIssueAttachmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiIssueAttachmentData DeserializeApiIssueAttachmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement
             string contentFormat = default;
             string content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiIssueAttachmentData(
                 id,
                 name,
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiIssueAttachmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiIssueAttachmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiIssueAttachmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiIssueAttachmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiIssueAttachmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

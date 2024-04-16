@@ -15,7 +15,7 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IsIotEdgeDevice.HasValue)
+            if (Optional.IsDefined(IsIotEdgeDevice))
             {
                 writer.WritePropertyName("iotEdge"u8);
                 writer.WriteBooleanValue(IsIotEdgeDevice.Value);
@@ -43,6 +43,22 @@ namespace Azure.IoT.Hub.Service.Models
                 }
             }
             return new DeviceCapabilities(iotEdge);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceCapabilities FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceCapabilities(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

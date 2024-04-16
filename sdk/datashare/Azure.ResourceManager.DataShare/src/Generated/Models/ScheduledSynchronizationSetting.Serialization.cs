@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class ScheduledSynchronizationSetting : IUtf8JsonSerializable, IJsonModel<ScheduledSynchronizationSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledSynchronizationSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledSynchronizationSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScheduledSynchronizationSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledSynchronizationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStringValue(RecurrenceInterval.ToString());
             writer.WritePropertyName("synchronizationTime"u8);
             writer.WriteStringValue(SynchronizeOn, "O");
-            if (options.Format != "W" && UserName != null)
+            if (options.Format != "W" && Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledSynchronizationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ScheduledSynchronizationSetting DeserializeScheduledSynchronizationSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataShare.Models
             DateTimeOffset synchronizationTime = default;
             string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ScheduledSynchronizationSetting(
                 id,
                 name,
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeScheduledSynchronizationSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledSynchronizationSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

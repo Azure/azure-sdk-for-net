@@ -16,50 +16,50 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class FrontDoorOriginPatch : IUtf8JsonSerializable, IJsonModel<FrontDoorOriginPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorOriginPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorOriginPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorOriginPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && OriginGroupName != null)
+            if (options.Format != "W" && Optional.IsDefined(OriginGroupName))
             {
                 writer.WritePropertyName("originGroupName"u8);
                 writer.WriteStringValue(OriginGroupName);
             }
-            if (Origin != null)
+            if (Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("azureOrigin"u8);
                 JsonSerializer.Serialize(writer, Origin);
             }
-            if (HostName != null)
+            if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (HttpPort.HasValue)
+            if (Optional.IsDefined(HttpPort))
             {
                 writer.WritePropertyName("httpPort"u8);
                 writer.WriteNumberValue(HttpPort.Value);
             }
-            if (HttpsPort.HasValue)
+            if (Optional.IsDefined(HttpsPort))
             {
                 writer.WritePropertyName("httpsPort"u8);
                 writer.WriteNumberValue(HttpsPort.Value);
             }
-            if (OriginHostHeader != null)
+            if (Optional.IsDefined(OriginHostHeader))
             {
                 writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 if (Priority != null)
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("priority");
                 }
             }
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 if (Weight != null)
                 {
@@ -83,24 +83,24 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("weight");
                 }
             }
-            if (SharedPrivateLinkResource != null)
+            if (Optional.IsDefined(SharedPrivateLinkResource))
             {
                 if (SharedPrivateLinkResource != null)
                 {
                     writer.WritePropertyName("sharedPrivateLinkResource"u8);
-                    writer.WriteObjectValue(SharedPrivateLinkResource);
+                    writer.WriteObjectValue(SharedPrivateLinkResource, options);
                 }
                 else
                 {
                     writer.WriteNull("sharedPrivateLinkResource");
                 }
             }
-            if (EnabledState.HasValue)
+            if (Optional.IsDefined(EnabledState))
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (EnforceCertificateNameCheck.HasValue)
+            if (Optional.IsDefined(EnforceCertificateNameCheck))
             {
                 writer.WritePropertyName("enforceCertificateNameCheck"u8);
                 writer.WriteBooleanValue(EnforceCertificateNameCheck.Value);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static FrontDoorOriginPatch DeserializeFrontDoorOriginPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn.Models
             EnabledState? enabledState = default;
             bool? enforceCertificateNameCheck = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -263,10 +263,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FrontDoorOriginPatch(
                 originGroupName,
                 azureOrigin,
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeFrontDoorOriginPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorOriginPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

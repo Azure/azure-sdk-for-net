@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.PostgreSql
         }
 
         /// <summary> The type of administrator. </summary>
+        [WirePath("properties.administratorType")]
         public PostgreSqlAdministratorType? AdministratorType { get; set; }
         /// <summary> The server administrator login account name. </summary>
+        [WirePath("properties.login")]
         public string LoginAccountName { get; set; }
         /// <summary> The server administrator Sid (Secure ID). </summary>
+        [WirePath("properties.sid")]
         public Guid? SecureId { get; set; }
         /// <summary> The server Active Directory Administrator tenant id. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
     }
 }

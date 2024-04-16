@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class RunbookParameterDefinition : IUtf8JsonSerializable, IJsonModel<RunbookParameterDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunbookParameterDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunbookParameterDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RunbookParameterDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RunbookParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RunbookParameterType != null)
+            if (Optional.IsDefined(RunbookParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RunbookParameterType);
             }
-            if (IsMandatory.HasValue)
+            if (Optional.IsDefined(IsMandatory))
             {
                 writer.WritePropertyName("isMandatory"u8);
                 writer.WriteBooleanValue(IsMandatory.Value);
             }
-            if (Position.HasValue)
+            if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteNumberValue(Position.Value);
             }
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunbookParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static RunbookParameterDefinition DeserializeRunbookParameterDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Automation.Models
             int? position = default;
             string defaultValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RunbookParameterDefinition(type, isMandatory, position, defaultValue, serializedAdditionalRawData);
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeRunbookParameterDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

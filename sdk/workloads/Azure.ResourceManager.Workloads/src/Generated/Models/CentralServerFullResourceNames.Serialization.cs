@@ -15,36 +15,36 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class CentralServerFullResourceNames : IUtf8JsonSerializable, IJsonModel<CentralServerFullResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CentralServerFullResourceNames>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CentralServerFullResourceNames>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CentralServerFullResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CentralServerFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CentralServerFullResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CentralServerFullResourceNames)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(VirtualMachines is ChangeTrackingList<VirtualMachineResourceNames> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (AvailabilitySetName != null)
+            if (Optional.IsDefined(AvailabilitySetName))
             {
                 writer.WritePropertyName("availabilitySetName"u8);
                 writer.WriteStringValue(AvailabilitySetName);
             }
-            if (LoadBalancer != null)
+            if (Optional.IsDefined(LoadBalancer))
             {
                 writer.WritePropertyName("loadBalancer"u8);
-                writer.WriteObjectValue(LoadBalancer);
+                writer.WriteObjectValue(LoadBalancer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<CentralServerFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CentralServerFullResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CentralServerFullResourceNames)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static CentralServerFullResourceNames DeserializeCentralServerFullResourceNames(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads.Models
             string availabilitySetName = default;
             LoadBalancerResourceNames loadBalancer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachines"u8))
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CentralServerFullResourceNames(virtualMachines ?? new ChangeTrackingList<VirtualMachineResourceNames>(), availabilitySetName, loadBalancer, serializedAdditionalRawData);
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CentralServerFullResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CentralServerFullResourceNames)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeCentralServerFullResourceNames(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CentralServerFullResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CentralServerFullResourceNames)} does not support reading '{options.Format}' format.");
             }
         }
 

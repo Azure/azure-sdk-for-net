@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class ManagementEventAggregationCondition : IUtf8JsonSerializable, IJsonModel<ManagementEventAggregationCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementEventAggregationCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementEventAggregationCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagementEventAggregationCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagementEventAggregationCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Operator.HasValue)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToSerialString());
             }
-            if (Threshold.HasValue)
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
-            if (WindowSize.HasValue)
+            if (Optional.IsDefined(WindowSize))
             {
                 writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementEventAggregationCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ManagementEventAggregationCondition DeserializeManagementEventAggregationCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
             double? threshold = default;
             TimeSpan? windowSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operator"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagementEventAggregationCondition(@operator, threshold, windowSize, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeManagementEventAggregationCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementEventAggregationCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class HyperVReplicaAzurePolicyContent : IUtf8JsonSerializable, IJsonModel<HyperVReplicaAzurePolicyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaAzurePolicyContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaAzurePolicyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HyperVReplicaAzurePolicyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzurePolicyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaAzurePolicyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaAzurePolicyContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointHistoryDuration.HasValue)
+            if (Optional.IsDefined(RecoveryPointHistoryDuration))
             {
                 writer.WritePropertyName("recoveryPointHistoryDuration"u8);
                 writer.WriteNumberValue(RecoveryPointHistoryDuration.Value);
             }
-            if (ApplicationConsistentSnapshotFrequencyInHours.HasValue)
+            if (Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
             {
                 writer.WritePropertyName("applicationConsistentSnapshotFrequencyInHours"u8);
                 writer.WriteNumberValue(ApplicationConsistentSnapshotFrequencyInHours.Value);
             }
-            if (ReplicationInterval.HasValue)
+            if (Optional.IsDefined(ReplicationInterval))
             {
                 writer.WritePropertyName("replicationInterval"u8);
                 writer.WriteNumberValue(ReplicationInterval.Value);
             }
-            if (OnlineReplicationStartTime != null)
+            if (Optional.IsDefined(OnlineReplicationStartTime))
             {
                 writer.WritePropertyName("onlineReplicationStartTime"u8);
                 writer.WriteStringValue(OnlineReplicationStartTime);
             }
-            if (!(StorageAccounts is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzurePolicyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaAzurePolicyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaAzurePolicyContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static HyperVReplicaAzurePolicyContent DeserializeHyperVReplicaAzurePolicyContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<string> storageAccounts = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointHistoryDuration"u8))
@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVReplicaAzurePolicyContent(
                 instanceType,
                 serializedAdditionalRawData,
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzurePolicyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzurePolicyContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeHyperVReplicaAzurePolicyContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzurePolicyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzurePolicyContent)} does not support reading '{options.Format}' format.");
             }
         }
 

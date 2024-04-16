@@ -15,64 +15,64 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class GalleryArtifactPublishingProfileBase : IUtf8JsonSerializable, IJsonModel<GalleryArtifactPublishingProfileBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryArtifactPublishingProfileBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryArtifactPublishingProfileBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GalleryArtifactPublishingProfileBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GalleryArtifactPublishingProfileBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryArtifactPublishingProfileBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryArtifactPublishingProfileBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(TargetRegions is ChangeTrackingList<TargetRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetRegions))
             {
                 writer.WritePropertyName("targetRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ReplicaCount.HasValue)
+            if (Optional.IsDefined(ReplicaCount))
             {
                 writer.WritePropertyName("replicaCount"u8);
                 writer.WriteNumberValue(ReplicaCount.Value);
             }
-            if (IsExcludedFromLatest.HasValue)
+            if (Optional.IsDefined(IsExcludedFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
                 writer.WriteBooleanValue(IsExcludedFromLatest.Value);
             }
-            if (options.Format != "W" && PublishedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublishedOn))
             {
                 writer.WritePropertyName("publishedDate"u8);
                 writer.WriteStringValue(PublishedOn.Value, "O");
             }
-            if (EndOfLifeOn.HasValue)
+            if (Optional.IsDefined(EndOfLifeOn))
             {
                 writer.WritePropertyName("endOfLifeDate"u8);
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
-            if (StorageAccountType.HasValue)
+            if (Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (ReplicationMode.HasValue)
+            if (Optional.IsDefined(ReplicationMode))
             {
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode.Value.ToString());
             }
-            if (!(TargetExtendedLocations is ChangeTrackingList<GalleryTargetExtendedLocation> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetExtendedLocations))
             {
                 writer.WritePropertyName("targetExtendedLocations"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetExtendedLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryArtifactPublishingProfileBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryArtifactPublishingProfileBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryArtifactPublishingProfileBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryArtifactPublishingProfileBase DeserializeGalleryArtifactPublishingProfileBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
             GalleryReplicationMode? replicationMode = default;
             IList<GalleryTargetExtendedLocation> targetExtendedLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetRegions"u8))
@@ -210,10 +210,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GalleryArtifactPublishingProfileBase(
                 targetRegions ?? new ChangeTrackingList<TargetRegion>(),
                 replicaCount,
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryArtifactPublishingProfileBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryArtifactPublishingProfileBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryArtifactPublishingProfileBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryArtifactPublishingProfileBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryArtifactPublishingProfileBase)} does not support reading '{options.Format}' format.");
             }
         }
 

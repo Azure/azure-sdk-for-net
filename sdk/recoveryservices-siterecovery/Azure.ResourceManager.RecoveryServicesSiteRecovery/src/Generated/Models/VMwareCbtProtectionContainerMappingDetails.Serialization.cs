@@ -15,48 +15,48 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class VMwareCbtProtectionContainerMappingDetails : IUtf8JsonSerializable, IJsonModel<VMwareCbtProtectionContainerMappingDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareCbtProtectionContainerMappingDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareCbtProtectionContainerMappingDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareCbtProtectionContainerMappingDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && KeyVaultId != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (options.Format != "W" && KeyVaultUri != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (options.Format != "W" && StorageAccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (options.Format != "W" && StorageAccountSasSecretName != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountSasSecretName))
             {
                 writer.WritePropertyName("storageAccountSasSecretName"u8);
                 writer.WriteStringValue(StorageAccountSasSecretName);
             }
-            if (options.Format != "W" && ServiceBusConnectionStringSecretName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceBusConnectionStringSecretName))
             {
                 writer.WritePropertyName("serviceBusConnectionStringSecretName"u8);
                 writer.WriteStringValue(ServiceBusConnectionStringSecretName);
             }
-            if (options.Format != "W" && TargetLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetLocation))
             {
                 writer.WritePropertyName("targetLocation"u8);
                 writer.WriteStringValue(TargetLocation);
             }
-            if (options.Format != "W" && !(RoleSizeToNicCountMap is ChangeTrackingDictionary<string, int> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RoleSizeToNicCountMap))
             {
                 writer.WritePropertyName("roleSizeToNicCountMap"u8);
                 writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(ExcludedSkus is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedSkus))
             {
                 writer.WritePropertyName("excludedSkus"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtProtectionContainerMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static VMwareCbtProtectionContainerMappingDetails DeserializeVMwareCbtProtectionContainerMappingDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IReadOnlyList<string> excludedSkus = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultId"u8))
@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VMwareCbtProtectionContainerMappingDetails(
                 instanceType,
                 serializedAdditionalRawData,
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareCbtProtectionContainerMappingDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtProtectionContainerMappingDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

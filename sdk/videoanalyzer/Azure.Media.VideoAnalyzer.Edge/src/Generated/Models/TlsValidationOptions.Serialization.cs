@@ -15,12 +15,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IgnoreHostname != null)
+            if (Optional.IsDefined(IgnoreHostname))
             {
                 writer.WritePropertyName("ignoreHostname"u8);
                 writer.WriteStringValue(IgnoreHostname);
             }
-            if (IgnoreSignature != null)
+            if (Optional.IsDefined(IgnoreSignature))
             {
                 writer.WritePropertyName("ignoreSignature"u8);
                 writer.WriteStringValue(IgnoreSignature);
@@ -50,6 +50,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new TlsValidationOptions(ignoreHostname, ignoreSignature);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TlsValidationOptions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTlsValidationOptions(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

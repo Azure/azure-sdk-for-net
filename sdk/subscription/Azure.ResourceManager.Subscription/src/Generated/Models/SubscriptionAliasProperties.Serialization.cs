@@ -15,73 +15,73 @@ namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class SubscriptionAliasProperties : IUtf8JsonSerializable, IJsonModel<SubscriptionAliasProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionAliasProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionAliasProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SubscriptionAliasProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AcceptOwnershipUri != null)
+            if (options.Format != "W" && Optional.IsDefined(AcceptOwnershipUri))
             {
                 writer.WritePropertyName("acceptOwnershipUrl"u8);
                 writer.WriteStringValue(AcceptOwnershipUri.AbsoluteUri);
             }
-            if (options.Format != "W" && AcceptOwnershipState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AcceptOwnershipState))
             {
                 writer.WritePropertyName("acceptOwnershipState"u8);
                 writer.WriteStringValue(AcceptOwnershipState.Value.ToString());
             }
-            if (BillingScope != null)
+            if (Optional.IsDefined(BillingScope))
             {
                 writer.WritePropertyName("billingScope"u8);
                 writer.WriteStringValue(BillingScope);
             }
-            if (Workload.HasValue)
+            if (Optional.IsDefined(Workload))
             {
                 writer.WritePropertyName("workload"u8);
                 writer.WriteStringValue(Workload.Value.ToString());
             }
-            if (ResellerId != null)
+            if (Optional.IsDefined(ResellerId))
             {
                 writer.WritePropertyName("resellerId"u8);
                 writer.WriteStringValue(ResellerId);
             }
-            if (SubscriptionOwnerId != null)
+            if (Optional.IsDefined(SubscriptionOwnerId))
             {
                 writer.WritePropertyName("subscriptionOwnerId"u8);
                 writer.WriteStringValue(SubscriptionOwnerId);
             }
-            if (ManagementGroupId != null)
+            if (Optional.IsDefined(ManagementGroupId))
             {
                 writer.WritePropertyName("managementGroupId"u8);
                 writer.WriteStringValue(ManagementGroupId);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Subscription.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAliasProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Subscription.Models
 
         internal static SubscriptionAliasProperties DeserializeSubscriptionAliasProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Subscription.Models
             DateTimeOffset? createdTime = default;
             IReadOnlyDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptionId"u8))
@@ -237,10 +237,10 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SubscriptionAliasProperties(
                 subscriptionId,
                 displayName,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Subscription.Models
                         return DeserializeSubscriptionAliasProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionAliasProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties : IUtf8JsonSerializable, IJsonModel<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && RequiredMemberName != null)
+            if (options.Format != "W" && Optional.IsDefined(RequiredMemberName))
             {
                 writer.WritePropertyName("requiredMemberName"u8);
                 writer.WriteStringValue(RequiredMemberName);
             }
-            if (options.Format != "W" && !(Fqdns is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Fqdns))
             {
                 writer.WritePropertyName("fqdns"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties DeserializeNetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             string requiredMemberName = default;
             IReadOnlyList<string> fqdns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupId"u8))
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(groupId, requiredMemberName, fqdns ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkInterfaceIPConfigurationPrivateLinkConnectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

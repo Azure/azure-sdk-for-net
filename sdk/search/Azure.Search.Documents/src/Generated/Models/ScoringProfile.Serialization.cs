@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (TextWeights != null)
+            if (Optional.IsDefined(TextWeights))
             {
                 if (TextWeights != null)
                 {
@@ -30,17 +30,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("text");
                 }
             }
-            if (!(Functions is ChangeTrackingList<ScoringFunction> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Functions))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScoringFunction>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (FunctionAggregation.HasValue)
+            if (Optional.IsDefined(FunctionAggregation))
             {
                 if (FunctionAggregation != null)
                 {
@@ -108,6 +108,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new ScoringProfile(name, text, functions ?? new ChangeTrackingList<ScoringFunction>(), functionAggregation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ScoringProfile FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeScoringProfile(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ContinuationToken != null)
+            if (Optional.IsDefined(ContinuationToken))
             {
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(LastUpdatedAfter, "O");
             writer.WritePropertyName("lastUpdatedBefore"u8);
             writer.WriteStringValue(LastUpdatedBefore, "O");
-            if (!(Filters is ChangeTrackingList<RunQueryFilter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(OrderBy is ChangeTrackingList<RunQueryOrderBy> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(OrderBy))
             {
                 writer.WritePropertyName("orderBy"u8);
                 writer.WriteStartArray();
@@ -50,12 +50,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class RunFilterParametersConverter : JsonConverter<RunFilterParameters>
         {
             public override void Write(Utf8JsonWriter writer, RunFilterParameters model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override RunFilterParameters Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();

@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsProcessEntity : IUtf8JsonSerializable, IJsonModel<SecurityInsightsProcessEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsProcessEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsProcessEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsProcessEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsProcessEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,52 +74,52 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && AccountEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountEntityId))
             {
                 writer.WritePropertyName("accountEntityId"u8);
                 writer.WriteStringValue(AccountEntityId);
             }
-            if (options.Format != "W" && CommandLine != null)
+            if (options.Format != "W" && Optional.IsDefined(CommandLine))
             {
                 writer.WritePropertyName("commandLine"u8);
                 writer.WriteStringValue(CommandLine);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTimeUtc"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (ElevationToken.HasValue)
+            if (Optional.IsDefined(ElevationToken))
             {
                 writer.WritePropertyName("elevationToken"u8);
                 writer.WriteStringValue(ElevationToken.Value.ToSerialString());
             }
-            if (options.Format != "W" && HostEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(HostEntityId))
             {
                 writer.WritePropertyName("hostEntityId"u8);
                 writer.WriteStringValue(HostEntityId);
             }
-            if (options.Format != "W" && HostLogonSessionEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(HostLogonSessionEntityId))
             {
                 writer.WritePropertyName("hostLogonSessionEntityId"u8);
                 writer.WriteStringValue(HostLogonSessionEntityId);
             }
-            if (options.Format != "W" && ImageFileEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(ImageFileEntityId))
             {
                 writer.WritePropertyName("imageFileEntityId"u8);
                 writer.WriteStringValue(ImageFileEntityId);
             }
-            if (options.Format != "W" && ParentProcessEntityId != null)
+            if (options.Format != "W" && Optional.IsDefined(ParentProcessEntityId))
             {
                 writer.WritePropertyName("parentProcessEntityId"u8);
                 writer.WriteStringValue(ParentProcessEntityId);
             }
-            if (options.Format != "W" && ProcessId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProcessId))
             {
                 writer.WritePropertyName("processId"u8);
                 writer.WriteStringValue(ProcessId);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsProcessEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsProcessEntity DeserializeSecurityInsightsProcessEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string parentProcessEntityId = default;
             string processId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -305,10 +305,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsProcessEntity(
                 id,
                 name,
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsProcessEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsProcessEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

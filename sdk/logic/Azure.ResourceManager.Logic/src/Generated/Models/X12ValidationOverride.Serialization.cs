@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class X12ValidationOverride : IUtf8JsonSerializable, IJsonModel<X12ValidationOverride>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12ValidationOverride>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12ValidationOverride>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<X12ValidationOverride>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<X12ValidationOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X12ValidationOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X12ValidationOverride)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<X12ValidationOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X12ValidationOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X12ValidationOverride)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12ValidationOverride DeserializeX12ValidationOverride(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic.Models
             bool trimLeadingAndTrailingSpacesAndZeroes = default;
             TrailingSeparatorPolicy trailingSeparatorPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageId"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new X12ValidationOverride(
                 messageId,
                 validateEdiTypes,
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(X12ValidationOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X12ValidationOverride)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeX12ValidationOverride(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(X12ValidationOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X12ValidationOverride)} does not support reading '{options.Format}' format.");
             }
         }
 

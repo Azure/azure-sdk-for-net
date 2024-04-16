@@ -15,32 +15,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Encoding.HasValue)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
-            if (Quality.HasValue)
+            if (Optional.IsDefined(Quality))
             {
                 writer.WritePropertyName("quality"u8);
                 writer.WriteNumberValue(Quality.Value);
             }
-            if (Resolution != null)
+            if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (RateControl != null)
+            if (Optional.IsDefined(RateControl))
             {
                 writer.WritePropertyName("rateControl"u8);
                 writer.WriteObjectValue(RateControl);
             }
-            if (H264 != null)
+            if (Optional.IsDefined(H264))
             {
                 writer.WritePropertyName("h264"u8);
                 writer.WriteObjectValue(H264);
             }
-            if (Mpeg4 != null)
+            if (Optional.IsDefined(Mpeg4))
             {
                 writer.WritePropertyName("mpeg4"u8);
                 writer.WriteObjectValue(Mpeg4);
@@ -124,6 +124,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 rateControl,
                 h264,
                 mpeg4);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VideoEncoderConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVideoEncoderConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

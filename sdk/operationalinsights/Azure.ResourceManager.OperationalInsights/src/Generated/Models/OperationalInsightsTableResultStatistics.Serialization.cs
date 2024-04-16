@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,28 +16,28 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 {
     public partial class OperationalInsightsTableResultStatistics : IUtf8JsonSerializable, IJsonModel<OperationalInsightsTableResultStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsTableResultStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsTableResultStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationalInsightsTableResultStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableResultStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Progress.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Progress))
             {
                 writer.WritePropertyName("progress"u8);
                 writer.WriteNumberValue(Progress.Value);
             }
-            if (options.Format != "W" && IngestedRecords.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IngestedRecords))
             {
                 writer.WritePropertyName("ingestedRecords"u8);
                 writer.WriteNumberValue(IngestedRecords.Value);
             }
-            if (options.Format != "W" && ScannedGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScannedGB))
             {
                 writer.WritePropertyName("scannedGb"u8);
                 writer.WriteNumberValue(ScannedGB.Value);
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableResultStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsTableResultStatistics DeserializeOperationalInsightsTableResultStatistics(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             int? ingestedRecords = default;
             float? scannedGb = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("progress"u8))
@@ -115,11 +116,68 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OperationalInsightsTableResultStatistics(progress, ingestedRecords, scannedGb, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Progress), out propertyOverride);
+            if (Optional.IsDefined(Progress) || hasPropertyOverride)
+            {
+                builder.Append("  progress: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Progress.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngestedRecords), out propertyOverride);
+            if (Optional.IsDefined(IngestedRecords) || hasPropertyOverride)
+            {
+                builder.Append("  ingestedRecords: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{IngestedRecords.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScannedGB), out propertyOverride);
+            if (Optional.IsDefined(ScannedGB) || hasPropertyOverride)
+            {
+                builder.Append("  scannedGb: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ScannedGB.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<OperationalInsightsTableResultStatistics>.Write(ModelReaderWriterOptions options)
@@ -130,8 +188,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +207,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsTableResultStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableResultStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

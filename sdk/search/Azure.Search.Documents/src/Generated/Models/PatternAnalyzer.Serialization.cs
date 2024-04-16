@@ -16,22 +16,22 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LowerCaseTerms.HasValue)
+            if (Optional.IsDefined(LowerCaseTerms))
             {
                 writer.WritePropertyName("lowercase"u8);
                 writer.WriteBooleanValue(LowerCaseTerms.Value);
             }
-            if (Pattern != null)
+            if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (FlagsInternal != null)
+            if (Optional.IsDefined(FlagsInternal))
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStringValue(FlagsInternal);
             }
-            if (!(Stopwords is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Stopwords))
             {
                 writer.WritePropertyName("stopwords"u8);
                 writer.WriteStartArray();
@@ -113,6 +113,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 pattern,
                 flags,
                 stopwords ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PatternAnalyzer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePatternAnalyzer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

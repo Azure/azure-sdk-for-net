@@ -15,12 +15,12 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Get != null)
+            if (Optional.IsDefined(Get))
             {
                 writer.WritePropertyName("get"u8);
                 writer.WriteObjectValue(Get);
             }
-            if (!(Put is ChangeTrackingList<TimeSeriesInstance> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Put))
             {
                 writer.WritePropertyName("put"u8);
                 writer.WriteStartArray();
@@ -30,7 +30,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 writer.WriteEndArray();
             }
-            if (!(Update is ChangeTrackingList<TimeSeriesInstance> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Update))
             {
                 writer.WritePropertyName("update"u8);
                 writer.WriteStartArray();
@@ -40,12 +40,20 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
                 writer.WriteEndArray();
             }
-            if (Delete != null)
+            if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

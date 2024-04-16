@@ -15,48 +15,48 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SsisVariable : IUtf8JsonSerializable, IJsonModel<SsisVariable>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SsisVariable>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SsisVariable>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SsisVariable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SsisVariable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SsisVariable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SsisVariable)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DataType != null)
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
-            if (IsSensitive.HasValue)
+            if (Optional.IsDefined(IsSensitive))
             {
                 writer.WritePropertyName("sensitive"u8);
                 writer.WriteBooleanValue(IsSensitive.Value);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (SensitiveValue != null)
+            if (Optional.IsDefined(SensitiveValue))
             {
                 writer.WritePropertyName("sensitiveValue"u8);
                 writer.WriteStringValue(SensitiveValue);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SsisVariable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SsisVariable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SsisVariable)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisVariable DeserializeSsisVariable(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string value = default;
             string sensitiveValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SsisVariable(
                 id,
                 name,
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SsisVariable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SsisVariable)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSsisVariable(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SsisVariable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SsisVariable)} does not support reading '{options.Format}' format.");
             }
         }
 

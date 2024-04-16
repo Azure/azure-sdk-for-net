@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class ValidateProbeResult : IUtf8JsonSerializable, IJsonModel<ValidateProbeResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateProbeResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateProbeResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ValidateProbeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ValidateProbeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ValidateProbeResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ValidateProbeResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsValid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsValid))
             {
                 writer.WritePropertyName("isValid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (options.Format != "W" && ErrorCode != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ValidateProbeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ValidateProbeResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ValidateProbeResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ValidateProbeResult DeserializeValidateProbeResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string errorCode = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isValid"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ValidateProbeResult(isValid, errorCode, message, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ValidateProbeResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ValidateProbeResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeValidateProbeResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ValidateProbeResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ValidateProbeResult)} does not support reading '{options.Format}' format.");
             }
         }
 

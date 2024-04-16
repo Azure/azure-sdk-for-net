@@ -19,17 +19,17 @@ namespace Azure.Communication.ShortCodes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Number != null)
+            if (Optional.IsDefined(Number))
             {
                 writer.WritePropertyName("number"u8);
                 writer.WriteStringValue(Number);
             }
-            if (!(ReviewNotes is ChangeTrackingList<ReviewNote> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ReviewNotes))
             {
                 writer.WritePropertyName("reviewNotes"u8);
                 writer.WriteStartArray();
@@ -39,7 +39,7 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Costs is ChangeTrackingList<ShortCodeCost> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Costs))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
@@ -49,32 +49,32 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SubmissionDate.HasValue)
+            if (Optional.IsDefined(SubmissionDate))
             {
                 writer.WritePropertyName("submissionDate"u8);
                 writer.WriteStringValue(SubmissionDate.Value, "O");
             }
-            if (StatusUpdatedDate.HasValue)
+            if (Optional.IsDefined(StatusUpdatedDate))
             {
                 writer.WritePropertyName("statusUpdatedDate"u8);
                 writer.WriteStringValue(StatusUpdatedDate.Value, "O");
             }
-            if (ProgramDetails != null)
+            if (Optional.IsDefined(ProgramDetails))
             {
                 writer.WritePropertyName("programDetails"u8);
                 writer.WriteObjectValue(ProgramDetails);
             }
-            if (CompanyInformation != null)
+            if (Optional.IsDefined(CompanyInformation))
             {
                 writer.WritePropertyName("companyInformation"u8);
                 writer.WriteObjectValue(CompanyInformation);
             }
-            if (MessageDetails != null)
+            if (Optional.IsDefined(MessageDetails))
             {
                 writer.WritePropertyName("messageDetails"u8);
                 writer.WriteObjectValue(MessageDetails);
             }
-            if (TrafficDetails != null)
+            if (Optional.IsDefined(TrafficDetails))
             {
                 writer.WritePropertyName("trafficDetails"u8);
                 writer.WriteObjectValue(TrafficDetails);
@@ -215,6 +215,22 @@ namespace Azure.Communication.ShortCodes.Models
                 companyInformation,
                 messageDetails,
                 trafficDetails);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static USProgramBrief FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUSProgramBrief(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

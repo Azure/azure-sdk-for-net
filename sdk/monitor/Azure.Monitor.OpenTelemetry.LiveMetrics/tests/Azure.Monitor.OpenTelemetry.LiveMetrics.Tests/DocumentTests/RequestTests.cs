@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,10 +56,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             var requestDocument = DocumentHelper.ConvertToRequest(requestActivity);
 
             // ASSERT
-            Assert.Equal(DocumentIngressDocumentType.Request, requestDocument.DocumentType);
+            Assert.Equal(DocumentType.Request, requestDocument.DocumentType);
             Assert.Equal("HelloWorld", requestDocument.Name);
             Assert.Equal("200", requestDocument.ResponseCode);
-            Assert.Equal("http://example.com:8080/search?q=OpenTelemetry", requestDocument.Url);
+            Assert.Equal("http://example.com:8080/search?q=OpenTelemetry", requestDocument.Url.AbsoluteUri);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(requestActivity.Duration.TotalMilliseconds, requestDocument.Extension_Duration);
@@ -99,11 +99,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             PrintActivity(requestActivity);
             var requestDocument = DocumentHelper.ConvertToRequest(requestActivity);
 
-            Assert.Equal(DocumentIngressDocumentType.Request, requestDocument.DocumentType);
+            Assert.Equal(DocumentType.Request, requestDocument.DocumentType);
             Assert.Equal(requestActivity.Duration.ToString("c"), requestDocument.Duration);
             Assert.Equal("GET /", requestDocument.Name);
             Assert.Equal("200", requestDocument.ResponseCode);
-            Assert.Equal(TestServerUrl, requestDocument.Url);
+            Assert.Equal(TestServerUrl, requestDocument.Url.AbsolutePath);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(requestActivity.Duration.TotalMilliseconds, requestDocument.Extension_Duration);

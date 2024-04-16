@@ -19,27 +19,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                writer.WriteObjectValue(Timeout);
+                writer.WriteObjectValue<object>(Timeout);
             }
-            if (Retry != null)
+            if (Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry"u8);
-                writer.WriteObjectValue(Retry);
+                writer.WriteObjectValue<object>(Retry);
             }
-            if (RetryIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(RetryIntervalInSeconds))
             {
                 writer.WritePropertyName("retryIntervalInSeconds"u8);
                 writer.WriteNumberValue(RetryIntervalInSeconds.Value);
             }
-            if (SecureInput.HasValue)
+            if (Optional.IsDefined(SecureInput))
             {
                 writer.WritePropertyName("secureInput"u8);
                 writer.WriteBooleanValue(SecureInput.Value);
             }
-            if (SecureOutput.HasValue)
+            if (Optional.IsDefined(SecureOutput))
             {
                 writer.WritePropertyName("secureOutput"u8);
                 writer.WriteBooleanValue(SecureOutput.Value);
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -124,12 +124,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ActivityPolicy FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeActivityPolicy(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class ActivityPolicyConverter : JsonConverter<ActivityPolicy>
         {
             public override void Write(Utf8JsonWriter writer, ActivityPolicy model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ActivityPolicy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

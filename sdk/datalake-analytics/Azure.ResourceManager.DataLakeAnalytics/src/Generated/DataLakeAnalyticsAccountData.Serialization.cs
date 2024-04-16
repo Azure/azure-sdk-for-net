@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 {
     public partial class DataLakeAnalyticsAccountData : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsAccountData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataLakeAnalyticsAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,189 +59,189 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && AccountId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Endpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (options.Format != "W" && DefaultDataLakeStoreAccount != null)
+            if (options.Format != "W" && Optional.IsDefined(DefaultDataLakeStoreAccount))
             {
                 writer.WritePropertyName("defaultDataLakeStoreAccount"u8);
                 writer.WriteStringValue(DefaultDataLakeStoreAccount);
             }
-            if (options.Format != "W" && !(DataLakeStoreAccounts is ChangeTrackingList<DataLakeStoreAccountInformationData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataLakeStoreAccounts))
             {
                 writer.WritePropertyName("dataLakeStoreAccounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataLakeStoreAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(PublicDataLakeStoreAccounts is ChangeTrackingList<DataLakeStoreAccountInformationData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PublicDataLakeStoreAccounts))
             {
                 writer.WritePropertyName("publicDataLakeStoreAccounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in PublicDataLakeStoreAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(StorageAccounts is ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(StorageAccounts))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ComputePolicies is ChangeTrackingList<DataLakeAnalyticsComputePolicyData> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ComputePolicies))
             {
                 writer.WritePropertyName("computePolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in ComputePolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(HiveMetastores is ChangeTrackingList<DataLakeAnalyticsHiveMetastore> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(HiveMetastores))
             {
                 writer.WritePropertyName("hiveMetastores"u8);
                 writer.WriteStartArray();
                 foreach (var item in HiveMetastores)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(VirtualNetworkRules is ChangeTrackingList<DataLakeAnalyticsVirtualNetworkRule> collection5 && collection5.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualNetworkRules))
             {
                 writer.WritePropertyName("virtualNetworkRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(FirewallRules is ChangeTrackingList<DataLakeAnalyticsFirewallRuleData> collection6 && collection6.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(FirewallRules))
             {
                 writer.WritePropertyName("firewallRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (FirewallState.HasValue)
+            if (Optional.IsDefined(FirewallState))
             {
                 writer.WritePropertyName("firewallState"u8);
                 writer.WriteStringValue(FirewallState.Value.ToSerialString());
             }
-            if (FirewallAllowAzureIPs.HasValue)
+            if (Optional.IsDefined(FirewallAllowAzureIPs))
             {
                 writer.WritePropertyName("firewallAllowAzureIps"u8);
                 writer.WriteStringValue(FirewallAllowAzureIPs.Value.ToSerialString());
             }
-            if (NewTier.HasValue)
+            if (Optional.IsDefined(NewTier))
             {
                 writer.WritePropertyName("newTier"u8);
                 writer.WriteStringValue(NewTier.Value.ToSerialString());
             }
-            if (options.Format != "W" && CurrentTier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentTier))
             {
                 writer.WritePropertyName("currentTier"u8);
                 writer.WriteStringValue(CurrentTier.Value.ToSerialString());
             }
-            if (MaxJobCount.HasValue)
+            if (Optional.IsDefined(MaxJobCount))
             {
                 writer.WritePropertyName("maxJobCount"u8);
                 writer.WriteNumberValue(MaxJobCount.Value);
             }
-            if (options.Format != "W" && MaxActiveJobCountPerUser.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxActiveJobCountPerUser))
             {
                 writer.WritePropertyName("maxActiveJobCountPerUser"u8);
                 writer.WriteNumberValue(MaxActiveJobCountPerUser.Value);
             }
-            if (options.Format != "W" && MaxQueuedJobCountPerUser.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxQueuedJobCountPerUser))
             {
                 writer.WritePropertyName("maxQueuedJobCountPerUser"u8);
                 writer.WriteNumberValue(MaxQueuedJobCountPerUser.Value);
             }
-            if (options.Format != "W" && MaxJobRunningTimeInMin.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxJobRunningTimeInMin))
             {
                 writer.WritePropertyName("maxJobRunningTimeInMin"u8);
                 writer.WriteNumberValue(MaxJobRunningTimeInMin.Value);
             }
-            if (options.Format != "W" && SystemMaxJobCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SystemMaxJobCount))
             {
                 writer.WritePropertyName("systemMaxJobCount"u8);
                 writer.WriteNumberValue(SystemMaxJobCount.Value);
             }
-            if (MaxDegreeOfParallelism.HasValue)
+            if (Optional.IsDefined(MaxDegreeOfParallelism))
             {
                 writer.WritePropertyName("maxDegreeOfParallelism"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelism.Value);
             }
-            if (options.Format != "W" && SystemMaxDegreeOfParallelism.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SystemMaxDegreeOfParallelism))
             {
                 writer.WritePropertyName("systemMaxDegreeOfParallelism"u8);
                 writer.WriteNumberValue(SystemMaxDegreeOfParallelism.Value);
             }
-            if (MaxDegreeOfParallelismPerJob.HasValue)
+            if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
             {
                 writer.WritePropertyName("maxDegreeOfParallelismPerJob"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelismPerJob.Value);
             }
-            if (options.Format != "W" && MinPriorityPerJob.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MinPriorityPerJob))
             {
                 writer.WritePropertyName("minPriorityPerJob"u8);
                 writer.WriteNumberValue(MinPriorityPerJob.Value);
             }
-            if (QueryStoreRetention.HasValue)
+            if (Optional.IsDefined(QueryStoreRetention))
             {
                 writer.WritePropertyName("queryStoreRetention"u8);
                 writer.WriteNumberValue(QueryStoreRetention.Value);
             }
-            if (options.Format != "W" && DebugDataAccessLevel.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DebugDataAccessLevel))
             {
                 writer.WritePropertyName("debugDataAccessLevel"u8);
                 writer.WriteStringValue(DebugDataAccessLevel.Value.ToSerialString());
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         internal static DataLakeAnalyticsAccountData DeserializeDataLakeAnalyticsAccountData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             int? queryStoreRetention = default;
             DebugDataAccessLevel? debugDataAccessLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -673,10 +673,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataLakeAnalyticsAccountData(
                 id,
                 name,
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         return DeserializeDataLakeAnalyticsAccountData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support reading '{options.Format}' format.");
             }
         }
 

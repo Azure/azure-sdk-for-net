@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class RestorePointData : IUtf8JsonSerializable, IJsonModel<RestorePointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorePointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorePointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestorePointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(ExcludeDisks is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludeDisks))
             {
                 writer.WritePropertyName("excludeDisks"u8);
                 writer.WriteStartArray();
@@ -61,35 +61,35 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (SourceMetadata != null)
+            if (Optional.IsDefined(SourceMetadata))
             {
                 writer.WritePropertyName("sourceMetadata"u8);
-                writer.WriteObjectValue(SourceMetadata);
+                writer.WriteObjectValue(SourceMetadata, options);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (ConsistencyMode.HasValue)
+            if (Optional.IsDefined(ConsistencyMode))
             {
                 writer.WritePropertyName("consistencyMode"u8);
                 writer.WriteStringValue(ConsistencyMode.Value.ToString());
             }
-            if (TimeCreated.HasValue)
+            if (Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (SourceRestorePoint != null)
+            if (Optional.IsDefined(SourceRestorePoint))
             {
                 writer.WritePropertyName("sourceRestorePoint"u8);
                 JsonSerializer.Serialize(writer, SourceRestorePoint);
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue(InstanceView, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestorePointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestorePointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static RestorePointData DeserializeRestorePointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute
             WritableSubResource sourceRestorePoint = default;
             RestorePointInstanceView instanceView = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RestorePointData(
                 id,
                 name,
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeRestorePointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestorePointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestorePointData)} does not support reading '{options.Format}' format.");
             }
         }
 

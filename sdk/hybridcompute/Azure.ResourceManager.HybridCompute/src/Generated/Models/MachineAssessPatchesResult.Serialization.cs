@@ -9,70 +9,69 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class MachineAssessPatchesResult : IUtf8JsonSerializable, IJsonModel<MachineAssessPatchesResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineAssessPatchesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineAssessPatchesResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineAssessPatchesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineAssessPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && AssessmentActivityId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AssessmentActivityId))
             {
                 writer.WritePropertyName("assessmentActivityId"u8);
                 writer.WriteStringValue(AssessmentActivityId.Value);
             }
-            if (options.Format != "W" && IsRebootPending.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsRebootPending))
             {
                 writer.WritePropertyName("rebootPending"u8);
                 writer.WriteBooleanValue(IsRebootPending.Value);
             }
-            if (AvailablePatchCountByClassification != null)
+            if (Optional.IsDefined(AvailablePatchCountByClassification))
             {
                 writer.WritePropertyName("availablePatchCountByClassification"u8);
-                writer.WriteObjectValue(AvailablePatchCountByClassification);
+                writer.WriteObjectValue(AvailablePatchCountByClassification, options);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && StartedBy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedBy))
             {
                 writer.WritePropertyName("startedBy"u8);
                 writer.WriteStringValue(StartedBy.Value.ToString());
             }
-            if (options.Format != "W" && PatchServiceUsed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PatchServiceUsed))
             {
                 writer.WritePropertyName("patchServiceUsed"u8);
                 writer.WriteStringValue(PatchServiceUsed.Value.ToString());
             }
-            if (options.Format != "W" && OSType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && ErrorDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 JsonSerializer.Serialize(writer, ErrorDetails);
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineAssessPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static MachineAssessPatchesResult DeserializeMachineAssessPatchesResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             HybridComputeOSType? osType = default;
             ResponseError errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -221,10 +220,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineAssessPatchesResult(
                 status,
                 assessmentActivityId,
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +263,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeMachineAssessPatchesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineAssessPatchesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

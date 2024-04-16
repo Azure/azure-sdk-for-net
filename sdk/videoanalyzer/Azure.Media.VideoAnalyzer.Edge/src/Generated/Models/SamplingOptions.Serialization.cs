@@ -15,12 +15,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SkipSamplesWithoutAnnotation != null)
+            if (Optional.IsDefined(SkipSamplesWithoutAnnotation))
             {
                 writer.WritePropertyName("skipSamplesWithoutAnnotation"u8);
                 writer.WriteStringValue(SkipSamplesWithoutAnnotation);
             }
-            if (MaximumSamplesPerSecond != null)
+            if (Optional.IsDefined(MaximumSamplesPerSecond))
             {
                 writer.WritePropertyName("maximumSamplesPerSecond"u8);
                 writer.WriteStringValue(MaximumSamplesPerSecond);
@@ -50,6 +50,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new SamplingOptions(skipSamplesWithoutAnnotation, maximumSamplesPerSecond);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SamplingOptions FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSamplingOptions(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

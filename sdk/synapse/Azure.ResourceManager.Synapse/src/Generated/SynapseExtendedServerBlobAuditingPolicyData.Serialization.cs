@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseExtendedServerBlobAuditingPolicyData : IUtf8JsonSerializable, IJsonModel<SynapseExtendedServerBlobAuditingPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseExtendedServerBlobAuditingPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseExtendedServerBlobAuditingPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseExtendedServerBlobAuditingPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseExtendedServerBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseExtendedServerBlobAuditingPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseExtendedServerBlobAuditingPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PredicateExpression != null)
+            if (Optional.IsDefined(PredicateExpression))
             {
                 writer.WritePropertyName("predicateExpression"u8);
                 writer.WriteStringValue(PredicateExpression);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (StorageEndpoint != null)
+            if (Optional.IsDefined(StorageEndpoint))
             {
                 writer.WritePropertyName("storageEndpoint"u8);
                 writer.WriteStringValue(StorageEndpoint);
             }
-            if (StorageAccountAccessKey != null)
+            if (Optional.IsDefined(StorageAccountAccessKey))
             {
                 writer.WritePropertyName("storageAccountAccessKey"u8);
                 writer.WriteStringValue(StorageAccountAccessKey);
             }
-            if (RetentionDays.HasValue)
+            if (Optional.IsDefined(RetentionDays))
             {
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
-            if (!(AuditActionsAndGroups is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AuditActionsAndGroups))
             {
                 writer.WritePropertyName("auditActionsAndGroups"u8);
                 writer.WriteStartArray();
@@ -85,27 +85,27 @@ namespace Azure.ResourceManager.Synapse
                 }
                 writer.WriteEndArray();
             }
-            if (StorageAccountSubscriptionId.HasValue)
+            if (Optional.IsDefined(StorageAccountSubscriptionId))
             {
                 writer.WritePropertyName("storageAccountSubscriptionId"u8);
                 writer.WriteStringValue(StorageAccountSubscriptionId.Value);
             }
-            if (IsStorageSecondaryKeyInUse.HasValue)
+            if (Optional.IsDefined(IsStorageSecondaryKeyInUse))
             {
                 writer.WritePropertyName("isStorageSecondaryKeyInUse"u8);
                 writer.WriteBooleanValue(IsStorageSecondaryKeyInUse.Value);
             }
-            if (IsAzureMonitorTargetEnabled.HasValue)
+            if (Optional.IsDefined(IsAzureMonitorTargetEnabled))
             {
                 writer.WritePropertyName("isAzureMonitorTargetEnabled"u8);
                 writer.WriteBooleanValue(IsAzureMonitorTargetEnabled.Value);
             }
-            if (QueueDelayMs.HasValue)
+            if (Optional.IsDefined(QueueDelayMs))
             {
                 writer.WritePropertyName("queueDelayMs"u8);
                 writer.WriteNumberValue(QueueDelayMs.Value);
             }
-            if (IsDevopsAuditEnabled.HasValue)
+            if (Optional.IsDefined(IsDevopsAuditEnabled))
             {
                 writer.WritePropertyName("isDevopsAuditEnabled"u8);
                 writer.WriteBooleanValue(IsDevopsAuditEnabled.Value);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseExtendedServerBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseExtendedServerBlobAuditingPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseExtendedServerBlobAuditingPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseExtendedServerBlobAuditingPolicyData DeserializeSynapseExtendedServerBlobAuditingPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Synapse
             int? queueDelayMs = default;
             bool? isDevopsAuditEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -298,10 +298,10 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SynapseExtendedServerBlobAuditingPolicyData(
                 id,
                 name,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Synapse
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseExtendedServerBlobAuditingPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseExtendedServerBlobAuditingPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Synapse
                         return DeserializeSynapseExtendedServerBlobAuditingPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseExtendedServerBlobAuditingPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseExtendedServerBlobAuditingPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

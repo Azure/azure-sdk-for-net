@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementCacheData : IUtf8JsonSerializable, IJsonModel<ApiManagementCacheData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementCacheData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementCacheData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementCacheData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCacheData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementCacheData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementCacheData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (UseFromLocation != null)
+            if (Optional.IsDefined(UseFromLocation))
             {
                 writer.WritePropertyName("useFromLocation"u8);
                 writer.WriteStringValue(UseFromLocation);
             }
-            if (ResourceUri != null)
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCacheData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementCacheData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementCacheData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiManagementCacheData DeserializeApiManagementCacheData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApiManagement
             string useFromLocation = default;
             Uri resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiManagementCacheData(
                 id,
                 name,
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementCacheData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementCacheData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiManagementCacheData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementCacheData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementCacheData)} does not support reading '{options.Format}' format.");
             }
         }
 

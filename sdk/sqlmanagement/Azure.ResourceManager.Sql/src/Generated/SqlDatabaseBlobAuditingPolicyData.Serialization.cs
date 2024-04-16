@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,18 +19,18 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlDatabaseBlobAuditingPolicyData : IUtf8JsonSerializable, IJsonModel<SqlDatabaseBlobAuditingPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseBlobAuditingPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseBlobAuditingPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlDatabaseBlobAuditingPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,19 +50,19 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RetentionDays.HasValue)
+            if (Optional.IsDefined(RetentionDays))
             {
                 writer.WritePropertyName("retentionDays"u8);
                 writer.WriteNumberValue(RetentionDays.Value);
             }
-            if (!(AuditActionsAndGroups is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AuditActionsAndGroups))
             {
                 writer.WritePropertyName("auditActionsAndGroups"u8);
                 writer.WriteStartArray();
@@ -70,42 +72,42 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (IsStorageSecondaryKeyInUse.HasValue)
+            if (Optional.IsDefined(IsStorageSecondaryKeyInUse))
             {
                 writer.WritePropertyName("isStorageSecondaryKeyInUse"u8);
                 writer.WriteBooleanValue(IsStorageSecondaryKeyInUse.Value);
             }
-            if (IsAzureMonitorTargetEnabled.HasValue)
+            if (Optional.IsDefined(IsAzureMonitorTargetEnabled))
             {
                 writer.WritePropertyName("isAzureMonitorTargetEnabled"u8);
                 writer.WriteBooleanValue(IsAzureMonitorTargetEnabled.Value);
             }
-            if (QueueDelayMs.HasValue)
+            if (Optional.IsDefined(QueueDelayMs))
             {
                 writer.WritePropertyName("queueDelayMs"u8);
                 writer.WriteNumberValue(QueueDelayMs.Value);
             }
-            if (IsManagedIdentityInUse.HasValue)
+            if (Optional.IsDefined(IsManagedIdentityInUse))
             {
                 writer.WritePropertyName("isManagedIdentityInUse"u8);
                 writer.WriteBooleanValue(IsManagedIdentityInUse.Value);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (StorageEndpoint != null)
+            if (Optional.IsDefined(StorageEndpoint))
             {
                 writer.WritePropertyName("storageEndpoint"u8);
                 writer.WriteStringValue(StorageEndpoint);
             }
-            if (StorageAccountAccessKey != null)
+            if (Optional.IsDefined(StorageAccountAccessKey))
             {
                 writer.WritePropertyName("storageAccountAccessKey"u8);
                 writer.WriteStringValue(StorageAccountAccessKey);
             }
-            if (StorageAccountSubscriptionId.HasValue)
+            if (Optional.IsDefined(StorageAccountSubscriptionId))
             {
                 writer.WritePropertyName("storageAccountSubscriptionId"u8);
                 writer.WriteStringValue(StorageAccountSubscriptionId.Value);
@@ -134,7 +136,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +145,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlDatabaseBlobAuditingPolicyData DeserializeSqlDatabaseBlobAuditingPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -165,7 +167,7 @@ namespace Azure.ResourceManager.Sql
             string storageAccountAccessKey = default;
             Guid? storageAccountSubscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -298,10 +300,10 @@ namespace Azure.ResourceManager.Sql
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlDatabaseBlobAuditingPolicyData(
                 id,
                 name,
@@ -321,6 +323,276 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionDays), out propertyOverride);
+            if (Optional.IsDefined(RetentionDays) || hasPropertyOverride)
+            {
+                builder.Append("    retentionDays: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{RetentionDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuditActionsAndGroups), out propertyOverride);
+            if (Optional.IsCollectionDefined(AuditActionsAndGroups) || hasPropertyOverride)
+            {
+                if (AuditActionsAndGroups.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    auditActionsAndGroups: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in AuditActionsAndGroups)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStorageSecondaryKeyInUse), out propertyOverride);
+            if (Optional.IsDefined(IsStorageSecondaryKeyInUse) || hasPropertyOverride)
+            {
+                builder.Append("    isStorageSecondaryKeyInUse: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsStorageSecondaryKeyInUse.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAzureMonitorTargetEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsAzureMonitorTargetEnabled) || hasPropertyOverride)
+            {
+                builder.Append("    isAzureMonitorTargetEnabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsAzureMonitorTargetEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueueDelayMs), out propertyOverride);
+            if (Optional.IsDefined(QueueDelayMs) || hasPropertyOverride)
+            {
+                builder.Append("    queueDelayMs: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{QueueDelayMs.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsManagedIdentityInUse), out propertyOverride);
+            if (Optional.IsDefined(IsManagedIdentityInUse) || hasPropertyOverride)
+            {
+                builder.Append("    isManagedIdentityInUse: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsManagedIdentityInUse.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (Optional.IsDefined(State) || hasPropertyOverride)
+            {
+                builder.Append("    state: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{State.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageEndpoint), out propertyOverride);
+            if (Optional.IsDefined(StorageEndpoint) || hasPropertyOverride)
+            {
+                builder.Append("    storageEndpoint: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (StorageEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountAccessKey), out propertyOverride);
+            if (Optional.IsDefined(StorageAccountAccessKey) || hasPropertyOverride)
+            {
+                builder.Append("    storageAccountAccessKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (StorageAccountAccessKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageAccountAccessKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageAccountAccessKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountSubscriptionId), out propertyOverride);
+            if (Optional.IsDefined(StorageAccountSubscriptionId) || hasPropertyOverride)
+            {
+                builder.Append("    storageAccountSubscriptionId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{StorageAccountSubscriptionId.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SqlDatabaseBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
@@ -329,8 +601,10 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -346,7 +620,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeSqlDatabaseBlobAuditingPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

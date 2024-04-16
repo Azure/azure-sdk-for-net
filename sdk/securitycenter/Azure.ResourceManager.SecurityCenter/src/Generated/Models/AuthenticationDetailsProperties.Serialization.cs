@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     [PersistableModelProxy(typeof(UnknownAuthenticationDetailsProperties))]
     public partial class AuthenticationDetailsProperties : IUtf8JsonSerializable, IJsonModel<AuthenticationDetailsProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthenticationDetailsProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthenticationDetailsProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AuthenticationDetailsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AuthenticationDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthenticationDetailsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthenticationDetailsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AuthenticationProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AuthenticationProvisioningState))
             {
                 writer.WritePropertyName("authenticationProvisioningState"u8);
                 writer.WriteStringValue(AuthenticationProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && !(GrantedPermissions is ChangeTrackingList<SecurityCenterCloudPermission> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(GrantedPermissions))
             {
                 writer.WritePropertyName("grantedPermissions"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthenticationDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthenticationDetailsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthenticationDetailsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AuthenticationDetailsProperties DeserializeAuthenticationDetailsProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthenticationDetailsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthenticationDetailsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAuthenticationDetailsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthenticationDetailsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthenticationDetailsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

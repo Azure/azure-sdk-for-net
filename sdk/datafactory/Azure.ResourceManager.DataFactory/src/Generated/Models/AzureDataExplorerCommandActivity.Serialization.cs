@@ -16,63 +16,63 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AzureDataExplorerCommandActivity : IUtf8JsonSerializable, IJsonModel<AzureDataExplorerCommandActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDataExplorerCommandActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDataExplorerCommandActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureDataExplorerCommandActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerCommandActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDataExplorerCommandActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDataExplorerCommandActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("command"u8);
             JsonSerializer.Serialize(writer, Command);
-            if (CommandTimeout != null)
+            if (Optional.IsDefined(CommandTimeout))
             {
                 writer.WritePropertyName("commandTimeout"u8);
                 JsonSerializer.Serialize(writer, CommandTimeout);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerCommandActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDataExplorerCommandActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDataExplorerCommandActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureDataExplorerCommandActivity DeserializeAzureDataExplorerCommandActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDataExplorerCommandActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDataExplorerCommandActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAzureDataExplorerCommandActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDataExplorerCommandActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDataExplorerCommandActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

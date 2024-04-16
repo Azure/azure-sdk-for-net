@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class TruncationSelectionPolicy : IUtf8JsonSerializable, IJsonModel<TruncationSelectionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TruncationSelectionPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TruncationSelectionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TruncationSelectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TruncationSelectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TruncationSelectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TruncationSelectionPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TruncationPercentage.HasValue)
+            if (Optional.IsDefined(TruncationPercentage))
             {
                 writer.WritePropertyName("truncationPercentage"u8);
                 writer.WriteNumberValue(TruncationPercentage.Value);
             }
-            if (DelayEvaluation.HasValue)
+            if (Optional.IsDefined(DelayEvaluation))
             {
                 writer.WritePropertyName("delayEvaluation"u8);
                 writer.WriteNumberValue(DelayEvaluation.Value);
             }
-            if (EvaluationInterval.HasValue)
+            if (Optional.IsDefined(EvaluationInterval))
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteNumberValue(EvaluationInterval.Value);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<TruncationSelectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TruncationSelectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TruncationSelectionPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TruncationSelectionPolicy DeserializeTruncationSelectionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             int? evaluationInterval = default;
             EarlyTerminationPolicyType policyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("truncationPercentage"u8))
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TruncationSelectionPolicy(delayEvaluation, evaluationInterval, policyType, serializedAdditionalRawData, truncationPercentage);
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TruncationSelectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TruncationSelectionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeTruncationSelectionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TruncationSelectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TruncationSelectionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

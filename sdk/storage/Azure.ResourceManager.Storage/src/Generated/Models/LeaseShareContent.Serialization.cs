@@ -15,35 +15,35 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class LeaseShareContent : IUtf8JsonSerializable, IJsonModel<LeaseShareContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LeaseShareContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LeaseShareContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LeaseShareContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LeaseShareContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LeaseShareContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LeaseShareContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
-            if (LeaseId != null)
+            if (Optional.IsDefined(LeaseId))
             {
                 writer.WritePropertyName("leaseId"u8);
                 writer.WriteStringValue(LeaseId);
             }
-            if (BreakPeriod.HasValue)
+            if (Optional.IsDefined(BreakPeriod))
             {
                 writer.WritePropertyName("breakPeriod"u8);
                 writer.WriteNumberValue(BreakPeriod.Value);
             }
-            if (LeaseDuration.HasValue)
+            if (Optional.IsDefined(LeaseDuration))
             {
                 writer.WritePropertyName("leaseDuration"u8);
                 writer.WriteNumberValue(LeaseDuration.Value);
             }
-            if (ProposedLeaseId != null)
+            if (Optional.IsDefined(ProposedLeaseId))
             {
                 writer.WritePropertyName("proposedLeaseId"u8);
                 writer.WriteStringValue(ProposedLeaseId);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LeaseShareContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LeaseShareContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LeaseShareContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static LeaseShareContent DeserializeLeaseShareContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Models
             int? leaseDuration = default;
             string proposedLeaseId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("action"u8))
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LeaseShareContent(
                 action,
                 leaseId,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Storage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LeaseShareContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LeaseShareContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeLeaseShareContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LeaseShareContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LeaseShareContent)} does not support reading '{options.Format}' format.");
             }
         }
 

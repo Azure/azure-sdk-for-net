@@ -15,103 +15,103 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class ReplicationProtectedItemProperties : IUtf8JsonSerializable, IJsonModel<ReplicationProtectedItemProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProtectedItemProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProtectedItemProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReplicationProtectedItemProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationProtectedItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationProtectedItemProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (ProtectedItemType != null)
+            if (Optional.IsDefined(ProtectedItemType))
             {
                 writer.WritePropertyName("protectedItemType"u8);
                 writer.WriteStringValue(ProtectedItemType);
             }
-            if (ProtectableItemId != null)
+            if (Optional.IsDefined(ProtectableItemId))
             {
                 writer.WritePropertyName("protectableItemId"u8);
                 writer.WriteStringValue(ProtectableItemId);
             }
-            if (RecoveryServicesProviderId != null)
+            if (Optional.IsDefined(RecoveryServicesProviderId))
             {
                 writer.WritePropertyName("recoveryServicesProviderId"u8);
                 writer.WriteStringValue(RecoveryServicesProviderId);
             }
-            if (PrimaryFabricFriendlyName != null)
+            if (Optional.IsDefined(PrimaryFabricFriendlyName))
             {
                 writer.WritePropertyName("primaryFabricFriendlyName"u8);
                 writer.WriteStringValue(PrimaryFabricFriendlyName);
             }
-            if (PrimaryFabricProvider != null)
+            if (Optional.IsDefined(PrimaryFabricProvider))
             {
                 writer.WritePropertyName("primaryFabricProvider"u8);
                 writer.WriteStringValue(PrimaryFabricProvider);
             }
-            if (RecoveryFabricFriendlyName != null)
+            if (Optional.IsDefined(RecoveryFabricFriendlyName))
             {
                 writer.WritePropertyName("recoveryFabricFriendlyName"u8);
                 writer.WriteStringValue(RecoveryFabricFriendlyName);
             }
-            if (RecoveryFabricId != null)
+            if (Optional.IsDefined(RecoveryFabricId))
             {
                 writer.WritePropertyName("recoveryFabricId"u8);
                 writer.WriteStringValue(RecoveryFabricId);
             }
-            if (PrimaryProtectionContainerFriendlyName != null)
+            if (Optional.IsDefined(PrimaryProtectionContainerFriendlyName))
             {
                 writer.WritePropertyName("primaryProtectionContainerFriendlyName"u8);
                 writer.WriteStringValue(PrimaryProtectionContainerFriendlyName);
             }
-            if (RecoveryProtectionContainerFriendlyName != null)
+            if (Optional.IsDefined(RecoveryProtectionContainerFriendlyName))
             {
                 writer.WritePropertyName("recoveryProtectionContainerFriendlyName"u8);
                 writer.WriteStringValue(RecoveryProtectionContainerFriendlyName);
             }
-            if (ProtectionState != null)
+            if (Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState);
             }
-            if (ProtectionStateDescription != null)
+            if (Optional.IsDefined(ProtectionStateDescription))
             {
                 writer.WritePropertyName("protectionStateDescription"u8);
                 writer.WriteStringValue(ProtectionStateDescription);
             }
-            if (ActiveLocation != null)
+            if (Optional.IsDefined(ActiveLocation))
             {
                 writer.WritePropertyName("activeLocation"u8);
                 writer.WriteStringValue(ActiveLocation);
             }
-            if (TestFailoverState != null)
+            if (Optional.IsDefined(TestFailoverState))
             {
                 writer.WritePropertyName("testFailoverState"u8);
                 writer.WriteStringValue(TestFailoverState);
             }
-            if (TestFailoverStateDescription != null)
+            if (Optional.IsDefined(TestFailoverStateDescription))
             {
                 writer.WritePropertyName("testFailoverStateDescription"u8);
                 writer.WriteStringValue(TestFailoverStateDescription);
             }
-            if (SwitchProviderState != null)
+            if (Optional.IsDefined(SwitchProviderState))
             {
                 writer.WritePropertyName("switchProviderState"u8);
                 writer.WriteStringValue(SwitchProviderState);
             }
-            if (SwitchProviderStateDescription != null)
+            if (Optional.IsDefined(SwitchProviderStateDescription))
             {
                 writer.WritePropertyName("switchProviderStateDescription"u8);
                 writer.WriteStringValue(SwitchProviderStateDescription);
             }
-            if (!(AllowedOperations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedOperations))
             {
                 writer.WritePropertyName("allowedOperations"u8);
                 writer.WriteStartArray();
@@ -121,67 +121,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ReplicationHealth != null)
+            if (Optional.IsDefined(ReplicationHealth))
             {
                 writer.WritePropertyName("replicationHealth"u8);
                 writer.WriteStringValue(ReplicationHealth);
             }
-            if (FailoverHealth != null)
+            if (Optional.IsDefined(FailoverHealth))
             {
                 writer.WritePropertyName("failoverHealth"u8);
                 writer.WriteStringValue(FailoverHealth);
             }
-            if (!(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(HealthErrors))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (PolicyFriendlyName != null)
+            if (Optional.IsDefined(PolicyFriendlyName))
             {
                 writer.WritePropertyName("policyFriendlyName"u8);
                 writer.WriteStringValue(PolicyFriendlyName);
             }
-            if (LastSuccessfulFailoverOn.HasValue)
+            if (Optional.IsDefined(LastSuccessfulFailoverOn))
             {
                 writer.WritePropertyName("lastSuccessfulFailoverTime"u8);
                 writer.WriteStringValue(LastSuccessfulFailoverOn.Value, "O");
             }
-            if (LastSuccessfulTestFailoverOn.HasValue)
+            if (Optional.IsDefined(LastSuccessfulTestFailoverOn))
             {
                 writer.WritePropertyName("lastSuccessfulTestFailoverTime"u8);
                 writer.WriteStringValue(LastSuccessfulTestFailoverOn.Value, "O");
             }
-            if (CurrentScenario != null)
+            if (Optional.IsDefined(CurrentScenario))
             {
                 writer.WritePropertyName("currentScenario"u8);
-                writer.WriteObjectValue(CurrentScenario);
+                writer.WriteObjectValue(CurrentScenario, options);
             }
-            if (FailoverRecoveryPointId != null)
+            if (Optional.IsDefined(FailoverRecoveryPointId))
             {
                 writer.WritePropertyName("failoverRecoveryPointId"u8);
                 writer.WriteStringValue(FailoverRecoveryPointId);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails);
+                writer.WriteObjectValue(ProviderSpecificDetails, options);
             }
-            if (RecoveryContainerId != null)
+            if (Optional.IsDefined(RecoveryContainerId))
             {
                 writer.WritePropertyName("recoveryContainerId"u8);
                 writer.WriteStringValue(RecoveryContainerId);
             }
-            if (EventCorrelationId.HasValue)
+            if (Optional.IsDefined(EventCorrelationId))
             {
                 writer.WritePropertyName("eventCorrelationId"u8);
                 writer.WriteStringValue(EventCorrelationId.Value);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationProtectedItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationProtectedItemProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static ReplicationProtectedItemProperties DeserializeReplicationProtectedItemProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier recoveryContainerId = default;
             Guid? eventCorrelationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -468,10 +468,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReplicationProtectedItemProperties(
                 friendlyName,
                 protectedItemType,
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationProtectedItemProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeReplicationProtectedItemProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationProtectedItemProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

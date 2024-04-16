@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,18 +16,18 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionEventSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionEventSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionEventSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionEventSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionEventSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEventSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -48,122 +47,122 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TransactOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TransactOn))
             {
                 writer.WritePropertyName("transactionDate"u8);
                 writer.WriteStringValue(TransactOn.Value, "O");
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && NewCredit != null)
+            if (options.Format != "W" && Optional.IsDefined(NewCredit))
             {
                 writer.WritePropertyName("newCredit"u8);
-                writer.WriteObjectValue(NewCredit);
+                writer.WriteObjectValue(NewCredit, options);
             }
-            if (options.Format != "W" && Adjustments != null)
+            if (options.Format != "W" && Optional.IsDefined(Adjustments))
             {
                 writer.WritePropertyName("adjustments"u8);
-                writer.WriteObjectValue(Adjustments);
+                writer.WriteObjectValue(Adjustments, options);
             }
-            if (options.Format != "W" && CreditExpired != null)
+            if (options.Format != "W" && Optional.IsDefined(CreditExpired))
             {
                 writer.WritePropertyName("creditExpired"u8);
-                writer.WriteObjectValue(CreditExpired);
+                writer.WriteObjectValue(CreditExpired, options);
             }
-            if (options.Format != "W" && Charges != null)
+            if (options.Format != "W" && Optional.IsDefined(Charges))
             {
                 writer.WritePropertyName("charges"u8);
-                writer.WriteObjectValue(Charges);
+                writer.WriteObjectValue(Charges, options);
             }
-            if (options.Format != "W" && ClosedBalance != null)
+            if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
             {
                 writer.WritePropertyName("closedBalance"u8);
-                writer.WriteObjectValue(ClosedBalance);
+                writer.WriteObjectValue(ClosedBalance, options);
             }
-            if (EventType.HasValue)
+            if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
             }
-            if (options.Format != "W" && InvoiceNumber != null)
+            if (options.Format != "W" && Optional.IsDefined(InvoiceNumber))
             {
                 writer.WritePropertyName("invoiceNumber"u8);
                 writer.WriteStringValue(InvoiceNumber);
             }
-            if (options.Format != "W" && BillingProfileId != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (options.Format != "W" && BillingProfileDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileDisplayName))
             {
                 writer.WritePropertyName("billingProfileDisplayName"u8);
                 writer.WriteStringValue(BillingProfileDisplayName);
             }
-            if (options.Format != "W" && LotId != null)
+            if (options.Format != "W" && Optional.IsDefined(LotId))
             {
                 writer.WritePropertyName("lotId"u8);
                 writer.WriteStringValue(LotId);
             }
-            if (options.Format != "W" && LotSource != null)
+            if (options.Format != "W" && Optional.IsDefined(LotSource))
             {
                 writer.WritePropertyName("lotSource"u8);
                 writer.WriteStringValue(LotSource);
             }
-            if (options.Format != "W" && CanceledCredit != null)
+            if (options.Format != "W" && Optional.IsDefined(CanceledCredit))
             {
                 writer.WritePropertyName("canceledCredit"u8);
-                writer.WriteObjectValue(CanceledCredit);
+                writer.WriteObjectValue(CanceledCredit, options);
             }
-            if (options.Format != "W" && CreditCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(CreditCurrency))
             {
                 writer.WritePropertyName("creditCurrency"u8);
                 writer.WriteStringValue(CreditCurrency);
             }
-            if (options.Format != "W" && BillingCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingCurrency))
             {
                 writer.WritePropertyName("billingCurrency"u8);
                 writer.WriteStringValue(BillingCurrency);
             }
-            if (options.Format != "W" && Reseller != null)
+            if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller);
+                writer.WriteObjectValue(Reseller, options);
             }
-            if (options.Format != "W" && CreditExpiredInBillingCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(CreditExpiredInBillingCurrency))
             {
                 writer.WritePropertyName("creditExpiredInBillingCurrency"u8);
-                writer.WriteObjectValue(CreditExpiredInBillingCurrency);
+                writer.WriteObjectValue(CreditExpiredInBillingCurrency, options);
             }
-            if (options.Format != "W" && NewCreditInBillingCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(NewCreditInBillingCurrency))
             {
                 writer.WritePropertyName("newCreditInBillingCurrency"u8);
-                writer.WriteObjectValue(NewCreditInBillingCurrency);
+                writer.WriteObjectValue(NewCreditInBillingCurrency, options);
             }
-            if (options.Format != "W" && AdjustmentsInBillingCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(AdjustmentsInBillingCurrency))
             {
                 writer.WritePropertyName("adjustmentsInBillingCurrency"u8);
-                writer.WriteObjectValue(AdjustmentsInBillingCurrency);
+                writer.WriteObjectValue(AdjustmentsInBillingCurrency, options);
             }
-            if (options.Format != "W" && ChargesInBillingCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(ChargesInBillingCurrency))
             {
                 writer.WritePropertyName("chargesInBillingCurrency"u8);
-                writer.WriteObjectValue(ChargesInBillingCurrency);
+                writer.WriteObjectValue(ChargesInBillingCurrency, options);
             }
-            if (options.Format != "W" && ClosedBalanceInBillingCurrency != null)
+            if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue(ClosedBalanceInBillingCurrency);
+                writer.WriteObjectValue(ClosedBalanceInBillingCurrency, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEventSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionEventSummary DeserializeConsumptionEventSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.Consumption.Models
             ConsumptionAmountWithExchangeRate chargesInBillingCurrency = default;
             ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -456,10 +455,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionEventSummary(
                 id,
                 name,
@@ -500,7 +499,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -516,7 +515,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionEventSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

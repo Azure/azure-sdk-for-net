@@ -17,25 +17,25 @@ namespace Azure.ResourceManager.IotCentral
 {
     public partial class IotCentralAppData : IUtf8JsonSerializable, IJsonModel<IotCentralAppData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotCentralAppData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotCentralAppData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotCentralAppData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IotCentralAppData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotCentralAppData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotCentralAppData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
-            if (Identity != null)
+            writer.WriteObjectValue(Sku, options);
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,60 +63,60 @@ namespace Azure.ResourceManager.IotCentral
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ApplicationId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Subdomain != null)
+            if (Optional.IsDefined(Subdomain))
             {
                 writer.WritePropertyName("subdomain"u8);
                 writer.WriteStringValue(Subdomain);
             }
-            if (Template != null)
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteStringValue(Template);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (NetworkRuleSets != null)
+            if (Optional.IsDefined(NetworkRuleSets))
             {
                 writer.WritePropertyName("networkRuleSets"u8);
-                writer.WriteObjectValue(NetworkRuleSets);
+                writer.WriteObjectValue(NetworkRuleSets, options);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<IotCentralPrivateEndpointConnectionData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotCentral
             var format = options.Format == "W" ? ((IPersistableModel<IotCentralAppData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotCentralAppData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotCentralAppData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.IotCentral
 
         internal static IotCentralAppData DeserializeIotCentralAppData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.IotCentral
             IotCentralNetworkRuleSets networkRuleSets = default;
             IReadOnlyList<IotCentralPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -325,10 +325,10 @@ namespace Azure.ResourceManager.IotCentral
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IotCentralAppData(
                 id,
                 name,
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.IotCentral
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotCentralAppData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotCentralAppData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.IotCentral
                         return DeserializeIotCentralAppData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotCentralAppData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotCentralAppData)} does not support reading '{options.Format}' format.");
             }
         }
 

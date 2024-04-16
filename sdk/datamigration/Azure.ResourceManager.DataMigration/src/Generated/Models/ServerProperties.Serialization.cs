@@ -15,43 +15,43 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class ServerProperties : IUtf8JsonSerializable, IJsonModel<ServerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ServerPlatform != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerPlatform))
             {
                 writer.WritePropertyName("serverPlatform"u8);
                 writer.WriteStringValue(ServerPlatform);
             }
-            if (options.Format != "W" && ServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && ServerVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerVersion))
             {
                 writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion);
             }
-            if (options.Format != "W" && ServerEdition != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerEdition))
             {
                 writer.WritePropertyName("serverEdition"u8);
                 writer.WriteStringValue(ServerEdition);
             }
-            if (options.Format != "W" && ServerOperatingSystemVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerOperatingSystemVersion))
             {
                 writer.WritePropertyName("serverOperatingSystemVersion"u8);
                 writer.WriteStringValue(ServerOperatingSystemVersion);
             }
-            if (options.Format != "W" && ServerDatabaseCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServerDatabaseCount))
             {
                 writer.WritePropertyName("serverDatabaseCount"u8);
                 writer.WriteNumberValue(ServerDatabaseCount.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ServerProperties DeserializeServerProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string serverOperatingSystemVersion = default;
             int? serverDatabaseCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverPlatform"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServerProperties(
                 serverPlatform,
                 serverName,
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeServerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Pipelines is ChangeTrackingList<TriggerPipelineReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Pipelines))
             {
                 writer.WritePropertyName("pipelines"u8);
                 writer.WriteStartArray();
@@ -31,12 +31,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -47,23 +47,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (BlobPathBeginsWith != null)
+            if (Optional.IsDefined(BlobPathBeginsWith))
             {
                 writer.WritePropertyName("blobPathBeginsWith"u8);
                 writer.WriteStringValue(BlobPathBeginsWith);
             }
-            if (BlobPathEndsWith != null)
+            if (Optional.IsDefined(BlobPathEndsWith))
             {
                 writer.WritePropertyName("blobPathEndsWith"u8);
                 writer.WriteStringValue(BlobPathEndsWith);
             }
-            if (IgnoreEmptyBlobs.HasValue)
+            if (Optional.IsDefined(IgnoreEmptyBlobs))
             {
                 writer.WritePropertyName("ignoreEmptyBlobs"u8);
                 writer.WriteBooleanValue(IgnoreEmptyBlobs.Value);
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -223,12 +223,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 scope);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new BlobEventsTrigger FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBlobEventsTrigger(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class BlobEventsTriggerConverter : JsonConverter<BlobEventsTrigger>
         {
             public override void Write(Utf8JsonWriter writer, BlobEventsTrigger model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override BlobEventsTrigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

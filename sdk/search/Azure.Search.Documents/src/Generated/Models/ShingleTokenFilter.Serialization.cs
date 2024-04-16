@@ -15,32 +15,32 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxShingleSize.HasValue)
+            if (Optional.IsDefined(MaxShingleSize))
             {
                 writer.WritePropertyName("maxShingleSize"u8);
                 writer.WriteNumberValue(MaxShingleSize.Value);
             }
-            if (MinShingleSize.HasValue)
+            if (Optional.IsDefined(MinShingleSize))
             {
                 writer.WritePropertyName("minShingleSize"u8);
                 writer.WriteNumberValue(MinShingleSize.Value);
             }
-            if (OutputUnigrams.HasValue)
+            if (Optional.IsDefined(OutputUnigrams))
             {
                 writer.WritePropertyName("outputUnigrams"u8);
                 writer.WriteBooleanValue(OutputUnigrams.Value);
             }
-            if (OutputUnigramsIfNoShingles.HasValue)
+            if (Optional.IsDefined(OutputUnigramsIfNoShingles))
             {
                 writer.WritePropertyName("outputUnigramsIfNoShingles"u8);
                 writer.WriteBooleanValue(OutputUnigramsIfNoShingles.Value);
             }
-            if (TokenSeparator != null)
+            if (Optional.IsDefined(TokenSeparator))
             {
                 writer.WritePropertyName("tokenSeparator"u8);
                 writer.WriteStringValue(TokenSeparator);
             }
-            if (FilterToken != null)
+            if (Optional.IsDefined(FilterToken))
             {
                 writer.WritePropertyName("filterToken"u8);
                 writer.WriteStringValue(FilterToken);
@@ -134,6 +134,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 outputUnigramsIfNoShingles,
                 tokenSeparator,
                 filterToken);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ShingleTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeShingleTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

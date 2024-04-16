@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,43 +18,43 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CognitiveServicesAccountModel : IUtf8JsonSerializable, IJsonModel<CognitiveServicesAccountModel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesAccountModel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesAccountModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CognitiveServicesAccountModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BaseModel != null)
+            if (Optional.IsDefined(BaseModel))
             {
                 writer.WritePropertyName("baseModel"u8);
-                writer.WriteObjectValue(BaseModel);
+                writer.WriteObjectValue(BaseModel, options);
             }
-            if (IsDefaultVersion.HasValue)
+            if (Optional.IsDefined(IsDefaultVersion))
             {
                 writer.WritePropertyName("isDefaultVersion"u8);
                 writer.WriteBooleanValue(IsDefaultVersion.Value);
             }
-            if (!(Skus is ChangeTrackingList<CognitiveServicesModelSku> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Skus))
             {
                 writer.WritePropertyName("skus"u8);
                 writer.WriteStartArray();
                 foreach (var item in Skus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (MaxCapacity.HasValue)
+            if (Optional.IsDefined(MaxCapacity))
             {
                 writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);
             }
-            if (!(Capabilities is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -63,7 +65,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(FinetuneCapabilities is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(FinetuneCapabilities))
             {
                 writer.WritePropertyName("finetuneCapabilities"u8);
                 writer.WriteStartObject();
@@ -74,45 +76,45 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Deprecation != null)
+            if (Optional.IsDefined(Deprecation))
             {
                 writer.WritePropertyName("deprecation"u8);
-                writer.WriteObjectValue(Deprecation);
+                writer.WriteObjectValue(Deprecation, options);
             }
-            if (LifecycleStatus.HasValue)
+            if (Optional.IsDefined(LifecycleStatus))
             {
                 writer.WritePropertyName("lifecycleStatus"u8);
                 writer.WriteStringValue(LifecycleStatus.Value.ToString());
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            if (Format != null)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (options.Format != "W" && CallRateLimit != null)
+            if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
-                writer.WriteObjectValue(CallRateLimit);
+                writer.WriteObjectValue(CallRateLimit, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -137,7 +139,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +148,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesAccountModel DeserializeCognitiveServicesAccountModel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,7 +169,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string source = default;
             ServiceAccountCallRateLimit callRateLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseModel"u8))
@@ -297,10 +299,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CognitiveServicesAccountModel(
                 format,
                 name,
@@ -319,6 +321,302 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 systemData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseModel), out propertyOverride);
+            if (Optional.IsDefined(BaseModel) || hasPropertyOverride)
+            {
+                builder.Append("  baseModel: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, BaseModel, options, 2, false, "  baseModel: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefaultVersion), out propertyOverride);
+            if (Optional.IsDefined(IsDefaultVersion) || hasPropertyOverride)
+            {
+                builder.Append("  isDefaultVersion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDefaultVersion.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Skus), out propertyOverride);
+            if (Optional.IsCollectionDefined(Skus) || hasPropertyOverride)
+            {
+                if (Skus.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  skus: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Skus)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  skus: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxCapacity), out propertyOverride);
+            if (Optional.IsDefined(MaxCapacity) || hasPropertyOverride)
+            {
+                builder.Append("  maxCapacity: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{MaxCapacity.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capabilities), out propertyOverride);
+            if (Optional.IsCollectionDefined(Capabilities) || hasPropertyOverride)
+            {
+                if (Capabilities.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  capabilities: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in Capabilities)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FinetuneCapabilities), out propertyOverride);
+            if (Optional.IsCollectionDefined(FinetuneCapabilities) || hasPropertyOverride)
+            {
+                if (FinetuneCapabilities.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  finetuneCapabilities: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in FinetuneCapabilities)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Deprecation), out propertyOverride);
+            if (Optional.IsDefined(Deprecation) || hasPropertyOverride)
+            {
+                builder.Append("  deprecation: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Deprecation, options, 2, false, "  deprecation: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LifecycleStatus), out propertyOverride);
+            if (Optional.IsDefined(LifecycleStatus) || hasPropertyOverride)
+            {
+                builder.Append("  lifecycleStatus: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{LifecycleStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, SystemData, options, 2, false, "  systemData: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Format), out propertyOverride);
+            if (Optional.IsDefined(Format) || hasPropertyOverride)
+            {
+                builder.Append("  format: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Format.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Format}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Format}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (Optional.IsDefined(Version) || hasPropertyOverride)
+            {
+                builder.Append("  version: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Version.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Version}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Version}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
+            if (Optional.IsDefined(Source) || hasPropertyOverride)
+            {
+                builder.Append("  source: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Source.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Source}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Source}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CallRateLimit), out propertyOverride);
+            if (Optional.IsDefined(CallRateLimit) || hasPropertyOverride)
+            {
+                builder.Append("  callRateLimit: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, CallRateLimit, options, 2, false, "  callRateLimit: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CognitiveServicesAccountModel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountModel>)this).GetFormatFromOptions(options) : options.Format;
@@ -327,8 +625,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -344,7 +644,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesAccountModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support reading '{options.Format}' format.");
             }
         }
 

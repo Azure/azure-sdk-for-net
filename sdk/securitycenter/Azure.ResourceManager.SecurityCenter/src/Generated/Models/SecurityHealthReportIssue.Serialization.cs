@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecurityHealthReportIssue : IUtf8JsonSerializable, IJsonModel<SecurityHealthReportIssue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityHealthReportIssue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityHealthReportIssue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityHealthReportIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityHealthReportIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityHealthReportIssue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityHealthReportIssue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("issueKey"u8);
             writer.WriteStringValue(IssueKey);
-            if (IssueName != null)
+            if (Optional.IsDefined(IssueName))
             {
                 writer.WritePropertyName("issueName"u8);
                 writer.WriteStringValue(IssueName);
             }
-            if (!(SecurityValues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SecurityValues))
             {
                 writer.WritePropertyName("securityValues"u8);
                 writer.WriteStartArray();
@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IssueDescription != null)
+            if (Optional.IsDefined(IssueDescription))
             {
                 writer.WritePropertyName("issueDescription"u8);
                 writer.WriteStringValue(IssueDescription);
             }
-            if (RemediationSteps != null)
+            if (Optional.IsDefined(RemediationSteps))
             {
                 writer.WritePropertyName("remediationSteps"u8);
                 writer.WriteStringValue(RemediationSteps);
             }
-            if (RemediationScript != null)
+            if (Optional.IsDefined(RemediationScript))
             {
                 writer.WritePropertyName("remediationScript"u8);
                 writer.WriteStringValue(RemediationScript);
             }
-            if (!(IssueAdditionalData is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IssueAdditionalData))
             {
                 writer.WritePropertyName("issueAdditionalData"u8);
                 writer.WriteStartObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityHealthReportIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityHealthReportIssue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityHealthReportIssue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityHealthReportIssue DeserializeSecurityHealthReportIssue(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string remediationScript = default;
             IDictionary<string, string> issueAdditionalData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("issueKey"u8))
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityHealthReportIssue(
                 issueKey,
                 issueName,
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityHealthReportIssue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityHealthReportIssue)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityHealthReportIssue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityHealthReportIssue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityHealthReportIssue)} does not support reading '{options.Format}' format.");
             }
         }
 

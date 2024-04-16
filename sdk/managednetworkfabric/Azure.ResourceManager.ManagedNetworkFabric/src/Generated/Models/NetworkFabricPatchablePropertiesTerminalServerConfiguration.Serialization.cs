@@ -15,48 +15,48 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class NetworkFabricPatchablePropertiesTerminalServerConfiguration : IUtf8JsonSerializable, IJsonModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrimaryIPv4Prefix != null)
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
             {
                 writer.WritePropertyName("primaryIpv4Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv4Prefix);
             }
-            if (PrimaryIPv6Prefix != null)
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
             {
                 writer.WritePropertyName("primaryIpv6Prefix"u8);
                 writer.WriteStringValue(PrimaryIPv6Prefix);
             }
-            if (SecondaryIPv4Prefix != null)
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
             {
                 writer.WritePropertyName("secondaryIpv4Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv4Prefix);
             }
-            if (SecondaryIPv6Prefix != null)
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
             {
                 writer.WritePropertyName("secondaryIpv6Prefix"u8);
                 writer.WriteStringValue(SecondaryIPv6Prefix);
             }
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (SerialNumber != null)
+            if (Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static NetworkFabricPatchablePropertiesTerminalServerConfiguration DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string password = default;
             string serialNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryIpv4Prefix"u8))
@@ -147,10 +147,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkFabricPatchablePropertiesTerminalServerConfiguration(
                 username,
                 password,
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkFabricPatchablePropertiesTerminalServerConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricPatchablePropertiesTerminalServerConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

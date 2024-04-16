@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.FrontDoor.Models
 {
     public partial class ManagedRuleDefinition : IUtf8JsonSerializable, IJsonModel<ManagedRuleDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedRuleDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RuleId != null)
+            if (options.Format != "W" && Optional.IsDefined(RuleId))
             {
                 writer.WritePropertyName("ruleId"u8);
                 writer.WriteStringValue(RuleId);
             }
-            if (options.Format != "W" && DefaultState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultState))
             {
                 writer.WritePropertyName("defaultState"u8);
                 writer.WriteStringValue(DefaultState.Value.ToString());
             }
-            if (options.Format != "W" && DefaultAction.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static ManagedRuleDefinition DeserializeManagedRuleDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             RuleMatchActionType? defaultAction = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedRuleDefinition(ruleId, defaultState, defaultAction, description, serializedAdditionalRawData);
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeManagedRuleDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

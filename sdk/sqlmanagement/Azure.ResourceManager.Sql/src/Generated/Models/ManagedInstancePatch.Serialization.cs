@@ -16,29 +16,29 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ManagedInstancePatch : IUtf8JsonSerializable, IJsonModel<ManagedInstancePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstancePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstancePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedInstancePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -51,155 +51,155 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ManagedInstanceCreateMode.HasValue)
+            if (Optional.IsDefined(ManagedInstanceCreateMode))
             {
                 writer.WritePropertyName("managedInstanceCreateMode"u8);
                 writer.WriteStringValue(ManagedInstanceCreateMode.Value.ToString());
             }
-            if (options.Format != "W" && FullyQualifiedDomainName != null)
+            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
             {
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);
             }
-            if (AdministratorLogin != null)
+            if (Optional.IsDefined(AdministratorLogin))
             {
                 writer.WritePropertyName("administratorLogin"u8);
                 writer.WriteStringValue(AdministratorLogin);
             }
-            if (AdministratorLoginPassword != null)
+            if (Optional.IsDefined(AdministratorLoginPassword))
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (options.Format != "W" && State != null)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (VCores.HasValue)
+            if (Optional.IsDefined(VCores))
             {
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (StorageSizeInGB.HasValue)
+            if (Optional.IsDefined(StorageSizeInGB))
             {
                 writer.WritePropertyName("storageSizeInGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
             }
-            if (Collation != null)
+            if (Optional.IsDefined(Collation))
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (options.Format != "W" && DnsZone != null)
+            if (options.Format != "W" && Optional.IsDefined(DnsZone))
             {
                 writer.WritePropertyName("dnsZone"u8);
                 writer.WriteStringValue(DnsZone);
             }
-            if (ManagedDnsZonePartner != null)
+            if (Optional.IsDefined(ManagedDnsZonePartner))
             {
                 writer.WritePropertyName("dnsZonePartner"u8);
                 writer.WriteStringValue(ManagedDnsZonePartner);
             }
-            if (IsPublicDataEndpointEnabled.HasValue)
+            if (Optional.IsDefined(IsPublicDataEndpointEnabled))
             {
                 writer.WritePropertyName("publicDataEndpointEnabled"u8);
                 writer.WriteBooleanValue(IsPublicDataEndpointEnabled.Value);
             }
-            if (SourceManagedInstanceId != null)
+            if (Optional.IsDefined(SourceManagedInstanceId))
             {
                 writer.WritePropertyName("sourceManagedInstanceId"u8);
                 writer.WriteStringValue(SourceManagedInstanceId);
             }
-            if (RestorePointInTime.HasValue)
+            if (Optional.IsDefined(RestorePointInTime))
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (ProxyOverride.HasValue)
+            if (Optional.IsDefined(ProxyOverride))
             {
                 writer.WritePropertyName("proxyOverride"u8);
                 writer.WriteStringValue(ProxyOverride.Value.ToString());
             }
-            if (TimezoneId != null)
+            if (Optional.IsDefined(TimezoneId))
             {
                 writer.WritePropertyName("timezoneId"u8);
                 writer.WriteStringValue(TimezoneId);
             }
-            if (InstancePoolId != null)
+            if (Optional.IsDefined(InstancePoolId))
             {
                 writer.WritePropertyName("instancePoolId"u8);
                 writer.WriteStringValue(InstancePoolId);
             }
-            if (MaintenanceConfigurationId != null)
+            if (Optional.IsDefined(MaintenanceConfigurationId))
             {
                 writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ManagedInstancePecProperty> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (MinimalTlsVersion != null)
+            if (Optional.IsDefined(MinimalTlsVersion))
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion);
             }
-            if (options.Format != "W" && CurrentBackupStorageRedundancy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentBackupStorageRedundancy))
             {
                 writer.WritePropertyName("currentBackupStorageRedundancy"u8);
                 writer.WriteStringValue(CurrentBackupStorageRedundancy.Value.ToString());
             }
-            if (RequestedBackupStorageRedundancy.HasValue)
+            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
-            if (IsZoneRedundant.HasValue)
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (PrimaryUserAssignedIdentityId != null)
+            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
                 writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
-            if (KeyId != null)
+            if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId.AbsoluteUri);
             }
-            if (Administrators != null)
+            if (Optional.IsDefined(Administrators))
             {
                 writer.WritePropertyName("administrators"u8);
-                writer.WriteObjectValue(Administrators);
+                writer.WriteObjectValue(Administrators, options);
             }
-            if (ServicePrincipal != null)
+            if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal);
+                writer.WriteObjectValue(ServicePrincipal, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedInstancePatch DeserializeManagedInstancePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Sql.Models
             ManagedInstanceExternalAdministrator administrators = default;
             SqlServicePrincipal servicePrincipal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -557,10 +557,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedInstancePatch(
                 sku,
                 identity,
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedInstancePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

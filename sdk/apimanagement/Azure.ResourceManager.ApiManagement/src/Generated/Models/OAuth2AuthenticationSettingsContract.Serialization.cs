@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class OAuth2AuthenticationSettingsContract : IUtf8JsonSerializable, IJsonModel<OAuth2AuthenticationSettingsContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OAuth2AuthenticationSettingsContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OAuth2AuthenticationSettingsContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OAuth2AuthenticationSettingsContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OAuth2AuthenticationSettingsContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OAuth2AuthenticationSettingsContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OAuth2AuthenticationSettingsContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AuthorizationServerId != null)
+            if (Optional.IsDefined(AuthorizationServerId))
             {
                 writer.WritePropertyName("authorizationServerId"u8);
                 writer.WriteStringValue(AuthorizationServerId);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<OAuth2AuthenticationSettingsContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OAuth2AuthenticationSettingsContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OAuth2AuthenticationSettingsContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static OAuth2AuthenticationSettingsContract DeserializeOAuth2AuthenticationSettingsContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string authorizationServerId = default;
             string scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationServerId"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OAuth2AuthenticationSettingsContract(authorizationServerId, scope, serializedAdditionalRawData);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OAuth2AuthenticationSettingsContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OAuth2AuthenticationSettingsContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeOAuth2AuthenticationSettingsContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OAuth2AuthenticationSettingsContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OAuth2AuthenticationSettingsContract)} does not support reading '{options.Format}' format.");
             }
         }
 

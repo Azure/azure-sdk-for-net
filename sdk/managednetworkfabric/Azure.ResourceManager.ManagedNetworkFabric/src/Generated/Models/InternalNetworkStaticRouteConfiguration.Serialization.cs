@@ -15,44 +15,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class InternalNetworkStaticRouteConfiguration : IUtf8JsonSerializable, IJsonModel<InternalNetworkStaticRouteConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalNetworkStaticRouteConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalNetworkStaticRouteConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InternalNetworkStaticRouteConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Extension.HasValue)
+            if (Optional.IsDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStringValue(Extension.Value.ToString());
             }
-            if (BfdConfiguration != null)
+            if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration);
+                writer.WriteObjectValue(BfdConfiguration, options);
             }
-            if (!(IPv4Routes is ChangeTrackingList<StaticRouteProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv4Routes))
             {
                 writer.WritePropertyName("ipv4Routes"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPv4Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPv6Routes is ChangeTrackingList<StaticRouteProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv6Routes))
             {
                 writer.WritePropertyName("ipv6Routes"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPv6Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<InternalNetworkStaticRouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static InternalNetworkStaticRouteConfiguration DeserializeInternalNetworkStaticRouteConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IList<StaticRouteProperties> ipv4Routes = default;
             IList<StaticRouteProperties> ipv6Routes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extension"u8))
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new InternalNetworkStaticRouteConfiguration(bfdConfiguration, ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>(), ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>(), serializedAdditionalRawData, extension);
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeInternalNetworkStaticRouteConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalNetworkStaticRouteConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

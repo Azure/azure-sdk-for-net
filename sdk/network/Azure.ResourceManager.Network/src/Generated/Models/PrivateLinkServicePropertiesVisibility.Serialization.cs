@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal partial class PrivateLinkServicePropertiesVisibility : IUtf8JsonSerializable, IJsonModel<PrivateLinkServicePropertiesVisibility>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkServicePropertiesVisibility>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkServicePropertiesVisibility>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateLinkServicePropertiesVisibility>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkServicePropertiesVisibility>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkServicePropertiesVisibility)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkServicePropertiesVisibility)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Subscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkServicePropertiesVisibility>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkServicePropertiesVisibility)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkServicePropertiesVisibility)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PrivateLinkServicePropertiesVisibility DeserializePrivateLinkServicePropertiesVisibility(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             IList<string> subscriptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptions"u8))
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PrivateLinkServicePropertiesVisibility(subscriptions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkServicePropertiesVisibility)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkServicePropertiesVisibility)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePrivateLinkServicePropertiesVisibility(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkServicePropertiesVisibility)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkServicePropertiesVisibility)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,28 +16,28 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class ServiceBusSqlFilter : IUtf8JsonSerializable, IJsonModel<ServiceBusSqlFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusSqlFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusSqlFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceBusSqlFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusSqlFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SqlExpression != null)
+            if (Optional.IsDefined(SqlExpression))
             {
                 writer.WritePropertyName("sqlExpression"u8);
                 writer.WriteStringValue(SqlExpression);
             }
-            if (CompatibilityLevel.HasValue)
+            if (Optional.IsDefined(CompatibilityLevel))
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteNumberValue(CompatibilityLevel.Value);
             }
-            if (RequiresPreprocessing.HasValue)
+            if (Optional.IsDefined(RequiresPreprocessing))
             {
                 writer.WritePropertyName("requiresPreprocessing"u8);
                 writer.WriteBooleanValue(RequiresPreprocessing.Value);
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusSqlFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusSqlFilter DeserializeServiceBusSqlFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             int? compatibilityLevel = default;
             bool? requiresPreprocessing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlExpression"u8))
@@ -111,11 +112,77 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceBusSqlFilter(sqlExpression, compatibilityLevel, requiresPreprocessing, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SqlExpression), out propertyOverride);
+            if (Optional.IsDefined(SqlExpression) || hasPropertyOverride)
+            {
+                builder.Append("  sqlExpression: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SqlExpression.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SqlExpression}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SqlExpression}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompatibilityLevel), out propertyOverride);
+            if (Optional.IsDefined(CompatibilityLevel) || hasPropertyOverride)
+            {
+                builder.Append("  compatibilityLevel: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{CompatibilityLevel.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiresPreprocessing), out propertyOverride);
+            if (Optional.IsDefined(RequiresPreprocessing) || hasPropertyOverride)
+            {
+                builder.Append("  requiresPreprocessing: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = RequiresPreprocessing.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ServiceBusSqlFilter>.Write(ModelReaderWriterOptions options)
@@ -126,8 +193,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +212,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         return DeserializeServiceBusSqlFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

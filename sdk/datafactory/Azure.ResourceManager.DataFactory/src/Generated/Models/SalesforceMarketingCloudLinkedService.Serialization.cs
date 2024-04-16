@@ -16,41 +16,41 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SalesforceMarketingCloudLinkedService : IUtf8JsonSerializable, IJsonModel<SalesforceMarketingCloudLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SalesforceMarketingCloudLinkedService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SalesforceMarketingCloudLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SalesforceMarketingCloudLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SalesforceMarketingCloudLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SalesforceMarketingCloudLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SalesforceMarketingCloudLinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (ConnectionProperties != null)
+            if (Optional.IsDefined(ConnectionProperties))
             {
                 writer.WritePropertyName("connectionProperties"u8);
 #if NET6_0_OR_GREATER
@@ -86,32 +86,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 JsonSerializer.Serialize(writer, ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 JsonSerializer.Serialize(writer, ClientSecret);
             }
-            if (UseEncryptedEndpoints != null)
+            if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
                 JsonSerializer.Serialize(writer, UseEncryptedEndpoints);
             }
-            if (UseHostVerification != null)
+            if (Optional.IsDefined(UseHostVerification))
             {
                 writer.WritePropertyName("useHostVerification"u8);
                 JsonSerializer.Serialize(writer, UseHostVerification);
             }
-            if (UsePeerVerification != null)
+            if (Optional.IsDefined(UsePeerVerification))
             {
                 writer.WritePropertyName("usePeerVerification"u8);
                 JsonSerializer.Serialize(writer, UsePeerVerification);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SalesforceMarketingCloudLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SalesforceMarketingCloudLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SalesforceMarketingCloudLinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SalesforceMarketingCloudLinkedService DeserializeSalesforceMarketingCloudLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             BinaryData connectionProperties = default;
             DataFactoryElement<string> clientId = default;
-            DataFactorySecretBaseDefinition clientSecret = default;
+            DataFactorySecret clientSecret = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
             DataFactoryElement<bool> usePeerVerification = default;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SalesforceMarketingCloudLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SalesforceMarketingCloudLinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSalesforceMarketingCloudLinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SalesforceMarketingCloudLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SalesforceMarketingCloudLinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

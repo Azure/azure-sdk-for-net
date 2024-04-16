@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class AvailableLabServicesSkuRestrictions : IUtf8JsonSerializable, IJsonModel<AvailableLabServicesSkuRestrictions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableLabServicesSkuRestrictions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableLabServicesSkuRestrictions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailableLabServicesSkuRestrictions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvailableLabServicesSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableLabServicesSkuRestrictions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableLabServicesSkuRestrictions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LabServicesSkuRestrictionType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LabServicesSkuRestrictionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LabServicesSkuRestrictionType.Value.ToString());
             }
-            if (options.Format != "W" && !(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ReasonCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReasonCode))
             {
                 writer.WritePropertyName("reasonCode"u8);
                 writer.WriteStringValue(ReasonCode.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableLabServicesSkuRestrictions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableLabServicesSkuRestrictions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableLabServicesSkuRestrictions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static AvailableLabServicesSkuRestrictions DeserializeAvailableLabServicesSkuRestrictions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.LabServices.Models
             IReadOnlyList<string> values = default;
             LabServicesSkuRestrictionReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AvailableLabServicesSkuRestrictions(type, values ?? new ChangeTrackingList<string>(), reasonCode, serializedAdditionalRawData);
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableLabServicesSkuRestrictions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableLabServicesSkuRestrictions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeAvailableLabServicesSkuRestrictions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableLabServicesSkuRestrictions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableLabServicesSkuRestrictions)} does not support reading '{options.Format}' format.");
             }
         }
 

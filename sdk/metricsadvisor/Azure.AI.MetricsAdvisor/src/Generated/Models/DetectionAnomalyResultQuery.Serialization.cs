@@ -19,12 +19,20 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndTime, "O");
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

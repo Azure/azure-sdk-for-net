@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationRefundPolicyError : IUtf8JsonSerializable, IJsonModel<ReservationRefundPolicyError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRefundPolicyError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRefundPolicyError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationRefundPolicyError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundPolicyError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationRefundPolicyError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationRefundPolicyError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Code.HasValue)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToString());
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundPolicyError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationRefundPolicyError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationRefundPolicyError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationRefundPolicyError DeserializeReservationRefundPolicyError(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Reservations.Models
             ReservationErrorResponseCode? code = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReservationRefundPolicyError(code, message, serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationRefundPolicyError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationRefundPolicyError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationRefundPolicyError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationRefundPolicyError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationRefundPolicyError)} does not support reading '{options.Format}' format.");
             }
         }
 

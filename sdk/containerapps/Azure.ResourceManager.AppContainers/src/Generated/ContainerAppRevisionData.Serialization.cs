@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppRevisionData : IUtf8JsonSerializable, IJsonModel<ContainerAppRevisionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppRevisionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppRevisionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppRevisionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRevisionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,64 +43,64 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastActiveOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastActiveOn))
             {
                 writer.WritePropertyName("lastActiveTime"u8);
                 writer.WriteStringValue(LastActiveOn.Value, "O");
             }
-            if (options.Format != "W" && Fqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && Template != null)
+            if (options.Format != "W" && Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template);
+                writer.WriteObjectValue(Template, options);
             }
-            if (options.Format != "W" && IsActive.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsActive))
             {
                 writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (options.Format != "W" && Replicas.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Replicas))
             {
                 writer.WritePropertyName("replicas"u8);
                 writer.WriteNumberValue(Replicas.Value);
             }
-            if (options.Format != "W" && TrafficWeight.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TrafficWeight))
             {
                 writer.WritePropertyName("trafficWeight"u8);
                 writer.WriteNumberValue(TrafficWeight.Value);
             }
-            if (options.Format != "W" && ProvisioningError != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningError))
             {
                 writer.WritePropertyName("provisioningError"u8);
                 writer.WriteStringValue(ProvisioningError);
             }
-            if (options.Format != "W" && HealthState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HealthState))
             {
                 writer.WritePropertyName("healthState"u8);
                 writer.WriteStringValue(HealthState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && RunningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RunningState))
             {
                 writer.WritePropertyName("runningState"u8);
                 writer.WriteStringValue(RunningState.Value.ToString());
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRevisionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppRevisionData DeserializeContainerAppRevisionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppContainers
             ContainerAppRevisionProvisioningState? provisioningState = default;
             RevisionRunningState? runningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppRevisionData(
                 id,
                 name,
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppContainers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.AppContainers
                         return DeserializeContainerAppRevisionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppRevisionData)} does not support reading '{options.Format}' format.");
             }
         }
 

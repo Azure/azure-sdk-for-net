@@ -15,43 +15,43 @@ namespace Azure.ResourceManager.Avs.Models
 {
     public partial class AvsEncryptionKeyVaultProperties : IUtf8JsonSerializable, IJsonModel<AvsEncryptionKeyVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsEncryptionKeyVaultProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsEncryptionKeyVaultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvsEncryptionKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvsEncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (KeyName != null)
+            if (Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (KeyVersion != null)
+            if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
                 writer.WriteStringValue(KeyVersion);
             }
-            if (options.Format != "W" && AutoDetectedKeyVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(AutoDetectedKeyVersion))
             {
                 writer.WritePropertyName("autoDetectedKeyVersion"u8);
                 writer.WriteStringValue(AutoDetectedKeyVersion);
             }
-            if (KeyVaultUri != null)
+            if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
-            if (options.Format != "W" && KeyState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(KeyState))
             {
                 writer.WritePropertyName("keyState"u8);
                 writer.WriteStringValue(KeyState.Value.ToString());
             }
-            if (options.Format != "W" && VersionType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VersionType))
             {
                 writer.WritePropertyName("versionType"u8);
                 writer.WriteStringValue(VersionType.Value.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsEncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static AvsEncryptionKeyVaultProperties DeserializeAvsEncryptionKeyVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Avs.Models
             AvsEncryptionKeyStatus? keyState = default;
             AvsEncryptionVersionType? versionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyName"u8))
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AvsEncryptionKeyVaultProperties(
                 keyName,
                 keyVersion,
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeAvsEncryptionKeyVaultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

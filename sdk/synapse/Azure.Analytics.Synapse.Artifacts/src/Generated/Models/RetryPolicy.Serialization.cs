@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Count != null)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
-                writer.WriteObjectValue(Count);
+                writer.WriteObjectValue<object>(Count);
             }
-            if (IntervalInSeconds.HasValue)
+            if (Optional.IsDefined(IntervalInSeconds))
             {
                 writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
@@ -63,12 +63,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new RetryPolicy(count, intervalInSeconds);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RetryPolicy FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRetryPolicy(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class RetryPolicyConverter : JsonConverter<RetryPolicy>
         {
             public override void Write(Utf8JsonWriter writer, RetryPolicy model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override RetryPolicy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

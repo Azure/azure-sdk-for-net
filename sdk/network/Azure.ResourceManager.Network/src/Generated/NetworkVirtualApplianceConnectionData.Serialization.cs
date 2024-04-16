@@ -16,55 +16,55 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkVirtualApplianceConnectionData : IUtf8JsonSerializable, IJsonModel<NetworkVirtualApplianceConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkVirtualApplianceConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkVirtualApplianceConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkVirtualApplianceConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (NamePropertiesName != null)
+            if (Optional.IsDefined(NamePropertiesName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Asn.HasValue)
+            if (Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (TunnelIdentifier.HasValue)
+            if (Optional.IsDefined(TunnelIdentifier))
             {
                 writer.WritePropertyName("tunnelIdentifier"u8);
                 writer.WriteNumberValue(TunnelIdentifier.Value);
             }
-            if (!(BgpPeerAddress is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BgpPeerAddress))
             {
                 writer.WritePropertyName("bgpPeerAddress"u8);
                 writer.WriteStartArray();
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (EnableInternetSecurity.HasValue)
+            if (Optional.IsDefined(EnableInternetSecurity))
             {
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (ConnectionRoutingConfiguration != null)
+            if (Optional.IsDefined(ConnectionRoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(ConnectionRoutingConfiguration);
+                writer.WriteObjectValue(ConnectionRoutingConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network
 
         internal static NetworkVirtualApplianceConnectionData DeserializeNetworkVirtualApplianceConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network
             bool? enableInternetSecurity = default;
             RoutingConfiguration routingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkVirtualApplianceConnectionData(
                 id,
                 name,
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeNetworkVirtualApplianceConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

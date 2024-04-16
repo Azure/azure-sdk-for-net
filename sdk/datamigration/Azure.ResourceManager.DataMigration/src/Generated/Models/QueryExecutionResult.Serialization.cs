@@ -15,36 +15,36 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class QueryExecutionResult : IUtf8JsonSerializable, IJsonModel<QueryExecutionResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryExecutionResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryExecutionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueryExecutionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QueryExecutionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryExecutionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryExecutionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (QueryText != null)
+            if (Optional.IsDefined(QueryText))
             {
                 writer.WritePropertyName("queryText"u8);
                 writer.WriteStringValue(QueryText);
             }
-            if (StatementsInBatch.HasValue)
+            if (Optional.IsDefined(StatementsInBatch))
             {
                 writer.WritePropertyName("statementsInBatch"u8);
                 writer.WriteNumberValue(StatementsInBatch.Value);
             }
-            if (SourceResult != null)
+            if (Optional.IsDefined(SourceResult))
             {
                 writer.WritePropertyName("sourceResult"u8);
-                writer.WriteObjectValue(SourceResult);
+                writer.WriteObjectValue(SourceResult, options);
             }
-            if (TargetResult != null)
+            if (Optional.IsDefined(TargetResult))
             {
                 writer.WritePropertyName("targetResult"u8);
-                writer.WriteObjectValue(TargetResult);
+                writer.WriteObjectValue(TargetResult, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryExecutionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryExecutionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryExecutionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static QueryExecutionResult DeserializeQueryExecutionResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ExecutionStatistics sourceResult = default;
             ExecutionStatistics targetResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryText"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new QueryExecutionResult(queryText, statementsInBatch, sourceResult, targetResult, serializedAdditionalRawData);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryExecutionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryExecutionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeQueryExecutionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryExecutionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryExecutionResult)} does not support reading '{options.Format}' format.");
             }
         }
 

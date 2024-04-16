@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningFeatureSetJob : IUtf8JsonSerializable, IJsonModel<MachineLearningFeatureSetJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningFeatureSetJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningFeatureSetJob>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningFeatureSetJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFeatureSetJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningFeatureSetJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningFeatureSetJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 if (CreatedOn != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("createdDate");
                 }
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Duration.HasValue)
+            if (Optional.IsDefined(Duration))
             {
                 if (Duration != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("duration");
                 }
             }
-            if (ExperimentId != null)
+            if (Optional.IsDefined(ExperimentId))
             {
                 if (ExperimentId != null)
                 {
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("experimentId");
                 }
             }
-            if (FeatureWindow != null)
+            if (Optional.IsDefined(FeatureWindow))
             {
                 if (FeatureWindow != null)
                 {
                     writer.WritePropertyName("featureWindow"u8);
-                    writer.WriteObjectValue(FeatureWindow);
+                    writer.WriteObjectValue(FeatureWindow, options);
                 }
                 else
                 {
                     writer.WriteNull("featureWindow");
                 }
             }
-            if (JobId != null)
+            if (Optional.IsDefined(JobId))
             {
                 if (JobId != null)
                 {
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobId");
                 }
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 if (Tags != null)
                 {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
-            if (FeatureStoreJobType.HasValue)
+            if (Optional.IsDefined(FeatureStoreJobType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(FeatureStoreJobType.Value.ToString());
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFeatureSetJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningFeatureSetJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningFeatureSetJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningFeatureSetJob DeserializeMachineLearningFeatureSetJob(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IReadOnlyDictionary<string, string> tags = default;
             FeatureStoreJobType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdDate"u8))
@@ -272,10 +272,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningFeatureSetJob(
                 createdDate,
                 displayName,
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningFeatureSetJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningFeatureSetJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningFeatureSetJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningFeatureSetJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningFeatureSetJob)} does not support reading '{options.Format}' format.");
             }
         }
 

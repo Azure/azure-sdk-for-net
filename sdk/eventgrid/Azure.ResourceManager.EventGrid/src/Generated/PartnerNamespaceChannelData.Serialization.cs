@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class PartnerNamespaceChannelData : IUtf8JsonSerializable, IJsonModel<PartnerNamespaceChannelData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerNamespaceChannelData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerNamespaceChannelData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PartnerNamespaceChannelData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceChannelData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerNamespaceChannelData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerNamespaceChannelData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ChannelType.HasValue)
+            if (Optional.IsDefined(ChannelType))
             {
                 writer.WritePropertyName("channelType"u8);
                 writer.WriteStringValue(ChannelType.Value.ToString());
             }
-            if (PartnerTopicInfo != null)
+            if (Optional.IsDefined(PartnerTopicInfo))
             {
                 writer.WritePropertyName("partnerTopicInfo"u8);
-                writer.WriteObjectValue(PartnerTopicInfo);
+                writer.WriteObjectValue(PartnerTopicInfo, options);
             }
-            if (PartnerDestinationInfo != null)
+            if (Optional.IsDefined(PartnerDestinationInfo))
             {
                 writer.WritePropertyName("partnerDestinationInfo"u8);
-                writer.WriteObjectValue(PartnerDestinationInfo);
+                writer.WriteObjectValue(PartnerDestinationInfo, options);
             }
-            if (MessageForActivation != null)
+            if (Optional.IsDefined(MessageForActivation))
             {
                 writer.WritePropertyName("messageForActivation"u8);
                 writer.WriteStringValue(MessageForActivation);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ReadinessState.HasValue)
+            if (Optional.IsDefined(ReadinessState))
             {
                 writer.WritePropertyName("readinessState"u8);
                 writer.WriteStringValue(ReadinessState.Value.ToString());
             }
-            if (ExpireOnIfNotActivated.HasValue)
+            if (Optional.IsDefined(ExpireOnIfNotActivated))
             {
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
                 writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceChannelData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerNamespaceChannelData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerNamespaceChannelData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static PartnerNamespaceChannelData DeserializePartnerNamespaceChannelData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.EventGrid
             PartnerTopicReadinessState? readinessState = default;
             DateTimeOffset? expirationTimeIfNotActivatedUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.EventGrid
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PartnerNamespaceChannelData(
                 id,
                 name,
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.EventGrid
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PartnerNamespaceChannelData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerNamespaceChannelData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.EventGrid
                         return DeserializePartnerNamespaceChannelData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartnerNamespaceChannelData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerNamespaceChannelData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecuritySolution : IUtf8JsonSerializable, IJsonModel<SecuritySolution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecuritySolution>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecuritySolution>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecuritySolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecuritySolution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecuritySolution)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SecurityFamily.HasValue)
+            if (Optional.IsDefined(SecurityFamily))
             {
                 writer.WritePropertyName("securityFamily"u8);
                 writer.WriteStringValue(SecurityFamily.Value.ToString());
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Template != null)
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
                 writer.WriteStringValue(Template);
             }
-            if (ProtectionStatus != null)
+            if (Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
                 writer.WriteStringValue(ProtectionStatus);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecuritySolution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecuritySolution)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecuritySolution DeserializeSecuritySolution(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string template = default;
             string protectionStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -201,10 +201,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecuritySolution(
                 id,
                 name,
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecuritySolution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecuritySolution)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecuritySolution(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecuritySolution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecuritySolution)} does not support reading '{options.Format}' format.");
             }
         }
 

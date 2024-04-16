@@ -15,98 +15,98 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 {
     public partial class ProvisionedClusterPropertiesAutoScalerProfile : IUtf8JsonSerializable, IJsonModel<ProvisionedClusterPropertiesAutoScalerProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterPropertiesAutoScalerProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterPropertiesAutoScalerProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProvisionedClusterPropertiesAutoScalerProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterPropertiesAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterPropertiesAutoScalerProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterPropertiesAutoScalerProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BalanceSimilarNodeGroups != null)
+            if (Optional.IsDefined(BalanceSimilarNodeGroups))
             {
                 writer.WritePropertyName("balance-similar-node-groups"u8);
                 writer.WriteStringValue(BalanceSimilarNodeGroups);
             }
-            if (Expander.HasValue)
+            if (Optional.IsDefined(Expander))
             {
                 writer.WritePropertyName("expander"u8);
                 writer.WriteStringValue(Expander.Value.ToString());
             }
-            if (MaxEmptyBulkDelete != null)
+            if (Optional.IsDefined(MaxEmptyBulkDelete))
             {
                 writer.WritePropertyName("max-empty-bulk-delete"u8);
                 writer.WriteStringValue(MaxEmptyBulkDelete);
             }
-            if (MaxGracefulTerminationSec != null)
+            if (Optional.IsDefined(MaxGracefulTerminationSec))
             {
                 writer.WritePropertyName("max-graceful-termination-sec"u8);
                 writer.WriteStringValue(MaxGracefulTerminationSec);
             }
-            if (MaxNodeProvisionTime != null)
+            if (Optional.IsDefined(MaxNodeProvisionTime))
             {
                 writer.WritePropertyName("max-node-provision-time"u8);
                 writer.WriteStringValue(MaxNodeProvisionTime);
             }
-            if (MaxTotalUnreadyPercentage != null)
+            if (Optional.IsDefined(MaxTotalUnreadyPercentage))
             {
                 writer.WritePropertyName("max-total-unready-percentage"u8);
                 writer.WriteStringValue(MaxTotalUnreadyPercentage);
             }
-            if (NewPodScaleUpDelay != null)
+            if (Optional.IsDefined(NewPodScaleUpDelay))
             {
                 writer.WritePropertyName("new-pod-scale-up-delay"u8);
                 writer.WriteStringValue(NewPodScaleUpDelay);
             }
-            if (OkTotalUnreadyCount != null)
+            if (Optional.IsDefined(OkTotalUnreadyCount))
             {
                 writer.WritePropertyName("ok-total-unready-count"u8);
                 writer.WriteStringValue(OkTotalUnreadyCount);
             }
-            if (ScanInterval != null)
+            if (Optional.IsDefined(ScanInterval))
             {
                 writer.WritePropertyName("scan-interval"u8);
                 writer.WriteStringValue(ScanInterval);
             }
-            if (ScaleDownDelayAfterAdd != null)
+            if (Optional.IsDefined(ScaleDownDelayAfterAdd))
             {
                 writer.WritePropertyName("scale-down-delay-after-add"u8);
                 writer.WriteStringValue(ScaleDownDelayAfterAdd);
             }
-            if (ScaleDownDelayAfterDelete != null)
+            if (Optional.IsDefined(ScaleDownDelayAfterDelete))
             {
                 writer.WritePropertyName("scale-down-delay-after-delete"u8);
                 writer.WriteStringValue(ScaleDownDelayAfterDelete);
             }
-            if (ScaleDownDelayAfterFailure != null)
+            if (Optional.IsDefined(ScaleDownDelayAfterFailure))
             {
                 writer.WritePropertyName("scale-down-delay-after-failure"u8);
                 writer.WriteStringValue(ScaleDownDelayAfterFailure);
             }
-            if (ScaleDownUnneededTime != null)
+            if (Optional.IsDefined(ScaleDownUnneededTime))
             {
                 writer.WritePropertyName("scale-down-unneeded-time"u8);
                 writer.WriteStringValue(ScaleDownUnneededTime);
             }
-            if (ScaleDownUnreadyTime != null)
+            if (Optional.IsDefined(ScaleDownUnreadyTime))
             {
                 writer.WritePropertyName("scale-down-unready-time"u8);
                 writer.WriteStringValue(ScaleDownUnreadyTime);
             }
-            if (ScaleDownUtilizationThreshold != null)
+            if (Optional.IsDefined(ScaleDownUtilizationThreshold))
             {
                 writer.WritePropertyName("scale-down-utilization-threshold"u8);
                 writer.WriteStringValue(ScaleDownUtilizationThreshold);
             }
-            if (SkipNodesWithLocalStorage != null)
+            if (Optional.IsDefined(SkipNodesWithLocalStorage))
             {
                 writer.WritePropertyName("skip-nodes-with-local-storage"u8);
                 writer.WriteStringValue(SkipNodesWithLocalStorage);
             }
-            if (SkipNodesWithSystemPods != null)
+            if (Optional.IsDefined(SkipNodesWithSystemPods))
             {
                 writer.WritePropertyName("skip-nodes-with-system-pods"u8);
                 writer.WriteStringValue(SkipNodesWithSystemPods);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterPropertiesAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProvisionedClusterPropertiesAutoScalerProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProvisionedClusterPropertiesAutoScalerProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ProvisionedClusterPropertiesAutoScalerProfile DeserializeProvisionedClusterPropertiesAutoScalerProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             string skipNodesWithLocalStorage = default;
             string skipNodesWithSystemPods = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("balance-similar-node-groups"u8))
@@ -261,10 +261,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ProvisionedClusterPropertiesAutoScalerProfile(
                 balanceSimilarNodeGroups,
                 expander,
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterPropertiesAutoScalerProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterPropertiesAutoScalerProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeProvisionedClusterPropertiesAutoScalerProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProvisionedClusterPropertiesAutoScalerProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProvisionedClusterPropertiesAutoScalerProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

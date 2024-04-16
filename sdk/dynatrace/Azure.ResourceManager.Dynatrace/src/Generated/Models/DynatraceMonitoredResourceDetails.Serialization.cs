@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.Dynatrace.Models
 {
     public partial class DynatraceMonitoredResourceDetails : IUtf8JsonSerializable, IJsonModel<DynatraceMonitoredResourceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceMonitoredResourceDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceMonitoredResourceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DynatraceMonitoredResourceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitoredResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (SendingMetricsStatus.HasValue)
+            if (Optional.IsDefined(SendingMetricsStatus))
             {
                 writer.WritePropertyName("sendingMetrics"u8);
                 writer.WriteStringValue(SendingMetricsStatus.Value.ToString());
             }
-            if (ReasonForMetricsStatus != null)
+            if (Optional.IsDefined(ReasonForMetricsStatus))
             {
                 writer.WritePropertyName("reasonForMetricsStatus"u8);
                 writer.WriteStringValue(ReasonForMetricsStatus);
             }
-            if (SendingLogsStatus.HasValue)
+            if (Optional.IsDefined(SendingLogsStatus))
             {
                 writer.WritePropertyName("sendingLogs"u8);
                 writer.WriteStringValue(SendingLogsStatus.Value.ToString());
             }
-            if (ReasonForLogsStatus != null)
+            if (Optional.IsDefined(ReasonForLogsStatus))
             {
                 writer.WritePropertyName("reasonForLogsStatus"u8);
                 writer.WriteStringValue(ReasonForLogsStatus);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitoredResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceMonitoredResourceDetails DeserializeDynatraceMonitoredResourceDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             LogsSendingStatus? sendingLogs = default;
             string reasonForLogsStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DynatraceMonitoredResourceDetails(
                 id,
                 sendingMetrics,
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceMonitoredResourceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

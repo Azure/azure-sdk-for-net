@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.MediaComposition;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
@@ -18,17 +17,17 @@ namespace Azure.Communication.MediaComposition.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Resolution != null)
+            if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (PlaceholderImageUri != null)
+            if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (ScalingMode.HasValue)
+            if (Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -54,6 +53,22 @@ namespace Azure.Communication.MediaComposition.Models
                 }
             }
             return UnknownLayout.DeserializeUnknownLayout(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaCompositionLayout FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaCompositionLayout(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

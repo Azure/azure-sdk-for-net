@@ -15,32 +15,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Trigger.HasValue)
+            if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
                 writer.WriteStringValue(Trigger.Value.ToString());
             }
-            if (OutputFrequency != null)
+            if (Optional.IsDefined(OutputFrequency))
             {
                 writer.WritePropertyName("outputFrequency"u8);
                 writer.WriteStringValue(OutputFrequency);
             }
-            if (MinimumDistanceThreshold != null)
+            if (Optional.IsDefined(MinimumDistanceThreshold))
             {
                 writer.WritePropertyName("minimumDistanceThreshold"u8);
                 writer.WriteStringValue(MinimumDistanceThreshold);
             }
-            if (MaximumDistanceThreshold != null)
+            if (Optional.IsDefined(MaximumDistanceThreshold))
             {
                 writer.WritePropertyName("maximumDistanceThreshold"u8);
                 writer.WriteStringValue(MaximumDistanceThreshold);
             }
-            if (Threshold != null)
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteStringValue(Threshold);
             }
-            if (Focus.HasValue)
+            if (Optional.IsDefined(Focus))
             {
                 writer.WritePropertyName("focus"u8);
                 writer.WriteStringValue(Focus.Value.ToString());
@@ -108,6 +108,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 outputFrequency,
                 minimumDistanceThreshold,
                 maximumDistanceThreshold);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SpatialAnalysisPersonDistanceEvent FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpatialAnalysisPersonDistanceEvent(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

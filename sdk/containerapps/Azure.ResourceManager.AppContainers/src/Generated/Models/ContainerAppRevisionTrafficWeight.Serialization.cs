@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppRevisionTrafficWeight : IUtf8JsonSerializable, IJsonModel<ContainerAppRevisionTrafficWeight>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppRevisionTrafficWeight>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppRevisionTrafficWeight>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppRevisionTrafficWeight>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRevisionTrafficWeight>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppRevisionTrafficWeight)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppRevisionTrafficWeight)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RevisionName != null)
+            if (Optional.IsDefined(RevisionName))
             {
                 writer.WritePropertyName("revisionName"u8);
                 writer.WriteStringValue(RevisionName);
             }
-            if (Weight.HasValue)
+            if (Optional.IsDefined(Weight))
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (IsLatestRevision.HasValue)
+            if (Optional.IsDefined(IsLatestRevision))
             {
                 writer.WritePropertyName("latestRevision"u8);
                 writer.WriteBooleanValue(IsLatestRevision.Value);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppRevisionTrafficWeight>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppRevisionTrafficWeight)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppRevisionTrafficWeight)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppRevisionTrafficWeight DeserializeContainerAppRevisionTrafficWeight(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             bool? latestRevision = default;
             string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("revisionName"u8))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppRevisionTrafficWeight(revisionName, weight, latestRevision, label, serializedAdditionalRawData);
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppRevisionTrafficWeight)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppRevisionTrafficWeight)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppRevisionTrafficWeight(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppRevisionTrafficWeight)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppRevisionTrafficWeight)} does not support reading '{options.Format}' format.");
             }
         }
 

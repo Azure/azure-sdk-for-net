@@ -15,85 +15,85 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class H264Layer : IUtf8JsonSerializable, IJsonModel<H264Layer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<H264Layer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<H264Layer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<H264Layer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<H264Layer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(H264Layer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(H264Layer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Profile.HasValue)
+            if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
                 writer.WriteStringValue(Profile.Value.ToString());
             }
-            if (Level != null)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level);
             }
-            if (BufferWindow.HasValue)
+            if (Optional.IsDefined(BufferWindow))
             {
                 writer.WritePropertyName("bufferWindow"u8);
                 writer.WriteStringValue(BufferWindow.Value, "P");
             }
-            if (ConstantRateFactor.HasValue)
+            if (Optional.IsDefined(ConstantRateFactor))
             {
                 writer.WritePropertyName("crf"u8);
                 writer.WriteNumberValue(ConstantRateFactor.Value);
             }
-            if (ReferenceFrames.HasValue)
+            if (Optional.IsDefined(ReferenceFrames))
             {
                 writer.WritePropertyName("referenceFrames"u8);
                 writer.WriteNumberValue(ReferenceFrames.Value);
             }
-            if (EntropyMode.HasValue)
+            if (Optional.IsDefined(EntropyMode))
             {
                 writer.WritePropertyName("entropyMode"u8);
                 writer.WriteStringValue(EntropyMode.Value.ToString());
             }
             writer.WritePropertyName("bitrate"u8);
             writer.WriteNumberValue(Bitrate);
-            if (MaxBitrate.HasValue)
+            if (Optional.IsDefined(MaxBitrate))
             {
                 writer.WritePropertyName("maxBitrate"u8);
                 writer.WriteNumberValue(MaxBitrate.Value);
             }
-            if (BFrames.HasValue)
+            if (Optional.IsDefined(BFrames))
             {
                 writer.WritePropertyName("bFrames"u8);
                 writer.WriteNumberValue(BFrames.Value);
             }
-            if (FrameRate != null)
+            if (Optional.IsDefined(FrameRate))
             {
                 writer.WritePropertyName("frameRate"u8);
                 writer.WriteStringValue(FrameRate);
             }
-            if (Slices.HasValue)
+            if (Optional.IsDefined(Slices))
             {
                 writer.WritePropertyName("slices"u8);
                 writer.WriteNumberValue(Slices.Value);
             }
-            if (UseAdaptiveBFrame.HasValue)
+            if (Optional.IsDefined(UseAdaptiveBFrame))
             {
                 writer.WritePropertyName("adaptiveBFrame"u8);
                 writer.WriteBooleanValue(UseAdaptiveBFrame.Value);
             }
-            if (Width != null)
+            if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteStringValue(Width);
             }
-            if (Height != null)
+            if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteStringValue(Height);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<H264Layer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(H264Layer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(H264Layer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static H264Layer DeserializeH264Layer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Media.Models
             string height = default;
             string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profile"u8))
@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new H264Layer(
                 width,
                 height,
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(H264Layer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(H264Layer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeH264Layer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(H264Layer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(H264Layer)} does not support reading '{options.Format}' format.");
             }
         }
 

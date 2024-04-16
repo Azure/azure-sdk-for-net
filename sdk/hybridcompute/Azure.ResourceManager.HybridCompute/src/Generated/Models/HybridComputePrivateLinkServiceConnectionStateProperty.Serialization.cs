@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class HybridComputePrivateLinkServiceConnectionStateProperty : IUtf8JsonSerializable, IJsonModel<HybridComputePrivateLinkServiceConnectionStateProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputePrivateLinkServiceConnectionStateProperty>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputePrivateLinkServiceConnectionStateProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridComputePrivateLinkServiceConnectionStateProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputePrivateLinkServiceConnectionStateProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputePrivateLinkServiceConnectionStateProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputePrivateLinkServiceConnectionStateProperty)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStringValue(Status);
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
-            if (options.Format != "W" && ActionsRequired != null)
+            if (options.Format != "W" && Optional.IsDefined(ActionsRequired))
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputePrivateLinkServiceConnectionStateProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputePrivateLinkServiceConnectionStateProperty)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputePrivateLinkServiceConnectionStateProperty)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static HybridComputePrivateLinkServiceConnectionStateProperty DeserializeHybridComputePrivateLinkServiceConnectionStateProperty(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             string description = default;
             string actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HybridComputePrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkServiceConnectionStateProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkServiceConnectionStateProperty)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputePrivateLinkServiceConnectionStateProperty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkServiceConnectionStateProperty)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkServiceConnectionStateProperty)} does not support reading '{options.Format}' format.");
             }
         }
 

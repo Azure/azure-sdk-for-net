@@ -18,22 +18,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedService != null)
+            if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
-            if (FileSystem != null)
+            if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
                 writer.WriteStringValue(FileSystem);
             }
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 writer.WriteStringValue(FolderPath);
             }
-            if (SasToken != null)
+            if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteObjectValue(SasToken);
@@ -85,12 +85,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkConnectionLandingZone(linkedService, fileSystem, folderPath, sasToken);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkConnectionLandingZone FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkConnectionLandingZone(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class LinkConnectionLandingZoneConverter : JsonConverter<LinkConnectionLandingZone>
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionLandingZone model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override LinkConnectionLandingZone Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

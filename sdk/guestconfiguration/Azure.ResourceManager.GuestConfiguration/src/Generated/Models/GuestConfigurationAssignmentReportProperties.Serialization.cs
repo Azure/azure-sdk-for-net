@@ -15,60 +15,60 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     public partial class GuestConfigurationAssignmentReportProperties : IUtf8JsonSerializable, IJsonModel<GuestConfigurationAssignmentReportProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationAssignmentReportProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationAssignmentReportProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GuestConfigurationAssignmentReportProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ComplianceStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
                 writer.WriteStringValue(ComplianceStatus.Value.ToString());
             }
-            if (options.Format != "W" && ReportId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReportId))
             {
                 writer.WritePropertyName("reportId"u8);
                 writer.WriteStringValue(ReportId.Value);
             }
-            if (Assignment != null)
+            if (Optional.IsDefined(Assignment))
             {
                 writer.WritePropertyName("assignment"u8);
-                writer.WriteObjectValue(Assignment);
+                writer.WriteObjectValue(Assignment, options);
             }
-            if (Vm != null)
+            if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm);
+                writer.WriteObjectValue(Vm, options);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 if (Details != null)
                 {
                     writer.WritePropertyName("details"u8);
-                    writer.WriteObjectValue(Details);
+                    writer.WriteObjectValue(Details, options);
                 }
                 else
                 {
                     writer.WriteNull("details");
                 }
             }
-            if (options.Format != "W" && VmssResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(VmssResourceId))
             {
                 writer.WritePropertyName("vmssResourceId"u8);
                 writer.WriteStringValue(VmssResourceId);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestConfigurationAssignmentReportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationAssignmentReportProperties DeserializeGuestConfigurationAssignmentReportProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             GuestConfigurationAssignmentReportDetails details = default;
             string vmssResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complianceStatus"u8))
@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GuestConfigurationAssignmentReportProperties(
                 complianceStatus,
                 reportId,
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeGuestConfigurationAssignmentReportProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestConfigurationAssignmentReportProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

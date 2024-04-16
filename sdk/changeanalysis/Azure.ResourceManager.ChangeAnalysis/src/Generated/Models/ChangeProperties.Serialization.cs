@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
     public partial class ChangeProperties : IUtf8JsonSerializable, IJsonModel<ChangeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChangeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChangeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChangeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChangeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChangeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChangeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (ChangeDetectedOn.HasValue)
+            if (Optional.IsDefined(ChangeDetectedOn))
             {
                 writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(ChangeDetectedOn.Value, "O");
             }
-            if (!(InitiatedByList is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InitiatedByList))
             {
                 writer.WritePropertyName("initiatedByList"u8);
                 writer.WriteStartArray();
@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ChangeType.HasValue)
+            if (Optional.IsDefined(ChangeType))
             {
                 writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());
             }
-            if (!(PropertyChanges is ChangeTrackingList<PropertyChange> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyChanges))
             {
                 writer.WritePropertyName("propertyChanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in PropertyChanges)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChangeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChangeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChangeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
 
         internal static ChangeProperties DeserializeChangeProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             ChangeType? changeType = default;
             IReadOnlyList<PropertyChange> propertyChanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ChangeProperties(
                 resourceId,
                 timeStamp,
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChangeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChangeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                         return DeserializeChangeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChangeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChangeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

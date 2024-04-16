@@ -15,73 +15,73 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class SubscriptionResourceGetMonitorMetricsWithPostContent : IUtf8JsonSerializable, IJsonModel<SubscriptionResourceGetMonitorMetricsWithPostContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionResourceGetMonitorMetricsWithPostContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionResourceGetMonitorMetricsWithPostContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SubscriptionResourceGetMonitorMetricsWithPostContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionResourceGetMonitorMetricsWithPostContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionResourceGetMonitorMetricsWithPostContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionResourceGetMonitorMetricsWithPostContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Timespan.HasValue)
+            if (Optional.IsDefined(Timespan))
             {
                 writer.WritePropertyName("timespan"u8);
                 writer.WriteStringValue(Timespan.Value, "T");
             }
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");
             }
-            if (MetricNames != null)
+            if (Optional.IsDefined(MetricNames))
             {
                 writer.WritePropertyName("metricNames"u8);
                 writer.WriteStringValue(MetricNames);
             }
-            if (Aggregation != null)
+            if (Optional.IsDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteStringValue(Aggregation);
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Top.HasValue)
+            if (Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
-            if (OrderBy != null)
+            if (Optional.IsDefined(OrderBy))
             {
                 writer.WritePropertyName("orderBy"u8);
                 writer.WriteStringValue(OrderBy);
             }
-            if (RollUpBy != null)
+            if (Optional.IsDefined(RollUpBy))
             {
                 writer.WritePropertyName("rollUpBy"u8);
                 writer.WriteStringValue(RollUpBy);
             }
-            if (ResultType.HasValue)
+            if (Optional.IsDefined(ResultType))
             {
                 writer.WritePropertyName("resultType"u8);
                 writer.WriteStringValue(ResultType.Value.ToString());
             }
-            if (MetricNamespace != null)
+            if (Optional.IsDefined(MetricNamespace))
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
-            if (AutoAdjustTimegrain.HasValue)
+            if (Optional.IsDefined(AutoAdjustTimegrain))
             {
                 writer.WritePropertyName("autoAdjustTimegrain"u8);
                 writer.WriteBooleanValue(AutoAdjustTimegrain.Value);
             }
-            if (ValidateDimensions.HasValue)
+            if (Optional.IsDefined(ValidateDimensions))
             {
                 writer.WritePropertyName("validateDimensions"u8);
                 writer.WriteBooleanValue(ValidateDimensions.Value);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionResourceGetMonitorMetricsWithPostContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionResourceGetMonitorMetricsWithPostContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionResourceGetMonitorMetricsWithPostContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static SubscriptionResourceGetMonitorMetricsWithPostContent DeserializeSubscriptionResourceGetMonitorMetricsWithPostContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Monitor.Models
             bool? autoAdjustTimegrain = default;
             bool? validateDimensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timespan"u8))
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SubscriptionResourceGetMonitorMetricsWithPostContent(
                 timespan,
                 interval,
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionResourceGetMonitorMetricsWithPostContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionResourceGetMonitorMetricsWithPostContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeSubscriptionResourceGetMonitorMetricsWithPostContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionResourceGetMonitorMetricsWithPostContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionResourceGetMonitorMetricsWithPostContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorEventHubReceiver : IUtf8JsonSerializable, IJsonModel<MonitorEventHubReceiver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorEventHubReceiver>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorEventHubReceiver>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorEventHubReceiver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorEventHubReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(EventHubNameSpace);
             writer.WritePropertyName("eventHubName"u8);
             writer.WriteStringValue(EventHubName);
-            if (UseCommonAlertSchema.HasValue)
+            if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorEventHubReceiver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorEventHubReceiver DeserializeMonitorEventHubReceiver(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Guid? tenantId = default;
             string subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MonitorEventHubReceiver(
                 name,
                 eventHubNameSpace,
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorEventHubReceiver(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support reading '{options.Format}' format.");
             }
         }
 

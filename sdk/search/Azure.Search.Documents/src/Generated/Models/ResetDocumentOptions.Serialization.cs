@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(DocumentKeys is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DocumentKeys))
             {
                 writer.WritePropertyName("documentKeys"u8);
                 writer.WriteStartArray();
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataSourceDocumentIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DataSourceDocumentIds))
             {
                 writer.WritePropertyName("datasourceDocumentIds"u8);
                 writer.WriteStartArray();
@@ -36,6 +36,14 @@ namespace Azure.Search.Documents.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

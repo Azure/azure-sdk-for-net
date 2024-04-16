@@ -17,38 +17,38 @@ namespace Azure.ResourceManager.MixedReality
 {
     public partial class RemoteRenderingAccountData : IUtf8JsonSerializable, IJsonModel<RemoteRenderingAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemoteRenderingAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemoteRenderingAccountData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RemoteRenderingAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RemoteRenderingAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RemoteRenderingAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RemoteRenderingAccountData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Plan != null)
+            if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteObjectValue(Kind);
+                writer.WriteObjectValue(Kind, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -76,24 +76,24 @@ namespace Azure.ResourceManager.MixedReality
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StorageAccountName != null)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (options.Format != "W" && AccountId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId.Value);
             }
-            if (options.Format != "W" && AccountDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountDomain))
             {
                 writer.WritePropertyName("accountDomain"u8);
                 writer.WriteStringValue(AccountDomain);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MixedReality
             var format = options.Format == "W" ? ((IPersistableModel<RemoteRenderingAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RemoteRenderingAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RemoteRenderingAccountData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MixedReality
 
         internal static RemoteRenderingAccountData DeserializeRemoteRenderingAccountData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MixedReality
             Guid? accountId = default;
             string accountDomain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -266,10 +266,10 @@ namespace Azure.ResourceManager.MixedReality
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RemoteRenderingAccountData(
                 id,
                 name,
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.MixedReality
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RemoteRenderingAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RemoteRenderingAccountData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.MixedReality
                         return DeserializeRemoteRenderingAccountData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RemoteRenderingAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RemoteRenderingAccountData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class AmlFileSystemSubnetContent : IUtf8JsonSerializable, IJsonModel<AmlFileSystemSubnetContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemSubnetContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemSubnetContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AmlFileSystemSubnetContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemSubnetContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemSubnetContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemSubnetContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FilesystemSubnet != null)
+            if (Optional.IsDefined(FilesystemSubnet))
             {
                 writer.WritePropertyName("filesystemSubnet"u8);
                 writer.WriteStringValue(FilesystemSubnet);
             }
-            if (StorageCapacityTiB.HasValue)
+            if (Optional.IsDefined(StorageCapacityTiB))
             {
                 writer.WritePropertyName("storageCapacityTiB"u8);
                 writer.WriteNumberValue(StorageCapacityTiB.Value);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemSubnetContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemSubnetContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemSubnetContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static AmlFileSystemSubnetContent DeserializeAmlFileSystemSubnetContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             StorageCacheSkuName sku = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filesystemSubnet"u8))
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AmlFileSystemSubnetContent(filesystemSubnet, storageCapacityTiB, sku, location, serializedAdditionalRawData);
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemSubnetContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemSubnetContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeAmlFileSystemSubnetContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemSubnetContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemSubnetContent)} does not support reading '{options.Format}' format.");
             }
         }
 

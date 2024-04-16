@@ -17,73 +17,73 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRouteConnectionData : IUtf8JsonSerializable, IJsonModel<ExpressRouteConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExpressRouteConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ExpressRouteCircuitPeering != null)
+            if (Optional.IsDefined(ExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("expressRouteCircuitPeering"u8);
                 JsonSerializer.Serialize(writer, ExpressRouteCircuitPeering);
             }
-            if (AuthorizationKey != null)
+            if (Optional.IsDefined(AuthorizationKey))
             {
                 writer.WritePropertyName("authorizationKey"u8);
                 writer.WriteStringValue(AuthorizationKey);
             }
-            if (RoutingWeight.HasValue)
+            if (Optional.IsDefined(RoutingWeight))
             {
                 writer.WritePropertyName("routingWeight"u8);
                 writer.WriteNumberValue(RoutingWeight.Value);
             }
-            if (EnableInternetSecurity.HasValue)
+            if (Optional.IsDefined(EnableInternetSecurity))
             {
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (ExpressRouteGatewayBypass.HasValue)
+            if (Optional.IsDefined(ExpressRouteGatewayBypass))
             {
                 writer.WritePropertyName("expressRouteGatewayBypass"u8);
                 writer.WriteBooleanValue(ExpressRouteGatewayBypass.Value);
             }
-            if (EnablePrivateLinkFastPath.HasValue)
+            if (Optional.IsDefined(EnablePrivateLinkFastPath))
             {
                 writer.WritePropertyName("enablePrivateLinkFastPath"u8);
                 writer.WriteBooleanValue(EnablePrivateLinkFastPath.Value);
             }
-            if (RoutingConfiguration != null)
+            if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(RoutingConfiguration);
+                writer.WriteObjectValue(RoutingConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteConnectionData DeserializeExpressRouteConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network
             bool? enablePrivateLinkFastPath = default;
             RoutingConfiguration routingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -244,10 +244,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ExpressRouteConnectionData(
                 id,
                 name,
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeExpressRouteConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

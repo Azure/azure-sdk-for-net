@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class OSDiskImageSecurityProfile : IUtf8JsonSerializable, IJsonModel<OSDiskImageSecurityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSDiskImageSecurityProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSDiskImageSecurityProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OSDiskImageSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OSDiskImageSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ConfidentialVmEncryptionType.HasValue)
+            if (Optional.IsDefined(ConfidentialVmEncryptionType))
             {
                 writer.WritePropertyName("confidentialVMEncryptionType"u8);
                 writer.WriteStringValue(ConfidentialVmEncryptionType.Value.ToString());
             }
-            if (SecureVmDiskEncryptionSetId != null)
+            if (Optional.IsDefined(SecureVmDiskEncryptionSetId))
             {
                 writer.WritePropertyName("secureVMDiskEncryptionSetId"u8);
                 writer.WriteStringValue(SecureVmDiskEncryptionSetId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSDiskImageSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static OSDiskImageSecurityProfile DeserializeOSDiskImageSecurityProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
             ConfidentialVmEncryptionType? confidentialVmEncryptionType = default;
             string secureVmDiskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("confidentialVMEncryptionType"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OSDiskImageSecurityProfile(confidentialVmEncryptionType, secureVmDiskEncryptionSetId, serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeOSDiskImageSecurityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

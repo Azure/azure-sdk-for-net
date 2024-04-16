@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningAutoScaleProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningAutoScaleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAutoScaleProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAutoScaleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningAutoScaleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAutoScaleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningAutoScaleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningAutoScaleProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MinNodeCount.HasValue)
+            if (Optional.IsDefined(MinNodeCount))
             {
                 writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (MaxNodeCount.HasValue)
+            if (Optional.IsDefined(MaxNodeCount))
             {
                 writer.WritePropertyName("maxNodeCount"u8);
                 writer.WriteNumberValue(MaxNodeCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAutoScaleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningAutoScaleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningAutoScaleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAutoScaleProperties DeserializeMachineLearningAutoScaleProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             bool? enabled = default;
             int? maxNodeCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minNodeCount"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningAutoScaleProperties(minNodeCount, enabled, maxNodeCount, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningAutoScaleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningAutoScaleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningAutoScaleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningAutoScaleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningAutoScaleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

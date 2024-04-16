@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class SoftwareAssuranceProperties : IUtf8JsonSerializable, IJsonModel<SoftwareAssuranceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareAssuranceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareAssuranceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SoftwareAssuranceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareAssuranceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SoftwareAssuranceStatus.HasValue)
+            if (Optional.IsDefined(SoftwareAssuranceStatus))
             {
                 writer.WritePropertyName("softwareAssuranceStatus"u8);
                 writer.WriteStringValue(SoftwareAssuranceStatus.Value.ToString());
             }
-            if (SoftwareAssuranceIntent.HasValue)
+            if (Optional.IsDefined(SoftwareAssuranceIntent))
             {
                 writer.WritePropertyName("softwareAssuranceIntent"u8);
                 writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToString());
             }
-            if (options.Format != "W" && LastUpdated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareAssuranceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static SoftwareAssuranceProperties DeserializeSoftwareAssuranceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Hci.Models
             SoftwareAssuranceIntent? softwareAssuranceIntent = default;
             DateTimeOffset? lastUpdated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("softwareAssuranceStatus"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SoftwareAssuranceProperties(softwareAssuranceStatus, softwareAssuranceIntent, lastUpdated, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeSoftwareAssuranceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareAssuranceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,25 +15,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     [PersistableModelProxy(typeof(UnknownProtectionPolicy))]
     public partial class BackupGenericProtectionPolicy : IUtf8JsonSerializable, IJsonModel<BackupGenericProtectionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupGenericProtectionPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupGenericProtectionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupGenericProtectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProtectedItemsCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemsCount))
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
             writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
-            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static BackupGenericProtectionPolicy DeserializeBackupGenericProtectionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupGenericProtectionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericProtectionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

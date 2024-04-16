@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 {
     public partial class HealthcareApisServiceImportConfiguration : IUtf8JsonSerializable, IJsonModel<HealthcareApisServiceImportConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisServiceImportConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisServiceImportConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HealthcareApisServiceImportConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceImportConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisServiceImportConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisServiceImportConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IntegrationDataStore != null)
+            if (Optional.IsDefined(IntegrationDataStore))
             {
                 writer.WritePropertyName("integrationDataStore"u8);
                 writer.WriteStringValue(IntegrationDataStore);
             }
-            if (IsInitialImportMode.HasValue)
+            if (Optional.IsDefined(IsInitialImportMode))
             {
                 writer.WritePropertyName("initialImportMode"u8);
                 writer.WriteBooleanValue(IsInitialImportMode.Value);
             }
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceImportConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisServiceImportConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisServiceImportConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisServiceImportConfiguration DeserializeHealthcareApisServiceImportConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             bool? initialImportMode = default;
             bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("integrationDataStore"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HealthcareApisServiceImportConfiguration(integrationDataStore, initialImportMode, enabled, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisServiceImportConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisServiceImportConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         return DeserializeHealthcareApisServiceImportConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisServiceImportConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisServiceImportConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

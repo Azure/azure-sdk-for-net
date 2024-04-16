@@ -17,23 +17,23 @@ namespace Azure.ResourceManager.NotificationHubs
 {
     public partial class NotificationHubAuthorizationRuleData : IUtf8JsonSerializable, IJsonModel<NotificationHubAuthorizationRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubAuthorizationRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubAuthorizationRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationHubAuthorizationRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubAuthorizationRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubAuthorizationRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubAuthorizationRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Rights is ChangeTrackingList<AuthorizationRuleAccessRight> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Rights))
             {
                 writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();
@@ -78,42 +78,42 @@ namespace Azure.ResourceManager.NotificationHubs
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PrimaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && SecondaryKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (options.Format != "W" && KeyName != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (options.Format != "W" && ClaimType != null)
+            if (options.Format != "W" && Optional.IsDefined(ClaimType))
             {
                 writer.WritePropertyName("claimType"u8);
                 writer.WriteStringValue(ClaimType);
             }
-            if (options.Format != "W" && ClaimValue != null)
+            if (options.Format != "W" && Optional.IsDefined(ClaimValue))
             {
                 writer.WritePropertyName("claimValue"u8);
                 writer.WriteStringValue(ClaimValue);
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedTime"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Revision.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NotificationHubs
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubAuthorizationRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubAuthorizationRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubAuthorizationRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NotificationHubs
 
         internal static NotificationHubAuthorizationRuleData DeserializeNotificationHubAuthorizationRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.NotificationHubs
             DateTimeOffset? createdTime = default;
             int? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -309,10 +309,10 @@ namespace Azure.ResourceManager.NotificationHubs
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NotificationHubAuthorizationRuleData(
                 id,
                 name,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubAuthorizationRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubAuthorizationRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.NotificationHubs
                         return DeserializeNotificationHubAuthorizationRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubAuthorizationRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubAuthorizationRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

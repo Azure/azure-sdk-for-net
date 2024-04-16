@@ -16,12 +16,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MaxTokenLength.HasValue)
+            if (Optional.IsDefined(MaxTokenLength))
             {
                 writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
-            if (!(Stopwords is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Stopwords))
             {
                 writer.WritePropertyName("stopwords"u8);
                 writer.WriteStartArray();
@@ -85,6 +85,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new LuceneStandardAnalyzer(odataType, name, maxTokenLength, stopwords ?? new ChangeTrackingList<string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new LuceneStandardAnalyzer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLuceneStandardAnalyzer(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

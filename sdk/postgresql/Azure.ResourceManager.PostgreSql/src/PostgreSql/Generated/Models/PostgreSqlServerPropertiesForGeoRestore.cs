@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
         public PostgreSqlServerPropertiesForGeoRestore(ResourceIdentifier sourceServerId)
         {
-            if (sourceServerId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceServerId));
-            }
+            Argument.AssertNotNull(sourceServerId, nameof(sourceServerId));
 
             SourceServerId = sourceServerId;
             CreateMode = PostgreSqlCreateMode.GeoRestore;
@@ -50,6 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> The source server id to restore from. </summary>
+        [WirePath("sourceServerId")]
         public ResourceIdentifier SourceServerId { get; }
     }
 }

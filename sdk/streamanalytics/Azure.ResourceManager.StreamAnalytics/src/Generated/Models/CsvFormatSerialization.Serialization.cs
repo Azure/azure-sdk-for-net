@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class CsvFormatSerialization : IUtf8JsonSerializable, IJsonModel<CsvFormatSerialization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CsvFormatSerialization>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CsvFormatSerialization>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CsvFormatSerialization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CsvFormatSerialization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(EventSerializationType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FieldDelimiter != null)
+            if (Optional.IsDefined(FieldDelimiter))
             {
                 writer.WritePropertyName("fieldDelimiter"u8);
                 writer.WriteStringValue(FieldDelimiter);
             }
-            if (Encoding.HasValue)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<CsvFormatSerialization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static CsvFormatSerialization DeserializeCsvFormatSerialization(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             string fieldDelimiter = default;
             StreamAnalyticsDataSerializationEncoding? encoding = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CsvFormatSerialization(type, serializedAdditionalRawData, fieldDelimiter, encoding);
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeCsvFormatSerialization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsvFormatSerialization)} does not support reading '{options.Format}' format.");
             }
         }
 

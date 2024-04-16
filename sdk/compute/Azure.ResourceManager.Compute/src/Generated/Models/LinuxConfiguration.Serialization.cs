@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class LinuxConfiguration : IUtf8JsonSerializable, IJsonModel<LinuxConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinuxConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinuxConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LinuxConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinuxConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinuxConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsPasswordAuthenticationDisabled.HasValue)
+            if (Optional.IsDefined(IsPasswordAuthenticationDisabled))
             {
                 writer.WritePropertyName("disablePasswordAuthentication"u8);
                 writer.WriteBooleanValue(IsPasswordAuthenticationDisabled.Value);
             }
-            if (Ssh != null)
+            if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue(Ssh);
+                writer.WriteObjectValue(Ssh, options);
             }
-            if (ProvisionVmAgent.HasValue)
+            if (Optional.IsDefined(ProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
-            if (PatchSettings != null)
+            if (Optional.IsDefined(PatchSettings))
             {
                 writer.WritePropertyName("patchSettings"u8);
-                writer.WriteObjectValue(PatchSettings);
+                writer.WriteObjectValue(PatchSettings, options);
             }
-            if (IsVmAgentPlatformUpdatesEnabled.HasValue)
+            if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {
                 writer.WritePropertyName("enableVMAgentPlatformUpdates"u8);
                 writer.WriteBooleanValue(IsVmAgentPlatformUpdatesEnabled.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinuxConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinuxConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static LinuxConfiguration DeserializeLinuxConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
             LinuxPatchSettings patchSettings = default;
             bool? enableVmAgentPlatformUpdates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disablePasswordAuthentication"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LinuxConfiguration(
                 disablePasswordAuthentication,
                 ssh,
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinuxConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinuxConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeLinuxConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinuxConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinuxConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

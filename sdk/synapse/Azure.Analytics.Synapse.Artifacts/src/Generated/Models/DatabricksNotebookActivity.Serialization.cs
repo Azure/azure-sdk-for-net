@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -33,22 +33,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -71,8 +71,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("notebookPath"u8);
-            writer.WriteObjectValue(NotebookPath);
-            if (!(BaseParameters is ChangeTrackingDictionary<string, object> collection1 && collection1.IsUndefined))
+            writer.WriteObjectValue<object>(NotebookPath);
+            if (Optional.IsCollectionDefined(BaseParameters))
             {
                 writer.WritePropertyName("baseParameters"u8);
                 writer.WriteStartObject();
@@ -84,11 +84,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Libraries is ChangeTrackingList<IDictionary<string, object>> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Libraries))
             {
                 writer.WritePropertyName("libraries"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             writer.WriteNullValue();
                             continue;
                         }
-                        writer.WriteObjectValue(item0.Value);
+                        writer.WriteObjectValue<object>(item0.Value);
                     }
                     writer.WriteEndObject();
                 }
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -314,12 +314,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 libraries ?? new ChangeTrackingList<IDictionary<string, object>>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DatabricksNotebookActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDatabricksNotebookActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class DatabricksNotebookActivityConverter : JsonConverter<DatabricksNotebookActivity>
         {
             public override void Write(Utf8JsonWriter writer, DatabricksNotebookActivity model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override DatabricksNotebookActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

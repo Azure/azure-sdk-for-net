@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricInternalNetworkData : IUtf8JsonSerializable, IJsonModel<NetworkFabricInternalNetworkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricInternalNetworkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricInternalNetworkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFabricInternalNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricInternalNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricInternalNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricInternalNetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,106 +43,106 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Annotation != null)
+            if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Mtu.HasValue)
+            if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (!(ConnectedIPv4Subnets is ChangeTrackingList<ConnectedSubnet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectedIPv4Subnets))
             {
                 writer.WritePropertyName("connectedIPv4Subnets"u8);
                 writer.WriteStartArray();
                 foreach (var item in ConnectedIPv4Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ConnectedIPv6Subnets is ChangeTrackingList<ConnectedSubnet> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConnectedIPv6Subnets))
             {
                 writer.WritePropertyName("connectedIPv6Subnets"u8);
                 writer.WriteStartArray();
                 foreach (var item in ConnectedIPv6Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ImportRoutePolicyId != null)
+            if (Optional.IsDefined(ImportRoutePolicyId))
             {
                 writer.WritePropertyName("importRoutePolicyId"u8);
                 writer.WriteStringValue(ImportRoutePolicyId);
             }
-            if (ExportRoutePolicyId != null)
+            if (Optional.IsDefined(ExportRoutePolicyId))
             {
                 writer.WritePropertyName("exportRoutePolicyId"u8);
                 writer.WriteStringValue(ExportRoutePolicyId);
             }
-            if (ImportRoutePolicy != null)
+            if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue(ImportRoutePolicy);
+                writer.WriteObjectValue(ImportRoutePolicy, options);
             }
-            if (ExportRoutePolicy != null)
+            if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy);
+                writer.WriteObjectValue(ExportRoutePolicy, options);
             }
-            if (IngressAclId != null)
+            if (Optional.IsDefined(IngressAclId))
             {
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
             }
-            if (EgressAclId != null)
+            if (Optional.IsDefined(EgressAclId))
             {
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
             }
-            if (IsMonitoringEnabled.HasValue)
+            if (Optional.IsDefined(IsMonitoringEnabled))
             {
                 writer.WritePropertyName("isMonitoringEnabled"u8);
                 writer.WriteStringValue(IsMonitoringEnabled.Value.ToString());
             }
-            if (Extension.HasValue)
+            if (Optional.IsDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteStringValue(Extension.Value.ToString());
             }
             writer.WritePropertyName("vlanId"u8);
             writer.WriteNumberValue(VlanId);
-            if (BgpConfiguration != null)
+            if (Optional.IsDefined(BgpConfiguration))
             {
                 writer.WritePropertyName("bgpConfiguration"u8);
-                writer.WriteObjectValue(BgpConfiguration);
+                writer.WriteObjectValue(BgpConfiguration, options);
             }
-            if (StaticRouteConfiguration != null)
+            if (Optional.IsDefined(StaticRouteConfiguration))
             {
                 writer.WritePropertyName("staticRouteConfiguration"u8);
-                writer.WriteObjectValue(StaticRouteConfiguration);
+                writer.WriteObjectValue(StaticRouteConfiguration, options);
             }
-            if (options.Format != "W" && ConfigurationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AdministrativeState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricInternalNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricInternalNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricInternalNetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         internal static NetworkFabricInternalNetworkData DeserializeNetworkFabricInternalNetworkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             NetworkFabricProvisioningState? provisioningState = default;
             NetworkFabricAdministrativeState? administrativeState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -414,10 +414,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkFabricInternalNetworkData(
                 id,
                 name,
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricInternalNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricInternalNetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         return DeserializeNetworkFabricInternalNetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricInternalNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricInternalNetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

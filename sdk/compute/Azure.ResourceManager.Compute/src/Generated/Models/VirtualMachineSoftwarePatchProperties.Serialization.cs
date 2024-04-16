@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineSoftwarePatchProperties : IUtf8JsonSerializable, IJsonModel<VirtualMachineSoftwarePatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineSoftwarePatchProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineSoftwarePatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineSoftwarePatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineSoftwarePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineSoftwarePatchProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineSoftwarePatchProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PatchId != null)
+            if (options.Format != "W" && Optional.IsDefined(PatchId))
             {
                 writer.WritePropertyName("patchId"u8);
                 writer.WriteStringValue(PatchId);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && KbId != null)
+            if (options.Format != "W" && Optional.IsDefined(KbId))
             {
                 writer.WritePropertyName("kbId"u8);
                 writer.WriteStringValue(KbId);
             }
-            if (options.Format != "W" && !(Classifications is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Classifications))
             {
                 writer.WritePropertyName("classifications"u8);
                 writer.WriteStartArray();
@@ -56,27 +56,27 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && RebootBehavior.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RebootBehavior))
             {
                 writer.WritePropertyName("rebootBehavior"u8);
                 writer.WriteStringValue(RebootBehavior.Value.ToString());
             }
-            if (options.Format != "W" && ActivityId != null)
+            if (options.Format != "W" && Optional.IsDefined(ActivityId))
             {
                 writer.WritePropertyName("activityId"u8);
                 writer.WriteStringValue(ActivityId);
             }
-            if (options.Format != "W" && PublishedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublishedOn))
             {
                 writer.WritePropertyName("publishedDate"u8);
                 writer.WriteStringValue(PublishedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && AssessmentState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AssessmentState))
             {
                 writer.WritePropertyName("assessmentState"u8);
                 writer.WriteStringValue(AssessmentState.Value.ToString());
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineSoftwarePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineSoftwarePatchProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineSoftwarePatchProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineSoftwarePatchProperties DeserializeVirtualMachineSoftwarePatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
             DateTimeOffset? lastModifiedDateTime = default;
             PatchAssessmentState? assessmentState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("patchId"u8))
@@ -210,10 +210,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineSoftwarePatchProperties(
                 patchId,
                 name,
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineSoftwarePatchProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineSoftwarePatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineSoftwarePatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineSoftwarePatchProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineSoftwarePatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,38 +15,38 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class ReverseShippingDetails : IUtf8JsonSerializable, IJsonModel<ReverseShippingDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReverseShippingDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReverseShippingDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReverseShippingDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReverseShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SasKeyForLabel != null)
+            if (options.Format != "W" && Optional.IsDefined(SasKeyForLabel))
             {
                 writer.WritePropertyName("sasKeyForLabel"u8);
                 writer.WriteStringValue(SasKeyForLabel);
             }
-            if (options.Format != "W" && CarrierName != null)
+            if (options.Format != "W" && Optional.IsDefined(CarrierName))
             {
                 writer.WritePropertyName("carrierName"u8);
                 writer.WriteStringValue(CarrierName);
             }
-            if (options.Format != "W" && CarrierDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(CarrierDisplayName))
             {
                 writer.WritePropertyName("carrierDisplayName"u8);
                 writer.WriteStringValue(CarrierDisplayName);
             }
-            if (options.Format != "W" && TrackingId != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackingId))
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
             }
-            if (options.Format != "W" && TrackingUri != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackingUri))
             {
                 writer.WritePropertyName("trackingUrl"u8);
                 writer.WriteStringValue(TrackingUri.AbsoluteUri);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReverseShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static ReverseShippingDetails DeserializeReverseShippingDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             string trackingId = default;
             Uri trackingUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sasKeyForLabel"u8))
@@ -129,10 +129,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReverseShippingDetails(
                 sasKeyForLabel,
                 carrierName,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeReverseShippingDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

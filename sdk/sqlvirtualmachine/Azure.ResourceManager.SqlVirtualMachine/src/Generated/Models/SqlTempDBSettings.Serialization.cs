@@ -15,53 +15,53 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     public partial class SqlTempDBSettings : IUtf8JsonSerializable, IJsonModel<SqlTempDBSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlTempDBSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlTempDBSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlTempDBSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlTempDBSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DataFileSize.HasValue)
+            if (Optional.IsDefined(DataFileSize))
             {
                 writer.WritePropertyName("dataFileSize"u8);
                 writer.WriteNumberValue(DataFileSize.Value);
             }
-            if (DataGrowth.HasValue)
+            if (Optional.IsDefined(DataGrowth))
             {
                 writer.WritePropertyName("dataGrowth"u8);
                 writer.WriteNumberValue(DataGrowth.Value);
             }
-            if (LogFileSize.HasValue)
+            if (Optional.IsDefined(LogFileSize))
             {
                 writer.WritePropertyName("logFileSize"u8);
                 writer.WriteNumberValue(LogFileSize.Value);
             }
-            if (LogGrowth.HasValue)
+            if (Optional.IsDefined(LogGrowth))
             {
                 writer.WritePropertyName("logGrowth"u8);
                 writer.WriteNumberValue(LogGrowth.Value);
             }
-            if (DataFileCount.HasValue)
+            if (Optional.IsDefined(DataFileCount))
             {
                 writer.WritePropertyName("dataFileCount"u8);
                 writer.WriteNumberValue(DataFileCount.Value);
             }
-            if (PersistFolder.HasValue)
+            if (Optional.IsDefined(PersistFolder))
             {
                 writer.WritePropertyName("persistFolder"u8);
                 writer.WriteBooleanValue(PersistFolder.Value);
             }
-            if (PersistFolderPath != null)
+            if (Optional.IsDefined(PersistFolderPath))
             {
                 writer.WritePropertyName("persistFolderPath"u8);
                 writer.WriteStringValue(PersistFolderPath);
             }
-            if (!(LogicalUnitNumbers is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LogicalUnitNumbers))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultFilePath != null)
+            if (Optional.IsDefined(DefaultFilePath))
             {
                 writer.WritePropertyName("defaultFilePath"u8);
                 writer.WriteStringValue(DefaultFilePath);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlTempDBSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlTempDBSettings DeserializeSqlTempDBSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             IList<int> luns = default;
             string defaultFilePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataFileSize"u8))
@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SqlTempDBSettings(
                 dataFileSize,
                 dataGrowth,
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeSqlTempDBSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlTempDBSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

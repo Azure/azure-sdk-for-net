@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class KubernetesClusterVaultTierRestoreCriteria : IUtf8JsonSerializable, IJsonModel<KubernetesClusterVaultTierRestoreCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterVaultTierRestoreCriteria>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterVaultTierRestoreCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubernetesClusterVaultTierRestoreCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("includeClusterScopeResources"u8);
             writer.WriteBooleanValue(IncludeClusterScopeResources);
-            if (!(IncludedNamespaces is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedNamespaces))
             {
                 writer.WritePropertyName("includedNamespaces"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludedNamespaces is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedNamespaces))
             {
                 writer.WritePropertyName("excludedNamespaces"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IncludedResourceTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedResourceTypes))
             {
                 writer.WritePropertyName("includedResourceTypes"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExcludedResourceTypes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedResourceTypes))
             {
                 writer.WritePropertyName("excludedResourceTypes"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LabelSelectors is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(LabelSelectors))
             {
                 writer.WritePropertyName("labelSelectors"u8);
                 writer.WriteStartArray();
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PersistentVolumeRestoreMode.HasValue)
+            if (Optional.IsDefined(PersistentVolumeRestoreMode))
             {
                 writer.WritePropertyName("persistentVolumeRestoreMode"u8);
                 writer.WriteStringValue(PersistentVolumeRestoreMode.Value.ToString());
             }
-            if (ConflictPolicy.HasValue)
+            if (Optional.IsDefined(ConflictPolicy))
             {
                 writer.WritePropertyName("conflictPolicy"u8);
                 writer.WriteStringValue(ConflictPolicy.Value.ToString());
             }
-            if (!(NamespaceMappings is ChangeTrackingDictionary<string, string> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(NamespaceMappings))
             {
                 writer.WritePropertyName("namespaceMappings"u8);
                 writer.WriteStartObject();
@@ -99,22 +99,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(RestoreHookReferences is ChangeTrackingList<NamespacedName> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(RestoreHookReferences))
             {
                 writer.WritePropertyName("restoreHookReferences"u8);
                 writer.WriteStartArray();
                 foreach (var item in RestoreHookReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (StagingResourceGroupId != null)
+            if (Optional.IsDefined(StagingResourceGroupId))
             {
                 writer.WritePropertyName("stagingResourceGroupId"u8);
                 writer.WriteStringValue(StagingResourceGroupId);
             }
-            if (StagingStorageAccountId != null)
+            if (Optional.IsDefined(StagingStorageAccountId))
             {
                 writer.WritePropertyName("stagingStorageAccountId"u8);
                 writer.WriteStringValue(StagingStorageAccountId);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterVaultTierRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static KubernetesClusterVaultTierRestoreCriteria DeserializeKubernetesClusterVaultTierRestoreCriteria(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceIdentifier stagingStorageAccountId = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("includeClusterScopeResources"u8))
@@ -322,10 +322,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KubernetesClusterVaultTierRestoreCriteria(
                 objectType,
                 serializedAdditionalRawData,
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeKubernetesClusterVaultTierRestoreCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterVaultTierRestoreCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

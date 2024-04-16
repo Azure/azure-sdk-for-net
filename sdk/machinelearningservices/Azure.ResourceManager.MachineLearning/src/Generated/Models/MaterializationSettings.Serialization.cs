@@ -15,54 +15,54 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MaterializationSettings : IUtf8JsonSerializable, IJsonModel<MaterializationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaterializationSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaterializationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MaterializationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MaterializationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaterializationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaterializationSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Notification != null)
+            if (Optional.IsDefined(Notification))
             {
                 if (Notification != null)
                 {
                     writer.WritePropertyName("notification"u8);
-                    writer.WriteObjectValue(Notification);
+                    writer.WriteObjectValue(Notification, options);
                 }
                 else
                 {
                     writer.WriteNull("notification");
                 }
             }
-            if (Resource != null)
+            if (Optional.IsDefined(Resource))
             {
                 if (Resource != null)
                 {
                     writer.WritePropertyName("resource"u8);
-                    writer.WriteObjectValue(Resource);
+                    writer.WriteObjectValue(Resource, options);
                 }
                 else
                 {
                     writer.WriteNull("resource");
                 }
             }
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 if (Schedule != null)
                 {
                     writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule);
+                    writer.WriteObjectValue(Schedule, options);
                 }
                 else
                 {
                     writer.WriteNull("schedule");
                 }
             }
-            if (!(SparkConfiguration is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SparkConfiguration))
             {
                 if (SparkConfiguration != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sparkConfiguration");
                 }
             }
-            if (StoreType.HasValue)
+            if (Optional.IsDefined(StoreType))
             {
                 writer.WritePropertyName("storeType"u8);
                 writer.WriteStringValue(StoreType.Value.ToString());
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaterializationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaterializationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaterializationSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MaterializationSettings DeserializeMaterializationSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> sparkConfiguration = default;
             MaterializationStoreType? storeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notification"u8))
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MaterializationSettings(
                 notification,
                 resource,
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaterializationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaterializationSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMaterializationSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaterializationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaterializationSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

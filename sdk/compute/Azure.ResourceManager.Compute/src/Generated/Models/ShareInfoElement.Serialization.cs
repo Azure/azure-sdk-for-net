@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ShareInfoElement : IUtf8JsonSerializable, IJsonModel<ShareInfoElement>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareInfoElement>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareInfoElement>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ShareInfoElement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ShareInfoElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareInfoElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareInfoElement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VmUri != null)
+            if (options.Format != "W" && Optional.IsDefined(VmUri))
             {
                 writer.WritePropertyName("vmUri"u8);
                 writer.WriteStringValue(VmUri.AbsoluteUri);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareInfoElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareInfoElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareInfoElement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ShareInfoElement DeserializeShareInfoElement(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             Uri vmUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmUri"u8))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ShareInfoElement(vmUri, serializedAdditionalRawData);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ShareInfoElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareInfoElement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeShareInfoElement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ShareInfoElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareInfoElement)} does not support reading '{options.Format}' format.");
             }
         }
 

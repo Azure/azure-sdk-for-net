@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     public partial class KubernetesGitRepository : IUtf8JsonSerializable, IJsonModel<KubernetesGitRepository>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesGitRepository>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesGitRepository>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubernetesGitRepository>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepository>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("url");
                 }
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("timeoutInSeconds");
                 }
             }
-            if (SyncIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(SyncIntervalInSeconds))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("syncIntervalInSeconds");
                 }
             }
-            if (RepositoryRef != null)
+            if (Optional.IsDefined(RepositoryRef))
             {
                 if (RepositoryRef != null)
                 {
                     writer.WritePropertyName("repositoryRef"u8);
-                    writer.WriteObjectValue(RepositoryRef);
+                    writer.WriteObjectValue(RepositoryRef, options);
                 }
                 else
                 {
                     writer.WriteNull("repositoryRef");
                 }
             }
-            if (SshKnownHosts != null)
+            if (Optional.IsDefined(SshKnownHosts))
             {
                 if (SshKnownHosts != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("sshKnownHosts");
                 }
             }
-            if (HttpsUser != null)
+            if (Optional.IsDefined(HttpsUser))
             {
                 if (HttpsUser != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("httpsUser");
                 }
             }
-            if (HttpsCACert != null)
+            if (Optional.IsDefined(HttpsCACert))
             {
                 if (HttpsCACert != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("httpsCACert");
                 }
             }
-            if (LocalAuthRef != null)
+            if (Optional.IsDefined(LocalAuthRef))
             {
                 if (LocalAuthRef != null)
                 {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepository>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static KubernetesGitRepository DeserializeKubernetesGitRepository(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             string httpsCACert = default;
             string localAuthRef = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -254,10 +254,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KubernetesGitRepository(
                 url,
                 timeoutInSeconds,
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesGitRepository(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesGitRepository)} does not support reading '{options.Format}' format.");
             }
         }
 

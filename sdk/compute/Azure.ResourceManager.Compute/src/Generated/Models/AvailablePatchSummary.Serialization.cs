@@ -15,56 +15,56 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class AvailablePatchSummary : IUtf8JsonSerializable, IJsonModel<AvailablePatchSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailablePatchSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailablePatchSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailablePatchSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvailablePatchSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && AssessmentActivityId != null)
+            if (options.Format != "W" && Optional.IsDefined(AssessmentActivityId))
             {
                 writer.WritePropertyName("assessmentActivityId"u8);
                 writer.WriteStringValue(AssessmentActivityId);
             }
-            if (options.Format != "W" && RebootPending.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RebootPending))
             {
                 writer.WritePropertyName("rebootPending"u8);
                 writer.WriteBooleanValue(RebootPending.Value);
             }
-            if (options.Format != "W" && CriticalAndSecurityPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CriticalAndSecurityPatchCount))
             {
                 writer.WritePropertyName("criticalAndSecurityPatchCount"u8);
                 writer.WriteNumberValue(CriticalAndSecurityPatchCount.Value);
             }
-            if (options.Format != "W" && OtherPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OtherPatchCount))
             {
                 writer.WritePropertyName("otherPatchCount"u8);
                 writer.WriteNumberValue(OtherPatchCount.Value);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailablePatchSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AvailablePatchSummary DeserializeAvailablePatchSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
             DateTimeOffset? lastModifiedTime = default;
             ComputeApiError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AvailablePatchSummary(
                 status,
                 assessmentActivityId,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeAvailablePatchSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

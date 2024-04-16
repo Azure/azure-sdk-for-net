@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ApplicationGatewayWafDynamicManifestData : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayWafDynamicManifestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayWafDynamicManifestData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayWafDynamicManifestData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationGatewayWafDynamicManifestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayWafDynamicManifestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayWafDynamicManifestData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayWafDynamicManifestData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,31 +43,31 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(AvailableRuleSets is ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AvailableRuleSets))
             {
                 writer.WritePropertyName("availableRuleSets"u8);
                 writer.WriteStartArray();
                 foreach (var item in AvailableRuleSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("defaultRuleSet"u8);
             writer.WriteStartObject();
-            if (RuleSetType != null)
+            if (Optional.IsDefined(RuleSetType))
             {
                 writer.WritePropertyName("ruleSetType"u8);
                 writer.WriteStringValue(RuleSetType);
             }
-            if (RuleSetVersion != null)
+            if (Optional.IsDefined(RuleSetVersion))
             {
                 writer.WritePropertyName("ruleSetVersion"u8);
                 writer.WriteStringValue(RuleSetVersion);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayWafDynamicManifestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayWafDynamicManifestData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayWafDynamicManifestData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ApplicationGatewayWafDynamicManifestData DeserializeApplicationGatewayWafDynamicManifestData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
             string ruleSetType = default;
             string ruleSetVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationGatewayWafDynamicManifestData(
                 id,
                 name,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayWafDynamicManifestData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayWafDynamicManifestData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeApplicationGatewayWafDynamicManifestData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayWafDynamicManifestData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayWafDynamicManifestData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class LiveEventEncoding : IUtf8JsonSerializable, IJsonModel<LiveEventEncoding>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LiveEventEncoding>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LiveEventEncoding>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LiveEventEncoding>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LiveEventEncoding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveEventEncoding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveEventEncoding)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EncodingType.HasValue)
+            if (Optional.IsDefined(EncodingType))
             {
                 writer.WritePropertyName("encodingType"u8);
                 writer.WriteStringValue(EncodingType.Value.ToString());
             }
-            if (PresetName != null)
+            if (Optional.IsDefined(PresetName))
             {
                 writer.WritePropertyName("presetName"u8);
                 writer.WriteStringValue(PresetName);
             }
-            if (StretchMode.HasValue)
+            if (Optional.IsDefined(StretchMode))
             {
                 if (StretchMode != null)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("stretchMode");
                 }
             }
-            if (KeyFrameInterval.HasValue)
+            if (Optional.IsDefined(KeyFrameInterval))
             {
                 if (KeyFrameInterval != null)
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<LiveEventEncoding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveEventEncoding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveEventEncoding)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static LiveEventEncoding DeserializeLiveEventEncoding(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
             InputVideoStretchMode? stretchMode = default;
             TimeSpan? keyFrameInterval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("encodingType"u8))
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LiveEventEncoding(encodingType, presetName, stretchMode, keyFrameInterval, serializedAdditionalRawData);
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LiveEventEncoding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveEventEncoding)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeLiveEventEncoding(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LiveEventEncoding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveEventEncoding)} does not support reading '{options.Format}' format.");
             }
         }
 

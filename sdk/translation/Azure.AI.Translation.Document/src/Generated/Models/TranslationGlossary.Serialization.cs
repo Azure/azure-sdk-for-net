@@ -19,17 +19,25 @@ namespace Azure.AI.Translation.Document
             writer.WriteStringValue(GlossaryUri.AbsoluteUri);
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format);
-            if (FormatVersion != null)
+            if (Optional.IsDefined(FormatVersion))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(FormatVersion);
             }
-            if (StorageSource != null)
+            if (Optional.IsDefined(StorageSource))
             {
                 writer.WritePropertyName("storageSource"u8);
                 writer.WriteStringValue(StorageSource);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SecureInput.HasValue)
+            if (Optional.IsDefined(SecureInput))
             {
                 writer.WritePropertyName("secureInput"u8);
                 writer.WriteBooleanValue(SecureInput.Value);
             }
-            if (SecureOutput.HasValue)
+            if (Optional.IsDefined(SecureOutput))
             {
                 writer.WritePropertyName("secureOutput"u8);
                 writer.WriteBooleanValue(SecureOutput.Value);
@@ -63,12 +63,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SecureInputOutputPolicy(secureInput, secureOutput);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SecureInputOutputPolicy FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSecureInputOutputPolicy(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SecureInputOutputPolicyConverter : JsonConverter<SecureInputOutputPolicy>
         {
             public override void Write(Utf8JsonWriter writer, SecureInputOutputPolicy model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SecureInputOutputPolicy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

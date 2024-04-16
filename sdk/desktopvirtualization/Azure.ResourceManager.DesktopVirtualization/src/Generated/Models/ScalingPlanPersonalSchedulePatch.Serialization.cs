@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class ScalingPlanPersonalSchedulePatch : IUtf8JsonSerializable, IJsonModel<ScalingPlanPersonalSchedulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingPlanPersonalSchedulePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingPlanPersonalSchedulePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScalingPlanPersonalSchedulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPersonalSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(DaysOfWeek is ChangeTrackingList<DesktopVirtualizationDayOfWeek> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DaysOfWeek))
             {
                 writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();
@@ -38,127 +38,127 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RampUpStartTime != null)
+            if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteObjectValue(RampUpStartTime);
+                writer.WriteObjectValue(RampUpStartTime, options);
             }
-            if (RampUpAutoStartHosts.HasValue)
+            if (Optional.IsDefined(RampUpAutoStartHosts))
             {
                 writer.WritePropertyName("rampUpAutoStartHosts"u8);
                 writer.WriteStringValue(RampUpAutoStartHosts.Value.ToString());
             }
-            if (RampUpStartVmOnConnect.HasValue)
+            if (Optional.IsDefined(RampUpStartVmOnConnect))
             {
                 writer.WritePropertyName("rampUpStartVMOnConnect"u8);
                 writer.WriteStringValue(RampUpStartVmOnConnect.Value.ToString());
             }
-            if (RampUpActionOnDisconnect.HasValue)
+            if (Optional.IsDefined(RampUpActionOnDisconnect))
             {
                 writer.WritePropertyName("rampUpActionOnDisconnect"u8);
                 writer.WriteStringValue(RampUpActionOnDisconnect.Value.ToString());
             }
-            if (RampUpMinutesToWaitOnDisconnect.HasValue)
+            if (Optional.IsDefined(RampUpMinutesToWaitOnDisconnect))
             {
                 writer.WritePropertyName("rampUpMinutesToWaitOnDisconnect"u8);
                 writer.WriteNumberValue(RampUpMinutesToWaitOnDisconnect.Value);
             }
-            if (RampUpActionOnLogoff.HasValue)
+            if (Optional.IsDefined(RampUpActionOnLogoff))
             {
                 writer.WritePropertyName("rampUpActionOnLogoff"u8);
                 writer.WriteStringValue(RampUpActionOnLogoff.Value.ToString());
             }
-            if (RampUpMinutesToWaitOnLogoff.HasValue)
+            if (Optional.IsDefined(RampUpMinutesToWaitOnLogoff))
             {
                 writer.WritePropertyName("rampUpMinutesToWaitOnLogoff"u8);
                 writer.WriteNumberValue(RampUpMinutesToWaitOnLogoff.Value);
             }
-            if (PeakStartTime != null)
+            if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteObjectValue(PeakStartTime);
+                writer.WriteObjectValue(PeakStartTime, options);
             }
-            if (PeakStartVmOnConnect.HasValue)
+            if (Optional.IsDefined(PeakStartVmOnConnect))
             {
                 writer.WritePropertyName("peakStartVMOnConnect"u8);
                 writer.WriteStringValue(PeakStartVmOnConnect.Value.ToString());
             }
-            if (PeakActionOnDisconnect.HasValue)
+            if (Optional.IsDefined(PeakActionOnDisconnect))
             {
                 writer.WritePropertyName("peakActionOnDisconnect"u8);
                 writer.WriteStringValue(PeakActionOnDisconnect.Value.ToString());
             }
-            if (PeakMinutesToWaitOnDisconnect.HasValue)
+            if (Optional.IsDefined(PeakMinutesToWaitOnDisconnect))
             {
                 writer.WritePropertyName("peakMinutesToWaitOnDisconnect"u8);
                 writer.WriteNumberValue(PeakMinutesToWaitOnDisconnect.Value);
             }
-            if (PeakActionOnLogoff.HasValue)
+            if (Optional.IsDefined(PeakActionOnLogoff))
             {
                 writer.WritePropertyName("peakActionOnLogoff"u8);
                 writer.WriteStringValue(PeakActionOnLogoff.Value.ToString());
             }
-            if (PeakMinutesToWaitOnLogoff.HasValue)
+            if (Optional.IsDefined(PeakMinutesToWaitOnLogoff))
             {
                 writer.WritePropertyName("peakMinutesToWaitOnLogoff"u8);
                 writer.WriteNumberValue(PeakMinutesToWaitOnLogoff.Value);
             }
-            if (RampDownStartTime != null)
+            if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteObjectValue(RampDownStartTime);
+                writer.WriteObjectValue(RampDownStartTime, options);
             }
-            if (RampDownStartVmOnConnect.HasValue)
+            if (Optional.IsDefined(RampDownStartVmOnConnect))
             {
                 writer.WritePropertyName("rampDownStartVMOnConnect"u8);
                 writer.WriteStringValue(RampDownStartVmOnConnect.Value.ToString());
             }
-            if (RampDownActionOnDisconnect.HasValue)
+            if (Optional.IsDefined(RampDownActionOnDisconnect))
             {
                 writer.WritePropertyName("rampDownActionOnDisconnect"u8);
                 writer.WriteStringValue(RampDownActionOnDisconnect.Value.ToString());
             }
-            if (RampDownMinutesToWaitOnDisconnect.HasValue)
+            if (Optional.IsDefined(RampDownMinutesToWaitOnDisconnect))
             {
                 writer.WritePropertyName("rampDownMinutesToWaitOnDisconnect"u8);
                 writer.WriteNumberValue(RampDownMinutesToWaitOnDisconnect.Value);
             }
-            if (RampDownActionOnLogoff.HasValue)
+            if (Optional.IsDefined(RampDownActionOnLogoff))
             {
                 writer.WritePropertyName("rampDownActionOnLogoff"u8);
                 writer.WriteStringValue(RampDownActionOnLogoff.Value.ToString());
             }
-            if (RampDownMinutesToWaitOnLogoff.HasValue)
+            if (Optional.IsDefined(RampDownMinutesToWaitOnLogoff))
             {
                 writer.WritePropertyName("rampDownMinutesToWaitOnLogoff"u8);
                 writer.WriteNumberValue(RampDownMinutesToWaitOnLogoff.Value);
             }
-            if (OffPeakStartTime != null)
+            if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteObjectValue(OffPeakStartTime);
+                writer.WriteObjectValue(OffPeakStartTime, options);
             }
-            if (OffPeakStartVmOnConnect.HasValue)
+            if (Optional.IsDefined(OffPeakStartVmOnConnect))
             {
                 writer.WritePropertyName("offPeakStartVMOnConnect"u8);
                 writer.WriteStringValue(OffPeakStartVmOnConnect.Value.ToString());
             }
-            if (OffPeakActionOnDisconnect.HasValue)
+            if (Optional.IsDefined(OffPeakActionOnDisconnect))
             {
                 writer.WritePropertyName("offPeakActionOnDisconnect"u8);
                 writer.WriteStringValue(OffPeakActionOnDisconnect.Value.ToString());
             }
-            if (OffPeakMinutesToWaitOnDisconnect.HasValue)
+            if (Optional.IsDefined(OffPeakMinutesToWaitOnDisconnect))
             {
                 writer.WritePropertyName("offPeakMinutesToWaitOnDisconnect"u8);
                 writer.WriteNumberValue(OffPeakMinutesToWaitOnDisconnect.Value);
             }
-            if (OffPeakActionOnLogoff.HasValue)
+            if (Optional.IsDefined(OffPeakActionOnLogoff))
             {
                 writer.WritePropertyName("offPeakActionOnLogoff"u8);
                 writer.WriteStringValue(OffPeakActionOnLogoff.Value.ToString());
             }
-            if (OffPeakMinutesToWaitOnLogoff.HasValue)
+            if (Optional.IsDefined(OffPeakMinutesToWaitOnLogoff))
             {
                 writer.WritePropertyName("offPeakMinutesToWaitOnLogoff"u8);
                 writer.WriteNumberValue(OffPeakMinutesToWaitOnLogoff.Value);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPersonalSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static ScalingPlanPersonalSchedulePatch DeserializeScalingPlanPersonalSchedulePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             SessionHandlingOperation? offPeakActionOnLogoff = default;
             int? offPeakMinutesToWaitOnLogoff = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -485,10 +485,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ScalingPlanPersonalSchedulePatch(
                 daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>(),
                 rampUpStartTime,
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeScalingPlanPersonalSchedulePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

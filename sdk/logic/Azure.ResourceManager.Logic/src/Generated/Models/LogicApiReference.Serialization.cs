@@ -15,33 +15,33 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicApiReference : IUtf8JsonSerializable, IJsonModel<LogicApiReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicApiReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (IconUri != null)
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("iconUri"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (Swagger != null)
+            if (Optional.IsDefined(Swagger))
             {
                 writer.WritePropertyName("swagger"u8);
 #if NET6_0_OR_GREATER
@@ -53,32 +53,32 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (BrandColor != null)
+            if (Optional.IsDefined(BrandColor))
             {
                 writer.WritePropertyName("brandColor"u8);
                 writer.WriteStringValue(BrandColor);
             }
-            if (Category.HasValue)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (IntegrationServiceEnvironment != null)
+            if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue(IntegrationServiceEnvironment);
+                writer.WriteObjectValue(IntegrationServiceEnvironment, options);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicApiReference DeserializeLogicApiReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Logic.Models
             string name = default;
             ResourceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogicApiReference(
                 id,
                 name,
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicApiReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiReference)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,43 +15,43 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class OracleOciDriverInfo : IUtf8JsonSerializable, IJsonModel<OracleOciDriverInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OracleOciDriverInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OracleOciDriverInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OracleOciDriverInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OracleOciDriverInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OracleOciDriverInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OracleOciDriverInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DriverName != null)
+            if (options.Format != "W" && Optional.IsDefined(DriverName))
             {
                 writer.WritePropertyName("driverName"u8);
                 writer.WriteStringValue(DriverName);
             }
-            if (options.Format != "W" && DriverSize != null)
+            if (options.Format != "W" && Optional.IsDefined(DriverSize))
             {
                 writer.WritePropertyName("driverSize"u8);
                 writer.WriteStringValue(DriverSize);
             }
-            if (options.Format != "W" && ArchiveChecksum != null)
+            if (options.Format != "W" && Optional.IsDefined(ArchiveChecksum))
             {
                 writer.WritePropertyName("archiveChecksum"u8);
                 writer.WriteStringValue(ArchiveChecksum);
             }
-            if (options.Format != "W" && OracleChecksum != null)
+            if (options.Format != "W" && Optional.IsDefined(OracleChecksum))
             {
                 writer.WritePropertyName("oracleChecksum"u8);
                 writer.WriteStringValue(OracleChecksum);
             }
-            if (options.Format != "W" && AssemblyVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(AssemblyVersion))
             {
                 writer.WritePropertyName("assemblyVersion"u8);
                 writer.WriteStringValue(AssemblyVersion);
             }
-            if (options.Format != "W" && !(SupportedOracleVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedOracleVersions))
             {
                 writer.WritePropertyName("supportedOracleVersions"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<OracleOciDriverInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OracleOciDriverInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OracleOciDriverInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static OracleOciDriverInfo DeserializeOracleOciDriverInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string assemblyVersion = default;
             IReadOnlyList<string> supportedOracleVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("driverName"u8))
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OracleOciDriverInfo(
                 driverName,
                 driverSize,
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OracleOciDriverInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OracleOciDriverInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeOracleOciDriverInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OracleOciDriverInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OracleOciDriverInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

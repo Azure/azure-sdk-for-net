@@ -15,85 +15,85 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataCenterAddressLocationResult : IUtf8JsonSerializable, IJsonModel<DataCenterAddressLocationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCenterAddressLocationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCenterAddressLocationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataCenterAddressLocationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressLocationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ContactPersonName != null)
+            if (options.Format != "W" && Optional.IsDefined(ContactPersonName))
             {
                 writer.WritePropertyName("contactPersonName"u8);
                 writer.WriteStringValue(ContactPersonName);
             }
-            if (options.Format != "W" && Company != null)
+            if (options.Format != "W" && Optional.IsDefined(Company))
             {
                 writer.WritePropertyName("company"u8);
                 writer.WriteStringValue(Company);
             }
-            if (options.Format != "W" && Street1 != null)
+            if (options.Format != "W" && Optional.IsDefined(Street1))
             {
                 writer.WritePropertyName("street1"u8);
                 writer.WriteStringValue(Street1);
             }
-            if (options.Format != "W" && Street2 != null)
+            if (options.Format != "W" && Optional.IsDefined(Street2))
             {
                 writer.WritePropertyName("street2"u8);
                 writer.WriteStringValue(Street2);
             }
-            if (options.Format != "W" && Street3 != null)
+            if (options.Format != "W" && Optional.IsDefined(Street3))
             {
                 writer.WritePropertyName("street3"u8);
                 writer.WriteStringValue(Street3);
             }
-            if (options.Format != "W" && City != null)
+            if (options.Format != "W" && Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (options.Format != "W" && State != null)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Zip != null)
+            if (options.Format != "W" && Optional.IsDefined(Zip))
             {
                 writer.WritePropertyName("zip"u8);
                 writer.WriteStringValue(Zip);
             }
-            if (options.Format != "W" && Country != null)
+            if (options.Format != "W" && Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (options.Format != "W" && Phone != null)
+            if (options.Format != "W" && Optional.IsDefined(Phone))
             {
                 writer.WritePropertyName("phone"u8);
                 writer.WriteStringValue(Phone);
             }
-            if (options.Format != "W" && PhoneExtension != null)
+            if (options.Format != "W" && Optional.IsDefined(PhoneExtension))
             {
                 writer.WritePropertyName("phoneExtension"u8);
                 writer.WriteStringValue(PhoneExtension);
             }
-            if (options.Format != "W" && AddressType != null)
+            if (options.Format != "W" && Optional.IsDefined(AddressType))
             {
                 writer.WritePropertyName("addressType"u8);
                 writer.WriteStringValue(AddressType);
             }
-            if (options.Format != "W" && AdditionalShippingInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(AdditionalShippingInformation))
             {
                 writer.WritePropertyName("additionalShippingInformation"u8);
                 writer.WriteStringValue(AdditionalShippingInformation);
             }
             writer.WritePropertyName("datacenterAddressType"u8);
             writer.WriteStringValue(DataCenterAddressType.ToSerialString());
-            if (options.Format != "W" && !(SupportedCarriersForReturnShipment is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedCarriersForReturnShipment))
             {
                 writer.WritePropertyName("supportedCarriersForReturnShipment"u8);
                 writer.WriteStartArray();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DataCenterAzureLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterAzureLocation))
             {
                 writer.WritePropertyName("dataCenterAzureLocation"u8);
                 writer.WriteStringValue(DataCenterAzureLocation.Value);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressLocationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataCenterAddressLocationResult DeserializeDataCenterAddressLocationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataBox.Models
             IReadOnlyList<string> supportedCarriersForReturnShipment = default;
             AzureLocation? dataCenterAzureLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contactPersonName"u8))
@@ -261,10 +261,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataCenterAddressLocationResult(
                 dataCenterAddressType,
                 supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(),
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataCenterAddressLocationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

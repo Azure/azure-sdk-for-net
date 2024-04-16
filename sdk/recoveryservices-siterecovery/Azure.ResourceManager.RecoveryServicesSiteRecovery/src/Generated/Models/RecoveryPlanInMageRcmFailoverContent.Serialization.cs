@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class RecoveryPlanInMageRcmFailoverContent : IUtf8JsonSerializable, IJsonModel<RecoveryPlanInMageRcmFailoverContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanInMageRcmFailoverContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanInMageRcmFailoverContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RecoveryPlanInMageRcmFailoverContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanInMageRcmFailoverContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPlanInMageRcmFailoverContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPlanInMageRcmFailoverContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("recoveryPointType"u8);
             writer.WriteStringValue(RecoveryPointType.ToString());
-            if (UseMultiVmSyncPoint != null)
+            if (Optional.IsDefined(UseMultiVmSyncPoint))
             {
                 writer.WritePropertyName("useMultiVmSyncPoint"u8);
                 writer.WriteStringValue(UseMultiVmSyncPoint);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanInMageRcmFailoverContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPlanInMageRcmFailoverContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPlanInMageRcmFailoverContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static RecoveryPlanInMageRcmFailoverContent DeserializeRecoveryPlanInMageRcmFailoverContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string useMultiVmSyncPoint = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointType"u8))
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RecoveryPlanInMageRcmFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointType, useMultiVmSyncPoint);
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanInMageRcmFailoverContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPlanInMageRcmFailoverContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeRecoveryPlanInMageRcmFailoverContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanInMageRcmFailoverContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPlanInMageRcmFailoverContent)} does not support reading '{options.Format}' format.");
             }
         }
 

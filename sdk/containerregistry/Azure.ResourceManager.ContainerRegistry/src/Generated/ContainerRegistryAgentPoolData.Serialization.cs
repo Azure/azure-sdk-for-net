@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryAgentPoolData : IUtf8JsonSerializable, IJsonModel<ContainerRegistryAgentPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryAgentPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryAgentPoolData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryAgentPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryAgentPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryAgentPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryAgentPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,34 +56,34 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Tier != null)
+            if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (OS.HasValue)
+            if (Optional.IsDefined(OS))
             {
                 writer.WritePropertyName("os"u8);
                 writer.WriteStringValue(OS.Value.ToString());
             }
-            if (VirtualNetworkSubnetResourceId != null)
+            if (Optional.IsDefined(VirtualNetworkSubnetResourceId))
             {
                 writer.WritePropertyName("virtualNetworkSubnetResourceId"u8);
                 writer.WriteStringValue(VirtualNetworkSubnetResourceId);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryAgentPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryAgentPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryAgentPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryAgentPoolData DeserializeContainerRegistryAgentPoolData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceIdentifier virtualNetworkSubnetResourceId = default;
             ContainerRegistryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -240,10 +240,10 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerRegistryAgentPoolData(
                 id,
                 name,
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryAgentPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryAgentPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                         return DeserializeContainerRegistryAgentPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryAgentPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryAgentPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

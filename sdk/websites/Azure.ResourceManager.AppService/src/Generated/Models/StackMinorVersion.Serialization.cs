@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,33 +16,33 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class StackMinorVersion : IUtf8JsonSerializable, IJsonModel<StackMinorVersion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StackMinorVersion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StackMinorVersion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StackMinorVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StackMinorVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StackMinorVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StackMinorVersion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DisplayVersion != null)
+            if (Optional.IsDefined(DisplayVersion))
             {
                 writer.WritePropertyName("displayVersion"u8);
                 writer.WriteStringValue(DisplayVersion);
             }
-            if (RuntimeVersion != null)
+            if (Optional.IsDefined(RuntimeVersion))
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
-            if (IsDefault.HasValue)
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (IsRemoteDebuggingEnabled.HasValue)
+            if (Optional.IsDefined(IsRemoteDebuggingEnabled))
             {
                 writer.WritePropertyName("isRemoteDebuggingEnabled"u8);
                 writer.WriteBooleanValue(IsRemoteDebuggingEnabled.Value);
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StackMinorVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StackMinorVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StackMinorVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StackMinorVersion DeserializeStackMinorVersion(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
             bool? isDefault = default;
             bool? isRemoteDebuggingEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayVersion"u8))
@@ -122,11 +123,100 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StackMinorVersion(displayVersion, runtimeVersion, isDefault, isRemoteDebuggingEnabled, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayVersion), out propertyOverride);
+            if (Optional.IsDefined(DisplayVersion) || hasPropertyOverride)
+            {
+                builder.Append("  displayVersion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DisplayVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeVersion), out propertyOverride);
+            if (Optional.IsDefined(RuntimeVersion) || hasPropertyOverride)
+            {
+                builder.Append("  runtimeVersion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RuntimeVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RuntimeVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RuntimeVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefault), out propertyOverride);
+            if (Optional.IsDefined(IsDefault) || hasPropertyOverride)
+            {
+                builder.Append("  isDefault: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDefault.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRemoteDebuggingEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsRemoteDebuggingEnabled) || hasPropertyOverride)
+            {
+                builder.Append("  isRemoteDebuggingEnabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsRemoteDebuggingEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<StackMinorVersion>.Write(ModelReaderWriterOptions options)
@@ -137,8 +227,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StackMinorVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StackMinorVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +246,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeStackMinorVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StackMinorVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StackMinorVersion)} does not support reading '{options.Format}' format.");
             }
         }
 

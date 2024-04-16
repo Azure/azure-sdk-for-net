@@ -15,28 +15,28 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 {
     public partial class HealthcareApisServiceAuthenticationConfiguration : IUtf8JsonSerializable, IJsonModel<HealthcareApisServiceAuthenticationConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisServiceAuthenticationConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisServiceAuthenticationConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HealthcareApisServiceAuthenticationConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceAuthenticationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisServiceAuthenticationConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisServiceAuthenticationConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Authority != null)
+            if (Optional.IsDefined(Authority))
             {
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (Audience != null)
+            if (Optional.IsDefined(Audience))
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
             }
-            if (IsSmartProxyEnabled.HasValue)
+            if (Optional.IsDefined(IsSmartProxyEnabled))
             {
                 writer.WritePropertyName("smartProxyEnabled"u8);
                 writer.WriteBooleanValue(IsSmartProxyEnabled.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisServiceAuthenticationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisServiceAuthenticationConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisServiceAuthenticationConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisServiceAuthenticationConfiguration DeserializeHealthcareApisServiceAuthenticationConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             string audience = default;
             bool? smartProxyEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authority"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HealthcareApisServiceAuthenticationConfiguration(authority, audience, smartProxyEnabled, serializedAdditionalRawData);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisServiceAuthenticationConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisServiceAuthenticationConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         return DeserializeHealthcareApisServiceAuthenticationConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisServiceAuthenticationConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisServiceAuthenticationConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

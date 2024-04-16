@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The identity type. </summary>
+        [WirePath("type")]
         public DatabaseIdentityType? IdentityType { get; set; }
         /// <summary> The Azure Active Directory tenant id. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
         /// <summary> The resource ids of the user assigned identities to use. </summary>
+        [WirePath("userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

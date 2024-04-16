@@ -16,38 +16,38 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ScriptActivityParameter : IUtf8JsonSerializable, IJsonModel<ScriptActivityParameter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptActivityParameter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptActivityParameter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScriptActivityParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActivityParameter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptActivityParameter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptActivityParameter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 JsonSerializer.Serialize(writer, Name);
             }
-            if (ParameterType.HasValue)
+            if (Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 JsonSerializer.Serialize(writer, Value);
             }
-            if (Direction.HasValue)
+            if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (Size.HasValue)
+            if (Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActivityParameter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptActivityParameter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptActivityParameter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ScriptActivityParameter DeserializeScriptActivityParameter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ScriptActivityParameterDirection? direction = default;
             int? size = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ScriptActivityParameter(
                 name,
                 type,
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScriptActivityParameter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptActivityParameter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeScriptActivityParameter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScriptActivityParameter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptActivityParameter)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
@@ -19,25 +18,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     public partial class ServiceFabricManagedClusterData : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceFabricManagedClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
-            if (options.Format != "W" && ETag.HasValue)
+            writer.WriteObjectValue(Sku, options);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -65,39 +64,39 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DnsName != null)
+            if (Optional.IsDefined(DnsName))
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
             }
-            if (options.Format != "W" && Fqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && IPv4Address != null)
+            if (options.Format != "W" && Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address.ToString());
             }
-            if (options.Format != "W" && ClusterId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (options.Format != "W" && ClusterState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterState))
             {
                 writer.WritePropertyName("clusterState"u8);
                 writer.WriteStringValue(ClusterState.Value.ToString());
             }
-            if (options.Format != "W" && !(ClusterCertificateThumbprints is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ClusterCertificateThumbprints))
             {
                 writer.WritePropertyName("clusterCertificateThumbprints"u8);
                 writer.WriteStartArray();
@@ -119,97 +118,97 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (ClientConnectionPort.HasValue)
+            if (Optional.IsDefined(ClientConnectionPort))
             {
                 writer.WritePropertyName("clientConnectionPort"u8);
                 writer.WriteNumberValue(ClientConnectionPort.Value);
             }
-            if (HttpGatewayConnectionPort.HasValue)
+            if (Optional.IsDefined(HttpGatewayConnectionPort))
             {
                 writer.WritePropertyName("httpGatewayConnectionPort"u8);
                 writer.WriteNumberValue(HttpGatewayConnectionPort.Value);
             }
-            if (AdminUserName != null)
+            if (Optional.IsDefined(AdminUserName))
             {
                 writer.WritePropertyName("adminUserName"u8);
                 writer.WriteStringValue(AdminUserName);
             }
-            if (AdminPassword != null)
+            if (Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (!(LoadBalancingRules is ChangeTrackingList<ManagedClusterLoadBalancingRule> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LoadBalancingRules))
             {
                 writer.WritePropertyName("loadBalancingRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancingRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (IsRdpAccessAllowed.HasValue)
+            if (Optional.IsDefined(IsRdpAccessAllowed))
             {
                 writer.WritePropertyName("allowRdpAccess"u8);
                 writer.WriteBooleanValue(IsRdpAccessAllowed.Value);
             }
-            if (!(NetworkSecurityRules is ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(NetworkSecurityRules))
             {
                 writer.WritePropertyName("networkSecurityRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Clients is ChangeTrackingList<ManagedClusterClientCertificate> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Clients))
             {
                 writer.WritePropertyName("clients"u8);
                 writer.WriteStartArray();
                 foreach (var item in Clients)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (AzureActiveDirectory != null)
+            if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue(AzureActiveDirectory);
+                writer.WriteObjectValue(AzureActiveDirectory, options);
             }
-            if (!(FabricSettings is ChangeTrackingList<ClusterFabricSettingsSection> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(FabricSettings))
             {
                 writer.WritePropertyName("fabricSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in FabricSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ClusterCodeVersion != null)
+            if (Optional.IsDefined(ClusterCodeVersion))
             {
                 writer.WritePropertyName("clusterCodeVersion"u8);
                 writer.WriteStringValue(ClusterCodeVersion);
             }
-            if (ClusterUpgradeMode.HasValue)
+            if (Optional.IsDefined(ClusterUpgradeMode))
             {
                 writer.WritePropertyName("clusterUpgradeMode"u8);
                 writer.WriteStringValue(ClusterUpgradeMode.Value.ToString());
             }
-            if (ClusterUpgradeCadence.HasValue)
+            if (Optional.IsDefined(ClusterUpgradeCadence))
             {
                 writer.WritePropertyName("clusterUpgradeCadence"u8);
                 writer.WriteStringValue(ClusterUpgradeCadence.Value.ToString());
             }
-            if (!(AddOnFeatures is ChangeTrackingList<ManagedClusterAddOnFeature> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(AddOnFeatures))
             {
                 writer.WritePropertyName("addonFeatures"u8);
                 writer.WriteStartArray();
@@ -219,107 +218,107 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (IsAutoOSUpgradeEnabled.HasValue)
+            if (Optional.IsDefined(IsAutoOSUpgradeEnabled))
             {
                 writer.WritePropertyName("enableAutoOSUpgrade"u8);
                 writer.WriteBooleanValue(IsAutoOSUpgradeEnabled.Value);
             }
-            if (HasZoneResiliency.HasValue)
+            if (Optional.IsDefined(HasZoneResiliency))
             {
                 writer.WritePropertyName("zonalResiliency"u8);
                 writer.WriteBooleanValue(HasZoneResiliency.Value);
             }
-            if (ApplicationTypeVersionsCleanupPolicy != null)
+            if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
             {
                 writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
-                writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy);
+                writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy, options);
             }
-            if (IsIPv6Enabled.HasValue)
+            if (Optional.IsDefined(IsIPv6Enabled))
             {
                 writer.WritePropertyName("enableIpv6"u8);
                 writer.WriteBooleanValue(IsIPv6Enabled.Value);
             }
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (!(IPTags is ChangeTrackingList<ManagedClusterIPTag> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IPv6Address != null)
+            if (options.Format != "W" && Optional.IsDefined(IPv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStringValue(IPv6Address.ToString());
             }
-            if (IsServicePublicIPEnabled.HasValue)
+            if (Optional.IsDefined(IsServicePublicIPEnabled))
             {
                 writer.WritePropertyName("enableServicePublicIP"u8);
                 writer.WriteBooleanValue(IsServicePublicIPEnabled.Value);
             }
-            if (!(AuxiliarySubnets is ChangeTrackingList<ManagedClusterSubnet> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(AuxiliarySubnets))
             {
                 writer.WritePropertyName("auxiliarySubnets"u8);
                 writer.WriteStartArray();
                 foreach (var item in AuxiliarySubnets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceEndpoints is ChangeTrackingList<ManagedClusterServiceEndpoint> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceEndpoints))
             {
                 writer.WritePropertyName("serviceEndpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ZonalUpdateMode.HasValue)
+            if (Optional.IsDefined(ZonalUpdateMode))
             {
                 writer.WritePropertyName("zonalUpdateMode"u8);
                 writer.WriteStringValue(ZonalUpdateMode.Value.ToString());
             }
-            if (UseCustomVnet.HasValue)
+            if (Optional.IsDefined(UseCustomVnet))
             {
                 writer.WritePropertyName("useCustomVnet"u8);
                 writer.WriteBooleanValue(UseCustomVnet.Value);
             }
-            if (PublicIPPrefixId != null)
+            if (Optional.IsDefined(PublicIPPrefixId))
             {
                 writer.WritePropertyName("publicIPPrefixId"u8);
                 writer.WriteStringValue(PublicIPPrefixId);
             }
-            if (PublicIPv6PrefixId != null)
+            if (Optional.IsDefined(PublicIPv6PrefixId))
             {
                 writer.WritePropertyName("publicIPv6PrefixId"u8);
                 writer.WriteStringValue(PublicIPv6PrefixId);
             }
-            if (DdosProtectionPlanId != null)
+            if (Optional.IsDefined(DdosProtectionPlanId))
             {
                 writer.WritePropertyName("ddosProtectionPlanId"u8);
                 writer.WriteStringValue(DdosProtectionPlanId);
             }
-            if (UpgradeDescription != null)
+            if (Optional.IsDefined(UpgradeDescription))
             {
                 writer.WritePropertyName("upgradeDescription"u8);
-                writer.WriteObjectValue(UpgradeDescription);
+                writer.WriteObjectValue(UpgradeDescription, options);
             }
-            if (HttpGatewayTokenAuthConnectionPort.HasValue)
+            if (Optional.IsDefined(HttpGatewayTokenAuthConnectionPort))
             {
                 writer.WritePropertyName("httpGatewayTokenAuthConnectionPort"u8);
                 writer.WriteNumberValue(HttpGatewayTokenAuthConnectionPort.Value);
             }
-            if (IsHttpGatewayExclusiveAuthModeEnabled.HasValue)
+            if (Optional.IsDefined(IsHttpGatewayExclusiveAuthModeEnabled))
             {
                 writer.WritePropertyName("enableHttpGatewayExclusiveAuthMode"u8);
                 writer.WriteBooleanValue(IsHttpGatewayExclusiveAuthModeEnabled.Value);
@@ -348,7 +347,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -357,7 +356,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 
         internal static ServiceFabricManagedClusterData DeserializeServiceFabricManagedClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -411,7 +410,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             int? httpGatewayTokenAuthConnectionPort = default;
             bool? enableHttpGatewayExclusiveAuthMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -864,10 +863,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceFabricManagedClusterData(
                 id,
                 name,
@@ -928,7 +927,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -944,7 +943,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         return DeserializeServiceFabricManagedClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 

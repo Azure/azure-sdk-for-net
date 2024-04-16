@@ -23,37 +23,37 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Debug != null)
+            if (Optional.IsDefined(Debug))
             {
                 writer.WritePropertyName("debug"u8);
                 writer.WriteStringValue(Debug);
             }
-            if (CalibrationConfiguration != null)
+            if (Optional.IsDefined(CalibrationConfiguration))
             {
                 writer.WritePropertyName("calibrationConfiguration"u8);
                 writer.WriteStringValue(CalibrationConfiguration);
             }
-            if (CameraConfiguration != null)
+            if (Optional.IsDefined(CameraConfiguration))
             {
                 writer.WritePropertyName("cameraConfiguration"u8);
                 writer.WriteStringValue(CameraConfiguration);
             }
-            if (CameraCalibratorNodeConfiguration != null)
+            if (Optional.IsDefined(CameraCalibratorNodeConfiguration))
             {
                 writer.WritePropertyName("cameraCalibratorNodeConfiguration"u8);
                 writer.WriteStringValue(CameraCalibratorNodeConfiguration);
             }
-            if (DetectorNodeConfiguration != null)
+            if (Optional.IsDefined(DetectorNodeConfiguration))
             {
                 writer.WritePropertyName("detectorNodeConfiguration"u8);
                 writer.WriteStringValue(DetectorNodeConfiguration);
             }
-            if (TrackerNodeConfiguration != null)
+            if (Optional.IsDefined(TrackerNodeConfiguration))
             {
                 writer.WritePropertyName("trackerNodeConfiguration"u8);
                 writer.WriteStringValue(TrackerNodeConfiguration);
             }
-            if (EnableFaceMaskClassifier != null)
+            if (Optional.IsDefined(EnableFaceMaskClassifier))
             {
                 writer.WritePropertyName("enableFaceMaskClassifier"u8);
                 writer.WriteStringValue(EnableFaceMaskClassifier);
@@ -141,6 +141,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 trackerNodeConfiguration,
                 enableFaceMaskClassifier,
                 zones);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SpatialAnalysisPersonDistanceOperation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpatialAnalysisPersonDistanceOperation(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -15,41 +15,41 @@ namespace Azure.ResourceManager.Communication.Models
 {
     public partial class DomainPropertiesVerificationStates : IUtf8JsonSerializable, IJsonModel<DomainPropertiesVerificationStates>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainPropertiesVerificationStates>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainPropertiesVerificationStates>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DomainPropertiesVerificationStates>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DomainPropertiesVerificationStates>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("Domain"u8);
-                writer.WriteObjectValue(Domain);
+                writer.WriteObjectValue(Domain, options);
             }
-            if (Spf != null)
+            if (Optional.IsDefined(Spf))
             {
                 writer.WritePropertyName("SPF"u8);
-                writer.WriteObjectValue(Spf);
+                writer.WriteObjectValue(Spf, options);
             }
-            if (Dkim != null)
+            if (Optional.IsDefined(Dkim))
             {
                 writer.WritePropertyName("DKIM"u8);
-                writer.WriteObjectValue(Dkim);
+                writer.WriteObjectValue(Dkim, options);
             }
-            if (Dkim2 != null)
+            if (Optional.IsDefined(Dkim2))
             {
                 writer.WritePropertyName("DKIM2"u8);
-                writer.WriteObjectValue(Dkim2);
+                writer.WriteObjectValue(Dkim2, options);
             }
-            if (Dmarc != null)
+            if (Optional.IsDefined(Dmarc))
             {
                 writer.WritePropertyName("DMARC"u8);
-                writer.WriteObjectValue(Dmarc);
+                writer.WriteObjectValue(Dmarc, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Communication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DomainPropertiesVerificationStates>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Communication.Models
 
         internal static DomainPropertiesVerificationStates DeserializeDomainPropertiesVerificationStates(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
             DomainVerificationStatusRecord dkiM2 = default;
             DomainVerificationStatusRecord dmarc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Domain"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DomainPropertiesVerificationStates(
                 domain,
                 spf,
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Communication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Communication.Models
                         return DeserializeDomainPropertiesVerificationStates(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support reading '{options.Format}' format.");
             }
         }
 

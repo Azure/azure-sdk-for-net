@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.Communication
 {
     public partial class CommunicationDomainResourceData : IUtf8JsonSerializable, IJsonModel<CommunicationDomainResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunicationDomainResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunicationDomainResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommunicationDomainResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CommunicationDomainResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,49 +56,49 @@ namespace Azure.ResourceManager.Communication
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DataLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("dataLocation"u8);
                 writer.WriteStringValue(DataLocation);
             }
-            if (options.Format != "W" && FromSenderDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(FromSenderDomain))
             {
                 writer.WritePropertyName("fromSenderDomain"u8);
                 writer.WriteStringValue(FromSenderDomain);
             }
-            if (options.Format != "W" && MailFromSenderDomain != null)
+            if (options.Format != "W" && Optional.IsDefined(MailFromSenderDomain))
             {
                 writer.WritePropertyName("mailFromSenderDomain"u8);
                 writer.WriteStringValue(MailFromSenderDomain);
             }
-            if (DomainManagement.HasValue)
+            if (Optional.IsDefined(DomainManagement))
             {
                 writer.WritePropertyName("domainManagement"u8);
                 writer.WriteStringValue(DomainManagement.Value.ToString());
             }
-            if (options.Format != "W" && VerificationStates != null)
+            if (options.Format != "W" && Optional.IsDefined(VerificationStates))
             {
                 writer.WritePropertyName("verificationStates"u8);
-                writer.WriteObjectValue(VerificationStates);
+                writer.WriteObjectValue(VerificationStates, options);
             }
-            if (options.Format != "W" && VerificationRecords != null)
+            if (options.Format != "W" && Optional.IsDefined(VerificationRecords))
             {
                 writer.WritePropertyName("verificationRecords"u8);
-                writer.WriteObjectValue(VerificationRecords);
+                writer.WriteObjectValue(VerificationRecords, options);
             }
-            if (UserEngagementTracking.HasValue)
+            if (Optional.IsDefined(UserEngagementTracking))
             {
                 writer.WritePropertyName("userEngagementTracking"u8);
                 writer.WriteStringValue(UserEngagementTracking.Value.ToString());
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Communication
             var format = options.Format == "W" ? ((IPersistableModel<CommunicationDomainResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Communication
 
         internal static CommunicationDomainResourceData DeserializeCommunicationDomainResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Communication
             DomainPropertiesVerificationRecords verificationRecords = default;
             UserEngagementTracking? userEngagementTracking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -277,10 +277,10 @@ namespace Azure.ResourceManager.Communication
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CommunicationDomainResourceData(
                 id,
                 name,
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Communication
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Communication
                         return DeserializeCommunicationDomainResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommunicationDomainResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

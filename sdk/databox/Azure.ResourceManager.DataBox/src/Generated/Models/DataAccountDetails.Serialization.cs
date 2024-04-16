@@ -15,20 +15,20 @@ namespace Azure.ResourceManager.DataBox.Models
     [PersistableModelProxy(typeof(UnknownDataAccountDetails))]
     public partial class DataAccountDetails : IUtf8JsonSerializable, IJsonModel<DataAccountDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataAccountDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataAccountDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataAccountDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataAccountDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataAccountDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("dataAccountType"u8);
             writer.WriteStringValue(DataAccountType.ToSerialString());
-            if (SharePassword != null)
+            if (Optional.IsDefined(SharePassword))
             {
                 writer.WritePropertyName("sharePassword"u8);
                 writer.WriteStringValue(SharePassword);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataAccountDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataAccountDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataAccountDetails DeserializeDataAccountDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataAccountDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataAccountDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataAccountDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataAccountDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataAccountDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

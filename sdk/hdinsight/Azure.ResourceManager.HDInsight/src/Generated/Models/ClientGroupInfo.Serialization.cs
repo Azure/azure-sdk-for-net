@@ -15,23 +15,23 @@ namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class ClientGroupInfo : IUtf8JsonSerializable, IJsonModel<ClientGroupInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientGroupInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientGroupInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClientGroupInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClientGroupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (GroupName != null)
+            if (Optional.IsDefined(GroupName))
             {
                 writer.WritePropertyName("groupName"u8);
                 writer.WriteStringValue(GroupName);
             }
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClientGroupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static ClientGroupInfo DeserializeClientGroupInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string groupName = default;
             string groupId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupName"u8))
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClientGroupInfo(groupName, groupId, serializedAdditionalRawData);
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeClientGroupInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientGroupInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

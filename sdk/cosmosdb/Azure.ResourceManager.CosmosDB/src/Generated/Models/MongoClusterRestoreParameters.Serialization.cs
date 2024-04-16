@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,23 +16,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class MongoClusterRestoreParameters : IUtf8JsonSerializable, IJsonModel<MongoClusterRestoreParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterRestoreParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterRestoreParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MongoClusterRestoreParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MongoClusterRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PointInTimeUTC.HasValue)
+            if (Optional.IsDefined(PointInTimeUTC))
             {
                 writer.WritePropertyName("pointInTimeUTC"u8);
                 writer.WriteStringValue(PointInTimeUTC.Value, "O");
             }
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoClusterRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MongoClusterRestoreParameters DeserializeMongoClusterRestoreParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DateTimeOffset? pointInTimeUTC = default;
             string sourceResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pointInTimeUTC"u8))
@@ -96,11 +97,63 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MongoClusterRestoreParameters(pointInTimeUTC, sourceResourceId, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PointInTimeUTC), out propertyOverride);
+            if (Optional.IsDefined(PointInTimeUTC) || hasPropertyOverride)
+            {
+                builder.Append("  pointInTimeUTC: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(PointInTimeUTC.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceResourceId), out propertyOverride);
+            if (Optional.IsDefined(SourceResourceId) || hasPropertyOverride)
+            {
+                builder.Append("  sourceResourceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SourceResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceResourceId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MongoClusterRestoreParameters>.Write(ModelReaderWriterOptions options)
@@ -111,8 +164,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +183,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeMongoClusterRestoreParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterRestoreParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

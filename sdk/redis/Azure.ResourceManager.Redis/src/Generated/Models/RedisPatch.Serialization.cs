@@ -16,18 +16,18 @@ namespace Azure.ResourceManager.Redis.Models
 {
     public partial class RedisPatch : IUtf8JsonSerializable, IJsonModel<RedisPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RedisPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,39 +38,39 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RedisConfiguration != null)
+            if (Optional.IsDefined(RedisConfiguration))
             {
                 writer.WritePropertyName("redisConfiguration"u8);
-                writer.WriteObjectValue(RedisConfiguration);
+                writer.WriteObjectValue(RedisConfiguration, options);
             }
-            if (RedisVersion != null)
+            if (Optional.IsDefined(RedisVersion))
             {
                 writer.WritePropertyName("redisVersion"u8);
                 writer.WriteStringValue(RedisVersion);
             }
-            if (EnableNonSslPort.HasValue)
+            if (Optional.IsDefined(EnableNonSslPort))
             {
                 writer.WritePropertyName("enableNonSslPort"u8);
                 writer.WriteBooleanValue(EnableNonSslPort.Value);
             }
-            if (ReplicasPerMaster.HasValue)
+            if (Optional.IsDefined(ReplicasPerMaster))
             {
                 writer.WritePropertyName("replicasPerMaster"u8);
                 writer.WriteNumberValue(ReplicasPerMaster.Value);
             }
-            if (ReplicasPerPrimary.HasValue)
+            if (Optional.IsDefined(ReplicasPerPrimary))
             {
                 writer.WritePropertyName("replicasPerPrimary"u8);
                 writer.WriteNumberValue(ReplicasPerPrimary.Value);
             }
-            if (!(TenantSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TenantSettings))
             {
                 writer.WritePropertyName("tenantSettings"u8);
                 writer.WriteStartObject();
@@ -81,30 +81,30 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 writer.WriteEndObject();
             }
-            if (ShardCount.HasValue)
+            if (Optional.IsDefined(ShardCount))
             {
                 writer.WritePropertyName("shardCount"u8);
                 writer.WriteNumberValue(ShardCount.Value);
             }
-            if (MinimumTlsVersion.HasValue)
+            if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (UpdateChannel.HasValue)
+            if (Optional.IsDefined(UpdateChannel))
             {
                 writer.WritePropertyName("updateChannel"u8);
                 writer.WriteStringValue(UpdateChannel.Value.ToString());
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Redis.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisPatch DeserializeRedisPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Redis.Models
             UpdateChannel? updateChannel = default;
             RedisSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -299,10 +299,10 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RedisPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Redis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Redis.Models
                         return DeserializeRedisPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

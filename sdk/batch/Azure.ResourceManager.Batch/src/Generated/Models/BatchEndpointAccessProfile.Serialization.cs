@@ -15,26 +15,26 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchEndpointAccessProfile : IUtf8JsonSerializable, IJsonModel<BatchEndpointAccessProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchEndpointAccessProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchEndpointAccessProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchEndpointAccessProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchEndpointAccessProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("defaultAction"u8);
             writer.WriteStringValue(DefaultAction.ToSerialString());
-            if (!(IPRules is ChangeTrackingList<BatchIPRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchEndpointAccessProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchEndpointAccessProfile DeserializeBatchEndpointAccessProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchEndpointAccessDefaultAction defaultAction = default;
             IList<BatchIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultAction"u8))
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchEndpointAccessProfile(defaultAction, ipRules ?? new ChangeTrackingList<BatchIPRule>(), serializedAdditionalRawData);
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchEndpointAccessProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchEndpointAccessProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

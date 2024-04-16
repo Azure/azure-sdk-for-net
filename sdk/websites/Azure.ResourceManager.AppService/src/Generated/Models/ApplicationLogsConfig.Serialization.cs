@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,31 +17,31 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class ApplicationLogsConfig : IUtf8JsonSerializable, IJsonModel<ApplicationLogsConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationLogsConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationLogsConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationLogsConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationLogsConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FileSystem != null)
+            if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
-                writer.WriteObjectValue(FileSystem);
+                writer.WriteObjectValue(FileSystem, options);
             }
-            if (AzureTableStorage != null)
+            if (Optional.IsDefined(AzureTableStorage))
             {
                 writer.WritePropertyName("azureTableStorage"u8);
-                writer.WriteObjectValue(AzureTableStorage);
+                writer.WriteObjectValue(AzureTableStorage, options);
             }
-            if (AzureBlobStorage != null)
+            if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
-                writer.WriteObjectValue(AzureBlobStorage);
+                writer.WriteObjectValue(AzureBlobStorage, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationLogsConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ApplicationLogsConfig DeserializeApplicationLogsConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
             AppServiceTableStorageApplicationLogsConfig azureTableStorage = default;
             AppServiceBlobStorageApplicationLogsConfig azureBlobStorage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileSystem"u8))
@@ -115,11 +117,90 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationLogsConfig(fileSystem, azureTableStorage, azureBlobStorage, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileSystem), out propertyOverride);
+            if (Optional.IsDefined(FileSystem) || hasPropertyOverride)
+            {
+                builder.Append("  fileSystem: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, FileSystem, options, 2, false, "  fileSystem: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureTableStorage), out propertyOverride);
+            if (Optional.IsDefined(AzureTableStorage) || hasPropertyOverride)
+            {
+                builder.Append("  azureTableStorage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureTableStorage, options, 2, false, "  azureTableStorage: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureBlobStorage), out propertyOverride);
+            if (Optional.IsDefined(AzureBlobStorage) || hasPropertyOverride)
+            {
+                builder.Append("  azureBlobStorage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureBlobStorage, options, 2, false, "  azureBlobStorage: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "FileSystemLevel":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("Level", item.Value);
+                        bicepOptions.PropertyOverrides.Add(FileSystem, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
         }
 
         BinaryData IPersistableModel<ApplicationLogsConfig>.Write(ModelReaderWriterOptions options)
@@ -130,8 +211,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +230,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeApplicationLogsConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationLogsConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

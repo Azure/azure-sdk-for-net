@@ -17,18 +17,18 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class MobileAttachedDataNetworkData : IUtf8JsonSerializable, IJsonModel<MobileAttachedDataNetworkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileAttachedDataNetworkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileAttachedDataNetworkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MobileAttachedDataNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MobileAttachedDataNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,20 +56,20 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("userPlaneDataInterface"u8);
-            writer.WriteObjectValue(UserPlaneDataInterface);
+            writer.WriteObjectValue(UserPlaneDataInterface, options);
             writer.WritePropertyName("dnsAddresses"u8);
             writer.WriteStartArray();
             foreach (var item in DnsAddresses)
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (NaptConfiguration != null)
+            if (Optional.IsDefined(NaptConfiguration))
             {
                 writer.WritePropertyName("naptConfiguration"u8);
-                writer.WriteObjectValue(NaptConfiguration);
+                writer.WriteObjectValue(NaptConfiguration, options);
             }
-            if (!(UserEquipmentAddressPoolPrefix is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserEquipmentAddressPoolPrefix))
             {
                 writer.WritePropertyName("userEquipmentAddressPoolPrefix"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserEquipmentStaticAddressPoolPrefix is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(UserEquipmentStaticAddressPoolPrefix))
             {
                 writer.WritePropertyName("userEquipmentStaticAddressPoolPrefix"u8);
                 writer.WriteStartArray();
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MobileNetwork
             var format = options.Format == "W" ? ((IPersistableModel<MobileAttachedDataNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal static MobileAttachedDataNetworkData DeserializeMobileAttachedDataNetworkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MobileNetwork
             IList<string> userEquipmentAddressPoolPrefix = default;
             IList<string> userEquipmentStaticAddressPoolPrefix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -275,10 +275,10 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MobileAttachedDataNetworkData(
                 id,
                 name,
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         return DeserializeMobileAttachedDataNetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileAttachedDataNetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

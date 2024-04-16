@@ -9,85 +9,84 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightApplicationProperties : IUtf8JsonSerializable, IJsonModel<HDInsightApplicationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightApplicationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightApplicationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HDInsightApplicationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightApplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ComputeProfile != null)
+            if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile);
+                writer.WriteObjectValue(ComputeProfile, options);
             }
-            if (!(InstallScriptActions is ChangeTrackingList<RuntimeScriptAction> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InstallScriptActions))
             {
                 writer.WritePropertyName("installScriptActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in InstallScriptActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(UninstallScriptActions is ChangeTrackingList<RuntimeScriptAction> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UninstallScriptActions))
             {
                 writer.WritePropertyName("uninstallScriptActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in UninstallScriptActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(HttpsEndpoints is ChangeTrackingList<HDInsightApplicationHttpsEndpoint> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(HttpsEndpoints))
             {
                 writer.WritePropertyName("httpsEndpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in HttpsEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(SshEndpoints is ChangeTrackingList<HDInsightApplicationEndpoint> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(SshEndpoints))
             {
                 writer.WritePropertyName("sshEndpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in SshEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (ApplicationType != null)
+            if (Optional.IsDefined(ApplicationType))
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType);
             }
-            if (options.Format != "W" && ApplicationState != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationState))
             {
                 writer.WritePropertyName("applicationState"u8);
                 writer.WriteStringValue(ApplicationState);
             }
-            if (!(Errors is ChangeTrackingList<ResponseError> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -97,23 +96,23 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && MarketplaceIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceIdentifier))
             {
                 writer.WritePropertyName("marketplaceIdentifier"u8);
                 writer.WriteStringValue(MarketplaceIdentifier);
             }
-            if (!(PrivateLinkConfigurations is ChangeTrackingList<HDInsightPrivateLinkConfiguration> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
                 writer.WritePropertyName("privateLinkConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightApplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightApplicationProperties DeserializeHDInsightApplicationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string marketplaceIdentifier = default;
             IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeProfile"u8))
@@ -295,10 +294,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightApplicationProperties(
                 computeProfile,
                 installScriptActions ?? new ChangeTrackingList<RuntimeScriptAction>(),
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -340,7 +339,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightApplicationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

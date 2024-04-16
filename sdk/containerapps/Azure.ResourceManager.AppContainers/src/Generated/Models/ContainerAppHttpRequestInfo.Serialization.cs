@@ -15,40 +15,40 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppHttpRequestInfo : IUtf8JsonSerializable, IJsonModel<ContainerAppHttpRequestInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppHttpRequestInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppHttpRequestInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppHttpRequestInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppHttpRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Host != null)
+            if (Optional.IsDefined(Host))
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (!(HttpHeaders is ChangeTrackingList<ContainerAppHttpHeaderInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HttpHeaders))
             {
                 writer.WritePropertyName("httpHeaders"u8);
                 writer.WriteStartArray();
                 foreach (var item in HttpHeaders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (Scheme.HasValue)
+            if (Optional.IsDefined(Scheme))
             {
                 writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme.Value.ToString());
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppHttpRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppHttpRequestInfo DeserializeContainerAppHttpRequestInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             int port = default;
             ContainerAppHttpScheme? scheme = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("host"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppHttpRequestInfo(
                 host,
                 httpHeaders ?? new ChangeTrackingList<ContainerAppHttpHeaderInfo>(),
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppHttpRequestInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

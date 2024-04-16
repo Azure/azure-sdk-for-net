@@ -15,22 +15,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BitRateLimit.HasValue)
+            if (Optional.IsDefined(BitRateLimit))
             {
                 writer.WritePropertyName("bitRateLimit"u8);
                 writer.WriteNumberValue(BitRateLimit.Value);
             }
-            if (EncodingInterval.HasValue)
+            if (Optional.IsDefined(EncodingInterval))
             {
                 writer.WritePropertyName("encodingInterval"u8);
                 writer.WriteNumberValue(EncodingInterval.Value);
             }
-            if (FrameRateLimit.HasValue)
+            if (Optional.IsDefined(FrameRateLimit))
             {
                 writer.WritePropertyName("frameRateLimit"u8);
                 writer.WriteNumberValue(FrameRateLimit.Value);
             }
-            if (GuaranteedFrameRate.HasValue)
+            if (Optional.IsDefined(GuaranteedFrameRate))
             {
                 writer.WritePropertyName("guaranteedFrameRate"u8);
                 writer.WriteBooleanValue(GuaranteedFrameRate.Value);
@@ -88,6 +88,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new RateControl(bitRateLimit, encodingInterval, frameRateLimit, guaranteedFrameRate);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RateControl FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRateControl(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }
