@@ -945,17 +945,17 @@
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @archerzz @ArcturusZhang @ArthurMa1978
 
-# ServiceLabel: %Large Instance %Mgmt
-# ServiceOwners:                                                   @8Gitbrix
-
-# ServiceLabel: %Recovery Services Backup %Mgmt
-# ServiceOwners:                                                   @Daya-Patil
-
 # PRLabel: %Network - Front Door
 /sdk/frontdoor/                                                    @ptnan7
 
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ptnan7
+
+# ServiceLabel: %Large Instance %Mgmt
+# ServiceOwners:                                                   @8Gitbrix
+
+# ServiceLabel: %Recovery Services Backup %Mgmt
+# ServiceOwners:                                                   @Daya-Patil
 
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                   @sunkun99 @archerzz @ArcturusZhang @ArthurMa1978
