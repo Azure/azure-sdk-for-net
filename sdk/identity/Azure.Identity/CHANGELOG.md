@@ -1,14 +1,9 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.11.1 (2024-05-07)
 
 ### Other Changes
+- Updated Microsoft.Identity.Client and related dependencies to version 4.60.3
 
 ## 1.11.0 (2024-04-09)
 
