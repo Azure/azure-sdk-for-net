@@ -11,9 +11,9 @@ pr:
   paths:
     include:
     - sdk/storage/ci.datamovement.yml
-    - sdk/storage/Azure..Storage.DataMovement/
-    - sdk/storage/Azure..Storage.DataMovement.Blobs/
-    - sdk/storage/Azure..Storage.DataMovement.Files.Shares/
+    - sdk/storage/Azure.Storage.DataMovement/
+    - sdk/storage/Azure.Storage.DataMovement.Blobs/
+    - sdk/storage/Azure.Storage.DataMovement.Files.Shares/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
