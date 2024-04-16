@@ -746,7 +746,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var date = DateTimeOffset.Parse("2015-10-27T12:00:00Z");
             var partitionIds = new[] { "first", "second", "third" };
-            var properties = new EventHubProperties("dummy", date, partitionIds);
+            var properties = new EventHubProperties("dummy", date, partitionIds, 1);
             var mockConnection = new Mock<EventHubConnection> { CallBase = true };
 
             mockConnection
@@ -754,7 +754,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<EventHubsRetryPolicy>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(properties))
-                .Verifiable("GetPropertiesAcync should have been delegated to.");
+                .Verifiable("GetPropertiesAsync should have been delegated to.");
 
             var actual = await mockConnection.Object.GetPartitionIdsAsync(Mock.Of<EventHubsRetryPolicy>(), CancellationToken.None);
 

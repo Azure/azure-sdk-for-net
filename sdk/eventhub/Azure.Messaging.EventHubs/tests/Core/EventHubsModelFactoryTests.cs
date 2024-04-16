@@ -40,6 +40,27 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventHubsModelFactory.EventHubProperties" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void EventHubPropertiesInitializesPropertiesWithGeoReplicationValue()
+        {
+            var name = "fakename";
+            var createdOn = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero);
+            var partitions = new[] { "0", "2", "4", "8" };
+            var geoReplicationValue = 2;
+            var properties = EventHubsModelFactory.EventHubProperties(name, createdOn, partitions, 2);
+
+            Assert.That(properties, Is.Not.Null, "The properties should have been created.");
+            Assert.That(properties.Name, Is.EqualTo(name), "The name should have been set.");
+            Assert.That(properties.CreatedOn, Is.EqualTo(createdOn), "The creation date/time should have been set.");
+            Assert.That(properties.PartitionIds, Is.EquivalentTo(partitions), "The partition identifiers should have been set.");
+            Assert.That(properties.GeoReplicationCount, Is.EqualTo(geoReplicationValue), "The geo-replication should have been set.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventHubsModelFactory.PartitionProperties" />
         ///   method.
         /// </summary>

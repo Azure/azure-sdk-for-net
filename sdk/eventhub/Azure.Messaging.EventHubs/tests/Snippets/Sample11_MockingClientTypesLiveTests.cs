@@ -49,7 +49,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 EventHubsModelFactory.EventHubProperties(
                     name: "fakeEventHubName",
                     createdOn: DateTimeOffset.UtcNow, // arbitrary value
-                    partitionIds: producerPartitions.ToArray());
+                    partitionIds: producerPartitions.ToArray(),
+                    geoReplicationCount: 1); // geo-replication is not enabled
 
             // This sets up GetEventHubPropertiesAsync to return the mocked Event Hub properties above.
 

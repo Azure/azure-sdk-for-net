@@ -112,49 +112,61 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that process of updating the checkpoint in the chosen storage service has started.
+        ///   Indicates the process of updating the checkpoint in the chosen storage service has started.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing is taking place.</param>
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint being written.</param>
+        /// <param name="replicationSegment">The replication segment associated with the checkpoint being written.</param>
+        /// <param name="offset">The offset associated with the checkpoint being written.</param>
         ///
-        [Event(23, Level = EventLevel.Verbose, Message = "Starting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        [Event(23, Level = EventLevel.Verbose, Message = "Starting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} at Sequence Number {4} Replication Segment {5} Offset {6}")]
         public virtual void UpdateCheckpointStart(string partitionId,
                                                   string identifier,
                                                   string eventHubName,
-                                                  string consumerGroup)
+                                                  string consumerGroup,
+                                                  long sequenceNumber,
+                                                  int replicationSegment,
+                                                  long offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(23, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                WriteEvent(23, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, sequenceNumber, replicationSegment, offset);
             }
         }
 
         /// <summary>
-        ///   Indicates that process of updating the checkpoint in the chosen storage service has completed.
+        ///   Indicates the process of updating the checkpoint in the chosen storage service has completed.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing is taking place.</param>
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint being written.</param>
+        /// <param name="replicationSegment">The replication segment associated with the checkpoint being written.</param>
+        /// <param name="offset">The offset associated with the checkpoint being written.</param>
         ///
-        [Event(24, Level = EventLevel.Verbose, Message = "Completed performing a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.")]
+        [Event(24, Level = EventLevel.Verbose, Message = "Completed performing a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} at Sequence Number: {4} Replication Segment: {5} Offset: {6}.")]
         public virtual void UpdateCheckpointComplete(string partitionId,
                                                      string identifier,
                                                      string eventHubName,
-                                                     string consumerGroup)
+                                                     string consumerGroup,
+                                                     long sequenceNumber,
+                                                     int replicationSegment,
+                                                     long offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(24, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                WriteEvent(24, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, sequenceNumber, replicationSegment, offset);
             }
         }
 
         /// <summary>
-        ///   Indicates that the process of updating the checkpoint in the chosen storage service has experienced an exception.
+        ///   Indicates the process of updating the checkpoint in the chosen storage service has experienced an exception.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing is taking place.</param>
@@ -162,17 +174,23 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="sequenceNumber">The sequence number associated with the checkpoint being written.</param>
+        /// <param name="replicationSegment">The replication segment associated with the checkpoint being written.</param>
+        /// <param name="offset">The offset associated with the checkpoint being written.</param>
         ///
-        [Event(25, Level = EventLevel.Error, Message = "An exception occurred while attempting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Error Message: '{4}'")]
+        [Event(25, Level = EventLevel.Error, Message = "An exception occurred while attempting to perform a checkpoint update for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3} at Sequence Number {5} Replication Segment {6} Offset {7}.  Error Message: '{4}'")]
         public virtual void UpdateCheckpointError(string partitionId,
                                                   string identifier,
                                                   string eventHubName,
                                                   string consumerGroup,
-                                                  string errorMessage)
+                                                  string errorMessage,
+                                                  long sequenceNumber,
+                                                  int replicationSegment,
+                                                  long offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(25, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+                WriteEvent(25, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty, sequenceNumber, replicationSegment, offset);
             }
         }
 
@@ -363,6 +381,132 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                 eventPayload[5].DataPointer = (IntPtr)arg5Ptr;
 
                 WriteEventCore(eventId, 6, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with five string arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        /// <param name="arg6">The sixth argument.</param>
+        /// <param name="arg7">The seventh argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent<TValue1, TValue2, TValue3>(int eventId,
+                                                                  string arg1,
+                                                                  string arg2,
+                                                                  string arg3,
+                                                                  string arg4,
+                                                                  TValue1 arg5,
+                                                                  TValue2 arg6,
+                                                                  TValue3 arg7)
+            where TValue1 : struct
+            where TValue2 : struct
+            where TValue3 : struct
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            {
+                var eventPayload = stackalloc EventData[7];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = Unsafe.SizeOf<TValue1>();
+                eventPayload[4].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg5);
+
+                eventPayload[5].Size = Unsafe.SizeOf<TValue2>();
+                eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg6);
+
+                eventPayload[6].Size = Unsafe.SizeOf<TValue3>();
+                eventPayload[6].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg7);
+
+                WriteEventCore(eventId, 7, eventPayload);
+            }
+        }
+
+        /// <summary>
+        ///   Writes an event with five string arguments into a stack allocated
+        ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
+        /// </summary>
+        ///
+        /// <param name="eventId">The identifier of the event.</param>
+        /// <param name="arg1">The first argument.</param>
+        /// <param name="arg2">The second argument.</param>
+        /// <param name="arg3">The third argument.</param>
+        /// <param name="arg4">The fourth argument.</param>
+        /// <param name="arg5">The fifth argument.</param>
+        /// <param name="arg6">The sixth argument.</param>
+        /// <param name="arg7">The seventh argument.</param>
+        /// <param name="arg8">The eighth argument.</param>
+        ///
+        [NonEvent]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private unsafe void WriteEvent<TValue1, TValue2, TValue3>(int eventId,
+                                                                  string arg1,
+                                                                  string arg2,
+                                                                  string arg3,
+                                                                  string arg4,
+                                                                  string arg5,
+                                                                  TValue1 arg6,
+                                                                  TValue2 arg7,
+                                                                  TValue3 arg8)
+            where TValue1 : struct
+            where TValue2 : struct
+            where TValue3 : struct
+        {
+            fixed (char* arg1Ptr = arg1)
+            fixed (char* arg2Ptr = arg2)
+            fixed (char* arg3Ptr = arg3)
+            fixed (char* arg4Ptr = arg4)
+            fixed (char* arg5Ptr = arg5)
+            {
+                var eventPayload = stackalloc EventData[7];
+
+                eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
+                eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
+
+                eventPayload[1].Size = (arg2.Length + 1) * sizeof(char);
+                eventPayload[1].DataPointer = (IntPtr)arg2Ptr;
+
+                eventPayload[2].Size = (arg3.Length + 1) * sizeof(char);
+                eventPayload[2].DataPointer = (IntPtr)arg3Ptr;
+
+                eventPayload[3].Size = (arg4.Length + 1) * sizeof(char);
+                eventPayload[3].DataPointer = (IntPtr)arg4Ptr;
+
+                eventPayload[4].Size = (arg5.Length + 1) * sizeof(char);
+                eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
+
+                eventPayload[5].Size = Unsafe.SizeOf<TValue1>();
+                eventPayload[5].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg6);
+
+                eventPayload[6].Size = Unsafe.SizeOf<TValue2>();
+                eventPayload[6].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg7);
+
+                eventPayload[7].Size = Unsafe.SizeOf<TValue3>();
+                eventPayload[7].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg8);
+
+                WriteEventCore(eventId, 8, eventPayload);
             }
         }
     }

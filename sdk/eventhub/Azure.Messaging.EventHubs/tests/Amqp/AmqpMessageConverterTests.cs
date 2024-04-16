@@ -1896,12 +1896,14 @@ namespace Azure.Messaging.EventHubs.Tests
             var name = "SomeName";
             var created = DateTimeOffset.Parse("2015-10-27T00:00:00z");
             var identifiers = new[] { "0", "1", "2" };
+            var geoReplicationFactor = 1;
             var converter = new AmqpMessageConverter();
             var body = new AmqpMap
             {
                 { AmqpManagement.ResponseMap.Name, name },
                 { AmqpManagement.ResponseMap.CreatedAt, created.UtcDateTime },
-                { AmqpManagement.ResponseMap.PartitionIdentifiers, identifiers }
+                { AmqpManagement.ResponseMap.PartitionIdentifiers, identifiers },
+                { AmqpManagement.ResponseMap.GeoReplicationFactor, geoReplicationFactor }
             };
 
             using var response = AmqpMessage.Create(new AmqpValue { Value = body });
@@ -1911,6 +1913,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(properties.Name, Is.EqualTo(name), "The name should match");
             Assert.That(properties.CreatedOn, Is.EqualTo(created), "The created date should match");
             Assert.That(properties.PartitionIds, Is.EquivalentTo(identifiers), "The set of partition identifiers should match");
+            Assert.That(properties.GeoReplicationCount, Is.EqualTo(geoReplicationFactor), "The geo replication factor should match");
         }
 
         /// <summary>

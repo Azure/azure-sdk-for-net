@@ -373,7 +373,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                          long offset,
                                                          long? sequenceNumber,
                                                          CancellationToken cancellationToken)
-            => await UpdateCheckpointInternalAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, string.Empty, offset, sequenceNumber, cancellationToken).ConfigureAwait(false);
+            => await UpdateCheckpointInternalAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, string.Empty, offset, sequenceNumber, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
@@ -395,12 +395,12 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                          string clientIdentifier,
                                                          CheckpointPosition startingPosition,
                                                          CancellationToken cancellationToken)
-            => await UpdateCheckpointInternalAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, null, startingPosition.SequenceNumber, cancellationToken).ConfigureAwait(false);
+            => await UpdateCheckpointInternalAsync(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, clientIdentifier, null, startingPosition.SequenceNumber, startingPosition.ReplicationSegment, cancellationToken).ConfigureAwait(false);
 
-        private async Task UpdateCheckpointInternalAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, string clientIdentifier, long? offset, long? sequenceNumber, CancellationToken cancellationToken)
+        private async Task UpdateCheckpointInternalAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, string clientIdentifier, long? offset, long? sequenceNumber, int? replicationSegment, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), "-1", offset.ToString());
+            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), replicationSegment.ToString(), offset.ToString());
 
             var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + partitionId, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
             var blobClient = ContainerClient.GetBlobClient(blobName);
@@ -409,6 +409,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 { BlobMetadataKey.Offset, offset.HasValue ? offset.Value.ToString(CultureInfo.InvariantCulture) : "" },
                 { BlobMetadataKey.SequenceNumber, sequenceNumber.HasValue ? sequenceNumber.Value.ToString(CultureInfo.InvariantCulture) : "" },
+                { BlobMetadataKey.ReplicationSegment, replicationSegment.HasValue ? replicationSegment.Value.ToString(CultureInfo.InvariantCulture) : "" },
                 { BlobMetadataKey.ClientIdentifier, clientIdentifier }
             };
 
@@ -430,17 +431,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), "-1", offset.ToString(), ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), replicationSegment.ToString(), offset.ToString(), ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             catch (Exception ex)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), "-1", offset.ToString(), ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), replicationSegment.ToString(), offset.ToString(), ex);
                 throw;
             }
             finally
             {
-                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), "-1", offset.ToString());
+                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), replicationSegment.ToString(), offset.ToString());
             }
         }
 
@@ -474,7 +475,15 @@ namespace Azure.Messaging.EventHubs.Primitives
                 sequenceNumber = sequenceResult;
                 if (sequenceNumber != long.MinValue) // If the sequence number is not equal to the default (long.MinValue), then a value was passed in.
                 {
-                    startingPosition = EventPosition.FromSequenceNumber(sequenceResult, false);
+                    // If a replication segment is present, use it to create the EventPosition.
+                    if (metadata.TryGetValue(BlobMetadataKey.ReplicationSegment, out var replicationStr) && int.TryParse(replicationStr, NumberStyles.Integer, CultureInfo.InvariantCulture, out var segmentResult))
+                    {
+                        startingPosition = EventPosition.FromSequenceNumber(sequenceResult, segmentResult, false);
+                    }
+                    else
+                    {
+                        startingPosition = EventPosition.FromSequenceNumber(sequenceResult, false);
+                    }
                 }
             }
             if (metadata.TryGetValue(BlobMetadataKey.Offset, out var offsetStr) && long.TryParse(offsetStr, NumberStyles.Integer, CultureInfo.InvariantCulture, out var offsetResult))

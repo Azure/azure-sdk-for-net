@@ -919,7 +919,7 @@ namespace Azure.Messaging.EventHubs
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Argument.AssertNotNull(partitionId, nameof(partitionId));
 
-            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
+            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup, offset, -1, sequenceNumber ?? long.MinValue);
 
             using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
             scope.Start();
@@ -934,13 +934,13 @@ namespace Azure.Messaging.EventHubs
                 // be thrown directly to the caller here.
 
                 scope.Failed(ex);
-                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message, offset, -1, sequenceNumber ?? long.MinValue);
 
                 throw;
             }
             finally
             {
-                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup, offset, -1, sequenceNumber ?? long.MinValue);
             }
         }
 
@@ -962,7 +962,7 @@ namespace Azure.Messaging.EventHubs
             Argument.AssertNotNull(partitionId, nameof(partitionId));
             Argument.AssertAtLeast(startingPosition.SequenceNumber, 0, nameof(startingPosition.SequenceNumber));
 
-            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);
+            Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.SequenceNumber, startingPosition.ReplicationSegment, long.MinValue);
 
             using var scope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorCheckpointActivityName, ActivityKind.Internal);
             scope.Start();
@@ -977,13 +977,13 @@ namespace Azure.Messaging.EventHubs
                 // be thrown directly to the caller here.
 
                 scope.Failed(ex);
-                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                Logger.UpdateCheckpointError(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message, startingPosition.SequenceNumber, startingPosition.ReplicationSegment, long.MinValue);
 
                 throw;
             }
             finally
             {
-                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup);
+                Logger.UpdateCheckpointComplete(partitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.SequenceNumber, startingPosition.ReplicationSegment, long.MinValue);
             }
         }
 
