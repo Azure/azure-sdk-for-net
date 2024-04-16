@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class ArmDeploymentScriptPropertiesBase : IUtf8JsonSerializable, IJsonModel<ArmDeploymentScriptPropertiesBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentScriptPropertiesBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentScriptPropertiesBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmDeploymentScriptPropertiesBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmDeploymentScriptPropertiesBase DeserializeArmDeploymentScriptPropertiesBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

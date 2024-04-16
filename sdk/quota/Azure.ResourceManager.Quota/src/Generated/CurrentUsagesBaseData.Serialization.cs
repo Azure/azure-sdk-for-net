@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Quota
 {
     public partial class CurrentUsagesBaseData : IUtf8JsonSerializable, IJsonModel<CurrentUsagesBaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CurrentUsagesBaseData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CurrentUsagesBaseData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CurrentUsagesBaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Quota
 
         internal static CurrentUsagesBaseData DeserializeCurrentUsagesBaseData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
