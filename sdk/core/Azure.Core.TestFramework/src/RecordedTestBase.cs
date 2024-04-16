@@ -106,7 +106,6 @@ namespace Azure.Core.TestFramework
                 "$..sshPassword",
                 "$..storageAccountPrimaryKey",
                 "$..storageContainerReadListSas",
-                "$..storageContainerUri",
                 "$..storageContainerWriteSas",
                 "$..token",
                 "$.value[*].key",
