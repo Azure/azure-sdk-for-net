@@ -1,16 +1,10 @@
 # Release History
 
-## 1.2.0
+## 1.2.0 (2024-04-15)
 
 ### Features Added
 - StartRecording now accepts PauseOnStart.
 - RecordingStateResult and RecordingStateChanged now accepts RecordingKind
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0 (2023-11-23)
 
