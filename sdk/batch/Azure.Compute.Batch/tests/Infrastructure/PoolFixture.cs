@@ -31,13 +31,12 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             client = batchClient;
         }
 
-        public void Dispose()
+        public async void Dispose()
         {
             //This should not throw so swallow exceptions?
             try
             {
-                //TODO: Turn this on?
-                //this.client.PoolOperations.DeletePool(this.PoolId);
+                await this.client.DeletePoolAsync(PoolId);
             }
             catch (Exception)
             {
@@ -68,7 +67,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             //Wait for pool to be in a usable state
             //TODO: Use a Utilities waiter
             TimeSpan computeNodeAllocationTimeout = TimeSpan.FromMinutes(10);
-            TestUtilities.WaitForPoolToReachStateAsync(client, poolId, AllocationState.Steady, computeNodeAllocationTimeout).Wait();
+            await TestUtilities.WaitForPoolToReachStateAsync(client, poolId, AllocationState.Steady, computeNodeAllocationTimeout);
 
             //Wait for the compute nodes in the pool to be in a usable state
             //TODO: Use a Utilities waiter

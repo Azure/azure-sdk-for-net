@@ -17,11 +17,22 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 
         public static async Task WaitForPoolToReachStateAsync(BatchClient client, string poolId, AllocationState targetAllocationState, TimeSpan timeout)
         {
+            DateTime allocationWaitStartTime = DateTime.UtcNow;
+            DateTime timeoutAfterThisTimeUtc = allocationWaitStartTime.Add(timeout);
+
             BatchPool pool = await client.GetPoolAsync(poolId);
 
-            await RefreshBasedPollingWithTimeoutAsync(
-                    condition: () => Task.FromResult(pool.AllocationState == targetAllocationState),
-                    timeout: timeout).ConfigureAwait(false);
+            while (pool.AllocationState != targetAllocationState)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(10)).ConfigureAwait(continueOnCapturedContext: false);
+
+                pool = await client.GetPoolAsync(poolId);
+
+                if (DateTime.UtcNow > timeoutAfterThisTimeUtc)
+                {
+                    throw new Exception("RefreshBasedPollingWithTimeout: Timed out waiting for condition to be met.");
+                }
+            }
         }
 
         /// <summary>

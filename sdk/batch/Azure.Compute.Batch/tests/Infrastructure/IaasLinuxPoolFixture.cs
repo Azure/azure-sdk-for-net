@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,46 +13,30 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 {
     internal class IaasLinuxPoolFixture : PoolFixture
     {
-        public IaasLinuxPoolFixture(BatchClient batchClient) : base(TestUtilities.GetMyName() + "-pooltest", batchClient) { }
+        public IaasLinuxPoolFixture(BatchClient batchClient) : base(TestUtilities.GetMyName() + "-" + GetTestMethodName(), batchClient) { }
 
-        public async Task<BatchPool> CreatePoolAsync()
+        public async Task<BatchPool> CreatePoolAsync(int targetDedicatedNodes = 1)
         {
             BatchPool currentPool = await FindPoolIfExistsAsync();
 
             if (currentPool == null)
             {
-                // gotta create a new pool
-                var password = TestUtilities.GenerateRandomPassword();
+                // create a new pool
+                ImageReference imageReference = new ImageReference()
+                {
+                    Publisher = "MicrosoftWindowsServer",
+                    Offer = "WindowsServer",
+                    Sku = "2019-datacenter-smalldisk",
+                    Version = "latest"
+                };
+                VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64");
+
                 BatchPoolCreateContent batchPoolCreateOptions = new BatchPoolCreateContent(
                     PoolId,
                     VMSize)
                 {
-                    CloudServiceConfiguration = new CloudServiceConfiguration(OSFamily),
-                    UserAccounts = {
-                        new UserAccount(AdminUserAccountName, password)
-                        {
-                            ElevationLevel = ElevationLevel.Admin,
-                        },
-                        new UserAccount(NonAdminUserAccountName, password)
-                        {
-                            ElevationLevel = ElevationLevel.NonAdmin,
-                        },
-                    },
-                    StartTask = new BatchStartTask("cmd /c hostname")
-                    {
-                        EnvironmentSettings = {
-                            new EnvironmentSetting("key")
-                        },
-                        UserIdentity = new UserIdentity()
-                        {
-                            AutoUser = new AutoUserSpecification()
-                            {
-                                Scope = AutoUserScope.Pool,
-                                ElevationLevel = ElevationLevel.NonAdmin,
-                            },
-                        },
-                    },
-                    TargetDedicatedNodes = 1,
+                    VirtualMachineConfiguration = virtualMachineConfiguration,
+                    TargetDedicatedNodes = targetDedicatedNodes,
                 };
                 Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
                 if (response == null)
@@ -58,6 +44,16 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             }
 
             return await WaitForPoolAllocation(client, PoolId);
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static string GetTestMethodName()
+        {
+            int frame = 4;
+            var st = new StackTrace();
+            var sf = st.GetFrame(frame);
+
+            return sf.GetMethod().Name;
         }
     }
 }
