@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class NSPConfigPerimeter : IUtf8JsonSerializable, IJsonModel<NSPConfigPerimeter>
+    public partial class NspConfigPerimeter : IUtf8JsonSerializable, IJsonModel<NspConfigPerimeter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NSPConfigPerimeter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspConfigPerimeter>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<NSPConfigPerimeter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NspConfigPerimeter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigPerimeter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigPerimeter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSPConfigPerimeter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NspConfigPerimeter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.Search.Models
             writer.WriteEndObject();
         }
 
-        NSPConfigPerimeter IJsonModel<NSPConfigPerimeter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NspConfigPerimeter IJsonModel<NspConfigPerimeter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigPerimeter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigPerimeter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSPConfigPerimeter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NspConfigPerimeter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNSPConfigPerimeter(document.RootElement, options);
+            return DeserializeNspConfigPerimeter(document.RootElement, options);
         }
 
-        internal static NSPConfigPerimeter DeserializeNSPConfigPerimeter(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NspConfigPerimeter DeserializeNspConfigPerimeter(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NSPConfigPerimeter(id, perimeterGuid, location, serializedAdditionalRawData);
+            return new NspConfigPerimeter(id, perimeterGuid, location, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NSPConfigPerimeter>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NspConfigPerimeter>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigPerimeter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigPerimeter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -199,26 +199,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NSPConfigPerimeter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NspConfigPerimeter)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NSPConfigPerimeter IPersistableModel<NSPConfigPerimeter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NspConfigPerimeter IPersistableModel<NspConfigPerimeter>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigPerimeter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigPerimeter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNSPConfigPerimeter(document.RootElement, options);
+                        return DeserializeNspConfigPerimeter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NSPConfigPerimeter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NspConfigPerimeter)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NSPConfigPerimeter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NspConfigPerimeter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.Search
             ResourceType type = default;
             SystemData systemData = default;
             string provisioningState = default;
-            NSPConfigPerimeter networkSecurityPerimeter = default;
-            NSPConfigAssociation resourceAssociation = default;
-            NSPConfigProfile profile = default;
-            IList<NSPProvisioningIssue> provisioningIssues = default;
+            NspConfigPerimeter networkSecurityPerimeter = default;
+            NspConfigAssociation resourceAssociation = default;
+            NspConfigProfile profile = default;
+            IList<NspProvisioningIssue> provisioningIssues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            networkSecurityPerimeter = NSPConfigPerimeter.DeserializeNSPConfigPerimeter(property0.Value, options);
+                            networkSecurityPerimeter = NspConfigPerimeter.DeserializeNspConfigPerimeter(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceAssociation"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            resourceAssociation = NSPConfigAssociation.DeserializeNSPConfigAssociation(property0.Value, options);
+                            resourceAssociation = NspConfigAssociation.DeserializeNspConfigAssociation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("profile"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            profile = NSPConfigProfile.DeserializeNSPConfigProfile(property0.Value, options);
+                            profile = NspConfigProfile.DeserializeNspConfigProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningIssues"u8))
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            List<NSPProvisioningIssue> array = new List<NSPProvisioningIssue>();
+                            List<NspProvisioningIssue> array = new List<NspProvisioningIssue>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NSPProvisioningIssue.DeserializeNSPProvisioningIssue(item, options));
+                                array.Add(NspProvisioningIssue.DeserializeNspProvisioningIssue(item, options));
                             }
                             provisioningIssues = array;
                             continue;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Search
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,
-                provisioningIssues ?? new ChangeTrackingList<NSPProvisioningIssue>(),
+                provisioningIssues ?? new ChangeTrackingList<NspProvisioningIssue>(),
                 serializedAdditionalRawData);
         }
 

@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class NSPProvisioningIssue : IUtf8JsonSerializable, IJsonModel<NSPProvisioningIssue>
+    public partial class NspProvisioningIssue : IUtf8JsonSerializable, IJsonModel<NspProvisioningIssue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NSPProvisioningIssue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspProvisioningIssue>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<NSPProvisioningIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NspProvisioningIssue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSPProvisioningIssue)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NspProvisioningIssue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.Search.Models
             writer.WriteEndObject();
         }
 
-        NSPProvisioningIssue IJsonModel<NSPProvisioningIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NspProvisioningIssue IJsonModel<NspProvisioningIssue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSPProvisioningIssue)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NspProvisioningIssue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNSPProvisioningIssue(document.RootElement, options);
+            return DeserializeNspProvisioningIssue(document.RootElement, options);
         }
 
-        internal static NSPProvisioningIssue DeserializeNSPProvisioningIssue(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NspProvisioningIssue DeserializeNspProvisioningIssue(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Search.Models
                 return null;
             }
             string name = default;
-            NSPProvisioningIssueProperties properties = default;
+            NspProvisioningIssueProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    properties = NSPProvisioningIssueProperties.DeserializeNSPProvisioningIssueProperties(property.Value, options);
+                    properties = NspProvisioningIssueProperties.DeserializeNspProvisioningIssueProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NSPProvisioningIssue(name, properties, serializedAdditionalRawData);
+            return new NspProvisioningIssue(name, properties, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -155,9 +155,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NSPProvisioningIssue>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NspProvisioningIssue>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -166,26 +166,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NSPProvisioningIssue)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NspProvisioningIssue)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NSPProvisioningIssue IPersistableModel<NSPProvisioningIssue>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NspProvisioningIssue IPersistableModel<NspProvisioningIssue>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNSPProvisioningIssue(document.RootElement, options);
+                        return DeserializeNspProvisioningIssue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NSPProvisioningIssue)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NspProvisioningIssue)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NSPProvisioningIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NspProvisioningIssue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

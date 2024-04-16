@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Search.Models
             get
             {
                 if (NetworkRuleSet is null)
-                    NetworkRuleSet = new NetworkRuleSet();
+                    NetworkRuleSet = new SearchServiceNetworkRuleSet();
                 return NetworkRuleSet.IPRules;
             }
         }

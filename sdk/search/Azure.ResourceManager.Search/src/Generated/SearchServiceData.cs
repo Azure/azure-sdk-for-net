@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the Azure AI Search service. </param>
         /// <param name="eTag"> A system generated property representing the service's etag that can be for optimistic concurrency control during updates. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku searchSku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, NetworkRuleSet networkRuleSet, IList<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SearchServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SearchSku searchSku, ManagedServiceIdentity identity, int? replicaCount, int? partitionCount, SearchServiceHostingMode? hostingMode, SearchServicePublicInternetAccess? publicInternetAccess, SearchServiceStatus? status, string statusDetails, SearchServiceProvisioningState? provisioningState, SearchServiceNetworkRuleSet networkRuleSet, IList<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions, SearchEncryptionWithCmk encryptionWithCmk, bool? isLocalAuthDisabled, SearchAadAuthDataPlaneAuthOptions authOptions, SearchSemanticSearch? semanticSearch, IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             SearchSku = searchSku;
             Identity = identity;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Search
         public SearchServiceProvisioningState? ProvisioningState { get; }
         /// <summary> Network specific rules that determine how the Azure AI Search service may be reached. </summary>
         [WirePath("properties.networkRuleSet")]
-        public NetworkRuleSet NetworkRuleSet { get; set; }
+        public SearchServiceNetworkRuleSet NetworkRuleSet { get; set; }
         /// <summary> A list of data exfiltration scenarios that are explicitly disallowed for the search service. Currently, the only supported value is 'All' to disable all possible data export scenarios with more fine grained controls planned for the future. </summary>
         [WirePath("properties.disabledDataExfiltrationOptions")]
         public IList<SearchDisabledDataExfiltrationOption> DisabledDataExfiltrationOptions { get; }

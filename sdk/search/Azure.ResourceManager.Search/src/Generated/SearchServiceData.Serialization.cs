@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Search
             SearchServiceStatus? status = default;
             string statusDetails = default;
             SearchServiceProvisioningState? provisioningState = default;
-            NetworkRuleSet networkRuleSet = default;
+            SearchServiceNetworkRuleSet networkRuleSet = default;
             IList<SearchDisabledDataExfiltrationOption> disabledDataExfiltrationOptions = default;
             SearchEncryptionWithCmk encryptionWithCmk = default;
             bool? disableLocalAuth = default;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Search
                             {
                                 continue;
                             }
-                            networkRuleSet = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value, options);
+                            networkRuleSet = SearchServiceNetworkRuleSet.DeserializeSearchServiceNetworkRuleSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("disabledDataExfiltrationOptions"u8))

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Network specific rules that determine how the Azure AI Search service may be reached. </summary>
-    public partial class NetworkRuleSet
+    public partial class SearchServiceNetworkRuleSet
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
-        public NetworkRuleSet()
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkRuleSet"/>. </summary>
+        public SearchServiceNetworkRuleSet()
         {
             IPRules = new ChangeTrackingList<SearchServiceIPRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceNetworkRuleSet"/>. </summary>
         /// <param name="ipRules"> A list of IP restriction rules that defines the inbound network(s) with allowing access to the search service endpoint. At the meantime, all other public IP networks are blocked by the firewall. These restriction rules are applied only when the 'publicNetworkAccess' of the search service is 'enabled'; otherwise, traffic over public interface is not allowed even with any public IP rules, and private endpoint connections would be the exclusive access method. </param>
         /// <param name="bypass"> Possible origins of inbound traffic that can bypass the rules defined in the 'ipRules' section. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkRuleSet(IList<SearchServiceIPRule> ipRules, SearchBypass? bypass, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SearchServiceNetworkRuleSet(IList<SearchServiceIPRule> ipRules, SearchBypass? bypass, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPRules = ipRules;
             Bypass = bypass;

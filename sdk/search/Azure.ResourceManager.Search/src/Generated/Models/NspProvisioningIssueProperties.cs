@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> The properties to describe any issues with provisioning network security perimeters to a search service. </summary>
-    public partial class NSPProvisioningIssueProperties
+    public partial class NspProvisioningIssueProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,21 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NSPProvisioningIssueProperties"/>. </summary>
-        public NSPProvisioningIssueProperties()
+        /// <summary> Initializes a new instance of <see cref="NspProvisioningIssueProperties"/>. </summary>
+        public NspProvisioningIssueProperties()
         {
             SuggestedResourceIds = new ChangeTrackingList<string>();
             SuggestedAccessRules = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NSPProvisioningIssueProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NspProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"></param>
         /// <param name="severity"></param>
         /// <param name="description"></param>
         /// <param name="suggestedResourceIds"></param>
         /// <param name="suggestedAccessRules"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NSPProvisioningIssueProperties(string issueType, string severity, string description, IList<string> suggestedResourceIds, IList<string> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NspProvisioningIssueProperties(string issueType, string severity, string description, IList<string> suggestedResourceIds, IList<string> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IssueType = issueType;
             Severity = severity;

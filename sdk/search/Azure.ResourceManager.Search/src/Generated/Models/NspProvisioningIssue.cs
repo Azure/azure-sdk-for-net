@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The perimeter for a network security perimeter configuration. </summary>
-    public partial class NSPConfigPerimeter
+    /// <summary> An object to describe any issues with provisioning network security perimeters to a search service. </summary>
+    public partial class NspProvisioningIssue
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,32 +45,27 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NSPConfigPerimeter"/>. </summary>
-        public NSPConfigPerimeter()
+        /// <summary> Initializes a new instance of <see cref="NspProvisioningIssue"/>. </summary>
+        public NspProvisioningIssue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NSPConfigPerimeter"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="perimeterGuid"></param>
-        /// <param name="location"></param>
+        /// <summary> Initializes a new instance of <see cref="NspProvisioningIssue"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="properties"> The properties to describe any issues with provisioning network security perimeters to a search service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NSPConfigPerimeter(string id, string perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NspProvisioningIssue(string name, NspProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            PerimeterGuid = perimeterGuid;
-            Location = location;
+            Name = name;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the id. </summary>
-        [WirePath("id")]
-        public string Id { get; set; }
-        /// <summary> Gets or sets the perimeter guid. </summary>
-        [WirePath("perimeterGuid")]
-        public string PerimeterGuid { get; set; }
-        /// <summary> Gets or sets the location. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; set; }
+        /// <summary> Gets or sets the name. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
+        /// <summary> The properties to describe any issues with provisioning network security perimeters to a search service. </summary>
+        [WirePath("properties")]
+        public NspProvisioningIssueProperties Properties { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The resource association for the network security perimeter. </summary>
-    public partial class NSPConfigAssociation
+    /// <summary> An access rule for a network security perimeter configuration. </summary>
+    public partial class NspConfigAccessRule
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NSPConfigAssociation"/>. </summary>
-        public NSPConfigAssociation()
+        /// <summary> Initializes a new instance of <see cref="NspConfigAccessRule"/>. </summary>
+        public NspConfigAccessRule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NSPConfigAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NspConfigAccessRule"/>. </summary>
         /// <param name="name"></param>
-        /// <param name="accessMode"></param>
+        /// <param name="properties"> The properties for the access rules in a network security perimeter configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NSPConfigAssociation(string name, string accessMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NspConfigAccessRule(string name, NspConfigAccessRuleProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            AccessMode = accessMode;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> Gets or sets the access mode. </summary>
-        [WirePath("accessMode")]
-        public string AccessMode { get; set; }
+        /// <summary> The properties for the access rules in a network security perimeter configuration. </summary>
+        [WirePath("properties")]
+        public NspConfigAccessRuleProperties Properties { get; set; }
     }
 }

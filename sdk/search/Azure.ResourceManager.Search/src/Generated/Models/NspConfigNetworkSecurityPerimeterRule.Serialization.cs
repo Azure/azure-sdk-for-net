@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class NSPConfigNetworkSecurityPerimeterRule : IUtf8JsonSerializable, IJsonModel<NSPConfigNetworkSecurityPerimeterRule>
+    public partial class NspConfigNetworkSecurityPerimeterRule : IUtf8JsonSerializable, IJsonModel<NspConfigNetworkSecurityPerimeterRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NSPConfigNetworkSecurityPerimeterRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspConfigNetworkSecurityPerimeterRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<NSPConfigNetworkSecurityPerimeterRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NspConfigNetworkSecurityPerimeterRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigNetworkSecurityPerimeterRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigNetworkSecurityPerimeterRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSPConfigNetworkSecurityPerimeterRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NspConfigNetworkSecurityPerimeterRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.Search.Models
             writer.WriteEndObject();
         }
 
-        NSPConfigNetworkSecurityPerimeterRule IJsonModel<NSPConfigNetworkSecurityPerimeterRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NspConfigNetworkSecurityPerimeterRule IJsonModel<NspConfigNetworkSecurityPerimeterRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigNetworkSecurityPerimeterRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigNetworkSecurityPerimeterRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSPConfigNetworkSecurityPerimeterRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NspConfigNetworkSecurityPerimeterRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNSPConfigNetworkSecurityPerimeterRule(document.RootElement, options);
+            return DeserializeNspConfigNetworkSecurityPerimeterRule(document.RootElement, options);
         }
 
-        internal static NSPConfigNetworkSecurityPerimeterRule DeserializeNSPConfigNetworkSecurityPerimeterRule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NspConfigNetworkSecurityPerimeterRule DeserializeNspConfigNetworkSecurityPerimeterRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NSPConfigNetworkSecurityPerimeterRule(id, perimeterGuid, location, serializedAdditionalRawData);
+            return new NspConfigNetworkSecurityPerimeterRule(id, perimeterGuid, location, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NSPConfigNetworkSecurityPerimeterRule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NspConfigNetworkSecurityPerimeterRule>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigNetworkSecurityPerimeterRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigNetworkSecurityPerimeterRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -199,26 +199,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NSPConfigNetworkSecurityPerimeterRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NspConfigNetworkSecurityPerimeterRule)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NSPConfigNetworkSecurityPerimeterRule IPersistableModel<NSPConfigNetworkSecurityPerimeterRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NspConfigNetworkSecurityPerimeterRule IPersistableModel<NspConfigNetworkSecurityPerimeterRule>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigNetworkSecurityPerimeterRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigNetworkSecurityPerimeterRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNSPConfigNetworkSecurityPerimeterRule(document.RootElement, options);
+                        return DeserializeNspConfigNetworkSecurityPerimeterRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NSPConfigNetworkSecurityPerimeterRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NspConfigNetworkSecurityPerimeterRule)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NSPConfigNetworkSecurityPerimeterRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NspConfigNetworkSecurityPerimeterRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

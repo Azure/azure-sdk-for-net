@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Search.Samples
                 ReplicaCount = 1,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                NetworkRuleSet = new NetworkRuleSet()
+                NetworkRuleSet = new SearchServiceNetworkRuleSet()
                 {
                     IPRules =
 {
@@ -297,7 +297,7 @@ Value = "123.4.6.0/18",
                 ReplicaCount = 1,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                NetworkRuleSet = new NetworkRuleSet()
+                NetworkRuleSet = new SearchServiceNetworkRuleSet()
                 {
                     IPRules =
 {

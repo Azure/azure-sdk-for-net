@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> An object to describe any issues with provisioning network security perimeters to a search service. </summary>
-    public partial class NSPProvisioningIssue
+    /// <summary> The resource association for the network security perimeter. </summary>
+    public partial class NspConfigAssociation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NSPProvisioningIssue"/>. </summary>
-        public NSPProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="NspConfigAssociation"/>. </summary>
+        public NspConfigAssociation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NSPProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NspConfigAssociation"/>. </summary>
         /// <param name="name"></param>
-        /// <param name="properties"> The properties to describe any issues with provisioning network security perimeters to a search service. </param>
+        /// <param name="accessMode"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NSPProvisioningIssue(string name, NSPProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NspConfigAssociation(string name, string accessMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            Properties = properties;
+            AccessMode = accessMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> The properties to describe any issues with provisioning network security perimeters to a search service. </summary>
-        [WirePath("properties")]
-        public NSPProvisioningIssueProperties Properties { get; set; }
+        /// <summary> Gets or sets the access mode. </summary>
+        [WirePath("accessMode")]
+        public string AccessMode { get; set; }
     }
 }

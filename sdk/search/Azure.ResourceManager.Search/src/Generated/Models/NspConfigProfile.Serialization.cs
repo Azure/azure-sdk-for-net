@@ -15,16 +15,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class NSPConfigProfile : IUtf8JsonSerializable, IJsonModel<NSPConfigProfile>
+    public partial class NspConfigProfile : IUtf8JsonSerializable, IJsonModel<NspConfigProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NSPConfigProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspConfigProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<NSPConfigProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NspConfigProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSPConfigProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NspConfigProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Search.Models
             writer.WriteEndObject();
         }
 
-        NSPConfigProfile IJsonModel<NSPConfigProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NspConfigProfile IJsonModel<NspConfigProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSPConfigProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NspConfigProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNSPConfigProfile(document.RootElement, options);
+            return DeserializeNspConfigProfile(document.RootElement, options);
         }
 
-        internal static NSPConfigProfile DeserializeNSPConfigProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NspConfigProfile DeserializeNspConfigProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Search.Models
             }
             string name = default;
             string accessRulesVersion = default;
-            IList<NSPConfigAccessRule> accessRules = default;
+            IList<NspConfigAccessRule> accessRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    List<NSPConfigAccessRule> array = new List<NSPConfigAccessRule>();
+                    List<NspConfigAccessRule> array = new List<NspConfigAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NSPConfigAccessRule.DeserializeNSPConfigAccessRule(item, options));
+                        array.Add(NspConfigAccessRule.DeserializeNspConfigAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NSPConfigProfile(name, accessRulesVersion, accessRules ?? new ChangeTrackingList<NSPConfigAccessRule>(), serializedAdditionalRawData);
+            return new NspConfigProfile(name, accessRulesVersion, accessRules ?? new ChangeTrackingList<NspConfigAccessRule>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -207,9 +207,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NSPConfigProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NspConfigProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -218,26 +218,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NSPConfigProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NspConfigProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NSPConfigProfile IPersistableModel<NSPConfigProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NspConfigProfile IPersistableModel<NspConfigProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNSPConfigProfile(document.RootElement, options);
+                        return DeserializeNspConfigProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NSPConfigProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NspConfigProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NSPConfigProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NspConfigProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

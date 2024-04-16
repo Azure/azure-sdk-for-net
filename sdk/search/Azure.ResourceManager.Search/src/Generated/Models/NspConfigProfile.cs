@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The network security perimeter properties present in a configuration rule. </summary>
-    public partial class NSPConfigNetworkSecurityPerimeterRule
+    /// <summary> The profile for a network security perimeter configuration. </summary>
+    public partial class NspConfigProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,32 +45,33 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NSPConfigNetworkSecurityPerimeterRule"/>. </summary>
-        public NSPConfigNetworkSecurityPerimeterRule()
+        /// <summary> Initializes a new instance of <see cref="NspConfigProfile"/>. </summary>
+        public NspConfigProfile()
         {
+            AccessRules = new ChangeTrackingList<NspConfigAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NSPConfigNetworkSecurityPerimeterRule"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="perimeterGuid"></param>
-        /// <param name="location"></param>
+        /// <summary> Initializes a new instance of <see cref="NspConfigProfile"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="accessRulesVersion"></param>
+        /// <param name="accessRules"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NSPConfigNetworkSecurityPerimeterRule(string id, string perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NspConfigProfile(string name, string accessRulesVersion, IList<NspConfigAccessRule> accessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            PerimeterGuid = perimeterGuid;
-            Location = location;
+            Name = name;
+            AccessRulesVersion = accessRulesVersion;
+            AccessRules = accessRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the id. </summary>
-        [WirePath("id")]
-        public string Id { get; set; }
-        /// <summary> Gets or sets the perimeter guid. </summary>
-        [WirePath("perimeterGuid")]
-        public string PerimeterGuid { get; set; }
-        /// <summary> Gets or sets the location. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; set; }
+        /// <summary> Gets or sets the name. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
+        /// <summary> Gets or sets the access rules version. </summary>
+        [WirePath("accessRulesVersion")]
+        public string AccessRulesVersion { get; set; }
+        /// <summary> Gets the access rules. </summary>
+        [WirePath("accessRules")]
+        public IList<NspConfigAccessRule> AccessRules { get; }
     }
 }

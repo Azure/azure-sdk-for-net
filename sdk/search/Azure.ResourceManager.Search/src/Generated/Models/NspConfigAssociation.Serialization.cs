@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class NSPConfigAccessRule : IUtf8JsonSerializable, IJsonModel<NSPConfigAccessRule>
+    public partial class NspConfigAssociation : IUtf8JsonSerializable, IJsonModel<NspConfigAssociation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NSPConfigAccessRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspConfigAssociation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<NSPConfigAccessRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NspConfigAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigAccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSPConfigAccessRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NspConfigAssociation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(AccessMode))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("accessMode"u8);
+                writer.WriteStringValue(AccessMode);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.Search.Models
             writer.WriteEndObject();
         }
 
-        NSPConfigAccessRule IJsonModel<NSPConfigAccessRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NspConfigAssociation IJsonModel<NspConfigAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigAccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSPConfigAccessRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NspConfigAssociation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNSPConfigAccessRule(document.RootElement, options);
+            return DeserializeNspConfigAssociation(document.RootElement, options);
         }
 
-        internal static NSPConfigAccessRule DeserializeNSPConfigAccessRule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NspConfigAssociation DeserializeNspConfigAssociation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Search.Models
                 return null;
             }
             string name = default;
-            NSPConfigAccessRuleProperties properties = default;
+            string accessMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,13 +86,9 @@ namespace Azure.ResourceManager.Search.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (property.NameEquals("accessMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = NSPConfigAccessRuleProperties.DeserializeNSPConfigAccessRuleProperties(property.Value, options);
+                    accessMode = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -101,7 +97,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NSPConfigAccessRule(name, properties, serializedAdditionalRawData);
+            return new NspConfigAssociation(name, accessMode, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -137,17 +133,25 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
-            if (Optional.IsDefined(Properties) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessMode), out propertyOverride);
+            if (Optional.IsDefined(AccessMode) || hasPropertyOverride)
             {
-                builder.Append("  properties: ");
+                builder.Append("  accessMode: ");
                 if (hasPropertyOverride)
                 {
                     builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    BicepSerializationHelpers.AppendChildObject(builder, Properties, options, 2, false, "  properties: ");
+                    if (AccessMode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AccessMode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AccessMode}'");
+                    }
                 }
             }
 
@@ -155,9 +159,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NSPConfigAccessRule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NspConfigAssociation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigAccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigAssociation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -166,26 +170,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NSPConfigAccessRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NspConfigAssociation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NSPConfigAccessRule IPersistableModel<NSPConfigAccessRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NspConfigAssociation IPersistableModel<NspConfigAssociation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigAccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigAssociation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNSPConfigAccessRule(document.RootElement, options);
+                        return DeserializeNspConfigAssociation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NSPConfigAccessRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NspConfigAssociation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NSPConfigAccessRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NspConfigAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

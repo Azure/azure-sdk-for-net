@@ -61,6 +61,7 @@ rename-mapping:
   SharedPrivateLinkResourceStatus: SearchServiceSharedPrivateLinkResourceStatus
   UnavailableNameReason: SearchServiceNameUnavailableReason
   SkuName: SearchServiceSkuName
+  NetworkRuleSet: SearchServiceNetworkRuleSet
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -91,6 +92,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  NSP: Nsp|nsp
 
 override-operation-name:
   Services_CheckNameAvailability: CheckSearchServiceNameAvailability

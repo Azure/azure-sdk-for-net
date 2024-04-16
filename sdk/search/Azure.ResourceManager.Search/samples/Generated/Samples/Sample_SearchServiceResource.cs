@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Search.Samples
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 PublicInternetAccess = SearchServicePublicInternetAccess.Enabled,
-                NetworkRuleSet = new NetworkRuleSet()
+                NetworkRuleSet = new SearchServiceNetworkRuleSet()
                 {
                     IPRules =
 {
@@ -397,7 +397,7 @@ Value = "123.4.6.0/18",
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 PublicInternetAccess = SearchServicePublicInternetAccess.Enabled,
-                NetworkRuleSet = new NetworkRuleSet()
+                NetworkRuleSet = new SearchServiceNetworkRuleSet()
                 {
                     IPRules =
 {

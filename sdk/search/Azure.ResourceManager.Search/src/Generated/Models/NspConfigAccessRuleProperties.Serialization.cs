@@ -15,16 +15,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class NSPConfigAccessRuleProperties : IUtf8JsonSerializable, IJsonModel<NSPConfigAccessRuleProperties>
+    public partial class NspConfigAccessRuleProperties : IUtf8JsonSerializable, IJsonModel<NspConfigAccessRuleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NSPConfigAccessRuleProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspConfigAccessRuleProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<NSPConfigAccessRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NspConfigAccessRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSPConfigAccessRuleProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NspConfigAccessRuleProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -91,19 +91,19 @@ namespace Azure.ResourceManager.Search.Models
             writer.WriteEndObject();
         }
 
-        NSPConfigAccessRuleProperties IJsonModel<NSPConfigAccessRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NspConfigAccessRuleProperties IJsonModel<NspConfigAccessRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NSPConfigAccessRuleProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NspConfigAccessRuleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNSPConfigAccessRuleProperties(document.RootElement, options);
+            return DeserializeNspConfigAccessRuleProperties(document.RootElement, options);
         }
 
-        internal static NSPConfigAccessRuleProperties DeserializeNSPConfigAccessRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NspConfigAccessRuleProperties DeserializeNspConfigAccessRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Search.Models
             IList<string> addressPrefixes = default;
             IList<string> fullyQualifiedDomainNames = default;
             IList<string> subscriptions = default;
-            IList<NSPConfigNetworkSecurityPerimeterRule> networkSecurityPerimeters = default;
+            IList<NspConfigNetworkSecurityPerimeterRule> networkSecurityPerimeters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    List<NSPConfigNetworkSecurityPerimeterRule> array = new List<NSPConfigNetworkSecurityPerimeterRule>();
+                    List<NspConfigNetworkSecurityPerimeterRule> array = new List<NspConfigNetworkSecurityPerimeterRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NSPConfigNetworkSecurityPerimeterRule.DeserializeNSPConfigNetworkSecurityPerimeterRule(item, options));
+                        array.Add(NspConfigNetworkSecurityPerimeterRule.DeserializeNspConfigNetworkSecurityPerimeterRule(item, options));
                     }
                     networkSecurityPerimeters = array;
                     continue;
@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NSPConfigAccessRuleProperties(
+            return new NspConfigAccessRuleProperties(
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 subscriptions ?? new ChangeTrackingList<string>(),
-                networkSecurityPerimeters ?? new ChangeTrackingList<NSPConfigNetworkSecurityPerimeterRule>(),
+                networkSecurityPerimeters ?? new ChangeTrackingList<NspConfigNetworkSecurityPerimeterRule>(),
                 serializedAdditionalRawData);
         }
 
@@ -360,9 +360,9 @@ namespace Azure.ResourceManager.Search.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NSPConfigAccessRuleProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NspConfigAccessRuleProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -371,26 +371,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NSPConfigAccessRuleProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NspConfigAccessRuleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NSPConfigAccessRuleProperties IPersistableModel<NSPConfigAccessRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NspConfigAccessRuleProperties IPersistableModel<NspConfigAccessRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NSPConfigAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NspConfigAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNSPConfigAccessRuleProperties(document.RootElement, options);
+                        return DeserializeNspConfigAccessRuleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NSPConfigAccessRuleProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NspConfigAccessRuleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NSPConfigAccessRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NspConfigAccessRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

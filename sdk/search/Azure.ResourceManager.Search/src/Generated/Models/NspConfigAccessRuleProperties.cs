@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> The properties for the access rules in a network security perimeter configuration. </summary>
-    public partial class NSPConfigAccessRuleProperties
+    public partial class NspConfigAccessRuleProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,23 +45,23 @@ namespace Azure.ResourceManager.Search.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NSPConfigAccessRuleProperties"/>. </summary>
-        public NSPConfigAccessRuleProperties()
+        /// <summary> Initializes a new instance of <see cref="NspConfigAccessRuleProperties"/>. </summary>
+        public NspConfigAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             Subscriptions = new ChangeTrackingList<string>();
-            NetworkSecurityPerimeters = new ChangeTrackingList<NSPConfigNetworkSecurityPerimeterRule>();
+            NetworkSecurityPerimeters = new ChangeTrackingList<NspConfigNetworkSecurityPerimeterRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NSPConfigAccessRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NspConfigAccessRuleProperties"/>. </summary>
         /// <param name="direction"></param>
         /// <param name="addressPrefixes"></param>
         /// <param name="fullyQualifiedDomainNames"></param>
         /// <param name="subscriptions"></param>
         /// <param name="networkSecurityPerimeters"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NSPConfigAccessRuleProperties(string direction, IList<string> addressPrefixes, IList<string> fullyQualifiedDomainNames, IList<string> subscriptions, IList<NSPConfigNetworkSecurityPerimeterRule> networkSecurityPerimeters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NspConfigAccessRuleProperties(string direction, IList<string> addressPrefixes, IList<string> fullyQualifiedDomainNames, IList<string> subscriptions, IList<NspConfigNetworkSecurityPerimeterRule> networkSecurityPerimeters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -85,6 +85,6 @@ namespace Azure.ResourceManager.Search.Models
         public IList<string> Subscriptions { get; }
         /// <summary> Gets the network security perimeters. </summary>
         [WirePath("networkSecurityPerimeters")]
-        public IList<NSPConfigNetworkSecurityPerimeterRule> NetworkSecurityPerimeters { get; }
+        public IList<NspConfigNetworkSecurityPerimeterRule> NetworkSecurityPerimeters { get; }
     }
 }
