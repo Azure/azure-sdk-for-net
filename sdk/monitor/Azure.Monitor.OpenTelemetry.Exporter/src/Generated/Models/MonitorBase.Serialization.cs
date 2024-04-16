@@ -23,9 +23,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             if (Optional.IsDefined(BaseData))
             {
                 writer.WritePropertyName("baseData"u8);
-                writer.WriteObjectValue<MonitorDomain>(BaseData);
+                writer.WriteObjectValue(BaseData);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(StackSettings))
             {
                 writer.WritePropertyName("stackSettings"u8);
-                writer.WriteObjectValue<FunctionAppRuntimes>(StackSettings, options);
+                writer.WriteObjectValue(StackSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

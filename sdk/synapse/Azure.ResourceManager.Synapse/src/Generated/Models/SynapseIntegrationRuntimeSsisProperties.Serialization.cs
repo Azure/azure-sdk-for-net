@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(CatalogInfo))
             {
                 writer.WritePropertyName("catalogInfo"u8);
-                writer.WriteObjectValue<SynapseIntegrationRuntimeSsisCatalogInfo>(CatalogInfo, options);
+                writer.WriteObjectValue(CatalogInfo, options);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(CustomSetupScriptProperties))
             {
                 writer.WritePropertyName("customSetupScriptProperties"u8);
-                writer.WriteObjectValue<SynapseIntegrationRuntimeCustomSetupScriptProperties>(CustomSetupScriptProperties, options);
+                writer.WriteObjectValue(CustomSetupScriptProperties, options);
             }
             if (Optional.IsDefined(DataProxyProperties))
             {
                 writer.WritePropertyName("dataProxyProperties"u8);
-                writer.WriteObjectValue<SynapseIntegrationRuntimeDataProxyProperties>(DataProxyProperties, options);
+                writer.WriteObjectValue(DataProxyProperties, options);
             }
             if (Optional.IsDefined(Edition))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in ExpressCustomSetupProperties)
                 {
-                    writer.WriteObjectValue<SynapseCustomSetupBase>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

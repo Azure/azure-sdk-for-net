@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (EarlyTermination != null)
                 {
                     writer.WritePropertyName("earlyTermination"u8);
-                    writer.WriteObjectValue<MachineLearningEarlyTerminationPolicy>(EarlyTermination, options);
+                    writer.WriteObjectValue(EarlyTermination, options);
                 }
                 else
                 {

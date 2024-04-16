@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmount))
             {
                 writer.WritePropertyName("originalAmount"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(OriginalAmount, options);
+                writer.WriteObjectValue(OriginalAmount, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
             {
                 writer.WritePropertyName("closedBalance"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(ClosedBalance, options);
+                writer.WriteObjectValue(ClosedBalance, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
@@ -107,17 +107,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmountInBillingCurrency))
             {
                 writer.WritePropertyName("originalAmountInBillingCurrency"u8);
-                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(OriginalAmountInBillingCurrency, options);
+                writer.WriteObjectValue(OriginalAmountInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(ClosedBalanceInBillingCurrency, options);
+                writer.WriteObjectValue(ClosedBalanceInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue<ConsumptionReseller>(Reseller, options);
+                writer.WriteObjectValue(Reseller, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

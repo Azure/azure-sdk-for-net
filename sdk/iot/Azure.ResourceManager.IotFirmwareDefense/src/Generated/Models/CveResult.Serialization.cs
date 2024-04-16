@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 if (Component != null)
                 {
                     writer.WritePropertyName("component"u8);
-                    writer.WriteObjectValue<CveComponent>(Component, options);
+                    writer.WriteObjectValue(Component, options);
                 }
                 else
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue<CveLink>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

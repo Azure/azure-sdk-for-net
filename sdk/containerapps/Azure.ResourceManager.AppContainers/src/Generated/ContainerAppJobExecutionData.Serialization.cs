@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue<ContainerAppJobExecutionTemplate>(Template, options);
+                writer.WriteObjectValue(Template, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

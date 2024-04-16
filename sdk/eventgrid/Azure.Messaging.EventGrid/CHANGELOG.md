@@ -1,6 +1,6 @@
 # Release History
 
-## 4.24.0-beta.1 (Unreleased)
+## 4.25.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.24.0 (2024-04-09)
+
+### Features Added
+
+- Added new Communication events.
 
 ## 4.23.0 (2024-03-11)
 

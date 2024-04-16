@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in StatusBanners)
                 {
-                    writer.WriteObjectValue<EmergingIssueBannerType>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in StatusActiveEvents)
                 {
-                    writer.WriteObjectValue<EmergingIssueActiveEventType>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

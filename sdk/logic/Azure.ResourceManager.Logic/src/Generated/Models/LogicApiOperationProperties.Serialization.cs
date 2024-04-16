@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
-                writer.WriteObjectValue<LogicApiOperationAnnotation>(Annotation, options);
+                writer.WriteObjectValue(Annotation, options);
             }
             if (Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
-                writer.WriteObjectValue<LogicApiReference>(Api, options);
+                writer.WriteObjectValue(Api, options);
             }
             if (Optional.IsDefined(InputsDefinition))
             {
                 writer.WritePropertyName("inputsDefinition"u8);
-                writer.WriteObjectValue<SwaggerSchema>(InputsDefinition, options);
+                writer.WriteObjectValue(InputsDefinition, options);
             }
             if (Optional.IsCollectionDefined(ResponsesDefinition))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in ResponsesDefinition)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<SwaggerSchema>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

@@ -44,7 +44,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(CurrencyInstance))
             {
                 writer.WritePropertyName("currencyInstance"u8);
-                writer.WriteObjectValue<AtlasNumberFormat>(CurrencyInstance, options);
+                writer.WriteObjectValue(CurrencyInstance, options);
             }
             if (Optional.IsDefined(GroupingUsed))
             {
@@ -54,12 +54,12 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Instance))
             {
                 writer.WritePropertyName("instance"u8);
-                writer.WriteObjectValue<AtlasNumberFormat>(Instance, options);
+                writer.WriteObjectValue(Instance, options);
             }
             if (Optional.IsDefined(IntegerInstance))
             {
                 writer.WritePropertyName("integerInstance"u8);
-                writer.WriteObjectValue<AtlasNumberFormat>(IntegerInstance, options);
+                writer.WriteObjectValue(IntegerInstance, options);
             }
             if (Optional.IsDefined(MaximumFractionDigits))
             {
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(NumberInstance))
             {
                 writer.WritePropertyName("numberInstance"u8);
-                writer.WriteObjectValue<AtlasNumberFormat>(NumberInstance, options);
+                writer.WriteObjectValue(NumberInstance, options);
             }
             if (Optional.IsDefined(ParseIntegerOnly))
             {
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(PercentInstance))
             {
                 writer.WritePropertyName("percentInstance"u8);
-                writer.WriteObjectValue<AtlasNumberFormat>(PercentInstance, options);
+                writer.WriteObjectValue(PercentInstance, options);
             }
             if (Optional.IsDefined(RoundingMode))
             {
@@ -347,11 +347,11 @@ namespace Azure.Analytics.Purview.DataMap
             return DeserializeAtlasNumberFormat(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AtlasNumberFormat>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

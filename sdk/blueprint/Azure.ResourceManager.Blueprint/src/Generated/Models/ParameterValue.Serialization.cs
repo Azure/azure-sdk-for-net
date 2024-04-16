@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("reference"u8);
-                writer.WriteObjectValue<SecretValueReference>(Reference, options);
+                writer.WriteObjectValue(Reference, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in UEIPAddresses)
                 {
-                    writer.WriteObjectValue<DnnIPPair>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

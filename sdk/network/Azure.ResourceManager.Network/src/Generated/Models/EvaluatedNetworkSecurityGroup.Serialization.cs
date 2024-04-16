@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(MatchedRule))
             {
                 writer.WritePropertyName("matchedRule"u8);
-                writer.WriteObjectValue<MatchedRule>(MatchedRule, options);
+                writer.WriteObjectValue(MatchedRule, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RulesEvaluationResult))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in RulesEvaluationResult)
                 {
-                    writer.WriteObjectValue<NetworkSecurityRulesEvaluationResult>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(DataVolumeCap))
             {
                 writer.WritePropertyName("DataVolumeCap"u8);
-                writer.WriteObjectValue<ApplicationInsightsComponentDataVolumeCap>(DataVolumeCap, options);
+                writer.WriteObjectValue(DataVolumeCap, options);
             }
             if (Optional.IsCollectionDefined(CurrentBillingFeatures))
             {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(Subscription))
             {
                 writer.WritePropertyName("subscription"u8);
-                writer.WriteObjectValue<EdgeProfileSubscription>(Subscription, options);
+                writer.WriteObjectValue(Subscription, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

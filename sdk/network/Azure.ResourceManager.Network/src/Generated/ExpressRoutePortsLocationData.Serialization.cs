@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AvailableBandwidths)
                 {
-                    writer.WriteObjectValue<ExpressRoutePortsLocationBandwidths>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

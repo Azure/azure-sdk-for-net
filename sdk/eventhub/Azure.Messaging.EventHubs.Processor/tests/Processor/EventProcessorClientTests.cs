@@ -1199,8 +1199,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     processorClient.Identifier,
                     processorClient.EventHubName,
                     processorClient.ConsumerGroup,
-                    It.IsAny<string>(),
-                    expectedException.Message),
+                    expectedException.Message,
+                    It.IsAny<string>()),
                 Times.Exactly(eventBatch.Length));
 
             cancellationSource.Cancel();

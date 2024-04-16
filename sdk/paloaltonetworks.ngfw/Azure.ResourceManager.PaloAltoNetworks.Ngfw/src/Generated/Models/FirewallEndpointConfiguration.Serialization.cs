@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WritePropertyName("port"u8);
             writer.WriteStringValue(Port);
             writer.WritePropertyName("address"u8);
-            writer.WriteObjectValue<IPAddressInfo>(Address, options);
+            writer.WriteObjectValue(Address, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

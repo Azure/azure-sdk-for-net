@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (BaseEnvironmentSource != null)
                 {
                     writer.WritePropertyName("baseEnvironmentSource"u8);
-                    writer.WriteObjectValue<BaseEnvironmentSource>(BaseEnvironmentSource, options);
+                    writer.WriteObjectValue(BaseEnvironmentSource, options);
                 }
                 else
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (InferencingServer != null)
                 {
                     writer.WritePropertyName("inferencingServer"u8);
-                    writer.WriteObjectValue<InferencingServer>(InferencingServer, options);
+                    writer.WriteObjectValue(InferencingServer, options);
                 }
                 else
                 {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in Inputs)
                     {
-                        writer.WriteObjectValue<ModelPackageInput>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ModelConfiguration != null)
                 {
                     writer.WritePropertyName("modelConfiguration"u8);
-                    writer.WriteObjectValue<ModelConfiguration>(ModelConfiguration, options);
+                    writer.WriteObjectValue(ModelConfiguration, options);
                 }
                 else
                 {

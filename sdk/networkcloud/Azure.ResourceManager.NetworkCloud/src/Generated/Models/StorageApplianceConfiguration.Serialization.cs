@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("adminCredentials"u8);
-            writer.WriteObjectValue<AdministrativeCredentials>(AdminCredentials, options);
+            writer.WriteObjectValue(AdminCredentials, options);
             writer.WritePropertyName("rackSlot"u8);
             writer.WriteNumberValue(RackSlot);
             writer.WritePropertyName("serialNumber"u8);

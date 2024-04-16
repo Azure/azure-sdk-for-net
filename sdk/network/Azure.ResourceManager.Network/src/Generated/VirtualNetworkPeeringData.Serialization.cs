@@ -78,22 +78,22 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RemoteAddressSpace))
             {
                 writer.WritePropertyName("remoteAddressSpace"u8);
-                writer.WriteObjectValue<AddressSpace>(RemoteAddressSpace, options);
+                writer.WriteObjectValue(RemoteAddressSpace, options);
             }
             if (Optional.IsDefined(RemoteVirtualNetworkAddressSpace))
             {
                 writer.WritePropertyName("remoteVirtualNetworkAddressSpace"u8);
-                writer.WriteObjectValue<AddressSpace>(RemoteVirtualNetworkAddressSpace, options);
+                writer.WriteObjectValue(RemoteVirtualNetworkAddressSpace, options);
             }
             if (Optional.IsDefined(RemoteBgpCommunities))
             {
                 writer.WritePropertyName("remoteBgpCommunities"u8);
-                writer.WriteObjectValue<VirtualNetworkBgpCommunities>(RemoteBgpCommunities, options);
+                writer.WriteObjectValue(RemoteBgpCommunities, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RemoteVirtualNetworkEncryption))
             {
                 writer.WritePropertyName("remoteVirtualNetworkEncryption"u8);
-                writer.WriteObjectValue<VirtualNetworkEncryption>(RemoteVirtualNetworkEncryption, options);
+                writer.WriteObjectValue(RemoteVirtualNetworkEncryption, options);
             }
             if (Optional.IsDefined(PeeringState))
             {

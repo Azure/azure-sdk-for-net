@@ -54,7 +54,7 @@ namespace Azure.Analytics.Defender.Easm
             if (Optional.IsDefined(Assets))
             {
                 writer.WritePropertyName("assets"u8);
-                writer.WriteObjectValue<AssetPageResult>(Assets, options);
+                writer.WriteObjectValue(Assets, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -197,11 +197,11 @@ namespace Azure.Analytics.Defender.Easm
             return DeserializeReportAssetSnapshotResult(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ReportAssetSnapshotResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

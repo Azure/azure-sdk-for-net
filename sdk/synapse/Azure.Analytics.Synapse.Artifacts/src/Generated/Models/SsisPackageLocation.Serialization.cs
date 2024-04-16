@@ -34,12 +34,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PackagePassword))
             {
                 writer.WritePropertyName("packagePassword"u8);
-                writer.WriteObjectValue<SecretBase>(PackagePassword);
+                writer.WriteObjectValue(PackagePassword);
             }
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue<SsisAccessCredential>(AccessCredential);
+                writer.WriteObjectValue(AccessCredential);
             }
             if (Optional.IsDefined(ConfigurationPath))
             {
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
                 writer.WritePropertyName("configurationAccessCredential"u8);
-                writer.WriteObjectValue<SsisAccessCredential>(ConfigurationAccessCredential);
+                writer.WriteObjectValue(ConfigurationAccessCredential);
             }
             if (Optional.IsDefined(PackageName))
             {
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildPackages)
                 {
-                    writer.WriteObjectValue<SsisChildPackage>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -211,12 +211,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 childPackages ?? new ChangeTrackingList<SsisChildPackage>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SsisPackageLocation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSsisPackageLocation(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SsisPackageLocationConverter : JsonConverter<SsisPackageLocation>
         {
             public override void Write(Utf8JsonWriter writer, SsisPackageLocation model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SsisPackageLocation>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override SsisPackageLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

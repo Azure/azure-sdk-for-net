@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue<OperationDisplay>(Display, options);
+                writer.WriteObjectValue(Display, options);
             }
             if (Optional.IsDefined(Origin))
             {

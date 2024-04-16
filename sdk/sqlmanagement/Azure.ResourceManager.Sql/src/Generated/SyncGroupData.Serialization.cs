@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<SqlSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W")
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue<SyncGroupSchema>(Schema, options);
+                writer.WriteObjectValue(Schema, options);
             }
             if (Optional.IsDefined(IsConflictLoggingEnabled))
             {

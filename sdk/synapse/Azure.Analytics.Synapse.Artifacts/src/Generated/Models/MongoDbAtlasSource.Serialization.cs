@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CursorMethods))
             {
                 writer.WritePropertyName("cursorMethods"u8);
-                writer.WriteObjectValue<MongoDbCursorMethodsProperties>(CursorMethods);
+                writer.WriteObjectValue(CursorMethods);
             }
             if (Optional.IsDefined(BatchSize))
             {
@@ -181,12 +181,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalColumns);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MongoDbAtlasSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMongoDbAtlasSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class MongoDbAtlasSourceConverter : JsonConverter<MongoDbAtlasSource>
         {
             public override void Write(Utf8JsonWriter writer, MongoDbAtlasSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<MongoDbAtlasSource>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override MongoDbAtlasSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

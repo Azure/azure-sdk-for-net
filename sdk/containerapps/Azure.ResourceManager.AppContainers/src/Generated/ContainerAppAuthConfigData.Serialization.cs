@@ -53,27 +53,27 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue<ContainerAppAuthPlatform>(Platform, options);
+                writer.WriteObjectValue(Platform, options);
             }
             if (Optional.IsDefined(GlobalValidation))
             {
                 writer.WritePropertyName("globalValidation"u8);
-                writer.WriteObjectValue<ContainerAppGlobalValidation>(GlobalValidation, options);
+                writer.WriteObjectValue(GlobalValidation, options);
             }
             if (Optional.IsDefined(IdentityProviders))
             {
                 writer.WritePropertyName("identityProviders"u8);
-                writer.WriteObjectValue<ContainerAppIdentityProvidersConfiguration>(IdentityProviders, options);
+                writer.WriteObjectValue(IdentityProviders, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue<ContainerAppLogin>(Login, options);
+                writer.WriteObjectValue(Login, options);
             }
             if (Optional.IsDefined(HttpSettings))
             {
                 writer.WritePropertyName("httpSettings"u8);
-                writer.WriteObjectValue<ContainerAppHttpSettings>(HttpSettings, options);
+                writer.WriteObjectValue(HttpSettings, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

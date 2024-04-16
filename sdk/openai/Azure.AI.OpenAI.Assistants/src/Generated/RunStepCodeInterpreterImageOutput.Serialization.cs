@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             writer.WriteStartObject();
             writer.WritePropertyName("image"u8);
-            writer.WriteObjectValue<RunStepCodeInterpreterImageReference>(Image, options);
+            writer.WriteObjectValue(Image, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -132,11 +132,11 @@ namespace Azure.AI.OpenAI.Assistants
             return DeserializeRunStepCodeInterpreterImageOutput(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RunStepCodeInterpreterImageOutput>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

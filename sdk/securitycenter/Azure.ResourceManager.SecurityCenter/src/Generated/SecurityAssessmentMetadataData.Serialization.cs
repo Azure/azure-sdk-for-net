@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(PartnerData))
             {
                 writer.WritePropertyName("partnerData"u8);
-                writer.WriteObjectValue<SecurityAssessmentMetadataPartner>(PartnerData, options);
+                writer.WriteObjectValue(PartnerData, options);
             }
             if (Optional.IsDefined(PublishDates))
             {
                 writer.WritePropertyName("publishDates"u8);
-                writer.WriteObjectValue<SecurityAssessmentPublishDates>(PublishDates, options);
+                writer.WriteObjectValue(PublishDates, options);
             }
             if (Optional.IsDefined(PlannedDeprecationDate))
             {

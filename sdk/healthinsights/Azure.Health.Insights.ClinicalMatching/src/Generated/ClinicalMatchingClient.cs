@@ -72,8 +72,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         {
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = trialMatcherData.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await MatchTrialsAsync(waitUntil, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchTrialMatcherResultsFromTrialMatcherResult, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
         }
@@ -89,8 +89,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         {
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = trialMatcherData.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = MatchTrials(waitUntil, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchTrialMatcherResultsFromTrialMatcherResult, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
         }

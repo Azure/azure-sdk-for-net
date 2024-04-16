@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("ioTDeviceDetails"u8);
-            writer.WriteObjectValue<EdgeIotDeviceInfo>(IotDeviceDetails, options);
+            writer.WriteObjectValue(IotDeviceDetails, options);
             writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
-            writer.WriteObjectValue<EdgeIotDeviceInfo>(IotEdgeDeviceDetails, options);
+            writer.WriteObjectValue(IotEdgeDeviceDetails, options);
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);

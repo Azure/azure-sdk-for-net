@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaceTapConfigurations)
                 {
-                    writer.WriteObjectValue<NetworkInterfaceTapConfigurationData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(DestinationNetworkInterfaceIPConfiguration))
             {
                 writer.WritePropertyName("destinationNetworkInterfaceIPConfiguration"u8);
-                writer.WriteObjectValue<NetworkInterfaceIPConfigurationData>(DestinationNetworkInterfaceIPConfiguration, options);
+                writer.WriteObjectValue(DestinationNetworkInterfaceIPConfiguration, options);
             }
             if (Optional.IsDefined(DestinationLoadBalancerFrontEndIPConfiguration))
             {
                 writer.WritePropertyName("destinationLoadBalancerFrontEndIPConfiguration"u8);
-                writer.WriteObjectValue<FrontendIPConfigurationData>(DestinationLoadBalancerFrontEndIPConfiguration, options);
+                writer.WriteObjectValue(DestinationLoadBalancerFrontEndIPConfiguration, options);
             }
             if (Optional.IsDefined(DestinationPort))
             {

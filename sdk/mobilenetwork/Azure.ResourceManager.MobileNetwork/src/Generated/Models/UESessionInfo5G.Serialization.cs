@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartArray();
             foreach (var item in QosFlow)
             {
-                writer.WriteObjectValue<UEQosFlow>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("ambr"u8);

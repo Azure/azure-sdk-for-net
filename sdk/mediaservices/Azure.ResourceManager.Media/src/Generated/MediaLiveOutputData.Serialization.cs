@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Hls))
             {
                 writer.WritePropertyName("hls"u8);
-                writer.WriteObjectValue<Hls>(Hls, options);
+                writer.WriteObjectValue(Hls, options);
             }
             if (Optional.IsDefined(OutputSnapTime))
             {

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Options)
                 {
-                    writer.WriteObjectValue<ContentKeyPolicyOption>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

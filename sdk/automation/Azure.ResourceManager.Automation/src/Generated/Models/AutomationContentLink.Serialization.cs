@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
-                writer.WriteObjectValue<AutomationContentHash>(ContentHash, options);
+                writer.WriteObjectValue(ContentHash, options);
             }
             if (Optional.IsDefined(Version))
             {

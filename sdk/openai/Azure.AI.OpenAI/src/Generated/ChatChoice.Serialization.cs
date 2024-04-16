@@ -29,12 +29,12 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
-                writer.WriteObjectValue<ChatResponseMessage>(Message, options);
+                writer.WriteObjectValue(Message, options);
             }
             if (LogProbabilityInfo != null)
             {
                 writer.WritePropertyName("logprobs"u8);
-                writer.WriteObjectValue<ChatChoiceLogProbabilityInfo>(LogProbabilityInfo, options);
+                writer.WriteObjectValue(LogProbabilityInfo, options);
             }
             else
             {
@@ -54,7 +54,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(FinishDetails))
             {
                 writer.WritePropertyName("finish_details"u8);
-                writer.WriteObjectValue<ChatFinishDetails>(FinishDetails, options);
+                writer.WriteObjectValue(FinishDetails, options);
             }
             if (Optional.IsDefined(InternalStreamingDeltaMessage))
             {
@@ -64,12 +64,12 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(ContentFilterResults))
             {
                 writer.WritePropertyName("content_filter_results"u8);
-                writer.WriteObjectValue<ContentFilterResultsForChoice>(ContentFilterResults, options);
+                writer.WriteObjectValue(ContentFilterResults, options);
             }
             if (Optional.IsDefined(Enhancements))
             {
                 writer.WritePropertyName("enhancements"u8);
-                writer.WriteObjectValue<AzureChatEnhancements>(Enhancements, options);
+                writer.WriteObjectValue(Enhancements, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -248,11 +248,11 @@ namespace Azure.AI.OpenAI
             return DeserializeChatChoice(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ChatChoice>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -125,8 +125,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             public override void Write(Utf8JsonWriter writer, Office365TableOutputColumn model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<Office365TableOutputColumn>(model, new ModelReaderWriterOptions("W"));
+                writer.WriteObjectValue(model, new ModelReaderWriterOptions("W"));
             }
+
             public override Office365TableOutputColumn Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

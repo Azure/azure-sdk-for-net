@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(LogRules))
             {
                 writer.WritePropertyName("logRules"u8);
-                writer.WriteObjectValue<DynatraceMonitorResourceLogRules>(LogRules, options);
+                writer.WriteObjectValue(LogRules, options);
             }
             if (Optional.IsDefined(MetricRules))
             {
                 writer.WritePropertyName("metricRules"u8);
-                writer.WriteObjectValue<DynatraceMonitorResourceMetricRules>(MetricRules, options);
+                writer.WriteObjectValue(MetricRules, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

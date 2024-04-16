@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("httpConfiguration"u8);
-                writer.WriteObjectValue<ConnectionMonitorHttpConfiguration>(HttpConfiguration, options);
+                writer.WriteObjectValue(HttpConfiguration, options);
             }
             if (Optional.IsDefined(TcpConfiguration))
             {
                 writer.WritePropertyName("tcpConfiguration"u8);
-                writer.WriteObjectValue<ConnectionMonitorTcpConfiguration>(TcpConfiguration, options);
+                writer.WriteObjectValue(TcpConfiguration, options);
             }
             if (Optional.IsDefined(IcmpConfiguration))
             {
                 writer.WritePropertyName("icmpConfiguration"u8);
-                writer.WriteObjectValue<ConnectionMonitorIcmpConfiguration>(IcmpConfiguration, options);
+                writer.WriteObjectValue(IcmpConfiguration, options);
             }
             if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
-                writer.WriteObjectValue<ConnectionMonitorSuccessThreshold>(SuccessThreshold, options);
+                writer.WriteObjectValue(SuccessThreshold, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

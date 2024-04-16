@@ -206,7 +206,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var metrics = await _metricsProvider.GetMetricsAsync();
 
             Assert.AreEqual(1, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.EventCount);
+            Assert.AreEqual(1, metrics.EventCount);
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             // Generic Exception
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             metrics = await _metricsProvider.GetMetricsAsync();
 
             Assert.AreEqual(1, metrics.PartitionCount);
-            Assert.AreEqual(0, metrics.EventCount);
+            Assert.AreEqual(1, metrics.EventCount);
             Assert.AreNotEqual(default(DateTime), metrics.Timestamp);
 
             _loggerProvider.ClearAllLogMessages();

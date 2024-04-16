@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue<VirtualMachineExtensionInstanceView>(InstanceView, options);
+                writer.WriteObjectValue(InstanceView, options);
             }
             if (Optional.IsDefined(SuppressFailures))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue<KeyVaultSecretReference>(KeyVaultProtectedSettings, options);
+                writer.WriteObjectValue(KeyVaultProtectedSettings, options);
             }
             if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
             {

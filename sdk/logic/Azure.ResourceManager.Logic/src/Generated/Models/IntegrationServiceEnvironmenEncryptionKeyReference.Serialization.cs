@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(KeyVault))
             {
                 writer.WritePropertyName("keyVault"u8);
-                writer.WriteObjectValue<LogicResourceReference>(KeyVault, options);
+                writer.WriteObjectValue(KeyVault, options);
             }
             if (Optional.IsDefined(KeyName))
             {

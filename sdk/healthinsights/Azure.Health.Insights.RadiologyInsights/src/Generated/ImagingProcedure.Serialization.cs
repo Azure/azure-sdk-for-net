@@ -27,23 +27,23 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             writer.WriteStartObject();
             writer.WritePropertyName("modality"u8);
-            writer.WriteObjectValue<FhirR4CodeableConcept>(Modality, options);
+            writer.WriteObjectValue(Modality, options);
             writer.WritePropertyName("anatomy"u8);
-            writer.WriteObjectValue<FhirR4CodeableConcept>(Anatomy, options);
+            writer.WriteObjectValue(Anatomy, options);
             if (Optional.IsDefined(Laterality))
             {
                 writer.WritePropertyName("laterality"u8);
-                writer.WriteObjectValue<FhirR4CodeableConcept>(Laterality, options);
+                writer.WriteObjectValue(Laterality, options);
             }
             if (Optional.IsDefined(Contrast))
             {
                 writer.WritePropertyName("contrast"u8);
-                writer.WriteObjectValue<RadiologyCodeWithTypes>(Contrast, options);
+                writer.WriteObjectValue(Contrast, options);
             }
             if (Optional.IsDefined(View))
             {
                 writer.WritePropertyName("view"u8);
-                writer.WriteObjectValue<RadiologyCodeWithTypes>(View, options);
+                writer.WriteObjectValue(View, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -183,11 +183,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeImagingProcedure(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ImagingProcedure>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

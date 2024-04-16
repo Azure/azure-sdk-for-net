@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStartArray();
             foreach (var item in IPExtendedCommunityRules)
             {
-                writer.WriteObjectValue<IPExtendedCommunityRule>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))

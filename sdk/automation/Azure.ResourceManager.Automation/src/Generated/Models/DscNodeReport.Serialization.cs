@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue<DscReportError>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue<DscReportResource>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MetaConfiguration))
             {
                 writer.WritePropertyName("metaConfiguration"u8);
-                writer.WriteObjectValue<DscMetaConfiguration>(MetaConfiguration, options);
+                writer.WriteObjectValue(MetaConfiguration, options);
             }
             if (Optional.IsDefined(HostName))
             {

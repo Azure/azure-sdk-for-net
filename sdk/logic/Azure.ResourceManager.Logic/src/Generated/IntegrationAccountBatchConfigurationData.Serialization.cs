@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<IntegrationAccountBatchConfigurationProperties>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);

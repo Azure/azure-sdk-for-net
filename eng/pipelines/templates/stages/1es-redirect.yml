@@ -34,6 +34,10 @@ extends:
   ${{ else }}:
     template: v1/1ES.Unofficial.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
+    ${{ if eq(parameters.oneESTemplateTag, 'canary') }}:
+      # Enable 1es template team to verify validation has been run on canary
+      customBuildTags:
+        - 1ES.PT.Tag-refs/tags/canary
     settings:
       skipBuildTagsForGitHubPullRequests: true
     sdl:

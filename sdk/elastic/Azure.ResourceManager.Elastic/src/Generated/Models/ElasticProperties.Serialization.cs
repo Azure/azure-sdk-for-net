@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(ElasticCloudUser))
             {
                 writer.WritePropertyName("elasticCloudUser"u8);
-                writer.WriteObjectValue<ElasticCloudUser>(ElasticCloudUser, options);
+                writer.WriteObjectValue(ElasticCloudUser, options);
             }
             if (Optional.IsDefined(ElasticCloudDeployment))
             {
                 writer.WritePropertyName("elasticCloudDeployment"u8);
-                writer.WriteObjectValue<ElasticCloudDeployment>(ElasticCloudDeployment, options);
+                writer.WriteObjectValue(ElasticCloudDeployment, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 foreach (var item in DiskVolumeConfigurations)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<DiskVolumeConfiguration>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }

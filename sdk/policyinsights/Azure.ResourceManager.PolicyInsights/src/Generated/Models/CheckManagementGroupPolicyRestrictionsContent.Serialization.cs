@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue<CheckRestrictionsResourceDetails>(ResourceDetails, options);
+                writer.WriteObjectValue(ResourceDetails, options);
             }
             if (Optional.IsCollectionDefined(PendingFields))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PendingFields)
                 {
-                    writer.WriteObjectValue<PendingField>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

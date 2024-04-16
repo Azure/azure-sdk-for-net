@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue<OperationalInsightsStorageAccount>(StorageAccount, options);
+                writer.WriteObjectValue(StorageAccount, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<StorageInsightStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

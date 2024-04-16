@@ -23,17 +23,24 @@ namespace Azure.Core.Tests
         private static HttpMessageSanitizer Sanitizer = new TestClientOption().Sanitizer;
 
         [Test]
-        public void FormatsResponse()
+        public void FormatsResponse(
+            [Values(true, false)] bool responseIsError)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Service request failed." + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
                 "Custom-Header: Value" + s_nl +
-                "x-ms-requestId: 123" + s_nl;
+                "x-ms-requestId: 123" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             response.AddHeader(new HttpHeader("Custom-Header", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
             response.Sanitizer = Sanitizer;
@@ -50,17 +57,24 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void FormatsResponse_ResponseCtor()
+        public void FormatsResponse_ResponseCtor(
+            [Values(true, false)] bool responseIsError)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Service request failed." + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
                 "Custom-Header: Value" + s_nl +
-                "x-ms-requestId: 123" + s_nl;
+                "x-ms-requestId: 123" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             response.AddHeader(new HttpHeader("Custom-Header", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
             response.Sanitizer = Sanitizer;
@@ -77,17 +91,24 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void FormatsResponseWithoutSanitizer_ResponseCtor()
+        public void FormatsResponseWithoutSanitizer_ResponseCtor(
+            [Values(true, false)] bool responseIsError)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Service request failed." + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
                 "Custom-Header: REDACTED" + s_nl +
-                "x-ms-requestId: REDACTED" + s_nl;
+                "x-ms-requestId: REDACTED" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             response.AddHeader(new HttpHeader("Custom-Header", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
 
@@ -103,17 +124,24 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void HeadersAreSanitized()
+        public void HeadersAreSanitized(
+            [Values(true, false)] bool responseIsError)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Service request failed." + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
                 "Custom-Header-2: REDACTED" + s_nl +
-                "x-ms-requestId-2: REDACTED" + s_nl;
+                "x-ms-requestId-2: REDACTED" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             response.AddHeader(new HttpHeader("Custom-Header-2", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId-2", "123"));
 
@@ -122,17 +150,24 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void HeadersAreSanitized_ResponseCtor()
+        public void HeadersAreSanitized_ResponseCtor(
+            [Values(true, false)] bool responseIsError)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Service request failed." + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
                 "Custom-Header-2: REDACTED" + s_nl +
-                "x-ms-requestId-2: REDACTED" + s_nl;
+                "x-ms-requestId-2: REDACTED" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             response.AddHeader(new HttpHeader("Custom-Header-2", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId-2", "123"));
 
@@ -141,9 +176,10 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void FormatsResponseContentForTextContentTypes()
+        public void FormatsResponseContentForTextContentTypes(
+            [Values(true, false)] bool responseIsError)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Service request failed." + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 s_nl +
@@ -152,9 +188,15 @@ namespace Azure.Core.Tests
                 s_nl +
                 "Headers:" + s_nl +
                 "Content-Type: text/json" + s_nl +
-                "x-ms-requestId: 123" + s_nl;
+                "x-ms-requestId: 123" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
             response.SetContent("{\"errorCode\": 1}");
@@ -174,16 +216,23 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void DoesntFormatsResponseContentForNonTextContentTypes()
+        public void DoesntFormatsResponseContentForNonTextContentTypes(
+            [Values(true, false)] bool responseIsError)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Service request failed." + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
-                "Content-Type: binary" + s_nl;
+                "Content-Type: binary" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             response.AddHeader(new HttpHeader("Content-Type", "binary"));
             response.SetContent("{\"errorCode\": 1}");
             response.Sanitizer = Sanitizer;
@@ -198,18 +247,26 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void IncludesErrorCodeInMessageIfAvailable()
+        public void IncludesErrorCodeInMessageIfAvailable(
+            [Values(true, false)] bool responseIsError)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Service request failed." + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 "ErrorCode: CUSTOM CODE" + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
                 "Custom-Header: Value" + s_nl +
-                "x-ms-requestId: 123" + s_nl;
+                "x-ms-requestId: 123" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                "ErrorCode: CUSTOM CODE" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             response.AddHeader(new HttpHeader("Custom-Header", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
             response.SetContent("{ \"error\": { \"code\":\"CUSTOM CODE\" }}");
@@ -220,9 +277,10 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void IncludesAdditionalInformationIfAvailable()
+        public void IncludesAdditionalInformationIfAvailable(
+            [Values(true, false)] bool responseIsError)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Service request failed." + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 s_nl +
@@ -232,9 +290,19 @@ namespace Azure.Core.Tests
                 s_nl +
                 "Headers:" + s_nl +
                 "Custom-Header: Value" + s_nl +
-                "x-ms-requestId: 123" + s_nl;
+                "x-ms-requestId: 123" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                "Additional Information:" + s_nl +
+                "a: a-value" + s_nl +
+                "b: b-value" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             response.AddHeader(new HttpHeader("Custom-Header", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
             response.SetContent("{ \"a\": \"a-value\", \"b\": \"b-value\" }");
@@ -249,17 +317,24 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void IncludesInnerException()
+        public void IncludesInnerException(
+            [Values(true, false)] bool responseIsError)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Service request failed." + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
                 "Custom-Header: Value" + s_nl +
-                "x-ms-requestId: 123" + s_nl;
+                "x-ms-requestId: 123" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             response.AddHeader(new HttpHeader("Custom-Header", "Value"));
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
             response.Sanitizer = Sanitizer;
@@ -271,7 +346,8 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void RequestFailedExceptionIsSerializeable()
+        public void RequestFailedExceptionIsSerializeable(
+            [Values(true, false)] bool responseIsError)
         {
             var dataContractSerializer = new DataContractSerializer(typeof(RequestFailedException));
             var exception = new RequestFailedException(201, "Message", "Error", null);
@@ -288,9 +364,10 @@ namespace Azure.Core.Tests
 
         [Test]
         public void ParsesJsonErrors(
+            [Values(true, false)] bool responseIsError,
             [Values(true, false)] bool hasErrorWrapper)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Custom message" + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 "ErrorCode: StatusCode" + s_nl +
@@ -300,9 +377,16 @@ namespace Azure.Core.Tests
                 "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }") + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
-                "Content-Type: text/json" + s_nl;
+                "Content-Type: text/json" + s_nl
+                :
+                "Custom message" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                "ErrorCode: StatusCode" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             var errorContent = hasErrorWrapper ? "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" :
                 "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }";
             response.SetContent(errorContent);
@@ -316,9 +400,10 @@ namespace Azure.Core.Tests
 
         [Test]
         public void ParsesJsonErrors_ResponseCtor(
+            [Values(true, false)] bool responseIsError,
             [Values(true, false)] bool hasErrorWrapper)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Custom message" + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 "ErrorCode: StatusCode" + s_nl +
@@ -328,9 +413,16 @@ namespace Azure.Core.Tests
                 "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }") + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
-                "Content-Type: text/json" + s_nl;
+                "Content-Type: text/json" + s_nl
+                :
+                "Custom message" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                "ErrorCode: StatusCode" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             var errorContent = hasErrorWrapper ? "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" :
                 "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }";
             response.SetContent(errorContent);
@@ -344,10 +436,11 @@ namespace Azure.Core.Tests
 
         [Test]
         public void ParsesJsonErrors_ResponseCtor_Stream(
+            [Values(true, false)] bool responseIsError,
             [Values(true, false)] bool canSeek,
             [Values(true, false)] bool hasErrorWrapper)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Custom message" + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 "ErrorCode: StatusCode" + s_nl +
@@ -357,9 +450,16 @@ namespace Azure.Core.Tests
                 "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }") + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
-                "Content-Type: text/json" + s_nl;
+                "Content-Type: text/json" + s_nl
+                :
+                "Custom message" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                "ErrorCode: StatusCode" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             var errorContent = hasErrorWrapper ? "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" :
                 "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }";
             response.ContentStream = GetStream(canSeek, errorContent);
@@ -378,11 +478,12 @@ namespace Azure.Core.Tests
 
         [Test]
         public async Task ParsesJsonErrors_ResponseCtor_StreamAsync(
+            [Values(true, false)] bool responseIsError,
             [Values(true, false)] bool canSeek,
             [Values(true, false)] bool hasErrorWrapper)
         {
             await Task.Yield();
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Custom message" + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 "ErrorCode: StatusCode" + s_nl +
@@ -392,9 +493,16 @@ namespace Azure.Core.Tests
                 "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }") + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
-                "Content-Type: text/json" + s_nl;
+                "Content-Type: text/json" + s_nl
+                :
+                "Custom message" + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                "ErrorCode: StatusCode" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             var errorContent = hasErrorWrapper ? "{ \"error\": { \"code\":\"StatusCode\", \"message\":\"Custom message\" }}" :
                 "{ \"code\":\"StatusCode\", \"message\":\"Custom message\" }";
             response.ContentStream = GetStream(canSeek, errorContent);
@@ -412,9 +520,10 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void IgnoresInvalidJsonErrors()
+        public void IgnoresInvalidJsonErrors(
+            [Values(true, false)] bool responseIsError)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Service request failed." + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 s_nl +
@@ -422,9 +531,15 @@ namespace Azure.Core.Tests
                 "{ \"error\": { \"code\":\"StatusCode\"" + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
-                "Content-Type: text/json" + s_nl;
+                "Content-Type: text/json" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             response.SetContent("{ \"error\": { \"code\":\"StatusCode\"");
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
             response.Sanitizer = Sanitizer;
@@ -434,9 +549,10 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void IgnoresNonStandardJson()
+        public void IgnoresNonStandardJson(
+            [Values(true, false)] bool responseIsError)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Service request failed." + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 s_nl +
@@ -444,9 +560,15 @@ namespace Azure.Core.Tests
                 "{ \"customCode\":\"StatusCode\" }" + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
-                "Content-Type: text/json" + s_nl;
+                "Content-Type: text/json" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             response.SetContent("{ \"customCode\":\"StatusCode\" }");
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
             response.Sanitizer = Sanitizer;
@@ -456,9 +578,10 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void IgnoresUnexpectedNestedJson()
+        public void IgnoresUnexpectedNestedJson(
+            [Values(true, false)] bool responseIsError)
         {
-            var formattedResponse =
+            var formattedResponse = responseIsError ?
                 "Service request failed." + s_nl +
                 "Status: 210 (Reason)" + s_nl +
                 s_nl +
@@ -466,9 +589,15 @@ namespace Azure.Core.Tests
                 "{ \"error\": { \"error\": { \"code\":\"StatusCode\" }}}" + s_nl +
                 s_nl +
                 "Headers:" + s_nl +
-                "Content-Type: text/json" + s_nl;
+                "Content-Type: text/json" + s_nl
+                :
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                RequestFailedException.NoContentOnSuccessMessage + s_nl;
 
             var response = new MockResponse(210, "Reason");
+            response.SetIsError(responseIsError);
             response.SetContent("{ \"error\": { \"error\": { \"code\":\"StatusCode\" }}}");
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
             response.Sanitizer = Sanitizer;

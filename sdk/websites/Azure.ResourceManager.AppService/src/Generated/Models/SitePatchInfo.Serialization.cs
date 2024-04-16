@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in HostNameSslStates)
                 {
-                    writer.WriteObjectValue<HostNameSslState>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SiteConfig))
             {
                 writer.WritePropertyName("siteConfig"u8);
-                writer.WriteObjectValue<SiteConfigProperties>(SiteConfig, options);
+                writer.WriteObjectValue(SiteConfig, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                writer.WriteObjectValue<HostingEnvironmentProfile>(HostingEnvironmentProfile, options);
+                writer.WriteObjectValue(HostingEnvironmentProfile, options);
             }
             if (Optional.IsDefined(IsClientAffinityEnabled))
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CloningInfo))
             {
                 writer.WritePropertyName("cloningInfo"u8);
-                writer.WriteObjectValue<CloningInfo>(CloningInfo, options);
+                writer.WriteObjectValue(CloningInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(SlotSwapStatus))
             {
                 writer.WritePropertyName("slotSwapStatus"u8);
-                writer.WriteObjectValue<SlotSwapStatus>(SlotSwapStatus, options);
+                writer.WriteObjectValue(SlotSwapStatus, options);
             }
             if (Optional.IsDefined(IsHttpsOnly))
             {

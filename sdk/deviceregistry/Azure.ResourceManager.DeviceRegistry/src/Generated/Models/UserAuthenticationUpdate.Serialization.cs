@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(UsernamePasswordCredentials))
             {
                 writer.WritePropertyName("usernamePasswordCredentials"u8);
-                writer.WriteObjectValue<UsernamePasswordCredentialsUpdate>(UsernamePasswordCredentials, options);
+                writer.WriteObjectValue(UsernamePasswordCredentials, options);
             }
             if (Optional.IsDefined(X509Credentials))
             {
                 writer.WritePropertyName("x509Credentials"u8);
-                writer.WriteObjectValue<X509CredentialsUpdate>(X509Credentials, options);
+                writer.WriteObjectValue(X509Credentials, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

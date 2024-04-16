@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NvaSku))
             {
                 writer.WritePropertyName("nvaSku"u8);
-                writer.WriteObjectValue<VirtualApplianceSkuProperties>(NvaSku, options);
+                writer.WriteObjectValue(NvaSku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AddressPrefix))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualApplianceNics)
                 {
-                    writer.WriteObjectValue<VirtualApplianceNicProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AdditionalNics)
                 {
-                    writer.WriteObjectValue<VirtualApplianceAdditionalNicProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Delegation))
             {
                 writer.WritePropertyName("delegation"u8);
-                writer.WriteObjectValue<VirtualApplianceDelegationProperties>(Delegation, options);
+                writer.WriteObjectValue(Delegation, options);
             }
             if (Optional.IsDefined(PartnerManagedResource))
             {
                 writer.WritePropertyName("partnerManagedResource"u8);
-                writer.WriteObjectValue<PartnerManagedResourceProperties>(PartnerManagedResource, options);
+                writer.WriteObjectValue(PartnerManagedResource, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
-                writer.WriteObjectValue<AsymmetricEncryptedSecret>(AccountKey, options);
+                writer.WriteObjectValue(AccountKey, options);
             }
             if (Optional.IsDefined(ConnectionString))
             {

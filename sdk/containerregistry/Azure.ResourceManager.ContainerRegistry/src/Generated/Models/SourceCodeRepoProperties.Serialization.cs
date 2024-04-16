@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(SourceControlAuthProperties))
             {
                 writer.WritePropertyName("sourceControlAuthProperties"u8);
-                writer.WriteObjectValue<SourceCodeRepoAuthInfo>(SourceControlAuthProperties, options);
+                writer.WriteObjectValue(SourceControlAuthProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -44,37 +44,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(ProcessServer))
             {
                 writer.WritePropertyName("processServer"u8);
-                writer.WriteObjectValue<SiteRecoveryProcessServerDetails>(ProcessServer, options);
+                writer.WriteObjectValue(ProcessServer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RcmProxy))
             {
                 writer.WritePropertyName("rcmProxy"u8);
-                writer.WriteObjectValue<RcmProxyDetails>(RcmProxy, options);
+                writer.WriteObjectValue(RcmProxy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PushInstaller))
             {
                 writer.WritePropertyName("pushInstaller"u8);
-                writer.WriteObjectValue<PushInstallerDetails>(PushInstaller, options);
+                writer.WriteObjectValue(PushInstaller, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReplicationAgent))
             {
                 writer.WritePropertyName("replicationAgent"u8);
-                writer.WriteObjectValue<ReplicationAgentDetails>(ReplicationAgent, options);
+                writer.WriteObjectValue(ReplicationAgent, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReprotectAgent))
             {
                 writer.WritePropertyName("reprotectAgent"u8);
-                writer.WriteObjectValue<ReprotectAgentDetails>(ReprotectAgent, options);
+                writer.WriteObjectValue(ReprotectAgent, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MarsAgent))
             {
                 writer.WritePropertyName("marsAgent"u8);
-                writer.WriteObjectValue<MarsAgentDetails>(MarsAgent, options);
+                writer.WriteObjectValue(MarsAgent, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Dra))
             {
                 writer.WritePropertyName("dra"u8);
-                writer.WriteObjectValue<SiteRecoveryDraDetails>(Dra, options);
+                writer.WriteObjectValue(Dra, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SwitchProviderBlockingErrorDetails)
                 {
-                    writer.WriteObjectValue<InMageRcmFabricSwitchProviderBlockingErrorDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in ResourceIdentifiers)
                 {
-                    writer.WriteObjectValue<SecurityAlertResourceIdentifier>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Entities)
                 {
-                    writer.WriteObjectValue<SecurityAlertEntity>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(SupportingEvidence))
             {
                 writer.WritePropertyName("supportingEvidence"u8);
-                writer.WriteObjectValue<SecurityAlertSupportingEvidence>(SupportingEvidence, options);
+                writer.WriteObjectValue(SupportingEvidence, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

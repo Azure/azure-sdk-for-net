@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue<ContainerAppTwitterRegistration>(Registration, options);
+                writer.WriteObjectValue(Registration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

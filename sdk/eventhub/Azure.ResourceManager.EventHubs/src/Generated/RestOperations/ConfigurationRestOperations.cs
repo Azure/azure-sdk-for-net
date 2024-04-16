@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EventHubs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ClusterQuotaConfigurationProperties>(clusterQuotaConfigurationProperties, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(clusterQuotaConfigurationProperties, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;

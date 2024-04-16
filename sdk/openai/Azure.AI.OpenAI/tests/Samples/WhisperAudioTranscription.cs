@@ -25,6 +25,7 @@ public partial class WhisperAudioTranscription
         {
             DeploymentName = "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
             AudioData = BinaryData.FromStream(audioStreamFromFile),
+            Filename = "test.mp3",
             ResponseFormat = AudioTranscriptionFormat.Verbose,
         };
 
@@ -63,5 +64,24 @@ public partial class WhisperAudioTranscription
         // .Text will be translated to English (ISO-639-1 "en")
         Console.WriteLine(translation.Text);
         #endregion
+    }
+
+    public AudioTranscriptionOptions GetOptionsWithTimestamps()
+    {
+        Stream audioDataStream = null;
+        #region Snippet:RequestAudioTimestamps
+        // To request timestamps for segments and/or words, specify the Verbose response format and provide the desired
+        // combination of enum flags for the available timestamp granularities. If not otherwise specified, segments
+        // will be provided. Note that words, unlike segments, will introduce additional processing latency to compute.
+        AudioTranscriptionOptions optionsForTimestamps = new()
+        {
+            DeploymentName = "my-whisper-deployment",
+            AudioData = BinaryData.FromStream(audioDataStream),
+            Filename = "hello-world.mp3",
+            ResponseFormat = AudioTranscriptionFormat.Verbose,
+            TimestampGranularityFlags = AudioTimestampGranularity.Word | AudioTimestampGranularity.Segment,
+        };
+        #endregion
+        return optionsForTimestamps;
     }
 }

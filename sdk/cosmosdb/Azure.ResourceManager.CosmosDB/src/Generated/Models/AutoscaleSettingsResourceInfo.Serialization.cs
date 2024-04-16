@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AutoUpgradePolicy))
             {
                 writer.WritePropertyName("autoUpgradePolicy"u8);
-                writer.WriteObjectValue<AutoUpgradePolicyResourceInfo>(AutoUpgradePolicy, options);
+                writer.WriteObjectValue(AutoUpgradePolicy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TargetMaxThroughput))
             {

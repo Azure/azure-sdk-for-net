@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(HelmMappingRuleProfile))
             {
                 writer.WritePropertyName("helmMappingRuleProfile"u8);
-                writer.WriteObjectValue<HelmMappingRuleProfile>(HelmMappingRuleProfile, options);
+                writer.WriteObjectValue(HelmMappingRuleProfile, options);
             }
             if (Optional.IsDefined(ApplicationEnablement))
             {

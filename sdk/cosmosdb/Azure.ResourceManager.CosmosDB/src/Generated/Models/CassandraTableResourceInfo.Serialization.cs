@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue<CassandraSchema>(Schema, options);
+                writer.WriteObjectValue(Schema, options);
             }
             if (Optional.IsDefined(AnalyticalStorageTtl))
             {

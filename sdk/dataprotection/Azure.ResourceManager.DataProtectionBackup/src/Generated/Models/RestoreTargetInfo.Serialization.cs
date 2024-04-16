@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("datasourceInfo"u8);
-            writer.WriteObjectValue<DataSourceInfo>(DataSourceInfo, options);
+            writer.WriteObjectValue(DataSourceInfo, options);
             if (Optional.IsDefined(DataSourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
-                writer.WriteObjectValue<DataSourceSetInfo>(DataSourceSetInfo, options);
+                writer.WriteObjectValue(DataSourceSetInfo, options);
             }
             if (Optional.IsDefined(DataSourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue<DataProtectionBackupAuthCredentials>(DataSourceAuthCredentials, options);
+                writer.WriteObjectValue(DataSourceAuthCredentials, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);

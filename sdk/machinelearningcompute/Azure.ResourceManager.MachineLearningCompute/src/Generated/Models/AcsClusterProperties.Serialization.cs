@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(OrchestratorProperties))
             {
                 writer.WritePropertyName("orchestratorProperties"u8);
-                writer.WriteObjectValue<KubernetesClusterProperties>(OrchestratorProperties, options);
+                writer.WriteObjectValue(OrchestratorProperties, options);
             }
             if (Optional.IsCollectionDefined(SystemServices))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in SystemServices)
                 {
-                    writer.WriteObjectValue<SystemService>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

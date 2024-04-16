@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(ClientCertificateAuthentication))
             {
                 writer.WritePropertyName("clientCertificateAuthentication"u8);
-                writer.WriteObjectValue<ClientCertificateAuthentication>(ClientCertificateAuthentication, options);
+                writer.WriteObjectValue(ClientCertificateAuthentication, options);
             }
             if (Optional.IsDefined(State))
             {

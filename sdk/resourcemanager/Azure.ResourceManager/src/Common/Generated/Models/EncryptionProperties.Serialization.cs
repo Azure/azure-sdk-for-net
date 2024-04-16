@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue<KeyVaultProperties>(KeyVaultProperties, options);
+                writer.WriteObjectValue(KeyVaultProperties, options);
             }
             writer.WriteEndObject();
         }
@@ -168,8 +168,9 @@ namespace Azure.ResourceManager.Models
         {
             public override void Write(Utf8JsonWriter writer, EncryptionProperties model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<EncryptionProperties>(model, new ModelReaderWriterOptions("W"));
+                writer.WriteObjectValue(model, new ModelReaderWriterOptions("W"));
             }
+
             public override EncryptionProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue<ComponentKubernetesResources>(Resources, options);
+                writer.WriteObjectValue(Resources, options);
             }
             if (Optional.IsDefined(NextExpectedUpdateOn))
             {

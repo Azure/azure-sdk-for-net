@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
-                writer.WriteObjectValue<RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity>(KeyEncryptionKeyIdentity, options);
+                writer.WriteObjectValue(KeyEncryptionKeyIdentity, options);
             }
             if (Optional.IsDefined(KeyEncryptionKeyUri))
             {

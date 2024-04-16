@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
-                writer.WriteObjectValue<IPExtendedCommunityIdList>(Add, options);
+                writer.WriteObjectValue(Add, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

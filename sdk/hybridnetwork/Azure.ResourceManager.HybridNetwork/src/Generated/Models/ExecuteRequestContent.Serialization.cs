@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WritePropertyName("serviceEndpoint"u8);
             writer.WriteStringValue(ServiceEndpoint);
             writer.WritePropertyName("requestMetadata"u8);
-            writer.WriteObjectValue<RequestMetadata>(RequestMetadata, options);
+            writer.WriteObjectValue(RequestMetadata, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

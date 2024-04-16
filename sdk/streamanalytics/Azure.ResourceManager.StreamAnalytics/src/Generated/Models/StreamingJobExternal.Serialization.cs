@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue<StreamAnalyticsStorageAccount>(StorageAccount, options);
+                writer.WriteObjectValue(StorageAccount, options);
             }
             if (Optional.IsDefined(Container))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(RefreshConfiguration))
             {
                 writer.WritePropertyName("refreshConfiguration"u8);
-                writer.WriteObjectValue<StreamingJobRefreshConfiguration>(RefreshConfiguration, options);
+                writer.WriteObjectValue(RefreshConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

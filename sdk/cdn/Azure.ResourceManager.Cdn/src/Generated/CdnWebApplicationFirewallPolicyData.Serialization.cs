@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<CdnSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -74,22 +74,22 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
-                writer.WriteObjectValue<WafPolicySettings>(PolicySettings, options);
+                writer.WriteObjectValue(PolicySettings, options);
             }
             if (Optional.IsDefined(RateLimitSettings))
             {
                 writer.WritePropertyName("rateLimitRules"u8);
-                writer.WriteObjectValue<RateLimitRuleList>(RateLimitSettings, options);
+                writer.WriteObjectValue(RateLimitSettings, options);
             }
             if (Optional.IsDefined(CustomSettings))
             {
                 writer.WritePropertyName("customRules"u8);
-                writer.WriteObjectValue<CustomRuleList>(CustomSettings, options);
+                writer.WriteObjectValue(CustomSettings, options);
             }
             if (Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
-                writer.WriteObjectValue<ManagedRuleSetList>(ManagedRules, options);
+                writer.WriteObjectValue(ManagedRules, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(EndpointLinks))
             {

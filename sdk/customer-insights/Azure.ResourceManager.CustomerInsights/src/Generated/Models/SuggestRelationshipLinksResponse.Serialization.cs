@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in SuggestedRelationships)
                 {
-                    writer.WriteObjectValue<RelationshipsLookup>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

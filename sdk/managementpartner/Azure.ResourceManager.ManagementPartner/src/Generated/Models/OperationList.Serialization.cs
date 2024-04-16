@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<OperationResponse>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

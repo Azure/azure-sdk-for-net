@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(DefenderForServers))
             {
                 writer.WritePropertyName("defenderForServers"u8);
-                writer.WriteObjectValue<AwsDefenderForServersInfo>(DefenderForServers, options);
+                writer.WriteObjectValue(DefenderForServers, options);
             }
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
-                writer.WriteObjectValue<DefenderForServersAwsOfferingArcAutoProvisioning>(ArcAutoProvisioning, options);
+                writer.WriteObjectValue(ArcAutoProvisioning, options);
             }
             if (Optional.IsDefined(VaAutoProvisioning))
             {
                 writer.WritePropertyName("vaAutoProvisioning"u8);
-                writer.WriteObjectValue<DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning>(VaAutoProvisioning, options);
+                writer.WriteObjectValue(VaAutoProvisioning, options);
             }
             if (Optional.IsDefined(MdeAutoProvisioning))
             {
                 writer.WritePropertyName("mdeAutoProvisioning"u8);
-                writer.WriteObjectValue<DefenderForServersAwsOfferingMdeAutoProvisioning>(MdeAutoProvisioning, options);
+                writer.WriteObjectValue(MdeAutoProvisioning, options);
             }
             if (Optional.IsDefined(SubPlan))
             {
                 writer.WritePropertyName("subPlan"u8);
-                writer.WriteObjectValue<DefenderForServersAwsOfferingSubPlan>(SubPlan, options);
+                writer.WriteObjectValue(SubPlan, options);
             }
             if (Optional.IsDefined(VmScanners))
             {
                 writer.WritePropertyName("vmScanners"u8);
-                writer.WriteObjectValue<DefenderForServersAwsOfferingVmScanners>(VmScanners, options);
+                writer.WriteObjectValue(VmScanners, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());

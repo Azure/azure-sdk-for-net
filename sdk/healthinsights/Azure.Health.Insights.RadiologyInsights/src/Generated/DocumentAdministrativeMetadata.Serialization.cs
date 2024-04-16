@@ -32,7 +32,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in OrderedProcedures)
                 {
-                    writer.WriteObjectValue<FhirR4Extendible>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            IList<FhirR4Extendible> orderedProcedures = default;
+            IList<OrderedProcedure> orderedProcedures = default;
             string encounterId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<FhirR4Extendible> array = new List<FhirR4Extendible>();
+                    List<OrderedProcedure> array = new List<OrderedProcedure>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4Extendible.DeserializeFhirR4Extendible(item, options));
+                        array.Add(OrderedProcedure.DeserializeOrderedProcedure(item, options));
                     }
                     orderedProcedures = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DocumentAdministrativeMetadata(orderedProcedures ?? new ChangeTrackingList<FhirR4Extendible>(), encounterId, serializedAdditionalRawData);
+            return new DocumentAdministrativeMetadata(orderedProcedures ?? new ChangeTrackingList<OrderedProcedure>(), encounterId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentAdministrativeMetadata>.Write(ModelReaderWriterOptions options)
@@ -152,11 +152,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeDocumentAdministrativeMetadata(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DocumentAdministrativeMetadata>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

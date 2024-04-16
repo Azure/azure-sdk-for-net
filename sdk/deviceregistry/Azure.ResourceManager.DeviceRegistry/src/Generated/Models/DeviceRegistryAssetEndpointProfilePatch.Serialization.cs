@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(UserAuthentication))
             {
                 writer.WritePropertyName("userAuthentication"u8);
-                writer.WriteObjectValue<UserAuthenticationUpdate>(UserAuthentication, options);
+                writer.WriteObjectValue(UserAuthentication, options);
             }
             if (Optional.IsDefined(TransportAuthentication))
             {
                 writer.WritePropertyName("transportAuthentication"u8);
-                writer.WriteObjectValue<TransportAuthenticationUpdate>(TransportAuthentication, options);
+                writer.WriteObjectValue(TransportAuthentication, options);
             }
             if (Optional.IsDefined(AdditionalConfiguration))
             {

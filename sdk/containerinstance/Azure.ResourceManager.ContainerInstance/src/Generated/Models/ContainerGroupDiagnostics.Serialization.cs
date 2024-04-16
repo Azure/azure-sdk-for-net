@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(LogAnalytics))
             {
                 writer.WritePropertyName("logAnalytics"u8);
-                writer.WriteObjectValue<ContainerGroupLogAnalytics>(LogAnalytics, options);
+                writer.WriteObjectValue(LogAnalytics, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

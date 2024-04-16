@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartArray();
             foreach (var item in TargetPhysicalPartitionThroughputInfo)
             {
-                writer.WriteObjectValue<PhysicalPartitionThroughputInfoResource>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("sourcePhysicalPartitionThroughputInfo"u8);
             writer.WriteStartArray();
             foreach (var item in SourcePhysicalPartitionThroughputInfo)
             {
-                writer.WriteObjectValue<PhysicalPartitionThroughputInfoResource>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(Related))
             {
                 writer.WritePropertyName("related"u8);
-                writer.WriteObjectValue<LogAnalyticsQuerySearchRelatedMetadata>(Related, options);
+                writer.WriteObjectValue(Related, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
