@@ -3,7 +3,7 @@ trigger: none
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
-    SDKType: client
+    SDKType: mgmt
     ServiceDirectory: storage
     BuildInParallel: true
     TimeoutInMinutes: 180
