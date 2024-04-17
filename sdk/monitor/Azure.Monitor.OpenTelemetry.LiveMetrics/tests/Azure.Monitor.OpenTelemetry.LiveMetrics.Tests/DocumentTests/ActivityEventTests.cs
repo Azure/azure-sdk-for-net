@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             var exceptionDocument = DocumentHelper.ConvertToExceptionDocument(activity.Events.First());
 
             // ASSERT
-            Assert.Equal(DocumentIngressDocumentType.Exception, exceptionDocument.DocumentType);
+            Assert.Equal(DocumentType.Exception, exceptionDocument.DocumentType);
             Assert.Equal(typeof(System.Exception).FullName, exceptionDocument.ExceptionType);
             Assert.Equal("Test exception", exceptionDocument.ExceptionMessage);
 
@@ -91,7 +91,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             var logDocument = DocumentHelper.ConvertToLogDocument(activity.Events.First());
 
             // ASSERT
-            Assert.Equal(DocumentIngressDocumentType.Trace, logDocument.DocumentType);
+            Assert.Equal(DocumentType.Trace, logDocument.DocumentType);
             Assert.Equal("This is a log message", logDocument.Message);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.

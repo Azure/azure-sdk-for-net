@@ -283,7 +283,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
         {
             ExceptionDocument exceptionDocumentIngress = new()
             {
-                DocumentType = DocumentIngressDocumentType.Exception,
+                DocumentType = DocumentType.Exception,
                 ExceptionType = exception.GetType().FullName,
                 ExceptionMessage = exception.Message,
             };
@@ -295,7 +295,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
         {
             return new Models.Trace()
             {
-                DocumentType = DocumentIngressDocumentType.Trace,
+                DocumentType = DocumentType.Trace,
                 Message = logRecord.FormattedMessage ?? logRecord.Body, // TODO: MAY NEED TO BUILD THE FORMATTED MESSAGE IF NOT AVAILABLE
                 // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
             };
@@ -305,7 +305,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
         {
             return new Models.Trace()
             {
-                DocumentType = DocumentIngressDocumentType.Trace,
+                DocumentType = DocumentType.Trace,
                 Message = activityEvent.Name,
                 // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
             };

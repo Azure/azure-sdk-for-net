@@ -54,7 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             var logDocument = DocumentHelper.ConvertToLogDocument(telemetryItems.First());
 
             // ASSERT
-            Assert.Equal(DocumentIngressDocumentType.Trace, logDocument.DocumentType);
+            Assert.Equal(DocumentType.Trace, logDocument.DocumentType);
 
             if (formatMessage)
             {
@@ -114,7 +114,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             var exceptionDocument = DocumentHelper.ConvertToExceptionDocument(logRecord.Exception);
 
             // ASSERT
-            Assert.Equal(DocumentIngressDocumentType.Exception, exceptionDocument.DocumentType);
+            Assert.Equal(DocumentType.Exception, exceptionDocument.DocumentType);
             Assert.Equal(typeof(System.Exception).FullName, exceptionDocument.ExceptionType);
             Assert.Equal("Test exception", exceptionDocument.ExceptionMessage);
 
