@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Multiregion routing methods. </summary>
+        [WirePath("routingMethod")]
         public CognitiveServicesRoutingMethod? RoutingMethod { get; set; }
         /// <summary> Gets the regions. </summary>
+        [WirePath("regions")]
         public IList<CognitiveServicesRegionSetting> Regions { get; }
     }
 }

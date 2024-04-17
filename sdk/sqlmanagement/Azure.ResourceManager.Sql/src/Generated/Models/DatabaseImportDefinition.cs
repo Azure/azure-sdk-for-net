@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -102,26 +101,37 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Name of the import database. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> Edition of the import database. </summary>
+        [WirePath("edition")]
         public string Edition { get; set; }
         /// <summary> Service level objective name of the import database. </summary>
+        [WirePath("serviceObjectiveName")]
         public string ServiceObjectiveName { get; set; }
         /// <summary> Max size in bytes for the import database. </summary>
+        [WirePath("maxSizeBytes")]
         public string MaxSizeBytes { get; set; }
         /// <summary> Storage key type. </summary>
+        [WirePath("storageKeyType")]
         public StorageKeyType StorageKeyType { get; }
         /// <summary> Storage key. </summary>
+        [WirePath("storageKey")]
         public string StorageKey { get; }
         /// <summary> Storage Uri. </summary>
+        [WirePath("storageUri")]
         public Uri StorageUri { get; }
         /// <summary> Administrator login name. </summary>
+        [WirePath("administratorLogin")]
         public string AdministratorLogin { get; }
         /// <summary> Administrator login password. </summary>
+        [WirePath("administratorLoginPassword")]
         public string AdministratorLoginPassword { get; }
         /// <summary> Authentication type. </summary>
+        [WirePath("authenticationType")]
         public string AuthenticationType { get; set; }
         /// <summary> Optional resource information to enable network isolation for request. </summary>
+        [WirePath("networkIsolation")]
         public NetworkIsolationSettings NetworkIsolation { get; set; }
     }
 }

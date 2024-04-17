@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The configuration settings of the Azure Active Directory allowed principals. </summary>
+        [WirePath("allowedPrincipals")]
         public AppServiceAadAllowedPrincipals AllowedPrincipals { get; set; }
         /// <summary> The configuration settings of the Azure Active Directory allowed applications. </summary>
+        [WirePath("allowedApplications")]
         public IList<string> AllowedApplications { get; }
     }
 }

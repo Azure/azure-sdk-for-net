@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -164,12 +165,15 @@ namespace Azure.ResourceManager.Resources
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue(this Utf8JsonWriter writer, object value)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value, ModelReaderWriterOptions options = null)
         {
             switch (value)
             {
                 case null:
                     writer.WriteNullValue();
+                    break;
+                case IJsonModel<T> jsonModel:
+                    jsonModel.Write(writer, options ?? new ModelReaderWriterOptions("W"));
                     break;
                 case IUtf8JsonSerializable serializable:
                     serializable.Write(writer);
@@ -225,7 +229,7 @@ namespace Azure.ResourceManager.Resources
                     foreach (var pair in enumerable)
                     {
                         writer.WritePropertyName(pair.Key);
-                        writer.WriteObjectValue(pair.Value);
+                        writer.WriteObjectValue<object>(pair.Value, options);
                     }
                     writer.WriteEndObject();
                     break;
@@ -233,7 +237,7 @@ namespace Azure.ResourceManager.Resources
                     writer.WriteStartArray();
                     foreach (var item in objectEnumerable)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<object>(item, options);
                     }
                     writer.WriteEndArray();
                     break;
@@ -245,7 +249,12 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        private static class TypeFormatters
+        public static void WriteObjectValue(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions options = null)
+        {
+            writer.WriteObjectValue<object>(value, options);
+        }
+
+        internal static class TypeFormatters
         {
             private const string RoundtripZFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
             public const string DefaultNumberFormat = "G";
@@ -365,6 +374,22 @@ namespace Azure.ResourceManager.Resources
             {
                 "P" => XmlConvert.ToTimeSpan(value),
                 _ => TimeSpan.ParseExact(value, format, CultureInfo.InvariantCulture)
+            };
+
+            public static string ConvertToString(object value, string format = null) => value switch
+            {
+                null => "null",
+                string s => s,
+                bool b => ToString(b),
+                int or float or double or long or decimal => ((IFormattable)value).ToString(DefaultNumberFormat, CultureInfo.InvariantCulture),
+                byte[] b0 when format != null => ToString(b0, format),
+                IEnumerable<string> s0 => string.Join(",", s0),
+                DateTimeOffset dateTime when format != null => ToString(dateTime, format),
+                TimeSpan timeSpan when format != null => ToString(timeSpan, format),
+                TimeSpan timeSpan0 => XmlConvert.ToString(timeSpan0),
+                Guid guid => guid.ToString(),
+                BinaryData binaryData => ConvertToString(binaryData.ToArray(), format),
+                _ => value.ToString()
             };
         }
     }

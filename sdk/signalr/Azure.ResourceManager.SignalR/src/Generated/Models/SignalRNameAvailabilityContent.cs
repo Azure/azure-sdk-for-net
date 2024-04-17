@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -76,8 +75,10 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; }
         /// <summary> The resource name to validate. e.g."my-resource-name". </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

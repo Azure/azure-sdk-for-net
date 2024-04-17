@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
@@ -52,7 +53,7 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns(new MockResourceCheckpointData());
             mock.Setup(b => b.GetDestinationCheckpointData())
                 .Returns(new MockResourceCheckpointData());
-            mock.Setup(b => b.CompleteTransferAsync(It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+            mock.Setup(b => b.CompleteTransferAsync(It.IsAny<bool>(), It.IsAny<StorageResourceCompleteTransferOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
             // Throw a failure when doing a CopyFromUri call to trigger a failed state
             mock.Setup(b => b.CopyFromUriAsync(It.IsAny<StorageResourceItem>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<StorageResourceCopyFromUriOptions>(), It.IsAny<CancellationToken>()))
@@ -119,11 +120,11 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceMock.Object,
                 false,
                 sourceLength,
-                default,
+                It.IsAny<StorageResourceCopyFromUriOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             destMock.Verify(b => b.DeleteIfExistsAsync(It.IsAny<CancellationToken>()),
-                Times.Once());
+                Times.Never());
             destMock.VerifyNoOtherCalls();
             await testEventsRaised.AssertSingleFailedCheck(1);
         }
@@ -158,13 +159,13 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceMock.Object,
                 false,
                 sourceLength,
-                default,
+                It.IsAny<StorageResourceCopyFromUriOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             destMock.Verify(b => b.DeleteIfExistsAsync(It.IsAny<CancellationToken>()),
-                Times.Once());
+                Times.Never());
             destMock.VerifyNoOtherCalls();
-            await testEventsRaised.AssertSingleFailedCheck(2);
+            await testEventsRaised.AssertSingleFailedCheck(1);
         }
     }
 }

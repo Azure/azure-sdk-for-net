@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.Translation.Document;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
@@ -24,6 +23,14 @@ namespace Azure.AI.Translation.Document.Models
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

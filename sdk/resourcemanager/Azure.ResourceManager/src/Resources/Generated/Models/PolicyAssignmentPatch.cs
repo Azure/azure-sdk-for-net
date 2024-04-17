@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -71,12 +70,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The resource selector list to filter policies by resource properties. </summary>
+        [WirePath("properties.resourceSelectors")]
         public IList<ResourceSelector> ResourceSelectors { get; }
         /// <summary> The policy property value override. </summary>
+        [WirePath("properties.overrides")]
         public IList<PolicyOverride> Overrides { get; }
     }
 }

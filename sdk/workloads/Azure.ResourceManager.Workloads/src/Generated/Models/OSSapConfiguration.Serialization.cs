@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSSapConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(DeployerVmPackages))
             {
                 writer.WritePropertyName("deployerVmPackages"u8);
-                writer.WriteObjectValue(DeployerVmPackages);
+                writer.WriteObjectValue(DeployerVmPackages, options);
             }
             if (Optional.IsDefined(SapFqdn))
             {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSSapConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.Workloads.Models
             DeployerVmPackages deployerVmPackages = default;
             string sapFqdn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deployerVmPackages"u8))
@@ -97,10 +96,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OSSapConfiguration(deployerVmPackages, sapFqdn, serializedAdditionalRawData);
         }
 
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +128,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeOSSapConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

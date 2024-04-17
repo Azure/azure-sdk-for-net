@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
@@ -75,18 +74,25 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> The fully qualified ID for the management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The type of the resource.  For example, Microsoft.Management/managementGroups. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; }
         /// <summary> The name of the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; }
         /// <summary> The friendly name of the management group. If no value is passed then this  field will be set to the groupId. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> The details of a management group used during creation. </summary>
+        [WirePath("properties.details")]
         public CreateManagementGroupDetails Details { get; set; }
         /// <summary> The list of children. </summary>
+        [WirePath("properties.children")]
         public IReadOnlyList<ManagementGroupChildOptions> Children { get; }
     }
 }

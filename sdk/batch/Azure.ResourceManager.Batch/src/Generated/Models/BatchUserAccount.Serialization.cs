@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchUserAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchUserAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchUserAccount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,12 +38,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(LinuxUserConfiguration))
             {
                 writer.WritePropertyName("linuxUserConfiguration"u8);
-                writer.WriteObjectValue(LinuxUserConfiguration);
+                writer.WriteObjectValue(LinuxUserConfiguration, options);
             }
             if (Optional.IsDefined(WindowsUserConfiguration))
             {
                 writer.WritePropertyName("windowsUserConfiguration"u8);
-                writer.WriteObjectValue(WindowsUserConfiguration);
+                writer.WriteObjectValue(WindowsUserConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchUserAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchUserAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchUserAccount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchLinuxUserConfiguration linuxUserConfiguration = default;
             BatchWindowsUserConfiguration windowsUserConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -132,10 +131,10 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchUserAccount(
                 name,
                 password,
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchUserAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchUserAccount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchUserAccount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchUserAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchUserAccount)} does not support reading '{options.Format}' format.");
             }
         }
 

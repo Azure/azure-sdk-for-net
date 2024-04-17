@@ -9,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -203,12 +201,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isAttachedCompute"> Indicating whether the compute was provisioned by user and brought from outside if true, or machine learning service provisioned it if false. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure customers can use only MSI and AAD exclusively for authentication. </param>
         /// <returns> A new <see cref="Models.MachineLearningComputeProperties"/> instance for mocking. </returns>
-        public static MachineLearningComputeProperties MachineLearningComputeProperties(string computeType = "Unknown", string computeLocation = null, MachineLearningProvisioningState? provisioningState = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier resourceId = null, IEnumerable<MachineLearningError> provisioningErrors = null, bool? isAttachedCompute = null, bool? disableLocalAuth = null)
+        public static MachineLearningComputeProperties MachineLearningComputeProperties(string computeType = null, string computeLocation = null, MachineLearningProvisioningState? provisioningState = null, string description = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, ResourceIdentifier resourceId = null, IEnumerable<MachineLearningError> provisioningErrors = null, bool? isAttachedCompute = null, bool? disableLocalAuth = null)
         {
             provisioningErrors ??= new List<MachineLearningError>();
 
             return new UnknownCompute(
-                computeType,
+                computeType == null ? default : new ComputeType(computeType),
                 computeLocation,
                 provisioningState,
                 description,
@@ -1041,7 +1039,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="intellectualProperty"> Intellectual Property details. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         /// <returns> A new <see cref="Models.MachineLearningDatastoreProperties"/> instance for mocking. </returns>
-        public static MachineLearningDatastoreProperties MachineLearningDatastoreProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, string datastoreType = "Unknown", IntellectualProperty intellectualProperty = null, bool? isDefault = null)
+        public static MachineLearningDatastoreProperties MachineLearningDatastoreProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, MachineLearningDatastoreCredentials credentials = null, string datastoreType = null, IntellectualProperty intellectualProperty = null, bool? isDefault = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1052,7 +1050,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 tags,
                 serializedAdditionalRawData: null,
                 credentials,
-                datastoreType,
+                datastoreType == null ? default : new DatastoreType(datastoreType),
                 intellectualProperty,
                 isDefault);
         }
@@ -1335,7 +1333,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="status"> Status of the job. </param>
         /// <returns> A new <see cref="Models.MachineLearningJobProperties"/> instance for mocking. </returns>
-        public static MachineLearningJobProperties MachineLearningJobProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, string jobType = "Unknown", NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null)
+        public static MachineLearningJobProperties MachineLearningJobProperties(string description = null, IDictionary<string, string> properties = null, IDictionary<string, string> tags = null, ResourceIdentifier componentId = null, ResourceIdentifier computeId = null, string displayName = null, string experimentName = null, MachineLearningIdentityConfiguration identity = null, bool? isArchived = null, string jobType = null, NotificationSetting notificationSetting = null, IDictionary<string, SecretConfiguration> secretsConfiguration = null, IDictionary<string, MachineLearningJobService> services = null, MachineLearningJobStatus? status = null)
         {
             properties ??= new Dictionary<string, string>();
             tags ??= new Dictionary<string, string>();
@@ -1353,7 +1351,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 experimentName,
                 identity,
                 isArchived,
-                jobType,
+                jobType == null ? default : new JobType(jobType),
                 notificationSetting,
                 secretsConfiguration,
                 services,
@@ -1514,12 +1512,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="labelingJobId"> Name and identifier of the job containing exported labels. </param>
         /// <param name="startOn"> The time when the export was requested. </param>
         /// <returns> A new <see cref="Models.ExportSummary"/> instance for mocking. </returns>
-        public static ExportSummary ExportSummary(DateTimeOffset? endOn = null, long? exportedRowCount = null, string format = "Unknown", string labelingJobId = null, DateTimeOffset? startOn = null)
+        public static ExportSummary ExportSummary(DateTimeOffset? endOn = null, long? exportedRowCount = null, string format = null, string labelingJobId = null, DateTimeOffset? startOn = null)
         {
             return new UnknownExportSummary(
                 endOn,
                 exportedRowCount,
-                format,
+                format == null ? default : new ExportFormatType(format),
                 labelingJobId,
                 startOn,
                 serializedAdditionalRawData: null);
@@ -1655,7 +1653,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The available derived classes include <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MachineLearningOnlineDeploymentProperties"/> instance for mocking. </returns>
-        public static MachineLearningOnlineDeploymentProperties MachineLearningOnlineDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration = null, string description = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, string> properties = null, bool? appInsightsEnabled = null, DataCollector dataCollector = null, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = null, string endpointComputeType = "Unknown", string instanceType = null, MachineLearningProbeSettings livenessProbe = null, string model = null, string modelMountPath = null, MachineLearningDeploymentProvisioningState? provisioningState = null, MachineLearningProbeSettings readinessProbe = null, MachineLearningOnlineRequestSettings requestSettings = null, MachineLearningOnlineScaleSettings scaleSettings = null)
+        public static MachineLearningOnlineDeploymentProperties MachineLearningOnlineDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration = null, string description = null, string environmentId = null, IDictionary<string, string> environmentVariables = null, IDictionary<string, string> properties = null, bool? appInsightsEnabled = null, DataCollector dataCollector = null, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess = null, string endpointComputeType = null, string instanceType = null, MachineLearningProbeSettings livenessProbe = null, string model = null, string modelMountPath = null, MachineLearningDeploymentProvisioningState? provisioningState = null, MachineLearningProbeSettings readinessProbe = null, MachineLearningOnlineRequestSettings requestSettings = null, MachineLearningOnlineScaleSettings scaleSettings = null)
         {
             environmentVariables ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
@@ -1670,7 +1668,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 appInsightsEnabled,
                 dataCollector,
                 egressPublicNetworkAccess,
-                endpointComputeType,
+                endpointComputeType == null ? default : new MachineLearningEndpointComputeType(endpointComputeType),
                 instanceType,
                 livenessProbe,
                 model,

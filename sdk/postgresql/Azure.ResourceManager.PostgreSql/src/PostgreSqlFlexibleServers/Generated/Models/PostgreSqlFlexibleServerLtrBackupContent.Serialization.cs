@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerLtrBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetDetails"u8);
-            writer.WriteObjectValue(TargetDetails);
+            writer.WriteObjectValue(TargetDetails, options);
             writer.WritePropertyName("backupSettings"u8);
-            writer.WriteObjectValue(BackupSettings);
+            writer.WriteObjectValue(BackupSettings, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerLtrBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServerBackupStoreDetails targetDetails = default;
             PostgreSqlFlexibleServerBackupSettings backupSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetDetails"u8))
@@ -87,10 +86,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostgreSqlFlexibleServerLtrBackupContent(backupSettings, serializedAdditionalRawData, targetDetails);
         }
 
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         return DeserializePostgreSqlFlexibleServerLtrBackupContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerLtrBackupContent)} does not support reading '{options.Format}' format.");
             }
         }
 

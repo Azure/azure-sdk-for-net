@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -66,6 +65,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
             }
             return new DerivedMetricInfo(id, telemetryType, filterGroups ?? new ChangeTrackingList<FilterConjunctionGroupInfo>(), projection, aggregation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DerivedMetricInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDerivedMetricInfo(document.RootElement);
         }
     }
 }

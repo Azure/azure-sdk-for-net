@@ -11,6 +11,8 @@
     "**/SessionRecords/**",
     "**/packages/**",
     "artifacts/**/*",
+    "*.cbor",
+    "*.cose",
     "*.exe",
     "*.dll",
     "*.nupkg",
@@ -32,6 +34,7 @@
     "*.user",
     ".vscode/cspell.json",
     "assets.json",
+    "sdk/confidentialledger/Azure.Security.CodeTransparency/tests/TestFiles/*",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
@@ -82,6 +85,7 @@
     "hnsw",
     "ienumerable",
     "illumos",
+    "imds",
     "interventional",
     "ints",
     "kubernetes",
@@ -94,6 +98,7 @@
     "nunit",
     "odata",
     "onco",
+    "opinsights",
     "otel",
     "overridden",
     "parallelization",
@@ -106,6 +111,7 @@
     "referer",
     "renormalize",
     "retriable",
+    "signalr",
     "signup",
     "skus",
     "southcentralus",
@@ -247,7 +253,10 @@
     {
       "filename": "**/sdk/confidentialledger/**/*.cs",
       "words": [
-        "ccfs"
+        "cbor",
+        "ccfs",
+        "cose",
+        "scitt"
       ]
     },
     {
@@ -542,6 +551,10 @@
         "ldaps",
         "llap",
         "oaep",
+        "SSDLRS",
+        "SSDV",
+        "SSDZRS",
+        "HDDLRS",
         "trino"
       ]
     },
@@ -616,6 +629,15 @@
       ]
     },
     {
+      "filename": "**/sdk/migrationdiscoverysap/**/*.cs",
+      "words": [
+        "Hana",
+        "Informix",
+        "Ascs",
+        "Webdisp"
+      ]
+    },
+    {
       "filename": "**/sdk/mobilenetwork/**/*.cs",
       "words": [
         "Napt",
@@ -623,7 +645,29 @@
         "Ambr",
         "Rfsp",
         "Snssai",
-        "AKSHCI"
+        "AKSHCI",
+        "imsi",
+        "guti",
+        "tnla",
+        "imsi",
+        "imei",
+        "imeisv",
+        "tmsi",
+        "supi",
+        "suci",
+        "ngap",
+        "fiveg",
+        "ngap",
+        "tngf",
+        "fiveqi",
+        "plmn",
+        "napt",
+        "nssai",
+        "iccid",
+        "gbps",
+        "mbps",
+        "sdkutrg",
+        "ueip"
       ]
     },
     {
@@ -983,7 +1027,7 @@
       "filename": "**/sdk/securitycenter/**/*[.md,.txt,*.cs]",
       "words": [
         "Pricings",
-        "Cspm",
+        "Cspm"
       ]
     },
     {
@@ -1007,7 +1051,7 @@
         "Saas",
         "vmuuid",
         "vnets",
-        "Wdatp",
+        "Wdatp"
       ],
       "ignoreWords": [
         "AKIARPZCNODDNAEQFSOE",
@@ -1026,7 +1070,7 @@
         "matan",
         "matanvs",
         "OSDRIVE",
-        "WASECAGENTPROV",
+        "WASECAGENTPROV"
       ]
     },
     {

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> A value indicating whether authorization is consented or not. </summary>
+        [WirePath("consentToAuthorization")]
         public bool? ConsentToAuthorization { get; set; }
     }
 }

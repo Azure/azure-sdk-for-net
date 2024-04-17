@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The resource of an Azure Cosmos DB MongoDB database event. </summary>
+        [WirePath("properties.resource")]
         public ExtendedRestorableMongoDBDatabaseResourceInfo Resource { get; }
     }
 }

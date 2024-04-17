@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Response containing the quota usage information for all the supported skus of Azure Cognitive Search service. </summary>
+    /// <summary> Response containing the quota usage information for all the supported SKUs of Azure AI Search. </summary>
     internal partial class QuotaUsagesListResult
     {
         /// <summary>
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="QuotaUsagesListResult"/>. </summary>
-        /// <param name="value"> The quota usages for the SKUs supported by Azure Cognitive Search. </param>
+        /// <param name="value"> The quota usages for the SKUs supported by Azure AI Search. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of quota usages. Returned when the total number of requested quota usages exceed maximum page size. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal QuotaUsagesListResult(IReadOnlyList<QuotaUsageResult> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.Search.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The quota usages for the SKUs supported by Azure Cognitive Search. </summary>
+        /// <summary> The quota usages for the SKUs supported by Azure AI Search. </summary>
         public IReadOnlyList<QuotaUsageResult> Value { get; }
         /// <summary> Request URL that can be used to query next page of quota usages. Returned when the total number of requested quota usages exceed maximum page size. </summary>
         public string NextLink { get; }

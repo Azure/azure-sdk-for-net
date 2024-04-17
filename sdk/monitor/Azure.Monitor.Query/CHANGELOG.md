@@ -1,12 +1,22 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 1.3.1 (2024-04-03)
+
+### Bugs Fixed
+- Fix bug in `LogsQueryClient` constructor where a `NullReferenceException` would be thrown when an options instance isn't passed.
+- Fix bug in `MetricsQueryClient` constructor where a `NullReferenceException` would be thrown when an options instance isn't passed.
+
+## 1.3.0 (2024-03-28)
 
 ### Other Changes
 - Enable national cloud support for US Gov and China clouds

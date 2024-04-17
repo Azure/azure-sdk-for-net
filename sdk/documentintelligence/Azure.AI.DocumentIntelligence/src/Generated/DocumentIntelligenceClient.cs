@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -112,8 +111,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = analyzeRequest?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await AnalyzeDocumentAsync(waitUntil, modelId, content, pages, locale, stringIndexType?.ToString(), features, queryFields, outputContentFormat?.ToString(), context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeResultOperation, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
         }
@@ -139,8 +138,8 @@ namespace Azure.AI.DocumentIntelligence
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = analyzeRequest?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = AnalyzeDocument(waitUntil, modelId, content, pages, locale, stringIndexType?.ToString(), features, queryFields, outputContentFormat?.ToString(), context);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeResultOperation, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
         }
@@ -262,8 +261,8 @@ namespace Azure.AI.DocumentIntelligence
             Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
             Argument.AssertNotNull(classifyRequest, nameof(classifyRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = classifyRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await ClassifyDocumentAsync(waitUntil, classifierId, content, stringIndexType?.ToString(), split?.ToString(), context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeResultOperation, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }
@@ -283,8 +282,8 @@ namespace Azure.AI.DocumentIntelligence
             Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
             Argument.AssertNotNull(classifyRequest, nameof(classifyRequest));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = classifyRequest.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = ClassifyDocument(waitUntil, classifierId, content, stringIndexType?.ToString(), split?.ToString(), context);
             return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeResultOperation, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }

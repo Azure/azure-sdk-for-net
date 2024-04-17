@@ -94,16 +94,16 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="identifier">A unique name used to identify the event processor.</param>
         /// <param name="eventHubName">The name of the Event Hub that the processor is associated with.</param>
         /// <param name="consumerGroup">The name of the consumer group that the processor is associated with.</param>
-        /// <param name="operationId">An identifier for the processing operation, allowing its activities to be correlated.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
+        /// <param name="operationId">An identifier for the processing operation, allowing its activities to be correlated.</param>
         ///
-        [Event(22, Level = EventLevel.Error, Message = "An exception occurred while processing events for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Operation Id: '{5}'; Error Message: '{4}'")]
+        [Event(22, Level = EventLevel.Error, Message = "An exception occurred while processing events for partition '{0}' by processor instance with identifier '{1}' for Event Hub: {2} and Consumer Group: {3}.  Error Message: '{4}'; Operation Id: '{5}'")]
         public virtual void EventBatchProcessingError(string partitionId,
                                                       string identifier,
                                                       string eventHubName,
                                                       string consumerGroup,
-                                                      string operationId,
-                                                      string errorMessage)
+                                                      string errorMessage,
+                                                      string operationId)
         {
             if (IsEnabled())
             {

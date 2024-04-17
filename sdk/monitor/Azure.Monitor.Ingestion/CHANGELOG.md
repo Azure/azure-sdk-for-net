@@ -10,6 +10,11 @@
 
 ### Other Changes
 
+## 1.1.2 (2024-04-03)
+
+### Bugs Fixed
+- Prevent logs from being dropped when the last entry is greater than 1 Mb.
+
 ## 1.1.1 (2023-10-16)
 
 ## Features Added

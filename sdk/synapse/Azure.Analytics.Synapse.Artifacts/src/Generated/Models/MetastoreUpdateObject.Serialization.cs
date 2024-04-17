@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,12 +23,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class MetastoreUpdateObjectConverter : JsonConverter<MetastoreUpdateObject>
         {
             public override void Write(Utf8JsonWriter writer, MetastoreUpdateObject model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue(model);
             }
+
             public override MetastoreUpdateObject Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();

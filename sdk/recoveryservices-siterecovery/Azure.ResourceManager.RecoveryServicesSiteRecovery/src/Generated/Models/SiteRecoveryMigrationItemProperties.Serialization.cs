@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentJob))
             {
                 writer.WritePropertyName("currentJob"u8);
-                writer.WriteObjectValue(CurrentJob);
+                writer.WriteObjectValue(CurrentJob, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CriticalJobHistory))
             {
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in CriticalJobHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails);
+                writer.WriteObjectValue(ProviderSpecificDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -201,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string eventCorrelationId = default;
             MigrationProviderSpecificSettings providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("machineName"u8))
@@ -365,10 +364,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SiteRecoveryMigrationItemProperties(
                 machineName,
                 policyId,
@@ -402,7 +401,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -418,7 +417,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryMigrationItemProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

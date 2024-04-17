@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -105,40 +104,58 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The canonical path to the signed resource. </summary>
+        [WirePath("canonicalizedResource")]
         public string CanonicalizedResource { get; }
         /// <summary> The signed services accessible with the service SAS. Possible values include: Blob (b), Container (c), File (f), Share (s). </summary>
+        [WirePath("signedResource")]
         public ServiceSasSignedResourceType? Resource { get; set; }
         /// <summary> The signed permissions for the service SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </summary>
+        [WirePath("signedPermission")]
         public StorageAccountSasPermission? Permissions { get; set; }
         /// <summary> An IP address or a range of IP addresses from which to accept requests. </summary>
+        [WirePath("signedIp")]
         public string IPAddressOrRange { get; set; }
         /// <summary> The protocol permitted for a request made with the account SAS. </summary>
+        [WirePath("signedProtocol")]
         public StorageAccountHttpProtocol? Protocols { get; set; }
         /// <summary> The time at which the SAS becomes valid. </summary>
+        [WirePath("signedStart")]
         public DateTimeOffset? SharedAccessStartOn { get; set; }
         /// <summary> The time at which the shared access signature becomes invalid. </summary>
+        [WirePath("signedExpiry")]
         public DateTimeOffset? SharedAccessExpiryOn { get; set; }
         /// <summary> A unique value up to 64 characters in length that correlates to an access policy specified for the container, queue, or table. </summary>
+        [WirePath("signedIdentifier")]
         public string Identifier { get; set; }
         /// <summary> The start of partition key. </summary>
+        [WirePath("startPk")]
         public string PartitionKeyStart { get; set; }
         /// <summary> The end of partition key. </summary>
+        [WirePath("endPk")]
         public string PartitionKeyEnd { get; set; }
         /// <summary> The start of row key. </summary>
+        [WirePath("startRk")]
         public string RowKeyStart { get; set; }
         /// <summary> The end of row key. </summary>
+        [WirePath("endRk")]
         public string RowKeyEnd { get; set; }
         /// <summary> The key to sign the account SAS token with. </summary>
+        [WirePath("keyToSign")]
         public string KeyToSign { get; set; }
         /// <summary> The response header override for cache control. </summary>
+        [WirePath("rscc")]
         public string CacheControl { get; set; }
         /// <summary> The response header override for content disposition. </summary>
+        [WirePath("rscd")]
         public string ContentDisposition { get; set; }
         /// <summary> The response header override for content encoding. </summary>
+        [WirePath("rsce")]
         public string ContentEncoding { get; set; }
         /// <summary> The response header override for content language. </summary>
+        [WirePath("rscl")]
         public string ContentLanguage { get; set; }
         /// <summary> The response header override for content type. </summary>
+        [WirePath("rsct")]
         public string ContentType { get; set; }
     }
 }

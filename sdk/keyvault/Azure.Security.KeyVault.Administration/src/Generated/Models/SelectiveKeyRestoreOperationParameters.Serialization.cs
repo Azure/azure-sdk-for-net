@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -21,6 +20,14 @@ namespace Azure.Security.KeyVault.Administration.Models
             writer.WritePropertyName("folder"u8);
             writer.WriteStringValue(Folder);
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

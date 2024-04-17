@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -91,20 +90,28 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The list of namespaces for the data policy manifest. </summary>
+        [WirePath("properties.namespaces")]
         public IReadOnlyList<string> Namespaces { get; }
         /// <summary> The policy mode of the data policy manifest. </summary>
+        [WirePath("properties.policyMode")]
         public string PolicyMode { get; }
         /// <summary> A value indicating whether policy mode is allowed only in built-in definitions. </summary>
+        [WirePath("properties.isBuiltInOnly")]
         public bool? IsBuiltInOnly { get; }
         /// <summary> An array of resource type aliases. </summary>
+        [WirePath("properties.resourceTypeAliases")]
         public IReadOnlyList<ResourceTypeAliases> ResourceTypeAliases { get; }
         /// <summary> The effect definition. </summary>
+        [WirePath("properties.effects")]
         public IReadOnlyList<DataPolicyManifestEffect> Effects { get; }
         /// <summary> The non-alias field accessor values that can be used in the policy rule. </summary>
+        [WirePath("properties.fieldValues")]
         public IReadOnlyList<string> FieldValues { get; }
         /// <summary> The standard resource functions (subscription and/or resourceGroup). </summary>
+        [WirePath("properties.standard")]
         public IReadOnlyList<string> Standard { get; }
         /// <summary> An array of data manifest custom resource definition. </summary>
+        [WirePath("properties.custom")]
         public IReadOnlyList<DataManifestCustomResourceFunctionDefinition> CustomDefinitions { get; }
     }
 }

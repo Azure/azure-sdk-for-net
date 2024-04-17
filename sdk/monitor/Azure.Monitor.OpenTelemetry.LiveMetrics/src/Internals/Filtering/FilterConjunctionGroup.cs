@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     ////errorList.Add(
                     ////    CollectionConfigurationError.CreateError(
                     ////        CollectionConfigurationErrorType.FilterFailureToRun,
-                    ////        string.Format(CultureInfo.InvariantCulture, "Failter failed to run: {0}.", filter),
+                    ////        string.Format(CultureInfo.InvariantCulture, "Filter failed to run: {0}.", filter),
                     ////        e));
                     filterPassed = false;
                 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -143,6 +142,14 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 answeredBy,
                 answeredFor);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CallConnectionPropertiesInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCallConnectionPropertiesInternal(document.RootElement);
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {

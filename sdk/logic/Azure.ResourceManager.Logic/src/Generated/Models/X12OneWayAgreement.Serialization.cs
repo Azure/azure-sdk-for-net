@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -23,16 +22,16 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<X12OneWayAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X12OneWayAgreement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X12OneWayAgreement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("senderBusinessIdentity"u8);
-            writer.WriteObjectValue(SenderBusinessIdentity);
+            writer.WriteObjectValue(SenderBusinessIdentity, options);
             writer.WritePropertyName("receiverBusinessIdentity"u8);
-            writer.WriteObjectValue(ReceiverBusinessIdentity);
+            writer.WriteObjectValue(ReceiverBusinessIdentity, options);
             writer.WritePropertyName("protocolSettings"u8);
-            writer.WriteObjectValue(ProtocolSettings);
+            writer.WriteObjectValue(ProtocolSettings, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<X12OneWayAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X12OneWayAgreement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X12OneWayAgreement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Logic.Models
             IntegrationAccountBusinessIdentity receiverBusinessIdentity = default;
             X12ProtocolSettings protocolSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("senderBusinessIdentity"u8))
@@ -95,10 +94,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new X12OneWayAgreement(senderBusinessIdentity, receiverBusinessIdentity, protocolSettings, serializedAdditionalRawData);
         }
 
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(X12OneWayAgreement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X12OneWayAgreement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeX12OneWayAgreement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(X12OneWayAgreement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X12OneWayAgreement)} does not support reading '{options.Format}' format.");
             }
         }
 

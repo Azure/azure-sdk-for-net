@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -100,20 +99,28 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity ManagedIdentity { get; set; }
         /// <summary> The display name of the policy assignment. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> The ID of the policy definition or policy set definition being assigned. </summary>
+        [WirePath("properties.policyDefinitionId")]
         public string PolicyDefinitionId { get; set; }
         /// <summary> The scope for the policy assignment. </summary>
+        [WirePath("properties.scope")]
         public string Scope { get; }
         /// <summary> The policy's excluded scopes. </summary>
+        [WirePath("properties.notScopes")]
         public IList<string> ExcludedScopes { get; }
         /// <summary> The parameter values for the assigned policy rule. The keys are the parameter names. </summary>
+        [WirePath("properties.parameters")]
         public IDictionary<string, ArmPolicyParameterValue> Parameters { get; }
         /// <summary> This message will be part of response in case of policy violation. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs.
@@ -145,14 +152,19 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.metadata")]
         public BinaryData Metadata { get; set; }
         /// <summary> The policy assignment enforcement mode. Possible values are Default and DoNotEnforce. </summary>
+        [WirePath("properties.enforcementMode")]
         public EnforcementMode? EnforcementMode { get; set; }
         /// <summary> The messages that describe why a resource is non-compliant with the policy. </summary>
+        [WirePath("properties.nonComplianceMessages")]
         public IList<NonComplianceMessage> NonComplianceMessages { get; }
         /// <summary> The resource selector list to filter policies by resource properties. </summary>
+        [WirePath("properties.resourceSelectors")]
         public IList<ResourceSelector> ResourceSelectors { get; }
         /// <summary> The policy property value override. </summary>
+        [WirePath("properties.overrides")]
         public IList<PolicyOverride> Overrides { get; }
     }
 }

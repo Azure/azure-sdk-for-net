@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -193,6 +193,95 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDataExportEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsDataExportEnabled) || hasPropertyOverride)
+            {
+                builder.Append("  enableDataExport: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDataExportEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImmediatePurgeDataOn30Days), out propertyOverride);
+            if (Optional.IsDefined(ImmediatePurgeDataOn30Days) || hasPropertyOverride)
+            {
+                builder.Append("  immediatePurgeDataOn30Days: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = ImmediatePurgeDataOn30Days.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLogAccessUsingOnlyResourcePermissionsEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsLogAccessUsingOnlyResourcePermissionsEnabled) || hasPropertyOverride)
+            {
+                builder.Append("  enableLogAccessUsingOnlyResourcePermissions: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsLogAccessUsingOnlyResourcePermissionsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterResourceId), out propertyOverride);
+            if (Optional.IsDefined(ClusterResourceId) || hasPropertyOverride)
+            {
+                builder.Append("  clusterResourceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ClusterResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLocalAuthDisabled), out propertyOverride);
+            if (Optional.IsDefined(IsLocalAuthDisabled) || hasPropertyOverride)
+            {
+                builder.Append("  disableLocalAuth: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsLocalAuthDisabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<OperationalInsightsWorkspaceFeatures>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
@@ -201,8 +290,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +309,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         return DeserializeOperationalInsightsWorkspaceFeatures(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support reading '{options.Format}' format.");
             }
         }
 

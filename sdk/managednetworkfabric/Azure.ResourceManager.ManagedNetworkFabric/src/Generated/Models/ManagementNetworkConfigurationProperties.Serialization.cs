@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("infrastructureVpnConfiguration"u8);
-            writer.WriteObjectValue(InfrastructureVpnConfiguration);
+            writer.WriteObjectValue(InfrastructureVpnConfiguration, options);
             writer.WritePropertyName("workloadVpnConfiguration"u8);
-            writer.WriteObjectValue(WorkloadVpnConfiguration);
+            writer.WriteObjectValue(WorkloadVpnConfiguration, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             VpnConfigurationProperties infrastructureVpnConfiguration = default;
             VpnConfigurationProperties workloadVpnConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("infrastructureVpnConfiguration"u8))
@@ -87,10 +86,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagementNetworkConfigurationProperties(infrastructureVpnConfiguration, workloadVpnConfiguration, serializedAdditionalRawData);
         }
 
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeManagementNetworkConfigurationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<SCClusterSpecEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SCClusterSpecEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SCClusterSpecEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,22 +69,22 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
-                writer.WriteObjectValue(Config);
+                writer.WriteObjectValue(Config, options);
             }
             if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
-                writer.WriteObjectValue(Environment);
+                writer.WriteObjectValue(Environment, options);
             }
             if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network);
+                writer.WriteObjectValue(Network, options);
             }
             if (Optional.IsDefined(Byok))
             {
                 writer.WritePropertyName("byok"u8);
-                writer.WriteObjectValue(Byok);
+                writer.WriteObjectValue(Byok, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<SCClusterSpecEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SCClusterSpecEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SCClusterSpecEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.Confluent.Models
             SCClusterNetworkEnvironmentEntity network = default;
             SCClusterByokEntity byok = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -219,10 +218,10 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SCClusterSpecEntity(
                 name,
                 availability,
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SCClusterSpecEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SCClusterSpecEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +263,7 @@ namespace Azure.ResourceManager.Confluent.Models
                         return DeserializeSCClusterSpecEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SCClusterSpecEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SCClusterSpecEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

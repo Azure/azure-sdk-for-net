@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Jit request tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

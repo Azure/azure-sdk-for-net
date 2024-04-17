@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseWorkspaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseWorkspaceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(DefaultDataLakeStorage))
             {
                 writer.WritePropertyName("defaultDataLakeStorage"u8);
-                writer.WriteObjectValue(DefaultDataLakeStorage);
+                writer.WriteObjectValue(DefaultDataLakeStorage, options);
             }
             if (Optional.IsDefined(SqlAdministratorLoginPassword))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
-                writer.WriteObjectValue(VirtualNetworkProfile);
+                writer.WriteObjectValue(VirtualNetworkProfile, options);
             }
             if (Optional.IsCollectionDefined(ConnectivityEndpoints))
             {
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WorkspaceUid))
             {
@@ -161,17 +161,17 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(ManagedVirtualNetworkSettings))
             {
                 writer.WritePropertyName("managedVirtualNetworkSettings"u8);
-                writer.WriteObjectValue(ManagedVirtualNetworkSettings);
+                writer.WriteObjectValue(ManagedVirtualNetworkSettings, options);
             }
             if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
             {
                 writer.WritePropertyName("workspaceRepositoryConfiguration"u8);
-                writer.WriteObjectValue(WorkspaceRepositoryConfiguration);
+                writer.WriteObjectValue(WorkspaceRepositoryConfiguration, options);
             }
             if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
-                writer.WriteObjectValue(PurviewConfiguration);
+                writer.WriteObjectValue(PurviewConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AdlaResourceId))
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(CspWorkspaceAdminProperties))
             {
                 writer.WritePropertyName("cspWorkspaceAdminProperties"u8);
-                writer.WriteObjectValue(CspWorkspaceAdminProperties);
+                writer.WriteObjectValue(CspWorkspaceAdminProperties, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Settings))
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseWorkspaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseWorkspaceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Synapse
             bool? azureADOnlyAuthentication = default;
             bool? trustedServiceBypassEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -562,10 +562,10 @@ namespace Azure.ResourceManager.Synapse
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SynapseWorkspaceData(
                 id,
                 name,
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Synapse
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseWorkspaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseWorkspaceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Synapse
                         return DeserializeSynapseWorkspaceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseWorkspaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseWorkspaceData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlServerMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlServerMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlServerMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlServerMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlServerMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlServerMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             int? storageMb = default;
             ServerSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -127,11 +127,90 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostgreSqlServerMetadata(location, version, storageMb, sku, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (Optional.IsDefined(Version) || hasPropertyOverride)
+            {
+                builder.Append("  version: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Version.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Version}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Version}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageMb), out propertyOverride);
+            if (Optional.IsDefined(StorageMb) || hasPropertyOverride)
+            {
+                builder.Append("  storageMb: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{StorageMb.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
+            if (Optional.IsDefined(Sku) || hasPropertyOverride)
+            {
+                builder.Append("  sku: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<PostgreSqlServerMetadata>.Write(ModelReaderWriterOptions options)
@@ -142,8 +221,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlServerMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlServerMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +240,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         return DeserializePostgreSqlServerMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlServerMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlServerMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 
