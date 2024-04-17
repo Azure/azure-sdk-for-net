@@ -719,10 +719,10 @@
 # ServiceOwners:                                                   @privlinksuppgithub
 
 # PRLabel: %Nginx
-/sdk/nginx/                                                        @spencerofwiti @bangbingsyb
+/sdk/nginx/                                                        @spencerofwiti @bangbingsyb @jamesfan
 
 # ServiceLabel: %Nginx
-# ServiceOwners:                                                   @spencerofwiti @bangbingsyb
+# ServiceOwners:                                                   @spencerofwiti @bangbingsyb @jamesfan
 
 # ServiceLabel: %Notification Hub
 # ServiceOwners:                                                   @tjsomasundaram
