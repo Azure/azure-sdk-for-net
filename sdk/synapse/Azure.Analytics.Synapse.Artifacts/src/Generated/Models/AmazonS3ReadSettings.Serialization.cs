@@ -229,12 +229,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 modifiedDatetimeEnd);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AmazonS3ReadSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAmazonS3ReadSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AmazonS3ReadSettings>(this);
+            return content;
+        }
+
         internal partial class AmazonS3ReadSettingsConverter : JsonConverter<AmazonS3ReadSettings>
         {
             public override void Write(Utf8JsonWriter writer, AmazonS3ReadSettings model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<AmazonS3ReadSettings>(model);
             }
+
             public override AmazonS3ReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

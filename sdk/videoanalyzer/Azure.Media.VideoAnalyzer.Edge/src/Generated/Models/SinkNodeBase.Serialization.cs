@@ -46,5 +46,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             return UnknownSinkNodeBase.DeserializeUnknownSinkNodeBase(element);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SinkNodeBase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSinkNodeBase(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SinkNodeBase>(this);
+            return content;
+        }
     }
 }

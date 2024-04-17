@@ -57,12 +57,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SsisAccessCredential(domain, userName, password);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SsisAccessCredential FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSsisAccessCredential(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SsisAccessCredential>(this);
+            return content;
+        }
+
         internal partial class SsisAccessCredentialConverter : JsonConverter<SsisAccessCredential>
         {
             public override void Write(Utf8JsonWriter writer, SsisAccessCredential model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<SsisAccessCredential>(model);
             }
+
             public override SsisAccessCredential Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

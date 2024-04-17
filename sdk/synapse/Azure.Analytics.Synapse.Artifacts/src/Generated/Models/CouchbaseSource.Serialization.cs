@@ -149,12 +149,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 query);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CouchbaseSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCouchbaseSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CouchbaseSource>(this);
+            return content;
+        }
+
         internal partial class CouchbaseSourceConverter : JsonConverter<CouchbaseSource>
         {
             public override void Write(Utf8JsonWriter writer, CouchbaseSource model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<CouchbaseSource>(model);
             }
+
             public override CouchbaseSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

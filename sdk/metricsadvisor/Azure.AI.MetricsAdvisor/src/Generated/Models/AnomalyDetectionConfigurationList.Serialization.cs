@@ -44,5 +44,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new AnomalyDetectionConfigurationList(value ?? new ChangeTrackingList<AnomalyDetectionConfiguration>(), nextLink);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnomalyDetectionConfigurationList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnomalyDetectionConfigurationList(document.RootElement);
+        }
     }
 }

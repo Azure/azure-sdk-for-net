@@ -214,8 +214,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossary.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);
         }
@@ -229,8 +229,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossary.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Create(content, context);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);
         }
@@ -322,8 +322,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateCategoriesAsync(content, context).ConfigureAwait(false);
             IReadOnlyList<AtlasGlossaryCategory> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -345,8 +345,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateCategories(content, context);
             IReadOnlyList<AtlasGlossaryCategory> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
@@ -446,8 +446,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryCategory.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateCategoryAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
         }
@@ -461,8 +461,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryCategory.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateCategory(content, context);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
         }
@@ -667,8 +667,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
             Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryCategory.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateCategoryAsync(categoryId, content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
         }
@@ -685,8 +685,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
             Argument.AssertNotNull(atlasGlossaryCategory, nameof(atlasGlossaryCategory));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryCategory.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateCategory(categoryId, content, context);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
         }
@@ -865,8 +865,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await PartialUpdateCategoryAsync(categoryId, content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
         }
@@ -889,8 +889,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(categoryId, nameof(categoryId));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = PartialUpdateCategory(categoryId, content, context);
             return Response.FromValue(AtlasGlossaryCategory.FromResponse(response), response);
         }
@@ -1299,8 +1299,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryTerm.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateTermAsync(content, includeTermHierarchy, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
         }
@@ -1315,8 +1315,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryTerm.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateTerm(content, includeTermHierarchy, context);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
         }
@@ -1524,8 +1524,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
             Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryTerm.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateTermAsync(termId, content, includeTermHierarchy, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
         }
@@ -1543,8 +1543,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
             Argument.AssertNotNull(atlasGlossaryTerm, nameof(atlasGlossaryTerm));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossaryTerm.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UpdateTerm(termId, content, includeTermHierarchy, context);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
         }
@@ -1726,8 +1726,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await PartialUpdateTermAsync(termId, content, includeTermHierarchy, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
         }
@@ -1751,8 +1751,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = PartialUpdateTerm(termId, content, includeTermHierarchy, context);
             return Response.FromValue(AtlasGlossaryTerm.FromResponse(response), response);
         }
@@ -1855,8 +1855,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateTermsAsync(content, includeTermHierarchy, context).ConfigureAwait(false);
             IReadOnlyList<AtlasGlossaryTerm> value = default;
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -1879,8 +1879,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateTerms(content, includeTermHierarchy, context);
             IReadOnlyList<AtlasGlossaryTerm> value = default;
             using var document = JsonDocument.Parse(response.ContentStream);
@@ -2138,8 +2138,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AssignTermToEntitiesAsync(termId, content, context).ConfigureAwait(false);
             return response;
         }
@@ -2163,8 +2163,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AssignTermToEntities(termId, content, context);
             return response;
         }
@@ -2275,8 +2275,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DeleteTermAssignmentFromEntitiesAsync(termId, content, context).ConfigureAwait(false);
             return response;
         }
@@ -2293,8 +2293,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(termId, nameof(termId));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromEnumerable(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DeleteTermAssignmentFromEntities(termId, content, context);
             return response;
         }
@@ -2676,8 +2676,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
             Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossary.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UpdateAsync(glossaryId, content, ignoreTermsAndCategories, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);
         }
@@ -2695,8 +2695,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
             Argument.AssertNotNull(atlasGlossary, nameof(atlasGlossary));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = atlasGlossary.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Update(glossaryId, content, ignoreTermsAndCategories, context);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);
         }
@@ -3320,8 +3320,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await PartialUpdateAsync(glossaryId, content, ignoreTermsAndCategories, context).ConfigureAwait(false);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);
         }
@@ -3351,8 +3351,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNullOrEmpty(glossaryId, nameof(glossaryId));
             Argument.AssertNotNull(body, nameof(body));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = RequestContentHelper.FromDictionary(body);
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = PartialUpdate(glossaryId, content, ignoreTermsAndCategories, context);
             return Response.FromValue(AtlasGlossary.FromResponse(response), response);
         }
