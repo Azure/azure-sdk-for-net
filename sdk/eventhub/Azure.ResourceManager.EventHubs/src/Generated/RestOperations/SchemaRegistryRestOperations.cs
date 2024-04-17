@@ -153,6 +153,7 @@ namespace Azure.ResourceManager.EventHubs
             return message;
         }
 
+        /// <summary> The CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
@@ -185,6 +186,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// <summary> The CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
@@ -239,6 +241,7 @@ namespace Azure.ResourceManager.EventHubs
             return message;
         }
 
+        /// <summary> The Delete method. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
@@ -265,6 +268,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// <summary> The Delete method. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
@@ -313,6 +317,7 @@ namespace Azure.ResourceManager.EventHubs
             return message;
         }
 
+        /// <summary> The Get method. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
@@ -345,6 +350,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
+        /// <summary> The Get method. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="namespaceName"> The Namespace name. </param>

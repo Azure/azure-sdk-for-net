@@ -169,6 +169,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
+        /// The Undelete method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -210,6 +211,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
+        /// The Undelete method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

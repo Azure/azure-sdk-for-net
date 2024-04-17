@@ -226,6 +226,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
+        /// <summary> The Undelete method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
@@ -252,6 +253,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
+        /// <summary> The Undelete method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the backup vault. </param>
