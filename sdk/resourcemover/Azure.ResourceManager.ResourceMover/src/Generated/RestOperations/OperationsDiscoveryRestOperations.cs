@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.ResourceMover
             return message;
         }
 
+        /// <summary> The Get method. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<MoverOperationsDiscoveryList>> GetAsync(CancellationToken cancellationToken = default)
         {
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.ResourceMover
             }
         }
 
+        /// <summary> The Get method. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<MoverOperationsDiscoveryList> Get(CancellationToken cancellationToken = default)
         {

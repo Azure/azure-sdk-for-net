@@ -242,6 +242,7 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary>
+        /// The Get method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -273,6 +274,7 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary>
+        /// The Get method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
