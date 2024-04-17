@@ -109,24 +109,19 @@ public class ClientUriBuilderTests
         Assert.AreEqual("http://localhost:80/" + path, uriBuilder.ToUri().OriginalString);
     }
 
-    //    [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
-    //    [TestCase("\u1234", "%E1%88%B4")]
-    //    [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
-    //    [TestCase(" ", "%20")]
-    //    [TestCase("%#?&", "%25%23%3F%26")]
-    //    public void PathIsEscaped(string path, string expected)
-    //    {
-    //        var uriBuilder = new RequestUriBuilder
-    //        {
-    //            Scheme = "http",
-    //            Host = "localhost",
-    //            Port = 80
-    //        };
+    [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
+    [TestCase("\u1234", "%E1%88%B4")]
+    [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
+    [TestCase(" ", "%20")]
+    [TestCase("%#?&", "%25%23%3F%26")]
+    public void PathIsEscaped(string path, string expected)
+    {
+        ClientUriBuilder uriBuilder = new();
+        uriBuilder.Reset(new Uri("http://localhost:80"));
+        uriBuilder.AppendPath(path, true);
 
-    //        uriBuilder.AppendPath(path);
-
-    //        Assert.AreEqual("http://localhost/" + expected, uriBuilder.ToUri().OriginalString);
-    //    }
+        Assert.AreEqual("http://localhost:80/" + expected, uriBuilder.ToUri().OriginalString);
+    }
 
     //    [Test]
     //    public void QueryIsNotEscaped()
