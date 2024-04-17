@@ -2,8 +2,6 @@
 
 ## 1.0.0-beta.7 (2024-04-15)
 
-### Features Added
-
 ### Breaking Changes
 - Consildated namespaces. Removing:
 	- Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
@@ -34,10 +32,6 @@
 	- TokenIssuanceStartData -> WebJobsTokenIssuanceStartData
 	- TokenIssuanceStartRequest -> WebJobsTokenIssuanceStartRequest
 	- TokenIssuanceStartResponse -> WebJobsTokenIssuanceStartResponse
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.6 (2024-03-13)
 
