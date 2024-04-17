@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Nginx
 namespace: Azure.ResourceManager.Nginx
-require: https://github.com/Azure/azure-rest-api-specs/blob/4a361fccb94e82da94a239d3563f1e3e3b9d007d/specification/nginx/resource-manager/readme.md
-#tag: package-2023-04-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/c4e661cdf92c8f579574008d0cd11874cc303da0/specification/nginx/resource-manager/readme.md
+tag: package-2024-01-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
