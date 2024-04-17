@@ -1,27 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using OpenTelemetry;
+using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
-    internal sealed class LiveMetricsActivityProcessor : BaseProcessor<Activity>
+    internal class LiveMetricsLogProcessor : BaseProcessor<LogRecord>
     {
+        private bool _disposed;
         private LiveMetricsResource? _resource;
         private readonly Manager _manager;
 
         internal LiveMetricsResource? LiveMetricsResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
-        internal LiveMetricsActivityProcessor(Manager manager)
+        public LiveMetricsLogProcessor(Manager manager)
         {
             _manager = manager;
         }
 
-        public override void OnEnd(Activity activity)
+        public override void OnEnd(LogRecord data)
         {
             // Check if live metrics is enabled.
             if (!_manager.ShouldCollect())
@@ -35,29 +35,35 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 _manager.LiveMetricsResource = LiveMetricsResource;
             }
 
-            if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
+            if (data.Exception is null)
             {
-                _manager._documentBuffer.AddRequestDocument(activity);
+                _manager._documentBuffer.AddLogDocument(data);
             }
             else
             {
-                _manager._documentBuffer.AddDependencyDocument(activity);
+                _manager._documentBuffer.AddExceptionDocument(data.Exception);
             }
+        }
 
-            if (activity.Events != null)
+        protected override void Dispose(bool disposing)
+        {
+            if (!_disposed)
             {
-                foreach (ref readonly var @event in activity.EnumerateEvents())
+                if (disposing)
                 {
-                    if (@event.Name == SemanticConventions.AttributeExceptionEventName)
+                    try
                     {
-                        _manager._documentBuffer.AddExceptionDocument(@event);
+                        _manager.Dispose();
                     }
-                    else
+                    catch (System.Exception)
                     {
-                        _manager._documentBuffer.AddLogDocument(@event);
                     }
                 }
+
+                _disposed = true;
             }
+
+            base.Dispose(disposing);
         }
     }
 }
