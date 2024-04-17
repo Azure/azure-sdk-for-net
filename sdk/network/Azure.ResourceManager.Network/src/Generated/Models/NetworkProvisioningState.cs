@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Network.Models
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
+        private const string CreatingValue = "Creating";
 
         /// <summary> Succeeded. </summary>
         public static NetworkProvisioningState Succeeded { get; } = new NetworkProvisioningState(SucceededValue);
@@ -35,6 +37,10 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkProvisioningState Deleting { get; } = new NetworkProvisioningState(DeletingValue);
         /// <summary> Failed. </summary>
         public static NetworkProvisioningState Failed { get; } = new NetworkProvisioningState(FailedValue);
+        /// <summary> Canceled. </summary>
+        public static NetworkProvisioningState Canceled { get; } = new NetworkProvisioningState(CanceledValue);
+        /// <summary> Creating. </summary>
+        public static NetworkProvisioningState Creating { get; } = new NetworkProvisioningState(CreatingValue);
         /// <summary> Determines if two <see cref="NetworkProvisioningState"/> values are the same. </summary>
         public static bool operator ==(NetworkProvisioningState left, NetworkProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkProvisioningState"/> values are not the same. </summary>

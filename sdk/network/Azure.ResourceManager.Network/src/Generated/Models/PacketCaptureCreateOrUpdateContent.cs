@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
         /// <param name="filters"> A list of packet capture filters. </param>
+        /// <param name="continuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
+        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PacketCaptureCreateOrUpdateContent(string target, PacketCaptureMachineScope scope, PacketCaptureTargetType? targetType, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IList<PacketCaptureFilter> filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PacketCaptureCreateOrUpdateContent(string target, PacketCaptureMachineScope scope, PacketCaptureTargetType? targetType, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IList<PacketCaptureFilter> filters, bool? continuousCapture, PacketCaptureSettings captureSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Target = target;
             Scope = scope;
@@ -79,6 +81,8 @@ namespace Azure.ResourceManager.Network.Models
             TimeLimitInSeconds = timeLimitInSeconds;
             StorageLocation = storageLocation;
             Filters = filters;
+            ContinuousCapture = continuousCapture;
+            CaptureSettings = captureSettings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -103,5 +107,9 @@ namespace Azure.ResourceManager.Network.Models
         public PacketCaptureStorageLocation StorageLocation { get; }
         /// <summary> A list of packet capture filters. </summary>
         public IList<PacketCaptureFilter> Filters { get; }
+        /// <summary> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </summary>
+        public bool? ContinuousCapture { get; set; }
+        /// <summary> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </summary>
+        public PacketCaptureSettings CaptureSettings { get; set; }
     }
 }

@@ -54,12 +54,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> Name of an application gateway SKU. </param>
         /// <param name="tier"> Tier of an application gateway. </param>
         /// <param name="capacity"> Capacity (instance count) of an application gateway. </param>
+        /// <param name="family"> Family of an application gateway SKU. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewaySku(ApplicationGatewaySkuName? name, ApplicationGatewayTier? tier, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewaySku(ApplicationGatewaySkuName? name, ApplicationGatewayTier? tier, int? capacity, ApplicationGatewaySkuFamily? family, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
             Capacity = capacity;
+            Family = family;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,5 +71,7 @@ namespace Azure.ResourceManager.Network.Models
         public ApplicationGatewayTier? Tier { get; set; }
         /// <summary> Capacity (instance count) of an application gateway. </summary>
         public int? Capacity { get; set; }
+        /// <summary> Family of an application gateway SKU. </summary>
+        public ApplicationGatewaySkuFamily? Family { get; set; }
     }
 }
