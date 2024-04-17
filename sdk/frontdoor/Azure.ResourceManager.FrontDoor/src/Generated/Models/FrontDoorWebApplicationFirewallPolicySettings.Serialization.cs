@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in ScrubbingRules)
                 {
-                    writer.WriteObjectValue<WebApplicationFirewallScrubbingRules>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
