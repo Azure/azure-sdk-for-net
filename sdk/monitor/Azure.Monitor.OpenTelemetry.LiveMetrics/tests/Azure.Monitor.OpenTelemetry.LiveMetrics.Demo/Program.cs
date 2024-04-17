@@ -79,15 +79,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                             activity?.RecordException(ex);
                         }
                     }
-                    else if (GetRandomBool(percent: 50))
-                    {
-                        activity?.SetTag("url.path", "/request/fail");
-                        activity?.SetStatus(ActivityStatusCode.Error);
-                    }
-                    else
-                    {
-                        activity.SetTag("url.path", "/request/success");
-                    }
                 }
             }
 
