@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class MaxSizeRangeCapability : IUtf8JsonSerializable, IJsonModel<MaxSizeRangeCapability>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaxSizeRangeCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaxSizeRangeCapability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MaxSizeRangeCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(MinValue))
             {
                 writer.WritePropertyName("minValue"u8);
-                writer.WriteObjectValue<MaxSizeCapability>(MinValue, options);
+                writer.WriteObjectValue(MinValue, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MaxValue))
             {
                 writer.WritePropertyName("maxValue"u8);
-                writer.WriteObjectValue<MaxSizeCapability>(MaxValue, options);
+                writer.WriteObjectValue(MaxValue, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ScaleSize))
             {
                 writer.WritePropertyName("scaleSize"u8);
-                writer.WriteObjectValue<MaxSizeCapability>(ScaleSize, options);
+                writer.WriteObjectValue(ScaleSize, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LogSize))
             {
                 writer.WritePropertyName("logSize"u8);
-                writer.WriteObjectValue<LogSizeCapability>(LogSize, options);
+                writer.WriteObjectValue(LogSize, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static MaxSizeRangeCapability DeserializeMaxSizeRangeCapability(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

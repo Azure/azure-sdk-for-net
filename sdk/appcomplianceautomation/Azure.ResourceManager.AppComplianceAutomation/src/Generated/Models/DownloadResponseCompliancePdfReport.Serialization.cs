@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     internal partial class DownloadResponseCompliancePdfReport : IUtf8JsonSerializable, IJsonModel<DownloadResponseCompliancePdfReport>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DownloadResponseCompliancePdfReport>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DownloadResponseCompliancePdfReport>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DownloadResponseCompliancePdfReport>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static DownloadResponseCompliancePdfReport DeserializeDownloadResponseCompliancePdfReport(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

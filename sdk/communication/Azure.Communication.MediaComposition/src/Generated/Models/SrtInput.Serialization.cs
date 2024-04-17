@@ -17,7 +17,7 @@ namespace Azure.Communication.MediaComposition
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resolution"u8);
-            writer.WriteObjectValue<LayoutResolution>(Resolution);
+            writer.WriteObjectValue(Resolution);
             writer.WritePropertyName("streamUrl"u8);
             writer.WriteStringValue(StreamUrl);
             writer.WritePropertyName("kind"u8);
@@ -74,11 +74,11 @@ namespace Azure.Communication.MediaComposition
             return DeserializeSrtInput(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SrtInput>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

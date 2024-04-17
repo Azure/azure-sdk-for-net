@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchAccountCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<BatchAccountCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchAccountCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
-                writer.WriteObjectValue<BatchAccountAutoStorageBaseConfiguration>(AutoStorage, options);
+                writer.WriteObjectValue(AutoStorage, options);
             }
             if (Optional.IsDefined(PoolAllocationMode))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(KeyVaultReference))
             {
                 writer.WritePropertyName("keyVaultReference"u8);
-                writer.WriteObjectValue<BatchKeyVaultReference>(KeyVaultReference, options);
+                writer.WriteObjectValue(KeyVaultReference, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue<BatchNetworkProfile>(NetworkProfile, options);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<BatchAccountEncryptionConfiguration>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAccountCreateOrUpdateContent DeserializeBatchAccountCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

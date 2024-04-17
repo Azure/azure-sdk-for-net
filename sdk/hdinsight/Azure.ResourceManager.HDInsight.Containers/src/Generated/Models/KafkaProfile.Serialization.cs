@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     public partial class KafkaProfile : IUtf8JsonSerializable, IJsonModel<KafkaProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KafkaProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KafkaProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KafkaProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -42,16 +42,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStringValue(RemoteStorageUri.AbsoluteUri);
             }
             writer.WritePropertyName("diskStorage"u8);
-            writer.WriteObjectValue<DiskStorageProfile>(DiskStorage, options);
+            writer.WriteObjectValue(DiskStorage, options);
             if (options.Format != "W" && Optional.IsDefined(ClusterIdentity))
             {
                 writer.WritePropertyName("clusterIdentity"u8);
-                writer.WriteObjectValue<HDInsightIdentityProfile>(ClusterIdentity, options);
+                writer.WriteObjectValue(ClusterIdentity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConnectivityEndpoints))
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
-                writer.WriteObjectValue<KafkaConnectivityEndpoints>(ConnectivityEndpoints, options);
+                writer.WriteObjectValue(ConnectivityEndpoints, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static KafkaProfile DeserializeKafkaProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

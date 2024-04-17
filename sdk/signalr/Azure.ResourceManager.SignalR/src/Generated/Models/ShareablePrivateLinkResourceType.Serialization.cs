@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class ShareablePrivateLinkResourceType : IUtf8JsonSerializable, IJsonModel<ShareablePrivateLinkResourceType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareablePrivateLinkResourceType>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareablePrivateLinkResourceType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ShareablePrivateLinkResourceType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<ShareablePrivateLinkResourceProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static ShareablePrivateLinkResourceType DeserializeShareablePrivateLinkResourceType(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

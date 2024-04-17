@@ -15,7 +15,7 @@ namespace Azure.Analytics.Defender.Easm
 {
     public partial class ReportBillableAssetSummaryResult : IUtf8JsonSerializable, IJsonModel<ReportBillableAssetSummaryResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportBillableAssetSummaryResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportBillableAssetSummaryResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReportBillableAssetSummaryResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in AssetSummaries)
                 {
-                    writer.WriteObjectValue<ReportBillableAssetSnapshotResult>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Defender.Easm
 
         internal static ReportBillableAssetSummaryResult DeserializeReportBillableAssetSummaryResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,11 +141,11 @@ namespace Azure.Analytics.Defender.Easm
             return DeserializeReportBillableAssetSummaryResult(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ReportBillableAssetSummaryResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

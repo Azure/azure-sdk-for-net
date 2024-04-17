@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class NfsAccessPolicy : IUtf8JsonSerializable, IJsonModel<NfsAccessPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NfsAccessPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NfsAccessPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NfsAccessPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartArray();
             foreach (var item in AccessRules)
             {
-                writer.WriteObjectValue<NfsAccessRule>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static NfsAccessPolicy DeserializeNfsAccessPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationAccountPatch : IUtf8JsonSerializable, IJsonModel<AutomationAccountPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationAccountPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationAccountPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationAccountPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<AutomationSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<AutomationEncryptionProperties>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsDefined(IsPublicNetworkAccessAllowed))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationAccountPatch DeserializeAutomationAccountPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

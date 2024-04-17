@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningAccountKeyDatastoreCredentials : IUtf8JsonSerializable, IJsonModel<MachineLearningAccountKeyDatastoreCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAccountKeyDatastoreCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAccountKeyDatastoreCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningAccountKeyDatastoreCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue<MachineLearningAccountKeyDatastoreSecrets>(Secrets, options);
+            writer.WriteObjectValue(Secrets, options);
             writer.WritePropertyName("credentialsType"u8);
             writer.WriteStringValue(CredentialsType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningAccountKeyDatastoreCredentials DeserializeMachineLearningAccountKeyDatastoreCredentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

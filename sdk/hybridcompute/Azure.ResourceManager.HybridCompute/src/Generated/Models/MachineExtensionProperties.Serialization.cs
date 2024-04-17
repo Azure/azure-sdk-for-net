@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class MachineExtensionProperties : IUtf8JsonSerializable, IJsonModel<MachineExtensionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineExtensionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineExtensionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineExtensionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue<MachineExtensionInstanceView>(InstanceView, options);
+                writer.WriteObjectValue(InstanceView, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static MachineExtensionProperties DeserializeMachineExtensionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

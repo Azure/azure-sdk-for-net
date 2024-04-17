@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     internal partial class UnknownDataFlow : IUtf8JsonSerializable, IJsonModel<DataFactoryDataFlowProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryDataFlowProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryDataFlowProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryDataFlowProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue<DataFlowFolder>(Folder, options);
+                writer.WriteObjectValue(Folder, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static UnknownDataFlow DeserializeUnknownDataFlow(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

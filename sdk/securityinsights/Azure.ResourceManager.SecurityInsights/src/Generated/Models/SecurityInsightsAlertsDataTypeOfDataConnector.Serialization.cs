@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsAlertsDataTypeOfDataConnector : IUtf8JsonSerializable, IJsonModel<SecurityInsightsAlertsDataTypeOfDataConnector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAlertsDataTypeOfDataConnector>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAlertsDataTypeOfDataConnector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsAlertsDataTypeOfDataConnector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Alerts))
             {
                 writer.WritePropertyName("alerts"u8);
-                writer.WriteObjectValue<DataConnectorDataTypeCommon>(Alerts, options);
+                writer.WriteObjectValue(Alerts, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsAlertsDataTypeOfDataConnector DeserializeSecurityInsightsAlertsDataTypeOfDataConnector(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue<MetricDataPoint>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Properties))
@@ -43,11 +43,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MetricsData>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

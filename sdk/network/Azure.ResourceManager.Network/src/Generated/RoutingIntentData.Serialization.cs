@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class RoutingIntentData : IUtf8JsonSerializable, IJsonModel<RoutingIntentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingIntentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingIntentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoutingIntentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RoutingPolicies)
                 {
-                    writer.WriteObjectValue<RoutingPolicy>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
 
         internal static RoutingIntentData DeserializeRoutingIntentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

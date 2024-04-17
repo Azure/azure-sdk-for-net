@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class ProximityPlacementGroupData : IUtf8JsonSerializable, IJsonModel<ProximityPlacementGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProximityPlacementGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProximityPlacementGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProximityPlacementGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    writer.WriteObjectValue<ComputeSubResourceDataWithColocationStatus>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachineScaleSets)
                 {
-                    writer.WriteObjectValue<ComputeSubResourceDataWithColocationStatus>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,19 +104,19 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in AvailabilitySets)
                 {
-                    writer.WriteObjectValue<ComputeSubResourceDataWithColocationStatus>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ColocationStatus))
             {
                 writer.WritePropertyName("colocationStatus"u8);
-                writer.WriteObjectValue<InstanceViewStatus>(ColocationStatus, options);
+                writer.WriteObjectValue(ColocationStatus, options);
             }
             if (Optional.IsDefined(Intent))
             {
                 writer.WritePropertyName("intent"u8);
-                writer.WriteObjectValue<ProximityPlacementGroupPropertiesIntent>(Intent, options);
+                writer.WriteObjectValue(Intent, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static ProximityPlacementGroupData DeserializeProximityPlacementGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

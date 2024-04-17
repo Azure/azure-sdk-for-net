@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads
 {
     public partial class SapProviderInstanceData : IUtf8JsonSerializable, IJsonModel<SapProviderInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapProviderInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapProviderInstanceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapProviderInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<UserAssignedServiceIdentity>(Identity, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (options.Format != "W")
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(ProviderSettings))
             {
                 writer.WritePropertyName("providerSettings"u8);
-                writer.WriteObjectValue<ProviderSpecificProperties>(ProviderSettings, options);
+                writer.WriteObjectValue(ProviderSettings, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Workloads
 
         internal static SapProviderInstanceData DeserializeSapProviderInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

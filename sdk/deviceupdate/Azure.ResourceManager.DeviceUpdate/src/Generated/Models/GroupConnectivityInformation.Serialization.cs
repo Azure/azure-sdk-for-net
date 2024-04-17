@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 {
     public partial class GroupConnectivityInformation : IUtf8JsonSerializable, IJsonModel<GroupConnectivityInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GroupConnectivityInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GroupConnectivityInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GroupConnectivityInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static GroupConnectivityInformation DeserializeGroupConnectivityInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

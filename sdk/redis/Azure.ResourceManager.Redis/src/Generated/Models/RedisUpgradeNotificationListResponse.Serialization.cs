@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Redis.Models
 {
     internal partial class RedisUpgradeNotificationListResponse : IUtf8JsonSerializable, IJsonModel<RedisUpgradeNotificationListResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisUpgradeNotificationListResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisUpgradeNotificationListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisUpgradeNotificationListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<RedisUpgradeNotification>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisUpgradeNotificationListResponse DeserializeRedisUpgradeNotificationListResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

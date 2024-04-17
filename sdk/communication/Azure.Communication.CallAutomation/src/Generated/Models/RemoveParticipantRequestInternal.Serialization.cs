@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("participantToRemove"u8);
-            writer.WriteObjectValue<CommunicationIdentifierModel>(ParticipantToRemove);
+            writer.WriteObjectValue(ParticipantToRemove);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
@@ -30,11 +30,11 @@ namespace Azure.Communication.CallAutomation
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RemoveParticipantRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationWebhookData : IUtf8JsonSerializable, IJsonModel<AutomationWebhookData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationWebhookData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationWebhookData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationWebhookData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
-                writer.WriteObjectValue<RunbookAssociationProperty>(Runbook, options);
+                writer.WriteObjectValue(Runbook, options);
             }
             if (Optional.IsDefined(RunOn))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Automation
 
         internal static AutomationWebhookData DeserializeAutomationWebhookData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

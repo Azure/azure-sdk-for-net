@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class StepInput : IUtf8JsonSerializable, IJsonModel<StepInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StepInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StepInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StepInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(ResponseValidationProperties))
             {
                 writer.WritePropertyName("responseValidationProperties"u8);
-                writer.WriteObjectValue<ResponseValidationProperties>(ResponseValidationProperties, options);
+                writer.WriteObjectValue(ResponseValidationProperties, options);
             }
             if (Optional.IsCollectionDefined(ResponseOptions))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in ResponseOptions)
                 {
-                    writer.WriteObjectValue<ResponseConfig>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static StepInput DeserializeStepInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

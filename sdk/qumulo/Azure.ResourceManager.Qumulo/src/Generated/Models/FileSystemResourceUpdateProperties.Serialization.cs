@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Qumulo.Models
 {
     public partial class FileSystemResourceUpdateProperties : IUtf8JsonSerializable, IJsonModel<FileSystemResourceUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileSystemResourceUpdateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileSystemResourceUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FileSystemResourceUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Qumulo.Models
             if (Optional.IsDefined(MarketplaceDetails))
             {
                 writer.WritePropertyName("marketplaceDetails"u8);
-                writer.WriteObjectValue<MarketplaceDetails>(MarketplaceDetails, options);
+                writer.WriteObjectValue(MarketplaceDetails, options);
             }
             if (Optional.IsDefined(UserDetails))
             {
                 writer.WritePropertyName("userDetails"u8);
-                writer.WriteObjectValue<QumuloUserDetails>(UserDetails, options);
+                writer.WriteObjectValue(UserDetails, options);
             }
             if (Optional.IsDefined(DelegatedSubnetId))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Qumulo.Models
 
         internal static FileSystemResourceUpdateProperties DeserializeFileSystemResourceUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

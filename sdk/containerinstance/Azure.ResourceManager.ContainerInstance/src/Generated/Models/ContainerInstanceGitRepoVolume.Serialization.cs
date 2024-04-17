@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 {
     public partial class ContainerInstanceGitRepoVolume : IUtf8JsonSerializable, IJsonModel<ContainerInstanceGitRepoVolume>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerInstanceGitRepoVolume>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerInstanceGitRepoVolume>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerInstanceGitRepoVolume>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerInstanceGitRepoVolume DeserializeContainerInstanceGitRepoVolume(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

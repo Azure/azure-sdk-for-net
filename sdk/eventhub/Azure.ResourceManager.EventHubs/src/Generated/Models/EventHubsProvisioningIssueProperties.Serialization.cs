@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class EventHubsProvisioningIssueProperties : IUtf8JsonSerializable, IJsonModel<EventHubsProvisioningIssueProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsProvisioningIssueProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsProvisioningIssueProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsProvisioningIssueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsProvisioningIssueProperties DeserializeEventHubsProvisioningIssueProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class ExportRoutePolicyInformation : IUtf8JsonSerializable, IJsonModel<ExportRoutePolicyInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportRoutePolicyInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportRoutePolicyInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExportRoutePolicyInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static ExportRoutePolicyInformation DeserializeExportRoutePolicyInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

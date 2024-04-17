@@ -24,7 +24,7 @@ namespace Azure.Communication.MediaComposition
                 foreach (var item in Layers)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<LayoutLayer>(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -33,7 +33,7 @@ namespace Azure.Communication.MediaComposition
             foreach (var item in InputGroups)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<InputGroup>(item.Value);
+                writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("kind"u8);
@@ -41,7 +41,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue<LayoutResolution>(Resolution);
+                writer.WriteObjectValue(Resolution);
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
@@ -140,11 +140,11 @@ namespace Azure.Communication.MediaComposition
             return DeserializeCustomLayout(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CustomLayout>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

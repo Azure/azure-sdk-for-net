@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public partial class RecoveryServicesSecuritySettings : IUtf8JsonSerializable, IJsonModel<RecoveryServicesSecuritySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesSecuritySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesSecuritySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RecoveryServicesSecuritySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(ImmutabilitySettings))
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
-                writer.WriteObjectValue<ImmutabilitySettings>(ImmutabilitySettings, options);
+                writer.WriteObjectValue(ImmutabilitySettings, options);
             }
             if (Optional.IsDefined(SoftDeleteSettings))
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
-                writer.WriteObjectValue<RecoveryServicesSoftDeleteSettings>(SoftDeleteSettings, options);
+                writer.WriteObjectValue(SoftDeleteSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MultiUserAuthorization))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static RecoveryServicesSecuritySettings DeserializeRecoveryServicesSecuritySettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

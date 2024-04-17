@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class SelfHelpDiagnosticInvocation : IUtf8JsonSerializable, IJsonModel<SelfHelpDiagnosticInvocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHelpDiagnosticInvocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelfHelpDiagnosticInvocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SelfHelpDiagnosticInvocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static SelfHelpDiagnosticInvocation DeserializeSelfHelpDiagnosticInvocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

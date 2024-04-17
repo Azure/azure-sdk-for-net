@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class SuggestRelationshipLinksResponse : IUtf8JsonSerializable, IJsonModel<SuggestRelationshipLinksResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuggestRelationshipLinksResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuggestRelationshipLinksResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SuggestRelationshipLinksResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in SuggestedRelationships)
                 {
-                    writer.WriteObjectValue<RelationshipsLookup>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static SuggestRelationshipLinksResponse DeserializeSuggestRelationshipLinksResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

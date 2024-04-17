@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationUsage : IUtf8JsonSerializable, IJsonModel<AutomationUsage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationUsage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue<AutomationUsageCounterName>(Name, options);
+                writer.WriteObjectValue(Name, options);
             }
             if (Optional.IsDefined(Unit))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationUsage DeserializeAutomationUsage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

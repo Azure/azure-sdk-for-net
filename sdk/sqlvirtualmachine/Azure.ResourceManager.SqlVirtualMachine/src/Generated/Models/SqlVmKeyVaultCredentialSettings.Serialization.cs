@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     public partial class SqlVmKeyVaultCredentialSettings : IUtf8JsonSerializable, IJsonModel<SqlVmKeyVaultCredentialSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmKeyVaultCredentialSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmKeyVaultCredentialSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlVmKeyVaultCredentialSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlVmKeyVaultCredentialSettings DeserializeSqlVmKeyVaultCredentialSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

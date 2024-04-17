@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class NewPlanNotification : IUtf8JsonSerializable, IJsonModel<NewPlanNotification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewPlanNotification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewPlanNotification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NewPlanNotification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Plans)
                 {
-                    writer.WriteObjectValue<PlanNotificationDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static NewPlanNotification DeserializeNewPlanNotification(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

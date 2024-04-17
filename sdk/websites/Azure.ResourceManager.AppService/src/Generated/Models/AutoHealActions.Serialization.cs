@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AutoHealActions : IUtf8JsonSerializable, IJsonModel<AutoHealActions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoHealActions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoHealActions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoHealActions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CustomAction))
             {
                 writer.WritePropertyName("customAction"u8);
-                writer.WriteObjectValue<AutoHealCustomAction>(CustomAction, options);
+                writer.WriteObjectValue(CustomAction, options);
             }
             if (Optional.IsDefined(MinProcessExecutionTime))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AutoHealActions DeserializeAutoHealActions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

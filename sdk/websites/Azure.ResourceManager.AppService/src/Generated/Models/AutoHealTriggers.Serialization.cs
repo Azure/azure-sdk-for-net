@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AutoHealTriggers : IUtf8JsonSerializable, IJsonModel<AutoHealTriggers>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoHealTriggers>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoHealTriggers>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoHealTriggers>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
-                writer.WriteObjectValue<RequestsBasedTrigger>(Requests, options);
+                writer.WriteObjectValue(Requests, options);
             }
             if (Optional.IsDefined(PrivateBytesInKB))
             {
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodes)
                 {
-                    writer.WriteObjectValue<StatusCodesBasedTrigger>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SlowRequests))
             {
                 writer.WritePropertyName("slowRequests"u8);
-                writer.WriteObjectValue<SlowRequestsBasedTrigger>(SlowRequests, options);
+                writer.WriteObjectValue(SlowRequests, options);
             }
             if (Optional.IsCollectionDefined(SlowRequestsWithPath))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in SlowRequestsWithPath)
                 {
-                    writer.WriteObjectValue<SlowRequestsBasedTrigger>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodesRange)
                 {
-                    writer.WriteObjectValue<StatusCodesRangeBasedTrigger>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AutoHealTriggers DeserializeAutoHealTriggers(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

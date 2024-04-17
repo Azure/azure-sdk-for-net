@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class ManagedHsmPrivateEndpointConnectionItemData : IUtf8JsonSerializable, IJsonModel<ManagedHsmPrivateEndpointConnectionItemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedHsmPrivateEndpointConnectionItemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedHsmPrivateEndpointConnectionItemData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedHsmPrivateEndpointConnectionItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue<ManagedHsmPrivateLinkServiceConnectionState>(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static ManagedHsmPrivateEndpointConnectionItemData DeserializeManagedHsmPrivateEndpointConnectionItemData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeKubernetesClusterInfo : IUtf8JsonSerializable, IJsonModel<EdgeKubernetesClusterInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesClusterInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesClusterInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeKubernetesClusterInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(EtcdInfo))
             {
                 writer.WritePropertyName("etcdInfo"u8);
-                writer.WriteObjectValue<DataBoxEdgeEtcdInfo>(EtcdInfo, options);
+                writer.WriteObjectValue(EtcdInfo, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue<EdgeKubernetesNodeInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeKubernetesClusterInfo DeserializeEdgeKubernetesClusterInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

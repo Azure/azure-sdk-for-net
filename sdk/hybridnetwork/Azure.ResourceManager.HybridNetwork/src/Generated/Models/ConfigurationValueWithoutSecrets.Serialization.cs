@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class ConfigurationValueWithoutSecrets : IUtf8JsonSerializable, IJsonModel<ConfigurationValueWithoutSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationValueWithoutSecrets>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationValueWithoutSecrets>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConfigurationValueWithoutSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ConfigurationGroupSchemaResourceReference))
             {
                 writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
-                writer.WriteObjectValue<DeploymentResourceIdReference>(ConfigurationGroupSchemaResourceReference, options);
+                writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference, options);
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static ConfigurationValueWithoutSecrets DeserializeConfigurationValueWithoutSecrets(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

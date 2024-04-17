@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class AdminRuleGroupData : IUtf8JsonSerializable, IJsonModel<AdminRuleGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdminRuleGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdminRuleGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdminRuleGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AppliesToGroups)
                 {
-                    writer.WriteObjectValue<NetworkManagerSecurityGroupItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
 
         internal static AdminRuleGroupData DeserializeAdminRuleGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

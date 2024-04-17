@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement
 {
     public partial class CostManagementViewData : IUtf8JsonSerializable, IJsonModel<CostManagementViewData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementViewData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementViewData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CostManagementViewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WriteStartArray();
                 foreach (var item in Kpis)
                 {
-                    writer.WriteObjectValue<ViewKpiProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WriteStartArray();
                 foreach (var item in Pivots)
                 {
-                    writer.WriteObjectValue<ViewPivotProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue<ReportConfigTimePeriod>(TimePeriod, options);
+                writer.WriteObjectValue(TimePeriod, options);
             }
             if (Optional.IsDefined(DataSet))
             {
                 writer.WritePropertyName("dataSet"u8);
-                writer.WriteObjectValue<ReportConfigDataset>(DataSet, options);
+                writer.WriteObjectValue(DataSet, options);
             }
             if (Optional.IsDefined(IncludeMonetaryCommitment))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CostManagement
 
         internal static CostManagementViewData DeserializeCostManagementViewData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

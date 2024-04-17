@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class NetworkStatusContractWithLocation : IUtf8JsonSerializable, IJsonModel<NetworkStatusContractWithLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkStatusContractWithLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkStatusContractWithLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkStatusContractWithLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(NetworkStatus))
             {
                 writer.WritePropertyName("networkStatus"u8);
-                writer.WriteObjectValue<NetworkStatusContract>(NetworkStatus, options);
+                writer.WriteObjectValue(NetworkStatus, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static NetworkStatusContractWithLocation DeserializeNetworkStatusContractWithLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

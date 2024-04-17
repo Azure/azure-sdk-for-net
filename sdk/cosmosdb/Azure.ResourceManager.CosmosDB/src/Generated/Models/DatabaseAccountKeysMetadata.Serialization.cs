@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class DatabaseAccountKeysMetadata : IUtf8JsonSerializable, IJsonModel<DatabaseAccountKeysMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseAccountKeysMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseAccountKeysMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatabaseAccountKeysMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,22 +31,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(PrimaryMasterKey))
             {
                 writer.WritePropertyName("primaryMasterKey"u8);
-                writer.WriteObjectValue<AccountKeyMetadata>(PrimaryMasterKey, options);
+                writer.WriteObjectValue(PrimaryMasterKey, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecondaryMasterKey))
             {
                 writer.WritePropertyName("secondaryMasterKey"u8);
-                writer.WriteObjectValue<AccountKeyMetadata>(SecondaryMasterKey, options);
+                writer.WriteObjectValue(SecondaryMasterKey, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PrimaryReadonlyMasterKey))
             {
                 writer.WritePropertyName("primaryReadonlyMasterKey"u8);
-                writer.WriteObjectValue<AccountKeyMetadata>(PrimaryReadonlyMasterKey, options);
+                writer.WriteObjectValue(PrimaryReadonlyMasterKey, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecondaryReadonlyMasterKey))
             {
                 writer.WritePropertyName("secondaryReadonlyMasterKey"u8);
-                writer.WriteObjectValue<AccountKeyMetadata>(SecondaryReadonlyMasterKey, options);
+                writer.WriteObjectValue(SecondaryReadonlyMasterKey, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static DatabaseAccountKeysMetadata DeserializeDatabaseAccountKeysMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

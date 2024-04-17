@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.Models
 {
     internal partial class MySqlServerKeyListResult : IUtf8JsonSerializable, IJsonModel<MySqlServerKeyListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerKeyListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerKeyListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlServerKeyListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<MySqlServerKeyData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlServerKeyListResult DeserializeMySqlServerKeyListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Models
 {
     internal partial class CreateEmailSignInUrlResponseProperties : IUtf8JsonSerializable, IJsonModel<CreateEmailSignInUrlResponseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateEmailSignInUrlResponseProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateEmailSignInUrlResponseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CreateEmailSignInUrlResponseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static CreateEmailSignInUrlResponseProperties DeserializeCreateEmailSignInUrlResponseProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.Analytics.Defender.Easm
 {
     public partial class LogAnalyticsDataConnection : IUtf8JsonSerializable, IJsonModel<LogAnalyticsDataConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsDataConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsDataConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogAnalyticsDataConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Defender.Easm
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<LogAnalyticsDataConnectionProperties>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Id))
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Defender.Easm
 
         internal static LogAnalyticsDataConnection DeserializeLogAnalyticsDataConnection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -295,11 +295,11 @@ namespace Azure.Analytics.Defender.Easm
             return DeserializeLogAnalyticsDataConnection(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<LogAnalyticsDataConnection>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

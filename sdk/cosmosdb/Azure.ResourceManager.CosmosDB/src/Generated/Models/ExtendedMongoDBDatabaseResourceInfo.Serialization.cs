@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class ExtendedMongoDBDatabaseResourceInfo : IUtf8JsonSerializable, IJsonModel<ExtendedMongoDBDatabaseResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedMongoDBDatabaseResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedMongoDBDatabaseResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExtendedMongoDBDatabaseResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue<ResourceRestoreParameters>(RestoreParameters, options);
+                writer.WriteObjectValue(RestoreParameters, options);
             }
             if (Optional.IsDefined(CreateMode))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ExtendedMongoDBDatabaseResourceInfo DeserializeExtendedMongoDBDatabaseResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

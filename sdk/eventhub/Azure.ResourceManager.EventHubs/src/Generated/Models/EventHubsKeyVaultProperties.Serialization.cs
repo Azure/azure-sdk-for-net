@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class EventHubsKeyVaultProperties : IUtf8JsonSerializable, IJsonModel<EventHubsKeyVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsKeyVaultProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsKeyVaultProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<UserAssignedIdentityProperties>(Identity, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsKeyVaultProperties DeserializeEventHubsKeyVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 {
     public partial class PostgreSqlServerPrivateEndpointConnectionProperties : IUtf8JsonSerializable, IJsonModel<PostgreSqlServerPrivateEndpointConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerPrivateEndpointConnectionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerPrivateEndpointConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlServerPrivateEndpointConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue<PostgreSqlServerPrivateLinkServiceConnectionStateProperty>(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         internal static PostgreSqlServerPrivateEndpointConnectionProperties DeserializePostgreSqlServerPrivateEndpointConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

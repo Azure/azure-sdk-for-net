@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class LinuxPatchSettings : IUtf8JsonSerializable, IJsonModel<LinuxPatchSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinuxPatchSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinuxPatchSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LinuxPatchSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AutomaticByPlatformSettings))
             {
                 writer.WritePropertyName("automaticByPlatformSettings"u8);
-                writer.WriteObjectValue<LinuxVmGuestPatchAutomaticByPlatformSettings>(AutomaticByPlatformSettings, options);
+                writer.WriteObjectValue(AutomaticByPlatformSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static LinuxPatchSettings DeserializeLinuxPatchSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

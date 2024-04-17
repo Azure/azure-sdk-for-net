@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class DefenderCspmAwsOfferingDataSensitivityDiscovery : IUtf8JsonSerializable, IJsonModel<DefenderCspmAwsOfferingDataSensitivityDiscovery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderCspmAwsOfferingDataSensitivityDiscovery>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderCspmAwsOfferingDataSensitivityDiscovery>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DefenderCspmAwsOfferingDataSensitivityDiscovery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderCspmAwsOfferingDataSensitivityDiscovery DeserializeDefenderCspmAwsOfferingDataSensitivityDiscovery(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

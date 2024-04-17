@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class PolicyTrackedResourceRecord : IUtf8JsonSerializable, IJsonModel<PolicyTrackedResourceRecord>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyTrackedResourceRecord>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyTrackedResourceRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicyTrackedResourceRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PolicyDetails))
             {
                 writer.WritePropertyName("policyDetails"u8);
-                writer.WriteObjectValue<PolicyDetails>(PolicyDetails, options);
+                writer.WriteObjectValue(PolicyDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue<TrackedResourceModificationDetails>(CreatedBy, options);
+                writer.WriteObjectValue(CreatedBy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteObjectValue<TrackedResourceModificationDetails>(LastModifiedBy, options);
+                writer.WriteObjectValue(LastModifiedBy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdateOn))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static PolicyTrackedResourceRecord DeserializePolicyTrackedResourceRecord(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

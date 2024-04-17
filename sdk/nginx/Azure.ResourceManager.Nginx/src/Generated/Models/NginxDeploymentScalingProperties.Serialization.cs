@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Nginx.Models
 {
     internal partial class NginxDeploymentScalingProperties : IUtf8JsonSerializable, IJsonModel<NginxDeploymentScalingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentScalingProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentScalingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NginxDeploymentScalingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxDeploymentScalingProperties DeserializeNginxDeploymentScalingProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

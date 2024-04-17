@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppJobConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppJobConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppJobConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppJobConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppJobConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue<ContainerAppWritableSecret>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(ManualTriggerConfig))
             {
                 writer.WritePropertyName("manualTriggerConfig"u8);
-                writer.WriteObjectValue<JobConfigurationManualTriggerConfig>(ManualTriggerConfig, options);
+                writer.WriteObjectValue(ManualTriggerConfig, options);
             }
             if (Optional.IsDefined(ScheduleTriggerConfig))
             {
                 writer.WritePropertyName("scheduleTriggerConfig"u8);
-                writer.WriteObjectValue<JobConfigurationScheduleTriggerConfig>(ScheduleTriggerConfig, options);
+                writer.WriteObjectValue(ScheduleTriggerConfig, options);
             }
             if (Optional.IsDefined(EventTriggerConfig))
             {
                 writer.WritePropertyName("eventTriggerConfig"u8);
-                writer.WriteObjectValue<EventTriggerConfiguration>(EventTriggerConfig, options);
+                writer.WriteObjectValue(EventTriggerConfig, options);
             }
             if (Optional.IsCollectionDefined(Registries))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Registries)
                 {
-                    writer.WriteObjectValue<ContainerAppRegistryCredentials>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppJobConfiguration DeserializeContainerAppJobConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

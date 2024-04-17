@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     public partial class NewRelicSwitchBillingContent : IUtf8JsonSerializable, IJsonModel<NewRelicSwitchBillingContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicSwitchBillingContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicSwitchBillingContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NewRelicSwitchBillingContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue<NewRelicPlanDetails>(PlanData, options);
+                writer.WriteObjectValue(PlanData, options);
             }
             writer.WritePropertyName("userEmail"u8);
             writer.WriteStringValue(UserEmail);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         internal static NewRelicSwitchBillingContent DeserializeNewRelicSwitchBillingContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

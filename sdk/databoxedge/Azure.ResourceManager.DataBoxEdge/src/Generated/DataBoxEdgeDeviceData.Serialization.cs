@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DataBoxEdgeDeviceData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeDeviceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeDeviceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeDeviceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxEdgeDeviceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<DataBoxEdgeSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -161,17 +161,17 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(ResourceMoveDetails))
             {
                 writer.WritePropertyName("resourceMoveDetails"u8);
-                writer.WriteObjectValue<DataBoxEdgeResourceMoveDetails>(ResourceMoveDetails, options);
+                writer.WriteObjectValue(ResourceMoveDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EdgeProfile))
             {
                 writer.WritePropertyName("edgeProfile"u8);
-                writer.WriteObjectValue<EdgeProfile>(EdgeProfile, options);
+                writer.WriteObjectValue(EdgeProfile, options);
             }
             if (Optional.IsDefined(DataResidency))
             {
                 writer.WritePropertyName("dataResidency"u8);
-                writer.WriteObjectValue<DataResidency>(DataResidency, options);
+                writer.WriteObjectValue(DataResidency, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DataBoxEdgeDeviceData DeserializeDataBoxEdgeDeviceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

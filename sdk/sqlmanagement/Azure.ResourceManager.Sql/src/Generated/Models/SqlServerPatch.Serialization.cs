@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SqlServerPatch : IUtf8JsonSerializable, IJsonModel<SqlServerPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlServerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<SqlServerPrivateEndpointConnection>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Administrators))
             {
                 writer.WritePropertyName("administrators"u8);
-                writer.WriteObjectValue<ServerExternalAdministrator>(Administrators, options);
+                writer.WriteObjectValue(Administrators, options);
             }
             if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlServerPatch DeserializeSqlServerPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

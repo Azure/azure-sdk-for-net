@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class UserCreatedAcrAccount : IUtf8JsonSerializable, IJsonModel<UserCreatedAcrAccount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserCreatedAcrAccount>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserCreatedAcrAccount>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserCreatedAcrAccount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ArmResourceIdentifier != null)
                 {
                     writer.WritePropertyName("armResourceId"u8);
-                    writer.WriteObjectValue<ArmResourceId>(ArmResourceIdentifier, options);
+                    writer.WriteObjectValue(ArmResourceIdentifier, options);
                 }
                 else
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UserCreatedAcrAccount DeserializeUserCreatedAcrAccount(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

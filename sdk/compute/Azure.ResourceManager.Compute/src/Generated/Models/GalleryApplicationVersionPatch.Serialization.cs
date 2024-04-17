@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class GalleryApplicationVersionPatch : IUtf8JsonSerializable, IJsonModel<GalleryApplicationVersionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryApplicationVersionPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryApplicationVersionPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GalleryApplicationVersionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublishingProfile))
             {
                 writer.WritePropertyName("publishingProfile"u8);
-                writer.WriteObjectValue<GalleryApplicationVersionPublishingProfile>(PublishingProfile, options);
+                writer.WriteObjectValue(PublishingProfile, options);
             }
             if (Optional.IsDefined(SafetyProfile))
             {
                 writer.WritePropertyName("safetyProfile"u8);
-                writer.WriteObjectValue<GalleryApplicationVersionSafetyProfile>(SafetyProfile, options);
+                writer.WriteObjectValue(SafetyProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(ReplicationStatus))
             {
                 writer.WritePropertyName("replicationStatus"u8);
-                writer.WriteObjectValue<ReplicationStatus>(ReplicationStatus, options);
+                writer.WriteObjectValue(ReplicationStatus, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryApplicationVersionPatch DeserializeGalleryApplicationVersionPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

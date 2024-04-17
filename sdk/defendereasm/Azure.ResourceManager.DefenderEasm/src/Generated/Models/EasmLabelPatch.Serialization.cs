@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
 {
     public partial class EasmLabelPatch : IUtf8JsonSerializable, IJsonModel<EasmLabelPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EasmLabelPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EasmLabelPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EasmLabelPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
 
         internal static EasmLabelPatch DeserializeEasmLabelPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

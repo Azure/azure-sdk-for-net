@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class DataCollectionRuleEventHubDataSource : IUtf8JsonSerializable, IJsonModel<DataCollectionRuleEventHubDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionRuleEventHubDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionRuleEventHubDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataCollectionRuleEventHubDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataCollectionRuleEventHubDataSource DeserializeDataCollectionRuleEventHubDataSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

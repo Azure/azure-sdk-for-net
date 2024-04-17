@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class LegacyMicrosoftAccount : IUtf8JsonSerializable, IJsonModel<LegacyMicrosoftAccount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LegacyMicrosoftAccount>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LegacyMicrosoftAccount>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LegacyMicrosoftAccount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue<ClientRegistration>(Registration, options);
+                writer.WriteObjectValue(Registration, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue<LoginScopes>(Login, options);
+                writer.WriteObjectValue(Login, options);
             }
             if (Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
-                writer.WriteObjectValue<AllowedAudiencesValidation>(Validation, options);
+                writer.WriteObjectValue(Validation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static LegacyMicrosoftAccount DeserializeLegacyMicrosoftAccount(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

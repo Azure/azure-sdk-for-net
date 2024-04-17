@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class KeyVaultSecretPatch : IUtf8JsonSerializable, IJsonModel<KeyVaultSecretPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultSecretPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultSecretPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KeyVaultSecretPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<SecretPatchProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultSecretPatch DeserializeKeyVaultSecretPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

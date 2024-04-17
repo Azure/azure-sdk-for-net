@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.Synapse
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SynapseRecommendedSensitivityLabelUpdateOperationListResult>(synapseRecommendedSensitivityLabelUpdateOperationListResult, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(synapseRecommendedSensitivityLabelUpdateOperationListResult, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;

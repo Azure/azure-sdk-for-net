@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class DatabaseMigrationSqlDBProperties : IUtf8JsonSerializable, IJsonModel<DatabaseMigrationSqlDBProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseMigrationSqlDBProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseMigrationSqlDBProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatabaseMigrationSqlDBProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(MigrationStatusDetails))
             {
                 writer.WritePropertyName("migrationStatusDetails"u8);
-                writer.WriteObjectValue<SqlDBMigrationStatusDetails>(MigrationStatusDetails, options);
+                writer.WriteObjectValue(MigrationStatusDetails, options);
             }
             if (Optional.IsDefined(TargetSqlConnection))
             {
                 writer.WritePropertyName("targetSqlConnection"u8);
-                writer.WriteObjectValue<SqlConnectionInformation>(TargetSqlConnection, options);
+                writer.WriteObjectValue(TargetSqlConnection, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OfflineConfiguration))
             {
                 writer.WritePropertyName("offlineConfiguration"u8);
-                writer.WriteObjectValue<SqlDBOfflineConfiguration>(OfflineConfiguration, options);
+                writer.WriteObjectValue(OfflineConfiguration, options);
             }
             if (Optional.IsCollectionDefined(TableList))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceSqlConnection))
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
-                writer.WriteObjectValue<SqlConnectionInformation>(SourceSqlConnection, options);
+                writer.WriteObjectValue(SourceSqlConnection, options);
             }
             if (Optional.IsDefined(SourceDatabaseName))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(MigrationFailureError))
             {
                 writer.WritePropertyName("migrationFailureError"u8);
-                writer.WriteObjectValue<ErrorInfo>(MigrationFailureError, options);
+                writer.WriteObjectValue(MigrationFailureError, options);
             }
             if (Optional.IsDefined(TargetDatabaseCollation))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static DatabaseMigrationSqlDBProperties DeserializeDatabaseMigrationSqlDBProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

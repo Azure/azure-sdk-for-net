@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     internal partial class ServerlessUpstreamSettings : IUtf8JsonSerializable, IJsonModel<ServerlessUpstreamSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerlessUpstreamSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerlessUpstreamSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServerlessUpstreamSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in Templates)
                 {
-                    writer.WriteObjectValue<SignalRUpstreamTemplate>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static ServerlessUpstreamSettings DeserializeServerlessUpstreamSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

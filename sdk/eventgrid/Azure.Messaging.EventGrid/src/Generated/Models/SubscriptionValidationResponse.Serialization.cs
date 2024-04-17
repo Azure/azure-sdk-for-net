@@ -52,11 +52,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return DeserializeSubscriptionValidationResponse(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SubscriptionValidationResponse>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             public override void Write(Utf8JsonWriter writer, SubscriptionValidationResponse model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SubscriptionValidationResponse>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SubscriptionValidationResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

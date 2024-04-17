@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Models
 {
     public partial class ChaosDelayAction : IUtf8JsonSerializable, IJsonModel<ChaosDelayAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosDelayAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosDelayAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChaosDelayAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static ChaosDelayAction DeserializeChaosDelayAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

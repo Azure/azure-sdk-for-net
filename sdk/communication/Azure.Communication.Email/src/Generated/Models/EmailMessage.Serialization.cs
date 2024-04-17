@@ -29,16 +29,16 @@ namespace Azure.Communication.Email
             writer.WritePropertyName("senderAddress"u8);
             writer.WriteStringValue(SenderAddress);
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue<EmailContent>(Content);
+            writer.WriteObjectValue(Content);
             writer.WritePropertyName("recipients"u8);
-            writer.WriteObjectValue<EmailRecipients>(Recipients);
+            writer.WriteObjectValue(Recipients);
             if (Optional.IsCollectionDefined(Attachments))
             {
                 writer.WritePropertyName("attachments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Attachments)
                 {
-                    writer.WriteObjectValue<EmailAttachment>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -48,7 +48,7 @@ namespace Azure.Communication.Email
                 writer.WriteStartArray();
                 foreach (var item in ReplyTo)
                 {
-                    writer.WriteObjectValue<EmailAddress>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -60,11 +60,11 @@ namespace Azure.Communication.Email
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<EmailMessage>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

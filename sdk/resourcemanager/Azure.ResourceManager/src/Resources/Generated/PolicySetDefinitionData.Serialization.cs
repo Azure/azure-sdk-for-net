@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class PolicySetDefinitionData : IUtf8JsonSerializable, IJsonModel<PolicySetDefinitionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySetDefinitionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySetDefinitionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicySetDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ArmPolicyParameter>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in PolicyDefinitions)
                 {
-                    writer.WriteObjectValue<PolicyDefinitionReference>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in PolicyDefinitionGroups)
                 {
-                    writer.WriteObjectValue<PolicyDefinitionGroup>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Resources
 
         internal static PolicySetDefinitionData DeserializePolicySetDefinitionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

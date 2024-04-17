@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     internal partial class PrivateEndpointConnectionListResultWithSystemData : IUtf8JsonSerializable, IJsonModel<PrivateEndpointConnectionListResultWithSystemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionListResultWithSystemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionListResultWithSystemData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateEndpointConnectionListResultWithSystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<DesktopVirtualizationPrivateEndpointConnectionDataData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static PrivateEndpointConnectionListResultWithSystemData DeserializePrivateEndpointConnectionListResultWithSystemData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

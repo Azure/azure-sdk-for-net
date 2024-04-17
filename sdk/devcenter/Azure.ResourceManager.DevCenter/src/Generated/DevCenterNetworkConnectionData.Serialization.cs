@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class DevCenterNetworkConnectionData : IUtf8JsonSerializable, IJsonModel<DevCenterNetworkConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterNetworkConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterNetworkConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevCenterNetworkConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static DevCenterNetworkConnectionData DeserializeDevCenterNetworkConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementNotificationData : IUtf8JsonSerializable, IJsonModel<ApiManagementNotificationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementNotificationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementNotificationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementNotificationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Recipients))
             {
                 writer.WritePropertyName("recipients"u8);
-                writer.WriteObjectValue<RecipientsContractProperties>(Recipients, options);
+                writer.WriteObjectValue(Recipients, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiManagementNotificationData DeserializeApiManagementNotificationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

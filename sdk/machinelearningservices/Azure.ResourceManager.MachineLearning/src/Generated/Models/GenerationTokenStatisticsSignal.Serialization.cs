@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class GenerationTokenStatisticsSignal : IUtf8JsonSerializable, IJsonModel<GenerationTokenStatisticsSignal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenerationTokenStatisticsSignal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenerationTokenStatisticsSignal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GenerationTokenStatisticsSignal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue<GenerationTokenStatisticsMetricThreshold>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ProductionData))
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ProductionData != null)
                 {
                     writer.WritePropertyName("productionData"u8);
-                    writer.WriteObjectValue<MonitoringInputDataBase>(ProductionData, options);
+                    writer.WriteObjectValue(ProductionData, options);
                 }
                 else
                 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static GenerationTokenStatisticsSignal DeserializeGenerationTokenStatisticsSignal(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

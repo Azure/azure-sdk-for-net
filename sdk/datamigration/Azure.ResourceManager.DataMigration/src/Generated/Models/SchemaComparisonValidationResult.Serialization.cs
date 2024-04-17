@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class SchemaComparisonValidationResult : IUtf8JsonSerializable, IJsonModel<SchemaComparisonValidationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SchemaComparisonValidationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SchemaComparisonValidationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SchemaComparisonValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SchemaDifferences))
             {
                 writer.WritePropertyName("schemaDifferences"u8);
-                writer.WriteObjectValue<SchemaComparisonValidationResultType>(SchemaDifferences, options);
+                writer.WriteObjectValue(SchemaDifferences, options);
             }
             if (Optional.IsDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
-                writer.WriteObjectValue<ValidationError>(ValidationErrors, options);
+                writer.WriteObjectValue(ValidationErrors, options);
             }
             if (Optional.IsCollectionDefined(SourceDatabaseObjectCount))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SchemaComparisonValidationResult DeserializeSchemaComparisonValidationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

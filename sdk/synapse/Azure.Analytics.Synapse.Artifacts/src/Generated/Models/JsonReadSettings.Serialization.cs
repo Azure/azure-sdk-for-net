@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue<CompressionReadSettings>(CompressionProperties);
+                writer.WriteObjectValue(CompressionProperties);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -74,11 +74,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeJsonReadSettings(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<JsonReadSettings>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -86,7 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, JsonReadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<JsonReadSettings>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override JsonReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

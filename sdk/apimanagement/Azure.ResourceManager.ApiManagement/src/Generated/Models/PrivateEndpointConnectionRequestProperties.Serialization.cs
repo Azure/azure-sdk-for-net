@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal partial class PrivateEndpointConnectionRequestProperties : IUtf8JsonSerializable, IJsonModel<PrivateEndpointConnectionRequestProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionRequestProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionRequestProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateEndpointConnectionRequestProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue<ApiManagementPrivateLinkServiceConnectionState>(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static PrivateEndpointConnectionRequestProperties DeserializePrivateEndpointConnectionRequestProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

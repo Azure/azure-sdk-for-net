@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class MigrateLoadBalancerToIPBasedContent : IUtf8JsonSerializable, IJsonModel<MigrateLoadBalancerToIPBasedContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateLoadBalancerToIPBasedContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateLoadBalancerToIPBasedContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrateLoadBalancerToIPBasedContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static MigrateLoadBalancerToIPBasedContent DeserializeMigrateLoadBalancerToIPBasedContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

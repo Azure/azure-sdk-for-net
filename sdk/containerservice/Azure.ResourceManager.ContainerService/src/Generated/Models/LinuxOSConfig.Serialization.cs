@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class LinuxOSConfig : IUtf8JsonSerializable, IJsonModel<LinuxOSConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinuxOSConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinuxOSConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LinuxOSConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(Sysctls))
             {
                 writer.WritePropertyName("sysctls"u8);
-                writer.WriteObjectValue<SysctlConfig>(Sysctls, options);
+                writer.WriteObjectValue(Sysctls, options);
             }
             if (Optional.IsDefined(TransparentHugePageEnabled))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static LinuxOSConfig DeserializeLinuxOSConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

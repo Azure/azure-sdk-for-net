@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 {
     public partial class DynatraceEnvironmentProperties : IUtf8JsonSerializable, IJsonModel<DynatraceEnvironmentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceEnvironmentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceEnvironmentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DynatraceEnvironmentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(AccountInfo))
             {
                 writer.WritePropertyName("accountInfo"u8);
-                writer.WriteObjectValue<DynatraceAccountInfo>(AccountInfo, options);
+                writer.WriteObjectValue(AccountInfo, options);
             }
             if (Optional.IsDefined(EnvironmentInfo))
             {
                 writer.WritePropertyName("environmentInfo"u8);
-                writer.WriteObjectValue<DynatraceEnvironmentInfo>(EnvironmentInfo, options);
+                writer.WriteObjectValue(EnvironmentInfo, options);
             }
             if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
-                writer.WriteObjectValue<DynatraceSingleSignOnProperties>(SingleSignOnProperties, options);
+                writer.WriteObjectValue(SingleSignOnProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceEnvironmentProperties DeserializeDynatraceEnvironmentProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

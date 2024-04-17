@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class ProductLine : IUtf8JsonSerializable, IJsonModel<ProductLine>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductLine>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductLine>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProductLine>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
-                writer.WriteObjectValue<ProductDescription>(Description, options);
+                writer.WriteObjectValue(Description, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ImageInformation))
             {
@@ -44,24 +44,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in ImageInformation)
                 {
-                    writer.WriteObjectValue<EdgeOrderProductImageInformation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(CostInformation))
             {
                 writer.WritePropertyName("costInformation"u8);
-                writer.WriteObjectValue<EdgeOrderProductCostInformation>(CostInformation, options);
+                writer.WriteObjectValue(CostInformation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AvailabilityInformation))
             {
                 writer.WritePropertyName("availabilityInformation"u8);
-                writer.WriteObjectValue<ProductAvailabilityInformation>(AvailabilityInformation, options);
+                writer.WriteObjectValue(AvailabilityInformation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HierarchyInformation))
             {
                 writer.WritePropertyName("hierarchyInformation"u8);
-                writer.WriteObjectValue<HierarchyInformation>(HierarchyInformation, options);
+                writer.WriteObjectValue(HierarchyInformation, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(FilterableProperties))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in FilterableProperties)
                 {
-                    writer.WriteObjectValue<FilterableProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in Products)
                 {
-                    writer.WriteObjectValue<EdgeOrderProduct>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static ProductLine DeserializeProductLine(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

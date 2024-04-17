@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public partial class CveResult : IUtf8JsonSerializable, IJsonModel<CveResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CveResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CveResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CveResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 if (Component != null)
                 {
                     writer.WritePropertyName("component"u8);
-                    writer.WriteObjectValue<CveComponent>(Component, options);
+                    writer.WriteObjectValue(Component, options);
                 }
                 else
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue<CveLink>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static CveResult DeserializeCveResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

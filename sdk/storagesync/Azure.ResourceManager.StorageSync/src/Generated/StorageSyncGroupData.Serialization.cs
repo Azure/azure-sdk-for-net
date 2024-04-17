@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageSync
 {
     public partial class StorageSyncGroupData : IUtf8JsonSerializable, IJsonModel<StorageSyncGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSyncGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSyncGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageSyncGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StorageSync
 
         internal static StorageSyncGroupData DeserializeStorageSyncGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

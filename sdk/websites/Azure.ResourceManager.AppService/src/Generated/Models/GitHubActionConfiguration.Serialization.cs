@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class GitHubActionConfiguration : IUtf8JsonSerializable, IJsonModel<GitHubActionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitHubActionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GitHubActionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GitHubActionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CodeConfiguration))
             {
                 writer.WritePropertyName("codeConfiguration"u8);
-                writer.WriteObjectValue<GitHubActionCodeConfiguration>(CodeConfiguration, options);
+                writer.WriteObjectValue(CodeConfiguration, options);
             }
             if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
-                writer.WriteObjectValue<GitHubActionContainerConfiguration>(ContainerConfiguration, options);
+                writer.WriteObjectValue(ContainerConfiguration, options);
             }
             if (Optional.IsDefined(IsLinux))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static GitHubActionConfiguration DeserializeGitHubActionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

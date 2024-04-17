@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class DataQualityMonitoringSignal : IUtf8JsonSerializable, IJsonModel<DataQualityMonitoringSignal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataQualityMonitoringSignal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataQualityMonitoringSignal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataQualityMonitoringSignal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Features != null)
                 {
                     writer.WritePropertyName("features"u8);
-                    writer.WriteObjectValue<MonitoringFeatureFilterBase>(Features, options);
+                    writer.WriteObjectValue(Features, options);
                 }
                 else
                 {
@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue<DataQualityMetricThresholdBase>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("productionData"u8);
-            writer.WriteObjectValue<MonitoringInputDataBase>(ProductionData, options);
+            writer.WriteObjectValue(ProductionData, options);
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue<MonitoringInputDataBase>(ReferenceData, options);
+            writer.WriteObjectValue(ReferenceData, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static DataQualityMonitoringSignal DeserializeDataQualityMonitoringSignal(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

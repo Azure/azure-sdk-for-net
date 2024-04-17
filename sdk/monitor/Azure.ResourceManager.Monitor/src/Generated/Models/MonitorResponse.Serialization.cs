@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal partial class MonitorResponse : IUtf8JsonSerializable, IJsonModel<MonitorResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<MonitorMetric>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorResponse DeserializeMonitorResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

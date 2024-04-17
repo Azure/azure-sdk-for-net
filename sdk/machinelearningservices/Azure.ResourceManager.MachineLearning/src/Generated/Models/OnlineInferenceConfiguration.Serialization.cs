@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class OnlineInferenceConfiguration : IUtf8JsonSerializable, IJsonModel<OnlineInferenceConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OnlineInferenceConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OnlineInferenceConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OnlineInferenceConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LivenessRoute != null)
                 {
                     writer.WritePropertyName("livenessRoute"u8);
-                    writer.WriteObjectValue<MachineLearningInferenceContainerRoute>(LivenessRoute, options);
+                    writer.WriteObjectValue(LivenessRoute, options);
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ReadinessRoute != null)
                 {
                     writer.WritePropertyName("readinessRoute"u8);
-                    writer.WriteObjectValue<MachineLearningInferenceContainerRoute>(ReadinessRoute, options);
+                    writer.WriteObjectValue(ReadinessRoute, options);
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ScoringRoute != null)
                 {
                     writer.WritePropertyName("scoringRoute"u8);
-                    writer.WriteObjectValue<MachineLearningInferenceContainerRoute>(ScoringRoute, options);
+                    writer.WriteObjectValue(ScoringRoute, options);
                 }
                 else
                 {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static OnlineInferenceConfiguration DeserializeOnlineInferenceConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

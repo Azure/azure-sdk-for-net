@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class AdvancedThreatProtectionSettingData : IUtf8JsonSerializable, IJsonModel<AdvancedThreatProtectionSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdvancedThreatProtectionSettingData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdvancedThreatProtectionSettingData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdvancedThreatProtectionSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static AdvancedThreatProtectionSettingData DeserializeAdvancedThreatProtectionSettingData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

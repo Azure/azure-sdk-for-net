@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class DeliveryRuleHostNameCondition : IUtf8JsonSerializable, IJsonModel<DeliveryRuleHostNameCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryRuleHostNameCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryRuleHostNameCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeliveryRuleHostNameCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue<HostNameMatchCondition>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRuleHostNameCondition DeserializeDeliveryRuleHostNameCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

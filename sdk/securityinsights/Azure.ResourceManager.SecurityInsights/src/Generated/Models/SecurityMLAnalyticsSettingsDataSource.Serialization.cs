@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityMLAnalyticsSettingsDataSource : IUtf8JsonSerializable, IJsonModel<SecurityMLAnalyticsSettingsDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityMLAnalyticsSettingsDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityMLAnalyticsSettingsDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityMLAnalyticsSettingsDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityMLAnalyticsSettingsDataSource DeserializeSecurityMLAnalyticsSettingsDataSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class DevCenterImageData : IUtf8JsonSerializable, IJsonModel<DevCenterImageData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterImageData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterImageData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevCenterImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevCenter
             if (options.Format != "W" && Optional.IsDefined(RecommendedMachineConfiguration))
             {
                 writer.WritePropertyName("recommendedMachineConfiguration"u8);
-                writer.WriteObjectValue<RecommendedMachineConfiguration>(RecommendedMachineConfiguration, options);
+                writer.WriteObjectValue(RecommendedMachineConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static DevCenterImageData DeserializeDevCenterImageData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

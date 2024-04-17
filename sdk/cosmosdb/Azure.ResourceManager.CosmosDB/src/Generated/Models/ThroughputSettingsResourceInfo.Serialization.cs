@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class ThroughputSettingsResourceInfo : IUtf8JsonSerializable, IJsonModel<ThroughputSettingsResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThroughputSettingsResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThroughputSettingsResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ThroughputSettingsResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
-                writer.WriteObjectValue<AutoscaleSettingsResourceInfo>(AutoscaleSettings, options);
+                writer.WriteObjectValue(AutoscaleSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MinimumThroughput))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ThroughputSettingsResourceInfo DeserializeThroughputSettingsResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

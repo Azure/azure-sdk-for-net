@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class SmbSetting : IUtf8JsonSerializable, IJsonModel<SmbSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmbSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmbSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SmbSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Multichannel))
             {
                 writer.WritePropertyName("multichannel"u8);
-                writer.WriteObjectValue<Multichannel>(Multichannel, options);
+                writer.WriteObjectValue(Multichannel, options);
             }
             if (Optional.IsDefined(Versions))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static SmbSetting DeserializeSmbSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppInstanceProbe : IUtf8JsonSerializable, IJsonModel<AppInstanceProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppInstanceProbe>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppInstanceProbe>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppInstanceProbe>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ProbeAction))
             {
                 writer.WritePropertyName("probeAction"u8);
-                writer.WriteObjectValue<AppInstanceProbeAction>(ProbeAction, options);
+                writer.WriteObjectValue(ProbeAction, options);
             }
             writer.WritePropertyName("disableProbe"u8);
             writer.WriteBooleanValue(IsProbeDisabled);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppInstanceProbe DeserializeAppInstanceProbe(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

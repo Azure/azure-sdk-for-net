@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     internal partial class DedicatedCapacities : IUtf8JsonSerializable, IJsonModel<DedicatedCapacities>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedCapacities>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedCapacities>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DedicatedCapacities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<DedicatedCapacityData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         internal static DedicatedCapacities DeserializeDedicatedCapacities(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

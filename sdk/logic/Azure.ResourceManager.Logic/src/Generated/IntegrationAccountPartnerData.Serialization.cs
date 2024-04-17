@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class IntegrationAccountPartnerData : IUtf8JsonSerializable, IJsonModel<IntegrationAccountPartnerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountPartnerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountPartnerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationAccountPartnerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Logic
 #endif
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue<IntegrationAccountPartnerContent>(Content, options);
+            writer.WriteObjectValue(Content, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Logic
 
         internal static IntegrationAccountPartnerData DeserializeIntegrationAccountPartnerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

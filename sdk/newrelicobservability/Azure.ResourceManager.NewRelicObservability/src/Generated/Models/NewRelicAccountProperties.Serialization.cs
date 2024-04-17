@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     public partial class NewRelicAccountProperties : IUtf8JsonSerializable, IJsonModel<NewRelicAccountProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicAccountProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicAccountProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NewRelicAccountProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(AccountInfo))
             {
                 writer.WritePropertyName("accountInfo"u8);
-                writer.WriteObjectValue<NewRelicObservabilityAccountInfo>(AccountInfo, options);
+                writer.WriteObjectValue(AccountInfo, options);
             }
             if (Optional.IsDefined(OrganizationInfo))
             {
                 writer.WritePropertyName("organizationInfo"u8);
-                writer.WriteObjectValue<NewRelicObservabilityOrganizationInfo>(OrganizationInfo, options);
+                writer.WriteObjectValue(OrganizationInfo, options);
             }
             if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
-                writer.WriteObjectValue<NewRelicSingleSignOnProperties>(SingleSignOnProperties, options);
+                writer.WriteObjectValue(SingleSignOnProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         internal static NewRelicAccountProperties DeserializeNewRelicAccountProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

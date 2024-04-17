@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class FrontDoorCustomDomainData : IUtf8JsonSerializable, IJsonModel<FrontDoorCustomDomainData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCustomDomainData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCustomDomainData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorCustomDomainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
-                writer.WriteObjectValue<FrontDoorCustomDomainHttpsContent>(TlsSettings, options);
+                writer.WriteObjectValue(TlsSettings, options);
             }
             if (Optional.IsDefined(DnsZone))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn
                 if (PreValidatedCustomDomainResource != null)
                 {
                     writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                    writer.WriteObjectValue<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId>(PreValidatedCustomDomainResource, options);
+                    writer.WriteObjectValue(PreValidatedCustomDomainResource, options);
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Cdn
             if (options.Format != "W" && Optional.IsDefined(ValidationProperties))
             {
                 writer.WritePropertyName("validationProperties"u8);
-                writer.WriteObjectValue<DomainValidationProperties>(ValidationProperties, options);
+                writer.WriteObjectValue(ValidationProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn
 
         internal static FrontDoorCustomDomainData DeserializeFrontDoorCustomDomainData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

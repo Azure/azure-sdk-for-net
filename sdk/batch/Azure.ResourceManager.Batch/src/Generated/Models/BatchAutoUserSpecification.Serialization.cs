@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchAutoUserSpecification : IUtf8JsonSerializable, IJsonModel<BatchAutoUserSpecification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAutoUserSpecification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAutoUserSpecification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchAutoUserSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAutoUserSpecification DeserializeBatchAutoUserSpecification(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

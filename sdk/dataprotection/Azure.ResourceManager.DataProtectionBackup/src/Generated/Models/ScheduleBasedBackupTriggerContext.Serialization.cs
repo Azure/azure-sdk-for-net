@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class ScheduleBasedBackupTriggerContext : IUtf8JsonSerializable, IJsonModel<ScheduleBasedBackupTriggerContext>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleBasedBackupTriggerContext>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleBasedBackupTriggerContext>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScheduleBasedBackupTriggerContext>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue<DataProtectionBackupSchedule>(Schedule, options);
+            writer.WriteObjectValue(Schedule, options);
             writer.WritePropertyName("taggingCriteria"u8);
             writer.WriteStartArray();
             foreach (var item in TaggingCriteriaList)
             {
-                writer.WriteObjectValue<DataProtectionBackupTaggingCriteria>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("objectType"u8);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ScheduleBasedBackupTriggerContext DeserializeScheduleBasedBackupTriggerContext(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

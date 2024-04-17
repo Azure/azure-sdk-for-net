@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class VMwareCbtMigrationDetails : IUtf8JsonSerializable, IJsonModel<VMwareCbtMigrationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareCbtMigrationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareCbtMigrationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareCbtMigrationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(TargetVmSecurityProfile))
             {
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
-                writer.WriteObjectValue<VMwareCbtSecurityProfileProperties>(TargetVmSecurityProfile, options);
+                writer.WriteObjectValue(TargetVmSecurityProfile, options);
             }
             if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue<VMwareCbtProtectedDiskDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue<VMwareCbtNicDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -293,12 +293,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(ApplianceMonitoringDetails))
             {
                 writer.WritePropertyName("applianceMonitoringDetails"u8);
-                writer.WriteObjectValue<ApplianceMonitoringDetails>(ApplianceMonitoringDetails, options);
+                writer.WriteObjectValue(ApplianceMonitoringDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GatewayOperationDetails))
             {
                 writer.WritePropertyName("gatewayOperationDetails"u8);
-                writer.WriteObjectValue<GatewayOperationDetails>(GatewayOperationDetails, options);
+                writer.WriteObjectValue(GatewayOperationDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OperationName))
             {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static VMwareCbtMigrationDetails DeserializeVMwareCbtMigrationDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

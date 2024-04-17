@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class CollectionsToSubscriptionsMappingResult : IUtf8JsonSerializable, IJsonModel<CollectionsToSubscriptionsMappingResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CollectionsToSubscriptionsMappingResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CollectionsToSubscriptionsMappingResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CollectionsToSubscriptionsMappingResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 foreach (var item in Details)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<CollectionsSubscriptionsMappingDetails>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static CollectionsToSubscriptionsMappingResult DeserializeCollectionsToSubscriptionsMappingResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

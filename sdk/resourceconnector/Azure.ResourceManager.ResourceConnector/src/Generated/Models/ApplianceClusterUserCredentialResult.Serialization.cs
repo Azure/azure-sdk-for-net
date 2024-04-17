@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 {
     public partial class ApplianceClusterUserCredentialResult : IUtf8JsonSerializable, IJsonModel<ApplianceClusterUserCredentialResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplianceClusterUserCredentialResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplianceClusterUserCredentialResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplianceClusterUserCredentialResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             if (options.Format != "W" && Optional.IsDefined(HybridConnectionConfig))
             {
                 writer.WritePropertyName("hybridConnectionConfig"u8);
-                writer.WriteObjectValue<HybridConnectionConfig>(HybridConnectionConfig, options);
+                writer.WriteObjectValue(HybridConnectionConfig, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue<ApplianceCredentialKubeconfig>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 
         internal static ApplianceClusterUserCredentialResult DeserializeApplianceClusterUserCredentialResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

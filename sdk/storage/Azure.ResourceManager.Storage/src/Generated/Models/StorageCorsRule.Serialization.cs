@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageCorsRule : IUtf8JsonSerializable, IJsonModel<StorageCorsRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCorsRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCorsRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageCorsRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageCorsRule DeserializeStorageCorsRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
         {
             writer.WriteStartObject();
             writer.WritePropertyName("playSourceInfo"u8);
-            writer.WriteObjectValue<PlaySourceInternal>(PlaySourceInfo);
+            writer.WriteObjectValue(PlaySourceInfo);
             if (Optional.IsCollectionDefined(PlayTo))
             {
                 writer.WritePropertyName("playTo"u8);
@@ -30,7 +30,7 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(PlayOptions))
             {
                 writer.WritePropertyName("playOptions"u8);
-                writer.WriteObjectValue<PlayOptionsInternal>(PlayOptions);
+                writer.WriteObjectValue(PlayOptions);
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -40,11 +40,11 @@ namespace Azure.Communication.CallingServer
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PlayRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

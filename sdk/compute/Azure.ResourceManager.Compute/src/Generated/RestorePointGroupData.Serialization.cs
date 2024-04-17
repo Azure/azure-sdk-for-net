@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class RestorePointGroupData : IUtf8JsonSerializable, IJsonModel<RestorePointGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorePointGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorePointGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestorePointGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue<RestorePointGroupSource>(Source, options);
+                writer.WriteObjectValue(Source, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in RestorePoints)
                 {
-                    writer.WriteObjectValue<RestorePointData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static RestorePointGroupData DeserializeRestorePointGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

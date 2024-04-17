@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 {
     public partial class NamespaceJunction : IUtf8JsonSerializable, IJsonModel<NamespaceJunction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamespaceJunction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamespaceJunction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NamespaceJunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static NamespaceJunction DeserializeNamespaceJunction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

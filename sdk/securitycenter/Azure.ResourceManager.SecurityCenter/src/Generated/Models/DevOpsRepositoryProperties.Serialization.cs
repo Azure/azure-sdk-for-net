@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class DevOpsRepositoryProperties : IUtf8JsonSerializable, IJsonModel<DevOpsRepositoryProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevOpsRepositoryProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevOpsRepositoryProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevOpsRepositoryProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ActionableRemediation))
             {
                 writer.WritePropertyName("actionableRemediation"u8);
-                writer.WriteObjectValue<ActionableRemediation>(ActionableRemediation, options);
+                writer.WriteObjectValue(ActionableRemediation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DevOpsRepositoryProperties DeserializeDevOpsRepositoryProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

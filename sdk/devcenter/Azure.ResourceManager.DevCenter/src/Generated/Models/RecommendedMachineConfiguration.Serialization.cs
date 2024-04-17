@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class RecommendedMachineConfiguration : IUtf8JsonSerializable, IJsonModel<RecommendedMachineConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendedMachineConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendedMachineConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RecommendedMachineConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (options.Format != "W" && Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
-                writer.WriteObjectValue<DevCenterResourceRange>(Memory, options);
+                writer.WriteObjectValue(Memory, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VCpus))
             {
                 writer.WritePropertyName("vCPUs"u8);
-                writer.WriteObjectValue<DevCenterResourceRange>(VCpus, options);
+                writer.WriteObjectValue(VCpus, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static RecommendedMachineConfiguration DeserializeRecommendedMachineConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

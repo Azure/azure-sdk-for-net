@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization
 {
     public partial class RoleEligibilityScheduleData : IUtf8JsonSerializable, IJsonModel<RoleEligibilityScheduleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleEligibilityScheduleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleEligibilityScheduleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleEligibilityScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
-                writer.WriteObjectValue<RoleManagementExpandedProperties>(ExpandedProperties, options);
+                writer.WriteObjectValue(ExpandedProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Authorization
 
         internal static RoleEligibilityScheduleData DeserializeRoleEligibilityScheduleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

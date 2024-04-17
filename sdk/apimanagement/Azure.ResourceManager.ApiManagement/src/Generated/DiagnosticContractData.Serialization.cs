@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class DiagnosticContractData : IUtf8JsonSerializable, IJsonModel<DiagnosticContractData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticContractData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticContractData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiagnosticContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Sampling))
             {
                 writer.WritePropertyName("sampling"u8);
-                writer.WriteObjectValue<SamplingSettings>(Sampling, options);
+                writer.WriteObjectValue(Sampling, options);
             }
             if (Optional.IsDefined(Frontend))
             {
                 writer.WritePropertyName("frontend"u8);
-                writer.WriteObjectValue<PipelineDiagnosticSettings>(Frontend, options);
+                writer.WriteObjectValue(Frontend, options);
             }
             if (Optional.IsDefined(Backend))
             {
                 writer.WritePropertyName("backend"u8);
-                writer.WriteObjectValue<PipelineDiagnosticSettings>(Backend, options);
+                writer.WriteObjectValue(Backend, options);
             }
             if (Optional.IsDefined(IsLogClientIPEnabled))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static DiagnosticContractData DeserializeDiagnosticContractData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

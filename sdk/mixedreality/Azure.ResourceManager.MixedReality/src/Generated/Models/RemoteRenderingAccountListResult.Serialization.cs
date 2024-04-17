@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MixedReality.Models
 {
     internal partial class RemoteRenderingAccountListResult : IUtf8JsonSerializable, IJsonModel<RemoteRenderingAccountListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemoteRenderingAccountListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemoteRenderingAccountListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RemoteRenderingAccountListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<RemoteRenderingAccountData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MixedReality.Models
 
         internal static RemoteRenderingAccountListResult DeserializeRemoteRenderingAccountListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

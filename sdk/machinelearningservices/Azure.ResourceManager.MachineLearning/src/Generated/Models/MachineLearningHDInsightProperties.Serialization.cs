@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningHDInsightProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningHDInsightProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningHDInsightProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningHDInsightProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningHDInsightProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AdministratorAccount != null)
                 {
                     writer.WritePropertyName("administratorAccount"u8);
-                    writer.WriteObjectValue<MachineLearningVmSshCredentials>(AdministratorAccount, options);
+                    writer.WriteObjectValue(AdministratorAccount, options);
                 }
                 else
                 {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningHDInsightProperties DeserializeMachineLearningHDInsightProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

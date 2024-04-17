@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class JitAuthorizationPolicies : IUtf8JsonSerializable, IJsonModel<JitAuthorizationPolicies>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitAuthorizationPolicies>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitAuthorizationPolicies>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JitAuthorizationPolicies>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static JitAuthorizationPolicies DeserializeJitAuthorizationPolicies(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

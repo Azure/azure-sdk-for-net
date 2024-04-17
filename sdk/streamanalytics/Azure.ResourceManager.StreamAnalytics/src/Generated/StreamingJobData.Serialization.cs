@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StreamAnalytics
 {
     public partial class StreamingJobData : IUtf8JsonSerializable, IJsonModel<StreamingJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingJobData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamingJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<StreamAnalyticsSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(JobId))
             {
@@ -150,14 +150,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue<StreamingJobInputData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Transformation))
             {
                 writer.WritePropertyName("transformation"u8);
-                writer.WriteObjectValue<StreamingJobTransformationData>(Transformation, options);
+                writer.WriteObjectValue(Transformation, options);
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue<StreamingJobOutputData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue<StreamingJobFunctionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 if (JobStorageAccount != null)
                 {
                     writer.WritePropertyName("jobStorageAccount"u8);
-                    writer.WriteObjectValue<StreamingJobStorageAccount>(JobStorageAccount, options);
+                    writer.WriteObjectValue(JobStorageAccount, options);
                 }
                 else
                 {
@@ -204,14 +204,14 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Externals))
             {
                 writer.WritePropertyName("externals"u8);
-                writer.WriteObjectValue<StreamingJobExternal>(Externals, options);
+                writer.WriteObjectValue(Externals, options);
             }
             if (Optional.IsDefined(Cluster))
             {
                 if (Cluster != null)
                 {
                     writer.WritePropertyName("cluster"u8);
-                    writer.WriteObjectValue<ClusterInfo>(Cluster, options);
+                    writer.WriteObjectValue(Cluster, options);
                 }
                 else
                 {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         internal static StreamingJobData DeserializeStreamingJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationCatalogMsrp : IUtf8JsonSerializable, IJsonModel<ReservationCatalogMsrp>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationCatalogMsrp>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationCatalogMsrp>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationCatalogMsrp>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(P1Y))
             {
                 writer.WritePropertyName("p1Y"u8);
-                writer.WriteObjectValue<PurchasePrice>(P1Y, options);
+                writer.WriteObjectValue(P1Y, options);
             }
             if (Optional.IsDefined(P3Y))
             {
                 writer.WritePropertyName("p3Y"u8);
-                writer.WriteObjectValue<PurchasePrice>(P3Y, options);
+                writer.WriteObjectValue(P3Y, options);
             }
             if (Optional.IsDefined(P5Y))
             {
                 writer.WritePropertyName("p5Y"u8);
-                writer.WriteObjectValue<PurchasePrice>(P5Y, options);
+                writer.WriteObjectValue(P5Y, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationCatalogMsrp DeserializeReservationCatalogMsrp(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     internal partial class DeletedManagedHsmListResult : IUtf8JsonSerializable, IJsonModel<DeletedManagedHsmListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedManagedHsmListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedManagedHsmListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeletedManagedHsmListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<DeletedManagedHsmData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static DeletedManagedHsmListResult DeserializeDeletedManagedHsmListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

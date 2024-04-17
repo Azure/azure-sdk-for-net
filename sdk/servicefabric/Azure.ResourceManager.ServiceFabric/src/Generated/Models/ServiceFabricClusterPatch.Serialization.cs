@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 {
     public partial class ServiceFabricClusterPatch : IUtf8JsonSerializable, IJsonModel<ServiceFabricClusterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricClusterPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricClusterPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceFabricClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
-                writer.WriteObjectValue<ClusterCertificateDescription>(Certificate, options);
+                writer.WriteObjectValue(Certificate, options);
             }
             if (Optional.IsDefined(CertificateCommonNames))
             {
                 writer.WritePropertyName("certificateCommonNames"u8);
-                writer.WriteObjectValue<ClusterServerCertificateCommonNames>(CertificateCommonNames, options);
+                writer.WriteObjectValue(CertificateCommonNames, options);
             }
             if (Optional.IsCollectionDefined(ClientCertificateCommonNames))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in ClientCertificateCommonNames)
                 {
-                    writer.WriteObjectValue<ClusterClientCertificateCommonName>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in ClientCertificateThumbprints)
                 {
-                    writer.WriteObjectValue<ClusterClientCertificateThumbprint>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in FabricSettings)
                 {
-                    writer.WriteObjectValue<SettingsSectionDescription>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in NodeTypes)
                 {
-                    writer.WriteObjectValue<ClusterNodeTypeDescription>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,17 +117,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(ReverseProxyCertificate))
             {
                 writer.WritePropertyName("reverseProxyCertificate"u8);
-                writer.WriteObjectValue<ClusterCertificateDescription>(ReverseProxyCertificate, options);
+                writer.WriteObjectValue(ReverseProxyCertificate, options);
             }
             if (Optional.IsDefined(UpgradeDescription))
             {
                 writer.WritePropertyName("upgradeDescription"u8);
-                writer.WriteObjectValue<ClusterUpgradePolicy>(UpgradeDescription, options);
+                writer.WriteObjectValue(UpgradeDescription, options);
             }
             if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
             {
                 writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
-                writer.WriteObjectValue<ApplicationTypeVersionsCleanupPolicy>(ApplicationTypeVersionsCleanupPolicy, options);
+                writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy, options);
             }
             if (Optional.IsDefined(UpgradeMode))
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Notifications)
                 {
-                    writer.WriteObjectValue<ClusterNotification>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ServiceFabricClusterPatch DeserializeServiceFabricClusterPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

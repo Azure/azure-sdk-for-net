@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Support.Models
 {
     public partial class UpdateSupportTicket : IUtf8JsonSerializable, IJsonModel<UpdateSupportTicket>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateSupportTicket>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateSupportTicket>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UpdateSupportTicket>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Support.Models
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue<SupportContactProfileContent>(ContactDetails, options);
+                writer.WriteObjectValue(ContactDetails, options);
             }
             if (Optional.IsDefined(AdvancedDiagnosticConsent))
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsent)
                 {
-                    writer.WriteObjectValue<SecondaryConsent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Support.Models
 
         internal static UpdateSupportTicket DeserializeUpdateSupportTicket(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

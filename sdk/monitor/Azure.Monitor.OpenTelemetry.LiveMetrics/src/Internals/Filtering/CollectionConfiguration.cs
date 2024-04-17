@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         #endregion
 
         #region Metadata used by other components
-        private readonly List<Tuple<string, DerivedMetricInfoAggregation?>> telemetryMetadata = new List<Tuple<string, DerivedMetricInfoAggregation?>>();
+        private readonly List<Tuple<string, Models.AggregationType?>> telemetryMetadata = new List<Tuple<string, Models.AggregationType?>>();
         #endregion
 
         public CollectionConfiguration(
@@ -63,7 +63,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
             errors = metricErrors.Concat(documentStreamErrors).ToArray();
 
-            UpdateAllErrorsWithKeyValue(errors, "ETag", this.info.Etag);
+            UpdateAllErrorsWithKeyValue(errors, "ETag", this.info.ETag);
         }
 
         private void UpdateAllErrorsWithKeyValue(CollectionConfigurationError[] errors, string key, string value)
@@ -84,7 +84,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             {
                 if (error.Data[i].Key == key)
                 {
-                    error.Data[i].Value = value;
+                    error.Data[i] = new KeyValuePairString(error.Data[i].Key, value);
+
+                    // TODO: MODEL CHANGED TO READONLY. I'M INVESTIGATING IF WE CAN REVERT THIS CHANGE. (2024-03-22)
+                    //error.Data[i].Value = value;
+
                     return null;
                 }
             }
@@ -106,14 +110,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         /// <summary>
         /// Gets Telemetry types only. Used by QuickPulseTelemetryProcessor.
         /// </summary>
-        public IEnumerable<Tuple<string, DerivedMetricInfoAggregation?>> TelemetryMetadata => this.telemetryMetadata;
+        public IEnumerable<Tuple<string, Models.AggregationType?>> TelemetryMetadata => this.telemetryMetadata;
 
         /// <summary>
         /// Gets document streams. Telemetry items are provided by QuickPulseTelemetryProcessor.
         /// </summary>
         public IEnumerable<DocumentStream> DocumentStreams => this.documentStreams;
 
-        public string ETag => this.info.Etag;
+        public string ETag => this.info.ETag;
 
         private static void AddMetric<DocumentIngress>(
           DerivedMetricInfo metricInfo,

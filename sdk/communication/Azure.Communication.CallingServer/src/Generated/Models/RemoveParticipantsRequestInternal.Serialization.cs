@@ -19,7 +19,7 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartArray();
             foreach (var item in ParticipantsToRemove)
             {
-                writer.WriteObjectValue<CommunicationIdentifierModel>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(OperationContext))
@@ -30,11 +30,11 @@ namespace Azure.Communication.CallingServer
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RemoveParticipantsRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }
