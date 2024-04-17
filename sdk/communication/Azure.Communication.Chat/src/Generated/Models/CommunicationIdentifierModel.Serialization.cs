@@ -113,7 +113,13 @@ namespace Azure.Communication
                     continue;
                 }
             }
-            return new CommunicationIdentifierModel(kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser, microsoftTeamsApp);
+            return new CommunicationIdentifierModel(
+                kind,
+                rawId,
+                communicationUser,
+                phoneNumber,
+                microsoftTeamsUser,
+                microsoftTeamsApp);
         }
     }
 }

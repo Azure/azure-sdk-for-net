@@ -903,7 +903,8 @@
                 "unknown",
                 "communicationUser",
                 "phoneNumber",
-                "microsoftTeamsUser"
+                "microsoftTeamsUser",
+                "microsoftTeamsApp"
             ],
             "type": "string",
             "x-ms-enum": {
