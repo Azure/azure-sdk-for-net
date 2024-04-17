@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CostManagement
 {
     public partial class CostManagementExportData : IUtf8JsonSerializable, IJsonModel<CostManagementExportData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementExportData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementExportData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CostManagementExportData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
-                writer.WriteObjectValue<ExportDeliveryInfo>(DeliveryInfo, options);
+                writer.WriteObjectValue(DeliveryInfo, options);
             }
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue<ExportDefinition>(Definition, options);
+                writer.WriteObjectValue(Definition, options);
             }
             if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue<ExportExecutionListResult>(RunHistory, options);
+                writer.WriteObjectValue(RunHistory, options);
             }
             if (Optional.IsDefined(PartitionData))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue<ExportSchedule>(Schedule, options);
+                writer.WriteObjectValue(Schedule, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CostManagement
 
         internal static CostManagementExportData DeserializeCostManagementExportData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class FlowLogData : IUtf8JsonSerializable, IJsonModel<FlowLogData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowLogData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowLogData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FlowLogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,17 +88,17 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue<RetentionPolicyParameters>(RetentionPolicy, options);
+                writer.WriteObjectValue(RetentionPolicy, options);
             }
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue<FlowLogProperties>(Format, options);
+                writer.WriteObjectValue(Format, options);
             }
             if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration"u8);
-                writer.WriteObjectValue<TrafficAnalyticsProperties>(FlowAnalyticsConfiguration, options);
+                writer.WriteObjectValue(FlowAnalyticsConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network
 
         internal static FlowLogData DeserializeFlowLogData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

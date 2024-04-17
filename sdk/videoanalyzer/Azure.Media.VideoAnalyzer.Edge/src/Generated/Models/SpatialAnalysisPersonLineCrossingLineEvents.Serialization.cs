@@ -17,14 +17,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("line"u8);
-            writer.WriteObjectValue<NamedLineBase>(Line);
+            writer.WriteObjectValue(Line);
             if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue<SpatialAnalysisPersonLineCrossingEvent>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -62,6 +62,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new SpatialAnalysisPersonLineCrossingLineEvents(line, events ?? new ChangeTrackingList<SpatialAnalysisPersonLineCrossingEvent>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SpatialAnalysisPersonLineCrossingLineEvents FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpatialAnalysisPersonLineCrossingLineEvents(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class ComponentLinkedStorageAccountPatch : IUtf8JsonSerializable, IJsonModel<ComponentLinkedStorageAccountPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComponentLinkedStorageAccountPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComponentLinkedStorageAccountPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComponentLinkedStorageAccountPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static ComponentLinkedStorageAccountPatch DeserializeComponentLinkedStorageAccountPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

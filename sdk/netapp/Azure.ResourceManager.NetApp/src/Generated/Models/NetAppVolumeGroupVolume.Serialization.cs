@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppVolumeGroupVolume : IUtf8JsonSerializable, IJsonModel<NetAppVolumeGroupVolume>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeGroupVolume>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeGroupVolume>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppVolumeGroupVolume>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue<VolumePropertiesExportPolicy>(ExportPolicy, options);
+                writer.WriteObjectValue(ExportPolicy, options);
             }
             if (Optional.IsCollectionDefined(ProtocolTypes))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in MountTargets)
                 {
-                    writer.WriteObjectValue<NetAppVolumeMountTarget>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
-                writer.WriteObjectValue<NetAppVolumeDataProtection>(DataProtection, options);
+                writer.WriteObjectValue(DataProtection, options);
             }
             if (Optional.IsDefined(IsRestoring))
             {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in PlacementRules)
                 {
-                    writer.WriteObjectValue<NetAppVolumePlacementRule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppVolumeGroupVolume DeserializeNetAppVolumeGroupVolume(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

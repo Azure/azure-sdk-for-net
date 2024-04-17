@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Peering.Models
 {
     internal partial class RpUnbilledPrefixListResult : IUtf8JsonSerializable, IJsonModel<RpUnbilledPrefixListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RpUnbilledPrefixListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RpUnbilledPrefixListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RpUnbilledPrefixListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<RoutingPreferenceUnbilledPrefix>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static RpUnbilledPrefixListResult DeserializeRpUnbilledPrefixListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

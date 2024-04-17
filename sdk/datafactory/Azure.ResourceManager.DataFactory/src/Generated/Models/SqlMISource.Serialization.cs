@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SqlMISource : IUtf8JsonSerializable, IJsonModel<SqlMISource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMISource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMISource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlMISource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue<SqlPartitionSettings>(PartitionSettings, options);
+                writer.WriteObjectValue(PartitionSettings, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SqlMISource DeserializeSqlMISource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

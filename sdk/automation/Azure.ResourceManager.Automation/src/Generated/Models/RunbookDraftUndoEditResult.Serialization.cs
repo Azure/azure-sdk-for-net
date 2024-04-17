@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class RunbookDraftUndoEditResult : IUtf8JsonSerializable, IJsonModel<RunbookDraftUndoEditResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunbookDraftUndoEditResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunbookDraftUndoEditResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RunbookDraftUndoEditResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static RunbookDraftUndoEditResult DeserializeRunbookDraftUndoEditResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

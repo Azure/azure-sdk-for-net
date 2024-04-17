@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     internal partial class X509CredentialsUpdate : IUtf8JsonSerializable, IJsonModel<X509CredentialsUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X509CredentialsUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X509CredentialsUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<X509CredentialsUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         internal static X509CredentialsUpdate DeserializeX509CredentialsUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

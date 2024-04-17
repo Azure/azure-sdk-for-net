@@ -25,9 +25,17 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(FileSource))
             {
                 writer.WritePropertyName("fileSource"u8);
-                writer.WriteObjectValue<FileSourceInternal>(FileSource);
+                writer.WriteObjectValue(FileSource);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

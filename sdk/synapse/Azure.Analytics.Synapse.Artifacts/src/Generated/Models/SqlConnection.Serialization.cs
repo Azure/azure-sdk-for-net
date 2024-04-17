@@ -91,12 +91,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SqlConnection(type, name, poolName, databaseName, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SqlConnection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlConnection(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SqlConnectionConverter : JsonConverter<SqlConnection>
         {
             public override void Write(Utf8JsonWriter writer, SqlConnection model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SqlConnection>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override SqlConnection Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

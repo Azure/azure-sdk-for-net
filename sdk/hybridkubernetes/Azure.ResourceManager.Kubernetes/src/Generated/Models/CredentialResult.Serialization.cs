@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
 {
     public partial class CredentialResult : IUtf8JsonSerializable, IJsonModel<CredentialResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CredentialResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CredentialResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CredentialResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
 
         internal static CredentialResult DeserializeCredentialResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

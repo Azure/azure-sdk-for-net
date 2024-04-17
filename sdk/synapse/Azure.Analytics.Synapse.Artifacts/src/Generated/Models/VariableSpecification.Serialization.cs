@@ -56,12 +56,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new VariableSpecification(type, defaultValue);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static VariableSpecification FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVariableSpecification(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class VariableSpecificationConverter : JsonConverter<VariableSpecification>
         {
             public override void Write(Utf8JsonWriter writer, VariableSpecification model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<VariableSpecification>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override VariableSpecification Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

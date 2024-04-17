@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     public partial class DeviceProvisioningServiceData : IUtf8JsonSerializable, IJsonModel<DeviceProvisioningServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceProvisioningServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceProvisioningServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceProvisioningServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<DeviceProvisioningServiceProperties>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<DeviceProvisioningServicesSkuInfo>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 
         internal static DeviceProvisioningServiceData DeserializeDeviceProvisioningServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Relay
 {
     public partial class WcfRelayData : IUtf8JsonSerializable, IJsonModel<WcfRelayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WcfRelayData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WcfRelayData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WcfRelayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Relay
 
         internal static WcfRelayData DeserializeWcfRelayData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

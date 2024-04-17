@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class CustomRolloutSpecification : IUtf8JsonSerializable, IJsonModel<CustomRolloutSpecification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomRolloutSpecification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomRolloutSpecification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomRolloutSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("canary"u8);
-            writer.WriteObjectValue<TrafficRegions>(Canary, options);
+            writer.WriteObjectValue(Canary, options);
             if (Optional.IsDefined(ProviderRegistration))
             {
                 writer.WritePropertyName("providerRegistration"u8);
-                writer.WriteObjectValue<ProviderRegistrationData>(ProviderRegistration, options);
+                writer.WriteObjectValue(ProviderRegistration, options);
             }
             if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypeRegistrations)
                 {
-                    writer.WriteObjectValue<ResourceTypeRegistrationData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CustomRolloutSpecification DeserializeCustomRolloutSpecification(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

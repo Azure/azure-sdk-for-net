@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridConnectivity
 {
     public partial class EndpointResourceData : IUtf8JsonSerializable, IJsonModel<EndpointResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EndpointResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EndpointResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EndpointResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         internal static EndpointResourceData DeserializeEndpointResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

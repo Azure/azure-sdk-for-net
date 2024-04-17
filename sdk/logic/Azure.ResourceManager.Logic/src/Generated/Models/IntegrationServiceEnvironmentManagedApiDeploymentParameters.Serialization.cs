@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class IntegrationServiceEnvironmentManagedApiDeploymentParameters : IUtf8JsonSerializable, IJsonModel<IntegrationServiceEnvironmentManagedApiDeploymentParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentManagedApiDeploymentParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentManagedApiDeploymentParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationServiceEnvironmentManagedApiDeploymentParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(ContentLinkDefinition))
             {
                 writer.WritePropertyName("contentLinkDefinition"u8);
-                writer.WriteObjectValue<LogicContentLink>(ContentLinkDefinition, options);
+                writer.WriteObjectValue(ContentLinkDefinition, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmentManagedApiDeploymentParameters DeserializeIntegrationServiceEnvironmentManagedApiDeploymentParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

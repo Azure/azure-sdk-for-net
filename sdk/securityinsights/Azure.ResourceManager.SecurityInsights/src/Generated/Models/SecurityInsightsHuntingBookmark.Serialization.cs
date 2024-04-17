@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsHuntingBookmark : IUtf8JsonSerializable, IJsonModel<SecurityInsightsHuntingBookmark>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsHuntingBookmark>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsHuntingBookmark>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsHuntingBookmark>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue<SecurityInsightsUserInfo>(CreatedBy, options);
+                writer.WriteObjectValue(CreatedBy, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue<SecurityInsightsUserInfo>(UpdatedBy, options);
+                writer.WriteObjectValue(UpdatedBy, options);
             }
             if (Optional.IsDefined(IncidentInfo))
             {
                 writer.WritePropertyName("incidentInfo"u8);
-                writer.WriteObjectValue<SecurityInsightsBookmarkIncidentInfo>(IncidentInfo, options);
+                writer.WriteObjectValue(IncidentInfo, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsHuntingBookmark DeserializeSecurityInsightsHuntingBookmark(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

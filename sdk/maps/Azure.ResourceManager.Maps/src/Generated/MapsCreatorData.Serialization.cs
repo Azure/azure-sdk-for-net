@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Maps
 {
     public partial class MapsCreatorData : IUtf8JsonSerializable, IJsonModel<MapsCreatorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsCreatorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsCreatorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MapsCreatorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Maps
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<MapsCreatorProperties>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Maps
 
         internal static MapsCreatorData DeserializeMapsCreatorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

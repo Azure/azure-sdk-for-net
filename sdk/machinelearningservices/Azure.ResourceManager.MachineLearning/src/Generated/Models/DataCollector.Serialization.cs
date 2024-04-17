@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class DataCollector : IUtf8JsonSerializable, IJsonModel<DataCollector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollector>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataCollector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             foreach (var item in Collections)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<DataCollectionConfiguration>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(RequestLogging))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RequestLogging != null)
                 {
                     writer.WritePropertyName("requestLogging"u8);
-                    writer.WriteObjectValue<RequestLogging>(RequestLogging, options);
+                    writer.WriteObjectValue(RequestLogging, options);
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static DataCollector DeserializeDataCollector(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
-                writer.WriteObjectValue<InstancesSortParameter>(Sort);
+                writer.WriteObjectValue(Sort);
             }
             if (Optional.IsDefined(Highlights))
             {
@@ -36,6 +36,14 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteNumberValue(PageSize.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

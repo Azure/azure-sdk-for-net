@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     internal partial class ProtocolSettings : IUtf8JsonSerializable, IJsonModel<ProtocolSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProtocolSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProtocolSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProtocolSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(SmbSetting))
             {
                 writer.WritePropertyName("smb"u8);
-                writer.WriteObjectValue<SmbSetting>(SmbSetting, options);
+                writer.WriteObjectValue(SmbSetting, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ProtocolSettings DeserializeProtocolSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

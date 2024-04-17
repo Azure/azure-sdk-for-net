@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     internal partial class UnknownBenefitUtilizationSummary : IUtf8JsonSerializable, IJsonModel<BenefitUtilizationSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BenefitUtilizationSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BenefitUtilizationSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BenefitUtilizationSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static UnknownBenefitUtilizationSummary DeserializeUnknownBenefitUtilizationSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

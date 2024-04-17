@@ -50,11 +50,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             dependencyActivity.SetTag("http.response.status_code", 200);
             dependencyActivity.Stop();
 
-            var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
+            var dependencyDocument = DocumentHelper.ConvertToDependencyDocument(dependencyActivity);
 
             // ASSERT
             Assert.Equal("http://bing.com", dependencyDocument.CommandName);
-            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal("HelloWorld", dependencyDocument.Name);
             Assert.Equal("200", dependencyDocument.ResultCode);
 
@@ -102,10 +102,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             // Assert
             var dependencyActivity = exportedActivities.Last();
             PrintActivity(dependencyActivity);
-            var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
+            var dependencyDocument = DocumentHelper.ConvertToDependencyDocument(dependencyActivity);
 
             Assert.Equal(requestUrl, dependencyDocument.CommandName);
-            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
             Assert.Equal("GET", dependencyDocument.Name);
             Assert.Equal(successfulRequest ? "200" : "404", dependencyDocument.ResultCode);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class ArcSettingData : IUtf8JsonSerializable, IJsonModel<ArcSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcSettingData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcSettingData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArcSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in PerNodeDetails)
                 {
-                    writer.WriteObjectValue<PerNodeArcState>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Hci
 
         internal static ArcSettingData DeserializeArcSettingData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

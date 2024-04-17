@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ElasticSan
 {
     public partial class ElasticSanSnapshotData : IUtf8JsonSerializable, IJsonModel<ElasticSanSnapshotData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanSnapshotData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanSnapshotData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ElasticSanSnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ElasticSan
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("creationData"u8);
-            writer.WriteObjectValue<SnapshotCreationInfo>(CreationData, options);
+            writer.WriteObjectValue(CreationData, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ElasticSan
 
         internal static ElasticSanSnapshotData DeserializeElasticSanSnapshotData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

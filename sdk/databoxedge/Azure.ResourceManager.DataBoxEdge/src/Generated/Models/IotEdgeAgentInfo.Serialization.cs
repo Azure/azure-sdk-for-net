@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class IotEdgeAgentInfo : IUtf8JsonSerializable, IJsonModel<IotEdgeAgentInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotEdgeAgentInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotEdgeAgentInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotEdgeAgentInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ImageRepository))
             {
                 writer.WritePropertyName("imageRepository"u8);
-                writer.WriteObjectValue<ImageRepositoryCredential>(ImageRepository, options);
+                writer.WriteObjectValue(ImageRepository, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static IotEdgeAgentInfo DeserializeIotEdgeAgentInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

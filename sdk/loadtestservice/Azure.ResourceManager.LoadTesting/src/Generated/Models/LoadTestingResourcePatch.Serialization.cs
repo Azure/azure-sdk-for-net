@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
 {
     public partial class LoadTestingResourcePatch : IUtf8JsonSerializable, IJsonModel<LoadTestingResourcePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestingResourcePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadTestingResourcePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LoadTestingResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 if (Encryption != null)
                 {
                     writer.WritePropertyName("encryption"u8);
-                    writer.WriteObjectValue<LoadTestingCmkEncryptionProperties>(Encryption, options);
+                    writer.WriteObjectValue(Encryption, options);
                 }
                 else
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
 
         internal static LoadTestingResourcePatch DeserializeLoadTestingResourcePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

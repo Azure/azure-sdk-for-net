@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Communication
 {
     public partial class SenderUsernameResourceData : IUtf8JsonSerializable, IJsonModel<SenderUsernameResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SenderUsernameResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SenderUsernameResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SenderUsernameResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Communication
 
         internal static SenderUsernameResourceData DeserializeSenderUsernameResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

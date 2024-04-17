@@ -58,8 +58,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(queryConfig, nameof(queryConfig));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = queryConfig.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await QueryAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(QueryResult.FromResponse(response), response);
         }
@@ -73,8 +73,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(queryConfig, nameof(queryConfig));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = queryConfig.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Query(content, context);
             return Response.FromValue(QueryResult.FromResponse(response), response);
         }
@@ -166,8 +166,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(suggestConfig, nameof(suggestConfig));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = suggestConfig.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await SuggestAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(SuggestResult.FromResponse(response), response);
         }
@@ -181,8 +181,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(suggestConfig, nameof(suggestConfig));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = suggestConfig.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Suggest(content, context);
             return Response.FromValue(SuggestResult.FromResponse(response), response);
         }
@@ -274,8 +274,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(autoCompleteConfig, nameof(autoCompleteConfig));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = autoCompleteConfig.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AutoCompleteAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AutoCompleteResult.FromResponse(response), response);
         }
@@ -289,8 +289,8 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(autoCompleteConfig, nameof(autoCompleteConfig));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = autoCompleteConfig.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AutoComplete(content, context);
             return Response.FromValue(AutoCompleteResult.FromResponse(response), response);
         }

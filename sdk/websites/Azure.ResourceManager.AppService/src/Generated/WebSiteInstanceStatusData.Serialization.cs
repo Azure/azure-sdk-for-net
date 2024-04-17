@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WebSiteInstanceStatusData : IUtf8JsonSerializable, IJsonModel<WebSiteInstanceStatusData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebSiteInstanceStatusData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebSiteInstanceStatusData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebSiteInstanceStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService
                 foreach (var item in Containers)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ContainerInfo>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static WebSiteInstanceStatusData DeserializeWebSiteInstanceStatusData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
 {
     public partial class DataProductData : IUtf8JsonSerializable, IJsonModel<DataProductData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataProductData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -136,17 +136,17 @@ namespace Azure.ResourceManager.NetworkAnalytics
             if (Optional.IsDefined(CustomerEncryptionKey))
             {
                 writer.WritePropertyName("customerEncryptionKey"u8);
-                writer.WriteObjectValue<EncryptionKeyDetails>(CustomerEncryptionKey, options);
+                writer.WriteObjectValue(CustomerEncryptionKey, options);
             }
             if (Optional.IsDefined(Networkacls))
             {
                 writer.WritePropertyName("networkacls"u8);
-                writer.WriteObjectValue<DataProductNetworkAcls>(Networkacls, options);
+                writer.WriteObjectValue(Networkacls, options);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue<NetworkAnalyticsManagedResourceGroupConfiguration>(ManagedResourceGroupConfiguration, options);
+                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AvailableMinorVersions))
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             if (options.Format != "W" && Optional.IsDefined(ConsumptionEndpoints))
             {
                 writer.WritePropertyName("consumptionEndpoints"u8);
-                writer.WriteObjectValue<ConsumptionEndpointsProperties>(ConsumptionEndpoints, options);
+                writer.WriteObjectValue(ConsumptionEndpoints, options);
             }
             if (options.Format != "W" && Optional.IsDefined(KeyVaultUri))
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
 
         internal static DataProductData DeserializeDataProductData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

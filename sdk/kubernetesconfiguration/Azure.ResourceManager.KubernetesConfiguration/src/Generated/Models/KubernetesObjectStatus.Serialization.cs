@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     public partial class KubernetesObjectStatus : IUtf8JsonSerializable, IJsonModel<KubernetesObjectStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesObjectStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesObjectStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubernetesObjectStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (AppliedBy != null)
                 {
                     writer.WritePropertyName("appliedBy"u8);
-                    writer.WriteObjectValue<KubernetesObjectReference>(AppliedBy, options);
+                    writer.WriteObjectValue(AppliedBy, options);
                 }
                 else
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteStartArray();
                     foreach (var item in StatusConditions)
                     {
-                        writer.WriteObjectValue<KubernetesObjectStatusCondition>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (HelmReleaseProperties != null)
                 {
                     writer.WritePropertyName("helmReleaseProperties"u8);
-                    writer.WriteObjectValue<HelmReleaseProperties>(HelmReleaseProperties, options);
+                    writer.WriteObjectValue(HelmReleaseProperties, options);
                 }
                 else
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static KubernetesObjectStatus DeserializeKubernetesObjectStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     public partial class DataReplicationProtectedItemProperties : IUtf8JsonSerializable, IJsonModel<DataReplicationProtectedItemProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationProtectedItemProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationProtectedItemProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataReplicationProtectedItemProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentJob))
             {
                 writer.WritePropertyName("currentJob"u8);
-                writer.WriteObjectValue<ProtectedItemJobProperties>(CurrentJob, options);
+                writer.WriteObjectValue(CurrentJob, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AllowedJobs))
             {
@@ -143,17 +143,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (options.Format != "W" && Optional.IsDefined(LastFailedEnableProtectionJob))
             {
                 writer.WritePropertyName("lastFailedEnableProtectionJob"u8);
-                writer.WriteObjectValue<ProtectedItemJobProperties>(LastFailedEnableProtectionJob, options);
+                writer.WriteObjectValue(LastFailedEnableProtectionJob, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastFailedPlannedFailoverJob))
             {
                 writer.WritePropertyName("lastFailedPlannedFailoverJob"u8);
-                writer.WriteObjectValue<ProtectedItemJobProperties>(LastFailedPlannedFailoverJob, options);
+                writer.WriteObjectValue(LastFailedPlannedFailoverJob, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastTestFailoverJob))
             {
                 writer.WritePropertyName("lastTestFailoverJob"u8);
-                writer.WriteObjectValue<ProtectedItemJobProperties>(LastTestFailoverJob, options);
+                writer.WriteObjectValue(LastTestFailoverJob, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReplicationHealth))
             {
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue<DataReplicationHealthErrorInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue<ProtectedItemModelCustomProperties>(CustomProperties, options);
+            writer.WriteObjectValue(CustomProperties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static DataReplicationProtectedItemProperties DeserializeDataReplicationProtectedItemProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

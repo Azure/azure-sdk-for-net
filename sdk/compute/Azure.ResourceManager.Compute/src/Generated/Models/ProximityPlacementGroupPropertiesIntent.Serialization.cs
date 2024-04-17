@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class ProximityPlacementGroupPropertiesIntent : IUtf8JsonSerializable, IJsonModel<ProximityPlacementGroupPropertiesIntent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProximityPlacementGroupPropertiesIntent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProximityPlacementGroupPropertiesIntent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProximityPlacementGroupPropertiesIntent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ProximityPlacementGroupPropertiesIntent DeserializeProximityPlacementGroupPropertiesIntent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

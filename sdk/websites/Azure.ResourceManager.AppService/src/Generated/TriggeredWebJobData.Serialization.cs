@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class TriggeredWebJobData : IUtf8JsonSerializable, IJsonModel<TriggeredWebJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggeredWebJobData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggeredWebJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TriggeredWebJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(LatestRun))
             {
                 writer.WritePropertyName("latest_run"u8);
-                writer.WriteObjectValue<TriggeredJobRun>(LatestRun, options);
+                writer.WriteObjectValue(LatestRun, options);
             }
             if (Optional.IsDefined(HistoryUri))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static TriggeredWebJobData DeserializeTriggeredWebJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

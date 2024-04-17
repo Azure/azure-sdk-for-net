@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class BaselineAdjustedResult : IUtf8JsonSerializable, IJsonModel<BaselineAdjustedResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaselineAdjustedResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaselineAdjustedResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BaselineAdjustedResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Baseline))
             {
                 writer.WritePropertyName("baseline"u8);
-                writer.WriteObjectValue<SqlVulnerabilityAssessmentBaseline>(Baseline, options);
+                writer.WriteObjectValue(Baseline, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static BaselineAdjustedResult DeserializeBaselineAdjustedResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class PendingUploadResponseDto : IUtf8JsonSerializable, IJsonModel<PendingUploadResponseDto>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PendingUploadResponseDto>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PendingUploadResponseDto>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PendingUploadResponseDto>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (BlobReferenceForConsumption != null)
                 {
                     writer.WritePropertyName("blobReferenceForConsumption"u8);
-                    writer.WriteObjectValue<BlobReferenceForConsumptionDto>(BlobReferenceForConsumption, options);
+                    writer.WriteObjectValue(BlobReferenceForConsumption, options);
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static PendingUploadResponseDto DeserializePendingUploadResponseDto(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

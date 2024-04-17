@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBAccountData : IUtf8JsonSerializable, IJsonModel<CosmosDBAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBAccountData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue<CosmosDBIPAddressOrRange>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(ConsistencyPolicy))
             {
                 writer.WritePropertyName("consistencyPolicy"u8);
-                writer.WriteObjectValue<ConsistencyPolicy>(ConsistencyPolicy, options);
+                writer.WriteObjectValue(ConsistencyPolicy, options);
             }
             if (Optional.IsCollectionDefined(Capabilities))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue<CosmosDBAccountCapability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in WriteLocations)
                 {
-                    writer.WriteObjectValue<CosmosDBAccountLocation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in ReadLocations)
                 {
-                    writer.WriteObjectValue<CosmosDBAccountLocation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue<CosmosDBAccountLocation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in FailoverPolicies)
                 {
-                    writer.WriteObjectValue<CosmosDBFailoverPolicy>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue<CosmosDBVirtualNetworkRule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<CosmosDBPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(ApiProperties))
             {
                 writer.WritePropertyName("apiProperties"u8);
-                writer.WriteObjectValue<ApiProperties>(ApiProperties, options);
+                writer.WriteObjectValue(ApiProperties, options);
             }
             if (Optional.IsDefined(IsAnalyticalStorageEnabled))
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(AnalyticalStorageConfiguration))
             {
                 writer.WritePropertyName("analyticalStorageConfiguration"u8);
-                writer.WriteObjectValue<AnalyticalStorageConfiguration>(AnalyticalStorageConfiguration, options);
+                writer.WriteObjectValue(AnalyticalStorageConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceId))
             {
@@ -254,12 +254,12 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue<CosmosDBAccountRestoreParameters>(RestoreParameters, options);
+                writer.WriteObjectValue(RestoreParameters, options);
             }
             if (Optional.IsDefined(BackupPolicy))
             {
                 writer.WritePropertyName("backupPolicy"u8);
-                writer.WriteObjectValue<CosmosDBAccountBackupPolicy>(BackupPolicy, options);
+                writer.WriteObjectValue(BackupPolicy, options);
             }
             if (Optional.IsCollectionDefined(Cors))
             {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in Cors)
                 {
-                    writer.WriteObjectValue<CosmosDBAccountCorsPolicy>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(DiagnosticLogSettings))
             {
                 writer.WritePropertyName("diagnosticLogSettings"u8);
-                writer.WriteObjectValue<DiagnosticLogSettings>(DiagnosticLogSettings, options);
+                writer.WriteObjectValue(DiagnosticLogSettings, options);
             }
             if (Optional.IsDefined(DisableLocalAuth))
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue<CosmosDBAccountCapacity>(Capacity, options);
+                writer.WriteObjectValue(Capacity, options);
             }
             if (Optional.IsDefined(EnableMaterializedViews))
             {
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (options.Format != "W" && Optional.IsDefined(KeysMetadata))
             {
                 writer.WritePropertyName("keysMetadata"u8);
-                writer.WriteObjectValue<DatabaseAccountKeysMetadata>(KeysMetadata, options);
+                writer.WriteObjectValue(KeysMetadata, options);
             }
             if (Optional.IsDefined(EnablePartitionMerge))
             {
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static CosmosDBAccountData DeserializeCosmosDBAccountData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

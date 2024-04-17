@@ -15,7 +15,7 @@ namespace Azure.Analytics.Purview.DataMap
 {
     public partial class AtlasGlossaryCategory : IUtf8JsonSerializable, IJsonModel<AtlasGlossaryCategory>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasGlossaryCategory>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasGlossaryCategory>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AtlasGlossaryCategory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Classifications)
                 {
-                    writer.WriteObjectValue<AtlasClassification>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Anchor))
             {
                 writer.WritePropertyName("anchor"u8);
-                writer.WriteObjectValue<AtlasGlossaryHeader>(Anchor, options);
+                writer.WriteObjectValue(Anchor, options);
             }
             if (Optional.IsCollectionDefined(ChildrenCategories))
             {
@@ -97,14 +97,14 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in ChildrenCategories)
                 {
-                    writer.WriteObjectValue<AtlasRelatedCategoryHeader>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ParentCategory))
             {
                 writer.WritePropertyName("parentCategory"u8);
-                writer.WriteObjectValue<AtlasRelatedCategoryHeader>(ParentCategory, options);
+                writer.WriteObjectValue(ParentCategory, options);
             }
             if (Optional.IsCollectionDefined(Terms))
             {
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.DataMap
                 writer.WriteStartArray();
                 foreach (var item in Terms)
                 {
-                    writer.WriteObjectValue<AtlasRelatedTermHeader>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -148,7 +148,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         internal static AtlasGlossaryCategory DeserializeAtlasGlossaryCategory(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -355,11 +355,11 @@ namespace Azure.Analytics.Purview.DataMap
             return DeserializeAtlasGlossaryCategory(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AtlasGlossaryCategory>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }
