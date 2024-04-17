@@ -95,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             {
                 if (filterInfo.FieldName == "Success")
                 {
-                    filterInfo = new FilterInfo("Extension_IsSuccess", filterInfo.Predicate, filterInfo.Comparand);
+                    filterInfo = new FilterInfo(nameof(Request.Extension_IsSuccess), filterInfo.Predicate, filterInfo.Comparand);
                 }
             }
             else if (typeof(TTelemetry) == typeof(RemoteDependency))
@@ -109,11 +109,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                 }
                 else if (fieldName == "Success")
                 {
-                    filterInfo = new FilterInfo("Extension_IsSuccess", filterInfo.Predicate, filterInfo.Comparand);
+                    filterInfo = new FilterInfo(nameof(RemoteDependency.Extension_IsSuccess), filterInfo.Predicate, filterInfo.Comparand);
                 }
                 else if (fieldName == "Data")
                 {
-                    filterInfo = new FilterInfo("CommandName", filterInfo.Predicate, filterInfo.Comparand);
+                    filterInfo = new FilterInfo(nameof(RemoteDependency.CommandName), filterInfo.Predicate, filterInfo.Comparand);
                 }
             }
             else if (typeof(TTelemetry) == typeof(Models.Exception))
@@ -127,7 +127,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                 }
                 else if (fieldName == "Exception.Message")
                 {
-                    filterInfo = new FilterInfo("ExceptionMessage", filterInfo.Predicate, filterInfo.Comparand);
+                    filterInfo = new FilterInfo(nameof(Models.Exception.ExceptionMessage), filterInfo.Predicate, filterInfo.Comparand);
                 }
             }
 
