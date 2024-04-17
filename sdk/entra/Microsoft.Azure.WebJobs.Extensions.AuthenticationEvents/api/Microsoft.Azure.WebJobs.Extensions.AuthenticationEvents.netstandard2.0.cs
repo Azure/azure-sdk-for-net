@@ -1,15 +1,5 @@
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
-    public sealed partial class EventTriggerMetrics
-    {
-        internal EventTriggerMetrics() { }
-        public const string MetricsHeader = "User-Agent";
-        public const string ProductName = "AuthenticationEvents";
-        public static string Framework { get { throw null; } }
-        public static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.EventTriggerMetrics Instance { get { throw null; } }
-        public static string Platform { get { throw null; } }
-        public static string ProductVersion { get { throw null; } }
-    }
     public abstract partial class WebJobsActionableCloudEventResponse<T> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.WebJobsActionableResponse<T> where T : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.WebJobsAuthenticationEventsAction
     {
         protected WebJobsActionableCloudEventResponse() { }
@@ -138,6 +128,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     {
         public WebJobsAuthenticationEventWebJobsStartup() { }
         public void Configure(Microsoft.Azure.WebJobs.IWebJobsBuilder builder) { }
+    }
+    public sealed partial class WebJobsEventTriggerMetrics
+    {
+        internal WebJobsEventTriggerMetrics() { }
+        public const string MetricsHeader = "User-Agent";
+        public const string ProductName = "AuthenticationEvents";
+        public static string Framework { get { throw null; } }
+        public static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.WebJobsEventTriggerMetrics Instance { get { throw null; } }
+        public static string Platform { get { throw null; } }
+        public static string ProductVersion { get { throw null; } }
     }
 }
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart
