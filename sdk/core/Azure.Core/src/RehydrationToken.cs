@@ -11,11 +11,12 @@ namespace Azure.Core
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
         /// the status of the long-running operation.
+        /// There are cases that operation id is not available, we return "NOT_SET" for unavailable operation id.
         /// </summary>
-        public string? Id { get; }
+        public string Id { get; } = NextLinkOperationImplementation.NotSet;
 
         // Version for this contract itself since we might change the members in the future.
-        internal string Version { get; } = "1.0.0";
+        internal string Version { get; } = NextLinkOperationImplementation.RehydrationTokenVersion;
 
         // The below members are used to re-construct <cref="NextLinkOperationImplemenation">.
         // Value of <cref="NextLinkOperationImplemenration.HeaderSrouce">.
@@ -36,7 +37,7 @@ namespace Azure.Core
         // The final state of the operation, could be azure-async-operation, location, original-uri or operation-location.
         internal string FinalStateVia { get; }
 
-        internal RehydrationToken(string? id, string? version, string headerSource, string nextRequestUri, string initialUri, RequestMethod requestMethod, string? lastKnownLocation, string finalStateVia)
+        internal RehydrationToken(string id, string? version, string headerSource, string nextRequestUri, string initialUri, RequestMethod requestMethod, string? lastKnownLocation, string finalStateVia)
         {
             Id = id;
             if (version is not null)
