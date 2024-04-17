@@ -157,7 +157,7 @@ stages:
                       deploy:
                         steps:
                           - checkout: self
-                            path: .
+                            path: s  # Keep this in the same path it would be if it was only a single checkout
                           - checkout: azure-sdk-build-tools
                             path: azure-sdk-build-tools
                           - task: MSBuild@1
