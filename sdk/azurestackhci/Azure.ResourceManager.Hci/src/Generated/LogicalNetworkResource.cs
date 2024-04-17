@@ -91,6 +91,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
+        /// The Get method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -130,6 +131,7 @@ namespace Azure.ResourceManager.Hci
         }
 
         /// <summary>
+        /// The Get method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

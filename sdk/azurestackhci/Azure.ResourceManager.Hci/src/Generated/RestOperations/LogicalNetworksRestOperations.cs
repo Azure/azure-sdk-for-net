@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.Hci
             return message;
         }
 
+        /// <summary> The Get method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="logicalNetworkName"> Name of the logical network. </param>
@@ -86,6 +87,7 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
+        /// <summary> The Get method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="logicalNetworkName"> Name of the logical network. </param>
