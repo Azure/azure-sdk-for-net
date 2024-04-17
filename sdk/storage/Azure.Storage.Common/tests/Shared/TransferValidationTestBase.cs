@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Shared;
@@ -232,7 +233,7 @@ namespace Azure.Storage.Test.Shared
             };
         }
 
-#if BlobSDK
+#if BlobSDK || DataLakeSDK
         internal static Action<Request> GetRequestStructuredMessageAssertion(
             StructuredMessage.Flags flags,
             Func<Request, bool> isStructuredMessageExpected = default,
@@ -315,7 +316,7 @@ namespace Azure.Storage.Test.Shared
             };
         }
 
-#if BlobSDK
+#if BlobSDK || DataLakeSDK
         internal static Action<Response> GetResponseStructuredMessageAssertion(
             StructuredMessage.Flags flags,
             Func<Response, bool> isStructuredMessageExpected = default)
@@ -422,7 +423,7 @@ namespace Azure.Storage.Test.Shared
             };
 
             // make pipeline assertion for checking checksum was present on upload
-#if BlobSDK
+#if BlobSDK || DataLakeSDK
             var assertion = algorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64
                 ? GetRequestStructuredMessageAssertion(StructuredMessage.Flags.StorageCrc64, null, dataLength)
                 : GetRequestChecksumHeaderAssertion(algorithm);
@@ -531,9 +532,9 @@ namespace Azure.Storage.Test.Shared
                 // Act
                 streamTamperPolicy.TransformRequestBody = true;
                 AsyncTestDelegate operation = async () => await UploadPartitionAsync(client, stream, validationOptions);
-
+                using var listener = AzureEventSourceListener.CreateConsoleLogger();
                 // Assert
-#if BlobSDK
+#if BlobSDK || DataLakeSDK
                 AssertWriteChecksumMismatch(operation, algorithm,
                     expectStructuredMessage: algorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64);
 #else
@@ -553,7 +554,7 @@ namespace Azure.Storage.Test.Shared
             var data = GetRandomBuffer(dataLength);
 
             // make pipeline assertion for checking checksum was present on upload
-#if BlobSDK
+#if BlobSDK || DataLakeSDK
             var assertion = clientAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64
                 ? GetRequestStructuredMessageAssertion(StructuredMessage.Flags.StorageCrc64, null, dataLength)
                 : GetRequestChecksumHeaderAssertion(clientAlgorithm);
@@ -599,7 +600,7 @@ namespace Azure.Storage.Test.Shared
             };
 
             // make pipeline assertion for checking checksum was present on upload
-#if BlobSDK
+#if BlobSDK || DataLakeSDK
             var assertion = overrideAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64
                 ? GetRequestStructuredMessageAssertion(StructuredMessage.Flags.StorageCrc64, null, dataLength)
                 : GetRequestChecksumHeaderAssertion(overrideAlgorithm);
@@ -1021,7 +1022,7 @@ namespace Azure.Storage.Test.Shared
             };
 
             // make pipeline assertion for checking checksum was present on upload
-#if BlobSDK
+#if BlobSDK || DataLakeSDK
             var assertion = algorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64
                 ? GetRequestStructuredMessageAssertion(StructuredMessage.Flags.StorageCrc64, ParallelUploadIsChecksumExpected, dataLength)
                 : GetRequestChecksumHeaderAssertion(algorithm, isChecksumExpected: ParallelUploadIsChecksumExpected);
@@ -1115,7 +1116,7 @@ namespace Azure.Storage.Test.Shared
                 };
 
             // make pipeline assertion for checking checksum was present on upload
-#if BlobSDK
+#if BlobSDK || DataLakeSDK
             var assertion = clientAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 && !split
                 ? GetRequestStructuredMessageAssertion(StructuredMessage.Flags.StorageCrc64, ParallelUploadIsChecksumExpected, dataLength)
                 : GetRequestChecksumHeaderAssertion(clientAlgorithm, isChecksumExpected: ParallelUploadIsChecksumExpected);
@@ -1173,7 +1174,7 @@ namespace Azure.Storage.Test.Shared
               };
 
             // make pipeline assertion for checking checksum was present on upload
-#if BlobSDK
+#if BlobSDK || DataLakeSDK
             var assertion = overrideAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 && !split
                 ? GetRequestStructuredMessageAssertion(StructuredMessage.Flags.StorageCrc64, ParallelUploadIsChecksumExpected, dataLength)
                 : GetRequestChecksumHeaderAssertion(overrideAlgorithm, isChecksumExpected: ParallelUploadIsChecksumExpected);
@@ -1751,7 +1752,7 @@ namespace Azure.Storage.Test.Shared
             Assert.IsTrue(dest.ToArray().SequenceEqual(data));
         }
 
-#if BlobSDK
+#if BlobSDK || DataLakeSDK
         [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader, false, false)]
         [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader-1, false, false)]
         [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader+1, true, false)]
