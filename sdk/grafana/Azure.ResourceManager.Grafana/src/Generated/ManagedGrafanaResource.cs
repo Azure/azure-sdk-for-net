@@ -628,6 +628,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary>
+        /// The FetchAvailablePlugins method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -656,6 +657,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary>
+        /// The FetchAvailablePlugins method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

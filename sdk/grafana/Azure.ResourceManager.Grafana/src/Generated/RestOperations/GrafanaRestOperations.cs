@@ -596,6 +596,7 @@ namespace Azure.ResourceManager.Grafana
             return message;
         }
 
+        /// <summary> The FetchAvailablePlugins method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
@@ -624,6 +625,7 @@ namespace Azure.ResourceManager.Grafana
             }
         }
 
+        /// <summary> The FetchAvailablePlugins method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
