@@ -255,6 +255,7 @@ namespace Azure.ResourceManager.EnergyServices
         }
 
         /// <summary>
+        /// The Update method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -296,6 +297,7 @@ namespace Azure.ResourceManager.EnergyServices
         }
 
         /// <summary>
+        /// The Update method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
