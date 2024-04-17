@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class GraphResourceGetResultData : IUtf8JsonSerializable, IJsonModel<GraphResourceGetResultData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GraphResourceGetResultData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GraphResourceGetResultData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GraphResourceGetResultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue<GraphResourceGetPropertiesOptions>(Options, options);
+                writer.WriteObjectValue(Options, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static GraphResourceGetResultData DeserializeGraphResourceGetResultData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

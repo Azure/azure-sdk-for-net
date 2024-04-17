@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 {
     internal partial class CollectorPolicyListResult : IUtf8JsonSerializable, IJsonModel<CollectorPolicyListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CollectorPolicyListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CollectorPolicyListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CollectorPolicyListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<CollectorPolicyData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         internal static CollectorPolicyListResult DeserializeCollectorPolicyListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

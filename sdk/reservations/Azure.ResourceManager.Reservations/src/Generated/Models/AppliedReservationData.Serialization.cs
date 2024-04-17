@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class AppliedReservationData : IUtf8JsonSerializable, IJsonModel<AppliedReservationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppliedReservationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppliedReservationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppliedReservationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservationOrderIds))
             {
                 writer.WritePropertyName("reservationOrderIds"u8);
-                writer.WriteObjectValue<AppliedReservationList>(ReservationOrderIds, options);
+                writer.WriteObjectValue(ReservationOrderIds, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static AppliedReservationData DeserializeAppliedReservationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

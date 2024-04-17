@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class ManagementPolicyRule : IUtf8JsonSerializable, IJsonModel<ManagementPolicyRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicyRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicyRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagementPolicyRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RuleType.ToString());
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue<ManagementPolicyDefinition>(Definition, options);
+            writer.WriteObjectValue(Definition, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyRule DeserializeManagementPolicyRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

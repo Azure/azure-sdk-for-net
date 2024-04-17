@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class SiteRecoveryDiskEncryptionInfo : IUtf8JsonSerializable, IJsonModel<SiteRecoveryDiskEncryptionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryDiskEncryptionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryDiskEncryptionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SiteRecoveryDiskEncryptionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskEncryptionKeyInfo))
             {
                 writer.WritePropertyName("diskEncryptionKeyInfo"u8);
-                writer.WriteObjectValue<SiteRecoveryDiskEncryptionKeyInfo>(DiskEncryptionKeyInfo, options);
+                writer.WriteObjectValue(DiskEncryptionKeyInfo, options);
             }
             if (Optional.IsDefined(KeyEncryptionKeyInfo))
             {
                 writer.WritePropertyName("keyEncryptionKeyInfo"u8);
-                writer.WriteObjectValue<SiteRecoveryKeyEncryptionKeyInfo>(KeyEncryptionKeyInfo, options);
+                writer.WriteObjectValue(KeyEncryptionKeyInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static SiteRecoveryDiskEncryptionInfo DeserializeSiteRecoveryDiskEncryptionInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

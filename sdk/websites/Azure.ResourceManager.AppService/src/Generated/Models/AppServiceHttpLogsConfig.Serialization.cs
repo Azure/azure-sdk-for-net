@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceHttpLogsConfig : IUtf8JsonSerializable, IJsonModel<AppServiceHttpLogsConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceHttpLogsConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceHttpLogsConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceHttpLogsConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
-                writer.WriteObjectValue<FileSystemHttpLogsConfig>(FileSystem, options);
+                writer.WriteObjectValue(FileSystem, options);
             }
             if (Optional.IsDefined(AzureBlobStorage))
             {
                 writer.WritePropertyName("azureBlobStorage"u8);
-                writer.WriteObjectValue<AppServiceBlobStorageHttpLogsConfig>(AzureBlobStorage, options);
+                writer.WriteObjectValue(AzureBlobStorage, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceHttpLogsConfig DeserializeAppServiceHttpLogsConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

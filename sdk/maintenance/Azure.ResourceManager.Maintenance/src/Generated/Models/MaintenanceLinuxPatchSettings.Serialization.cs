@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Maintenance.Models
 {
     public partial class MaintenanceLinuxPatchSettings : IUtf8JsonSerializable, IJsonModel<MaintenanceLinuxPatchSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceLinuxPatchSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceLinuxPatchSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MaintenanceLinuxPatchSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         internal static MaintenanceLinuxPatchSettings DeserializeMaintenanceLinuxPatchSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

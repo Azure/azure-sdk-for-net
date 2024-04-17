@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     public partial class ContainerServiceFleetManagedClusterUpdate : IUtf8JsonSerializable, IJsonModel<ContainerServiceFleetManagedClusterUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceFleetManagedClusterUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceFleetManagedClusterUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServiceFleetManagedClusterUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("upgrade"u8);
-            writer.WriteObjectValue<ContainerServiceFleetManagedClusterUpgradeSpec>(Upgrade, options);
+            writer.WriteObjectValue(Upgrade, options);
             if (Optional.IsDefined(NodeImageSelection))
             {
                 writer.WritePropertyName("nodeImageSelection"u8);
-                writer.WriteObjectValue<NodeImageSelection>(NodeImageSelection, options);
+                writer.WriteObjectValue(NodeImageSelection, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         internal static ContainerServiceFleetManagedClusterUpdate DeserializeContainerServiceFleetManagedClusterUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

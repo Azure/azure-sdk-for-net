@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Type);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<LinkConnection>(Properties);
+            writer.WriteObjectValue(Properties);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -93,11 +93,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeLinkConnectionResource(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<LinkConnectionResource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionResource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<LinkConnectionResource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override LinkConnectionResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

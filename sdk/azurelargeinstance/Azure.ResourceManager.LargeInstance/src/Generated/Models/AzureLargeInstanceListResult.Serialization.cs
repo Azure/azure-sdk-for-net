@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
 {
     internal partial class AzureLargeInstanceListResult : IUtf8JsonSerializable, IJsonModel<AzureLargeInstanceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureLargeInstanceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureLargeInstanceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureLargeInstanceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<LargeInstanceData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
 
         internal static AzureLargeInstanceListResult DeserializeAzureLargeInstanceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

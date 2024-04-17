@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.3.4 (2024-04-16)
 
 ### Bugs Fixed
 
-### Other Changes
+- Correct unit mismatch in backoff calculation.
 
 ## 1.3.3 (2024-02-12)
 

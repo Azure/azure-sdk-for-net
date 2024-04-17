@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class ServerEndpointSyncSessionStatus : IUtf8JsonSerializable, IJsonModel<ServerEndpointSyncSessionStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointSyncSessionStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointSyncSessionStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServerEndpointSyncSessionStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in FilesNotSyncingErrors)
                 {
-                    writer.WriteObjectValue<ServerEndpointFilesNotSyncingError>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         internal static ServerEndpointSyncSessionStatus DeserializeServerEndpointSyncSessionStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

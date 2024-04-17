@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoFollowerDatabaseDefinition : IUtf8JsonSerializable, IJsonModel<KustoFollowerDatabaseDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoFollowerDatabaseDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoFollowerDatabaseDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoFollowerDatabaseDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue<KustoDatabaseTableLevelSharingProperties>(TableLevelSharingProperties, options);
+                writer.WriteObjectValue(TableLevelSharingProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DatabaseShareOrigin))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoFollowerDatabaseDefinition DeserializeKustoFollowerDatabaseDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

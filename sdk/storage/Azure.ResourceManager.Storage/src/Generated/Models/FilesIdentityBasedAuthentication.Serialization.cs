@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class FilesIdentityBasedAuthentication : IUtf8JsonSerializable, IJsonModel<FilesIdentityBasedAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilesIdentityBasedAuthentication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilesIdentityBasedAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FilesIdentityBasedAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(ActiveDirectoryProperties))
             {
                 writer.WritePropertyName("activeDirectoryProperties"u8);
-                writer.WriteObjectValue<StorageActiveDirectoryProperties>(ActiveDirectoryProperties, options);
+                writer.WriteObjectValue(ActiveDirectoryProperties, options);
             }
             if (Optional.IsDefined(DefaultSharePermission))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static FilesIdentityBasedAuthentication DeserializeFilesIdentityBasedAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

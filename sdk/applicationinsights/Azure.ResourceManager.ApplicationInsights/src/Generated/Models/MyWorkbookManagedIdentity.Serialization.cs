@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class MyWorkbookManagedIdentity : IUtf8JsonSerializable, IJsonModel<MyWorkbookManagedIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MyWorkbookManagedIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MyWorkbookManagedIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MyWorkbookManagedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
-                writer.WriteObjectValue<MyWorkbookUserAssignedIdentities>(UserAssignedIdentities, options);
+                writer.WriteObjectValue(UserAssignedIdentities, options);
             }
             if (Optional.IsDefined(IdentityType))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static MyWorkbookManagedIdentity DeserializeMyWorkbookManagedIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

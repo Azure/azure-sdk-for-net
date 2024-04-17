@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class FlowEndpointsConfiguration : IUtf8JsonSerializable, IJsonModel<FlowEndpointsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowEndpointsConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowEndpointsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FlowEndpointsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
-                writer.WriteObjectValue<FlowEndpoints>(Workflow, options);
+                writer.WriteObjectValue(Workflow, options);
             }
             if (Optional.IsDefined(Connector))
             {
                 writer.WritePropertyName("connector"u8);
-                writer.WriteObjectValue<FlowEndpoints>(Connector, options);
+                writer.WriteObjectValue(Connector, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowEndpointsConfiguration DeserializeFlowEndpointsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

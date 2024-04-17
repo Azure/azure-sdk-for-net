@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 {
     public partial class DevCenterEnvironmentRole : IUtf8JsonSerializable, IJsonModel<DevCenterEnvironmentRole>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterEnvironmentRole>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterEnvironmentRole>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevCenterEnvironmentRole>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static DevCenterEnvironmentRole DeserializeDevCenterEnvironmentRole(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

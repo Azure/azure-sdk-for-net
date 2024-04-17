@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseDynamicExecutorAllocation : IUtf8JsonSerializable, IJsonModel<SynapseDynamicExecutorAllocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseDynamicExecutorAllocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseDynamicExecutorAllocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseDynamicExecutorAllocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseDynamicExecutorAllocation DeserializeSynapseDynamicExecutorAllocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

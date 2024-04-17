@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppProbe : IUtf8JsonSerializable, IJsonModel<ContainerAppProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppProbe>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppProbe>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppProbe>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
-                writer.WriteObjectValue<ContainerAppHttpRequestInfo>(HttpGet, options);
+                writer.WriteObjectValue(HttpGet, options);
             }
             if (Optional.IsDefined(InitialDelaySeconds))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(TcpSocket))
             {
                 writer.WritePropertyName("tcpSocket"u8);
-                writer.WriteObjectValue<ContainerAppTcpSocketRequestInfo>(TcpSocket, options);
+                writer.WriteObjectValue(TcpSocket, options);
             }
             if (Optional.IsDefined(TerminationGracePeriodSeconds))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppProbe DeserializeContainerAppProbe(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

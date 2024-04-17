@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 {
     public partial class PostgreSqlPerformanceTierServiceLevelObjectives : IUtf8JsonSerializable, IJsonModel<PostgreSqlPerformanceTierServiceLevelObjectives>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlPerformanceTierServiceLevelObjectives>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlPerformanceTierServiceLevelObjectives>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlPerformanceTierServiceLevelObjectives>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         internal static PostgreSqlPerformanceTierServiceLevelObjectives DeserializePostgreSqlPerformanceTierServiceLevelObjectives(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

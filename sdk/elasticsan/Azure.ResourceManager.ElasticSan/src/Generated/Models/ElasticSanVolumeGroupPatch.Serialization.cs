@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 {
     public partial class ElasticSanVolumeGroupPatch : IUtf8JsonSerializable, IJsonModel<ElasticSanVolumeGroupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanVolumeGroupPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanVolumeGroupPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ElasticSanVolumeGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
-                writer.WriteObjectValue<ElasticSanEncryptionProperties>(EncryptionProperties, options);
+                writer.WriteObjectValue(EncryptionProperties, options);
             }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue<NetworkRuleSet>(NetworkAcls, options);
+                writer.WriteObjectValue(NetworkAcls, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         internal static ElasticSanVolumeGroupPatch DeserializeElasticSanVolumeGroupPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

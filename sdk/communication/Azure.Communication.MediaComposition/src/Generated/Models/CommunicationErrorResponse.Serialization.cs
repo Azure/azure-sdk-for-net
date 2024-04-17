@@ -16,7 +16,7 @@ namespace Azure.Communication.MediaComposition.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("error"u8);
-            writer.WriteObjectValue<CommunicationError>(Error);
+            writer.WriteObjectValue(Error);
             writer.WriteEndObject();
         }
 
@@ -46,11 +46,11 @@ namespace Azure.Communication.MediaComposition.Models
             return DeserializeCommunicationErrorResponse(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CommunicationErrorResponse>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

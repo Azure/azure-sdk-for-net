@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
     public partial class SpringBootSiteErrorSummariesProperties : IUtf8JsonSerializable, IJsonModel<SpringBootSiteErrorSummariesProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootSiteErrorSummariesProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootSiteErrorSummariesProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SpringBootSiteErrorSummariesProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DiscoveryScopeErrorSummaries)
                 {
-                    writer.WriteObjectValue<SpringBootSiteErrorSummaryModel>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue<SpringBootSiteError>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
 
         internal static SpringBootSiteErrorSummariesProperties DeserializeSpringBootSiteErrorSummariesProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

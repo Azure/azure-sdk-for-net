@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 {
     public partial class DataLakeAnalyticsStorageContainerData : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsStorageContainerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsStorageContainerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsStorageContainerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataLakeAnalyticsStorageContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 
         internal static DataLakeAnalyticsStorageContainerData DeserializeDataLakeAnalyticsStorageContainerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

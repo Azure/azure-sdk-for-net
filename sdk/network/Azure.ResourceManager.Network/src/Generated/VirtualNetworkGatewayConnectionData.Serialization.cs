@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkGatewayConnectionData : IUtf8JsonSerializable, IJsonModel<VirtualNetworkGatewayConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualNetworkGatewayConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStringValue(AuthorizationKey);
             }
             writer.WritePropertyName("virtualNetworkGateway1"u8);
-            writer.WriteObjectValue<VirtualNetworkGatewayData>(VirtualNetworkGateway1, options);
+            writer.WriteObjectValue(VirtualNetworkGateway1, options);
             if (Optional.IsDefined(VirtualNetworkGateway2))
             {
                 writer.WritePropertyName("virtualNetworkGateway2"u8);
-                writer.WriteObjectValue<VirtualNetworkGatewayData>(VirtualNetworkGateway2, options);
+                writer.WriteObjectValue(VirtualNetworkGateway2, options);
             }
             if (Optional.IsDefined(LocalNetworkGateway2))
             {
                 writer.WritePropertyName("localNetworkGateway2"u8);
-                writer.WriteObjectValue<LocalNetworkGatewayData>(LocalNetworkGateway2, options);
+                writer.WriteObjectValue(LocalNetworkGateway2, options);
             }
             if (Optional.IsCollectionDefined(IngressNatRules))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TunnelConnectionStatus)
                 {
-                    writer.WriteObjectValue<TunnelConnectionHealth>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in GatewayCustomBgpIPAddresses)
                 {
-                    writer.WriteObjectValue<GatewayCustomBgpIPAddressIPConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPsecPolicies)
                 {
-                    writer.WriteObjectValue<IPsecPolicy>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TrafficSelectorPolicies)
                 {
-                    writer.WriteObjectValue<TrafficSelectorPolicy>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Network
 
         internal static VirtualNetworkGatewayConnectionData DeserializeVirtualNetworkGatewayConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

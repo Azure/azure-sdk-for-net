@@ -135,6 +135,8 @@ namespace Azure.AI.OpenAI.Tests
                     new ChatRequestUserMessage("What temperature should I bake pizza at?"),
                 },
                 MaxTokens = 512,
+                EnableLogProbabilities = true,
+                LogProbabilitiesPerToken = 2,
             };
 
             StreamingResponse<StreamingChatCompletionsUpdate> response
@@ -142,6 +144,8 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response, Is.Not.Null);
 
             StringBuilder contentBuilder = new();
+            string id = null;
+            string model = null;
             bool gotRole = false;
             bool gotRequestContentFilterResults = false;
             bool gotResponseContentFilterResults = false;
@@ -150,11 +154,21 @@ namespace Azure.AI.OpenAI.Tests
             {
                 Assert.That(chatUpdate, Is.Not.Null);
 
-                if (chatUpdate.AzureExtensionsContext?.RequestContentFilterResults is null)
+                if (serviceTarget != Service.Azure)
                 {
                     Assert.That(chatUpdate.Id, Is.Not.Null.Or.Empty);
                     Assert.That(chatUpdate.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
                     Assert.That(chatUpdate.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
+                }
+                if (!string.IsNullOrEmpty(chatUpdate.Id))
+                {
+                    Assert.That((id is null) || (id == chatUpdate.Id));
+                    id = chatUpdate.Id;
+                }
+                if (!string.IsNullOrEmpty(chatUpdate.Model))
+                {
+                    Assert.That((model is null) || (model == chatUpdate.Model));
+                    model = chatUpdate.Model;
                 }
                 if (chatUpdate.Role.HasValue)
                 {
@@ -162,9 +176,13 @@ namespace Azure.AI.OpenAI.Tests
                     Assert.That(chatUpdate.Role.Value, Is.EqualTo(ChatRole.Assistant));
                     gotRole = true;
                 }
-                if (chatUpdate.ContentUpdate is not null)
+                if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
                 {
                     contentBuilder.Append(chatUpdate.ContentUpdate);
+                    Assert.That(chatUpdate.LogProbabilityInfo, Is.Not.Null);
+                    Assert.That(chatUpdate.LogProbabilityInfo.TokenLogProbabilityResults.Count, Is.GreaterThanOrEqualTo(1));
+                    Assert.That(chatUpdate.ContentUpdate.StartsWith(chatUpdate.LogProbabilityInfo.TokenLogProbabilityResults[0].Token));
+                    Assert.That(chatUpdate.LogProbabilityInfo.TokenLogProbabilityResults[0].TopLogProbabilityEntries.Count, Is.LessThanOrEqualTo(requestOptions.LogProbabilitiesPerToken));
                 }
                 if (chatUpdate.AzureExtensionsContext?.RequestContentFilterResults is not null)
                 {
@@ -184,6 +202,8 @@ namespace Azure.AI.OpenAI.Tests
                 }
             }
 
+            Assert.IsTrue(!string.IsNullOrEmpty(id));
+            Assert.IsTrue(!string.IsNullOrEmpty(model));
             Assert.IsTrue(gotRole);
             Assert.That(contentBuilder.ToString(), Is.Not.Null.Or.Empty);
             if (serviceTarget == Service.Azure)

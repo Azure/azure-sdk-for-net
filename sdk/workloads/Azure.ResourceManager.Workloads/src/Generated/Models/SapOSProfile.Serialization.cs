@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SapOSProfile : IUtf8JsonSerializable, IJsonModel<SapOSProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapOSProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapOSProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapOSProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(OSConfiguration))
             {
                 writer.WritePropertyName("osConfiguration"u8);
-                writer.WriteObjectValue<SapOSConfiguration>(OSConfiguration, options);
+                writer.WriteObjectValue(OSConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapOSProfile DeserializeSapOSProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

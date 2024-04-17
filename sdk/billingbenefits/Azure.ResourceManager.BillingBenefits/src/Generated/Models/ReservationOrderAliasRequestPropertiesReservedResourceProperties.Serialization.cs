@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 {
     internal partial class ReservationOrderAliasRequestPropertiesReservedResourceProperties : IUtf8JsonSerializable, IJsonModel<ReservationOrderAliasRequestPropertiesReservedResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationOrderAliasRequestPropertiesReservedResourceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationOrderAliasRequestPropertiesReservedResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationOrderAliasRequestPropertiesReservedResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static ReservationOrderAliasRequestPropertiesReservedResourceProperties DeserializeReservationOrderAliasRequestPropertiesReservedResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

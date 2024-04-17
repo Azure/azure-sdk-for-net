@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecurityCenterFileProtectionMode : IUtf8JsonSerializable, IJsonModel<SecurityCenterFileProtectionMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCenterFileProtectionMode>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCenterFileProtectionMode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityCenterFileProtectionMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityCenterFileProtectionMode DeserializeSecurityCenterFileProtectionMode(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -237,11 +237,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeSftpReadSettings(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SftpReadSettings>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -249,7 +249,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SftpReadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SftpReadSettings>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SftpReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

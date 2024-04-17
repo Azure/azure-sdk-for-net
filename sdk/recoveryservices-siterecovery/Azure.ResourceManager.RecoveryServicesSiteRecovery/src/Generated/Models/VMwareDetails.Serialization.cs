@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class VMwareDetails : IUtf8JsonSerializable, IJsonModel<VMwareDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProcessServers)
                 {
-                    writer.WriteObjectValue<SiteRecoveryProcessServer>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in MasterTargetServers)
                 {
-                    writer.WriteObjectValue<MasterTargetServer>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in RunAsAccounts)
                 {
-                    writer.WriteObjectValue<SiteRecoveryRunAsAccount>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AgentVersionDetails))
             {
                 writer.WritePropertyName("agentVersionDetails"u8);
-                writer.WriteObjectValue<SiteRecoveryVersionDetails>(AgentVersionDetails, options);
+                writer.WriteObjectValue(AgentVersionDetails, options);
             }
             if (Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SwitchProviderBlockingErrorDetails)
                 {
-                    writer.WriteObjectValue<InMageFabricSwitchProviderBlockingErrorDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static VMwareDetails DeserializeVMwareDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

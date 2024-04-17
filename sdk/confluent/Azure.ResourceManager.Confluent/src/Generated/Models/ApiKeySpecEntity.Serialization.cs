@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     public partial class ApiKeySpecEntity : IUtf8JsonSerializable, IJsonModel<ApiKeySpecEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiKeySpecEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiKeySpecEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiKeySpecEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue<ApiKeyResourceEntity>(Resource, options);
+                writer.WriteObjectValue(Resource, options);
             }
             if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue<ApiKeyOwnerEntity>(Owner, options);
+                writer.WriteObjectValue(Owner, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static ApiKeySpecEntity DeserializeApiKeySpecEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

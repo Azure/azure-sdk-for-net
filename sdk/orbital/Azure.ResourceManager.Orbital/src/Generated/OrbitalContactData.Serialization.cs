@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Orbital
 {
     public partial class OrbitalContactData : IUtf8JsonSerializable, IJsonModel<OrbitalContactData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalContactData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalContactData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OrbitalContactData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Orbital
             if (options.Format != "W" && Optional.IsDefined(AntennaConfiguration))
             {
                 writer.WritePropertyName("antennaConfiguration"u8);
-                writer.WriteObjectValue<OrbitalContactAntennaConfiguration>(AntennaConfiguration, options);
+                writer.WriteObjectValue(AntennaConfiguration, options);
             }
             if (Optional.IsDefined(ContactProfile))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Orbital
 
         internal static OrbitalContactData DeserializeOrbitalContactData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

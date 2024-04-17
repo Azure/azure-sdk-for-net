@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class FunctionAppRuntimeSettings : IUtf8JsonSerializable, IJsonModel<FunctionAppRuntimeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionAppRuntimeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionAppRuntimeSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FunctionAppRuntimeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(AppInsightsSettings))
             {
                 writer.WritePropertyName("appInsightsSettings"u8);
-                writer.WriteObjectValue<AppInsightsWebAppStackSettings>(AppInsightsSettings, options);
+                writer.WriteObjectValue(AppInsightsSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GitHubActionSettings))
             {
                 writer.WritePropertyName("gitHubActionSettings"u8);
-                writer.WriteObjectValue<GitHubActionWebAppStackSettings>(GitHubActionSettings, options);
+                writer.WriteObjectValue(GitHubActionSettings, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AppSettingsDictionary))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(SiteConfigPropertiesDictionary))
             {
                 writer.WritePropertyName("siteConfigPropertiesDictionary"u8);
-                writer.WriteObjectValue<SiteConfigPropertiesDictionary>(SiteConfigPropertiesDictionary, options);
+                writer.WriteObjectValue(SiteConfigPropertiesDictionary, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFunctionsExtensionVersions))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static FunctionAppRuntimeSettings DeserializeFunctionAppRuntimeSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class BlobReferenceForConsumptionDto : IUtf8JsonSerializable, IJsonModel<BlobReferenceForConsumptionDto>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobReferenceForConsumptionDto>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobReferenceForConsumptionDto>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BlobReferenceForConsumptionDto>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Credential != null)
                 {
                     writer.WritePropertyName("credential"u8);
-                    writer.WriteObjectValue<PendingUploadCredentialDto>(Credential, options);
+                    writer.WriteObjectValue(Credential, options);
                 }
                 else
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static BlobReferenceForConsumptionDto DeserializeBlobReferenceForConsumptionDto(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

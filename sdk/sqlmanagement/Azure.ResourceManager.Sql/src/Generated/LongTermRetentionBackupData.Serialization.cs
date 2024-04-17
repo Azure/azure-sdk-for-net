@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class LongTermRetentionBackupData : IUtf8JsonSerializable, IJsonModel<LongTermRetentionBackupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LongTermRetentionBackupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LongTermRetentionBackupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LongTermRetentionBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static LongTermRetentionBackupData DeserializeLongTermRetentionBackupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

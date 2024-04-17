@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     public partial class ClusterServiceConfigResult : IUtf8JsonSerializable, IJsonModel<ClusterServiceConfigResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterServiceConfigResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterServiceConfigResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterServiceConfigResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 foreach (var item in DefaultKeys)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ClusterServiceConfigValueEntity>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static ClusterServiceConfigResult DeserializeClusterServiceConfigResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

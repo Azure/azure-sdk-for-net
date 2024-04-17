@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     internal partial class SBSubscriptionListResult : IUtf8JsonSerializable, IJsonModel<SBSubscriptionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SBSubscriptionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SBSubscriptionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SBSubscriptionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<ServiceBusSubscriptionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static SBSubscriptionListResult DeserializeSBSubscriptionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

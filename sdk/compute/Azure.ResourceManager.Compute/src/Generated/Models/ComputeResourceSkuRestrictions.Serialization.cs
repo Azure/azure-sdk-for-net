@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeResourceSkuRestrictions : IUtf8JsonSerializable, IJsonModel<ComputeResourceSkuRestrictions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeResourceSkuRestrictions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeResourceSkuRestrictions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComputeResourceSkuRestrictions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(RestrictionInfo))
             {
                 writer.WritePropertyName("restrictionInfo"u8);
-                writer.WriteObjectValue<ComputeResourceSkuRestrictionInfo>(RestrictionInfo, options);
+                writer.WriteObjectValue(RestrictionInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReasonCode))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ComputeResourceSkuRestrictions DeserializeComputeResourceSkuRestrictions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

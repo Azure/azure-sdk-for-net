@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningUsernamePasswordAuthTypeWorkspaceConnection : IUtf8JsonSerializable, IJsonModel<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningUsernamePasswordAuthTypeWorkspaceConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue<MachineLearningWorkspaceConnectionUsernamePassword>(Credentials, options);
+                writer.WriteObjectValue(Credentials, options);
             }
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningUsernamePasswordAuthTypeWorkspaceConnection DeserializeMachineLearningUsernamePasswordAuthTypeWorkspaceConnection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

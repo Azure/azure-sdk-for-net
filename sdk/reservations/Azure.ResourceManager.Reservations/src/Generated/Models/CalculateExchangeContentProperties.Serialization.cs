@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class CalculateExchangeContentProperties : IUtf8JsonSerializable, IJsonModel<CalculateExchangeContentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CalculateExchangeContentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CalculateExchangeContentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CalculateExchangeContentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in ReservationsToPurchase)
                 {
-                    writer.WriteObjectValue<ReservationPurchaseContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in SavingsPlansToPurchase)
                 {
-                    writer.WriteObjectValue<SavingsPlanPurchase>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in ReservationsToExchange)
                 {
-                    writer.WriteObjectValue<ReservationToReturn>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static CalculateExchangeContentProperties DeserializeCalculateExchangeContentProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

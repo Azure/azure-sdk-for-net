@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Quota.Models
 {
     public partial class QuotaOperationDisplay : IUtf8JsonSerializable, IJsonModel<QuotaOperationDisplay>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaOperationDisplay>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaOperationDisplay>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuotaOperationDisplay>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         internal static QuotaOperationDisplay DeserializeQuotaOperationDisplay(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

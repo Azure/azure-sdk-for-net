@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBSqlContainerData : IUtf8JsonSerializable, IJsonModel<CosmosDBSqlContainerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlContainerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBSqlContainerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBSqlContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue<ExtendedCosmosDBSqlContainerResourceInfo>(Resource, options);
+                writer.WriteObjectValue(Resource, options);
             }
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue<CosmosDBSqlContainerPropertiesConfig>(Options, options);
+                writer.WriteObjectValue(Options, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static CosmosDBSqlContainerData DeserializeCosmosDBSqlContainerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

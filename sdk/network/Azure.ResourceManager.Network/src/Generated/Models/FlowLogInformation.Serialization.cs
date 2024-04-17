@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class FlowLogInformation : IUtf8JsonSerializable, IJsonModel<FlowLogInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowLogInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlowLogInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FlowLogInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration"u8);
-                writer.WriteObjectValue<TrafficAnalyticsProperties>(FlowAnalyticsConfiguration, options);
+                writer.WriteObjectValue(FlowAnalyticsConfiguration, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue<RetentionPolicyParameters>(RetentionPolicy, options);
+                writer.WriteObjectValue(RetentionPolicy, options);
             }
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue<FlowLogProperties>(Format, options);
+                writer.WriteObjectValue(Format, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FlowLogInformation DeserializeFlowLogInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

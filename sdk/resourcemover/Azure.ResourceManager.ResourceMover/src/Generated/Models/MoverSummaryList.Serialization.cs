@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 {
     internal partial class MoverSummaryList : IUtf8JsonSerializable, IJsonModel<MoverSummaryList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverSummaryList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverSummaryList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MoverSummaryList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Summary)
                 {
-                    writer.WriteObjectValue<MoverSummaryItemInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverSummaryList DeserializeMoverSummaryList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

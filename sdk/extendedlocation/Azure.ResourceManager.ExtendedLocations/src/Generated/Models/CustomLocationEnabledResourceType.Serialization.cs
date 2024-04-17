@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
 {
     public partial class CustomLocationEnabledResourceType : IUtf8JsonSerializable, IJsonModel<CustomLocationEnabledResourceType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomLocationEnabledResourceType>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomLocationEnabledResourceType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomLocationEnabledResourceType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 writer.WriteStartArray();
                 foreach (var item in TypesMetadata)
                 {
-                    writer.WriteObjectValue<CustomLocationEnabledResourceTypeMetadata>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
 
         internal static CustomLocationEnabledResourceType DeserializeCustomLocationEnabledResourceType(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

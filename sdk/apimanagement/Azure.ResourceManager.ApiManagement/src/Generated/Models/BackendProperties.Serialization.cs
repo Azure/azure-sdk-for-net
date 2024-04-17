@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal partial class BackendProperties : IUtf8JsonSerializable, IJsonModel<BackendProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackendProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ServiceFabricCluster))
             {
                 writer.WritePropertyName("serviceFabricCluster"u8);
-                writer.WriteObjectValue<BackendServiceFabricClusterProperties>(ServiceFabricCluster, options);
+                writer.WriteObjectValue(ServiceFabricCluster, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static BackendProperties DeserializeBackendProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

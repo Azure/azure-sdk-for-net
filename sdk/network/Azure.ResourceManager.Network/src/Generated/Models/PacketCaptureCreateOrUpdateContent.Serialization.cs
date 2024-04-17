@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class PacketCaptureCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<PacketCaptureCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCaptureCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCaptureCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PacketCaptureCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue<PacketCaptureMachineScope>(Scope, options);
+                writer.WriteObjectValue(Scope, options);
             }
             if (Optional.IsDefined(TargetType))
             {
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteNumberValue(TimeLimitInSeconds.Value);
             }
             writer.WritePropertyName("storageLocation"u8);
-            writer.WriteObjectValue<PacketCaptureStorageLocation>(StorageLocation, options);
+            writer.WriteObjectValue(StorageLocation, options);
             if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue<PacketCaptureFilter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static PacketCaptureCreateOrUpdateContent DeserializePacketCaptureCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

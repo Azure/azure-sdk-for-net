@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 {
     public partial class StoragePoolSkuLocationInfo : IUtf8JsonSerializable, IJsonModel<StoragePoolSkuLocationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StoragePoolSkuLocationInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StoragePoolSkuLocationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StoragePoolSkuLocationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in ZoneDetails)
                 {
-                    writer.WriteObjectValue<StoragePoolSkuZoneDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static StoragePoolSkuLocationInfo DeserializeStoragePoolSkuLocationInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

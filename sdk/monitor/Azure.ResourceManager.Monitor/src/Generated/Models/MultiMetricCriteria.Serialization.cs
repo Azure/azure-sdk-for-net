@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MultiMetricCriteria : IUtf8JsonSerializable, IJsonModel<MultiMetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiMetricCriteria>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiMetricCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MultiMetricCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue<MetricDimension>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MultiMetricCriteria DeserializeMultiMetricCriteria(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

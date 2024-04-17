@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class SignalRUpstreamAuthSettings : IUtf8JsonSerializable, IJsonModel<SignalRUpstreamAuthSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRUpstreamAuthSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRUpstreamAuthSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignalRUpstreamAuthSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("managedIdentity"u8);
-                writer.WriteObjectValue<ManagedIdentitySettings>(ManagedIdentity, options);
+                writer.WriteObjectValue(ManagedIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRUpstreamAuthSettings DeserializeSignalRUpstreamAuthSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

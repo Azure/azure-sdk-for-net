@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 {
     public partial class ApplianceUpgradeGraph : IUtf8JsonSerializable, IJsonModel<ApplianceUpgradeGraph>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplianceUpgradeGraph>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplianceUpgradeGraph>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplianceUpgradeGraph>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<ApplianceUpgradeGraphProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 
         internal static ApplianceUpgradeGraph DeserializeApplianceUpgradeGraph(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

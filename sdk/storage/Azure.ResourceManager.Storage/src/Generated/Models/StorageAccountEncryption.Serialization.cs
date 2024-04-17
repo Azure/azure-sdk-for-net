@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageAccountEncryption : IUtf8JsonSerializable, IJsonModel<StorageAccountEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountEncryption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageAccountEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Services))
             {
                 writer.WritePropertyName("services"u8);
-                writer.WriteObjectValue<StorageAccountEncryptionServices>(Services, options);
+                writer.WriteObjectValue(Services, options);
             }
             if (Optional.IsDefined(KeySource))
             {
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyvaultproperties"u8);
-                writer.WriteObjectValue<StorageAccountKeyVaultProperties>(KeyVaultProperties, options);
+                writer.WriteObjectValue(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<StorageAccountEncryptionIdentity>(EncryptionIdentity, options);
+                writer.WriteObjectValue(EncryptionIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountEncryption DeserializeStorageAccountEncryption(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

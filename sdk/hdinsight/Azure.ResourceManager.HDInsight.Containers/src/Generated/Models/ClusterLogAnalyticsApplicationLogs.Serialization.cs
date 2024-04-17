@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     public partial class ClusterLogAnalyticsApplicationLogs : IUtf8JsonSerializable, IJsonModel<ClusterLogAnalyticsApplicationLogs>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterLogAnalyticsApplicationLogs>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterLogAnalyticsApplicationLogs>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterLogAnalyticsApplicationLogs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static ClusterLogAnalyticsApplicationLogs DeserializeClusterLogAnalyticsApplicationLogs(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

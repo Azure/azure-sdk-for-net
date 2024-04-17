@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     internal partial class IotHubEndpointHealthInfoListResult : IUtf8JsonSerializable, IJsonModel<IotHubEndpointHealthInfoListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubEndpointHealthInfoListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubEndpointHealthInfoListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotHubEndpointHealthInfoListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<IotHubEndpointHealthInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubEndpointHealthInfoListResult DeserializeIotHubEndpointHealthInfoListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

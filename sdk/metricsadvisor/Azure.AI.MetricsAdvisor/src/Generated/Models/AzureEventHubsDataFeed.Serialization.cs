@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSourceParameter"u8);
-            writer.WriteObjectValue<AzureEventHubsParameter>(DataSourceParameter);
+            writer.WriteObjectValue(DataSourceParameter);
             writer.WritePropertyName("dataSourceType"u8);
             writer.WriteStringValue(DataSourceType.ToString());
             writer.WritePropertyName("dataFeedName"u8);
@@ -46,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue<DataFeedMetric>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Dimension))
@@ -499,11 +499,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             return DeserializeAzureEventHubsDataFeed(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureEventHubsDataFeed>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

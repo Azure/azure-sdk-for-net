@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ManagedClusterAgentPoolProfileProperties : IUtf8JsonSerializable, IJsonModel<ManagedClusterAgentPoolProfileProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAgentPoolProfileProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAgentPoolProfileProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterAgentPoolProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue<AgentPoolUpgradeSettings>(UpgradeSettings, options);
+                writer.WriteObjectValue(UpgradeSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
-                writer.WriteObjectValue<ContainerServicePowerState>(PowerState, options);
+                writer.WriteObjectValue(PowerState, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
@@ -216,12 +216,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(KubeletConfig))
             {
                 writer.WritePropertyName("kubeletConfig"u8);
-                writer.WriteObjectValue<KubeletConfig>(KubeletConfig, options);
+                writer.WriteObjectValue(KubeletConfig, options);
             }
             if (Optional.IsDefined(LinuxOSConfig))
             {
                 writer.WritePropertyName("linuxOSConfig"u8);
-                writer.WriteObjectValue<LinuxOSConfig>(LinuxOSConfig, options);
+                writer.WriteObjectValue(LinuxOSConfig, options);
             }
             if (Optional.IsDefined(EnableEncryptionAtHost))
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue<ContainerServiceCreationData>(CreationData, options);
+                writer.WriteObjectValue(CreationData, options);
             }
             if (Optional.IsDefined(CapacityReservationGroupId))
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue<AgentPoolNetworkProfile>(NetworkProfile, options);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterAgentPoolProfileProperties DeserializeManagedClusterAgentPoolProfileProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

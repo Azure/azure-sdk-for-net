@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformCustomContainerUserSourceInfo : IUtf8JsonSerializable, IJsonModel<AppPlatformCustomContainerUserSourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformCustomContainerUserSourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformCustomContainerUserSourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformCustomContainerUserSourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(CustomContainer))
             {
                 writer.WritePropertyName("customContainer"u8);
-                writer.WriteObjectValue<AppPlatformCustomContainer>(CustomContainer, options);
+                writer.WriteObjectValue(CustomContainer, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(UserSourceInfoType);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformCustomContainerUserSourceInfo DeserializeAppPlatformCustomContainerUserSourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

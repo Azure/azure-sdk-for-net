@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseEventGridDataConnection : IUtf8JsonSerializable, IJsonModel<SynapseEventGridDataConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseEventGridDataConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseEventGridDataConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseEventGridDataConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseEventGridDataConnection DeserializeSynapseEventGridDataConnection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

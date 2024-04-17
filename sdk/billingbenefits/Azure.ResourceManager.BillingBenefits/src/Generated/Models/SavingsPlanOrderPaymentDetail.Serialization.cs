@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 {
     public partial class SavingsPlanOrderPaymentDetail : IUtf8JsonSerializable, IJsonModel<SavingsPlanOrderPaymentDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanOrderPaymentDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanOrderPaymentDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SavingsPlanOrderPaymentDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue<BillingBenefitsPrice>(PricingCurrencyTotal, options);
+                writer.WriteObjectValue(PricingCurrencyTotal, options);
             }
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue<BillingBenefitsPrice>(BillingCurrencyTotal, options);
+                writer.WriteObjectValue(BillingCurrencyTotal, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue<BillingBenefitsExtendedStatusInfo>(ExtendedStatusInfo, options);
+                writer.WriteObjectValue(ExtendedStatusInfo, options);
             }
             if (Optional.IsDefined(BillingAccount))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static SavingsPlanOrderPaymentDetail DeserializeSavingsPlanOrderPaymentDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

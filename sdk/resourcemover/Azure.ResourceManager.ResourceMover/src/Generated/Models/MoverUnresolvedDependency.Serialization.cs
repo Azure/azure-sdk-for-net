@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class MoverUnresolvedDependency : IUtf8JsonSerializable, IJsonModel<MoverUnresolvedDependency>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverUnresolvedDependency>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverUnresolvedDependency>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MoverUnresolvedDependency>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverUnresolvedDependency DeserializeMoverUnresolvedDependency(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

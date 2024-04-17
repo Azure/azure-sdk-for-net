@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Subscription.Models
 {
     public partial class AcceptOwnershipContent : IUtf8JsonSerializable, IJsonModel<AcceptOwnershipContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcceptOwnershipContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcceptOwnershipContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AcceptOwnershipContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Subscription.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<AcceptOwnershipRequestProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Subscription.Models
 
         internal static AcceptOwnershipContent DeserializeAcceptOwnershipContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

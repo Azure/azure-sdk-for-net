@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 {
     public partial class HealthcareApisIotMappingProperties : IUtf8JsonSerializable, IJsonModel<HealthcareApisIotMappingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisIotMappingProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisIotMappingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HealthcareApisIotMappingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisIotMappingProperties DeserializeHealthcareApisIotMappingProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

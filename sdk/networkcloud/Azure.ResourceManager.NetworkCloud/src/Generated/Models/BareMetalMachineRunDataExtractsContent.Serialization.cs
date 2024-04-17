@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class BareMetalMachineRunDataExtractsContent : IUtf8JsonSerializable, IJsonModel<BareMetalMachineRunDataExtractsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BareMetalMachineRunDataExtractsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BareMetalMachineRunDataExtractsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BareMetalMachineRunDataExtractsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartArray();
             foreach (var item in Commands)
             {
-                writer.WriteObjectValue<BareMetalMachineCommandSpecification>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("limitTimeSeconds"u8);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static BareMetalMachineRunDataExtractsContent DeserializeBareMetalMachineRunDataExtractsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

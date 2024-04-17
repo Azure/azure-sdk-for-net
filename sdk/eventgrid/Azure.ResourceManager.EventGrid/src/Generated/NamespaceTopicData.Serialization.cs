@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class NamespaceTopicData : IUtf8JsonSerializable, IJsonModel<NamespaceTopicData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamespaceTopicData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamespaceTopicData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NamespaceTopicData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static NamespaceTopicData DeserializeNamespaceTopicData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs
 {
     public partial class EventHubsDisasterRecoveryData : IUtf8JsonSerializable, IJsonModel<EventHubsDisasterRecoveryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsDisasterRecoveryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsDisasterRecoveryData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsDisasterRecoveryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static EventHubsDisasterRecoveryData DeserializeEventHubsDisasterRecoveryData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

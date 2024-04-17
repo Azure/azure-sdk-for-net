@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     internal partial class RedisEnterprisePrivateLinkResourceListResult : IUtf8JsonSerializable, IJsonModel<RedisEnterprisePrivateLinkResourceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterprisePrivateLinkResourceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterprisePrivateLinkResourceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisEnterprisePrivateLinkResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<RedisEnterprisePrivateLinkResource>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static RedisEnterprisePrivateLinkResourceListResult DeserializeRedisEnterprisePrivateLinkResourceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

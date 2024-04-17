@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class FeatureStatus : IUtf8JsonSerializable, IJsonModel<FeatureStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FeatureStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static FeatureStatus DeserializeFeatureStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

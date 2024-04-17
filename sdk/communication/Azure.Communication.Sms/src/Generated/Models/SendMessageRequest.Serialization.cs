@@ -21,7 +21,7 @@ namespace Azure.Communication.Sms.Models
             writer.WriteStartArray();
             foreach (var item in SmsRecipients)
             {
-                writer.WriteObjectValue<SmsRecipient>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("message"u8);
@@ -29,16 +29,16 @@ namespace Azure.Communication.Sms.Models
             if (Optional.IsDefined(SmsSendOptions))
             {
                 writer.WritePropertyName("smsSendOptions"u8);
-                writer.WriteObjectValue<SmsSendOptions>(SmsSendOptions);
+                writer.WriteObjectValue(SmsSendOptions);
             }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SendMessageRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

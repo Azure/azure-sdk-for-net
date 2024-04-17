@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppInsightsWebAppStackSettings : IUtf8JsonSerializable, IJsonModel<AppInsightsWebAppStackSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppInsightsWebAppStackSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppInsightsWebAppStackSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppInsightsWebAppStackSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppInsightsWebAppStackSettings DeserializeAppInsightsWebAppStackSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

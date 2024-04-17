@@ -156,7 +156,7 @@ stages:
                     runOnce:
                       deploy:
                         steps:
-                          - checkout: none
+                          - checkout: self
                           - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
                           - task: MSBuild@1
                             displayName: 'Upload Symbols for ${{artifact.name}}'
@@ -167,6 +167,14 @@ stages:
                                 /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
                                 /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
                                 /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
+                          - template: /eng/common/pipelines/templates/steps/create-apireview.yml
+                            parameters:
+                              ArtifactPath: $(Pipeline.Workspace)/packages
+                              Artifacts: ${{parameters.Artifacts}}
+                              ConfigFileDir: $(Pipeline.Workspace)/packages/PackageInfo
+                              MarkPackageAsShipped: true
+                              ArtifactName: ${{parameters.ArtifactName}}
+                              PackageName: ${{artifact.name}}
 
               - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
                 - deployment: PublicDocsMS

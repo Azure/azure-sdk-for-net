@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class AutoscaleSettingData : IUtf8JsonSerializable, IJsonModel<AutoscaleSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoscaleSettingData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoscaleSettingData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoscaleSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStartArray();
             foreach (var item in Profiles)
             {
-                writer.WriteObjectValue<AutoscaleProfile>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Notifications))
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor
                     writer.WriteStartArray();
                     foreach (var item in Notifications)
                     {
-                        writer.WriteObjectValue<AutoscaleNotification>(item, options);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor
                 if (PredictiveAutoscalePolicy != null)
                 {
                     writer.WritePropertyName("predictiveAutoscalePolicy"u8);
-                    writer.WriteObjectValue<PredictiveAutoscalePolicy>(PredictiveAutoscalePolicy, options);
+                    writer.WriteObjectValue(PredictiveAutoscalePolicy, options);
                 }
                 else
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static AutoscaleSettingData DeserializeAutoscaleSettingData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRouteCircuitPeeringData : IUtf8JsonSerializable, IJsonModel<ExpressRouteCircuitPeeringData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCircuitPeeringData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCircuitPeeringData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExpressRouteCircuitPeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
-                writer.WriteObjectValue<ExpressRouteCircuitPeeringConfig>(MicrosoftPeeringConfig, options);
+                writer.WriteObjectValue(MicrosoftPeeringConfig, options);
             }
             if (Optional.IsDefined(Stats))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue<ExpressRouteCircuitStats>(Stats, options);
+                writer.WriteObjectValue(Stats, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(IPv6PeeringConfig))
             {
                 writer.WritePropertyName("ipv6PeeringConfig"u8);
-                writer.WriteObjectValue<IPv6ExpressRouteCircuitPeeringConfig>(IPv6PeeringConfig, options);
+                writer.WriteObjectValue(IPv6PeeringConfig, options);
             }
             if (Optional.IsDefined(ExpressRouteConnection))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Connections)
                 {
-                    writer.WriteObjectValue<ExpressRouteCircuitConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PeeredConnections)
                 {
-                    writer.WriteObjectValue<PeerExpressRouteCircuitConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteCircuitPeeringData DeserializeExpressRouteCircuitPeeringData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

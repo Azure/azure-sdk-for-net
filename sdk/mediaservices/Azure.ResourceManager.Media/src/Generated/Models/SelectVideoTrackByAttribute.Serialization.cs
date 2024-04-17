@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class SelectVideoTrackByAttribute : IUtf8JsonSerializable, IJsonModel<SelectVideoTrackByAttribute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelectVideoTrackByAttribute>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SelectVideoTrackByAttribute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SelectVideoTrackByAttribute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static SelectVideoTrackByAttribute DeserializeSelectVideoTrackByAttribute(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     internal partial class UnknownInputSchemaMapping : IUtf8JsonSerializable, IJsonModel<EventGridInputSchemaMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridInputSchemaMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridInputSchemaMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventGridInputSchemaMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static UnknownInputSchemaMapping DeserializeUnknownInputSchemaMapping(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

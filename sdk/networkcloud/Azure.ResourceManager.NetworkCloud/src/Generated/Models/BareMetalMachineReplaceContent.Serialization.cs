@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class BareMetalMachineReplaceContent : IUtf8JsonSerializable, IJsonModel<BareMetalMachineReplaceContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BareMetalMachineReplaceContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BareMetalMachineReplaceContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BareMetalMachineReplaceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(BmcCredentials))
             {
                 writer.WritePropertyName("bmcCredentials"u8);
-                writer.WriteObjectValue<AdministrativeCredentials>(BmcCredentials, options);
+                writer.WriteObjectValue(BmcCredentials, options);
             }
             if (Optional.IsDefined(BmcMacAddress))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static BareMetalMachineReplaceContent DeserializeBareMetalMachineReplaceContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class ContainerInfo : IUtf8JsonSerializable, IJsonModel<ContainerInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CurrentCpuStats))
             {
                 writer.WritePropertyName("currentCpuStats"u8);
-                writer.WriteObjectValue<ContainerCpuStatistics>(CurrentCpuStats, options);
+                writer.WriteObjectValue(CurrentCpuStats, options);
             }
             if (Optional.IsDefined(PreviousCpuStats))
             {
                 writer.WritePropertyName("previousCpuStats"u8);
-                writer.WriteObjectValue<ContainerCpuStatistics>(PreviousCpuStats, options);
+                writer.WriteObjectValue(PreviousCpuStats, options);
             }
             if (Optional.IsDefined(MemoryStats))
             {
                 writer.WritePropertyName("memoryStats"u8);
-                writer.WriteObjectValue<ContainerMemoryStatistics>(MemoryStats, options);
+                writer.WriteObjectValue(MemoryStats, options);
             }
             if (Optional.IsDefined(Name))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Eth0))
             {
                 writer.WritePropertyName("eth0"u8);
-                writer.WriteObjectValue<ContainerNetworkInterfaceStatistics>(Eth0, options);
+                writer.WriteObjectValue(Eth0, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ContainerInfo DeserializeContainerInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

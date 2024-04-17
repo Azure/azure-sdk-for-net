@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseWorkspacePatch : IUtf8JsonSerializable, IJsonModel<SynapseWorkspacePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseWorkspacePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseWorkspacePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseWorkspacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(ManagedVirtualNetworkSettings))
             {
                 writer.WritePropertyName("managedVirtualNetworkSettings"u8);
-                writer.WriteObjectValue<SynapseManagedVirtualNetworkSettings>(ManagedVirtualNetworkSettings, options);
+                writer.WriteObjectValue(ManagedVirtualNetworkSettings, options);
             }
             if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
             {
                 writer.WritePropertyName("workspaceRepositoryConfiguration"u8);
-                writer.WriteObjectValue<SynapseWorkspaceRepositoryConfiguration>(WorkspaceRepositoryConfiguration, options);
+                writer.WriteObjectValue(WorkspaceRepositoryConfiguration, options);
             }
             if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
-                writer.WriteObjectValue<PurviewConfiguration>(PurviewConfiguration, options);
+                writer.WriteObjectValue(PurviewConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<SynapseEncryptionDetails>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseWorkspacePatch DeserializeSynapseWorkspacePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

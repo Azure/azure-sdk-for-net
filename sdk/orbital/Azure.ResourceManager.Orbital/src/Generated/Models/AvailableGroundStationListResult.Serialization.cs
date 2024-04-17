@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Orbital.Models
 {
     internal partial class AvailableGroundStationListResult : IUtf8JsonSerializable, IJsonModel<AvailableGroundStationListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableGroundStationListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableGroundStationListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailableGroundStationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<AvailableGroundStationData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Orbital.Models
 
         internal static AvailableGroundStationListResult DeserializeAvailableGroundStationListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabCostThreshold : IUtf8JsonSerializable, IJsonModel<DevTestLabCostThreshold>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabCostThreshold>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabCostThreshold>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabCostThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(PercentageThreshold))
             {
                 writer.WritePropertyName("percentageThreshold"u8);
-                writer.WriteObjectValue<PercentageCostThresholdProperties>(PercentageThreshold, options);
+                writer.WriteObjectValue(PercentageThreshold, options);
             }
             if (Optional.IsDefined(DisplayOnChart))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabCostThreshold DeserializeDevTestLabCostThreshold(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

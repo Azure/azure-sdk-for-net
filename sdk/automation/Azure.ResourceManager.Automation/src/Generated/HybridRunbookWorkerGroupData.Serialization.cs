@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class HybridRunbookWorkerGroupData : IUtf8JsonSerializable, IJsonModel<HybridRunbookWorkerGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridRunbookWorkerGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridRunbookWorkerGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridRunbookWorkerGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue<RunAsCredentialAssociationProperty>(Credential, options);
+                writer.WriteObjectValue(Credential, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Automation
 
         internal static HybridRunbookWorkerGroupData DeserializeHybridRunbookWorkerGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

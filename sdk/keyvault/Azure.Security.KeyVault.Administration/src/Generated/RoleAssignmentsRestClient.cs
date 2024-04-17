@@ -134,7 +134,7 @@ namespace Azure.Security.KeyVault.Administration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RoleAssignmentCreateParameters>(parameters);
+            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }

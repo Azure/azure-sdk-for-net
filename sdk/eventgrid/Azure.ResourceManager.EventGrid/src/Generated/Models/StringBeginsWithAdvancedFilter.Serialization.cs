@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class StringBeginsWithAdvancedFilter : IUtf8JsonSerializable, IJsonModel<StringBeginsWithAdvancedFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StringBeginsWithAdvancedFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StringBeginsWithAdvancedFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StringBeginsWithAdvancedFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static StringBeginsWithAdvancedFilter DeserializeStringBeginsWithAdvancedFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class PacketCoreDataPlaneData : IUtf8JsonSerializable, IJsonModel<PacketCoreDataPlaneData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCoreDataPlaneData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCoreDataPlaneData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PacketCoreDataPlaneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("userPlaneAccessInterface"u8);
-            writer.WriteObjectValue<MobileNetworkInterfaceProperties>(UserPlaneAccessInterface, options);
+            writer.WriteObjectValue(UserPlaneAccessInterface, options);
             if (Optional.IsCollectionDefined(UserPlaneAccessVirtualIPv4Addresses))
             {
                 writer.WritePropertyName("userPlaneAccessVirtualIpv4Addresses"u8);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal static PacketCoreDataPlaneData DeserializePacketCoreDataPlaneData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

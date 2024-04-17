@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Quota
 {
     public partial class QuotaRequestDetailData : IUtf8JsonSerializable, IJsonModel<QuotaRequestDetailData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaRequestDetailData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaRequestDetailData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuotaRequestDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Quota
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<ServiceErrorDetail>(Error, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RequestSubmitOn))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Quota
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<QuotaSubRequestDetail>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Quota
 
         internal static QuotaRequestDetailData DeserializeQuotaRequestDetailData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

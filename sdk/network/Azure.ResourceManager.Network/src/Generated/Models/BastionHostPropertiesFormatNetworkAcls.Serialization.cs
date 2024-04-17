@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     internal partial class BastionHostPropertiesFormatNetworkAcls : IUtf8JsonSerializable, IJsonModel<BastionHostPropertiesFormatNetworkAcls>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BastionHostPropertiesFormatNetworkAcls>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BastionHostPropertiesFormatNetworkAcls>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BastionHostPropertiesFormatNetworkAcls>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue<BastionHostIPRule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BastionHostPropertiesFormatNetworkAcls DeserializeBastionHostPropertiesFormatNetworkAcls(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

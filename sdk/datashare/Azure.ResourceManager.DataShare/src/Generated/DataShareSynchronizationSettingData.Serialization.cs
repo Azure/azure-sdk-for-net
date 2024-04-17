@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare
 {
     public partial class DataShareSynchronizationSettingData : IUtf8JsonSerializable, IJsonModel<DataShareSynchronizationSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataShareSynchronizationSettingData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataShareSynchronizationSettingData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataShareSynchronizationSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataShare
 
         internal static DataShareSynchronizationSettingData DeserializeDataShareSynchronizationSettingData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

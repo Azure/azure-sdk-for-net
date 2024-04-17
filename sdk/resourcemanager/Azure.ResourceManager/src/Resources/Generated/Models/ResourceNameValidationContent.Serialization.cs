@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourceNameValidationContent : IUtf8JsonSerializable, IJsonModel<ResourceNameValidationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceNameValidationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceNameValidationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceNameValidationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ResourceNameValidationContent DeserializeResourceNameValidationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

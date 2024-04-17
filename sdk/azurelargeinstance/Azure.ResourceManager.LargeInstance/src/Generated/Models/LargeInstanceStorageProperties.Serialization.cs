@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
 {
     public partial class LargeInstanceStorageProperties : IUtf8JsonSerializable, IJsonModel<LargeInstanceStorageProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LargeInstanceStorageProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LargeInstanceStorageProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LargeInstanceStorageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
             if (Optional.IsDefined(StorageBillingProperties))
             {
                 writer.WritePropertyName("storageBillingProperties"u8);
-                writer.WriteObjectValue<LargeInstanceStorageBillingProperties>(StorageBillingProperties, options);
+                writer.WriteObjectValue(StorageBillingProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
 
         internal static LargeInstanceStorageProperties DeserializeLargeInstanceStorageProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

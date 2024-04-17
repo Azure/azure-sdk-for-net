@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (AuthIdentity != null)
                 {
                     writer.WritePropertyName("authIdentity"u8);
-                    writer.WriteObjectValue<SearchIndexerDataIdentity>(AuthIdentity);
+                    writer.WriteObjectValue(AuthIdentity);
                 }
                 else
                 {
@@ -187,11 +187,11 @@ namespace Azure.Search.Documents.Indexes.Models
             return DeserializeAzureOpenAIEmbeddingSkill(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureOpenAIEmbeddingSkill>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

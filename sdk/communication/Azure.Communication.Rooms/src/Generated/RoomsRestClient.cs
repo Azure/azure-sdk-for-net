@@ -67,7 +67,7 @@ namespace Azure.Communication.Rooms
             }
             var model = createRoomRequest;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CreateRoomRequest>(model);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
@@ -263,7 +263,7 @@ namespace Azure.Communication.Rooms
                 PstnDialOutEnabled = pstnDialOutEnabled
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UpdateRoomRequest>(model);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }

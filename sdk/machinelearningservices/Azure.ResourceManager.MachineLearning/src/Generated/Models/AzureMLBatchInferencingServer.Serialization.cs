@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class AzureMLBatchInferencingServer : IUtf8JsonSerializable, IJsonModel<AzureMLBatchInferencingServer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMLBatchInferencingServer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMLBatchInferencingServer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureMLBatchInferencingServer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue<MachineLearningCodeConfiguration>(CodeConfiguration, options);
+                    writer.WriteObjectValue(CodeConfiguration, options);
                 }
                 else
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AzureMLBatchInferencingServer DeserializeAzureMLBatchInferencingServer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

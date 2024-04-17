@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class DscNodeConfigurationData : IUtf8JsonSerializable, IJsonModel<DscNodeConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscNodeConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscNodeConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DscNodeConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue<DscConfigurationAssociationProperty>(Configuration, options);
+                writer.WriteObjectValue(Configuration, options);
             }
             if (Optional.IsDefined(Source))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Automation
 
         internal static DscNodeConfigurationData DeserializeDscNodeConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsSentinelOnboardingStateData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsSentinelOnboardingStateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsSentinelOnboardingStateData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsSentinelOnboardingStateData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsSentinelOnboardingStateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsSentinelOnboardingStateData DeserializeSecurityInsightsSentinelOnboardingStateData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

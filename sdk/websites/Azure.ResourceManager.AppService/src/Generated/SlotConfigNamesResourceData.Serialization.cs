@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SlotConfigNamesResourceData : IUtf8JsonSerializable, IJsonModel<SlotConfigNamesResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SlotConfigNamesResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SlotConfigNamesResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SlotConfigNamesResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static SlotConfigNamesResourceData DeserializeSlotConfigNamesResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

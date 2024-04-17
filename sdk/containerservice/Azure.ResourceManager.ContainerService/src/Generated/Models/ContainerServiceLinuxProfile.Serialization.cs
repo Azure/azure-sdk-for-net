@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ContainerServiceLinuxProfile : IUtf8JsonSerializable, IJsonModel<ContainerServiceLinuxProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceLinuxProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceLinuxProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServiceLinuxProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WritePropertyName("adminUsername"u8);
             writer.WriteStringValue(AdminUsername);
             writer.WritePropertyName("ssh"u8);
-            writer.WriteObjectValue<ContainerServiceSshConfiguration>(Ssh, options);
+            writer.WriteObjectValue(Ssh, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceLinuxProfile DeserializeContainerServiceLinuxProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

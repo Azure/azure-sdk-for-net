@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class SnapshotData : IUtf8JsonSerializable, IJsonModel<SnapshotData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<SnapshotSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue<DiskPurchasePlan>(PurchasePlan, options);
+                writer.WriteObjectValue(PurchasePlan, options);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue<SupportedCapabilities>(SupportedCapabilities, options);
+                writer.WriteObjectValue(SupportedCapabilities, options);
             }
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue<DiskCreationData>(CreationData, options);
+                writer.WriteObjectValue(CreationData, options);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue<EncryptionSettingsGroup>(EncryptionSettingsGroup, options);
+                writer.WriteObjectValue(EncryptionSettingsGroup, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<DiskEncryption>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue<DiskSecurityProfile>(SecurityProfile, options);
+                writer.WriteObjectValue(SecurityProfile, options);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(CopyCompletionError))
             {
                 writer.WritePropertyName("copyCompletionError"u8);
-                writer.WriteObjectValue<CopyCompletionError>(CopyCompletionError, options);
+                writer.WriteObjectValue(CopyCompletionError, options);
             }
             if (Optional.IsDefined(DataAccessAuthMode))
             {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static SnapshotData DeserializeSnapshotData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class EventHubsNetworkSecurityPerimeterConfiguration : IUtf8JsonSerializable, IJsonModel<EventHubsNetworkSecurityPerimeterConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNetworkSecurityPerimeterConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNetworkSecurityPerimeterConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsNetworkSecurityPerimeterConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,24 +75,24 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningIssues)
                 {
-                    writer.WriteObjectValue<EventHubsProvisioningIssue>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
-                writer.WriteObjectValue<EventHubsNetworkSecurityPerimeter>(NetworkSecurityPerimeter, options);
+                writer.WriteObjectValue(NetworkSecurityPerimeter, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
-                writer.WriteObjectValue<EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>(ResourceAssociation, options);
+                writer.WriteObjectValue(ResourceAssociation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>(Profile, options);
+                writer.WriteObjectValue(Profile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsNetworkSecurityPerimeterConfiguration DeserializeEventHubsNetworkSecurityPerimeterConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

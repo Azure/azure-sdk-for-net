@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityDevOps
 {
     public partial class AzureDevOpsProjectData : IUtf8JsonSerializable, IJsonModel<AzureDevOpsProjectData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDevOpsProjectData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDevOpsProjectData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureDevOpsProjectData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<AzureDevOpsProjectProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         internal static AzureDevOpsProjectData DeserializeAzureDevOpsProjectData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

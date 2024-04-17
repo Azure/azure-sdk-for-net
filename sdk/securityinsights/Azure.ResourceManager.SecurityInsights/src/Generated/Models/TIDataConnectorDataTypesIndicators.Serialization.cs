@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     internal partial class TIDataConnectorDataTypesIndicators : IUtf8JsonSerializable, IJsonModel<TIDataConnectorDataTypesIndicators>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TIDataConnectorDataTypesIndicators>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TIDataConnectorDataTypesIndicators>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TIDataConnectorDataTypesIndicators>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static TIDataConnectorDataTypesIndicators DeserializeTIDataConnectorDataTypesIndicators(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

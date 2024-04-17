@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 {
     public partial class BillingBenefitsReservationOrderAliasCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<BillingBenefitsReservationOrderAliasCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsReservationOrderAliasCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsReservationOrderAliasCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BillingBenefitsReservationOrderAliasCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<BillingBenefitsSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue<BillingBenefitsAppliedScopeProperties>(AppliedScopeProperties, options);
+                writer.WriteObjectValue(AppliedScopeProperties, options);
             }
             if (Optional.IsDefined(Quantity))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(ReservedResourceProperties))
             {
                 writer.WritePropertyName("reservedResourceProperties"u8);
-                writer.WriteObjectValue<ReservationOrderAliasRequestPropertiesReservedResourceProperties>(ReservedResourceProperties, options);
+                writer.WriteObjectValue(ReservedResourceProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static BillingBenefitsReservationOrderAliasCreateOrUpdateContent DeserializeBillingBenefitsReservationOrderAliasCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

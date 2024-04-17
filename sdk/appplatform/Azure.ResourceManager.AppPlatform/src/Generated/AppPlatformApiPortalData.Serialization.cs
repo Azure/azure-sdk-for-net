@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformApiPortalData : IUtf8JsonSerializable, IJsonModel<AppPlatformApiPortalData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformApiPortalData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformApiPortalData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformApiPortalData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.AppPlatform
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<AppPlatformApiPortalProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<AppPlatformSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W")
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformApiPortalData DeserializeAppPlatformApiPortalData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

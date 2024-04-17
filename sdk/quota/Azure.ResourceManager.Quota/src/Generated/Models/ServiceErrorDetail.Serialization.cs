@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Quota.Models
 {
     public partial class ServiceErrorDetail : IUtf8JsonSerializable, IJsonModel<ServiceErrorDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceErrorDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceErrorDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceErrorDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         internal static ServiceErrorDetail DeserializeServiceErrorDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

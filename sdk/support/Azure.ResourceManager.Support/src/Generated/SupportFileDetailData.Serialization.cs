@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Support
 {
     public partial class SupportFileDetailData : IUtf8JsonSerializable, IJsonModel<SupportFileDetailData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportFileDetailData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportFileDetailData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SupportFileDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Support
 
         internal static SupportFileDetailData DeserializeSupportFileDetailData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

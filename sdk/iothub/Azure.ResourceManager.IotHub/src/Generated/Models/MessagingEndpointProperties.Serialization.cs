@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotHub.Models
 {
     public partial class MessagingEndpointProperties : IUtf8JsonSerializable, IJsonModel<MessagingEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessagingEndpointProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessagingEndpointProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MessagingEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static MessagingEndpointProperties DeserializeMessagingEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

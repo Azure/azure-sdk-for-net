@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 {
     public partial class AvailabilityGroupListenerData : IUtf8JsonSerializable, IJsonModel<AvailabilityGroupListenerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilityGroupListenerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilityGroupListenerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailabilityGroupListenerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerConfigurations)
                 {
-                    writer.WriteObjectValue<AvailabilityGroupListenerLoadBalancerConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WriteStartArray();
                 foreach (var item in MultiSubnetIPConfigurations)
                 {
-                    writer.WriteObjectValue<MultiSubnetIPConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(AvailabilityGroupConfiguration))
             {
                 writer.WritePropertyName("availabilityGroupConfiguration"u8);
-                writer.WriteObjectValue<AvailabilityGroupConfiguration>(AvailabilityGroupConfiguration, options);
+                writer.WriteObjectValue(AvailabilityGroupConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 
         internal static AvailabilityGroupListenerData DeserializeAvailabilityGroupListenerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

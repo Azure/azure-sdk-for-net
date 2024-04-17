@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     internal partial class ListContentKeysResponse : IUtf8JsonSerializable, IJsonModel<ListContentKeysResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListContentKeysResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListContentKeysResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ListContentKeysResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in ContentKeys)
                 {
-                    writer.WriteObjectValue<StreamingLocatorContentKey>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ListContentKeysResponse DeserializeListContentKeysResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

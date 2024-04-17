@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class BackupFindRestorableTimeRangeContent : IUtf8JsonSerializable, IJsonModel<BackupFindRestorableTimeRangeContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupFindRestorableTimeRangeContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupFindRestorableTimeRangeContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupFindRestorableTimeRangeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupFindRestorableTimeRangeContent DeserializeBackupFindRestorableTimeRangeContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

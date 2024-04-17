@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorMetric : IUtf8JsonSerializable, IJsonModel<MonitorMetric>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorMetric>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorMetric>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(MetricType);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue<MonitorLocalizableString>(Name, options);
+            writer.WriteObjectValue(Name, options);
             if (Optional.IsDefined(DisplayDescription))
             {
                 writer.WritePropertyName("displayDescription"u8);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Timeseries)
             {
-                writer.WriteObjectValue<MonitorTimeSeriesElement>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorMetric DeserializeMonitorMetric(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

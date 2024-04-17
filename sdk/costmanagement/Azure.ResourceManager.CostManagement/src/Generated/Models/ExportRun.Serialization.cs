@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class ExportRun : IUtf8JsonSerializable, IJsonModel<ExportRun>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportRun>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportRun>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExportRun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RunSettings))
             {
                 writer.WritePropertyName("runSettings"u8);
-                writer.WriteObjectValue<CommonExportProperties>(RunSettings, options);
+                writer.WriteObjectValue(RunSettings, options);
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<ExportRunErrorDetails>(Error, options);
+                writer.WriteObjectValue(Error, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static ExportRun DeserializeExportRun(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
