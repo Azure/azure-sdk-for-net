@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchTaskInfo : IUtf8JsonSerializable, IJsonModel<BatchTaskInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchTaskInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,7 +51,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(ExecutionInfo))
             {
                 writer.WritePropertyName("executionInfo"u8);
-                writer.WriteObjectValue<BatchTaskExecutionInfo>(ExecutionInfo, options);
+                writer.WriteObjectValue(ExecutionInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -85,7 +85,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchTaskInfo DeserializeBatchTaskInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -194,11 +194,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchTaskInfo(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchTaskInfo>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

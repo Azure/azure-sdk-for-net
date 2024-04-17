@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class ImageInfo : IUtf8JsonSerializable, IJsonModel<ImageInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ImageInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("nodeAgentSKUId"u8);
             writer.WriteStringValue(NodeAgentSkuId);
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue<ImageReference>(ImageReference, options);
+            writer.WriteObjectValue(ImageReference, options);
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OsType.ToString());
             if (Optional.IsCollectionDefined(Capabilities))
@@ -81,7 +81,7 @@ namespace Azure.Compute.Batch
 
         internal static ImageInfo DeserializeImageInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -195,11 +195,11 @@ namespace Azure.Compute.Batch
             return DeserializeImageInfo(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ImageInfo>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

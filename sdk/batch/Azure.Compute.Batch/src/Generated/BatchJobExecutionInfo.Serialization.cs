@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchJobExecutionInfo : IUtf8JsonSerializable, IJsonModel<BatchJobExecutionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobExecutionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobExecutionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchJobExecutionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,7 +41,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(SchedulingError))
             {
                 writer.WritePropertyName("schedulingError"u8);
-                writer.WriteObjectValue<BatchJobSchedulingError>(SchedulingError, options);
+                writer.WriteObjectValue(SchedulingError, options);
             }
             if (Optional.IsDefined(TerminationReason))
             {
@@ -80,7 +80,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchJobExecutionInfo DeserializeBatchJobExecutionInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -182,11 +182,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchJobExecutionInfo(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchJobExecutionInfo>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

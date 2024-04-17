@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchPool : IUtf8JsonSerializable, IJsonModel<BatchPool>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchPool>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchPool>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchPool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -84,12 +84,12 @@ namespace Azure.Compute.Batch
             if (options.Format != "W" && Optional.IsDefined(CloudServiceConfiguration))
             {
                 writer.WritePropertyName("cloudServiceConfiguration"u8);
-                writer.WriteObjectValue<CloudServiceConfiguration>(CloudServiceConfiguration, options);
+                writer.WriteObjectValue(CloudServiceConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VirtualMachineConfiguration))
             {
                 writer.WritePropertyName("virtualMachineConfiguration"u8);
-                writer.WriteObjectValue<VirtualMachineConfiguration>(VirtualMachineConfiguration, options);
+                writer.WriteObjectValue(VirtualMachineConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResizeTimeout))
             {
@@ -102,7 +102,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in ResizeErrors)
                 {
-                    writer.WriteObjectValue<ResizeError>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -155,7 +155,7 @@ namespace Azure.Compute.Batch
             if (options.Format != "W" && Optional.IsDefined(AutoScaleRun))
             {
                 writer.WritePropertyName("autoScaleRun"u8);
-                writer.WriteObjectValue<AutoScaleRun>(AutoScaleRun, options);
+                writer.WriteObjectValue(AutoScaleRun, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EnableInterNodeCommunication))
             {
@@ -165,12 +165,12 @@ namespace Azure.Compute.Batch
             if (options.Format != "W" && Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue<NetworkConfiguration>(NetworkConfiguration, options);
+                writer.WriteObjectValue(NetworkConfiguration, options);
             }
             if (Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
-                writer.WriteObjectValue<BatchStartTask>(StartTask, options);
+                writer.WriteObjectValue(StartTask, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CertificateReferences))
             {
@@ -178,7 +178,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in CertificateReferences)
                 {
-                    writer.WriteObjectValue<BatchCertificateReference>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -188,7 +188,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in ApplicationPackageReferences)
                 {
-                    writer.WriteObjectValue<BatchApplicationPackageReference>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -210,7 +210,7 @@ namespace Azure.Compute.Batch
             if (options.Format != "W" && Optional.IsDefined(TaskSchedulingPolicy))
             {
                 writer.WritePropertyName("taskSchedulingPolicy"u8);
-                writer.WriteObjectValue<BatchTaskSchedulingPolicy>(TaskSchedulingPolicy, options);
+                writer.WriteObjectValue(TaskSchedulingPolicy, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(UserAccounts))
             {
@@ -218,7 +218,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in UserAccounts)
                 {
-                    writer.WriteObjectValue<UserAccount>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -228,14 +228,14 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue<MetadataItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Stats))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue<BatchPoolStatistics>(Stats, options);
+                writer.WriteObjectValue(Stats, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MountConfiguration))
             {
@@ -243,14 +243,14 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in MountConfiguration)
                 {
-                    writer.WriteObjectValue<MountConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<BatchPoolIdentity>(Identity, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(TargetNodeCommunicationMode))
             {
@@ -265,7 +265,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue<UpgradePolicy>(UpgradePolicy, options);
+                writer.WriteObjectValue(UpgradePolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -299,7 +299,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchPool DeserializeBatchPool(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -814,11 +814,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchPool(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchPool>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

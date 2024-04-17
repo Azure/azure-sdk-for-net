@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchJobSchedule : IUtf8JsonSerializable, IJsonModel<BatchJobSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchJobSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,14 +79,14 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue<BatchJobScheduleConfiguration>(Schedule, options);
+                writer.WriteObjectValue(Schedule, options);
             }
             writer.WritePropertyName("jobSpecification"u8);
-            writer.WriteObjectValue<BatchJobSpecification>(JobSpecification, options);
+            writer.WriteObjectValue(JobSpecification, options);
             if (options.Format != "W" && Optional.IsDefined(ExecutionInfo))
             {
                 writer.WritePropertyName("executionInfo"u8);
-                writer.WriteObjectValue<BatchJobScheduleExecutionInfo>(ExecutionInfo, options);
+                writer.WriteObjectValue(ExecutionInfo, options);
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
@@ -94,14 +94,14 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue<MetadataItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Stats))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue<BatchJobScheduleStatistics>(Stats, options);
+                writer.WriteObjectValue(Stats, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -135,7 +135,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchJobSchedule DeserializeBatchJobSchedule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -344,11 +344,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchJobSchedule(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchJobSchedule>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

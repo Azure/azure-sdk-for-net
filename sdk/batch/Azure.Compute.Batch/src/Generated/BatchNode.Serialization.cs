@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchNode : IUtf8JsonSerializable, IJsonModel<BatchNode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNode>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchNode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,19 +102,19 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in RecentTasks)
                 {
-                    writer.WriteObjectValue<BatchTaskInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
-                writer.WriteObjectValue<BatchStartTask>(StartTask, options);
+                writer.WriteObjectValue(StartTask, options);
             }
             if (Optional.IsDefined(StartTaskInfo))
             {
                 writer.WritePropertyName("startTaskInfo"u8);
-                writer.WriteObjectValue<BatchStartTaskInfo>(StartTaskInfo, options);
+                writer.WriteObjectValue(StartTaskInfo, options);
             }
             if (Optional.IsCollectionDefined(CertificateReferences))
             {
@@ -122,7 +122,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in CertificateReferences)
                 {
-                    writer.WriteObjectValue<BatchCertificateReference>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue<BatchNodeError>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,17 +144,17 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(EndpointConfiguration))
             {
                 writer.WritePropertyName("endpointConfiguration"u8);
-                writer.WriteObjectValue<BatchNodeEndpointConfiguration>(EndpointConfiguration, options);
+                writer.WriteObjectValue(EndpointConfiguration, options);
             }
             if (Optional.IsDefined(NodeAgentInfo))
             {
                 writer.WritePropertyName("nodeAgentInfo"u8);
-                writer.WriteObjectValue<BatchNodeAgentInfo>(NodeAgentInfo, options);
+                writer.WriteObjectValue(NodeAgentInfo, options);
             }
             if (Optional.IsDefined(VirtualMachineInfo))
             {
                 writer.WritePropertyName("virtualMachineInfo"u8);
-                writer.WriteObjectValue<VirtualMachineInfo>(VirtualMachineInfo, options);
+                writer.WriteObjectValue(VirtualMachineInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -188,7 +188,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchNode DeserializeBatchNode(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -495,11 +495,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchNode(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchNode>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

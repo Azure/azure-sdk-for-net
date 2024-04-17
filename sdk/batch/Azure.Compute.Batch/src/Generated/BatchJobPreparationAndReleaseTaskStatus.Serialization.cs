@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchJobPreparationAndReleaseTaskStatus : IUtf8JsonSerializable, IJsonModel<BatchJobPreparationAndReleaseTaskStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobPreparationAndReleaseTaskStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobPreparationAndReleaseTaskStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchJobPreparationAndReleaseTaskStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,12 +44,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(JobPreparationTaskExecutionInfo))
             {
                 writer.WritePropertyName("jobPreparationTaskExecutionInfo"u8);
-                writer.WriteObjectValue<BatchJobPreparationTaskExecutionInfo>(JobPreparationTaskExecutionInfo, options);
+                writer.WriteObjectValue(JobPreparationTaskExecutionInfo, options);
             }
             if (Optional.IsDefined(JobReleaseTaskExecutionInfo))
             {
                 writer.WritePropertyName("jobReleaseTaskExecutionInfo"u8);
-                writer.WriteObjectValue<BatchJobReleaseTaskExecutionInfo>(JobReleaseTaskExecutionInfo, options);
+                writer.WriteObjectValue(JobReleaseTaskExecutionInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +83,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchJobPreparationAndReleaseTaskStatus DeserializeBatchJobPreparationAndReleaseTaskStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -185,11 +185,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchJobPreparationAndReleaseTaskStatus(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchJobPreparationAndReleaseTaskStatus>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

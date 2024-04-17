@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchTaskCountsResult : IUtf8JsonSerializable, IJsonModel<BatchTaskCountsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskCountsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskCountsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchTaskCountsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,9 +27,9 @@ namespace Azure.Compute.Batch
 
             writer.WriteStartObject();
             writer.WritePropertyName("taskCounts"u8);
-            writer.WriteObjectValue<BatchTaskCounts>(TaskCounts, options);
+            writer.WriteObjectValue(TaskCounts, options);
             writer.WritePropertyName("taskSlotCounts"u8);
-            writer.WriteObjectValue<BatchTaskSlotCounts>(TaskSlotCounts, options);
+            writer.WriteObjectValue(TaskSlotCounts, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -62,7 +62,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchTaskCountsResult DeserializeBatchTaskCountsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -132,11 +132,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchTaskCountsResult(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchTaskCountsResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

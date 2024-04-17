@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchPoolIdentity : IUtf8JsonSerializable, IJsonModel<BatchPoolIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchPoolIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchPoolIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchPoolIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in UserAssignedIdentities)
                 {
-                    writer.WriteObjectValue<UserAssignedIdentity>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchPoolIdentity DeserializeBatchPoolIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,11 +149,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchPoolIdentity(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchPoolIdentity>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

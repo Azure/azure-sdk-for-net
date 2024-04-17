@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchJobScheduleExecutionInfo : IUtf8JsonSerializable, IJsonModel<BatchJobScheduleExecutionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobScheduleExecutionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobScheduleExecutionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchJobScheduleExecutionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(RecentJob))
             {
                 writer.WritePropertyName("recentJob"u8);
-                writer.WriteObjectValue<RecentBatchJob>(RecentJob, options);
+                writer.WriteObjectValue(RecentJob, options);
             }
             if (Optional.IsDefined(EndTime))
             {
@@ -73,7 +73,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchJobScheduleExecutionInfo DeserializeBatchJobScheduleExecutionInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -161,11 +161,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchJobScheduleExecutionInfo(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchJobScheduleExecutionInfo>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

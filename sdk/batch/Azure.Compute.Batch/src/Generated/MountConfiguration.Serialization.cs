@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class MountConfiguration : IUtf8JsonSerializable, IJsonModel<MountConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MountConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MountConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MountConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,22 +29,22 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(AzureBlobFileSystemConfiguration))
             {
                 writer.WritePropertyName("azureBlobFileSystemConfiguration"u8);
-                writer.WriteObjectValue<AzureBlobFileSystemConfiguration>(AzureBlobFileSystemConfiguration, options);
+                writer.WriteObjectValue(AzureBlobFileSystemConfiguration, options);
             }
             if (Optional.IsDefined(NfsMountConfiguration))
             {
                 writer.WritePropertyName("nfsMountConfiguration"u8);
-                writer.WriteObjectValue<NfsMountConfiguration>(NfsMountConfiguration, options);
+                writer.WriteObjectValue(NfsMountConfiguration, options);
             }
             if (Optional.IsDefined(CifsMountConfiguration))
             {
                 writer.WritePropertyName("cifsMountConfiguration"u8);
-                writer.WriteObjectValue<CifsMountConfiguration>(CifsMountConfiguration, options);
+                writer.WriteObjectValue(CifsMountConfiguration, options);
             }
             if (Optional.IsDefined(AzureFileShareConfiguration))
             {
                 writer.WritePropertyName("azureFileShareConfiguration"u8);
-                writer.WriteObjectValue<AzureFileShareConfiguration>(AzureFileShareConfiguration, options);
+                writer.WriteObjectValue(AzureFileShareConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,7 +78,7 @@ namespace Azure.Compute.Batch
 
         internal static MountConfiguration DeserializeMountConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -176,11 +176,11 @@ namespace Azure.Compute.Batch
             return DeserializeMountConfiguration(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MountConfiguration>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

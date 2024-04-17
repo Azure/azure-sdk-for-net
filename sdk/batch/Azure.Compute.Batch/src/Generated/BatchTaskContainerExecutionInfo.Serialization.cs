@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchTaskContainerExecutionInfo : IUtf8JsonSerializable, IJsonModel<BatchTaskContainerExecutionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskContainerExecutionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskContainerExecutionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchTaskContainerExecutionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchTaskContainerExecutionInfo DeserializeBatchTaskContainerExecutionInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,11 +149,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchTaskContainerExecutionInfo(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchTaskContainerExecutionInfo>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

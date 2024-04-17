@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchPoolReplaceContent : IUtf8JsonSerializable, IJsonModel<BatchPoolReplaceContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchPoolReplaceContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchPoolReplaceContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchPoolReplaceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,27 +29,27 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
-                writer.WriteObjectValue<BatchStartTask>(StartTask, options);
+                writer.WriteObjectValue(StartTask, options);
             }
             writer.WritePropertyName("certificateReferences"u8);
             writer.WriteStartArray();
             foreach (var item in CertificateReferences)
             {
-                writer.WriteObjectValue<BatchCertificateReference>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("applicationPackageReferences"u8);
             writer.WriteStartArray();
             foreach (var item in ApplicationPackageReferences)
             {
-                writer.WriteObjectValue<BatchApplicationPackageReference>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("metadata"u8);
             writer.WriteStartArray();
             foreach (var item in Metadata)
             {
-                writer.WriteObjectValue<MetadataItem>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(TargetNodeCommunicationMode))
@@ -89,7 +89,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchPoolReplaceContent DeserializeBatchPoolReplaceContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -206,11 +206,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchPoolReplaceContent(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchPoolReplaceContent>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class VirtualMachineConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachineConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,13 +27,13 @@ namespace Azure.Compute.Batch
 
             writer.WriteStartObject();
             writer.WritePropertyName("imageReference"u8);
-            writer.WriteObjectValue<ImageReference>(ImageReference, options);
+            writer.WriteObjectValue(ImageReference, options);
             writer.WritePropertyName("nodeAgentSKUId"u8);
             writer.WriteStringValue(NodeAgentSkuId);
             if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue<WindowsConfiguration>(WindowsConfiguration, options);
+                writer.WriteObjectValue(WindowsConfiguration, options);
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {
@@ -41,7 +41,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
-                    writer.WriteObjectValue<DataDisk>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,17 +53,17 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
-                writer.WriteObjectValue<ContainerConfiguration>(ContainerConfiguration, options);
+                writer.WriteObjectValue(ContainerConfiguration, options);
             }
             if (Optional.IsDefined(DiskEncryptionConfiguration))
             {
                 writer.WritePropertyName("diskEncryptionConfiguration"u8);
-                writer.WriteObjectValue<DiskEncryptionConfiguration>(DiskEncryptionConfiguration, options);
+                writer.WriteObjectValue(DiskEncryptionConfiguration, options);
             }
             if (Optional.IsDefined(NodePlacementConfiguration))
             {
                 writer.WritePropertyName("nodePlacementConfiguration"u8);
-                writer.WriteObjectValue<BatchNodePlacementConfiguration>(NodePlacementConfiguration, options);
+                writer.WriteObjectValue(NodePlacementConfiguration, options);
             }
             if (Optional.IsCollectionDefined(Extensions))
             {
@@ -71,24 +71,24 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue<VMExtension>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OsDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue<OSDisk>(OsDisk, options);
+                writer.WriteObjectValue(OsDisk, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue<SecurityProfile>(SecurityProfile, options);
+                writer.WriteObjectValue(SecurityProfile, options);
             }
             if (Optional.IsDefined(ServiceArtifactReference))
             {
                 writer.WritePropertyName("serviceArtifactReference"u8);
-                writer.WriteObjectValue<ServiceArtifactReference>(ServiceArtifactReference, options);
+                writer.WriteObjectValue(ServiceArtifactReference, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -122,7 +122,7 @@ namespace Azure.Compute.Batch
 
         internal static VirtualMachineConfiguration DeserializeVirtualMachineConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -311,11 +311,11 @@ namespace Azure.Compute.Batch
             return DeserializeVirtualMachineConfiguration(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<VirtualMachineConfiguration>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

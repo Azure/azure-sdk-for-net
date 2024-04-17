@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class NetworkConfiguration : IUtf8JsonSerializable, IJsonModel<NetworkConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,12 +39,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(EndpointConfiguration))
             {
                 writer.WritePropertyName("endpointConfiguration"u8);
-                writer.WriteObjectValue<BatchPoolEndpointConfiguration>(EndpointConfiguration, options);
+                writer.WriteObjectValue(EndpointConfiguration, options);
             }
             if (Optional.IsDefined(PublicIpAddressConfiguration))
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
-                writer.WriteObjectValue<PublicIpAddressConfiguration>(PublicIpAddressConfiguration, options);
+                writer.WriteObjectValue(PublicIpAddressConfiguration, options);
             }
             if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
@@ -83,7 +83,7 @@ namespace Azure.Compute.Batch
 
         internal static NetworkConfiguration DeserializeNetworkConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -193,11 +193,11 @@ namespace Azure.Compute.Batch
             return DeserializeNetworkConfiguration(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<NetworkConfiguration>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

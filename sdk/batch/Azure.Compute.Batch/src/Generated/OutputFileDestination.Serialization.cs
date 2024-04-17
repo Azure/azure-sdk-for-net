@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class OutputFileDestination : IUtf8JsonSerializable, IJsonModel<OutputFileDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutputFileDestination>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutputFileDestination>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OutputFileDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
-                writer.WriteObjectValue<OutputFileBlobContainerDestination>(Container, options);
+                writer.WriteObjectValue(Container, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.Compute.Batch
 
         internal static OutputFileDestination DeserializeOutputFileDestination(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,11 +131,11 @@ namespace Azure.Compute.Batch
             return DeserializeOutputFileDestination(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<OutputFileDestination>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchStartTask : IUtf8JsonSerializable, IJsonModel<BatchStartTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchStartTask>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchStartTask>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchStartTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue<BatchTaskContainerSettings>(ContainerSettings, options);
+                writer.WriteObjectValue(ContainerSettings, options);
             }
             if (Optional.IsCollectionDefined(ResourceFiles))
             {
@@ -39,7 +39,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in ResourceFiles)
                 {
-                    writer.WriteObjectValue<ResourceFile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,14 +49,14 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentSettings)
                 {
-                    writer.WriteObjectValue<EnvironmentSetting>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
-                writer.WriteObjectValue<UserIdentity>(UserIdentity, options);
+                writer.WriteObjectValue(UserIdentity, options);
             }
             if (Optional.IsDefined(MaxTaskRetryCount))
             {
@@ -100,7 +100,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchStartTask DeserializeBatchStartTask(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -242,11 +242,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchStartTask(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchStartTask>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class OutputFile : IUtf8JsonSerializable, IJsonModel<OutputFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutputFile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OutputFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OutputFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,9 +29,9 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("filePattern"u8);
             writer.WriteStringValue(FilePattern);
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue<OutputFileDestination>(Destination, options);
+            writer.WriteObjectValue(Destination, options);
             writer.WritePropertyName("uploadOptions"u8);
-            writer.WriteObjectValue<OutputFileUploadConfig>(UploadOptions, options);
+            writer.WriteObjectValue(UploadOptions, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -64,7 +64,7 @@ namespace Azure.Compute.Batch
 
         internal static OutputFile DeserializeOutputFile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,11 +140,11 @@ namespace Azure.Compute.Batch
             return DeserializeOutputFile(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<OutputFile>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

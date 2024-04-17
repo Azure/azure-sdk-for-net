@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchCertificate : IUtf8JsonSerializable, IJsonModel<BatchCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchCertificate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchCertificate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.Compute.Batch
             if (options.Format != "W" && Optional.IsDefined(DeleteCertificateError))
             {
                 writer.WritePropertyName("deleteCertificateError"u8);
-                writer.WriteObjectValue<DeleteBatchCertificateError>(DeleteCertificateError, options);
+                writer.WriteObjectValue(DeleteCertificateError, options);
             }
             writer.WritePropertyName("data"u8);
             writer.WriteStringValue(Data);
@@ -109,7 +109,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchCertificate DeserializeBatchCertificate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -276,11 +276,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchCertificate(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchCertificate>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

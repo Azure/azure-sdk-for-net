@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchJobPreparationTask : IUtf8JsonSerializable, IJsonModel<BatchJobPreparationTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobPreparationTask>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchJobPreparationTask>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchJobPreparationTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,7 +36,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue<BatchTaskContainerSettings>(ContainerSettings, options);
+                writer.WriteObjectValue(ContainerSettings, options);
             }
             if (Optional.IsCollectionDefined(ResourceFiles))
             {
@@ -44,7 +44,7 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in ResourceFiles)
                 {
-                    writer.WriteObjectValue<ResourceFile>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,14 +54,14 @@ namespace Azure.Compute.Batch
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentSettings)
                 {
-                    writer.WriteObjectValue<EnvironmentSetting>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Constraints))
             {
                 writer.WritePropertyName("constraints"u8);
-                writer.WriteObjectValue<BatchTaskConstraints>(Constraints, options);
+                writer.WriteObjectValue(Constraints, options);
             }
             if (Optional.IsDefined(WaitForSuccess))
             {
@@ -71,7 +71,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
-                writer.WriteObjectValue<UserIdentity>(UserIdentity, options);
+                writer.WriteObjectValue(UserIdentity, options);
             }
             if (Optional.IsDefined(RerunOnNodeRebootAfterSuccess))
             {
@@ -110,7 +110,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchJobPreparationTask DeserializeBatchJobPreparationTask(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -270,11 +270,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchJobPreparationTask(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchJobPreparationTask>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

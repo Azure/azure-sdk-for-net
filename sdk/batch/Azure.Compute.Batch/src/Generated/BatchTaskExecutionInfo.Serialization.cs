@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchTaskExecutionInfo : IUtf8JsonSerializable, IJsonModel<BatchTaskExecutionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskExecutionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchTaskExecutionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchTaskExecutionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,12 +44,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(ContainerInfo))
             {
                 writer.WritePropertyName("containerInfo"u8);
-                writer.WriteObjectValue<BatchTaskContainerExecutionInfo>(ContainerInfo, options);
+                writer.WriteObjectValue(ContainerInfo, options);
             }
             if (Optional.IsDefined(FailureInfo))
             {
                 writer.WritePropertyName("failureInfo"u8);
-                writer.WriteObjectValue<BatchTaskFailureInfo>(FailureInfo, options);
+                writer.WriteObjectValue(FailureInfo, options);
             }
             writer.WritePropertyName("retryCount"u8);
             writer.WriteNumberValue(RetryCount);
@@ -102,7 +102,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchTaskExecutionInfo DeserializeBatchTaskExecutionInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -263,11 +263,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchTaskExecutionInfo(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchTaskExecutionInfo>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

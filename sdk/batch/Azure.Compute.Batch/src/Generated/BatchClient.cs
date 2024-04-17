@@ -230,8 +230,8 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(pool, nameof(pool));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = pool.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreatePoolAsync(content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return response;
         }
@@ -256,8 +256,8 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(pool, nameof(pool));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = pool.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreatePool(content, timeOutInSeconds, ocpdate, context);
             return response;
         }
@@ -869,8 +869,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await EnablePoolAutoScaleAsync(poolId, content0, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
@@ -902,8 +902,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = EnablePoolAutoScale(poolId, content0, timeOutInSeconds, ocpdate, requestConditions, context);
             return response;
         }
@@ -1029,8 +1029,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await EvaluatePoolAutoScaleAsync(poolId, content0, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return Response.FromValue(AutoScaleRun.FromResponse(response), response);
         }
@@ -1058,8 +1058,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = EvaluatePoolAutoScale(poolId, content0, timeOutInSeconds, ocpdate, context);
             return Response.FromValue(AutoScaleRun.FromResponse(response), response);
         }
@@ -1188,8 +1188,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ResizePoolAsync(poolId, content0, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
@@ -1222,8 +1222,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ResizePool(poolId, content0, timeOutInSeconds, ocpdate, requestConditions, context);
             return response;
         }
@@ -1435,8 +1435,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(pool, nameof(pool));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = pool.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ReplacePoolPropertiesAsync(poolId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return response;
         }
@@ -1464,8 +1464,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(pool, nameof(pool));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = pool.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ReplacePoolProperties(poolId, content, timeOutInSeconds, ocpdate, context);
             return response;
         }
@@ -1590,8 +1590,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RemoveNodesAsync(poolId, content0, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
@@ -1620,8 +1620,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = RemoveNodes(poolId, content0, timeOutInSeconds, ocpdate, requestConditions, context);
             return response;
         }
@@ -2068,8 +2068,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(job, nameof(job));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = job.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ReplaceJobAsync(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
@@ -2098,8 +2098,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(job, nameof(job));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = job.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ReplaceJob(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
             return response;
         }
@@ -2231,8 +2231,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DisableJobAsync(jobId, content0, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
@@ -2266,8 +2266,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DisableJob(jobId, content0, timeOutInSeconds, ocpdate, requestConditions, context);
             return response;
         }
@@ -2482,8 +2482,8 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = parameters?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await TerminateJobAsync(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
@@ -2514,8 +2514,8 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = parameters?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = TerminateJob(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
             return response;
         }
@@ -2642,8 +2642,8 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(job, nameof(job));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = job.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateJobAsync(content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return response;
         }
@@ -2674,8 +2674,8 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(job, nameof(job));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = job.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateJob(content, timeOutInSeconds, ocpdate, context);
             return response;
         }
@@ -2931,8 +2931,8 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(certificate, nameof(certificate));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = certificate.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateCertificateAsync(content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return response;
         }
@@ -2952,8 +2952,8 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(certificate, nameof(certificate));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = certificate.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateCertificate(content, timeOutInSeconds, ocpdate, context);
             return response;
         }
@@ -3802,8 +3802,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = jobSchedule.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ReplaceJobScheduleAsync(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
@@ -3834,8 +3834,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = jobSchedule.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ReplaceJobSchedule(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context);
             return response;
         }
@@ -4211,8 +4211,8 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = jobSchedule.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateJobScheduleAsync(content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return response;
         }
@@ -4232,8 +4232,8 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = jobSchedule.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateJobSchedule(content, timeOutInSeconds, ocpdate, context);
             return response;
         }
@@ -4351,8 +4351,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(task, nameof(task));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = task.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateTaskAsync(jobId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return response;
         }
@@ -4380,8 +4380,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(task, nameof(task));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = task.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateTask(jobId, content, timeOutInSeconds, ocpdate, context);
             return response;
         }
@@ -4516,8 +4516,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(taskCollection, nameof(taskCollection));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = taskCollection.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateTaskCollectionAsync(jobId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return Response.FromValue(BatchTaskAddCollectionResult.FromResponse(response), response);
         }
@@ -4556,8 +4556,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(taskCollection, nameof(taskCollection));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = taskCollection.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateTaskCollection(jobId, content, timeOutInSeconds, ocpdate, context);
             return Response.FromValue(BatchTaskAddCollectionResult.FromResponse(response), response);
         }
@@ -4933,8 +4933,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNull(task, nameof(task));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = task.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ReplaceTaskAsync(jobId, taskId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
@@ -4960,8 +4960,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNull(task, nameof(task));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = task.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ReplaceTask(jobId, taskId, content, timeOutInSeconds, ocpdate, requestConditions, context);
             return response;
         }
@@ -5678,8 +5678,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNull(user, nameof(user));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = user.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateNodeUserAsync(poolId, nodeId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return response;
         }
@@ -5708,8 +5708,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNull(user, nameof(user));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = user.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateNodeUser(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
             return response;
         }
@@ -5934,8 +5934,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ReplaceNodeUserAsync(poolId, nodeId, userName, content0, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return response;
         }
@@ -5968,8 +5968,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ReplaceNodeUser(poolId, nodeId, userName, content0, timeOutInSeconds, ocpdate, context);
             return response;
         }
@@ -6244,8 +6244,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = parameters?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RebootNodeAsync(poolId, nodeId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return response;
         }
@@ -6270,8 +6270,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = parameters?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = RebootNode(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
             return response;
         }
@@ -6398,8 +6398,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = parameters?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await ReimageNodeAsync(poolId, nodeId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return response;
         }
@@ -6428,8 +6428,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = parameters?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = ReimageNode(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
             return response;
         }
@@ -6555,8 +6555,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = parameters?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await DisableNodeSchedulingAsync(poolId, nodeId, content, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return response;
         }
@@ -6584,8 +6584,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = parameters?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = DisableNodeScheduling(poolId, nodeId, content, timeOutInSeconds, ocpdate, context);
             return response;
         }
@@ -7130,8 +7130,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UploadNodeLogsAsync(poolId, nodeId, content0, timeOutInSeconds, ocpdate, context).ConfigureAwait(false);
             return Response.FromValue(UploadBatchServiceLogsResult.FromResponse(response), response);
         }
@@ -7168,8 +7168,8 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNull(content, nameof(content));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content0 = content.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UploadNodeLogs(poolId, nodeId, content0, timeOutInSeconds, ocpdate, context);
             return Response.FromValue(UploadBatchServiceLogsResult.FromResponse(response), response);
         }

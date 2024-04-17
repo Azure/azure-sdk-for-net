@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class UserIdentity : IUtf8JsonSerializable, IJsonModel<UserIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(AutoUser))
             {
                 writer.WritePropertyName("autoUser"u8);
-                writer.WriteObjectValue<AutoUserSpecification>(AutoUser, options);
+                writer.WriteObjectValue(AutoUser, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.Compute.Batch
 
         internal static UserIdentity DeserializeUserIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -142,11 +142,11 @@ namespace Azure.Compute.Batch
             return DeserializeUserIdentity(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UserIdentity>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchPoolStatistics : IUtf8JsonSerializable, IJsonModel<BatchPoolStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchPoolStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchPoolStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchPoolStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,12 +35,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(UsageStats))
             {
                 writer.WritePropertyName("usageStats"u8);
-                writer.WriteObjectValue<BatchPoolUsageStatistics>(UsageStats, options);
+                writer.WriteObjectValue(UsageStats, options);
             }
             if (Optional.IsDefined(ResourceStats))
             {
                 writer.WritePropertyName("resourceStats"u8);
-                writer.WriteObjectValue<BatchPoolResourceStatistics>(ResourceStats, options);
+                writer.WriteObjectValue(ResourceStats, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.Compute.Batch
 
         internal static BatchPoolStatistics DeserializeBatchPoolStatistics(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -176,11 +176,11 @@ namespace Azure.Compute.Batch
             return DeserializeBatchPoolStatistics(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BatchPoolStatistics>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

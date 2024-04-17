@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch
 {
     public partial class UserAccount : IUtf8JsonSerializable, IJsonModel<UserAccount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAccount>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAccount>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UserAccount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -38,12 +38,12 @@ namespace Azure.Compute.Batch
             if (Optional.IsDefined(LinuxUserConfiguration))
             {
                 writer.WritePropertyName("linuxUserConfiguration"u8);
-                writer.WriteObjectValue<LinuxUserConfiguration>(LinuxUserConfiguration, options);
+                writer.WriteObjectValue(LinuxUserConfiguration, options);
             }
             if (Optional.IsDefined(WindowsUserConfiguration))
             {
                 writer.WritePropertyName("windowsUserConfiguration"u8);
-                writer.WriteObjectValue<WindowsUserConfiguration>(WindowsUserConfiguration, options);
+                writer.WriteObjectValue(WindowsUserConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,7 +77,7 @@ namespace Azure.Compute.Batch
 
         internal static UserAccount DeserializeUserAccount(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -183,11 +183,11 @@ namespace Azure.Compute.Batch
             return DeserializeUserAccount(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UserAccount>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }
