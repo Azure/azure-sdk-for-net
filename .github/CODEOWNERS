@@ -463,8 +463,8 @@
 # ServiceLabel: %DevOps
 # ServiceOwners:                                                   @narula0781 @ashishonce @romil07
 
-# ServiceLabel: %DevOps Infrastructure
-# ServiceOwners:                                                   @oolaoluwa @elizatar
+# PRLabel: %DevOpsInfrastructure
+/sdk/devopsinfrastructure/                                         @oolaoluwa @elizatargithub7
 
 # PRLabel: %Device Update
 /sdk/deviceupdate/                                                 @dpokluda @sedols
