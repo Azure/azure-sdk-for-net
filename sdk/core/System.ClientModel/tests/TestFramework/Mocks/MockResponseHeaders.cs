@@ -18,7 +18,8 @@ public class MockResponseHeaders : PipelineResponseHeaders
 
     public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
     {
-        throw new NotImplementedException();
+        IEnumerator<KeyValuePair<string, string>> enumerator = _headers.GetEnumerator();
+        return enumerator;
     }
 
     public override bool TryGetValue(string name, out string? value)

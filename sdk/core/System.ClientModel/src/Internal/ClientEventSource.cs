@@ -29,8 +29,7 @@ internal abstract class ClientEventSource : EventSource
         NamesInUse = namesInUse;
     }
 
-    protected ClientEventSource(string eventSourceName) : base(
-        DeduplicateName(eventSourceName))
+    protected ClientEventSource(string eventSourceName) : base(eventSourceName)
     {
     }
 
