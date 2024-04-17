@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Status of the shared private link resource. Valid values are Pending, Approved, Rejected or Disconnected. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public enum SharedSearchServicePrivateLinkResourceStatus
     {
         /// <summary> Pending. </summary>
