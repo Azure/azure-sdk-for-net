@@ -156,7 +156,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     try
                     {
                         CollectionConfigurationError[] groupErrors;
-                        switch (documentFilterConjunctionGroupInfo.TelemetryType?.ToString())
+                        switch (documentFilterConjunctionGroupInfo.TelemetryType.ToString())
                         {
                             case TelemetryType.Request:
                                 this.requestFilterGroups.Add(new FilterConjunctionGroup<Request>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
