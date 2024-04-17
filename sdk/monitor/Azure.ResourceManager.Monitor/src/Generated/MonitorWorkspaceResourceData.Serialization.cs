@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class MonitorWorkspaceResourceData : IUtf8JsonSerializable, IJsonModel<MonitorWorkspaceResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorWorkspaceResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorWorkspaceResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorWorkspaceResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W" && Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue<MonitorWorkspaceMetrics>(Metrics, options);
+                writer.WriteObjectValue(Metrics, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W" && Optional.IsDefined(DefaultIngestionSettings))
             {
                 writer.WritePropertyName("defaultIngestionSettings"u8);
-                writer.WriteObjectValue<MonitorWorkspaceDefaultIngestionSettings>(DefaultIngestionSettings, options);
+                writer.WriteObjectValue(DefaultIngestionSettings, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<MonitorWorkspacePrivateEndpointConnection>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static MonitorWorkspaceResourceData DeserializeMonitorWorkspaceResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

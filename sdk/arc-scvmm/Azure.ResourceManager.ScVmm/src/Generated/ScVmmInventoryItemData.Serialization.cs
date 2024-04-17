@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ScVmm
 {
     public partial class ScVmmInventoryItemData : IUtf8JsonSerializable, IJsonModel<ScVmmInventoryItemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmInventoryItemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmInventoryItemData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScVmmInventoryItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ScVmm
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<ScVmmInventoryItemProperties>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ScVmm
 
         internal static ScVmmInventoryItemData DeserializeScVmmInventoryItemData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

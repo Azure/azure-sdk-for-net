@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 {
     public partial class ClusterEndpointRangeDescription : IUtf8JsonSerializable, IJsonModel<ClusterEndpointRangeDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterEndpointRangeDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterEndpointRangeDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterEndpointRangeDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterEndpointRangeDescription DeserializeClusterEndpointRangeDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

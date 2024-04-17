@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class MonitoringMetricConfigurationData : IUtf8JsonSerializable, IJsonModel<MonitoringMetricConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringMetricConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringMetricConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitoringMetricConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WriteStartArray();
             foreach (var item in MetricConfigurations)
             {
-                writer.WriteObjectValue<DataBoxEdgeMetricConfiguration>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static MonitoringMetricConfigurationData DeserializeMonitoringMetricConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

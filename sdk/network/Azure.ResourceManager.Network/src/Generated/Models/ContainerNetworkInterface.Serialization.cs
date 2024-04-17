@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ContainerNetworkInterface : IUtf8JsonSerializable, IJsonModel<ContainerNetworkInterface>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerNetworkInterface>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerNetworkInterface>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerNetworkInterface>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ContainerNetworkInterfaceConfiguration))
             {
                 writer.WritePropertyName("containerNetworkInterfaceConfiguration"u8);
-                writer.WriteObjectValue<ContainerNetworkInterfaceConfiguration>(ContainerNetworkInterfaceConfiguration, options);
+                writer.WriteObjectValue(ContainerNetworkInterfaceConfiguration, options);
             }
             if (Optional.IsDefined(Container))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue<ContainerNetworkInterfaceIPConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ContainerNetworkInterface DeserializeContainerNetworkInterface(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

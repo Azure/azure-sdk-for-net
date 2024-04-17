@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     public partial class NetworkAnalyticsManagedResourceGroupConfiguration : IUtf8JsonSerializable, IJsonModel<NetworkAnalyticsManagedResourceGroupConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkAnalyticsManagedResourceGroupConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkAnalyticsManagedResourceGroupConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkAnalyticsManagedResourceGroupConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 
         internal static NetworkAnalyticsManagedResourceGroupConfiguration DeserializeNetworkAnalyticsManagedResourceGroupConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

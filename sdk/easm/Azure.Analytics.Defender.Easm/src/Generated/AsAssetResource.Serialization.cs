@@ -15,7 +15,7 @@ namespace Azure.Analytics.Defender.Easm
 {
     public partial class AsAssetResource : IUtf8JsonSerializable, IJsonModel<AsAssetResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AsAssetResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AsAssetResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AsAssetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Defender.Easm
 
             writer.WriteStartObject();
             writer.WritePropertyName("asset"u8);
-            writer.WriteObjectValue<AsAsset>(Asset, options);
+            writer.WriteObjectValue(Asset, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (options.Format != "W")
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in AuditTrail)
                 {
-                    writer.WriteObjectValue<AuditTrailItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.Analytics.Defender.Easm
 
         internal static AsAssetResource DeserializeAsAssetResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -339,11 +339,11 @@ namespace Azure.Analytics.Defender.Easm
             return DeserializeAsAssetResource(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AsAssetResource>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerAutomaticTuningData : IUtf8JsonSerializable, IJsonModel<SqlServerAutomaticTuningData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerAutomaticTuningData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerAutomaticTuningData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlServerAutomaticTuningData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
                 foreach (var item in Options)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<AutomaticTuningServerOptions>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlServerAutomaticTuningData DeserializeSqlServerAutomaticTuningData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

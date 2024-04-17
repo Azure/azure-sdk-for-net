@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public partial class ManagedClusterUpgradePolicy : IUtf8JsonSerializable, IJsonModel<ManagedClusterUpgradePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterUpgradePolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterUpgradePolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(HealthPolicy))
             {
                 writer.WritePropertyName("healthPolicy"u8);
-                writer.WriteObjectValue<ManagedClusterHealthPolicy>(HealthPolicy, options);
+                writer.WriteObjectValue(HealthPolicy, options);
             }
             if (Optional.IsDefined(DeltaHealthPolicy))
             {
                 writer.WritePropertyName("deltaHealthPolicy"u8);
-                writer.WriteObjectValue<ManagedClusterUpgradeDeltaHealthPolicy>(DeltaHealthPolicy, options);
+                writer.WriteObjectValue(DeltaHealthPolicy, options);
             }
             if (Optional.IsDefined(MonitoringPolicy))
             {
                 writer.WritePropertyName("monitoringPolicy"u8);
-                writer.WriteObjectValue<ManagedClusterMonitoringPolicy>(MonitoringPolicy, options);
+                writer.WriteObjectValue(MonitoringPolicy, options);
             }
             if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedClusterUpgradePolicy DeserializeManagedClusterUpgradePolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class LabPlanPatch : IUtf8JsonSerializable, IJsonModel<LabPlanPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabPlanPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabPlanPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabPlanPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(DefaultConnectionProfile))
             {
                 writer.WritePropertyName("defaultConnectionProfile"u8);
-                writer.WriteObjectValue<LabConnectionProfile>(DefaultConnectionProfile, options);
+                writer.WriteObjectValue(DefaultConnectionProfile, options);
             }
             if (Optional.IsDefined(DefaultAutoShutdownProfile))
             {
                 writer.WritePropertyName("defaultAutoShutdownProfile"u8);
-                writer.WriteObjectValue<LabAutoShutdownProfile>(DefaultAutoShutdownProfile, options);
+                writer.WriteObjectValue(DefaultAutoShutdownProfile, options);
             }
             if (Optional.IsDefined(DefaultNetworkProfile))
             {
                 writer.WritePropertyName("defaultNetworkProfile"u8);
-                writer.WriteObjectValue<LabPlanNetworkProfile>(DefaultNetworkProfile, options);
+                writer.WriteObjectValue(DefaultNetworkProfile, options);
             }
             if (Optional.IsCollectionDefined(AllowedRegions))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(SupportInfo))
             {
                 writer.WritePropertyName("supportInfo"u8);
-                writer.WriteObjectValue<LabPlanSupportInfo>(SupportInfo, options);
+                writer.WriteObjectValue(SupportInfo, options);
             }
             if (Optional.IsDefined(LinkedLmsInstance))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabPlanPatch DeserializeLabPlanPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

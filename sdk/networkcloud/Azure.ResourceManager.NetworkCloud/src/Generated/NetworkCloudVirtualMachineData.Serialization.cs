@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudVirtualMachineData : IUtf8JsonSerializable, IJsonModel<NetworkCloudVirtualMachineData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudVirtualMachineData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudVirtualMachineData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkCloudVirtualMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue<ExtendedLocation>(ExtendedLocation, options);
+            writer.WriteObjectValue(ExtendedLocation, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(BootMethod.Value.ToString());
             }
             writer.WritePropertyName("cloudServicesNetworkAttachment"u8);
-            writer.WriteObjectValue<NetworkAttachment>(CloudServicesNetworkAttachment, options);
+            writer.WriteObjectValue(CloudServicesNetworkAttachment, options);
             if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in NetworkAttachments)
                 {
-                    writer.WriteObjectValue<NetworkAttachment>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in PlacementHints)
                 {
-                    writer.WriteObjectValue<VirtualMachinePlacementHint>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in SshPublicKeys)
                 {
-                    writer.WriteObjectValue<NetworkCloudSshPublicKey>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("storageProfile"u8);
-            writer.WriteObjectValue<NetworkCloudStorageProfile>(StorageProfile, options);
+            writer.WriteObjectValue(StorageProfile, options);
             if (Optional.IsDefined(UserData))
             {
                 writer.WritePropertyName("userData"u8);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(VmImageRepositoryCredentials))
             {
                 writer.WritePropertyName("vmImageRepositoryCredentials"u8);
-                writer.WriteObjectValue<ImageRepositoryCredentials>(VmImageRepositoryCredentials, options);
+                writer.WriteObjectValue(VmImageRepositoryCredentials, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Volumes))
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
         internal static NetworkCloudVirtualMachineData DeserializeNetworkCloudVirtualMachineData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

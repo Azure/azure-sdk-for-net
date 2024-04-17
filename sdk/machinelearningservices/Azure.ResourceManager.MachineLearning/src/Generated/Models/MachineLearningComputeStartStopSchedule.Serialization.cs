@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningComputeStartStopSchedule : IUtf8JsonSerializable, IJsonModel<MachineLearningComputeStartStopSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeStartStopSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeStartStopSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningComputeStartStopSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(RecurrenceSchedule))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue<ComputeStartStopRecurrenceSchedule>(RecurrenceSchedule, options);
+                writer.WriteObjectValue(RecurrenceSchedule, options);
             }
             if (Optional.IsDefined(CronSchedule))
             {
                 writer.WritePropertyName("cron"u8);
-                writer.WriteObjectValue<ComputeStartStopCronSchedule>(CronSchedule, options);
+                writer.WriteObjectValue(CronSchedule, options);
             }
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue<MachineLearningScheduleBase>(Schedule, options);
+                writer.WriteObjectValue(Schedule, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningComputeStartStopSchedule DeserializeMachineLearningComputeStartStopSchedule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

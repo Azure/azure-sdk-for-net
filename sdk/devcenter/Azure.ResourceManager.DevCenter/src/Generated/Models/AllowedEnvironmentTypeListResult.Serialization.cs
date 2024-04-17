@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 {
     internal partial class AllowedEnvironmentTypeListResult : IUtf8JsonSerializable, IJsonModel<AllowedEnvironmentTypeListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AllowedEnvironmentTypeListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AllowedEnvironmentTypeListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AllowedEnvironmentTypeListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<AllowedEnvironmentTypeData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         internal static AllowedEnvironmentTypeListResult DeserializeAllowedEnvironmentTypeListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

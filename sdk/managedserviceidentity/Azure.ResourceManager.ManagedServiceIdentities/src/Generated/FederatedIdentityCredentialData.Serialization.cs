@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 {
     public partial class FederatedIdentityCredentialData : IUtf8JsonSerializable, IJsonModel<FederatedIdentityCredentialData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FederatedIdentityCredentialData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FederatedIdentityCredentialData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FederatedIdentityCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 
         internal static FederatedIdentityCredentialData DeserializeFederatedIdentityCredentialData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class ReplaceAllIPFirewallRulesContent : IUtf8JsonSerializable, IJsonModel<ReplaceAllIPFirewallRulesContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplaceAllIPFirewallRulesContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplaceAllIPFirewallRulesContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReplaceAllIPFirewallRulesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 foreach (var item in IPFirewallRules)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<SynapseIPFirewallRuleProperties>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static ReplaceAllIPFirewallRulesContent DeserializeReplaceAllIPFirewallRulesContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

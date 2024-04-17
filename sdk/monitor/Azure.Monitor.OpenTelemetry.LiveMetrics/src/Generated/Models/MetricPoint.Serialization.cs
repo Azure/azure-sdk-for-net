@@ -15,29 +15,20 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("Name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Value))
-            {
-                writer.WritePropertyName("Value"u8);
-                writer.WriteNumberValue(Value.Value);
-            }
-            if (Optional.IsDefined(Weight))
-            {
-                writer.WritePropertyName("Weight"u8);
-                writer.WriteNumberValue(Weight.Value);
-            }
+            writer.WritePropertyName("Name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("Value"u8);
+            writer.WriteNumberValue(Value);
+            writer.WritePropertyName("Weight"u8);
+            writer.WriteNumberValue(Weight);
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MetricPoint>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

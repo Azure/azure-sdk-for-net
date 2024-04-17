@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsOfficeDataConnectorDataTypes : IUtf8JsonSerializable, IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
-                writer.WriteObjectValue<OfficeDataConnectorDataTypesExchange>(Exchange, options);
+                writer.WriteObjectValue(Exchange, options);
             }
             if (Optional.IsDefined(SharePoint))
             {
                 writer.WritePropertyName("sharePoint"u8);
-                writer.WriteObjectValue<OfficeDataConnectorDataTypesSharePoint>(SharePoint, options);
+                writer.WriteObjectValue(SharePoint, options);
             }
             if (Optional.IsDefined(Teams))
             {
                 writer.WritePropertyName("teams"u8);
-                writer.WriteObjectValue<OfficeDataConnectorDataTypesTeams>(Teams, options);
+                writer.WriteObjectValue(Teams, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsOfficeDataConnectorDataTypes DeserializeSecurityInsightsOfficeDataConnectorDataTypes(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

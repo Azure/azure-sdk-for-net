@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
 {
     internal partial class InboundEndpointListResult : IUtf8JsonSerializable, IJsonModel<InboundEndpointListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundEndpointListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundEndpointListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InboundEndpointListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<DnsResolverInboundEndpointData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         internal static InboundEndpointListResult DeserializeInboundEndpointListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

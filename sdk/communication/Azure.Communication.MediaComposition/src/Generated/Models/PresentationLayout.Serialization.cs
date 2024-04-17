@@ -36,7 +36,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue<LayoutResolution>(Resolution);
+                writer.WriteObjectValue(Resolution);
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
@@ -137,11 +137,11 @@ namespace Azure.Communication.MediaComposition
             return DeserializePresentationLayout(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PresentationLayout>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

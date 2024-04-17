@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class PredictionDriftMonitoringSignal : IUtf8JsonSerializable, IJsonModel<PredictionDriftMonitoringSignal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionDriftMonitoringSignal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionDriftMonitoringSignal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PredictionDriftMonitoringSignal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue<PredictionDriftMetricThresholdBase>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("modelType"u8);
             writer.WriteStringValue(ModelType.ToString());
             writer.WritePropertyName("productionData"u8);
-            writer.WriteObjectValue<MonitoringInputDataBase>(ProductionData, options);
+            writer.WriteObjectValue(ProductionData, options);
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue<MonitoringInputDataBase>(ReferenceData, options);
+            writer.WriteObjectValue(ReferenceData, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static PredictionDriftMonitoringSignal DeserializePredictionDriftMonitoringSignal(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

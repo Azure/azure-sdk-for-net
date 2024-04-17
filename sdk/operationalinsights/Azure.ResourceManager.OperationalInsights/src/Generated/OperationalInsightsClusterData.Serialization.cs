@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class OperationalInsightsClusterData : IUtf8JsonSerializable, IJsonModel<OperationalInsightsClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationalInsightsClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<OperationalInsightsClusterSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue<OperationalInsightsKeyVaultProperties>(KeyVaultProperties, options);
+                writer.WriteObjectValue(KeyVaultProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WriteStartArray();
                 foreach (var item in AssociatedWorkspaces)
                 {
-                    writer.WriteObjectValue<OperationalInsightsClusterAssociatedWorkspace>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CapacityReservationProperties))
             {
                 writer.WritePropertyName("capacityReservationProperties"u8);
-                writer.WriteObjectValue<OperationalInsightsCapacityReservationProperties>(CapacityReservationProperties, options);
+                writer.WriteObjectValue(CapacityReservationProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static OperationalInsightsClusterData DeserializeOperationalInsightsClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

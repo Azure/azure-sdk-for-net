@@ -112,7 +112,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             var updatedCredential = (await adminClient.UpdateDataSourceCredentialAsync(credentialToUpdate)).Value as ServicePrincipalCredentialEntity;
 
-            Assert.That(updatedCredential.ClientId, Is.EqualTo(ClientId));
+            Assert.That(updatedCredential.ClientId, Is.EqualTo(SanitizeValue));
             Assert.That(updatedCredential.TenantId, Is.EqualTo(TenantId));
         }
 
@@ -255,7 +255,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             if (credential is ServicePrincipalCredentialEntity spCredential)
             {
                 Assert.That(spCredential.CredentialKind, Is.EqualTo(DataSourceCredentialKind.ServicePrincipal));
-                Assert.That(spCredential.ClientId, Is.EqualTo(ClientId));
+                Assert.That(spCredential.ClientId, Is.EqualTo(SanitizeValue));
                 Assert.That(spCredential.TenantId, Is.EqualTo(TenantId));
             }
             else if (credential is ServicePrincipalInKeyVaultCredentialEntity kvCredential)

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
     public partial class DedicatedCapacityPatch : IUtf8JsonSerializable, IJsonModel<DedicatedCapacityPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedCapacityPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedCapacityPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DedicatedCapacityPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<CapacitySku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             if (Optional.IsDefined(Administration))
             {
                 writer.WritePropertyName("administration"u8);
-                writer.WriteObjectValue<DedicatedCapacityAdministrators>(Administration, options);
+                writer.WriteObjectValue(Administration, options);
             }
             if (Optional.IsDefined(Mode))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
 
         internal static DedicatedCapacityPatch DeserializeDedicatedCapacityPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

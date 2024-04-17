@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     internal partial class ClusterPropertiesEncryption : IUtf8JsonSerializable, IJsonModel<ClusterPropertiesEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterPropertiesEncryption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterPropertiesEncryption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterPropertiesEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(CustomerManagedKeyEncryption))
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
-                writer.WriteObjectValue<RedisEnterpriseCustomerManagedKeyEncryption>(CustomerManagedKeyEncryption, options);
+                writer.WriteObjectValue(CustomerManagedKeyEncryption, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static ClusterPropertiesEncryption DeserializeClusterPropertiesEncryption(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

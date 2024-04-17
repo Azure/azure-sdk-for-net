@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class RenewCertificateOrderContent : IUtf8JsonSerializable, IJsonModel<RenewCertificateOrderContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RenewCertificateOrderContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RenewCertificateOrderContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RenewCertificateOrderContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static RenewCertificateOrderContent DeserializeRenewCertificateOrderContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

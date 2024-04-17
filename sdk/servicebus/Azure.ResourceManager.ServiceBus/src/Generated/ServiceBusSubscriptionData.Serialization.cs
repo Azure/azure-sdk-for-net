@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceBus
 {
     public partial class ServiceBusSubscriptionData : IUtf8JsonSerializable, IJsonModel<ServiceBusSubscriptionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusSubscriptionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusSubscriptionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceBusSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (options.Format != "W" && Optional.IsDefined(CountDetails))
             {
                 writer.WritePropertyName("countDetails"u8);
-                writer.WriteObjectValue<MessageCountDetails>(CountDetails, options);
+                writer.WriteObjectValue(CountDetails, options);
             }
             if (Optional.IsDefined(LockDuration))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(ClientAffineProperties))
             {
                 writer.WritePropertyName("clientAffineProperties"u8);
-                writer.WriteObjectValue<ServiceBusClientAffineProperties>(ClientAffineProperties, options);
+                writer.WriteObjectValue(ClientAffineProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static ServiceBusSubscriptionData DeserializeServiceBusSubscriptionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

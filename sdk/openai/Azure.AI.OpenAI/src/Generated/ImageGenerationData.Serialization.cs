@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
 {
     public partial class ImageGenerationData : IUtf8JsonSerializable, IJsonModel<ImageGenerationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageGenerationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageGenerationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ImageGenerationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(ContentFilterResults))
             {
                 writer.WritePropertyName("content_filter_results"u8);
-                writer.WriteObjectValue<ImageGenerationContentFilterResults>(ContentFilterResults, options);
+                writer.WriteObjectValue(ContentFilterResults, options);
             }
             if (Optional.IsDefined(RevisedPrompt))
             {
@@ -49,7 +49,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(PromptFilterResults))
             {
                 writer.WritePropertyName("prompt_filter_results"u8);
-                writer.WriteObjectValue<ImageGenerationPromptFilterResults>(PromptFilterResults, options);
+                writer.WriteObjectValue(PromptFilterResults, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +83,7 @@ namespace Azure.AI.OpenAI
 
         internal static ImageGenerationData DeserializeImageGenerationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -189,11 +189,11 @@ namespace Azure.AI.OpenAI
             return DeserializeImageGenerationData(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ImageGenerationData>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Schedule != null)
                 {
                     writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue<IndexingSchedule>(Schedule);
+                    writer.WriteObjectValue(Schedule);
                 }
                 else
                 {
@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Parameters != null)
                 {
                     writer.WritePropertyName("parameters"u8);
-                    writer.WriteObjectValue<IndexingParameters>(Parameters);
+                    writer.WriteObjectValue(Parameters);
                 }
                 else
                 {
@@ -98,7 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
+                    writer.WriteObjectValue(EncryptionKey);
                 }
                 else
                 {
@@ -110,7 +110,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Cache != null)
                 {
                     writer.WritePropertyName("cache"u8);
-                    writer.WriteObjectValue<SearchIndexerCache>(Cache);
+                    writer.WriteObjectValue(Cache);
                 }
                 else
                 {
@@ -274,11 +274,11 @@ namespace Azure.Search.Documents.Indexes.Models
             return DeserializeSearchIndexer(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndexer>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

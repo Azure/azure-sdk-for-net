@@ -15,7 +15,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 {
     public partial class ImageAnalysisResult : IUtf8JsonSerializable, IJsonModel<ImageAnalysisResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageAnalysisResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageAnalysisResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ImageAnalysisResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,41 +29,41 @@ namespace Azure.AI.Vision.ImageAnalysis
             if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("captionResult"u8);
-                writer.WriteObjectValue<CaptionResult>(Caption, options);
+                writer.WriteObjectValue(Caption, options);
             }
             if (Optional.IsDefined(DenseCaptions))
             {
                 writer.WritePropertyName("denseCaptionsResult"u8);
-                writer.WriteObjectValue<DenseCaptionsResult>(DenseCaptions, options);
+                writer.WriteObjectValue(DenseCaptions, options);
             }
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue<ImageMetadata>(Metadata, options);
+            writer.WriteObjectValue(Metadata, options);
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
             if (Optional.IsDefined(Objects))
             {
                 writer.WritePropertyName("objectsResult"u8);
-                writer.WriteObjectValue<ObjectsResult>(Objects, options);
+                writer.WriteObjectValue(Objects, options);
             }
             if (Optional.IsDefined(People))
             {
                 writer.WritePropertyName("peopleResult"u8);
-                writer.WriteObjectValue<PeopleResult>(People, options);
+                writer.WriteObjectValue(People, options);
             }
             if (Optional.IsDefined(Read))
             {
                 writer.WritePropertyName("readResult"u8);
-                writer.WriteObjectValue<ReadResult>(Read, options);
+                writer.WriteObjectValue(Read, options);
             }
             if (Optional.IsDefined(SmartCrops))
             {
                 writer.WritePropertyName("smartCropsResult"u8);
-                writer.WriteObjectValue<SmartCropsResult>(SmartCrops, options);
+                writer.WriteObjectValue(SmartCrops, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tagsResult"u8);
-                writer.WriteObjectValue<TagsResult>(Tags, options);
+                writer.WriteObjectValue(Tags, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -97,7 +97,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         internal static ImageAnalysisResult DeserializeImageAnalysisResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -247,11 +247,11 @@ namespace Azure.AI.Vision.ImageAnalysis
             return DeserializeImageAnalysisResult(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ImageAnalysisResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

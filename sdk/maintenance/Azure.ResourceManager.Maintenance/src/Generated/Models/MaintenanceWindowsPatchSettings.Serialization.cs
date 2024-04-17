@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Maintenance.Models
 {
     public partial class MaintenanceWindowsPatchSettings : IUtf8JsonSerializable, IJsonModel<MaintenanceWindowsPatchSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceWindowsPatchSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceWindowsPatchSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MaintenanceWindowsPatchSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Maintenance.Models
 
         internal static MaintenanceWindowsPatchSettings DeserializeMaintenanceWindowsPatchSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

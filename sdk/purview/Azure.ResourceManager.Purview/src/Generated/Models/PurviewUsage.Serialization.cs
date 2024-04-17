@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Purview.Models
 {
     public partial class PurviewUsage : IUtf8JsonSerializable, IJsonModel<PurviewUsage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewUsage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PurviewUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Purview.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue<PurviewUsageName>(Name, options);
+                writer.WriteObjectValue(Name, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Unit))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         internal static PurviewUsage DeserializePurviewUsage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

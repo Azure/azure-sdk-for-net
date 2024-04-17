@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class DeadLetterWithResourceIdentity : IUtf8JsonSerializable, IJsonModel<DeadLetterWithResourceIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeadLetterWithResourceIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeadLetterWithResourceIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeadLetterWithResourceIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<EventSubscriptionIdentity>(Identity, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(DeadLetterDestination))
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
-                writer.WriteObjectValue<DeadLetterDestination>(DeadLetterDestination, options);
+                writer.WriteObjectValue(DeadLetterDestination, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static DeadLetterWithResourceIdentity DeserializeDeadLetterWithResourceIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

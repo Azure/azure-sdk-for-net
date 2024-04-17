@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
     public partial class DetailedInformation : IUtf8JsonSerializable, IJsonModel<DetailedInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetailedInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetailedInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DetailedInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(UnitsSupported))
             {
                 writer.WritePropertyName("unitsSupported"u8);
-                writer.WriteObjectValue<UnitSystemsInfo>(UnitsSupported, options);
+                writer.WriteObjectValue(UnitsSupported, options);
             }
             if (Optional.IsCollectionDefined(ApiInputParameters))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
 
         internal static DetailedInformation DeserializeDetailedInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class ProxyArtifactVersionsListOverview : IUtf8JsonSerializable, IJsonModel<ProxyArtifactVersionsListOverview>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProxyArtifactVersionsListOverview>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProxyArtifactVersionsListOverview>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProxyArtifactVersionsListOverview>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<ProxyArtifactOverviewPropertiesValue>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static ProxyArtifactVersionsListOverview DeserializeProxyArtifactVersionsListOverview(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

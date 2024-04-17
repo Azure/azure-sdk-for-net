@@ -101,7 +101,17 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         private async Task UploadAppendBlocksAsync(AppendBlobClient blobClient, Stream contents)
         {
-            await blobClient.CreateIfNotExistsAsync();
+            await blobClient.CreateIfNotExistsAsync(new AppendBlobCreateOptions()
+            {
+                Metadata = _defaultMetadata,
+                HttpHeaders = new BlobHttpHeaders()
+                {
+                    ContentType = _defaultContentType,
+                    ContentLanguage = _defaultContentLanguage,
+                    ContentDisposition = _defaultContentDisposition,
+                    CacheControl = _defaultCacheControl,
+                }
+            });
             long offset = 0;
             long size = contents.Length;
             long blockSize = Math.Min(DefaultBufferSize, size);
@@ -161,33 +171,34 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 options = new BlockBlobStorageResourceOptions
                 {
-                    AccessTier = new(_defaultAccessTier),
+                    AccessTier = _defaultAccessTier,
                     ContentDisposition = new(_defaultContentDisposition),
                     ContentLanguage = new(_defaultContentLanguage),
                     CacheControl = new(_defaultCacheControl),
-                    ContentType = new(_defaultContentType)
+                    ContentType = new(_defaultContentType),
+                    Metadata = new(_defaultMetadata)
                 };
             }
             else if (type == TransferPropertiesTestType.NoPreserve)
             {
                 options = new BlockBlobStorageResourceOptions
                 {
-                    AccessTier = new(false),
                     ContentDisposition = new(false),
                     ContentLanguage = new(false),
                     CacheControl = new(false),
-                    ContentType = new(false)
+                    ContentType = new(false),
+                    Metadata = new(false)
                 };
             }
             else if (type == TransferPropertiesTestType.Preserve)
             {
                 options = new BlockBlobStorageResourceOptions
                 {
-                    AccessTier = new(true),
                     ContentDisposition = new(true),
                     ContentLanguage = new(true),
                     CacheControl = new(true),
-                    ContentType = new(true)
+                    ContentType = new(true),
+                    Metadata = new(true)
                 };
             }
             return new BlockBlobStorageResource(objectClient, options);

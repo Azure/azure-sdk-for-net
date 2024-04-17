@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingSubscriptionData : IUtf8JsonSerializable, IJsonModel<BillingSubscriptionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BillingSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(LastMonthCharges))
             {
                 writer.WritePropertyName("lastMonthCharges"u8);
-                writer.WriteObjectValue<BillingAmount>(LastMonthCharges, options);
+                writer.WriteObjectValue(LastMonthCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MonthToDateCharges))
             {
                 writer.WritePropertyName("monthToDateCharges"u8);
-                writer.WriteObjectValue<BillingAmount>(MonthToDateCharges, options);
+                writer.WriteObjectValue(MonthToDateCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NextBillingCycleDetails))
             {
                 writer.WritePropertyName("nextBillingCycleDetails"u8);
-                writer.WriteObjectValue<NextBillingCycleDetails>(NextBillingCycleDetails, options);
+                writer.WriteObjectValue(NextBillingCycleDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OfferId))
             {
@@ -184,12 +184,12 @@ namespace Azure.ResourceManager.Billing
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue<CreatedSubscriptionReseller>(Reseller, options);
+                writer.WriteObjectValue(Reseller, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RenewalTermDetails))
             {
                 writer.WritePropertyName("renewalTermDetails"u8);
-                writer.WriteObjectValue<SubscriptionRenewalTermDetails>(RenewalTermDetails, options);
+                writer.WriteObjectValue(RenewalTermDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SkuDescription))
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Billing
 
         internal static BillingSubscriptionData DeserializeBillingSubscriptionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

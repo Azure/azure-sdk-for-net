@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class FeatureAttributionMetricThreshold : IUtf8JsonSerializable, IJsonModel<FeatureAttributionMetricThreshold>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureAttributionMetricThreshold>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureAttributionMetricThreshold>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FeatureAttributionMetricThreshold>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Threshold != null)
                 {
                     writer.WritePropertyName("threshold"u8);
-                    writer.WriteObjectValue<MonitoringThreshold>(Threshold, options);
+                    writer.WriteObjectValue(Threshold, options);
                 }
                 else
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static FeatureAttributionMetricThreshold DeserializeFeatureAttributionMetricThreshold(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

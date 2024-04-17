@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class ExtendedCassandraTableResourceInfo : IUtf8JsonSerializable, IJsonModel<ExtendedCassandraTableResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedCassandraTableResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedCassandraTableResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExtendedCassandraTableResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue<CassandraSchema>(Schema, options);
+                writer.WriteObjectValue(Schema, options);
             }
             if (Optional.IsDefined(AnalyticalStorageTtl))
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ExtendedCassandraTableResourceInfo DeserializeExtendedCassandraTableResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class NetworkCloudKubernetesClusterPatch : IUtf8JsonSerializable, IJsonModel<NetworkCloudKubernetesClusterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudKubernetesClusterPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudKubernetesClusterPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkCloudKubernetesClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(ControlPlaneNodeConfiguration))
             {
                 writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
-                writer.WriteObjectValue<ControlPlaneNodePatchConfiguration>(ControlPlaneNodeConfiguration, options);
+                writer.WriteObjectValue(ControlPlaneNodeConfiguration, options);
             }
             if (Optional.IsDefined(KubernetesVersion))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static NetworkCloudKubernetesClusterPatch DeserializeNetworkCloudKubernetesClusterPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 {
     internal partial class ContainerGroupDiagnostics : IUtf8JsonSerializable, IJsonModel<ContainerGroupDiagnostics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupDiagnostics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupDiagnostics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerGroupDiagnostics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(LogAnalytics))
             {
                 writer.WritePropertyName("logAnalytics"u8);
-                writer.WriteObjectValue<ContainerGroupLogAnalytics>(LogAnalytics, options);
+                writer.WriteObjectValue(LogAnalytics, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGroupDiagnostics DeserializeContainerGroupDiagnostics(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

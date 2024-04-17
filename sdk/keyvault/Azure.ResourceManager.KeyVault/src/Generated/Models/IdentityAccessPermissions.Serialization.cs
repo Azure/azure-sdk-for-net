@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     public partial class IdentityAccessPermissions : IUtf8JsonSerializable, IJsonModel<IdentityAccessPermissions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdentityAccessPermissions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdentityAccessPermissions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IdentityAccessPermissions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static IdentityAccessPermissions DeserializeIdentityAccessPermissions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

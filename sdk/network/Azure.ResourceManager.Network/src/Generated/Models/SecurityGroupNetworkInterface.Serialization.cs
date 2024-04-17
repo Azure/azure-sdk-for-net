@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class SecurityGroupNetworkInterface : IUtf8JsonSerializable, IJsonModel<SecurityGroupNetworkInterface>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityGroupNetworkInterface>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityGroupNetworkInterface>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityGroupNetworkInterface>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(SecurityRuleAssociations))
             {
                 writer.WritePropertyName("securityRuleAssociations"u8);
-                writer.WriteObjectValue<SecurityRuleAssociations>(SecurityRuleAssociations, options);
+                writer.WriteObjectValue(SecurityRuleAssociations, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static SecurityGroupNetworkInterface DeserializeSecurityGroupNetworkInterface(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchUserAccount : IUtf8JsonSerializable, IJsonModel<BatchUserAccount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchUserAccount>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchUserAccount>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchUserAccount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(LinuxUserConfiguration))
             {
                 writer.WritePropertyName("linuxUserConfiguration"u8);
-                writer.WriteObjectValue<BatchLinuxUserConfiguration>(LinuxUserConfiguration, options);
+                writer.WriteObjectValue(LinuxUserConfiguration, options);
             }
             if (Optional.IsDefined(WindowsUserConfiguration))
             {
                 writer.WritePropertyName("windowsUserConfiguration"u8);
-                writer.WriteObjectValue<BatchWindowsUserConfiguration>(WindowsUserConfiguration, options);
+                writer.WriteObjectValue(WindowsUserConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchUserAccount DeserializeBatchUserAccount(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

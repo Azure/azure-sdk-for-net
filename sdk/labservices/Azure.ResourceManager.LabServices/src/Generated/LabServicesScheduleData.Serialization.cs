@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LabServices
 {
     public partial class LabServicesScheduleData : IUtf8JsonSerializable, IJsonModel<LabServicesScheduleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabServicesScheduleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabServicesScheduleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabServicesScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(RecurrencePattern))
             {
                 writer.WritePropertyName("recurrencePattern"u8);
-                writer.WriteObjectValue<LabServicesRecurrencePattern>(RecurrencePattern, options);
+                writer.WriteObjectValue(RecurrencePattern, options);
             }
             if (Optional.IsDefined(TimeZoneId))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.LabServices
 
         internal static LabServicesScheduleData DeserializeLabServicesScheduleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

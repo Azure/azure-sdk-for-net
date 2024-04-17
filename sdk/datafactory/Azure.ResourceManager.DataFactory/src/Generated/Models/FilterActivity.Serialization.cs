@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class FilterActivity : IUtf8JsonSerializable, IJsonModel<FilterActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilterActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilterActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FilterActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,16 +61,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("items"u8);
-            writer.WriteObjectValue<DataFactoryExpression>(Items, options);
+            writer.WriteObjectValue(Items, options);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue<DataFactoryExpression>(Condition, options);
+            writer.WriteObjectValue(Condition, options);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static FilterActivity DeserializeFilterActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

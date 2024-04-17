@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 {
     internal partial class MoverUnresolvedDependencyList : IUtf8JsonSerializable, IJsonModel<MoverUnresolvedDependencyList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverUnresolvedDependencyList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverUnresolvedDependencyList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MoverUnresolvedDependencyList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<MoverUnresolvedDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (options.Format != "W" && Optional.IsDefined(SummaryCollection))
             {
                 writer.WritePropertyName("summaryCollection"u8);
-                writer.WriteObjectValue<MoverSummaryList>(SummaryCollection, options);
+                writer.WriteObjectValue(SummaryCollection, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TotalCount))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverUnresolvedDependencyList DeserializeMoverUnresolvedDependencyList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

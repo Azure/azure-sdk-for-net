@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     internal partial class SapDiskSku : IUtf8JsonSerializable, IJsonModel<SapDiskSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDiskSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDiskSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapDiskSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapDiskSku DeserializeSapDiskSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

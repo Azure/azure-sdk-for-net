@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media
 {
     public partial class StreamingPolicyData : IUtf8JsonSerializable, IJsonModel<StreamingPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamingPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(EnvelopeEncryption))
             {
                 writer.WritePropertyName("envelopeEncryption"u8);
-                writer.WriteObjectValue<EnvelopeEncryption>(EnvelopeEncryption, options);
+                writer.WriteObjectValue(EnvelopeEncryption, options);
             }
             if (Optional.IsDefined(CommonEncryptionCenc))
             {
                 writer.WritePropertyName("commonEncryptionCenc"u8);
-                writer.WriteObjectValue<CommonEncryptionCenc>(CommonEncryptionCenc, options);
+                writer.WriteObjectValue(CommonEncryptionCenc, options);
             }
             if (Optional.IsDefined(CommonEncryptionCbcs))
             {
                 writer.WritePropertyName("commonEncryptionCbcs"u8);
-                writer.WriteObjectValue<CommonEncryptionCbcs>(CommonEncryptionCbcs, options);
+                writer.WriteObjectValue(CommonEncryptionCbcs, options);
             }
             if (Optional.IsDefined(NoEncryption))
             {
                 writer.WritePropertyName("noEncryption"u8);
-                writer.WriteObjectValue<NoEncryption>(NoEncryption, options);
+                writer.WriteObjectValue(NoEncryption, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Media
 
         internal static StreamingPolicyData DeserializeStreamingPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.Developer.DevCenter.Models
 {
     public partial class DevBoxHardwareProfile : IUtf8JsonSerializable, IJsonModel<DevBoxHardwareProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxHardwareProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxHardwareProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevBoxHardwareProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.Developer.DevCenter.Models
 
         internal static DevBoxHardwareProfile DeserializeDevBoxHardwareProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -161,11 +161,11 @@ namespace Azure.Developer.DevCenter.Models
             return DeserializeDevBoxHardwareProfile(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DevBoxHardwareProfile>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

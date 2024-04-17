@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class DataImport : IUtf8JsonSerializable, IJsonModel<DataImport>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataImport>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataImport>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataImport>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Source != null)
                 {
                     writer.WritePropertyName("source"u8);
-                    writer.WriteObjectValue<DataImportSource>(Source, options);
+                    writer.WriteObjectValue(Source, options);
                 }
                 else
                 {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue<IntellectualProperty>(IntellectualProperty, options);
+                    writer.WriteObjectValue(IntellectualProperty, options);
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue<AutoDeleteSetting>(AutoDeleteSetting, options);
+                    writer.WriteObjectValue(AutoDeleteSetting, options);
                 }
                 else
                 {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static DataImport DeserializeDataImport(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

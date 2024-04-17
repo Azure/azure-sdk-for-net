@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 {
     public partial class AzureDevOpsConnectorProperties : IUtf8JsonSerializable, IJsonModel<AzureDevOpsConnectorProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDevOpsConnectorProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDevOpsConnectorProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureDevOpsConnectorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
-                writer.WriteObjectValue<AuthorizationInfo>(Authorization, options);
+                writer.WriteObjectValue(Authorization, options);
             }
             if (Optional.IsCollectionDefined(Orgs))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WriteStartArray();
                 foreach (var item in Orgs)
                 {
-                    writer.WriteObjectValue<AzureDevOpsOrgMetadata>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsConnectorProperties DeserializeAzureDevOpsConnectorProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

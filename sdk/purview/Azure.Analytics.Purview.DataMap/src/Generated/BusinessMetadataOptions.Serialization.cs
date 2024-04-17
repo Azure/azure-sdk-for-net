@@ -15,7 +15,7 @@ namespace Azure.Analytics.Purview.DataMap
 {
     public partial class BusinessMetadataOptions : IUtf8JsonSerializable, IJsonModel<BusinessMetadataOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BusinessMetadataOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BusinessMetadataOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BusinessMetadataOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         internal static BusinessMetadataOptions DeserializeBusinessMetadataOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

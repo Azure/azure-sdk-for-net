@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
     [PersistableModelProxy(typeof(UnknownCodec))]
     public partial class MediaCodecBase : IUtf8JsonSerializable, IJsonModel<MediaCodecBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaCodecBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaCodecBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaCodecBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaCodecBase DeserializeMediaCodecBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

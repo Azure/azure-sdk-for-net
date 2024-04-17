@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class AutomationRuleRunPlaybookAction : IUtf8JsonSerializable, IJsonModel<AutomationRuleRunPlaybookAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationRuleRunPlaybookAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationRuleRunPlaybookAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationRuleRunPlaybookAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(ActionConfiguration))
             {
                 writer.WritePropertyName("actionConfiguration"u8);
-                writer.WriteObjectValue<AutomationRuleRunPlaybookActionProperties>(ActionConfiguration, options);
+                writer.WriteObjectValue(ActionConfiguration, options);
             }
             writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static AutomationRuleRunPlaybookAction DeserializeAutomationRuleRunPlaybookAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

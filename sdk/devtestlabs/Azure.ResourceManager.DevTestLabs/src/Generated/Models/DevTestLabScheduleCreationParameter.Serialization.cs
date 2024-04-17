@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabScheduleCreationParameter : IUtf8JsonSerializable, IJsonModel<DevTestLabScheduleCreationParameter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabScheduleCreationParameter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabScheduleCreationParameter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabScheduleCreationParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,17 +62,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(WeeklyRecurrence))
             {
                 writer.WritePropertyName("weeklyRecurrence"u8);
-                writer.WriteObjectValue<DevTestLabWeekDetails>(WeeklyRecurrence, options);
+                writer.WriteObjectValue(WeeklyRecurrence, options);
             }
             if (Optional.IsDefined(DailyRecurrence))
             {
                 writer.WritePropertyName("dailyRecurrence"u8);
-                writer.WriteObjectValue<DayDetails>(DailyRecurrence, options);
+                writer.WriteObjectValue(DailyRecurrence, options);
             }
             if (Optional.IsDefined(HourlyRecurrence))
             {
                 writer.WritePropertyName("hourlyRecurrence"u8);
-                writer.WriteObjectValue<HourDetails>(HourlyRecurrence, options);
+                writer.WriteObjectValue(HourlyRecurrence, options);
             }
             if (Optional.IsDefined(TimeZoneId))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(NotificationSettings))
             {
                 writer.WritePropertyName("notificationSettings"u8);
-                writer.WriteObjectValue<DevTestLabNotificationSettings>(NotificationSettings, options);
+                writer.WriteObjectValue(NotificationSettings, options);
             }
             if (Optional.IsDefined(TargetResourceId))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabScheduleCreationParameter DeserializeDevTestLabScheduleCreationParameter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

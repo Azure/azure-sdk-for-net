@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class RestorableGremlinGraph : IUtf8JsonSerializable, IJsonModel<RestorableGremlinGraph>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorableGremlinGraph>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorableGremlinGraph>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestorableGremlinGraph>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue<ExtendedRestorableGremlinGraphResourceInfo>(Resource, options);
+                writer.WriteObjectValue(Resource, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static RestorableGremlinGraph DeserializeRestorableGremlinGraph(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

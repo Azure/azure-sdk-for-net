@@ -40,8 +40,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// The access tier of the destination blob.
         /// </summary>
-        public DataTransferProperty<AccessTier?> AccessTier;
-        public bool PreserveAccessTier;
+        public AccessTier? AccessTierValue;
 
         /// <summary>
         /// The metadata for the destination blob.
@@ -66,13 +65,12 @@ namespace Azure.Storage.DataMovement.Blobs
             DataTransferProperty<string> contentLanguage,
             DataTransferProperty<string> contentDisposition,
             DataTransferProperty<string> cacheControl,
-            DataTransferProperty<AccessTier?> accessTier,
+            AccessTier? accessTier,
             DataTransferProperty<Metadata> metadata,
             DataTransferProperty<Tags> tags)
             : base(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, blobType)
         {
-            PreserveAccessTier = accessTier?.Preserve ?? true;
-            AccessTier = accessTier;
+            AccessTierValue = accessTier;
 
             CacheControl = cacheControl;
             PreserveCacheControl = cacheControl?.Preserve ?? true;
@@ -181,18 +179,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 writer.WriteEmptyLengthOffset();
             }
 
-            // Preserve Access Tier
-            writer.Write(PreserveAccessTier);
-            if (!PreserveAccessTier)
-            {
-                // AccessTier
-                writer.Write((byte)AccessTier.Value.ToJobPlanAccessTier());
-            }
-            else
-            {
-                // Write null byte value
-                writer.Write((byte)0);
-            }
+            // AccessTier
+            writer.Write((byte)AccessTierValue.ToJobPlanAccessTier());
 
             // Preserve Metadata
             writer.Write(PreserveMetadata);
@@ -292,8 +280,7 @@ namespace Azure.Storage.DataMovement.Blobs
             int cacheControlOffset = reader.ReadInt32();
             int cacheControlLength = reader.ReadInt32();
 
-            // Preserve AccessTier and offset/length
-            bool preserveAccessTier = reader.ReadBoolean();
+            // AccessTier
             AccessTier? accessTier = default;
             JobPlanAccessTier jobPlanAccessTier = (JobPlanAccessTier)reader.ReadByte();
             if (!jobPlanAccessTier.Equals(JobPlanAccessTier.None))
@@ -375,7 +362,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 contentLanguage: preserveContentLanguage ? new(preserveContentLanguage) : new(contentLanguage),
                 contentDisposition: preserveContentDisposition ? new(preserveContentDisposition) : new(contentDisposition),
                 cacheControl: preserveCacheControl ? new(preserveCacheControl): new(cacheControl),
-                accessTier: preserveAccessTier ? new(preserveAccessTier) : new(accessTier),
+                accessTier: accessTier,
                 metadata: preserveMetadata ? new(preserveMetadata) : new(metadataString.ToDictionary(nameof(metadataString))),
                 tags: preserveTags ? new(preserveTags) : new(tagsString.ToDictionary(nameof(tagsString))));
         }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 {
     internal partial class ApplianceSupportedVersionMetadata : IUtf8JsonSerializable, IJsonModel<ApplianceSupportedVersionMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplianceSupportedVersionMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplianceSupportedVersionMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplianceSupportedVersionMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             if (options.Format != "W" && Optional.IsDefined(CatalogVersion))
             {
                 writer.WritePropertyName("catalogVersion"u8);
-                writer.WriteObjectValue<ApplianceSupportedVersionCatalogVersion>(CatalogVersion, options);
+                writer.WriteObjectValue(CatalogVersion, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 
         internal static ApplianceSupportedVersionMetadata DeserializeApplianceSupportedVersionMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

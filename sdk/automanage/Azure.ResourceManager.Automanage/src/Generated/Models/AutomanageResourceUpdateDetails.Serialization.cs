@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automanage.Models
 {
     public partial class AutomanageResourceUpdateDetails : IUtf8JsonSerializable, IJsonModel<AutomanageResourceUpdateDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomanageResourceUpdateDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomanageResourceUpdateDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomanageResourceUpdateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automanage.Models
 
         internal static AutomanageResourceUpdateDetails DeserializeAutomanageResourceUpdateDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

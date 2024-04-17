@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class HciPrecheckResult : IUtf8JsonSerializable, IJsonModel<HciPrecheckResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciPrecheckResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciPrecheckResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HciPrecheckResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue<HciPrecheckResultTags>(Tags, options);
+                writer.WriteObjectValue(Tags, options);
             }
             if (Optional.IsDefined(Title))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static HciPrecheckResult DeserializeHciPrecheckResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

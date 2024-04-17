@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
 {
     public partial class DevSpacesSku : IUtf8JsonSerializable, IJsonModel<DevSpacesSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevSpacesSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevSpacesSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevSpacesSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
 
         internal static DevSpacesSku DeserializeDevSpacesSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

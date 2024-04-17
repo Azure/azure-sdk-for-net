@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppJobData : IUtf8JsonSerializable, IJsonModel<ContainerAppJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppJobData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue<ContainerAppJobConfiguration>(Configuration, options);
+                writer.WriteObjectValue(Configuration, options);
             }
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue<ContainerAppJobTemplate>(Template, options);
+                writer.WriteObjectValue(Template, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OutboundIPAddresses))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static ContainerAppJobData DeserializeContainerAppJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

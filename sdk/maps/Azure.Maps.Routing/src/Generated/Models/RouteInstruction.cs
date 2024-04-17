@@ -37,7 +37,7 @@ namespace Azure.Maps.Routing.Models
         public string SignpostText { get; }
         /// <summary> 3-character [ISO 3166-1](https://www.iso.org/iso-3166-country-codes.html) alpha-3 country code. E.g. USA. </summary>
         public string CountryCode { get; }
-        /// <summary> A subdivision (e.g., state) of the country, represented by the second part of an [ISO 3166-2](https://www.iso.org/standard/63546.html) code. This is only available for some countries like the US, Canada, and Mexico. </summary>
+        /// <summary> A subdivision (e.g., state) of the country, represented by the second part of an [ISO 3166-2](https://www.iso.org/standard/63546.html) code. This is only available for some countries/regions like the US, Canada, and Mexico. </summary>
         public string StateCode { get; }
         /// <summary> The type of the junction where the maneuver takes place. For larger roundabouts, two separate instructions are generated for entering and leaving the roundabout. </summary>
         public JunctionType? JunctionType { get; }

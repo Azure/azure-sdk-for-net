@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     public partial class ServerVersionCapabilityV2 : IUtf8JsonSerializable, IJsonModel<ServerVersionCapabilityV2>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerVersionCapabilityV2>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerVersionCapabilityV2>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServerVersionCapabilityV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static ServerVersionCapabilityV2 DeserializeServerVersionCapabilityV2(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

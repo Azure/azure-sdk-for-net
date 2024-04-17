@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     internal partial class FlinkCatalogOptions : IUtf8JsonSerializable, IJsonModel<FlinkCatalogOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlinkCatalogOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlinkCatalogOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FlinkCatalogOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(Hive))
             {
                 writer.WritePropertyName("hive"u8);
-                writer.WriteObjectValue<FlinkHiveCatalogOption>(Hive, options);
+                writer.WriteObjectValue(Hive, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static FlinkCatalogOptions DeserializeFlinkCatalogOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
