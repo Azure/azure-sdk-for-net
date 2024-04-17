@@ -185,36 +185,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
             throw new RpcException(new Status(StatusCode.FailedPrecondition, $"SessionId {request.SessionId} not found."));
         }
 
-        public override async Task<Empty> Renew(RenewSessionLock request, ServerCallContext context)
+        public override async Task<RenewSessionLockResponse> Renew(RenewSessionLock request, ServerCallContext context)
         {
             try
             {
                 if (_provider.SessionActionsCache.TryGetValue(request.SessionId, out var actions))
                 {
                     await actions.RenewSessionLockAsync().ConfigureAwait(false);
-                    return new Empty();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
-            }
-
-            throw new RpcException(new Status(StatusCode.FailedPrecondition, $"SessionId {request.SessionId} not found."));
-        }
-
-        public override Task<SessionLockedUntilResponse> SessionLocked(SessionLockedUntil request, ServerCallContext context)
-        {
-            try
-            {
-                if (_provider.SessionActionsCache.TryGetValue(request.SessionId, out var actions))
-                {
-                    return Task.FromResult(
-                        new SessionLockedUntilResponse
-                        {
-                            LockedUntil = actions.SessionLockedUntil.ToTimestamp()
-                        }
-                    );
+                    return new RenewSessionLockResponse
+                    {
+                        LockedUntil = actions.SessionLockedUntil.ToTimestamp()
+                    };
                 }
             }
             catch (Exception ex)

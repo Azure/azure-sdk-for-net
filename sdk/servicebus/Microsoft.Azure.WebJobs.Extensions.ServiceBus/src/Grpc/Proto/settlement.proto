@@ -31,10 +31,7 @@ service Settlement {
   rpc Release (ReleaseSession) returns (google.protobuf.Empty) {}
 
   // Renew
-  rpc Renew (RenewSessionLock) returns (google.protobuf.Empty) {}
-
-  // SessionLockedUntil property
-  rpc SessionLocked (SessionLockedUntil) returns (SessionLockedUntilResponse) {}
+  rpc Renew (RenewSessionLock) returns (RenewSessionLockResponse) {}
 }
 
 // The complete message request containing the locktoken.
@@ -88,12 +85,7 @@ message RenewSessionLock {
   string sessionId = 1;
 }
 
-// Session locked until property response.
-message SessionLockedUntil {
-  string sessionId = 1;
-}
-
-// Session locked until property response.
-message SessionLockedUntilResponse {
+// Renew session lock.
+message RenewSessionLockResponse {
   google.protobuf.Timestamp lockedUntil = 1;
 }
