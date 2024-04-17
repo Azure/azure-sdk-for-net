@@ -1,9 +1,12 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (2024-04-17)
 
 ### Features Added
-
+- Add support for Data Retention policies for threads.
+- Add new RetentionPolicy property in ChatThreadProperties.
+- Update CreateChatThreadOptions to include RetentionPolicy.
+- Update UpdateChatThreadRequest to include RetentionPolicy.
 
 ## 1.3.0 (2024-04-10)
 
