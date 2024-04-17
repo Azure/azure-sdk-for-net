@@ -12,7 +12,7 @@ model-namespace: false
 generation1-convenience-client: true
 payload-flattening-threshold: 10
 require: #Need to update the readme.md URL for an updated API specification
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d8a5fbdb879da9801598da76511fc91075c87928/specification/communication/data-plane/MediaComposition/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/43154c7fa114187c15f9b5fb9f71fadab1e547b0/specification/communication/data-plane/MediaComposition/readme.md
 ```
 
 ``` yaml
