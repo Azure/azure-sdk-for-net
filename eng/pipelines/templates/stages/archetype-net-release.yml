@@ -157,6 +157,7 @@ stages:
                       deploy:
                         steps:
                           - checkout: self
+                            path: .
                           - checkout: azure-sdk-build-tools
                             path: azure-sdk-build-tools
                           - task: MSBuild@1
