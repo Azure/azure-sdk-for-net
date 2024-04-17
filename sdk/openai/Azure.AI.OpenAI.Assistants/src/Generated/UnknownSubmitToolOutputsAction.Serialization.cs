@@ -13,19 +13,21 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    internal partial class UnknownRequiredAction : IUtf8JsonSerializable, IJsonModel<RequiredAction>
+    internal partial class UnknownSubmitToolOutputsAction : IUtf8JsonSerializable, IJsonModel<SubmitToolOutputsAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequiredAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubmitToolOutputsAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RequiredAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SubmitToolOutputsAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RequiredAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SubmitToolOutputsAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequiredAction)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SubmitToolOutputsAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("submit_tool_outputs"u8);
+            writer.WriteObjectValue<InternalSubmitToolOutputsDetails>(InternalDetails, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -46,19 +48,19 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteEndObject();
         }
 
-        RequiredAction IJsonModel<RequiredAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SubmitToolOutputsAction IJsonModel<SubmitToolOutputsAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RequiredAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SubmitToolOutputsAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequiredAction)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SubmitToolOutputsAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRequiredAction(document.RootElement, options);
+            return DeserializeSubmitToolOutputsAction(document.RootElement, options);
         }
 
-        internal static UnknownRequiredAction DeserializeUnknownRequiredAction(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownSubmitToolOutputsAction DeserializeUnknownSubmitToolOutputsAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -66,11 +68,17 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            string type = "Unknown";
+            InternalSubmitToolOutputsDetails submitToolOutputs = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("submit_tool_outputs"u8))
+                {
+                    submitToolOutputs = InternalSubmitToolOutputsDetails.DeserializeInternalSubmitToolOutputsDetails(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
@@ -82,46 +90,46 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownRequiredAction(type, serializedAdditionalRawData);
+            return new UnknownSubmitToolOutputsAction(type, serializedAdditionalRawData, submitToolOutputs);
         }
 
-        BinaryData IPersistableModel<RequiredAction>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SubmitToolOutputsAction>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RequiredAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SubmitToolOutputsAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RequiredAction)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubmitToolOutputsAction)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RequiredAction IPersistableModel<RequiredAction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SubmitToolOutputsAction IPersistableModel<SubmitToolOutputsAction>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RequiredAction>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SubmitToolOutputsAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRequiredAction(document.RootElement, options);
+                        return DeserializeSubmitToolOutputsAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequiredAction)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubmitToolOutputsAction)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RequiredAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SubmitToolOutputsAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new UnknownRequiredAction FromResponse(Response response)
+        internal static new UnknownSubmitToolOutputsAction FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeUnknownRequiredAction(document.RootElement);
+            return DeserializeUnknownSubmitToolOutputsAction(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

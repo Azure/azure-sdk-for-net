@@ -102,11 +102,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="threadId"> The ID of the thread associated with this run. </param>
         /// <param name="assistantId"> The ID of the assistant associated with the thread this run was performed against. </param>
         /// <param name="status"> The status of the assistant thread run. </param>
-        /// <param name="requiredAction">
-        /// The details of the action required for the assistant thread run to continue.
-        /// Please note <see cref="Assistants.RequiredAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SubmitToolOutputsAction"/>.
-        /// </param>
+        /// <param name="requiredAction"> The details of the action required for the assistant thread run to continue. </param>
         /// <param name="lastError"> The last error, if any, encountered by this assistant thread run. </param>
         /// <param name="model"> The ID of the model to use. </param>
         /// <param name="instructions"> The overridden system instructions used for this assistant thread run. </param>
@@ -161,11 +157,7 @@ namespace Azure.AI.OpenAI.Assistants
         public string AssistantId { get; }
         /// <summary> The status of the assistant thread run. </summary>
         public RunStatus Status { get; }
-        /// <summary>
-        /// The details of the action required for the assistant thread run to continue.
-        /// Please note <see cref="Assistants.RequiredAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SubmitToolOutputsAction"/>.
-        /// </summary>
+        /// <summary> The details of the action required for the assistant thread run to continue. </summary>
         public RequiredAction RequiredAction { get; }
         /// <summary> The last error, if any, encountered by this assistant thread run. </summary>
         public RunError LastError { get; }
