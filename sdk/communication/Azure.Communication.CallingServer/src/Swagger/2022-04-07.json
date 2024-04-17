@@ -863,1420 +863,1441 @@
       }
     }
   },
-  "definitions": {
-    "CreateCallRequest": {
-      "required": [
-        "targets",
-        "source",
-        "callbackUri"
-      ],
-      "type": "object",
-      "properties": {
-        "targets": {
-          "description": "The targets of the call.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CommunicationIdentifierModel"
-          }
+    "definitions": {
+        "CreateCallRequest": {
+            "required": [
+                "targets",
+                "source",
+                "callbackUri"
+            ],
+            "type": "object",
+            "properties": {
+                "targets": {
+                    "description": "The targets of the call.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
+                    }
+                },
+                "source": {
+                    "$ref": "#/definitions/CallSource",
+                    "description": "The source of the call."
+                },
+                "subject": {
+                    "description": "The subject.",
+                    "type": "string"
+                },
+                "callbackUri": {
+                    "description": "The callback URI.",
+                    "type": "string"
+                },
+                "mediaStreamingConfiguration": {
+                    "$ref": "#/definitions/MediaStreamingConfiguration",
+                    "description": "Media Streaming Configuration."
+                }
+            }
         },
-        "source": {
-          "$ref": "#/definitions/CallSource",
-          "description": "The source of the call."
+        "CommunicationIdentifierModelKind": {
+            "description": "Type of CommunicationIdentifierModel.",
+            "enum": [
+                "unknown",
+                "communicationUser",
+                "phoneNumber",
+                "microsoftTeamsUser"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "CommunicationIdentifierModelKind",
+                "modelAsString": true
+            }
         },
-        "subject": {
-          "description": "The subject.",
-          "type": "string"
+        "CommunicationIdentifierModel": {
+            "type": "object",
+            "properties": {
+                "rawId": {
+                    "description": "Full ID of the identifier.",
+                    "type": "string"
+                },
+                "kind": {
+                    "$ref": "#/definitions/CommunicationIdentifierModelKind"
+                },
+                "communicationUser": {
+                    "$ref": "#/definitions/CommunicationUserIdentifierModel",
+                    "description": "The communication user."
+                },
+                "phoneNumber": {
+                    "$ref": "#/definitions/PhoneNumberIdentifierModel",
+                    "description": "The phone number."
+                },
+                "microsoftTeamsUser": {
+                    "$ref": "#/definitions/MicrosoftTeamsUserIdentifierModel",
+                    "description": "The Microsoft Teams user."
+                },
+                "microsoftTeamsApp": {
+                    "$ref": "#/definitions/MicrosoftTeamsAppIdentifierModel",
+                    "description": "The Microsoft Teams application."
+                }
+            }
         },
-        "callbackUri": {
-          "description": "The callback URI.",
-          "type": "string"
+        "CallSource": {
+            "required": [
+                "identifier"
+            ],
+            "type": "object",
+            "properties": {
+                "callerId": {
+                    "$ref": "#/definitions/PhoneNumberIdentifierModel",
+                    "description": "The alternate identity of the source of the call if dialing out to a pstn number"
+                },
+                "displayName": {
+                    "description": "Display name of the call if dialing out to a pstn number",
+                    "type": "string"
+                },
+                "identifier": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel",
+                    "description": "The identifier of the source of the call"
+                }
+            }
         },
-        "mediaStreamingConfiguration": {
-          "$ref": "#/definitions/MediaStreamingConfiguration",
-          "description": "Media Streaming Configuration."
+        "MediaStreamingTransportType": {
+            "description": "The type of transport to be used for media streaming, eg. Websocket",
+            "enum": [
+                "websocket"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "MediaStreamingTransportType",
+                "modelAsString": true
+            }
+        },
+        "MediaStreamingContentType": {
+            "description": "Content type to stream, eg. audio, audio/video",
+            "enum": [
+                "audio"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "MediaStreamingContentType",
+                "modelAsString": true
+            }
+        },
+        "MediaStreamingAudioChannelType": {
+            "description": "Audio channel type to stream, eg. unmixed audio, mixed audio",
+            "enum": [
+                "mixed",
+                "unmixed"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "MediaStreamingAudioChannelType",
+                "modelAsString": true
+            }
+        },
+        "MediaStreamingConfiguration": {
+            "required": [
+                "transportUrl",
+                "transportType",
+                "contentType",
+                "audioChannelType"
+            ],
+            "type": "object",
+            "properties": {
+                "transportUrl": {
+                    "description": "Transport URL for media streaming",
+                    "type": "string"
+                },
+                "transportType": {
+                    "$ref": "#/definitions/MediaStreamingTransportType"
+                },
+                "contentType": {
+                    "$ref": "#/definitions/MediaStreamingContentType"
+                },
+                "audioChannelType": {
+                    "$ref": "#/definitions/MediaStreamingAudioChannelType"
+                }
+            }
+        },
+        "CommunicationUserIdentifierModel": {
+            "required": [
+                "id"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "PhoneNumberIdentifierModel": {
+            "required": [
+                "value"
+            ],
+            "type": "object",
+            "properties": {
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "CommunicationCloudEnvironmentModel": {
+            "enum": [
+                "public",
+                "dod",
+                "gcch"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "CommunicationCloudEnvironmentModel",
+                "modelAsString": true
+            }
+        },
+        "MicrosoftTeamsUserIdentifierModel": {
+            "required": [
+                "userId"
+            ],
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "string"
+                },
+                "isAnonymous": {
+                    "type": "boolean"
+                },
+                "cloud": {
+                    "$ref": "#/definitions/CommunicationCloudEnvironmentModel"
+                }
+            }
+        },
+        "MicrosoftTeamsAppIdentifierModel": {
+            "description": "A Microsoft Teams application.",
+            "type": "object",
+            "required": [
+                "appId"
+            ],
+            "properties": {
+                "appId": {
+                    "type": "string",
+                    "description": "The Id of the Microsoft Teams application."
+                },
+                "cloud": {
+                    "$ref": "#/definitions/CommunicationCloudEnvironmentModel",
+                    "description": "The cloud that the Microsoft Teams application belongs to. By default 'public' if missing."
+                }
+            }
+        },
+        "CallConnectionStateModel": {
+            "description": "The state of the call connection.",
+            "enum": [
+                "unknown",
+                "connecting",
+                "connected",
+                "transferring",
+                "transferAccepted",
+                "disconnecting",
+                "disconnected"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "CallConnectionStateModel",
+                "modelAsString": true
+            }
+        },
+        "CallConnectionProperties": {
+            "type": "object",
+            "properties": {
+                "callConnectionId": {
+                    "description": "The call connection id.",
+                    "type": "string"
+                },
+                "serverCallId": {
+                    "description": "The server call id.",
+                    "type": "string"
+                },
+                "source": {
+                    "$ref": "#/definitions/CallSource",
+                    "description": "The source of the call."
+                },
+                "targets": {
+                    "description": "The targets of the call.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
+                    }
+                },
+                "callConnectionState": {
+                    "$ref": "#/definitions/CallConnectionStateModel"
+                },
+                "subject": {
+                    "description": "The subject.",
+                    "type": "string"
+                },
+                "callbackUri": {
+                    "description": "The callback URI.",
+                    "type": "string"
+                },
+                "mediaSubscriptionId": {
+                    "description": "SubscriptionId for media streaming",
+                    "type": "string"
+                }
+            }
+        },
+        "AnswerCallRequest": {
+            "description": "The request payload for answering the call.",
+            "required": [
+                "incomingCallContext",
+                "callbackUri"
+            ],
+            "type": "object",
+            "properties": {
+                "incomingCallContext": {
+                    "description": "The context associated with the call.",
+                    "type": "string"
+                },
+                "callbackUri": {
+                    "description": "The callback uri.",
+                    "type": "string"
+                },
+                "mediaStreamingConfiguration": {
+                    "$ref": "#/definitions/MediaStreamingConfiguration",
+                    "description": "Media Streaming Configuration."
+                }
+            }
+        },
+        "RedirectCallRequest": {
+            "description": "The request payload for redirecting the call.",
+            "required": [
+                "incomingCallContext",
+                "target"
+            ],
+            "type": "object",
+            "properties": {
+                "incomingCallContext": {
+                    "description": "The context associated with the call.",
+                    "type": "string"
+                },
+                "target": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel",
+                    "description": "The target identity to redirect the call to."
+                }
+            }
+        },
+        "CallRejectReason": {
+            "description": "The rejection reason.",
+            "enum": [
+                "none",
+                "busy",
+                "forbidden"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "CallRejectReason",
+                "modelAsString": true
+            }
+        },
+        "RejectCallRequest": {
+            "description": "The request payload for rejecting the call.",
+            "required": [
+                "incomingCallContext"
+            ],
+            "type": "object",
+            "properties": {
+                "incomingCallContext": {
+                    "description": "The context associated with the call.",
+                    "type": "string"
+                },
+                "callRejectReason": {
+                    "$ref": "#/definitions/CallRejectReason"
+                }
+            }
+        },
+        "TransferToParticipantRequest": {
+            "description": "The transfer call to participant request.",
+            "required": [
+                "targetParticipant"
+            ],
+            "type": "object",
+            "properties": {
+                "targetParticipant": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel",
+                    "description": "The identity of the target where call should be transferred to."
+                },
+                "transfereeCallerId": {
+                    "$ref": "#/definitions/PhoneNumberIdentifierModel",
+                    "description": "The caller ID of the transferee when transferring to PSTN."
+                },
+                "userToUserInformation": {
+                    "description": "The user to user information.",
+                    "type": "string"
+                },
+                "operationContext": {
+                    "description": "The operation context.",
+                    "type": "string"
+                }
+            }
+        },
+        "TransferCallResponse": {
+            "type": "object",
+            "properties": {
+                "operationContext": {
+                    "description": "The operation context provided by client.",
+                    "type": "string"
+                }
+            }
+        },
+        "PlayRequest": {
+            "required": [
+                "playSourceInfo"
+            ],
+            "type": "object",
+            "properties": {
+                "playSourceInfo": {
+                    "$ref": "#/definitions/PlaySource",
+                    "description": "The source of the audio to be played."
+                },
+                "playTo": {
+                    "description": "The list of call participants play provided audio to. \r\nPlays to everyone in the call when not provided.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
+                    }
+                },
+                "playOptions": {
+                    "$ref": "#/definitions/PlayOptions",
+                    "description": "Defines options for playing the audio."
+                },
+                "operationContext": {
+                    "description": "The value to identify context of the operation.",
+                    "type": "string"
+                }
+            }
+        },
+        "PlaySourceType": {
+            "description": "Defines the type of the play source",
+            "enum": [
+                "file"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "PlaySourceType",
+                "modelAsString": true
+            }
+        },
+        "PlaySource": {
+            "required": [
+                "sourceType"
+            ],
+            "type": "object",
+            "properties": {
+                "sourceType": {
+                    "$ref": "#/definitions/PlaySourceType"
+                },
+                "playSourceId": {
+                    "description": "Defines the identifier to be used for caching related media",
+                    "type": "string"
+                },
+                "fileSource": {
+                    "$ref": "#/definitions/FileSource",
+                    "description": "Defines the file source info to be used for play"
+                }
+            }
+        },
+        "PlayOptions": {
+            "required": [
+                "loop"
+            ],
+            "type": "object",
+            "properties": {
+                "loop": {
+                    "description": "The option to play the provided audio source in loop when set to true",
+                    "type": "boolean"
+                }
+            }
+        },
+        "FileSource": {
+            "required": [
+                "uri"
+            ],
+            "type": "object",
+            "properties": {
+                "uri": {
+                    "description": "Uri for the audio file to be played",
+                    "type": "string"
+                }
+            }
+        },
+        "RecognizeInputType": {
+            "description": "Determines the type of the recognition.",
+            "enum": [
+                "dtmf"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "RecognizeInputType",
+                "modelAsString": true
+            }
+        },
+        "RecognizeRequest": {
+            "required": [
+                "recognizeInputType",
+                "recognizeOptions"
+            ],
+            "type": "object",
+            "properties": {
+                "recognizeInputType": {
+                    "$ref": "#/definitions/RecognizeInputType"
+                },
+                "playPrompt": {
+                    "$ref": "#/definitions/PlaySource",
+                    "description": "The source of the audio to be played for recognition."
+                },
+                "interruptCallMediaOperation": {
+                    "description": "If set recognize can barge into other existing queued-up/currently-processing requests.",
+                    "type": "boolean"
+                },
+                "recognizeOptions": {
+                    "$ref": "#/definitions/RecognizeOptions",
+                    "description": "Defines options for recognition."
+                },
+                "operationContext": {
+                    "description": "The value to identify context of the operation.",
+                    "type": "string"
+                }
+            }
+        },
+        "RecognizeOptions": {
+            "required": [
+                "targetParticipant"
+            ],
+            "type": "object",
+            "properties": {
+                "interruptPrompt": {
+                    "description": "Determines if we interrupt the prompt and start recognizing.",
+                    "type": "boolean"
+                },
+                "initialSilenceTimeoutInSeconds": {
+                    "format": "int32",
+                    "description": "Time to wait for first input after prompt (if any).",
+                    "maximum": 300,
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "targetParticipant": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel",
+                    "description": "Target participant of DTMF tone recognition."
+                },
+                "dtmfOptions": {
+                    "$ref": "#/definitions/DtmfOptions",
+                    "description": "Defines configurations for DTMF."
+                }
+            }
+        },
+        "Tone": {
+            "enum": [
+                "zero",
+                "one",
+                "two",
+                "three",
+                "four",
+                "five",
+                "six",
+                "seven",
+                "eight",
+                "nine",
+                "a",
+                "b",
+                "c",
+                "d",
+                "pound",
+                "asterisk"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "Tone",
+                "modelAsString": true
+            }
+        },
+        "DtmfOptions": {
+            "description": "Options for DTMF recognition",
+            "type": "object",
+            "properties": {
+                "interToneTimeoutInSeconds": {
+                    "format": "int32",
+                    "description": "Time to wait between DTMF inputs to stop recognizing.",
+                    "maximum": 60,
+                    "minimum": 1,
+                    "type": "integer"
+                },
+                "maxTonesToCollect": {
+                    "format": "int32",
+                    "description": "Maximum number of DTMF tones to be collected.",
+                    "type": "integer"
+                },
+                "stopTones": {
+                    "description": "List of tones that will stop recognizing.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Tone"
+                    }
+                }
+            }
+        },
+        "GetParticipantsResponse": {
+            "type": "object",
+            "properties": {
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AcsCallParticipant"
+                    }
+                },
+                "nextLink": {
+                    "type": "string"
+                }
+            }
+        },
+        "AcsCallParticipant": {
+            "type": "object",
+            "properties": {
+                "identifier": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel",
+                    "description": "Communication identifier of the participant"
+                },
+                "isMuted": {
+                    "description": "Is participant muted",
+                    "type": "boolean"
+                }
+            }
+        },
+        "AddParticipantsRequest": {
+            "required": [
+                "participantsToAdd"
+            ],
+            "type": "object",
+            "properties": {
+                "sourceCallerId": {
+                    "$ref": "#/definitions/PhoneNumberIdentifierModel",
+                    "description": "The source caller Id that's shown to the PSTN participant being invited. Required only when inviting a PSTN participant."
+                },
+                "participantsToAdd": {
+                    "description": "The participants to invite.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
+                    }
+                },
+                "invitationTimeoutInSeconds": {
+                    "format": "int32",
+                    "description": "Gets or sets the timeout to wait for the invited participant to pickup.\r\nThe maximum value of this is 180 seconds",
+                    "maximum": 180,
+                    "minimum": 0,
+                    "type": "integer"
+                },
+                "operationContext": {
+                    "description": "The operation context.",
+                    "type": "string"
+                }
+            }
+        },
+        "AddParticipantsResponse": {
+            "type": "object",
+            "properties": {
+                "participants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AcsCallParticipant"
+                    }
+                },
+                "operationContext": {
+                    "description": "The operation context provided by client.",
+                    "type": "string"
+                }
+            }
+        },
+        "RemoveParticipantsRequest": {
+            "description": "The remove participant by identifier request.",
+            "required": [
+                "participantsToRemove"
+            ],
+            "type": "object",
+            "properties": {
+                "participantsToRemove": {
+                    "description": "The participants to invite.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
+                    }
+                },
+                "operationContext": {
+                    "description": "The operation context.",
+                    "type": "string"
+                }
+            }
+        },
+        "RemoveParticipantsResponse": {
+            "type": "object",
+            "properties": {
+                "operationContext": {
+                    "description": "The operation context provided by client.",
+                    "type": "string"
+                }
+            }
+        },
+        "RecordingContentType": {
+            "description": "The content type of call recording.",
+            "enum": [
+                "audio",
+                "audioVideo"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "RecordingContentType",
+                "modelAsString": true
+            }
+        },
+        "RecordingChannelType": {
+            "description": "The channel type of call recording.",
+            "enum": [
+                "mixed",
+                "unmixed"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "RecordingChannelType",
+                "modelAsString": true
+            }
+        },
+        "RecordingFormatType": {
+            "description": "The format type of call recording.",
+            "enum": [
+                "wav",
+                "mp3",
+                "mp4"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "RecordingFormatType",
+                "modelAsString": true
+            }
+        },
+        "StartCallRecordingRequest": {
+            "description": "The request payload start for call recording operation with call locator.",
+            "required": [
+                "callLocator"
+            ],
+            "type": "object",
+            "properties": {
+                "callLocator": {
+                    "$ref": "#/definitions/CallLocator",
+                    "description": "The call locator."
+                },
+                "recordingStateCallbackUri": {
+                    "description": "The uri to send notifications to.",
+                    "type": "string"
+                },
+                "recordingContentType": {
+                    "$ref": "#/definitions/RecordingContentType"
+                },
+                "recordingChannelType": {
+                    "$ref": "#/definitions/RecordingChannelType"
+                },
+                "recordingFormatType": {
+                    "$ref": "#/definitions/RecordingFormatType"
+                },
+                "channelAffinity": {
+                    "description": "The channel affinity of call recording.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ChannelAffinity"
+                    }
+                }
+            }
+        },
+        "CallLocatorKind": {
+            "description": "The call locator kind.",
+            "enum": [
+                "groupCallLocator",
+                "serverCallLocator"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "CallLocatorKind",
+                "modelAsString": true
+            }
+        },
+        "CallLocator": {
+            "description": "The locator used for joining or taking action on a call.",
+            "type": "object",
+            "properties": {
+                "groupCallId": {
+                    "description": "The group call id",
+                    "type": "string"
+                },
+                "serverCallId": {
+                    "description": "The server call id.",
+                    "type": "string"
+                },
+                "kind": {
+                    "$ref": "#/definitions/CallLocatorKind"
+                }
+            }
+        },
+        "ChannelAffinity": {
+            "description": "Channel affinity for a participant",
+            "type": "object",
+            "properties": {
+                "channel": {
+                    "format": "int32",
+                    "description": "Channel number to which bitstream from a particular participant will be written.",
+                    "type": "integer"
+                },
+                "participant": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel",
+                    "description": "The identifier for the participant whose bitstream will be written to the channel \r\nrepresented by the channel number."
+                }
+            }
+        },
+        "RecordingState": {
+            "enum": [
+                "active",
+                "inactive"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "RecordingState",
+                "modelAsString": true
+            }
+        },
+        "RecordingStateResponse": {
+            "type": "object",
+            "properties": {
+                "recordingId": {
+                    "type": "string"
+                },
+                "recordingState": {
+                    "$ref": "#/definitions/RecordingState"
+                }
+            }
+        },
+        "AddParticipantsFailedEvent": {
+            "type": "object",
+            "properties": {
+                "eventSource": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "operationContext": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "resultInformation": {
+                    "$ref": "#/definitions/ResultInformation",
+                    "readOnly": true
+                },
+                "participants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
+                    },
+                    "readOnly": true
+                },
+                "version": {
+                    "description": "Used to determine the version of the event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "callConnectionId": {
+                    "description": "Call connection ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "serverCallId": {
+                    "description": "Server call ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "correlationId": {
+                    "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "publicEventType": {
+                    "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "ResultInformation": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "subCode": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "AddParticipantsSucceededEvent": {
+            "type": "object",
+            "properties": {
+                "eventSource": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "operationContext": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "resultInformation": {
+                    "$ref": "#/definitions/ResultInformation",
+                    "readOnly": true
+                },
+                "participants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
+                    },
+                    "readOnly": true
+                },
+                "version": {
+                    "description": "Used to determine the version of the event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "callConnectionId": {
+                    "description": "Call connection ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "serverCallId": {
+                    "description": "Server call ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "correlationId": {
+                    "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "publicEventType": {
+                    "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "CallConnectedEvent": {
+            "type": "object",
+            "properties": {
+                "eventSource": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "version": {
+                    "description": "Used to determine the version of the event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "operationContext": {
+                    "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "resultInformation": {
+                    "$ref": "#/definitions/ResultInformation",
+                    "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+                    "readOnly": true
+                },
+                "callConnectionId": {
+                    "description": "Call connection ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "serverCallId": {
+                    "description": "Server call ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "correlationId": {
+                    "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "publicEventType": {
+                    "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "CallDisconnectedEvent": {
+            "type": "object",
+            "properties": {
+                "eventSource": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "version": {
+                    "description": "Used to determine the version of the event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "operationContext": {
+                    "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "resultInformation": {
+                    "$ref": "#/definitions/ResultInformation",
+                    "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+                    "readOnly": true
+                },
+                "callConnectionId": {
+                    "description": "Call connection ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "serverCallId": {
+                    "description": "Server call ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "correlationId": {
+                    "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "publicEventType": {
+                    "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "CallTransferAcceptedEvent": {
+            "type": "object",
+            "properties": {
+                "eventSource": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "operationContext": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "resultInformation": {
+                    "$ref": "#/definitions/ResultInformation",
+                    "readOnly": true
+                },
+                "version": {
+                    "description": "Used to determine the version of the event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "callConnectionId": {
+                    "description": "Call connection ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "serverCallId": {
+                    "description": "Server call ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "correlationId": {
+                    "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "publicEventType": {
+                    "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "CallTransferFailedEvent": {
+            "type": "object",
+            "properties": {
+                "eventSource": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "operationContext": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "resultInformation": {
+                    "$ref": "#/definitions/ResultInformation",
+                    "readOnly": true
+                },
+                "version": {
+                    "description": "Used to determine the version of the event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "callConnectionId": {
+                    "description": "Call connection ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "serverCallId": {
+                    "description": "Server call ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "correlationId": {
+                    "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "publicEventType": {
+                    "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "ParticipantsUpdatedEvent": {
+            "type": "object",
+            "properties": {
+                "eventSource": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "participants": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationIdentifierModel"
+                    },
+                    "readOnly": true
+                },
+                "version": {
+                    "description": "Used to determine the version of the event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "operationContext": {
+                    "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "resultInformation": {
+                    "$ref": "#/definitions/ResultInformation",
+                    "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+                    "readOnly": true
+                },
+                "callConnectionId": {
+                    "description": "Call connection ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "serverCallId": {
+                    "description": "Server call ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "correlationId": {
+                    "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "publicEventType": {
+                    "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "RecordingStateChangedEvent": {
+            "type": "object",
+            "properties": {
+                "eventSource": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "recordingId": {
+                    "description": "The call recording id",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "state": {
+                    "$ref": "#/definitions/RecordingState"
+                },
+                "startDateTime": {
+                    "format": "date-time",
+                    "description": "The time of the recording started",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "version": {
+                    "description": "Used to determine the version of the event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "operationContext": {
+                    "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "resultInformation": {
+                    "$ref": "#/definitions/ResultInformation",
+                    "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
+                    "readOnly": true
+                },
+                "callConnectionId": {
+                    "description": "Call connection ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "serverCallId": {
+                    "description": "Server call ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "correlationId": {
+                    "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "publicEventType": {
+                    "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "PlayCompleted": {
+            "type": "object",
+            "properties": {
+                "operationContext": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "resultInformation": {
+                    "$ref": "#/definitions/ResultInformation",
+                    "readOnly": true
+                },
+                "version": {
+                    "description": "Used to determine the version of the event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "callConnectionId": {
+                    "description": "Call connection ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "serverCallId": {
+                    "description": "Server call ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "correlationId": {
+                    "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "publicEventType": {
+                    "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "PlayFailed": {
+            "type": "object",
+            "properties": {
+                "eventSource": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "operationContext": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "resultInformation": {
+                    "$ref": "#/definitions/ResultInformation",
+                    "readOnly": true
+                },
+                "version": {
+                    "description": "Used to determine the version of the event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "callConnectionId": {
+                    "description": "Call connection ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "serverCallId": {
+                    "description": "Server call ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "correlationId": {
+                    "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "publicEventType": {
+                    "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "RecognitionType": {
+            "description": "Determines the sub-type of the recognize operation.\r\nIn case of cancel operation the this field is not set and is returned empty",
+            "enum": [
+                "dtmf"
+            ],
+            "type": "string",
+            "readOnly": true,
+            "x-ms-enum": {
+                "name": "RecognitionType",
+                "modelAsString": true
+            }
+        },
+        "RecognizeCompleted": {
+            "type": "object",
+            "properties": {
+                "operationContext": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "resultInformation": {
+                    "$ref": "#/definitions/ResultInformation",
+                    "description": "Result information defines the code, subcode and message",
+                    "readOnly": true
+                },
+                "recognitionType": {
+                    "$ref": "#/definitions/RecognitionType"
+                },
+                "collectTonesResult": {
+                    "$ref": "#/definitions/CollectTonesResult",
+                    "description": "Defines the result for RecognitionType = Dtmf",
+                    "readOnly": true
+                },
+                "version": {
+                    "description": "Used to determine the version of the event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "callConnectionId": {
+                    "description": "Call connection ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "serverCallId": {
+                    "description": "Server call ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "correlationId": {
+                    "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "publicEventType": {
+                    "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "CollectTonesResult": {
+            "type": "object",
+            "properties": {
+                "tones": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Tone"
+                    },
+                    "readOnly": true
+                }
+            }
+        },
+        "RecognizeFailed": {
+            "type": "object",
+            "properties": {
+                "operationContext": {
+                    "type": "string",
+                    "readOnly": true
+                },
+                "resultInformation": {
+                    "$ref": "#/definitions/ResultInformation",
+                    "readOnly": true
+                },
+                "version": {
+                    "description": "Used to determine the version of the event.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "callConnectionId": {
+                    "description": "Call connection ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "serverCallId": {
+                    "description": "Server call ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "correlationId": {
+                    "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "publicEventType": {
+                    "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "CommunicationErrorResponse": {
+            "description": "The Communication Services error response",
+            "required": [
+                "error"
+            ],
+            "type": "object",
+            "properties": {
+                "error": {
+                    "$ref": "#/definitions/CommunicationError"
+                }
+            }
+        },
+        "CommunicationError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "string"
+                },
+                "details": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationError"
+                    }
+                },
+                "innererror": {
+                    "$ref": "#/definitions/CommunicationError"
+                }
+            }
         }
-      }
     },
-    "CommunicationIdentifierModelKind": {
-      "description": "Type of CommunicationIdentifierModel.",
-      "enum": [
-        "unknown",
-        "communicationUser",
-        "phoneNumber",
-        "microsoftTeamsUser"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "CommunicationIdentifierModelKind",
-        "modelAsString": true
-      }
-    },
-    "CommunicationIdentifierModel": {
-      "type": "object",
-      "properties": {
-        "rawId": {
-          "description": "Full ID of the identifier.",
-          "type": "string"
-        },
-        "kind": {
-          "$ref": "#/definitions/CommunicationIdentifierModelKind"
-        },
-        "communicationUser": {
-          "$ref": "#/definitions/CommunicationUserIdentifierModel",
-          "description": "The communication user."
-        },
-        "phoneNumber": {
-          "$ref": "#/definitions/PhoneNumberIdentifierModel",
-          "description": "The phone number."
-        },
-        "microsoftTeamsUser": {
-          "$ref": "#/definitions/MicrosoftTeamsUserIdentifierModel",
-          "description": "The Microsoft Teams user."
-        }
-      }
-    },
-    "CallSource": {
-      "required": [
-        "identifier"
-      ],
-      "type": "object",
-      "properties": {
-        "callerId": {
-          "$ref": "#/definitions/PhoneNumberIdentifierModel",
-          "description": "The alternate identity of the source of the call if dialing out to a pstn number"
-        },
-        "displayName": {
-          "description": "Display name of the call if dialing out to a pstn number",
-          "type": "string"
-        },
-        "identifier": {
-          "$ref": "#/definitions/CommunicationIdentifierModel",
-          "description": "The identifier of the source of the call"
-        }
-      }
-    },
-    "MediaStreamingTransportType": {
-      "description": "The type of transport to be used for media streaming, eg. Websocket",
-      "enum": [
-        "websocket"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "MediaStreamingTransportType",
-        "modelAsString": true
-      }
-    },
-    "MediaStreamingContentType": {
-      "description": "Content type to stream, eg. audio, audio/video",
-      "enum": [
-        "audio"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "MediaStreamingContentType",
-        "modelAsString": true
-      }
-    },
-    "MediaStreamingAudioChannelType": {
-      "description": "Audio channel type to stream, eg. unmixed audio, mixed audio",
-      "enum": [
-        "mixed",
-        "unmixed"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "MediaStreamingAudioChannelType",
-        "modelAsString": true
-      }
-    },
-    "MediaStreamingConfiguration": {
-      "required": [
-        "transportUrl",
-        "transportType",
-        "contentType",
-        "audioChannelType"
-      ],
-      "type": "object",
-      "properties": {
-        "transportUrl": {
-          "description": "Transport URL for media streaming",
-          "type": "string"
-        },
-        "transportType": {
-          "$ref": "#/definitions/MediaStreamingTransportType"
-        },
-        "contentType": {
-          "$ref": "#/definitions/MediaStreamingContentType"
-        },
-        "audioChannelType": {
-          "$ref": "#/definitions/MediaStreamingAudioChannelType"
-        }
-      }
-    },
-    "CommunicationUserIdentifierModel": {
-      "required": [
-        "id"
-      ],
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        }
-      }
-    },
-    "PhoneNumberIdentifierModel": {
-      "required": [
-        "value"
-      ],
-      "type": "object",
-      "properties": {
-        "value": {
-          "type": "string"
-        }
-      }
-    },
-    "CommunicationCloudEnvironmentModel": {
-      "enum": [
-        "public",
-        "dod",
-        "gcch"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "CommunicationCloudEnvironmentModel",
-        "modelAsString": true
-      }
-    },
-    "MicrosoftTeamsUserIdentifierModel": {
-      "required": [
-        "userId"
-      ],
-      "type": "object",
-      "properties": {
-        "userId": {
-          "type": "string"
-        },
-        "isAnonymous": {
-          "type": "boolean"
-        },
-        "cloud": {
-          "$ref": "#/definitions/CommunicationCloudEnvironmentModel"
-        }
-      }
-    },
-    "CallConnectionStateModel": {
-      "description": "The state of the call connection.",
-      "enum": [
-        "unknown",
-        "connecting",
-        "connected",
-        "transferring",
-        "transferAccepted",
-        "disconnecting",
-        "disconnected"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "CallConnectionStateModel",
-        "modelAsString": true
-      }
-    },
-    "CallConnectionProperties": {
-      "type": "object",
-      "properties": {
-        "callConnectionId": {
-          "description": "The call connection id.",
-          "type": "string"
-        },
-        "serverCallId": {
-          "description": "The server call id.",
-          "type": "string"
-        },
-        "source": {
-          "$ref": "#/definitions/CallSource",
-          "description": "The source of the call."
-        },
-        "targets": {
-          "description": "The targets of the call.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CommunicationIdentifierModel"
-          }
-        },
-        "callConnectionState": {
-          "$ref": "#/definitions/CallConnectionStateModel"
-        },
-        "subject": {
-          "description": "The subject.",
-          "type": "string"
-        },
-        "callbackUri": {
-          "description": "The callback URI.",
-          "type": "string"
-        },
-        "mediaSubscriptionId": {
-          "description": "SubscriptionId for media streaming",
-          "type": "string"
-        }
-      }
-    },
-    "AnswerCallRequest": {
-      "description": "The request payload for answering the call.",
-      "required": [
-        "incomingCallContext",
-        "callbackUri"
-      ],
-      "type": "object",
-      "properties": {
-        "incomingCallContext": {
-          "description": "The context associated with the call.",
-          "type": "string"
-        },
-        "callbackUri": {
-          "description": "The callback uri.",
-          "type": "string"
-        },
-        "mediaStreamingConfiguration": {
-          "$ref": "#/definitions/MediaStreamingConfiguration",
-          "description": "Media Streaming Configuration."
-        }
-      }
-    },
-    "RedirectCallRequest": {
-      "description": "The request payload for redirecting the call.",
-      "required": [
-        "incomingCallContext",
-        "target"
-      ],
-      "type": "object",
-      "properties": {
-        "incomingCallContext": {
-          "description": "The context associated with the call.",
-          "type": "string"
-        },
-        "target": {
-          "$ref": "#/definitions/CommunicationIdentifierModel",
-          "description": "The target identity to redirect the call to."
-        }
-      }
-    },
-    "CallRejectReason": {
-      "description": "The rejection reason.",
-      "enum": [
-        "none",
-        "busy",
-        "forbidden"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "CallRejectReason",
-        "modelAsString": true
-      }
-    },
-    "RejectCallRequest": {
-      "description": "The request payload for rejecting the call.",
-      "required": [
-        "incomingCallContext"
-      ],
-      "type": "object",
-      "properties": {
-        "incomingCallContext": {
-          "description": "The context associated with the call.",
-          "type": "string"
-        },
-        "callRejectReason": {
-          "$ref": "#/definitions/CallRejectReason"
-        }
-      }
-    },
-    "TransferToParticipantRequest": {
-      "description": "The transfer call to participant request.",
-      "required": [
-        "targetParticipant"
-      ],
-      "type": "object",
-      "properties": {
-        "targetParticipant": {
-          "$ref": "#/definitions/CommunicationIdentifierModel",
-          "description": "The identity of the target where call should be transferred to."
-        },
-        "transfereeCallerId": {
-          "$ref": "#/definitions/PhoneNumberIdentifierModel",
-          "description": "The caller ID of the transferee when transferring to PSTN."
-        },
-        "userToUserInformation": {
-          "description": "The user to user information.",
-          "type": "string"
-        },
-        "operationContext": {
-          "description": "The operation context.",
-          "type": "string"
-        }
-      }
-    },
-    "TransferCallResponse": {
-      "type": "object",
-      "properties": {
-        "operationContext": {
-          "description": "The operation context provided by client.",
-          "type": "string"
-        }
-      }
-    },
-    "PlayRequest": {
-      "required": [
-        "playSourceInfo"
-      ],
-      "type": "object",
-      "properties": {
-        "playSourceInfo": {
-          "$ref": "#/definitions/PlaySource",
-          "description": "The source of the audio to be played."
-        },
-        "playTo": {
-          "description": "The list of call participants play provided audio to. \r\nPlays to everyone in the call when not provided.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CommunicationIdentifierModel"
-          }
-        },
-        "playOptions": {
-          "$ref": "#/definitions/PlayOptions",
-          "description": "Defines options for playing the audio."
-        },
-        "operationContext": {
-          "description": "The value to identify context of the operation.",
-          "type": "string"
-        }
-      }
-    },
-    "PlaySourceType": {
-      "description": "Defines the type of the play source",
-      "enum": [
-        "file"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "PlaySourceType",
-        "modelAsString": true
-      }
-    },
-    "PlaySource": {
-      "required": [
-        "sourceType"
-      ],
-      "type": "object",
-      "properties": {
-        "sourceType": {
-          "$ref": "#/definitions/PlaySourceType"
-        },
-        "playSourceId": {
-          "description": "Defines the identifier to be used for caching related media",
-          "type": "string"
-        },
-        "fileSource": {
-          "$ref": "#/definitions/FileSource",
-          "description": "Defines the file source info to be used for play"
-        }
-      }
-    },
-    "PlayOptions": {
-      "required": [
-        "loop"
-      ],
-      "type": "object",
-      "properties": {
-        "loop": {
-          "description": "The option to play the provided audio source in loop when set to true",
-          "type": "boolean"
-        }
-      }
-    },
-    "FileSource": {
-      "required": [
-        "uri"
-      ],
-      "type": "object",
-      "properties": {
-        "uri": {
-          "description": "Uri for the audio file to be played",
-          "type": "string"
-        }
-      }
-    },
-    "RecognizeInputType": {
-      "description": "Determines the type of the recognition.",
-      "enum": [
-        "dtmf"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "RecognizeInputType",
-        "modelAsString": true
-      }
-    },
-    "RecognizeRequest": {
-      "required": [
-        "recognizeInputType",
-        "recognizeOptions"
-      ],
-      "type": "object",
-      "properties": {
-        "recognizeInputType": {
-          "$ref": "#/definitions/RecognizeInputType"
-        },
-        "playPrompt": {
-          "$ref": "#/definitions/PlaySource",
-          "description": "The source of the audio to be played for recognition."
-        },
-        "interruptCallMediaOperation": {
-          "description": "If set recognize can barge into other existing queued-up/currently-processing requests.",
-          "type": "boolean"
-        },
-        "recognizeOptions": {
-          "$ref": "#/definitions/RecognizeOptions",
-          "description": "Defines options for recognition."
-        },
-        "operationContext": {
-          "description": "The value to identify context of the operation.",
-          "type": "string"
-        }
-      }
-    },
-    "RecognizeOptions": {
-      "required": [
-        "targetParticipant"
-      ],
-      "type": "object",
-      "properties": {
-        "interruptPrompt": {
-          "description": "Determines if we interrupt the prompt and start recognizing.",
-          "type": "boolean"
-        },
-        "initialSilenceTimeoutInSeconds": {
-          "format": "int32",
-          "description": "Time to wait for first input after prompt (if any).",
-          "maximum": 300,
-          "minimum": 0,
-          "type": "integer"
-        },
-        "targetParticipant": {
-          "$ref": "#/definitions/CommunicationIdentifierModel",
-          "description": "Target participant of DTMF tone recognition."
-        },
-        "dtmfOptions": {
-          "$ref": "#/definitions/DtmfOptions",
-          "description": "Defines configurations for DTMF."
-        }
-      }
-    },
-    "Tone": {
-      "enum": [
-        "zero",
-        "one",
-        "two",
-        "three",
-        "four",
-        "five",
-        "six",
-        "seven",
-        "eight",
-        "nine",
-        "a",
-        "b",
-        "c",
-        "d",
-        "pound",
-        "asterisk"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "Tone",
-        "modelAsString": true
-      }
-    },
-    "DtmfOptions": {
-      "description": "Options for DTMF recognition",
-      "type": "object",
-      "properties": {
-        "interToneTimeoutInSeconds": {
-          "format": "int32",
-          "description": "Time to wait between DTMF inputs to stop recognizing.",
-          "maximum": 60,
-          "minimum": 1,
-          "type": "integer"
-        },
-        "maxTonesToCollect": {
-          "format": "int32",
-          "description": "Maximum number of DTMF tones to be collected.",
-          "type": "integer"
-        },
-        "stopTones": {
-          "description": "List of tones that will stop recognizing.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Tone"
-          }
-        }
-      }
-    },
-    "GetParticipantsResponse": {
-      "type": "object",
-      "properties": {
-        "values": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/AcsCallParticipant"
-          }
-        },
-        "nextLink": {
-          "type": "string"
-        }
-      }
-    },
-    "AcsCallParticipant": {
-      "type": "object",
-      "properties": {
-        "identifier": {
-          "$ref": "#/definitions/CommunicationIdentifierModel",
-          "description": "Communication identifier of the participant"
-        },
-        "isMuted": {
-          "description": "Is participant muted",
-          "type": "boolean"
-        }
-      }
-    },
-    "AddParticipantsRequest": {
-      "required": [
-        "participantsToAdd"
-      ],
-      "type": "object",
-      "properties": {
-        "sourceCallerId": {
-          "$ref": "#/definitions/PhoneNumberIdentifierModel",
-          "description": "The source caller Id that's shown to the PSTN participant being invited. Required only when inviting a PSTN participant."
-        },
-        "participantsToAdd": {
-          "description": "The participants to invite.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CommunicationIdentifierModel"
-          }
-        },
-        "invitationTimeoutInSeconds": {
-          "format": "int32",
-          "description": "Gets or sets the timeout to wait for the invited participant to pickup.\r\nThe maximum value of this is 180 seconds",
-          "maximum": 180,
-          "minimum": 0,
-          "type": "integer"
-        },
-        "operationContext": {
-          "description": "The operation context.",
-          "type": "string"
-        }
-      }
-    },
-    "AddParticipantsResponse": {
-      "type": "object",
-      "properties": {
-        "participants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/AcsCallParticipant"
-          }
-        },
-        "operationContext": {
-          "description": "The operation context provided by client.",
-          "type": "string"
-        }
-      }
-    },
-    "RemoveParticipantsRequest": {
-      "description": "The remove participant by identifier request.",
-      "required": [
-        "participantsToRemove"
-      ],
-      "type": "object",
-      "properties": {
-        "participantsToRemove": {
-          "description": "The participants to invite.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CommunicationIdentifierModel"
-          }
-        },
-        "operationContext": {
-          "description": "The operation context.",
-          "type": "string"
-        }
-      }
-    },
-    "RemoveParticipantsResponse": {
-      "type": "object",
-      "properties": {
-        "operationContext": {
-          "description": "The operation context provided by client.",
-          "type": "string"
-        }
-      }
-    },
-    "RecordingContentType": {
-      "description": "The content type of call recording.",
-      "enum": [
-        "audio",
-        "audioVideo"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "RecordingContentType",
-        "modelAsString": true
-      }
-    },
-    "RecordingChannelType": {
-      "description": "The channel type of call recording.",
-      "enum": [
-        "mixed",
-        "unmixed"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "RecordingChannelType",
-        "modelAsString": true
-      }
-    },
-    "RecordingFormatType": {
-      "description": "The format type of call recording.",
-      "enum": [
-        "wav",
-        "mp3",
-        "mp4"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "RecordingFormatType",
-        "modelAsString": true
-      }
-    },
-    "StartCallRecordingRequest": {
-      "description": "The request payload start for call recording operation with call locator.",
-      "required": [
-        "callLocator"
-      ],
-      "type": "object",
-      "properties": {
-        "callLocator": {
-          "$ref": "#/definitions/CallLocator",
-          "description": "The call locator."
-        },
-        "recordingStateCallbackUri": {
-          "description": "The uri to send notifications to.",
-          "type": "string"
-        },
-        "recordingContentType": {
-          "$ref": "#/definitions/RecordingContentType"
-        },
-        "recordingChannelType": {
-          "$ref": "#/definitions/RecordingChannelType"
-        },
-        "recordingFormatType": {
-          "$ref": "#/definitions/RecordingFormatType"
-        },
-        "channelAffinity": {
-          "description": "The channel affinity of call recording.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ChannelAffinity"
-          }
-        }
-      }
-    },
-    "CallLocatorKind": {
-      "description": "The call locator kind.",
-      "enum": [
-        "groupCallLocator",
-        "serverCallLocator"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "CallLocatorKind",
-        "modelAsString": true
-      }
-    },
-    "CallLocator": {
-      "description": "The locator used for joining or taking action on a call.",
-      "type": "object",
-      "properties": {
-        "groupCallId": {
-          "description": "The group call id",
-          "type": "string"
-        },
-        "serverCallId": {
-          "description": "The server call id.",
-          "type": "string"
-        },
-        "kind": {
-          "$ref": "#/definitions/CallLocatorKind"
-        }
-      }
-    },
-    "ChannelAffinity": {
-      "description": "Channel affinity for a participant",
-      "type": "object",
-      "properties": {
-        "channel": {
-          "format": "int32",
-          "description": "Channel number to which bitstream from a particular participant will be written.",
-          "type": "integer"
-        },
-        "participant": {
-          "$ref": "#/definitions/CommunicationIdentifierModel",
-          "description": "The identifier for the participant whose bitstream will be written to the channel \r\nrepresented by the channel number."
-        }
-      }
-    },
-    "RecordingState": {
-      "enum": [
-        "active",
-        "inactive"
-      ],
-      "type": "string",
-      "x-ms-enum": {
-        "name": "RecordingState",
-        "modelAsString": true
-      }
-    },
-    "RecordingStateResponse": {
-      "type": "object",
-      "properties": {
-        "recordingId": {
-          "type": "string"
-        },
-        "recordingState": {
-          "$ref": "#/definitions/RecordingState"
-        }
-      }
-    },
-    "AddParticipantsFailedEvent": {
-      "type": "object",
-      "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
-        },
-        "participants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CommunicationIdentifierModel"
-          },
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "ResultInformation": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "subCode": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "message": {
-          "type": "string"
-        }
-      }
-    },
-    "AddParticipantsSucceededEvent": {
-      "type": "object",
-      "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
-        },
-        "participants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CommunicationIdentifierModel"
-          },
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "CallConnectedEvent": {
-      "type": "object",
-      "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "CallDisconnectedEvent": {
-      "type": "object",
-      "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "CallTransferAcceptedEvent": {
-      "type": "object",
-      "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "CallTransferFailedEvent": {
-      "type": "object",
-      "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "ParticipantsUpdatedEvent": {
-      "type": "object",
-      "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "participants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CommunicationIdentifierModel"
-          },
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "RecordingStateChangedEvent": {
-      "type": "object",
-      "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "recordingId": {
-          "description": "The call recording id",
-          "type": "string",
-          "readOnly": true
-        },
-        "state": {
-          "$ref": "#/definitions/RecordingState"
-        },
-        "startDateTime": {
-          "format": "date-time",
-          "description": "The time of the recording started",
-          "type": "string",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "description": "Used by customers when calling mid-call actions to correlate the request to the response event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "description": "Contains the resulting SIP code/sub-code and message from NGC services.",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "PlayCompleted": {
-      "type": "object",
-      "properties": {
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "PlayFailed": {
-      "type": "object",
-      "properties": {
-        "eventSource": {
-          "type": "string",
-          "readOnly": true
-        },
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "RecognitionType": {
-      "description": "Determines the sub-type of the recognize operation.\r\nIn case of cancel operation the this field is not set and is returned empty",
-      "enum": [
-        "dtmf"
-      ],
-      "type": "string",
-      "readOnly": true,
-      "x-ms-enum": {
-        "name": "RecognitionType",
-        "modelAsString": true
-      }
-    },
-    "RecognizeCompleted": {
-      "type": "object",
-      "properties": {
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "description": "Result information defines the code, subcode and message",
-          "readOnly": true
-        },
-        "recognitionType": {
-          "$ref": "#/definitions/RecognitionType"
-        },
-        "collectTonesResult": {
-          "$ref": "#/definitions/CollectTonesResult",
-          "description": "Defines the result for RecognitionType = Dtmf",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "CollectTonesResult": {
-      "type": "object",
-      "properties": {
-        "tones": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Tone"
-          },
-          "readOnly": true
-        }
-      }
-    },
-    "RecognizeFailed": {
-      "type": "object",
-      "properties": {
-        "operationContext": {
-          "type": "string",
-          "readOnly": true
-        },
-        "resultInformation": {
-          "$ref": "#/definitions/ResultInformation",
-          "readOnly": true
-        },
-        "version": {
-          "description": "Used to determine the version of the event.",
-          "type": "string",
-          "readOnly": true
-        },
-        "callConnectionId": {
-          "description": "Call connection ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "serverCallId": {
-          "description": "Server call ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "correlationId": {
-          "description": "Correlation ID for event to call correlation. Also called ChainId for skype chain ID.",
-          "type": "string",
-          "readOnly": true
-        },
-        "publicEventType": {
-          "description": "The public event namespace used as the \"type\" property in the CloudEvent.",
-          "type": "string",
-          "readOnly": true
-        }
-      }
-    },
-    "CommunicationErrorResponse": {
-      "description": "The Communication Services error response",
-      "required": [
-        "error"
-      ],
-      "type": "object",
-      "properties": {
-        "error": {
-          "$ref": "#/definitions/CommunicationError"
-        }
-      }
-    },
-    "CommunicationError": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
-        },
-        "target": {
-          "type": "string"
-        },
-        "details": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/CommunicationError"
-          }
-        },
-        "innererror": {
-          "$ref": "#/definitions/CommunicationError"
-        }
-      }
-    }
-  },
   "parameters": {
     "ApiVersionParameter": {
       "name": "api-version",

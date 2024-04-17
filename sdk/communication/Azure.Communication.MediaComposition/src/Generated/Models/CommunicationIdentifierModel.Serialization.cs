@@ -40,6 +40,11 @@ namespace Azure.Communication
                 writer.WritePropertyName("microsoftTeamsUser"u8);
                 writer.WriteObjectValue(MicrosoftTeamsUser);
             }
+            if (MicrosoftTeamsApp != null)
+            {
+                writer.WritePropertyName("microsoftTeamsApp"u8);
+                writer.WriteObjectValue(MicrosoftTeamsApp);
+            }
             writer.WriteEndObject();
         }
 
@@ -54,6 +59,8 @@ namespace Azure.Communication
             CommunicationUserIdentifierModel communicationUser = default;
             PhoneNumberIdentifierModel phoneNumber = default;
             MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default;
+            MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = default;
+
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -97,8 +104,17 @@ namespace Azure.Communication
                     microsoftTeamsUser = MicrosoftTeamsUserIdentifierModel.DeserializeMicrosoftTeamsUserIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("microsoftTeamsApp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    microsoftTeamsApp = MicrosoftTeamsAppIdentifierModel.DeserializeMicrosoftTeamsAppIdentifierModel(property.Value);
+                    continue;
+                }
             }
-            return new CommunicationIdentifierModel(kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser);
+            return new CommunicationIdentifierModel(kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser, microsoftTeamsApp);
         }
     }
 }
