@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class ProfileChangeSkuWafMapping : IUtf8JsonSerializable, IJsonModel<ProfileChangeSkuWafMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProfileChangeSkuWafMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProfileChangeSkuWafMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProfileChangeSkuWafMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ProfileChangeSkuWafMapping DeserializeProfileChangeSkuWafMapping(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

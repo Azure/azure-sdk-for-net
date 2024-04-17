@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class ValidateSecretContent : IUtf8JsonSerializable, IJsonModel<ValidateSecretContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateSecretContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateSecretContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ValidateSecretContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ValidateSecretContent DeserializeValidateSecretContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

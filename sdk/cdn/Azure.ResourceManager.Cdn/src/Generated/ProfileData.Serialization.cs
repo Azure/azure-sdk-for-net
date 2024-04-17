@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(LogScrubbing))
             {
                 writer.WritePropertyName("logScrubbing"u8);
-                writer.WriteObjectValue<ProfileLogScrubbing>(LogScrubbing, options);
+                writer.WriteObjectValue(LogScrubbing, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

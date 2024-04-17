@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in DeepCreatedCustomDomains)
                 {
-                    writer.WriteObjectValue<DeepCreatedCustomDomain>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

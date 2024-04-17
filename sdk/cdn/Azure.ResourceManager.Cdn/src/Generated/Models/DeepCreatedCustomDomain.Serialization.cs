@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class DeepCreatedCustomDomain : IUtf8JsonSerializable, IJsonModel<DeepCreatedCustomDomain>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeepCreatedCustomDomain>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeepCreatedCustomDomain>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeepCreatedCustomDomain>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeepCreatedCustomDomain DeserializeDeepCreatedCustomDomain(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

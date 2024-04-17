@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class MigrationContent : IUtf8JsonSerializable, IJsonModel<MigrationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MigrationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<CdnSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             writer.WritePropertyName("classicResourceReference"u8);
             JsonSerializer.Serialize(writer, ClassicResourceReference);
             writer.WritePropertyName("profileName"u8);
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in MigrationWebApplicationFirewallMappings)
                 {
-                    writer.WriteObjectValue<MigrationWebApplicationFirewallMapping>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static MigrationContent DeserializeMigrationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
