@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             return message;
         }
 
+        /// <summary> The ListByConnector method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
@@ -85,6 +86,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             }
         }
 
+        /// <summary> The ListByConnector method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
@@ -138,6 +140,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             return message;
         }
 
+        /// <summary> The List method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
@@ -170,6 +173,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             }
         }
 
+        /// <summary> The List method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="azureDevOpsConnectorName"> Name of the AzureDevOps Connector. </param>
@@ -506,6 +510,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             return message;
         }
 
+        /// <summary> The ListByConnector method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -536,6 +541,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             }
         }
 
+        /// <summary> The ListByConnector method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -580,6 +586,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             return message;
         }
 
+        /// <summary> The List method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -614,6 +621,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             }
         }
 
+        /// <summary> The List method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

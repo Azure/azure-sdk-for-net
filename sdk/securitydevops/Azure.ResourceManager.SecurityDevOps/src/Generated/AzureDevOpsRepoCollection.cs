@@ -240,6 +240,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         }
 
         /// <summary>
+        /// The List method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -269,6 +270,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         }
 
         /// <summary>
+        /// The List method
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

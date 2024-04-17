@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             return message;
         }
 
+        /// <summary> The ListByResourceGroup method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             }
         }
 
+        /// <summary> The ListByResourceGroup method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -498,6 +500,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             return message;
         }
 
+        /// <summary> The ListByResourceGroup method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -526,6 +529,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             }
         }
 
+        /// <summary> The ListByResourceGroup method. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
