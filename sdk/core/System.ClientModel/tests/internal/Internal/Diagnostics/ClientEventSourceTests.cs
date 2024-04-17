@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace System.ClientModel.Tests.Diagnostics
+namespace System.ClientModel.Internal.Tests.Diagnostics
 {
     public class ClientEventSourceTests
     {

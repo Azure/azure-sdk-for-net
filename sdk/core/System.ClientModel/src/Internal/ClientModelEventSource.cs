@@ -9,9 +9,10 @@ using System.Text;
 
 namespace System.ClientModel.Internal;
 
-[EventSource]
+[EventSource(Name = EventSourceName)]
 internal sealed class ClientModelEventSource : ClientEventSource
 {
+    private const string EventSourceName = "System.ClientModel";
     private const int RequestEvent = 1;
     private const int RequestContentEvent = 2;
     private const int ResponseEvent = 5;
@@ -36,7 +37,7 @@ internal sealed class ClientModelEventSource : ClientEventSource
 
     private ClientModelEventSource(string eventSourceName) : base(eventSourceName) { }
 
-    public static ClientModelEventSource GetSingleton(string eventSourceName) => new ClientModelEventSource(eventSourceName);
+    public static ClientModelEventSource Singleton => new ClientModelEventSource(EventSourceName);
 
     [Event(BackgroundRefreshFailedEvent, Level = EventLevel.Informational, Message = "Background token refresh [{0}] failed with exception {1}")]
     public void BackgroundRefreshFailed(string requestId, string exception)

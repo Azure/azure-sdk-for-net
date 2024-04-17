@@ -18,7 +18,7 @@ namespace System.ClientModel.Primitives;
 public class ClientLoggingPolicy : PipelinePolicy
 {
     private const double RequestTooLongTime = 3.0; // sec
-    private static readonly ClientModelEventSource s_eventSource = ClientModelEventSource.GetSingleton("System.ClientModel");
+    private static readonly ClientModelEventSource s_eventSource = ClientModelEventSource.Singleton;
 
     private readonly bool _logContent;
     private readonly int _maxLength;
@@ -159,13 +159,15 @@ public class ClientLoggingPolicy : PipelinePolicy
         response.Headers.TryGetValue("Content-Type", out string? responseContentType);
         ContentTypeUtilities.TryGetTextEncoding(responseContentType!, out Encoding? responseTextEncoding);
 
-        bool wrapResponseContent = response.ContentStream != null &&
+        bool wrapResponseContent = !message.BufferResponse &&
+                                   response.ContentStream != null &&
                                    response.ContentStream?.CanSeek == false &&
                                    logWrapper.IsEnabled(isError);
 
         double elapsed = (after - before) / (double)Stopwatch.Frequency;
 
-        string responseId = GetResponseIdFromHeaders(response.Headers);
+        string responseId = string.IsNullOrEmpty(_clientRequestIdHeaderName) ? string.Empty : GetResponseIdFromHeaders(response.Headers);
+        responseId = string.IsNullOrEmpty(responseId) ? requestId : responseId;
 
         if (isError)
         {
