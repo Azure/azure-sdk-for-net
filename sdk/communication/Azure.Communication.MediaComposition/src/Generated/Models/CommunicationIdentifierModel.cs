@@ -21,15 +21,13 @@ namespace Azure.Communication
         /// <param name="communicationUser"> The communication user. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
-        /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
-        internal CommunicationIdentifierModel(CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp)
+        internal CommunicationIdentifierModel(CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
         {
             Kind = kind;
             RawId = rawId;
             CommunicationUser = communicationUser;
             PhoneNumber = phoneNumber;
             MicrosoftTeamsUser = microsoftTeamsUser;
-            MicrosoftTeamsApp = microsoftTeamsApp;
         }
 
         /// <summary> The identifier kind. Only required in responses. </summary>
@@ -42,7 +40,5 @@ namespace Azure.Communication
         public PhoneNumberIdentifierModel PhoneNumber { get; set; }
         /// <summary> The Microsoft Teams user. </summary>
         public MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get; set; }
-        /// <summary> The Microsoft Teams application. </summary>
-        public MicrosoftTeamsAppIdentifierModel MicrosoftTeamsApp { get; set; }
     }
 }
