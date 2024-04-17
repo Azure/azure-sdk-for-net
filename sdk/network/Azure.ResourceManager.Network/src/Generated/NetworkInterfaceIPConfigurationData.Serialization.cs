@@ -100,6 +100,18 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
+            if (Optional.IsDefined(PrivateIPAddressPrefixLength))
+            {
+                if (PrivateIPAddressPrefixLength != null)
+                {
+                    writer.WritePropertyName("privateIPAddressPrefixLength"u8);
+                    writer.WriteNumberValue(PrivateIPAddressPrefixLength.Value);
+                }
+                else
+                {
+                    writer.WriteNull("privateIPAddressPrefixLength");
+                }
+            }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
@@ -194,6 +206,7 @@ namespace Azure.ResourceManager.Network
             IList<BackendAddressPoolData> loadBalancerBackendAddressPools = default;
             IList<InboundNatRuleData> loadBalancerInboundNatRules = default;
             string privateIPAddress = default;
+            int? privateIPAddressPrefixLength = default;
             NetworkIPAllocationMethod? privateIPAllocationMethod = default;
             NetworkIPVersion? privateIPAddressVersion = default;
             SubnetData subnet = default;
@@ -317,6 +330,16 @@ namespace Azure.ResourceManager.Network
                             privateIPAddress = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("privateIPAddressPrefixLength"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privateIPAddressPrefixLength = null;
+                                continue;
+                            }
+                            privateIPAddressPrefixLength = property0.Value.GetInt32();
+                            continue;
+                        }
                         if (property0.NameEquals("privateIPAllocationMethod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -415,6 +438,7 @@ namespace Azure.ResourceManager.Network
                 loadBalancerBackendAddressPools ?? new ChangeTrackingList<BackendAddressPoolData>(),
                 loadBalancerInboundNatRules ?? new ChangeTrackingList<InboundNatRuleData>(),
                 privateIPAddress,
+                privateIPAddressPrefixLength,
                 privateIPAllocationMethod,
                 privateIPAddressVersion,
                 subnet,

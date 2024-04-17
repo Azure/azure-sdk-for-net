@@ -1,14 +1,10 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (2024-04-17)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-2023-09' to 'package-2023-11'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c4e661cdf92c8f579574008d0cd11874cc303da0/specification/network/resource-manager/readme.md
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ## 1.7.0 (2024-01-12)
 
