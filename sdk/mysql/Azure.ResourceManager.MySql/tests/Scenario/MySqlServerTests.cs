@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.MySql.Tests
 
         [TestCase]
         [RecordedTest]
+        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43400")]
         public async Task CreateGetList()
         {
             // Create
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.MySql.Tests
 
         [TestCase]
         [RecordedTest]
+        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43400")]
         public async Task CreateUpdateGetDelete()
         {
             // Create

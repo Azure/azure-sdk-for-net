@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowOnDeserializationWithRehydrationTokenNullRequiredMember()
         {
-            var data = BinaryData.FromString("\"requestMethod\": null}");
+            var data = BinaryData.FromString("{\"requestMethod\": null}");
             Assert.That(() => ModelReaderWriter.Read(data, typeof(RehydrationToken)), Throws.Exception);
         }
 
