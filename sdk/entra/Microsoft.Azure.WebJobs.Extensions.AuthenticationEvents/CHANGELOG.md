@@ -2,6 +2,7 @@
 
 ## 1.0.0-beta.7 (2024-04-15)
 
+
 ### Other Changes
 - Consildated namespaces. Removing:
 	- Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
