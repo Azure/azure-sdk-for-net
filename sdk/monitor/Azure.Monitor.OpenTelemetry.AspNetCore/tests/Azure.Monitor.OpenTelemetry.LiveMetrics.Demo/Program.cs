@@ -26,7 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
         {
             using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
                             .AddSource(ActivitySourceName)
-                            //.AddLiveMetrics(configure => configure.ConnectionString = ConnectionString)
+                            //.AddLiveMetrics(configure => configure.ConnectionString = ConnectionString) // TODO: FIX THIS IN FOLLOW UP PR
                             .Build();
 
             Console.WriteLine("Press any key to stop the loop.");
