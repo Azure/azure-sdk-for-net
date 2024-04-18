@@ -943,7 +943,7 @@
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
 # PRLabel: %DevOps - Infrastructure
-/sdk/devops/Azure.ResourceManager.DevOpsInfrastructure/            @oolaoluwa
+/sdk/devopsinfrastructure/Azure.ResourceManager.*/                 @oolaoluwa
 
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @archerzz @ArcturusZhang @ArthurMa1978
