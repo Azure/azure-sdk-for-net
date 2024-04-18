@@ -10,7 +10,7 @@
    "$id": "2",
    "Kind": "Enum",
    "Name": "CommunicationMessageKind",
-   "EnumValueType": "string",
+   "EnumValueType": "String",
    "AllowedValues": [
     {
      "$id": "3",
@@ -41,7 +41,7 @@
    "$id": "6",
    "Kind": "Enum",
    "Name": "MessageTemplateStatus",
-   "EnumValueType": "string",
+   "EnumValueType": "String",
    "AllowedValues": [
     {
      "$id": "7",
@@ -78,7 +78,7 @@
    "$id": "11",
    "Kind": "Enum",
    "Name": "CommunicationMessagesChannel",
-   "EnumValueType": "string",
+   "EnumValueType": "String",
    "AllowedValues": [
     {
      "$id": "12",
@@ -97,7 +97,7 @@
    "$id": "13",
    "Kind": "Enum",
    "Name": "MessageTemplateValueKind",
-   "EnumValueType": "string",
+   "EnumValueType": "String",
    "AllowedValues": [
     {
      "$id": "14",
@@ -146,7 +146,7 @@
    "$id": "20",
    "Kind": "Enum",
    "Name": "MessageTemplateBindingsKind",
-   "EnumValueType": "string",
+   "EnumValueType": "String",
    "AllowedValues": [
     {
      "$id": "21",
@@ -165,7 +165,7 @@
    "$id": "22",
    "Kind": "Enum",
    "Name": "WhatsAppMessageButtonSubType",
-   "EnumValueType": "string",
+   "EnumValueType": "String",
    "AllowedValues": [
     {
      "$id": "23",
@@ -464,7 +464,7 @@
     {
      "$id": "57",
      "Name": "body",
-     "SerializedName": "body",
+     "SerializedName": "",
      "Description": "The stream body.",
      "Type": {
       "$id": "58",
@@ -534,6 +534,7 @@
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "A request to send a text notification.",
    "IsNullable": false,
+   "DiscriminatorPropertyName": "kind",
    "DiscriminatorValue": "text",
    "Usage": "Input",
    "BaseModel": {
@@ -563,6 +564,7 @@
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "A request to send a media notification.",
    "IsNullable": false,
+   "DiscriminatorPropertyName": "kind",
    "DiscriminatorValue": "image",
    "Usage": "Input",
    "BaseModel": {
@@ -606,6 +608,7 @@
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "A request to send a template notification.",
    "IsNullable": false,
+   "DiscriminatorPropertyName": "kind",
    "DiscriminatorValue": "template",
    "Usage": "Input",
    "BaseModel": {
@@ -761,6 +764,7 @@
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The message template's text value information.",
    "IsNullable": false,
+   "DiscriminatorPropertyName": "kind",
    "DiscriminatorValue": "text",
    "Usage": "Input",
    "BaseModel": {
@@ -843,6 +847,7 @@
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The message template's image value information.",
    "IsNullable": false,
+   "DiscriminatorPropertyName": "kind",
    "DiscriminatorValue": "image",
    "Usage": "Input",
    "BaseModel": {
@@ -900,6 +905,7 @@
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The message template's document value information.",
    "IsNullable": false,
+   "DiscriminatorPropertyName": "kind",
    "DiscriminatorValue": "document",
    "Usage": "Input",
    "BaseModel": {
@@ -957,6 +963,7 @@
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The message template's video value information.",
    "IsNullable": false,
+   "DiscriminatorPropertyName": "kind",
    "DiscriminatorValue": "video",
    "Usage": "Input",
    "BaseModel": {
@@ -1014,6 +1021,7 @@
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The message template's location value information.",
    "IsNullable": false,
+   "DiscriminatorPropertyName": "kind",
    "DiscriminatorValue": "location",
    "Usage": "Input",
    "BaseModel": {
@@ -1085,6 +1093,7 @@
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The message template's quick action value information.",
    "IsNullable": false,
+   "DiscriminatorPropertyName": "kind",
    "DiscriminatorValue": "quickAction",
    "Usage": "Input",
    "BaseModel": {
@@ -1128,6 +1137,7 @@
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The template bindings for WhatsApp",
    "IsNullable": false,
+   "DiscriminatorPropertyName": "kind",
    "DiscriminatorValue": "whatsApp",
    "Usage": "Input",
    "BaseModel": {
@@ -1272,6 +1282,7 @@
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "The WhatsApp-specific template response contract",
    "IsNullable": false,
+   "DiscriminatorPropertyName": "kind",
    "DiscriminatorValue": "whatsApp",
    "Usage": "Output",
    "BaseModel": {
