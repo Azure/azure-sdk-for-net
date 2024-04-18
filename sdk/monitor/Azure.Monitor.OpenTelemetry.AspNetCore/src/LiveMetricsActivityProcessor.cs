@@ -4,8 +4,9 @@
 using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.DataCollection;
 using OpenTelemetry;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
 {

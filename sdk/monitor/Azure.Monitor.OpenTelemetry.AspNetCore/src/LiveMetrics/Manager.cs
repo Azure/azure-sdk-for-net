@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Core.Pipeline;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Diagnostics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
 {

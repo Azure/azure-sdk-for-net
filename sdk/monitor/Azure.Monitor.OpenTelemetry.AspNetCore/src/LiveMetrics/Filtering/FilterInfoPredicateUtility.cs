@@ -4,7 +4,7 @@
 using System;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 {
     internal static class FilterInfoPredicateUtility
     {
@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
                 return null;
             }
 
-            if (!Enum.TryParse<Predicate>(filterInfoPredicate.ToString(), out Predicate predicate))
+            if (!Enum.TryParse(filterInfoPredicate.ToString(), out Predicate predicate))
             {
                 throw new ArgumentOutOfRangeException(nameof(filterInfoPredicate), $"Unknown predicate value '{filterInfoPredicate}'");
             }

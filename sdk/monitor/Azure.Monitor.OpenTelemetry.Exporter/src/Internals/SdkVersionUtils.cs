@@ -12,7 +12,8 @@ using Azure.Monitor.OpenTelemetry.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 #elif ASP_NET_CORE_DISTRO
 using Azure.Monitor.OpenTelemetry.AspNetCore;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Diagnostics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
+
 #endif
 using OpenTelemetry;
 

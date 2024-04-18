@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.DataCollection
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
 {
     /// <summary>
     /// This struct encapsulates pre-aggregated metrics sent to Live Metrics.

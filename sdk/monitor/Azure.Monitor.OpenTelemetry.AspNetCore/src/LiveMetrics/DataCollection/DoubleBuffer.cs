@@ -4,7 +4,7 @@
 using System.Threading;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.DataCollection
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
 {
     /// <summary>
     /// Implements a double buffering mechanism for handling DocumentIngress objects.

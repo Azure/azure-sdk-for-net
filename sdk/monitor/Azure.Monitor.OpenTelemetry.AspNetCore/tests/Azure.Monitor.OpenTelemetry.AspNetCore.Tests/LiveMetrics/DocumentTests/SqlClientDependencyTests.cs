@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.DataCollection;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 using Microsoft.Data.SqlClient;
 using OpenTelemetry;

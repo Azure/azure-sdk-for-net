@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 {
     using System;
     using System.Collections.Generic;
@@ -26,14 +26,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
 
             this.info = info;
 
-            this.CreateFilters(out errors);
+            CreateFilters(out errors);
         }
 
         public bool CheckFilters(TTelemetry document, out CollectionConfigurationError[] errors)
         {
-            var errorList = new List<CollectionConfigurationError>(this.filters.Count);
+            var errorList = new List<CollectionConfigurationError>(filters.Count);
 
-            foreach (Filter<TTelemetry> filter in this.filters)
+            foreach (Filter<TTelemetry> filter in filters)
             {
                 bool filterPassed;
                 try
@@ -66,12 +66,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
         private void CreateFilters(out CollectionConfigurationError[] errors)
         {
             var errorList = new List<CollectionConfigurationError>();
-            foreach (FilterInfo filterInfo in this.info.Filters)
+            foreach (FilterInfo filterInfo in info.Filters)
             {
                 try
                 {
                     var filter = new Filter<TTelemetry>(filterInfo);
-                    this.filters.Add(filter);
+                    filters.Add(filter);
                 }
                 catch (System.Exception e)
                 {

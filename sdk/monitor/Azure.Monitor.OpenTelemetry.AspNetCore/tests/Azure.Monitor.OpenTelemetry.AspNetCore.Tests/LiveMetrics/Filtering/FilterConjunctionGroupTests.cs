@@ -4,7 +4,7 @@
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
 {
     using System.Collections.Generic;
-    using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering;
+    using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
     using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
     using Xunit;
 

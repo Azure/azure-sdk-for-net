@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
-    using ExceptionDocument = Azure.Monitor.OpenTelemetry.AspNetCore.Models.Exception;
+    using ExceptionDocument = Models.Exception;
 
     /// <summary>
     /// Represents a concept of a uniquely identifiable set of full telemetry documents that are being reported by the SDK.
@@ -47,13 +47,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
         {
             this.info = info ?? throw new ArgumentNullException(nameof(info));
 
-            this.CreateFilters(out errors);
+            CreateFilters(out errors);
 
-            this.RequestQuotaTracker = new QuickPulseQuotaTracker(maxRequestQuota ?? DefaultMaxTelemetryQuota, initialRequestQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
-            this.DependencyQuotaTracker = new QuickPulseQuotaTracker(maxDependencyQuota ?? DefaultMaxTelemetryQuota, initialDependencyQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
-            this.ExceptionQuotaTracker = new QuickPulseQuotaTracker(maxExceptionQuota ?? DefaultMaxTelemetryQuota, initialExceptionQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
-            this.EventQuotaTracker = new QuickPulseQuotaTracker(maxEventQuota ?? DefaultMaxTelemetryQuota, initialEventQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
-            this.TraceQuotaTracker = new QuickPulseQuotaTracker(maxTraceQuota ?? DefaultMaxTelemetryQuota, initialTraceQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
+            RequestQuotaTracker = new QuickPulseQuotaTracker(maxRequestQuota ?? DefaultMaxTelemetryQuota, initialRequestQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
+            DependencyQuotaTracker = new QuickPulseQuotaTracker(maxDependencyQuota ?? DefaultMaxTelemetryQuota, initialDependencyQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
+            ExceptionQuotaTracker = new QuickPulseQuotaTracker(maxExceptionQuota ?? DefaultMaxTelemetryQuota, initialExceptionQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
+            EventQuotaTracker = new QuickPulseQuotaTracker(maxEventQuota ?? DefaultMaxTelemetryQuota, initialEventQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
+            TraceQuotaTracker = new QuickPulseQuotaTracker(maxTraceQuota ?? DefaultMaxTelemetryQuota, initialTraceQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
         }
 
         public QuickPulseQuotaTracker RequestQuotaTracker { get; }
@@ -66,26 +66,26 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
 
         public QuickPulseQuotaTracker TraceQuotaTracker { get; }
 
-        public string Id => this.info.Id;
+        public string Id => info.Id;
 
         public bool CheckFilters(Request document, out CollectionConfigurationError[] errors)
         {
-            return DocumentStream.CheckFilters(this.requestFilterGroups, document, out errors);
+            return CheckFilters(requestFilterGroups, document, out errors);
         }
 
         public bool CheckFilters(RemoteDependency document, out CollectionConfigurationError[] errors)
         {
-            return DocumentStream.CheckFilters(this.dependencyFilterGroups, document, out errors);
+            return CheckFilters(dependencyFilterGroups, document, out errors);
         }
 
         public bool CheckFilters(ExceptionDocument document, out CollectionConfigurationError[] errors)
         {
-            return DocumentStream.CheckFilters(this.exceptionFilterGroups, document, out errors);
+            return CheckFilters(exceptionFilterGroups, document, out errors);
         }
 
         public bool CheckFilters(Trace document, out CollectionConfigurationError[] errors)
         {
-            return DocumentStream.CheckFilters(this.traceFilterGroups, document, out errors);
+            return CheckFilters(traceFilterGroups, document, out errors);
         }
 
         private static bool CheckFilters<TTelemetry>(
@@ -107,7 +107,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
             // iterate over filter groups (filters within each group are evaluated as AND, the groups are evaluated as OR)
             foreach (FilterConjunctionGroup<TTelemetry> conjunctionFilterGroup in filterGroups)
             {
-                if (DocumentStream.CheckFiltersGeneric(document, conjunctionFilterGroup, errorList))
+                if (CheckFiltersGeneric(document, conjunctionFilterGroup, errorList))
                 {
                     // no need to check remaining groups, one OR-connected group has passed
                     leastOneConjunctionGroupPassed = true;
@@ -149,9 +149,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
         private void CreateFilters(out CollectionConfigurationError[] errors)
         {
             var errorList = new List<CollectionConfigurationError>();
-            if (this.info.DocumentFilterGroups != null)
+            if (info.DocumentFilterGroups != null)
             {
-                foreach (DocumentFilterConjunctionGroupInfo documentFilterConjunctionGroupInfo in this.info.DocumentFilterGroups)
+                foreach (DocumentFilterConjunctionGroupInfo documentFilterConjunctionGroupInfo in info.DocumentFilterGroups)
                 {
                     try
                     {
@@ -159,16 +159,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
                         switch (documentFilterConjunctionGroupInfo.TelemetryType.ToString())
                         {
                             case TelemetryType.Request:
-                                this.requestFilterGroups.Add(new FilterConjunctionGroup<Request>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
+                                requestFilterGroups.Add(new FilterConjunctionGroup<Request>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
                                 break;
                             case TelemetryType.Dependency:
-                                this.dependencyFilterGroups.Add(new FilterConjunctionGroup<RemoteDependency>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
+                                dependencyFilterGroups.Add(new FilterConjunctionGroup<RemoteDependency>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
                                 break;
                             case TelemetryType.Exception:
-                                this.exceptionFilterGroups.Add(new FilterConjunctionGroup<ExceptionDocument>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
+                                exceptionFilterGroups.Add(new FilterConjunctionGroup<ExceptionDocument>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
                                 break;
                             case TelemetryType.Trace:
-                                this.traceFilterGroups.Add(new FilterConjunctionGroup<Trace>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
+                                traceFilterGroups.Add(new FilterConjunctionGroup<Trace>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Unsupported TelemetryType: '{0}'", documentFilterConjunctionGroupInfo.TelemetryType));
@@ -183,7 +183,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
                                 CollectionConfigurationErrorType.DocumentStreamFailureToCreateFilterUnexpected,
                                 string.Format(CultureInfo.InvariantCulture, "Failed to create a document stream filter {0}.", documentFilterConjunctionGroupInfo),
                                 e,
-                                Tuple.Create("DocumentStreamId", this.info.Id)));
+                                Tuple.Create("DocumentStreamId", info.Id)));
                     }
                 }
             }

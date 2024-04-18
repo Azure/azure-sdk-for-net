@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
 
         public AccumulatedValues(string metricId, AggregationType aggregationType)
         {
-            this.MetricId = metricId;
+            MetricId = metricId;
             this.aggregationType = aggregationType;
         }
 
@@ -35,42 +35,42 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
 
         public void AddValue(double value)
         {
-            Interlocked.Increment(ref this.count);
+            Interlocked.Increment(ref count);
 
             bool lockTaken = false;
             try
             {
-                this.spinLock.Enter(ref lockTaken);
+                spinLock.Enter(ref lockTaken);
 
-                switch (this.aggregationType)
+                switch (aggregationType)
                 {
                     case AggregationType.Avg:
                     case AggregationType.Sum:
-                        this.sum += value;
+                        sum += value;
                         break;
                     case AggregationType.Min:
-                        if (value < this.min)
+                        if (value < min)
                         {
-                            this.min = value;
+                            min = value;
                         }
 
                         break;
                     case AggregationType.Max:
-                        if (value > this.max)
+                        if (value > max)
                         {
-                            this.max = value;
+                            max = value;
                         }
 
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Unsupported AggregationType: '{0}'", this.aggregationType));
+                        throw new ArgumentOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Unsupported AggregationType: '{0}'", aggregationType));
                 }
             }
             finally
             {
                 if (lockTaken)
                 {
-                    this.spinLock.Exit();
+                    spinLock.Exit();
                 }
             }
         }
@@ -81,31 +81,31 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
             bool lockTaken = false;
             try
             {
-                this.spinLock.Enter(ref lockTaken);
+                spinLock.Enter(ref lockTaken);
 
                 count = this.count;
-                switch (this.aggregationType)
+                switch (aggregationType)
                 {
                     case AggregationType.Avg:
-                        return this.count != 0 ? this.sum / this.count : 0.0;
+                        return this.count != 0 ? sum / this.count : 0.0;
                     case AggregationType.Sum:
-                        return this.sum;
+                        return sum;
                     case AggregationType.Min:
-                        return this.count != 0 ? this.min : 0.0;
+                        return this.count != 0 ? min : 0.0;
                     case AggregationType.Max:
-                        return this.count != 0 ? this.max : 0.0;
+                        return this.count != 0 ? max : 0.0;
                     default:
                         throw new ArgumentOutOfRangeException(
-                            nameof(this.aggregationType),
-                            this.aggregationType,
-                            string.Format(CultureInfo.InvariantCulture, "AggregationType is not supported: {0}", this.aggregationType));
+                            nameof(aggregationType),
+                            aggregationType,
+                            string.Format(CultureInfo.InvariantCulture, "AggregationType is not supported: {0}", aggregationType));
                 }
             }
             finally
             {
                 if (lockTaken)
                 {
-                    this.spinLock.Exit();
+                    spinLock.Exit();
                 }
             }
         }

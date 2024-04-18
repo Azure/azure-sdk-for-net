@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.DataCollection;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Logs;

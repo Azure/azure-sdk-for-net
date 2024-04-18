@@ -5,9 +5,24 @@ using System;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
+/* Unmerged change from project 'Azure.Monitor.OpenTelemetry.AspNetCore (netstandard2.0)'
+Before:
+using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+After:
+using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+using Azure;
+using Azure.Monitor;
+using Azure.Monitor.OpenTelemetry;
+using Azure.Monitor.OpenTelemetry.AspNetCore;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Diagnostics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
+*/
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Diagnostics
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics
 {
     /// <summary>
     /// EventSource for the AzureMonitorExporter.

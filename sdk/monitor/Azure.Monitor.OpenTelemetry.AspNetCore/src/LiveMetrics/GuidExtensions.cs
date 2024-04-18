@@ -4,7 +4,7 @@
 using System;
 using System.Globalization;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics
 {
     internal static class GuidExtensions
     {

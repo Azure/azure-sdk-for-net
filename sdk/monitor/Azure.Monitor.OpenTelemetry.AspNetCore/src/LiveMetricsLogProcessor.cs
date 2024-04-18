@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.DataCollection;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 

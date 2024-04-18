@@ -5,7 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics
 {
     internal readonly struct QuickPulseResponse
     {

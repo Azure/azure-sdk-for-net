@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.DataCollection;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Diagnostics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
 {
@@ -208,7 +209,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                     continue;
                 }
 
-                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out Filtering.AggregationType aggregationType))
+                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out AspNetCore.LiveMetrics.Filtering.AggregationType aggregationType))
                 {
                     var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
 

@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Diagnostics;
 using Xunit;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {

@@ -10,9 +10,9 @@ using System.Text.Json;
 using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Diagnostics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
 {

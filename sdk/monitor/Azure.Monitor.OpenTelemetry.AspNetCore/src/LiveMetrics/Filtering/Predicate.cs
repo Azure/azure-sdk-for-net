@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 {
     internal enum Predicate
     {

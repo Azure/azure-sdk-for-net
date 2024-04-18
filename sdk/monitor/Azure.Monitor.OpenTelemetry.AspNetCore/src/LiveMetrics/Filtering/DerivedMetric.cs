@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 {
     using System;
     using System.Collections.Generic;
@@ -54,22 +54,22 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
             CreateProjection();
         }
 
-        public string Id => this.info.Id;
+        public string Id => info.Id;
 
-        public Models.AggregationType? AggregationType => this.info.Aggregation;  // TODO: this was enum. Need to double check new type is parsed and used correctly.
+        public Models.AggregationType? AggregationType => info.Aggregation;  // TODO: this was enum. Need to double check new type is parsed and used correctly.
 
         public bool CheckFilters(TTelemetry document, out CollectionConfigurationError[] errors)
         {
-            if (this.filterGroups.Count < 1)
+            if (filterGroups.Count < 1)
             {
                 errors = Array.Empty<CollectionConfigurationError>();
                 return true;
             }
 
-            var errorList = new List<CollectionConfigurationError>(this.filterGroups.Count);
+            var errorList = new List<CollectionConfigurationError>(filterGroups.Count);
 
             // iterate over OR-connected groups
-            foreach (FilterConjunctionGroup<TTelemetry> conjunctionFilterGroup in this.filterGroups)
+            foreach (FilterConjunctionGroup<TTelemetry> conjunctionFilterGroup in filterGroups)
             {
                 CollectionConfigurationError[] groupErrors;
                 bool groupPassed = conjunctionFilterGroup.CheckFilters(document, out groupErrors);
@@ -90,41 +90,41 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
 
         public double Project(TTelemetry document)
         {
-            if (this.projectionLambda == null)
+            if (projectionLambda == null)
             {
                 throw new ArgumentException("Projection lambda is not initialized.");
             }
 
             try
             {
-                return this.projectionLambda(document);
+                return projectionLambda(document);
             }
             catch (FormatException e)
             {
                 // the projected value could not be parsed by double.Parse()
                 throw new ArgumentOutOfRangeException(
-                    string.Format(CultureInfo.InvariantCulture, "Projected field {0} was not a number", this.info.Projection),
+                    string.Format(CultureInfo.InvariantCulture, "Projected field {0} was not a number", info.Projection),
                     e);
             }
         }
 
         public override string ToString()
         {
-            return this.info.ToString()!;
+            return info.ToString()!;
         }
 
         private void CreateFilters(out CollectionConfigurationError[] errors)
         {
             var errorList = new List<CollectionConfigurationError>();
-            if (this.info.FilterGroups != null)
+            if (info.FilterGroups != null)
             {
-                foreach (FilterConjunctionGroupInfo filterConjunctionGroupInfo in this.info.FilterGroups)
+                foreach (FilterConjunctionGroupInfo filterConjunctionGroupInfo in info.FilterGroups)
                 {
                     CollectionConfigurationError[]? groupErrors = null;
                     try
                     {
                         var conjunctionFilterGroup = new FilterConjunctionGroup<TTelemetry>(filterConjunctionGroupInfo, out groupErrors);
-                        this.filterGroups.Add(conjunctionFilterGroup);
+                        filterGroups.Add(conjunctionFilterGroup);
                     }
                     catch (System.Exception e)
                     {
@@ -133,14 +133,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
                                 CollectionConfigurationErrorType.MetricFailureToCreateFilterUnexpected,
                                 string.Format(CultureInfo.InvariantCulture, "Failed to create a filter group {0}.", filterConjunctionGroupInfo),
                                 e,
-                                Tuple.Create("MetricId", this.info.Id)));
+                                Tuple.Create("MetricId", info.Id)));
                     }
 
                     if (groupErrors != null)
                     {
                         foreach (var error in groupErrors)
                         {
-                            UpdateMetricIdOfError(error, this.info.Id);
+                            UpdateMetricIdOfError(error, info.Id);
                         }
 
                         errorList.AddRange(groupErrors);
@@ -177,21 +177,21 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
             {
                 Expression fieldExpression;
 
-                if (string.Equals(this.info.Projection, ProjectionCount, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(info.Projection, ProjectionCount, StringComparison.OrdinalIgnoreCase))
                 {
                     fieldExpression = Expression.Constant(1, typeof(int));
                 }
                 else
                 {
                     Filter<TTelemetry>.FieldNameType fieldNameType;
-                    Type? fieldType = Filter<TTelemetry>.GetFieldType(this.info.Projection, out fieldNameType);
+                    Type? fieldType = Filter<TTelemetry>.GetFieldType(info.Projection, out fieldNameType);
                     if (fieldNameType == Filter<TTelemetry>.FieldNameType.AnyField)
                     {
                         throw new ArgumentOutOfRangeException(
-                            string.Format(CultureInfo.InvariantCulture, "Unsupported field type for projection: {0}", this.info.Projection));
+                            string.Format(CultureInfo.InvariantCulture, "Unsupported field type for projection: {0}", info.Projection));
                     }
 
-                    fieldExpression = Filter<TTelemetry>.ProduceFieldExpression(documentExpression, this.info.Projection, fieldNameType);
+                    fieldExpression = Filter<TTelemetry>.ProduceFieldExpression(documentExpression, info.Projection, fieldNameType);
 
                     // special case - for TimeSpan values ToString() will not result in a value convertable to double, so we must take care of that ourselves
                     if (fieldType == typeof(TimeSpan))
@@ -228,7 +228,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
             {
                 Expression<Func<TTelemetry, double>> lambdaExpression = Expression.Lambda<Func<TTelemetry, double>>(projectionExpression, documentExpression);
 
-                this.projectionLambda = lambdaExpression.Compile();
+                projectionLambda = lambdaExpression.Compile();
             }
             catch (System.Exception e)
             {

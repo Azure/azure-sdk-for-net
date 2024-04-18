@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,21 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
     using Azure.Monitor.OpenTelemetry.Exporter.Internals;
     using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 
-    using ExceptionDocument = Azure.Monitor.OpenTelemetry.AspNetCore.Models.Exception;
+    /* Unmerged change from project 'Azure.Monitor.OpenTelemetry.AspNetCore (netstandard2.0)'
+    Before:
+        using ExceptionDocument = Azure.Monitor.OpenTelemetry.AspNetCore.Models.Exception;
+    After:
+        using ExceptionDocument = Models.Exception;
+        using Azure;
+        using Azure.Monitor;
+        using Azure.Monitor.OpenTelemetry;
+        using Azure.Monitor.OpenTelemetry.AspNetCore;
+        using Azure.Monitor.OpenTelemetry.AspNetCore.Internals;
+        using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
+        using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering;
+        using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
+    */
+    using ExceptionDocument = Models.Exception;
 
     /// <summary>
     /// Represents the collection configuration - a set of calculated metrics, and full telemetry documents to be collected by the SDK.
@@ -52,14 +66,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
             this.info = info ?? throw new ArgumentNullException(nameof(info));
 
             // create metrics based on descriptions in info
-            this.CreateTelemetryMetrics(out CollectionConfigurationError[] metricErrors);
+            CreateTelemetryMetrics(out CollectionConfigurationError[] metricErrors);
 
             // maintain a separate collection of all (Id, AggregationType) pairs with some additional data - to allow for uniform access to all types of metrics
             // this includes both telemetry metrics and Metric metrics
-            this.CreateMetadata();
+            CreateMetadata();
 
             // create document streams based on description in info
-            this.CreateDocumentStreams(previousDocumentStreams ?? Array.Empty<DocumentStream>(), out CollectionConfigurationError[] documentStreamErrors);
+            CreateDocumentStreams(previousDocumentStreams ?? Array.Empty<DocumentStream>(), out CollectionConfigurationError[] documentStreamErrors);
 
             errors = metricErrors.Concat(documentStreamErrors).ToArray();
 
@@ -99,25 +113,25 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
             return new CollectionConfigurationError(error.CollectionConfigurationErrorType, error.Message, error.FullException, newData);
         }
 
-        public IEnumerable<DerivedMetric<Request>> RequestMetrics => this.requestDocumentIngressMetrics;
+        public IEnumerable<DerivedMetric<Request>> RequestMetrics => requestDocumentIngressMetrics;
 
-        public IEnumerable<DerivedMetric<RemoteDependency>> DependencyMetrics => this.dependencyTelemetryMetrics;
+        public IEnumerable<DerivedMetric<RemoteDependency>> DependencyMetrics => dependencyTelemetryMetrics;
 
-        public IEnumerable<DerivedMetric<ExceptionDocument>> ExceptionMetrics => this.exceptionTelemetryMetrics;
+        public IEnumerable<DerivedMetric<ExceptionDocument>> ExceptionMetrics => exceptionTelemetryMetrics;
 
-        public IEnumerable<DerivedMetric<Trace>> TraceMetrics => this.traceTelemetryMetrics;
+        public IEnumerable<DerivedMetric<Trace>> TraceMetrics => traceTelemetryMetrics;
 
         /// <summary>
         /// Gets Telemetry types only. Used by QuickPulseTelemetryProcessor.
         /// </summary>
-        public IEnumerable<Tuple<string, Models.AggregationType?>> TelemetryMetadata => this.telemetryMetadata;
+        public IEnumerable<Tuple<string, Models.AggregationType?>> TelemetryMetadata => telemetryMetadata;
 
         /// <summary>
         /// Gets document streams. Telemetry items are provided by QuickPulseTelemetryProcessor.
         /// </summary>
-        public IEnumerable<DocumentStream> DocumentStreams => this.documentStreams;
+        public IEnumerable<DocumentStream> DocumentStreams => documentStreams;
 
-        public string ETag => this.info.ETag;
+        public string ETag => info.ETag;
 
         private static void AddMetric<DocumentIngress>(
           DerivedMetricInfo metricInfo,
@@ -165,12 +179,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
                         documentStream.EventQuotaTracker.CurrentQuota,
                         documentStream.TraceQuotaTracker.CurrentQuota));
 
-            if (this.info.DocumentStreams != null)
+            if (info.DocumentStreams != null)
             {
-                float? maxQuota = this.info.QuotaInfo?.MaxQuota;
-                float? quotaAccrualRatePerSec = this.info.QuotaInfo?.QuotaAccrualRatePerSec;
+                float? maxQuota = info.QuotaInfo?.MaxQuota;
+                float? quotaAccrualRatePerSec = info.QuotaInfo?.QuotaAccrualRatePerSec;
 
-                foreach (DocumentStreamInfo documentStreamInfo in this.info.DocumentStreams)
+                foreach (DocumentStreamInfo documentStreamInfo in info.DocumentStreams)
                 {
                     if (documentStreamIds.Contains(documentStreamInfo.Id))
                     {
@@ -189,7 +203,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
                     try
                     {
                         previousQuotasByStreamId.TryGetValue(documentStreamInfo.Id, out Tuple<float, float, float, float, float>? previousQuotas);
-                        float? initialQuota = this.info.QuotaInfo?.InitialQuota;
+                        float? initialQuota = info.QuotaInfo?.InitialQuota;
 
                         var documentStream = new DocumentStream(
                             documentStreamInfo,
@@ -207,7 +221,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
                             quotaAccrualRatePerSec: quotaAccrualRatePerSec);
 
                         documentStreamIds.Add(documentStreamInfo.Id);
-                        this.documentStreams.Add(documentStream);
+                        documentStreams.Add(documentStream);
                     }
                     catch (System.Exception e)
                     {
@@ -255,16 +269,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
                 switch (metricInfo.TelemetryType)
                 {
                     case TelemetryType.Request:
-                        CollectionConfiguration.AddMetric(metricInfo, this.requestDocumentIngressMetrics, out localErrors);
+                        AddMetric(metricInfo, requestDocumentIngressMetrics, out localErrors);
                         break;
                     case TelemetryType.Dependency:
-                        CollectionConfiguration.AddMetric(metricInfo, this.dependencyTelemetryMetrics, out localErrors);
+                        AddMetric(metricInfo, dependencyTelemetryMetrics, out localErrors);
                         break;
                     case TelemetryType.Exception:
-                        CollectionConfiguration.AddMetric(metricInfo, this.exceptionTelemetryMetrics, out localErrors);
+                        AddMetric(metricInfo, exceptionTelemetryMetrics, out localErrors);
                         break;
                     case TelemetryType.Trace:
-                        CollectionConfiguration.AddMetric(metricInfo, this.traceTelemetryMetrics, out localErrors);
+                        AddMetric(metricInfo, traceTelemetryMetrics, out localErrors);
                         break;
                     default:
                         errorList.Add(
@@ -291,12 +305,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering
         private void CreateMetadata()
         {
             foreach (var metricIds in
-                this.requestDocumentIngressMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))
-                .Concat(this.dependencyTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
-                .Concat(this.exceptionTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
-                .Concat(this.traceTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))))
+                requestDocumentIngressMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))
+                .Concat(dependencyTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
+                .Concat(exceptionTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
+                .Concat(traceTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))))
             {
-                this.telemetryMetadata.Add(metricIds);
+                telemetryMetadata.Add(metricIds);
             }
         }
     }

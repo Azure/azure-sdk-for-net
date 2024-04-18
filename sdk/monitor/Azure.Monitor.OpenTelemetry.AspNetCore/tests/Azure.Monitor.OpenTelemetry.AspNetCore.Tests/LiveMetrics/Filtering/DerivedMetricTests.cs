@@ -6,7 +6,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering;
+    using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
     using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
     using Xunit;
     using AggregationType = Models.AggregationType;

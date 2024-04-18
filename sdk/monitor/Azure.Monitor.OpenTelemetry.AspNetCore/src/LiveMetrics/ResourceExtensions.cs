@@ -6,7 +6,7 @@ using System.Net;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry.Resources;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 
 internal static class ResourceExtensions
 {

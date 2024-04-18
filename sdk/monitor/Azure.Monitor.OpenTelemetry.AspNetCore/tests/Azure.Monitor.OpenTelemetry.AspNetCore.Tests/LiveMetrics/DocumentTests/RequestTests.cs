@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.DataCollection;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;

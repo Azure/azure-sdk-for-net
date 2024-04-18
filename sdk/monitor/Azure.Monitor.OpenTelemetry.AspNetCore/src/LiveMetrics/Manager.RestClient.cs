@@ -3,8 +3,9 @@
 
 using System;
 using System.Diagnostics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Diagnostics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics

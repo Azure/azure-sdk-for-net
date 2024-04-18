@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics
 {
     internal static class LiveMetricConstants
     {
