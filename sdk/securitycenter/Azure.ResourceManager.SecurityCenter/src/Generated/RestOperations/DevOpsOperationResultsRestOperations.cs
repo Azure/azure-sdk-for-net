@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         OperationStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
+                        value = OperationStatusResult.DeserializeOperationStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         OperationStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
+                        value = OperationStatusResult.DeserializeOperationStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
