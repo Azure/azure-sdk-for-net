@@ -12,7 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
     /* Unmerged change from project 'Azure.Monitor.OpenTelemetry.AspNetCore (netstandard2.0)'
     Before:
-        using ExceptionDocument = Azure.Monitor.OpenTelemetry.AspNetCore.Models.Exception;
+    using ExceptionDocument = Azure.Monitor.OpenTelemetry.AspNetCore.Models.Exception;
     After:
         using ExceptionDocument = Models.Exception;
         using Azure;
@@ -66,14 +66,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
             this.info = info ?? throw new ArgumentNullException(nameof(info));
 
             // create metrics based on descriptions in info
-            CreateTelemetryMetrics(out CollectionConfigurationError[] metricErrors);
+            this.CreateTelemetryMetrics(out CollectionConfigurationError[] metricErrors);
 
             // maintain a separate collection of all (Id, AggregationType) pairs with some additional data - to allow for uniform access to all types of metrics
             // this includes both telemetry metrics and Metric metrics
-            CreateMetadata();
+            this.CreateMetadata();
 
             // create document streams based on description in info
-            CreateDocumentStreams(previousDocumentStreams ?? Array.Empty<DocumentStream>(), out CollectionConfigurationError[] documentStreamErrors);
+            this.CreateDocumentStreams(previousDocumentStreams ?? Array.Empty<DocumentStream>(), out CollectionConfigurationError[] documentStreamErrors);
 
             errors = metricErrors.Concat(documentStreamErrors).ToArray();
 
@@ -113,25 +113,25 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
             return new CollectionConfigurationError(error.CollectionConfigurationErrorType, error.Message, error.FullException, newData);
         }
 
-        public IEnumerable<DerivedMetric<Request>> RequestMetrics => requestDocumentIngressMetrics;
+        public IEnumerable<DerivedMetric<Request>> RequestMetrics => this.requestDocumentIngressMetrics;
 
-        public IEnumerable<DerivedMetric<RemoteDependency>> DependencyMetrics => dependencyTelemetryMetrics;
+        public IEnumerable<DerivedMetric<RemoteDependency>> DependencyMetrics => this.dependencyTelemetryMetrics;
 
-        public IEnumerable<DerivedMetric<ExceptionDocument>> ExceptionMetrics => exceptionTelemetryMetrics;
+        public IEnumerable<DerivedMetric<ExceptionDocument>> ExceptionMetrics => this.exceptionTelemetryMetrics;
 
-        public IEnumerable<DerivedMetric<Trace>> TraceMetrics => traceTelemetryMetrics;
+        public IEnumerable<DerivedMetric<Trace>> TraceMetrics => this.traceTelemetryMetrics;
 
         /// <summary>
         /// Gets Telemetry types only. Used by QuickPulseTelemetryProcessor.
         /// </summary>
-        public IEnumerable<Tuple<string, Models.AggregationType?>> TelemetryMetadata => telemetryMetadata;
+        public IEnumerable<Tuple<string, Models.AggregationType?>> TelemetryMetadata => this.telemetryMetadata;
 
         /// <summary>
         /// Gets document streams. Telemetry items are provided by QuickPulseTelemetryProcessor.
         /// </summary>
-        public IEnumerable<DocumentStream> DocumentStreams => documentStreams;
+        public IEnumerable<DocumentStream> DocumentStreams => this.documentStreams;
 
-        public string ETag => info.ETag;
+        public string ETag => this.info.ETag;
 
         private static void AddMetric<DocumentIngress>(
           DerivedMetricInfo metricInfo,
@@ -179,12 +179,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                         documentStream.EventQuotaTracker.CurrentQuota,
                         documentStream.TraceQuotaTracker.CurrentQuota));
 
-            if (info.DocumentStreams != null)
+            if (this.info.DocumentStreams != null)
             {
-                float? maxQuota = info.QuotaInfo?.MaxQuota;
-                float? quotaAccrualRatePerSec = info.QuotaInfo?.QuotaAccrualRatePerSec;
+                float? maxQuota = this.info.QuotaInfo?.MaxQuota;
+                float? quotaAccrualRatePerSec = this.info.QuotaInfo?.QuotaAccrualRatePerSec;
 
-                foreach (DocumentStreamInfo documentStreamInfo in info.DocumentStreams)
+                foreach (DocumentStreamInfo documentStreamInfo in this.info.DocumentStreams)
                 {
                     if (documentStreamIds.Contains(documentStreamInfo.Id))
                     {
@@ -203,7 +203,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                     try
                     {
                         previousQuotasByStreamId.TryGetValue(documentStreamInfo.Id, out Tuple<float, float, float, float, float>? previousQuotas);
-                        float? initialQuota = info.QuotaInfo?.InitialQuota;
+                        float? initialQuota = this.info.QuotaInfo?.InitialQuota;
 
                         var documentStream = new DocumentStream(
                             documentStreamInfo,
@@ -221,7 +221,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                             quotaAccrualRatePerSec: quotaAccrualRatePerSec);
 
                         documentStreamIds.Add(documentStreamInfo.Id);
-                        documentStreams.Add(documentStream);
+                        this.documentStreams.Add(documentStream);
                     }
                     catch (System.Exception e)
                     {
@@ -269,16 +269,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                 switch (metricInfo.TelemetryType)
                 {
                     case TelemetryType.Request:
-                        AddMetric(metricInfo, requestDocumentIngressMetrics, out localErrors);
+                        CollectionConfiguration.AddMetric(metricInfo, this.requestDocumentIngressMetrics, out localErrors);
                         break;
                     case TelemetryType.Dependency:
-                        AddMetric(metricInfo, dependencyTelemetryMetrics, out localErrors);
+                        CollectionConfiguration.AddMetric(metricInfo, this.dependencyTelemetryMetrics, out localErrors);
                         break;
                     case TelemetryType.Exception:
-                        AddMetric(metricInfo, exceptionTelemetryMetrics, out localErrors);
+                        CollectionConfiguration.AddMetric(metricInfo, this.exceptionTelemetryMetrics, out localErrors);
                         break;
                     case TelemetryType.Trace:
-                        AddMetric(metricInfo, traceTelemetryMetrics, out localErrors);
+                        CollectionConfiguration.AddMetric(metricInfo, this.traceTelemetryMetrics, out localErrors);
                         break;
                     default:
                         errorList.Add(
@@ -305,12 +305,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
         private void CreateMetadata()
         {
             foreach (var metricIds in
-                requestDocumentIngressMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))
-                .Concat(dependencyTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
-                .Concat(exceptionTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
-                .Concat(traceTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))))
+                this.requestDocumentIngressMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))
+                .Concat(this.dependencyTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
+                .Concat(this.exceptionTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType)))
+                .Concat(this.traceTelemetryMetrics.Select(metric => Tuple.Create(metric.Id, metric.AggregationType))))
             {
-                telemetryMetadata.Add(metricIds);
+                this.telemetryMetadata.Add(metricIds);
             }
         }
     }

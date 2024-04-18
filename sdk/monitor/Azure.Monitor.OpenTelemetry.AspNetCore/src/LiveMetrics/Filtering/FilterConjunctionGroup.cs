@@ -26,14 +26,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
             this.info = info;
 
-            CreateFilters(out errors);
+            this.CreateFilters(out errors);
         }
 
         public bool CheckFilters(TTelemetry document, out CollectionConfigurationError[] errors)
         {
-            var errorList = new List<CollectionConfigurationError>(filters.Count);
+            var errorList = new List<CollectionConfigurationError>(this.filters.Count);
 
-            foreach (Filter<TTelemetry> filter in filters)
+            foreach (Filter<TTelemetry> filter in this.filters)
             {
                 bool filterPassed;
                 try
@@ -66,12 +66,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
         private void CreateFilters(out CollectionConfigurationError[] errors)
         {
             var errorList = new List<CollectionConfigurationError>();
-            foreach (FilterInfo filterInfo in info.Filters)
+            foreach (FilterInfo filterInfo in this.info.Filters)
             {
                 try
                 {
                     var filter = new Filter<TTelemetry>(filterInfo);
-                    filters.Add(filter);
+                    this.filters.Add(filter);
                 }
                 catch (System.Exception e)
                 {

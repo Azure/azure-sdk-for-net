@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                 return null;
             }
 
-            if (!Enum.TryParse(filterInfoPredicate.ToString(), out Predicate predicate))
+            if (!Enum.TryParse<Predicate>(filterInfoPredicate.ToString(), out Predicate predicate))
             {
                 throw new ArgumentOutOfRangeException(nameof(filterInfoPredicate), $"Unknown predicate value '{filterInfoPredicate}'");
             }

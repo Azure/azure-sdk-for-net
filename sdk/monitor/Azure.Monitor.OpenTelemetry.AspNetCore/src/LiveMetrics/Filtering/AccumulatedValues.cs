@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
         public AccumulatedValues(string metricId, AggregationType aggregationType)
         {
-            MetricId = metricId;
+            this.MetricId = metricId;
             this.aggregationType = aggregationType;
         }
 
@@ -35,42 +35,42 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
         public void AddValue(double value)
         {
-            Interlocked.Increment(ref count);
+            Interlocked.Increment(ref this.count);
 
             bool lockTaken = false;
             try
             {
-                spinLock.Enter(ref lockTaken);
+                this.spinLock.Enter(ref lockTaken);
 
-                switch (aggregationType)
+                switch (this.aggregationType)
                 {
                     case AggregationType.Avg:
                     case AggregationType.Sum:
-                        sum += value;
+                        this.sum += value;
                         break;
                     case AggregationType.Min:
-                        if (value < min)
+                        if (value < this.min)
                         {
-                            min = value;
+                            this.min = value;
                         }
 
                         break;
                     case AggregationType.Max:
-                        if (value > max)
+                        if (value > this.max)
                         {
-                            max = value;
+                            this.max = value;
                         }
 
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Unsupported AggregationType: '{0}'", aggregationType));
+                        throw new ArgumentOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Unsupported AggregationType: '{0}'", this.aggregationType));
                 }
             }
             finally
             {
                 if (lockTaken)
                 {
-                    spinLock.Exit();
+                    this.spinLock.Exit();
                 }
             }
         }
@@ -81,31 +81,31 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
             bool lockTaken = false;
             try
             {
-                spinLock.Enter(ref lockTaken);
+                this.spinLock.Enter(ref lockTaken);
 
                 count = this.count;
-                switch (aggregationType)
+                switch (this.aggregationType)
                 {
                     case AggregationType.Avg:
-                        return this.count != 0 ? sum / this.count : 0.0;
+                        return this.count != 0 ? this.sum / this.count : 0.0;
                     case AggregationType.Sum:
-                        return sum;
+                        return this.sum;
                     case AggregationType.Min:
-                        return this.count != 0 ? min : 0.0;
+                        return this.count != 0 ? this.min : 0.0;
                     case AggregationType.Max:
-                        return this.count != 0 ? max : 0.0;
+                        return this.count != 0 ? this.max : 0.0;
                     default:
                         throw new ArgumentOutOfRangeException(
-                            nameof(aggregationType),
-                            aggregationType,
-                            string.Format(CultureInfo.InvariantCulture, "AggregationType is not supported: {0}", aggregationType));
+                            nameof(this.aggregationType),
+                            this.aggregationType,
+                            string.Format(CultureInfo.InvariantCulture, "AggregationType is not supported: {0}", this.aggregationType));
                 }
             }
             finally
             {
                 if (lockTaken)
                 {
-                    spinLock.Exit();
+                    this.spinLock.Exit();
                 }
             }
         }

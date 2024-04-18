@@ -24,17 +24,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
         public QuickPulseQuotaTracker(float maxQuota, float startQuota, float? quotaAccrualRatePerSec = null)
         {
             this.maxQuota = maxQuota;
-            this.quotaAccrualRatePerSec = quotaAccrualRatePerSec ?? this.maxQuota / 60; // should not be calculated from maxQuota - Should be passed from the service
-            startedTrackingTime = DateTimeOffset.UtcNow;
-            lastQuotaAccrualFullSeconds = 0;
-            currentQuota = startQuota;
+            this.quotaAccrualRatePerSec = quotaAccrualRatePerSec ?? (this.maxQuota / 60); // should not be calculated from maxQuota - Should be passed from the service
+            this.startedTrackingTime = DateTimeOffset.UtcNow;
+            this.lastQuotaAccrualFullSeconds = 0;
+            this.currentQuota = startQuota;
         }
 
-        public float CurrentQuota => Interlocked.CompareExchange(ref currentQuota, 0, 0);
+        public float CurrentQuota => Interlocked.CompareExchange(ref this.currentQuota, 0, 0);
 
-        public float MaxQuota => Interlocked.CompareExchange(ref maxQuota, 0, 0);
+        public float MaxQuota => Interlocked.CompareExchange(ref this.maxQuota, 0, 0);
 
-        public bool QuotaExhausted => Interlocked.CompareExchange(ref currentQuota, 0, 0) < 1f;
+        public bool QuotaExhausted => Interlocked.CompareExchange(ref this.currentQuota, 0, 0) < 1f;
 
         /// <summary>
         /// Checks if there's quota left.
@@ -42,11 +42,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
         /// <returns><b>true</b> if there's still quota left, <b>false</b> otherwise.</returns>
         public bool ApplyQuota()
         {
-            var currentTimeFullSeconds = (long)(DateTimeOffset.UtcNow - startedTrackingTime).TotalSeconds;
+            var currentTimeFullSeconds = (long)(DateTimeOffset.UtcNow - this.startedTrackingTime).TotalSeconds;
 
-            AccrueQuota(currentTimeFullSeconds);
+            this.AccrueQuota(currentTimeFullSeconds);
 
-            return UseQuota();
+            return this.UseQuota();
         }
 
         private bool UseQuota()
@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
             while (true)
             {
-                float originalValue = Interlocked.CompareExchange(ref currentQuota, 0, 0);
+                float originalValue = Interlocked.CompareExchange(ref this.currentQuota, 0, 0);
 
                 if (originalValue < 1f)
                 {
@@ -64,7 +64,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
                 float newValue = originalValue - 1f;
 
-                if (Interlocked.CompareExchange(ref currentQuota, newValue, originalValue) == originalValue)
+                if (Interlocked.CompareExchange(ref this.currentQuota, newValue, originalValue) == originalValue)
                 {
                     return true;
                 }
@@ -79,7 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
             while (true)
             {
-                long lastQuotaAccrualFullSecondsLocal = Interlocked.Read(ref lastQuotaAccrualFullSeconds);
+                long lastQuotaAccrualFullSecondsLocal = Interlocked.Read(ref this.lastQuotaAccrualFullSeconds);
 
                 long fullSecondsSinceLastQuotaAccrual = currentTimeFullSeconds - lastQuotaAccrualFullSecondsLocal;
 
@@ -91,14 +91,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                     long newValue = lastQuotaAccrualFullSecondsLocal + fullSecondsSinceLastQuotaAccrual;
 
                     long valueBeforeExchange = Interlocked.CompareExchange(
-                        ref lastQuotaAccrualFullSeconds,
+                        ref this.lastQuotaAccrualFullSeconds,
                         newValue,
                         lastQuotaAccrualFullSecondsLocal);
 
                     if (valueBeforeExchange == lastQuotaAccrualFullSecondsLocal)
                     {
                         // we have updated this.lastQuotaAccrualFullSeconds, now increase the quota value
-                        IncreaseQuota(fullSecondsSinceLastQuotaAccrual);
+                        this.IncreaseQuota(fullSecondsSinceLastQuotaAccrual);
 
                         break;
                     }
@@ -131,11 +131,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
             while (true)
             {
-                float originalValue = Interlocked.CompareExchange(ref currentQuota, 0, 0);
+                float originalValue = Interlocked.CompareExchange(ref this.currentQuota, 0, 0);
 
-                float delta = Math.Min(quotaAccrualRatePerSec * seconds, maxQuota - originalValue);
+                float delta = Math.Min(this.quotaAccrualRatePerSec * seconds, this.maxQuota - originalValue);
 
-                if (Interlocked.CompareExchange(ref currentQuota, originalValue + delta, originalValue) == originalValue)
+                if (Interlocked.CompareExchange(ref this.currentQuota, originalValue + delta, originalValue) == originalValue)
                 {
                     break;
                 }

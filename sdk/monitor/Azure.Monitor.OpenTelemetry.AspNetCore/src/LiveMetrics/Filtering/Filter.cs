@@ -89,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
         {
             ValidateInput(filterInfo);
 
-            info = filterInfo;
+            this.info = filterInfo;
 
             if (typeof(TTelemetry) == typeof(Request))
             {
@@ -104,7 +104,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                 if (fieldName == "Type" || fieldName == "Target")
                 {
                     Expression<Func<TTelemetry, bool>> lambdaExpression = Expression.Lambda<Func<TTelemetry, bool>>(Expression.Constant(true), Expression.Variable(typeof(TTelemetry)));
-                    filterLambda = lambdaExpression.Compile();
+                    this.filterLambda = lambdaExpression.Compile();
                     return;
                 }
                 else if (fieldName == "Success")
@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                 if (fieldName == "Exception.StackTrace")
                 {
                     Expression<Func<TTelemetry, bool>> lambdaExpression = Expression.Lambda<Func<TTelemetry, bool>>(Expression.Constant(true), Expression.Variable(typeof(TTelemetry)));
-                    filterLambda = lambdaExpression.Compile();
+                    this.filterLambda = lambdaExpression.Compile();
                     return;
                 }
                 else if (fieldName == "Exception.Message")
@@ -131,26 +131,26 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                 }
             }
 
-            fieldName = filterInfo.FieldName;
-            predicate = (Predicate)FilterInfoPredicateUtility.ToPredicate(filterInfo.Predicate);
-            comparand = filterInfo.Comparand;
+            this.fieldName = filterInfo.FieldName;
+            this.predicate = (Predicate)FilterInfoPredicateUtility.ToPredicate(filterInfo.Predicate);
+            this.comparand = filterInfo.Comparand;
 
             FieldNameType fieldNameType;
             Type fieldType = GetFieldType(filterInfo.FieldName, out fieldNameType);
-            ThrowOnInvalidFilter(
+            this.ThrowOnInvalidFilter(
                 null,
-                fieldNameType == FieldNameType.AnyField && predicate != Predicate.Contains && predicate != Predicate.DoesNotContain);
+                fieldNameType == FieldNameType.AnyField && this.predicate != Predicate.Contains && this.predicate != Predicate.DoesNotContain);
 
             double comparandDouble;
-            this.comparandDouble = double.TryParse(filterInfo.Comparand, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite | NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.AllowExponent, CultureInfo.InvariantCulture, out comparandDouble) ? comparandDouble : null;
+            this.comparandDouble = double.TryParse(filterInfo.Comparand, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite | NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.AllowExponent, CultureInfo.InvariantCulture, out comparandDouble) ? comparandDouble : (double?)null;
 
             bool comparandBoolean;
-            this.comparandBoolean = bool.TryParse(filterInfo.Comparand, out comparandBoolean) ? comparandBoolean : null;
+            this.comparandBoolean = bool.TryParse(filterInfo.Comparand, out comparandBoolean) ? comparandBoolean : (bool?)null;
 
             TimeSpan comparandTimeSpan;
             this.comparandTimeSpan = TimeSpan.TryParse(filterInfo.Comparand, CultureInfo.InvariantCulture, out comparandTimeSpan)
                                          ? comparandTimeSpan
-                                         : null;
+                                         : (TimeSpan?)null;
 
             ParameterExpression documentExpression = Expression.Variable(typeof(TTelemetry));
 
@@ -161,14 +161,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                 if (fieldNameType == FieldNameType.AnyField)
                 {
                     // multiple fields => multiple comparison expressions connected with ORs
-                    comparisonExpression = ProduceComparatorExpressionForAnyFieldCondition(documentExpression);
+                    comparisonExpression = this.ProduceComparatorExpressionForAnyFieldCondition(documentExpression);
                 }
                 else
                 {
                     // a single field filterInfo.FieldName of type fieldType => a single comparison expression
                     Expression fieldExpression = ProduceFieldExpression(documentExpression, filterInfo.FieldName, fieldNameType);
 
-                    comparisonExpression = ProduceComparatorExpressionForSingleFieldCondition(fieldExpression, fieldType);
+                    comparisonExpression = this.ProduceComparatorExpressionForSingleFieldCondition(fieldExpression, fieldType);
                 }
             }
             catch (System.Exception e)
@@ -182,7 +182,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                     comparisonExpression,
                     documentExpression);
 
-                filterLambda = lambdaExpression.Compile();
+                this.filterLambda = lambdaExpression.Compile();
             }
             catch (System.Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
         {
             try
             {
-                return filterLambda(document);
+                return this.filterLambda(document);
             }
             catch (System.Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
         public override string ToString()
         {
-            return info?.ToString() ?? string.Empty;
+            return this.info?.ToString() ?? string.Empty;
         }
 
         internal static Expression ProduceFieldExpression(ParameterExpression documentExpression, string fieldName, FieldNameType fieldNameType)
@@ -403,18 +403,18 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
             {
                 case TypeCode.Boolean:
                     {
-                        ThrowOnInvalidFilter(fieldType, !comparandBoolean.HasValue);
+                        this.ThrowOnInvalidFilter(fieldType, !this.comparandBoolean.HasValue);
 
-                        switch (predicate)
+                        switch (this.predicate)
                         {
                             case Predicate.Equal:
                                 // fieldValue == this.comparandBoolean.Value;
-                                return Expression.Equal(fieldExpression, Expression.Constant(comparandBoolean.Value, isFieldTypeNullable ? typeof(bool?) : typeof(bool)));
+                                return Expression.Equal(fieldExpression, Expression.Constant(this.comparandBoolean.Value, isFieldTypeNullable ? typeof(bool?) : typeof(bool)));
                             case Predicate.NotEqual:
                                 // fieldValue != this.comparandBoolean.Value;
-                                return Expression.NotEqual(fieldExpression, Expression.Constant(comparandBoolean.Value, isFieldTypeNullable ? typeof(bool?) : typeof(bool)));
+                                return Expression.NotEqual(fieldExpression, Expression.Constant(this.comparandBoolean.Value, isFieldTypeNullable ? typeof(bool?) : typeof(bool)));
                             default:
-                                ThrowOnInvalidFilter(fieldType);
+                                this.ThrowOnInvalidFilter(fieldType);
                                 break;
                         }
                     }
@@ -437,17 +437,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                             object enumValue = null;
                             try
                             {
-                                enumValue = Enum.Parse(fieldType, comparand, true);
+                                enumValue = Enum.Parse(fieldType, this.comparand, true);
                             }
                             catch (System.Exception)
                             {
                                 // we must throw unless this.predicate is either Contains or DoesNotContain, in which case it's ok
-                                ThrowOnInvalidFilter(fieldType, predicate != Predicate.Contains && predicate != Predicate.DoesNotContain);
+                                this.ThrowOnInvalidFilter(fieldType, this.predicate != Predicate.Contains && this.predicate != Predicate.DoesNotContain);
                             }
 
                             Type enumUnderlyingType = fieldType.GetTypeInfo().GetEnumUnderlyingType();
 
-                            switch (predicate)
+                            switch (this.predicate)
                             {
                                 case Predicate.Equal:
                                     // fieldValue == enumValue
@@ -486,15 +486,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                                 case Predicate.Contains:
                                     // fieldValue.ToString(CultureInfo.InvariantCulture).IndexOf(this.comparand, StringComparison.OrdinalIgnoreCase) != -1
                                     Expression toStringCall = Expression.Call(fieldExpression, isFieldTypeNullable ? ValueTypeToStringMethodInfo : ObjectToStringMethodInfo);
-                                    Expression indexOfCall = Expression.Call(toStringCall, StringIndexOfMethodInfo, Expression.Constant(comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
+                                    Expression indexOfCall = Expression.Call(toStringCall, StringIndexOfMethodInfo, Expression.Constant(this.comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
                                     return Expression.NotEqual(indexOfCall, Expression.Constant(-1));
                                 case Predicate.DoesNotContain:
                                     // fieldValue.ToString(CultureInfo.InvariantCulture).IndexOf(this.comparand, StringComparison.OrdinalIgnoreCase) == -1
                                     toStringCall = Expression.Call(fieldExpression, isFieldTypeNullable ? ValueTypeToStringMethodInfo : ObjectToStringMethodInfo);
-                                    indexOfCall = Expression.Call(toStringCall, StringIndexOfMethodInfo, Expression.Constant(comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
+                                    indexOfCall = Expression.Call(toStringCall, StringIndexOfMethodInfo, Expression.Constant(this.comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
                                     return Expression.Equal(indexOfCall, Expression.Constant(-1));
                                 default:
-                                    ThrowOnInvalidFilter(fieldType);
+                                    this.ThrowOnInvalidFilter(fieldType);
                                     break;
                             }
                         }
@@ -507,54 +507,54 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                                                                       ? fieldExpression
                                                                       : Expression.ConvertChecked(fieldExpression, isFieldTypeNullable ? typeof(double?) : typeof(double));
 
-                            switch (predicate)
+                            switch (this.predicate)
                             {
                                 case Predicate.Equal:
-                                    ThrowOnInvalidFilter(fieldType, !comparandDouble.HasValue);
+                                    this.ThrowOnInvalidFilter(fieldType, !this.comparandDouble.HasValue);
                                     return Expression.Equal(
                                         fieldConvertedExpression,
-                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
+                                        Expression.Constant(this.comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
                                 case Predicate.NotEqual:
-                                    ThrowOnInvalidFilter(fieldType, !comparandDouble.HasValue);
+                                    this.ThrowOnInvalidFilter(fieldType, !this.comparandDouble.HasValue);
                                     return Expression.NotEqual(
                                         fieldConvertedExpression,
-                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
+                                        Expression.Constant(this.comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
                                 case Predicate.LessThan:
-                                    ThrowOnInvalidFilter(fieldType, !comparandDouble.HasValue);
+                                    this.ThrowOnInvalidFilter(fieldType, !this.comparandDouble.HasValue);
                                     return Expression.LessThan(
                                         fieldConvertedExpression,
-                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
+                                        Expression.Constant(this.comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
                                 case Predicate.GreaterThan:
-                                    ThrowOnInvalidFilter(fieldType, !comparandDouble.HasValue);
+                                    this.ThrowOnInvalidFilter(fieldType, !this.comparandDouble.HasValue);
                                     return Expression.GreaterThan(
                                         fieldConvertedExpression,
-                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
+                                        Expression.Constant(this.comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
                                 case Predicate.LessThanOrEqual:
-                                    ThrowOnInvalidFilter(fieldType, !comparandDouble.HasValue);
+                                    this.ThrowOnInvalidFilter(fieldType, !this.comparandDouble.HasValue);
                                     return Expression.LessThanOrEqual(
                                         fieldConvertedExpression,
-                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
+                                        Expression.Constant(this.comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
                                 case Predicate.GreaterThanOrEqual:
-                                    ThrowOnInvalidFilter(fieldType, !comparandDouble.HasValue);
+                                    this.ThrowOnInvalidFilter(fieldType, !this.comparandDouble.HasValue);
                                     return Expression.GreaterThanOrEqual(
                                         fieldConvertedExpression,
-                                        Expression.Constant(comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
+                                        Expression.Constant(this.comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
                                 case Predicate.Contains:
                                     // fieldValue.ToString(CultureInfo.InvariantCulture).IndexOf(this.comparand, StringComparison.OrdinalIgnoreCase) != -1
                                     Expression toStringCall = isFieldTypeNullable
                                                                   ? Expression.Call(fieldConvertedExpression, NullableDoubleToStringMethodInfo)
                                                                   : Expression.Call(fieldConvertedExpression, DoubleToStringMethodInfo, Expression.Constant(CultureInfo.InvariantCulture));
-                                    Expression indexOfCall = Expression.Call(toStringCall, StringIndexOfMethodInfo, Expression.Constant(comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
+                                    Expression indexOfCall = Expression.Call(toStringCall, StringIndexOfMethodInfo, Expression.Constant(this.comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
                                     return Expression.NotEqual(indexOfCall, Expression.Constant(-1));
                                 case Predicate.DoesNotContain:
                                     // fieldValue.ToString(CultureInfo.InvariantCulture).IndexOf(this.comparand, StringComparison.OrdinalIgnoreCase) == -1
                                     toStringCall = isFieldTypeNullable
                                                        ? Expression.Call(fieldConvertedExpression, NullableDoubleToStringMethodInfo)
                                                        : Expression.Call(fieldConvertedExpression, DoubleToStringMethodInfo, Expression.Constant(CultureInfo.InvariantCulture));
-                                    indexOfCall = Expression.Call(toStringCall, StringIndexOfMethodInfo, Expression.Constant(comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
+                                    indexOfCall = Expression.Call(toStringCall, StringIndexOfMethodInfo, Expression.Constant(this.comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
                                     return Expression.Equal(indexOfCall, Expression.Constant(-1));
                                 default:
-                                    ThrowOnInvalidFilter(fieldType);
+                                    this.ThrowOnInvalidFilter(fieldType);
                                     break;
                             }
                         }
@@ -565,23 +565,23 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                     {
                         Expression fieldValueOrEmptyString = Expression.Condition(Expression.Equal(fieldExpression, Expression.Constant(null)), Expression.Constant(string.Empty), fieldExpression);
 
-                        Expression indexOfCall = Expression.Call(fieldValueOrEmptyString, StringIndexOfMethodInfo, Expression.Constant(comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
+                        Expression indexOfCall = Expression.Call(fieldValueOrEmptyString, StringIndexOfMethodInfo, Expression.Constant(this.comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
 
-                        switch (predicate)
+                        switch (this.predicate)
                         {
                             case Predicate.Equal:
                                 // (fieldValue ?? string.Empty).Equals(this.comparand, StringComparison.OrdinalIgnoreCase)
-                                return Expression.Call(fieldValueOrEmptyString, StringEqualsMethodInfo, Expression.Constant(comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
+                                return Expression.Call(fieldValueOrEmptyString, StringEqualsMethodInfo, Expression.Constant(this.comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
                             case Predicate.NotEqual:
                                 // !(fieldValue ?? string.Empty).Equals(this.comparand, StringComparison.OrdinalIgnoreCase)
-                                return Expression.Not(Expression.Call(fieldValueOrEmptyString, StringEqualsMethodInfo, Expression.Constant(comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase)));
+                                return Expression.Not(Expression.Call(fieldValueOrEmptyString, StringEqualsMethodInfo, Expression.Constant(this.comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase)));
                             case Predicate.LessThan:
                             case Predicate.GreaterThan:
                             case Predicate.LessThanOrEqual:
                             case Predicate.GreaterThanOrEqual:
                                 // double.TryParse(fieldValue, out temp) && temp {<, <=, >, >=} comparandDouble
-                                ThrowOnInvalidFilter(fieldType, !comparandDouble.HasValue);
-                                return CreateStringToDoubleComparisonBlock(fieldExpression, predicate);
+                                this.ThrowOnInvalidFilter(fieldType, !this.comparandDouble.HasValue);
+                                return this.CreateStringToDoubleComparisonBlock(fieldExpression, this.predicate);
                             case Predicate.Contains:
                                 // fieldValue => (fieldValue ?? string.Empty).IndexOf(this.comparand, StringComparison.OrdinalIgnoreCase) != -1;
                                 return Expression.NotEqual(indexOfCall, Expression.Constant(-1));
@@ -589,7 +589,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                                 // fieldValue => (fieldValue ?? string.Empty).IndexOf(this.comparand, StringComparison.OrdinalIgnoreCase) == -1;
                                 return Expression.Equal(indexOfCall, Expression.Constant(-1));
                             default:
-                                ThrowOnInvalidFilter(fieldType);
+                                this.ThrowOnInvalidFilter(fieldType);
                                 break;
                         }
                     }
@@ -599,35 +599,35 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                     Type nullableUnderlyingType;
                     if (fieldType == typeof(TimeSpan))
                     {
-                        ThrowOnInvalidFilter(fieldType, !comparandTimeSpan.HasValue);
+                        this.ThrowOnInvalidFilter(fieldType, !this.comparandTimeSpan.HasValue);
                         if (fieldExpression.Type == typeof(string))
                         {
                             MethodInfo parseMethod = typeof(TimeSpan).GetMethod("Parse", new[] { typeof(string) });
                             fieldExpression = Expression.Call(parseMethod, fieldExpression);
                         }
 
-                        switch (predicate)
+                        switch (this.predicate)
                         {
                             case Predicate.Equal:
-                                Func<TimeSpan, bool> comparator = fieldValue => fieldValue == comparandTimeSpan.Value;
+                                Func<TimeSpan, bool> comparator = fieldValue => fieldValue == this.comparandTimeSpan.Value;
                                 return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
                             case Predicate.NotEqual:
-                                comparator = fieldValue => fieldValue != comparandTimeSpan.Value;
+                                comparator = fieldValue => fieldValue != this.comparandTimeSpan.Value;
                                 return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
                             case Predicate.LessThan:
-                                comparator = fieldValue => fieldValue < comparandTimeSpan.Value;
+                                comparator = fieldValue => fieldValue < this.comparandTimeSpan.Value;
                                 return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
                             case Predicate.GreaterThan:
-                                comparator = fieldValue => fieldValue > comparandTimeSpan.Value;
+                                comparator = fieldValue => fieldValue > this.comparandTimeSpan.Value;
                                 return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
                             case Predicate.LessThanOrEqual:
-                                comparator = fieldValue => fieldValue <= comparandTimeSpan.Value;
+                                comparator = fieldValue => fieldValue <= this.comparandTimeSpan.Value;
                                 return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
                             case Predicate.GreaterThanOrEqual:
-                                comparator = fieldValue => fieldValue >= comparandTimeSpan.Value;
+                                comparator = fieldValue => fieldValue >= this.comparandTimeSpan.Value;
                                 return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
                             default:
-                                ThrowOnInvalidFilter(fieldType);
+                                this.ThrowOnInvalidFilter(fieldType);
                                 break;
                         }
                     }
@@ -637,16 +637,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 
                         Expression fieldValueOrEmptyString = Expression.Condition(Expression.Equal(fieldExpression, Expression.Constant(null)), Expression.Constant(string.Empty), toStringCall);
 
-                        Expression indexOfCall = Expression.Call(fieldValueOrEmptyString, StringIndexOfMethodInfo, Expression.Constant(comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
+                        Expression indexOfCall = Expression.Call(fieldValueOrEmptyString, StringIndexOfMethodInfo, Expression.Constant(this.comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
 
-                        switch (predicate)
+                        switch (this.predicate)
                         {
                             case Predicate.Equal:
                                 // (fieldValue?.ToString() ?? string.Empty).Equals(this.comparand, StringComparison.OrdinalIgnoreCase)
-                                return Expression.Call(fieldValueOrEmptyString, StringEqualsMethodInfo, Expression.Constant(comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
+                                return Expression.Call(fieldValueOrEmptyString, StringEqualsMethodInfo, Expression.Constant(this.comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase));
                             case Predicate.NotEqual:
                                 // !(fieldValue?.ToString() ?? string.Empty).Equals(this.comparand, StringComparison.OrdinalIgnoreCase)
-                                return Expression.Not(Expression.Call(fieldValueOrEmptyString, StringEqualsMethodInfo, Expression.Constant(comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase)));
+                                return Expression.Not(Expression.Call(fieldValueOrEmptyString, StringEqualsMethodInfo, Expression.Constant(this.comparand), Expression.Constant(StringComparison.OrdinalIgnoreCase)));
                             case Predicate.Contains:
                                 // fieldValue => (fieldValue?.ToString() ?? string.Empty).IndexOf(this.comparand, StringComparison.OrdinalIgnoreCase) != -1;
                                 return Expression.NotEqual(indexOfCall, Expression.Constant(-1));
@@ -654,7 +654,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                                 // fieldValue => (fieldValue?.ToString() ?? string.Empty).IndexOf(this.comparand, StringComparison.OrdinalIgnoreCase) == -1;
                                 return Expression.Equal(indexOfCall, Expression.Constant(-1));
                             default:
-                                ThrowOnInvalidFilter(fieldType);
+                                this.ThrowOnInvalidFilter(fieldType);
                                 break;
                         }
                     }
@@ -665,7 +665,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                     }
                     else
                     {
-                        ThrowOnInvalidFilter(fieldType);
+                        this.ThrowOnInvalidFilter(fieldType);
                     }
 
                     break;
@@ -677,13 +677,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
         private Expression ProduceComparatorExpressionForAnyFieldCondition(ParameterExpression documentExpression)
         {
             // this.predicate is either Predicate.Contains or Predicate.DoesNotContain at this point
-            if (predicate != Predicate.Contains && predicate != Predicate.DoesNotContain)
+            if (this.predicate != Predicate.Contains && this.predicate != Predicate.DoesNotContain)
             {
                 throw new InvalidOperationException(
                     "ProduceComparatorExpressionForAnyFieldCondition is called while this.predicate is neither Predicate.Contains nor Predicate.DoesNotContain");
             }
 
-            Expression comparisonExpression = predicate == Predicate.Contains ? Expression.Constant(false) : Expression.Constant(true);
+            Expression comparisonExpression = this.predicate == Predicate.Contains ? Expression.Constant(false) : Expression.Constant(true);
 
             foreach (PropertyInfo propertyInfo in typeof(TTelemetry).GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
@@ -698,9 +698,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                             null,
                             ListKeyValuePairStringScanMethodInfo,
                             customDimensionsProperty,
-                            Expression.Constant(comparand));
+                            Expression.Constant(this.comparand));
 
-                        if (predicate == Predicate.DoesNotContain)
+                        if (this.predicate == Predicate.DoesNotContain)
                         {
                             propertyComparatorExpression = Expression.Not(propertyComparatorExpression);
                         }
@@ -713,9 +713,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                             null,
                             DictionaryStringDoubleScanMethodInfo,
                             customMetricsProperty,
-                            Expression.Constant(comparand));
+                            Expression.Constant(this.comparand));
 
-                        if (predicate == Predicate.DoesNotContain)
+                        if (this.predicate == Predicate.DoesNotContain)
                         {
                             propertyComparatorExpression = Expression.Not(propertyComparatorExpression);
                         }
@@ -724,10 +724,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
                     {
                         // regular property, create a comparator
                         Expression fieldExpression = ProduceFieldExpression(documentExpression, propertyInfo.Name, FieldNameType.FieldName);
-                        propertyComparatorExpression = ProduceComparatorExpressionForSingleFieldCondition(fieldExpression, propertyInfo.PropertyType);
+                        propertyComparatorExpression = this.ProduceComparatorExpressionForSingleFieldCondition(fieldExpression, propertyInfo.PropertyType);
                     }
 
-                    comparisonExpression = predicate == Predicate.Contains
+                    comparisonExpression = this.predicate == Predicate.Contains
                                                ? Expression.OrElse(comparisonExpression, propertyComparatorExpression)
                                                : Expression.AndAlso(comparisonExpression, propertyComparatorExpression);
                 }
@@ -749,16 +749,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
             switch (predicate)
             {
                 case Predicate.LessThan:
-                    comparisonExpression = Expression.LessThan(tempVariable, Expression.Constant(comparandDouble.Value));
+                    comparisonExpression = Expression.LessThan(tempVariable, Expression.Constant(this.comparandDouble.Value));
                     break;
                 case Predicate.LessThanOrEqual:
-                    comparisonExpression = Expression.LessThanOrEqual(tempVariable, Expression.Constant(comparandDouble.Value));
+                    comparisonExpression = Expression.LessThanOrEqual(tempVariable, Expression.Constant(this.comparandDouble.Value));
                     break;
                 case Predicate.GreaterThan:
-                    comparisonExpression = Expression.GreaterThan(tempVariable, Expression.Constant(comparandDouble.Value));
+                    comparisonExpression = Expression.GreaterThan(tempVariable, Expression.Constant(this.comparandDouble.Value));
                     break;
                 case Predicate.GreaterThanOrEqual:
-                    comparisonExpression = Expression.GreaterThanOrEqual(tempVariable, Expression.Constant(comparandDouble.Value));
+                    comparisonExpression = Expression.GreaterThanOrEqual(tempVariable, Expression.Constant(this.comparandDouble.Value));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(predicate));
@@ -775,7 +775,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
         {
             if (conditionToThrow)
             {
-                throw new ArgumentOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "The filter is invalid. Field: '{0}', field type: '{1}', predicate: '{2}', comparand: '{3}', document type: '{4}'", fieldName, fieldType?.FullName ?? "---", predicate, comparand, typeof(TTelemetry).FullName));
+                throw new ArgumentOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "The filter is invalid. Field: '{0}', field type: '{1}', predicate: '{2}', comparand: '{3}', document type: '{4}'", this.fieldName, fieldType?.FullName ?? "---", this.predicate, this.comparand, typeof(TTelemetry).FullName));
             }
         }
     }
