@@ -280,6 +280,25 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        public class ServiceBusBindToSessionMessageAndRenewMessageLock
+        {
+            internal static SettlementService SettlementService { get; set; }
+            public static async Task BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
+            {
+                Assert.AreEqual("foobar", message.Body.ToString());
+                var lockBefore = message.LockedUntil;
+                await SettlementService.RenewMessageLock(
+                    new RenewMessageLockRequest
+                    {
+                        Locktoken = message.LockToken,
+                    },
+                    new MockServerCallContext());
+                Assert.True(lockBefore < message.LockedUntil);
+                _waitHandle1.Set();
+            }
+        }
+
         public class ServiceBusBindToSessionMessageAndSetAndGet
         {
             internal static SettlementService SettlementService { get; set; }
@@ -287,16 +306,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
                 Assert.AreEqual("foobar", message.Body.ToString());
-                await SettlementService.Set(
-                    new SetRequest
+                await SettlementService.SetSessionState(
+                    new SetSessionStateRequest
                     {
                         SessionId = message.SessionId,
                         SessionState = ByteString.CopyFromUtf8(message.Body.ToString())
                     },
                     new MockServerCallContext()
                  );
-                var test = await SettlementService.Get(
-                    new GetRequest
+                var test = await SettlementService.GetSessionState(
+                    new GetSessionStateRequest
                     {
                         SessionId = message.SessionId,
                     },
@@ -314,8 +333,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
                 Assert.AreEqual("foobar", message.Body.ToString());
-                await SettlementService.Release(
-                    new ReleaseSession
+                await SettlementService.ReleaseSession(
+                    new ReleaseSessionRequest
                     {
                         SessionId = message.SessionId
                     },
@@ -334,19 +353,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 Assert.AreEqual("foobar", message.Body.ToString());
                 // Check when the session lock is set to expire
-                var sessionLocked = await SettlementService.SessionLocked(
-                    new SessionLockedUntil
-                    {
-                        SessionId = message.SessionId,
-                    },
-                    new MockServerCallContext()
-                );
-                _waitHandle1.Set();
-                var lockedUntil = sessionLocked.LockedUntil.ToDateTime();
+                var lockedUntil = message.LockedUntil;
 
                 // Renew the session lock
-                await SettlementService.Renew(
-                    new RenewSessionLock
+                await SettlementService.RenewSessionLock(
+                    new RenewSessionLockRequest
                     {
                         SessionId = message.SessionId
                     },
@@ -354,18 +365,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 );
                 _waitHandle1.Set();
 
-                // Check when the session lock is set to expire
-                var sessionLockedAfter = await SettlementService.SessionLocked(
-                    new SessionLockedUntil
-                    {
-                        SessionId = message.SessionId,
-                    },
-                    new MockServerCallContext()
-                );
-                _waitHandle1.Set();
-                var lockedUntilAfter = sessionLockedAfter.LockedUntil.ToDateTime();
-
-                Assert.True(lockedUntil < lockedUntilAfter);
+                Assert.True(lockedUntil < message.LockedUntil);
             }
         }
 

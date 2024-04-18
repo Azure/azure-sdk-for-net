@@ -21,17 +21,20 @@ service Settlement {
   // Defers a message
   rpc Defer (DeferRequest) returns (google.protobuf.Empty) {}
 
-  // Get
-  rpc Get (GetRequest) returns (GetResponse) {}
+  // Renew message lock
+  rpc RenewMessageLock (RenewMessageLockRequest) returns (google.protobuf.Empty) {}
 
-  // Set
-  rpc Set (SetRequest) returns (google.protobuf.Empty) {}
+  // Get session state
+  rpc GetSessionState (GetSessionStateRequest) returns (GetSessionStateResponse) {}
 
-  // Release
-  rpc Release (ReleaseSession) returns (google.protobuf.Empty) {}
+  // Set session state
+  rpc SetSessionState (SetSessionStateRequest) returns (google.protobuf.Empty) {}
 
-  // Renew
-  rpc Renew (RenewSessionLock) returns (RenewSessionLockResponse) {}
+  // Release session
+  rpc ReleaseSession (ReleaseSessionRequest) returns (google.protobuf.Empty) {}
+
+  // Renew session lock
+  rpc RenewSessionLock (RenewSessionLockRequest) returns (RenewSessionLockResponse) {}
 }
 
 // The complete message request containing the locktoken.
@@ -59,29 +62,34 @@ message DeferRequest {
   bytes propertiesToModify = 2;
 }
 
+// The renew message lock request containing the locktoken.
+message RenewMessageLockRequest {
+  string locktoken = 1;
+}
+
 // The get message request.
-message GetRequest {
+message GetSessionStateRequest {
   string sessionId = 1;
 }
 
 // The set message request.
-message SetRequest {
+message SetSessionStateRequest {
   string sessionId = 1;
   bytes sessionState = 2;
 }
 
 // Get response containing the session state.
-message GetResponse {
+message GetSessionStateResponse {
   bytes sessionState = 1;
 }
 
 // Release session.
-message ReleaseSession {
+message ReleaseSessionRequest {
   string sessionId = 1;
 }
 
 // Renew session lock.
-message RenewSessionLock {
+message RenewSessionLockRequest {
   string sessionId = 1;
 }
 

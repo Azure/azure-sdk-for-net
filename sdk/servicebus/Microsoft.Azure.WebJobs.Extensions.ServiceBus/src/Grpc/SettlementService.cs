@@ -127,14 +127,34 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
             throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
 
-        public override async Task<GetResponse> Get(GetRequest request, ServerCallContext context)
+        public override async Task<Empty> RenewMessageLock(RenewMessageLockRequest request, ServerCallContext context)
+        {
+            try
+            {
+                if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
+                {
+                    await tuple.Actions.RenewMessageLockAsync(
+                        tuple.Message,
+                        context.CancellationToken).ConfigureAwait(false);
+                    return new Empty();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
+            }
+
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
+        }
+
+        public override async Task<GetSessionStateResponse> GetSessionState(GetSessionStateRequest request, ServerCallContext context)
         {
             try
             {
                 if (_provider.SessionActionsCache.TryGetValue(request.SessionId, out var actions))
                 {
                     var sessionState = await actions.GetSessionStateAsync(context.CancellationToken).ConfigureAwait(false);
-                    return new GetResponse
+                    return new GetSessionStateResponse
                     {
                         SessionState = ByteString.CopyFrom(sessionState)
                     };
@@ -148,7 +168,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
             throw new RpcException(new Status(StatusCode.FailedPrecondition, $"SessionId {request.SessionId} not found."));
         }
 
-        public override async Task<Empty> Set(SetRequest request, ServerCallContext context)
+        public override async Task<Empty> SetSessionState(SetSessionStateRequest request, ServerCallContext context)
         {
             try
             {
@@ -167,7 +187,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
             throw new RpcException(new Status(StatusCode.FailedPrecondition, $"SessionId {request.SessionId} not found."));
         }
 
-        public override Task<Empty> Release(ReleaseSession request, ServerCallContext context)
+        public override Task<Empty> ReleaseSession(ReleaseSessionRequest request, ServerCallContext context)
         {
             try
             {
@@ -185,7 +205,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
             throw new RpcException(new Status(StatusCode.FailedPrecondition, $"SessionId {request.SessionId} not found."));
         }
 
-        public override async Task<RenewSessionLockResponse> Renew(RenewSessionLock request, ServerCallContext context)
+        public override async Task<RenewSessionLockResponse> RenewSessionLock(RenewSessionLockRequest request, ServerCallContext context)
         {
             try
             {
