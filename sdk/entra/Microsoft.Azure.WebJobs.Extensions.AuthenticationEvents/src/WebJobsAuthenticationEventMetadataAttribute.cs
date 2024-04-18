@@ -1,20 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using System;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>EventMetadata enum attribute that controls the related request object, schemas and json payloads</summary>
-    /// <seealso cref="AuthenticationEventRequest{T, K}" />
+    /// <seealso cref="WebJobsAuthenticationEventRequest{T, K}" />
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
-    public class AuthenticationEventMetadataAttribute : Attribute
+    public class WebJobsAuthenticationEventMetadataAttribute : Attribute
     {
         /// <summary>Gets or sets the type of the request.</summary>
         /// <value>The type of the request.
         /// Which is must inherit EventRequest</value>
-        /// <seealso cref="AuthenticationEventRequest{T, K}" />
+        /// <seealso cref="WebJobsAuthenticationEventRequest{T, K}" />
         internal Type RequestType { get; set; }
         /// <summary>Gets or sets the request schema.
         /// The name of the schema file in the event folder.</summary>
@@ -32,16 +31,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <value>The Event Identifier.</value>
         internal string EventIdentifier { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventMetadataAttribute" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="WebJobsAuthenticationEventMetadataAttribute" /> class.</summary>
         /// <param name="requestType">Type of the request.</param>
         /// <param name="eventIdentifier">The event identifier.</param>
         /// <param name="eventNamespace">The name space related to the event</param>
         /// <param name="responseTemplate">The response template.
         /// Defaulted to ResponseTemplate.json</param>
         /// <exception cref="Exception">If the requestType in not of type EventRequest</exception>
-        internal AuthenticationEventMetadataAttribute(Type requestType, string eventIdentifier, string eventNamespace, string responseTemplate = "ResponseTemplate.json")
+        internal WebJobsAuthenticationEventMetadataAttribute(Type requestType, string eventIdentifier, string eventNamespace, string responseTemplate = "ResponseTemplate.json")
         {
-            if (!typeof(AuthenticationEventRequestBase).IsAssignableFrom(requestType))
+            if (!typeof(WebJobsAuthenticationEventRequestBase).IsAssignableFrom(requestType))
             {
                 throw new Exception(AuthenticationEventResource.Ex_Invalid_EventType);
             }

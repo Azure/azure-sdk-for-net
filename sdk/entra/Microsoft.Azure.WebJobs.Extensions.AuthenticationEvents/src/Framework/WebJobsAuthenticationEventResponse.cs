@@ -6,12 +6,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Represents an event response based on the event type and request.</summary>
-    public abstract class AuthenticationEventResponse : HttpResponseMessage
+    public abstract class WebJobsAuthenticationEventResponse : HttpResponseMessage
     {
         // internal HttpResponseMessage HttpResponseMessage { get; set; }
         /// <summary>Invalidates this instance. (Builds the Json payload).</summary>
@@ -42,10 +41,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <param name="type">The type to create.</param>
         /// <param name="body">The Json payload for the body.</param>
         /// <returns>A created instance of EventResponse based on the Type.</returns>
-        /// <seealso cref="AuthenticationEventResponse"/>
-        internal static AuthenticationEventResponse CreateInstance(Type type, string body)
+        /// <seealso cref="WebJobsAuthenticationEventResponse"/>
+        internal static WebJobsAuthenticationEventResponse CreateInstance(Type type, string body)
         {
-            AuthenticationEventResponse response = (AuthenticationEventResponse)Activator.CreateInstance(type, true);
+            WebJobsAuthenticationEventResponse response = (WebJobsAuthenticationEventResponse)Activator.CreateInstance(type, true);
             response.Body = body;
             return response;
         }

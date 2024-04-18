@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -12,22 +10,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
 {
     /// <summary>
     ///   <para>A representation of the onTokenIssuanceStart event request for preview_10_01_2021.</para>
-    ///   <para>Relates the EventResponse-TokenIssuanceStartResponse(preview_10_01_2021) and EventData-TokenIssuanceStartData(preview_10_01_2021).</para>
+    ///   <para>Relates the EventResponse-WebJobsTokenIssuanceStartResponse(preview_10_01_2021) and EventData-WebJobsTokenIssuanceStartData(preview_10_01_2021).</para>
     /// </summary>
     ///
     [Serializable]
-    public class TokenIssuanceStartRequest : CloudEventRequest<TokenIssuanceStartResponse, TokenIssuanceStartData>
+    public class WebJobsTokenIssuanceStartRequest : WebJobsAuthenticationEventsCloudEventRequest<WebJobsTokenIssuanceStartResponse, WebJobsTokenIssuanceStartData>
     {
-        /// <summary>Initializes a new instance of the <see cref="TokenIssuanceStartRequest" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="WebJobsTokenIssuanceStartRequest" /> class.</summary>
         /// <param name="request">The incoming HTTP request message.</param>
-        public TokenIssuanceStartRequest(HttpRequestMessage request) : base(request) { }
+        public WebJobsTokenIssuanceStartRequest(HttpRequestMessage request) : base(request) { }
 
         /// <summary>Gets or sets the token claims.</summary>
         /// <value>The token claims.</value>
         [JsonPropertyName("tokenClaims")]
         public Dictionary<string, string> TokenClaims { get; } = new Dictionary<string, string>();
 
-        internal override AuthenticationEventResponse GetResponseObject()
+        internal override WebJobsAuthenticationEventResponse GetResponseObject()
         {
             return Response;
         }

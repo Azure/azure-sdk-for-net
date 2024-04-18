@@ -12,14 +12,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     /// <summary>
     /// Static class to set the metric headers for each event trigger.
     /// </summary>
-    public sealed class EventTriggerMetrics
+    public sealed class WebJobsEventTriggerMetrics
     {
         /// <summary>
         /// Default constructor for eventmetrics
         /// </summary>
-        private EventTriggerMetrics()
+        private WebJobsEventTriggerMetrics()
         {
-            ProductVersion = typeof(EventTriggerMetrics).Assembly.GetName().Version.ToString();
+            ProductVersion = typeof(WebJobsEventTriggerMetrics).Assembly.GetName().Version.ToString();
             Framework = RuntimeInformation.FrameworkDescription;
             Platform = RuntimeInformation.OSDescription ?? "unknown";
         }
@@ -27,12 +27,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// Lazy immplementation to make sure that only one instance is created and returned, while delaying the creation till needed.
         /// </summary>
-        private static readonly Lazy<EventTriggerMetrics> lazyEventTrigger = new Lazy<EventTriggerMetrics>(() => new EventTriggerMetrics());
+        private static readonly Lazy<WebJobsEventTriggerMetrics> lazyEventTrigger = new Lazy<WebJobsEventTriggerMetrics>(() => new WebJobsEventTriggerMetrics());
 
         /// <summary>
         /// The singleton instance for event trigger metrics
         /// </summary>
-        public static EventTriggerMetrics Instance
+        public static WebJobsEventTriggerMetrics Instance
         {
             get
             {

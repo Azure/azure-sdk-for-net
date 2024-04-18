@@ -5,10 +5,10 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart
 {
     /// <summary>Represents the Role Data Model Object.</summary>
-    public class AuthenticationEventContextServicePrincipal
+    public class WebJobsAuthenticationEventsContextServicePrincipal
     {
         /// <summary>Gets the identifier.</summary>
         /// <value>The identifier.</value>

@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Abstract class that handles payload strongly typed payloads conversions.</summary>
-    public abstract class CloudEventData : AuthenticationEventData
+    public abstract class WebJobsAuthenticationEventsTypedData : WebJobsAuthenticationEventData
     {
         /// <summary>De-serializes the json the its associated typed object.</summary>
         /// <param name="cloudEvent">The json containing the typed structure.</param>
         /// <returns>Returns the typed structure that inherits EventData.</returns>
-        internal override AuthenticationEventData FromJson(AuthenticationEventJsonElement cloudEvent)
+        internal override WebJobsAuthenticationEventData FromJson(AuthenticationEventJsonElement cloudEvent)
         {
             //TODO: REMOVE!!!! THis is temporary to handle the legacy payload.
             if (cloudEvent != null)

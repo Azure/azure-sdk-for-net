@@ -4,11 +4,11 @@
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
 using Microsoft.Azure.WebJobs.Hosting;
 
-[assembly: WebJobsStartup(typeof(AuthenticationEventWebJobsStartup))]
+[assembly: WebJobsStartup(typeof(WebJobsAuthenticationEventWebJobsStartup))]
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Entry point for our trigger and bindings.</summary>
-    public class AuthenticationEventWebJobsStartup : IWebJobsStartup//fix
+    public class WebJobsAuthenticationEventWebJobsStartup : IWebJobsStartup//fix
     {
         /// <summary>Configures the specified builder.</summary>
         /// <param name="builder">The builder.</param>

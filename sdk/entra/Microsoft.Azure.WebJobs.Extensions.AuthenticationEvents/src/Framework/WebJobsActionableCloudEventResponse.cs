@@ -4,13 +4,13 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Abstract class for any responses that implement an cloud event payload and has actions on it.</summary>
     /// <typeparam name="T">Of type EventAction.</typeparam>
-    /// <seealso cref="AuthenticationEventAction" />
-    public abstract class ActionableCloudEventResponse<T> : ActionableResponse<T>
-        where T : AuthenticationEventAction
+    /// <seealso cref="WebJobsAuthenticationEventsAction" />
+    public abstract class WebJobsActionableCloudEventResponse<T> : WebJobsActionableResponse<T>
+        where T : WebJobsAuthenticationEventsAction
     {
         /// <summary>Gets the Cloud Event @odata.type.</summary>
         /// <value>Gets the Cloud Event @odata.type.</value>

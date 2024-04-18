@@ -1,36 +1,33 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart
 {
-    /// <summary>A representation of the ProvideClaimsForToken action.</summary>
-    public partial class ProvideClaimsForToken : TokenIssuanceAction
+    /// <summary>A representation of the WebJobsProvideClaimsForToken action.</summary>
+    public partial class WebJobsProvideClaimsForToken : WebJobsTokenIssuanceAction
     {
         /// <summary>Gets or sets the claims.</summary>
         /// <value>The claims.</value>
         [JsonPropertyName("claims")]
         [Required]
-        public List<TokenClaim> Claims { get; } = new List<TokenClaim>();
+        public List<WebjobsAuthenticationEventsTokenClaim> Claims { get; } = new List<WebjobsAuthenticationEventsTokenClaim>();
 
-        /// <summary>Gets the type of the action of ProvideClaimsForToken.</summary>
+        /// <summary>Gets the type of the action of WebJobsProvideClaimsForToken.</summary>
         /// <value>The type of the action.</value>
         [JsonPropertyName("actionType")]
         [OneOf("microsoft.graph.tokenIssuanceStart.provideClaimsForToken")]
         internal override string ActionType => "microsoft.graph.tokenIssuanceStart.provideClaimsForToken";
 
-        /// <summary>Initializes a new instance of the <see cref="ProvideClaimsForToken" /> class.</summary>
-        public ProvideClaimsForToken() { }
-        /// <summary>Initializes a new instance of the <see cref="ProvideClaimsForToken" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="WebJobsProvideClaimsForToken" /> class.</summary>
+        public WebJobsProvideClaimsForToken() { }
+        /// <summary>Initializes a new instance of the <see cref="WebJobsProvideClaimsForToken" /> class.</summary>
         /// <param name="claim">A collection of claims to add.</param>
-        public ProvideClaimsForToken(params TokenClaim[] claim)
+        public WebJobsProvideClaimsForToken(params WebjobsAuthenticationEventsTokenClaim[] claim)
         {
             if (claim != null)
             {
@@ -47,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <param name="Values">The claim values.</param>
         public void AddClaim(string Id, params string[] Values)
         {
-            Claims.Add(new TokenClaim(Id, Values));
+            Claims.Add(new WebjobsAuthenticationEventsTokenClaim(Id, Values));
         }
 
         /// <summary>Builds the action body.</summary>
@@ -65,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
             return new AuthenticationEventJsonElement(new Dictionary<string, object> { { "claims", jsonClaims } });
         }
 
-        /// <summary>Create the ProvideClaimsForToken action
+        /// <summary>Create the WebJobsProvideClaimsForToken action
         /// from Json. </summary>
         /// <param name="actionBody">The action body.</param>
         internal override void FromJson(AuthenticationEventJsonElement actionBody)

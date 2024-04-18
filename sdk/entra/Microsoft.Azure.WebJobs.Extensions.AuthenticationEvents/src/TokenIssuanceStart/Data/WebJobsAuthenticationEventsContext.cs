@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 using System;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart
 {
     /// <summary>Represents the Context Data Model Object.</summary>
-    public class AuthenticationEventContext
+    public class WebJobsAuthenticationEventsContext
     {
         /// <summary>Gets the correlation identifier.</summary>
         /// <value>The correlation identifier.</value>
@@ -18,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <summary>Gets the client.</summary>
         /// <value>The client.</value>
         [JsonPropertyName("client")]
-        public AuthenticationEventContextClient Client { get; set; }
+        public WebJobsAuthenticationEventsContextClient Client { get; set; }
 
         /// <summary>Gets the authentication protocol.</summary>
         /// <value>The authentication protocol.</value>
@@ -29,16 +28,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <summary>Gets the client service principal.</summary>
         /// <value>The client service principal.</value>
         [JsonPropertyName("clientServicePrincipal")]
-        public AuthenticationEventContextServicePrincipal ClientServicePrincipal { get; set; }
+        public WebJobsAuthenticationEventsContextServicePrincipal ClientServicePrincipal { get; set; }
 
         /// <summary>Gets the resource service principal.</summary>
         /// <value>The resource service principal.</value>
         [JsonPropertyName("resourceServicePrincipal")]
-        public AuthenticationEventContextServicePrincipal ResourceServicePrincipal { get; set; }
+        public WebJobsAuthenticationEventsContextServicePrincipal ResourceServicePrincipal { get; set; }
 
         /// <summary>Gets the user.</summary>
         /// <value>The user.</value>
         [JsonPropertyName("user")]
-        public AuthenticationEventContextUser User { get; set; }
+        public WebJobsAuthenticationEventsContextUser User { get; set; }
     }
 }

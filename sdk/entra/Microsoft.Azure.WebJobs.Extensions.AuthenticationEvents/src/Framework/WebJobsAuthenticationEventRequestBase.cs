@@ -7,19 +7,17 @@ using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using System.Web;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>The base class for all typed event requests.</summary>
-    public abstract class AuthenticationEventRequestBase
+    public abstract class WebJobsAuthenticationEventRequestBase
     {
         private readonly Dictionary<string, string> queryParameters;
-        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventRequestBase" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="WebJobsAuthenticationEventRequestBase" /> class.</summary>
         /// <param name="request">The HTTP request message.</param>
-        internal AuthenticationEventRequestBase(HttpRequestMessage request)
+        internal WebJobsAuthenticationEventRequestBase(HttpRequestMessage request)
         {
             HttpRequestMessage = request;
             queryParameters = HttpUtility.ParseQueryString(request.RequestUri.Query).ToDictionary();
@@ -39,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [JsonPropertyName("requestStatus")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         [Required]
-        public RequestStatusType RequestStatus { get; internal set; }
+        public WebJobsAuthenticationEventsRequestStatusType RequestStatus { get; internal set; }
 
         /// <summary>Gets or sets the status message.</summary>
         /// <value>The status message.</value>
@@ -69,15 +67,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         internal virtual JsonSerializerOptions JsonSerializerOptions => new JsonSerializerOptions() { WriteIndented = true, PropertyNameCaseInsensitive = true };
 
-        internal abstract AuthenticationEventResponse GetResponseObject();
+        internal abstract WebJobsAuthenticationEventResponse GetResponseObject();
 
         /// <summary>Set the response to Failed mode.</summary>
         /// <param name="exception">The exception to return in the response.</param>
         /// <returns>The Underlying AuthEventResponse.</returns>
-        public abstract AuthenticationEventResponse Failed(Exception exception);
+        public abstract WebJobsAuthenticationEventResponse Failed(Exception exception);
 
         /// <summary>Validates the response and creates the IActionResult with the json payload based on the status of the request.</summary>
         /// <returns>IActionResult based on the EventStatus (UnauthorizedResult, BadRequestObjectResult or JsonResult).</returns>
-        public abstract AuthenticationEventResponse Completed();
+        public abstract WebJobsAuthenticationEventResponse Completed();
     }
 }
