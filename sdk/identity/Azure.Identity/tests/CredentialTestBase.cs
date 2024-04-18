@@ -416,6 +416,7 @@ namespace Azure.Identity.Tests
             {
                 Transport = mockTransport,
                 TenantId = TenantId,
+                RedirectUri =  new Uri("http://localhost:8400/")
             };
             var credential = GetTokenCredential(config);
             if (!CredentialTestHelpers.IsMsalCredential(credential))
@@ -708,6 +709,7 @@ namespace Azure.Identity.Tests
             public TokenRequestContext RequestContext { get; set; }
             public string TenantId { get; set; }
             public IList<string> AdditionallyAllowedTenants { get; set; } = new List<string>();
+            public Uri RedirectUri { get; set; }
             internal TenantIdResolverBase TestTentantIdResolver { get; set; }
             internal MockMsalConfidentialClient MockConfidentialMsalClient { get; set; }
             internal MockMsalPublicClient MockPublicMsalClient { get; set; }
