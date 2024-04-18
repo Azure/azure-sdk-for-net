@@ -1,14 +1,8 @@
 # Release History
 
-## 5.3.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 5.3.0 (2024-04-18)
+- Includes all features from 5.3.0-beta.1.
+- Bumped Azure.Identity dependency to 1.11.1 to resolve secruity vulnerability.
 
 ## 5.3.0-beta.1 (2024-04-15)
 - When binding to a CancellationToken, the token will no longer be signaled when in Drain Mode. To detect if the function app is in Drain Mode, use dependency injection to inject the IDrainModeManager, and check the IsDrainModeEnabled property.
