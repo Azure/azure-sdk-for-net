@@ -30,14 +30,14 @@
     <!--<ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />-->
   </ItemGroup>
 
-  <!-- Shared source from Azure.Core -->
+  <!-- Shared sources from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEvent.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
-  <!-- Shared sorce from Azure.Monitor.OpenTelemetry.Exporter -->
+  <!-- Shared sources from Azure.Monitor.OpenTelemetry.Exporter -->
   <ItemGroup>
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ConnectionString\*.cs" LinkBase="Shared\Exporter\ConnectionString" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\Platform\*.cs" LinkBase="Shared\Exporter\Platform" />
