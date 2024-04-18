@@ -9,7 +9,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MigrationDiscoverySap.Models;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap
 {
@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         OperationStatusResult IOperationSource<OperationStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            return JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
+            return OperationStatusResult.DeserializeOperationStatusResult(document.RootElement);
         }
 
         async ValueTask<OperationStatusResult> IOperationSource<OperationStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
+            return OperationStatusResult.DeserializeOperationStatusResult(document.RootElement);
         }
     }
 }

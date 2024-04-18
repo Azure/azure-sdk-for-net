@@ -10,19 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.Monitor.Models
+namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
-    public partial class MonitorPrivateLinkScopeOperationStatus : IUtf8JsonSerializable, IJsonModel<MonitorPrivateLinkScopeOperationStatus>
+    public partial class OperationStatusResult : IUtf8JsonSerializable, IJsonModel<OperationStatusResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorPrivateLinkScopeOperationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationStatusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MonitorPrivateLinkScopeOperationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OperationStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorPrivateLinkScopeOperationStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationStatusResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,34 +37,32 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status);
+            if (Optional.IsDefined(PercentComplete))
+            {
+                writer.WritePropertyName("percentComplete"u8);
+                writer.WriteNumberValue(PercentComplete.Value);
+            }
             if (Optional.IsDefined(StartOn))
             {
-                if (StartOn != null)
-                {
-                    writer.WritePropertyName("startTime"u8);
-                    writer.WriteStringValue(StartOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("startTime");
-                }
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(EndOn))
             {
-                if (EndOn != null)
-                {
-                    writer.WritePropertyName("endTime"u8);
-                    writer.WriteStringValue(EndOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("endTime");
-                }
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Status))
+            if (Optional.IsCollectionDefined(Operations))
             {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
+                writer.WritePropertyName("operations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Operations)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Error))
             {
@@ -88,19 +87,19 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteEndObject();
         }
 
-        MonitorPrivateLinkScopeOperationStatus IJsonModel<MonitorPrivateLinkScopeOperationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        OperationStatusResult IJsonModel<OperationStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorPrivateLinkScopeOperationStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationStatusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonitorPrivateLinkScopeOperationStatus(document.RootElement, options);
+            return DeserializeOperationStatusResult(document.RootElement, options);
         }
 
-        internal static MonitorPrivateLinkScopeOperationStatus DeserializeMonitorPrivateLinkScopeOperationStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static OperationStatusResult DeserializeOperationStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -110,9 +109,11 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             string id = default;
             string name = default;
+            string status = default;
+            float? percentComplete = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
-            string status = default;
+            IReadOnlyList<ResourceManager.Models.OperationStatusResult> operations = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -128,11 +129,24 @@ namespace Azure.ResourceManager.Monitor.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("status"u8))
+                {
+                    status = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("percentComplete"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    percentComplete = property.Value.GetSingle();
+                    continue;
+                }
                 if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        startTime = null;
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -142,15 +156,23 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endTime = null;
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (property.NameEquals("operations"u8))
                 {
-                    status = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceManager.Models.OperationStatusResult> array = new List<ResourceManager.Models.OperationStatusResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(JsonSerializer.Deserialize<ResourceManager.Models.OperationStatusResult>(item.GetRawText()));
+                    }
+                    operations = array;
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -168,45 +190,47 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MonitorPrivateLinkScopeOperationStatus(
+            return new OperationStatusResult(
                 id,
                 name,
+                status,
+                percentComplete,
                 startTime,
                 endTime,
-                status,
+                operations ?? new ChangeTrackingList<ResourceManager.Models.OperationStatusResult>(),
                 error,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MonitorPrivateLinkScopeOperationStatus>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<OperationStatusResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorPrivateLinkScopeOperationStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MonitorPrivateLinkScopeOperationStatus IPersistableModel<MonitorPrivateLinkScopeOperationStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        OperationStatusResult IPersistableModel<OperationStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopeOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMonitorPrivateLinkScopeOperationStatus(document.RootElement, options);
+                        return DeserializeOperationStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorPrivateLinkScopeOperationStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MonitorPrivateLinkScopeOperationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OperationStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
