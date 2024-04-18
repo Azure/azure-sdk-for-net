@@ -13,6 +13,7 @@ using Azure.Core.TestFramework;
 using ClientModel.Tests.Mocks;
 using ClientModel.Tests;
 using NUnit.Framework;
+using System.IO;
 
 namespace System.ClientModel.Tests.Internal
 {
@@ -261,28 +262,28 @@ namespace System.ClientModel.Tests.Internal
                     logContent: true,
                     maxLength: int.MaxValue,
                     assemblyName: "Test-SDK",
-                    requestIdHeaderName: "Client-Identifier",
+                    requestIdHeaderName: "x-client-id",
                     loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, int.MaxValue, _sanitizer, "Test-SDK") });
-            string requestId = null;
+            PipelineMessage message = pipeline.CreateMessage();
+            message.Request.Method = "GET";
+            message.Request.Uri = new Uri("http://example.com");
+            message.Request.Headers.Add("Custom-Header", "Value");
+            message.Request.Headers.Add("x-client-id", "client1");
+            message.Request.Headers.Add("Date", "3/28/2024");
+            message.Request.Headers.Add("Content-Type", "text/json");
+            message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
+            message.Request.Headers.Add("x-client-id", "client-id");
 
-            await SendRequestAsync(pipeline, request =>
-            {
-                request.Method = RequestMethod.Get;
-                request.Uri.Reset(new Uri("https://contoso.a.io"));
-                request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
-                request.Headers.Add("Content-Type", "text/json");
-                requestId = request.ClientRequestId;
-            });
+            await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestContentTextEvent);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
             Assert.AreEqual("RequestContentText", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
+            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello world", e.GetProperty<string>("content"));
 
             CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
@@ -291,21 +292,34 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task ContentIsNotLoggedAsTextWhenDisabled()
         {
-            var response = new MockResponse(500);
+            var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Content-Type", "text/json" } });
+            var response = new MockPipelineResponse(500);
             response.ContentStream = new MemoryStream(new byte[] { 1, 2, 3 });
-            response.AddHeader(new HttpHeader("Content-Type", "text/json"));
 
-            MockTransport mockTransport = CreateMockTransport(response);
-
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, _sanitizer, "Test-SDK") });
-
-            await SendRequestAsync(pipeline, request =>
+            ClientPipelineOptions options = new()
             {
-                request.Method = RequestMethod.Get;
-                request.Uri.Reset(new Uri("https://contoso.a.io"));
-                request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
-                request.Headers.Add("Content-Type", "text/json");
-            });
+                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                LoggingPolicy = new ClientLoggingPolicy(
+                    logContent: false,
+                    maxLength: int.MaxValue,
+                    assemblyName: "Test-SDK",
+                    requestIdHeaderName: "x-client-id",
+                    loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
+            };
+
+            ClientPipeline pipeline = ClientPipeline.Create(options);
+
+            PipelineMessage message = pipeline.CreateMessage();
+            message.Request.Method = "GET";
+            message.Request.Uri = new Uri("http://example.com");
+            message.Request.Headers.Add("Custom-Header", "Value");
+            message.Request.Headers.Add("Client-Identifier", "client1");
+            message.Request.Headers.Add("Date", "3/28/2024");
+            message.Request.Headers.Add("Content-Type", "text/json");
+            message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
+            message.Request.Headers.Add("x-client-id", "client-id");
+
+            await pipeline.SendSyncOrAsync(message, IsAsync);
 
             AssertNoContentLogged();
         }
@@ -313,19 +327,29 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task ContentIsNotLoggedWhenDisabled()
         {
-            var response = new MockResponse(500);
+            var response = new MockPipelineResponse(500);
             response.ContentStream = new NonSeekableMemoryStream(new byte[] { 1, 2, 3 });
 
-            MockTransport mockTransport = CreateMockTransport(response);
-
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, _sanitizer, "Test-SDK") });
-
-            await SendRequestAsync(pipeline, request =>
+            ClientPipelineOptions options = new()
             {
-                request.Method = RequestMethod.Get;
-                request.Uri.Reset(new Uri("https://contoso.a.io"));
-                request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
-            });
+                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                LoggingPolicy = new ClientLoggingPolicy(
+                    logContent: false,
+                    maxLength: int.MaxValue,
+                    assemblyName: "Test-SDK",
+                    requestIdHeaderName: "Client-Identifier",
+                    loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
+            };
+
+            ClientPipeline pipeline = ClientPipeline.Create(options);
+
+            PipelineMessage message = pipeline.CreateMessage();
+            message.Request.Method = "GET";
+            message.Request.Uri = new Uri("http://example.com");
+            message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
+            message.Request.Headers.Add("x-client-id", "client-id");
+
+            await pipeline.SendSyncOrAsync(message, IsAsync);
 
             AssertNoContentLogged();
         }
@@ -333,19 +357,28 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task RequestContentIsNotLoggedWhenDisabled()
         {
-            var response = new MockResponse(500);
+            var response = new MockPipelineResponse(500);
             response.ContentStream = new MemoryStream(new byte[] { 1, 2, 3 });
 
-            MockTransport mockTransport = CreateMockTransport(response);
-
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, _sanitizer, "Test-SDK") });
-
-            await SendRequestAsync(pipeline, request =>
+            ClientPipelineOptions options = new()
             {
-                request.Method = RequestMethod.Get;
-                request.Uri.Reset(new Uri("https://contoso.a.io"));
-                request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
-            });
+                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                LoggingPolicy = new ClientLoggingPolicy(
+                    logContent: false,
+                    maxLength: int.MaxValue,
+                    assemblyName: "Test-SDK",
+                    requestIdHeaderName: "Client-Identifier",
+                    loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
+            };
+
+            ClientPipeline pipeline = ClientPipeline.Create(options);
+
+            PipelineMessage message = pipeline.CreateMessage();
+            message.Request.Method = "GET";
+            message.Request.Uri = new Uri("http://example.com");
+            message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
+
+            await pipeline.SendSyncOrAsync(message, IsAsync);
 
             AssertNoContentLogged();
         }
@@ -367,7 +400,7 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task NonSeekableResponsesAreLoggedInBlocks()
         {
-            Response response = await SendRequest(isSeekable: false, isError: false);
+            MockPipelineResponse response = await SendRequest(isSeekable: false, isError: false);
 
             EventWrittenEventArgs[] contentEvents = _listener.EventsById(ResponseContentBlockEvent).ToArray();
 
@@ -375,13 +408,13 @@ namespace System.ClientModel.Tests.Internal
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
             Assert.AreEqual("ResponseContentBlock", contentEvents[0].EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual("client1", contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, contentEvents[0].GetProperty<byte[]>("content"));
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
             Assert.AreEqual("ResponseContentBlock", contentEvents[1].EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvents[1].GetProperty<string>("requestId"));
+            Assert.AreEqual("client1", contentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, contentEvents[1].GetProperty<byte[]>("content"));
 
@@ -391,7 +424,7 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task NonSeekableResponsesErrorsAreLoggedInBlocks()
         {
-            Response response = await SendRequest(isSeekable: false, isError: true);
+            MockPipelineResponse response = await SendRequest(isSeekable: false, isError: true);
 
             EventWrittenEventArgs[] errorContentEvents = _listener.EventsById(ErrorResponseContentBlockEvent).ToArray();
 
@@ -399,13 +432,13 @@ namespace System.ClientModel.Tests.Internal
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
             Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[0].EventName);
-            Assert.AreEqual(response.ClientRequestId, errorContentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual("client-id", errorContentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, errorContentEvents[0].GetProperty<byte[]>("content"));
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
             Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[1].EventName);
-            Assert.AreEqual(response.ClientRequestId, errorContentEvents[1].GetProperty<string>("requestId"));
+            Assert.AreEqual("client-id", errorContentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, errorContentEvents[1].GetProperty<byte[]>("content"));
 
@@ -415,10 +448,10 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task NonSeekableResponsesAreLoggedInTextBlocks()
         {
-            Response response = await SendRequest(
+            MockPipelineResponse response = await SendRequest(
                 isSeekable: false,
                 isError: false,
-                mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
+                mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } })
             );
 
             EventWrittenEventArgs[] contentEvents = _listener.EventsById(ResponseContentTextBlockEvent).ToArray();
@@ -427,13 +460,13 @@ namespace System.ClientModel.Tests.Internal
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
             Assert.AreEqual("ResponseContentTextBlock", contentEvents[0].EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual("client-id", contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
             Assert.AreEqual("Hello ", contentEvents[0].GetProperty<string>("content"));
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
             Assert.AreEqual("ResponseContentTextBlock", contentEvents[1].EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvents[1].GetProperty<string>("requestId"));
+            Assert.AreEqual("client-id", contentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
             Assert.AreEqual("world", contentEvents[1].GetProperty<string>("content"));
 
@@ -443,10 +476,10 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task NonSeekableResponsesErrorsAreLoggedInTextBlocks()
         {
-            Response response = await SendRequest(
+            MockPipelineResponse response = await SendRequest(
                 isSeekable: false,
                 isError: true,
-                mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
+                mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } })
             );
 
             EventWrittenEventArgs[] errorContentEvents = _listener.EventsById(ErrorResponseContentTextBlockEvent).ToArray();
@@ -455,13 +488,13 @@ namespace System.ClientModel.Tests.Internal
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
             Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[0].EventName);
-            Assert.AreEqual(response.ClientRequestId, errorContentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual("client-id", errorContentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
             Assert.AreEqual("Hello ", errorContentEvents[0].GetProperty<string>("content"));
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
             Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[1].EventName);
-            Assert.AreEqual(response.ClientRequestId, errorContentEvents[1].GetProperty<string>("requestId"));
+            Assert.AreEqual("client-id", errorContentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
             Assert.AreEqual("world", errorContentEvents[1].GetProperty<string>("content"));
 
@@ -471,27 +504,27 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task SeekableTextResponsesAreLoggedInText()
         {
-            Response response = await SendRequest(
+            MockPipelineResponse response = await SendRequest(
                 isSeekable: true,
                 isError: false,
-                mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
+                mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } })
             );
 
             EventWrittenEventArgs contentEvent = _listener.SingleEventById(ResponseContentTextEvent);
 
             Assert.AreEqual(EventLevel.Verbose, contentEvent.Level);
             Assert.AreEqual("ResponseContentText", contentEvent.EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvent.GetProperty<string>("requestId"));
+            Assert.AreEqual("client-id", contentEvent.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello world", contentEvent.GetProperty<string>("content"));
         }
 
         [Test]
         public async Task SeekableTextResponsesErrorsAreLoggedInText()
         {
-            Response response = await SendRequest(
+            MockPipelineResponse response = await SendRequest(
                 isSeekable: true,
                 isError: true,
-                mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml")),
+                mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } }),
                 maxLength: 5
             );
 
@@ -499,17 +532,17 @@ namespace System.ClientModel.Tests.Internal
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvent.Level);
             Assert.AreEqual("ErrorResponseContentText", errorContentEvent.EventName);
-            Assert.AreEqual(response.ClientRequestId, errorContentEvent.GetProperty<string>("requestId"));
+            Assert.AreEqual("client-id", errorContentEvent.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello", errorContentEvent.GetProperty<string>("content"));
         }
 
         [Test]
         public async Task SeekableTextResponsesAreLimitedInLength()
         {
-            Response response = await SendRequest(
+            MockPipelineResponse response = await SendRequest(
                 isSeekable: true,
                 isError: false,
-                mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml")),
+                mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } }),
                 maxLength: 5
             );
 
@@ -517,32 +550,41 @@ namespace System.ClientModel.Tests.Internal
 
             Assert.AreEqual(EventLevel.Verbose, contentEvent.Level);
             Assert.AreEqual("ResponseContentText", contentEvent.EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvent.GetProperty<string>("requestId"));
+            Assert.AreEqual("client-id", contentEvent.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello", contentEvent.GetProperty<string>("content"));
         }
 
         [Test]
         public async Task RequestContentLogsAreLimitedInLength()
         {
-            var response = new MockResponse(500);
-            MockTransport mockTransport = CreateMockTransport(response);
+            var response = new MockPipelineResponse(500);
 
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, 5, _sanitizer, "Test-SDK") });
-            string requestId = null;
-
-            await SendRequestAsync(pipeline, request =>
+            ClientPipelineOptions options = new()
             {
-                request.Method = RequestMethod.Get;
-                request.Uri.Reset(new Uri("https://contoso.a.io"));
-                request.Content = RequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
-                request.Headers.Add("Content-Type", "text/json");
-                requestId = request.ClientRequestId;
-            });
+                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                LoggingPolicy = new ClientLoggingPolicy(
+                    logContent: true,
+                    maxLength: 5,
+                    assemblyName: "Test-SDK",
+                    requestIdHeaderName: "Client-Identifier",
+                    loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
+            };
+
+            ClientPipeline pipeline = ClientPipeline.Create(options);
+
+            PipelineMessage message = pipeline.CreateMessage();
+            message.Request.Method = "GET";
+            message.Request.Uri = new Uri("http://example.com");
+            message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
+            message.Request.Headers.Add("Content-Type", "text/json");
+            message.Request.Headers.Add("Client-Identifier", "client1");
+
+            await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestContentTextEvent);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
             Assert.AreEqual("RequestContentText", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
+            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello", e.GetProperty<string>("content"));
 
             CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
@@ -551,10 +593,10 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task NonSeekableResponsesAreLimitedInLength()
         {
-            Response response = await SendRequest(
+            MockPipelineResponse response = await SendRequest(
                 isSeekable: false,
                 isError: false,
-                mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml")),
+                mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } }),
                 maxLength: 5
             );
 
@@ -564,7 +606,7 @@ namespace System.ClientModel.Tests.Internal
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
             Assert.AreEqual("ResponseContentTextBlock", contentEvents[0].EventName);
-            Assert.AreEqual(response.ClientRequestId, contentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual("client-id", contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
             Assert.AreEqual("Hello", contentEvents[0].GetProperty<string>("content"));
 
@@ -574,31 +616,38 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task HeadersAndQueryParametersAreSanitized()
         {
-            var response = new MockResponse(200);
+            var mockHeaders = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Improved value" }, { "Secret-Response-Header", "Very secret" } });
+            var response = new MockPipelineResponse(200);
             response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
-            response.AddHeader(new HttpHeader("Custom-Response-Header", "Improved value"));
-            response.AddHeader(new HttpHeader("Secret-Response-Header", "Very secret"));
 
-            MockTransport mockTransport = CreateMockTransport(response);
-
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, _sanitizer, "Test-SDK") });
-            string requestId = null;
-
-            await SendRequestAsync(pipeline, request =>
+            ClientPipelineOptions options = new()
             {
-                request.Method = RequestMethod.Get;
-                request.Uri.Reset(new Uri("https://contoso.a.io?api-version=5&secret=123"));
-                request.Headers.Add("Date", "3/26/2019");
-                request.Headers.Add("Custom-Header", "Value");
-                request.Headers.Add("Secret-Custom-Header", "Value");
-                request.Content = RequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
-                requestId = request.ClientRequestId;
-            });
+                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                LoggingPolicy = new ClientLoggingPolicy(
+                    logContent: false,
+                    maxLength: int.MaxValue,
+                    assemblyName: "Test-SDK",
+                    requestIdHeaderName: "Client-Identifier",
+                    loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
+            };
+
+            ClientPipeline pipeline = ClientPipeline.Create(options);
+
+            PipelineMessage message = pipeline.CreateMessage();
+            message.Request.Method = "GET";
+            message.Request.Uri = new Uri("https://contoso.a.io?api-version=5&secret=123");
+            message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
+            message.Request.Headers.Add("Content-Type", "text/json");
+            message.Request.Headers.Add("Client-Identifier", "client1");
+            message.Request.Headers.Add("Date", "4/18/2024");
+            message.Request.Headers.Add("Secret-Custom-Header", "Value");
+
+            await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Request", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
+            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
             Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=REDACTED", e.GetProperty<string>("uri"));
             Assert.AreEqual("GET", e.GetProperty<string>("method"));
             StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
@@ -609,7 +658,7 @@ namespace System.ClientModel.Tests.Internal
             e = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Response", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
+            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
             Assert.AreEqual(e.GetProperty<int>("status"), 200);
             StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Secret-Response-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
@@ -618,31 +667,39 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task HeadersAndQueryParametersAreNotSanitizedWhenStars()
         {
-            var response = new MockResponse(200);
+            var mockHeaders = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Improved value" }, { "Secret-Response-Header", "Very secret" } });
+            var response = new MockPipelineResponse(200, mockHeaders: mockHeaders);
             response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
-            response.AddHeader(new HttpHeader("Custom-Response-Header", "Improved value"));
-            response.AddHeader(new HttpHeader("Secret-Response-Header", "Very secret"));
 
-            MockTransport mockTransport = CreateMockTransport(response);
-
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: false, int.MaxValue, new HttpMessageSanitizer(new[] { "*" }, new[] { "*" }), "Test-SDK") });
-            string requestId = null;
-
-            await SendRequestAsync(pipeline, request =>
+            ClientPipelineOptions options = new()
             {
-                request.Method = RequestMethod.Get;
-                request.Uri.Reset(new Uri("https://contoso.a.io?api-version=5&secret=123"));
-                request.Headers.Add("Date", "3/26/2019");
-                request.Headers.Add("Custom-Header", "Value");
-                request.Headers.Add("Secret-Custom-Header", "Value");
-                request.Content = RequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
-                requestId = request.ClientRequestId;
-            });
+                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                LoggingPolicy = new ClientLoggingPolicy(
+                    logContent: false,
+                    maxLength: int.MaxValue,
+                    assemblyName: "Test-SDK",
+                    requestIdHeaderName: "Client-Identifier",
+                    loggedQueryParameters: new List<string>() { "*" },
+                    loggedHeaderNames: new List<string>() { "*" })
+            };
+
+            ClientPipeline pipeline = ClientPipeline.Create(options);
+
+            PipelineMessage message = pipeline.CreateMessage();
+            message.Request.Method = "GET";
+            message.Request.Uri = new Uri("https://contoso.a.io?api-version=5&secret=123");
+            message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
+            message.Request.Headers.Add("Content-Type", "text/json");
+            message.Request.Headers.Add("Client-Identifier", "client1");
+            message.Request.Headers.Add("Date", "4/18/2024");
+            message.Request.Headers.Add("Secret-Custom-Header", "Value");
+
+            await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Request", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
+            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
             Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=123", e.GetProperty<string>("uri"));
             Assert.AreEqual("GET", e.GetProperty<string>("method"));
             StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
@@ -653,39 +710,50 @@ namespace System.ClientModel.Tests.Internal
             e = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Response", e.EventName);
-            Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
+            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
             Assert.AreEqual(e.GetProperty<int>("status"), 200);
             StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Secret-Response-Header:Very secret{Environment.NewLine}", e.GetProperty<string>("headers"));
         }
 
-        private async Task<Response> SendRequest(bool isSeekable, bool isError, Action<MockResponse> setupRequest = null, int maxLength = int.MaxValue)
+        private async Task<MockPipelineResponse> SendRequest(bool isSeekable, bool isError, MockResponseHeaders? mockHeaders = default, int maxLength = int.MaxValue)
         {
-            var mockResponse = new MockResponse(isError ? 500 : 200);
+            var response = new MockPipelineResponse(isError ? 500 : 200, mockHeaders: mockHeaders);
             byte[] responseContent = Encoding.UTF8.GetBytes("Hello world");
             if (isSeekable)
             {
-                mockResponse.ContentStream = new MemoryStream(responseContent);
+                response.ContentStream = new MemoryStream(responseContent);
             }
             else
             {
-                mockResponse.ContentStream = new NonSeekableMemoryStream(responseContent);
+                response.ContentStream = new NonSeekableMemoryStream(responseContent);
             }
-            setupRequest?.Invoke(mockResponse);
 
-            MockTransport mockTransport = CreateMockTransport(mockResponse);
-            var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, maxLength, _sanitizer, "Test-SDK") });
-
-            Response response = await SendRequestAsync(pipeline, request =>
+            ClientPipelineOptions options = new()
             {
-                request.Method = RequestMethod.Get;
-                request.Uri.Reset(new Uri("https://contoso.a.io"));
-            },
+                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                LoggingPolicy = new ClientLoggingPolicy(
+                    logContent: true,
+                    maxLength: int.MaxValue,
+                    assemblyName: "Test-SDK",
+                    requestIdHeaderName: "x-client-id",
+                    loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
+            };
+
+            ClientPipeline pipeline = ClientPipeline.Create(options);
+
+            PipelineMessage message = pipeline.CreateMessage();
+            message.Request.Method = "GET";
+            message.Request.Uri = new Uri("http://example.com");
+            message.Request.Headers.Add("x-client-id", "client-id");
+
             // These tests are essentially testing whether the logging policy works
             // correctly when responses are buffered (memory stream) and unbuffered
             // (non-seekable). In order to validate the intent of the test, we set
             // message.BufferResponse accordingly here.
-            bufferResponse: isSeekable);
+            message.BufferResponse = isSeekable;
+
+            await pipeline.SendSyncOrAsync(message, IsAsync);
 
             var buffer = new byte[11];
 
@@ -702,7 +770,7 @@ namespace System.ClientModel.Tests.Internal
                 Assert.AreEqual(0, response.ContentStream.Read(buffer, 0, 5));
             }
 
-            return mockResponse;
+            return response;
         }
     }
 }
