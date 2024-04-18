@@ -10,20 +10,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
     using Azure.Monitor.OpenTelemetry.Exporter.Internals;
     using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 
-    /* Unmerged change from project 'Azure.Monitor.OpenTelemetry.AspNetCore (netstandard2.0)'
-    Before:
-    using ExceptionDocument = Azure.Monitor.OpenTelemetry.AspNetCore.Models.Exception;
-    After:
-        using ExceptionDocument = Models.Exception;
-        using Azure;
-        using Azure.Monitor;
-        using Azure.Monitor.OpenTelemetry;
-        using Azure.Monitor.OpenTelemetry.AspNetCore;
-        using Azure.Monitor.OpenTelemetry.AspNetCore.Internals;
-        using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
-        using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Filtering;
-        using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
-    */
     using ExceptionDocument = Models.Exception;
 
     /// <summary>
