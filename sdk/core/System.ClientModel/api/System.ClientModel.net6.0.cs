@@ -42,19 +42,6 @@ namespace System.ClientModel
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
 }
-namespace System.ClientModel.Diagnostics
-{
-    public partial class ClientEventSourceListener : System.Diagnostics.Tracing.EventListener
-    {
-        public const string TraitName = "ClientEventSource";
-        public const string TraitValue = "true";
-        public ClientEventSourceListener(System.Action<System.Diagnostics.Tracing.EventWrittenEventArgs, string> log, System.Diagnostics.Tracing.EventLevel level) { }
-        public static System.ClientModel.Diagnostics.ClientEventSourceListener CreateConsoleLogger(System.Diagnostics.Tracing.EventLevel level = System.Diagnostics.Tracing.EventLevel.Informational) { throw null; }
-        public static System.ClientModel.Diagnostics.ClientEventSourceListener CreateTraceLogger(System.Diagnostics.Tracing.EventLevel level = System.Diagnostics.Tracing.EventLevel.Informational) { throw null; }
-        protected sealed override void OnEventSourceCreated(System.Diagnostics.Tracing.EventSource eventSource) { }
-        protected sealed override void OnEventWritten(System.Diagnostics.Tracing.EventWrittenEventArgs eventData) { }
-    }
-}
 namespace System.ClientModel.Primitives
 {
     public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
@@ -74,8 +61,10 @@ namespace System.ClientModel.Primitives
     }
     public partial class ClientLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public ClientLoggingPolicy(string[] allowedQueryParameters, string[] allowedHeaders, bool isLoggingEnabled = true, string? clientRequestIdHeaderName = null, bool logContent = false, int maxLength = 100, string assemblyName = "System.ClientModel") { }
+        public ClientLoggingPolicy(bool isLoggingEnabled = true, System.Collections.Generic.List<string>? loggedHeaderNames = null, System.Collections.Generic.List<string>? loggedQueryParameters = null, string? requestIdHeaderName = null, bool logContent = false, int maxLength = 4096, string? assemblyName = null) { }
         public static System.ClientModel.Primitives.ClientLoggingPolicy Default { get { throw null; } }
+        public System.Collections.Generic.List<string> LoggedHeaderNames { get { throw null; } }
+        public System.Collections.Generic.List<string> LoggedQueryParameters { get { throw null; } }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
