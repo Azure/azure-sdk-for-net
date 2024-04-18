@@ -220,7 +220,7 @@ namespace Azure.Identity
                 };
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
             }
-            if (string.IsNullOrEmpty(claims))
+            if (!string.IsNullOrEmpty(claims))
             {
                 builder.WithClaims(claims);
             }
@@ -311,6 +311,10 @@ namespace Azure.Identity
                     Path = tenantId
                 };
                 builder.WithTenantIdFromAuthority(uriBuilder.Uri);
+            }
+            if (!string.IsNullOrEmpty(claims))
+            {
+                builder.WithClaims(claims);
             }
             return await builder
                 .ExecuteAsync(async, cancellationToken)
