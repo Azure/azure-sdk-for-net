@@ -5,6 +5,9 @@ parameters:
   - name: ArtifactName
     type: string
     default: packages
+  - name: ArtifactPath
+    type: string
+    default: $(Pipeline.Workspace)
   - name: DependsOn
     type: string
     default: Build
@@ -20,18 +23,20 @@ jobs:
     steps:
       - checkout: self
         fetchDepth: 0
-      - download: current
-        artifact: ${{parameters.ArtifactName}}
+
       - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
 
       - template: /eng/common/pipelines/templates/steps/create-apireview.yml
         parameters:
           Artifacts: ${{parameters.Artifacts}}
+          ArtifactPath: ${{parameters.ArtifactPath}}
 
       - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
         parameters:
           Artifacts: ${{ parameters.Artifacts }}
+          ArtifactPath: ${{parameters.ArtifactPath}}
 
       - template: /eng/common/pipelines/templates/steps/validate-all-packages.yml
         parameters:
           Artifacts: ${{ parameters.Artifacts }}
+          ArtifactPath: ${{parameters.ArtifactPath}}
