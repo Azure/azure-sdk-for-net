@@ -767,7 +767,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [TestCase(false)]
         [TestCase(true)]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
-        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        //[LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task CreateAsync_CPK(bool createIfNotExists)
         {
             // Arrange
@@ -872,7 +872,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
-        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        //[LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task CreateIfNotExistsAsync_CPK()
         {
             // Arrange
@@ -1359,7 +1359,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
-        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        //[LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task RenameAsync_CPK()
         {
             // Arrange
@@ -2305,7 +2305,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
-        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        //[LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task GetSetPropertiesAsync_CPK()
         {
             // Arrange
@@ -2964,7 +2964,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        //[LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task AppendFlushReadAsync_CPK()
         {
             // Arrange

@@ -44,7 +44,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43401")]
+        //[LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43401")]
         public void ValidateUserAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.ArcEnable))

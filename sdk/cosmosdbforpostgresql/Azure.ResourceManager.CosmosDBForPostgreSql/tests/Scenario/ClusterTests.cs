@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
 
         [TestCase]
         [RecordedTest]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43401")]
+        //[LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43401")]
         public async Task CreateGetList()
         {
             // Create
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
 
         [TestCase]
         [RecordedTest]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43401")]
+        //[LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43401")]
         public async Task CreateUpdateGetDelete()
         {
             // Create

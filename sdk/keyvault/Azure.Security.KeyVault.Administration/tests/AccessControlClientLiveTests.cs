@@ -143,7 +143,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
+        //[LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task CreateRoleAssignment()
         {
             List<KeyVaultRoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
@@ -162,7 +162,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
+        //[LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task CreateKeysRoleAssignment()
         {
             List<KeyVaultRoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);
@@ -181,7 +181,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
+        //[LiveOnly(Reason = "PrincipalId cannot be stored in test recordings.")]
         public async Task CreateKeyRoleAssignment()
         {
             List<KeyVaultRoleDefinition> definitions = await Client.GetRoleDefinitionsAsync(KeyVaultRoleScope.Global).ToEnumerableAsync().ConfigureAwait(false);

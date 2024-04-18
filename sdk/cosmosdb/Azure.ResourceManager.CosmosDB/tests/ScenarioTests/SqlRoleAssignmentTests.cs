@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly]
+        //[LiveOnly]
         public async Task SqlRoleAssignmentCreateAndUpdate()
         {
             var assignment = await CreateSqlRoleAssignment();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly]
+        //[LiveOnly]
         public async Task SqlRoleAssignmentList()
         {
             var assignment = await CreateSqlRoleAssignment();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
-        [LiveOnly]
+        //[LiveOnly]
         public async Task SqlRoleAssignmentDelete()
         {
             var assignment = await CreateSqlRoleAssignment();

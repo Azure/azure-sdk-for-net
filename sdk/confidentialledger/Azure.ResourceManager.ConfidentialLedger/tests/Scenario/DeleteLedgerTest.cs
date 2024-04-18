@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
 
         [Test, Order(1)]
         [RecordedTest]
-        [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
+        //[LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
         public async Task TestDeleteLedger()
         {
             await _ledgerResource.DeleteAsync(WaitUntil.Completed);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
 
         [Test, Order(2)]
         [RecordedTest]
-        [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
+        //[LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
         public async Task TestDeleteLedgerOnDeletedLedger()
         {
             await _ledgerResource.DeleteAsync(WaitUntil.Completed);

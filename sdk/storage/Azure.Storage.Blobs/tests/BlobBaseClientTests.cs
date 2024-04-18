@@ -678,7 +678,7 @@ namespace Azure.Storage.Blobs.Test
         #endregion
 
         [RecordedTest]
-        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        //[LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task DownloadAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -701,7 +701,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        //[LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task DownloadAsync_CPK_Streaming()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -724,7 +724,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        //[LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task DownloadAsync_CPK_BinaryData()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -4137,7 +4137,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        //[LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task GetPropertiesAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -7596,7 +7596,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        //[LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
         public async Task WithCustomerProvidedKey()
         {
             // Arrange

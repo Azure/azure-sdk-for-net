@@ -46,7 +46,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [RecordedTest]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43401")]
+        //[LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/43401")]
         public async Task ValidateImdsUserAssignedIdentity()
         {
             if (string.IsNullOrEmpty(TestEnvironment.IMDSEnable))
