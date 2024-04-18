@@ -5,7 +5,7 @@ using System.Reflection;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
 using Azure.Monitor.OpenTelemetry.Exporter;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -123,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                                 return true;
                             })
                             .AddProcessor<ProfilingSessionTraceProcessor>()
-                            .AddLiveMetrics()
+                            //.AddLiveMetrics() TODO: Enable LiveMetrics
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b

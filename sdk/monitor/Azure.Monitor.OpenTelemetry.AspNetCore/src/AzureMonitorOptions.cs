@@ -5,7 +5,7 @@
 
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
 {

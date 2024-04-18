@@ -7,9 +7,9 @@ using System.Linq;
 using System.Reflection;
 #if AZURE_MONITOR_EXPORTER
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-#elif LIVE_METRICS_EXPORTER
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+#elif ASP_NET_CORE_DISTRO
+using Azure.Monitor.OpenTelemetry.AspNetCore;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Diagnostics;
 #endif
 using OpenTelemetry;
 
@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
 #if AZURE_MONITOR_EXPORTER
                     AzureMonitorExporterEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
-#elif LIVE_METRICS_EXPORTER
+#elif ASP_NET_CORE_DISTRO
                     LiveMetricsExporterEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
 #endif
                     return shortVersion.Substring(0, 20);
@@ -72,7 +72,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
 #if AZURE_MONITOR_EXPORTER
                 AzureMonitorExporterEventSource.Log.ErrorInitializingPartOfSdkVersion(type.Name, ex);
-#elif LIVE_METRICS_EXPORTER
+#elif ASP_NET_CORE_DISTRO
                 LiveMetricsExporterEventSource.Log.ErrorInitializingPartOfSdkVersion(type.Name, ex);
 #endif
                 return null;
@@ -88,7 +88,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 string? otelSdkVersion = GetVersion(typeof(Sdk));
 #if AZURE_MONITOR_EXPORTER
                 string? extensionVersion = GetVersion(typeof(AzureMonitorTraceExporter));
-#elif LIVE_METRICS_EXPORTER
+#elif ASP_NET_CORE_DISTRO
                 string? extensionVersion = GetVersion(typeof(LiveMetricsActivityProcessor));
 #endif
 
@@ -103,7 +103,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
 #if AZURE_MONITOR_EXPORTER
                 AzureMonitorExporterEventSource.Log.SdkVersionCreateFailed(ex);
-#elif LIVE_METRICS_EXPORTER
+#elif ASP_NET_CORE_DISTRO
                 LiveMetricsExporterEventSource.Log.SdkVersionCreateFailed(ex);
 #endif
                 return null;

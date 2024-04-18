@@ -10,8 +10,8 @@ using System.Runtime.InteropServices;
 
 #if AZURE_MONITOR_EXPORTER
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-#elif LIVE_METRICS_EXPORTER
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+#elif ASP_NET_CORE_DISTRO
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics.Diagnostics;
 #endif
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
@@ -30,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
             {
 #if AZURE_MONITOR_EXPORTER
                 AzureMonitorExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
-#elif LIVE_METRICS_EXPORTER
+#elif ASP_NET_CORE_DISTRO
                 LiveMetricsExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
 #endif
                 _environmentVariables = new Dictionary<string, object>();
