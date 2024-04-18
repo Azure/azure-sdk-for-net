@@ -23,7 +23,8 @@ jobs:
     steps:
       - checkout: self
         fetchDepth: 0
-
+      - download: current
+        artifact: ${{parameters.ArtifactName}}
       - template: /eng/common/pipelines/templates/steps/create-apireview.yml
         parameters:
           Artifacts: ${{parameters.Artifacts}}
