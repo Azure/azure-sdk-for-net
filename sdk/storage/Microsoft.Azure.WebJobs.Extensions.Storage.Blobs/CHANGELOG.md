@@ -1,6 +1,6 @@
 # Release History
 
-## 5.3.0 (2024-04-17)
+## 5.3.0 (2024-04-18)
 - Includes all features from 5.3.0-beta.1.
 - Bumped Azure.Identity dependency to 1.11.1 to resolve secruity vulnerability.
 
