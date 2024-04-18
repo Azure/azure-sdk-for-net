@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System.Collections.Concurrent;
 using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;

@@ -15,16 +15,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    internal partial class NetworkRuleSet : IUtf8JsonSerializable, IJsonModel<NetworkRuleSet>
+    public partial class SearchServiceNetworkRuleSet : IUtf8JsonSerializable, IJsonModel<SearchServiceNetworkRuleSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkRuleSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServiceNetworkRuleSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NetworkRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchServiceNetworkRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceNetworkRuleSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.Search.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Bypass))
+            {
+                writer.WritePropertyName("bypass"u8);
+                writer.WriteStringValue(Bypass.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,19 +61,19 @@ namespace Azure.ResourceManager.Search.Models
             writer.WriteEndObject();
         }
 
-        NetworkRuleSet IJsonModel<NetworkRuleSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SearchServiceNetworkRuleSet IJsonModel<SearchServiceNetworkRuleSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchServiceNetworkRuleSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkRuleSet(document.RootElement, options);
+            return DeserializeSearchServiceNetworkRuleSet(document.RootElement, options);
         }
 
-        internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SearchServiceNetworkRuleSet DeserializeSearchServiceNetworkRuleSet(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.Search.Models
                 return null;
             }
             IList<SearchServiceIPRule> ipRules = default;
+            SearchBypass? bypass = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,13 +101,22 @@ namespace Azure.ResourceManager.Search.Models
                     ipRules = array;
                     continue;
                 }
+                if (property.NameEquals("bypass"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bypass = new SearchBypass(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkRuleSet(ipRules ?? new ChangeTrackingList<SearchServiceIPRule>(), serializedAdditionalRawData);
+            return new SearchServiceNetworkRuleSet(ipRules ?? new ChangeTrackingList<SearchServiceIPRule>(), bypass, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -137,13 +152,27 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Bypass), out propertyOverride);
+            if (Optional.IsDefined(Bypass) || hasPropertyOverride)
+            {
+                builder.Append("  bypass: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Bypass.Value.ToString()}'");
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NetworkRuleSet>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SearchServiceNetworkRuleSet>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -152,26 +181,26 @@ namespace Azure.ResourceManager.Search.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceNetworkRuleSet)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NetworkRuleSet IPersistableModel<NetworkRuleSet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SearchServiceNetworkRuleSet IPersistableModel<SearchServiceNetworkRuleSet>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceNetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNetworkRuleSet(document.RootElement, options);
+                        return DeserializeSearchServiceNetworkRuleSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchServiceNetworkRuleSet)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetworkRuleSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchServiceNetworkRuleSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

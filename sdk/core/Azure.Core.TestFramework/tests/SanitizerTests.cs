@@ -15,14 +15,14 @@ namespace Azure.Core.Tests
         {
             var sanitizer = HeaderRegexSanitizer.CreateWithQueryParameter("headerKey", "queryParameter", "value");
             Assert.AreEqual("headerKey", sanitizer.Key);
-            Assert.AreEqual(@"([\x0026|&|?]queryParameter=)(?<group>[\w\d%]+)", sanitizer.Regex);
+            Assert.AreEqual(@"([\x0026|&|?]queryParameter=)(?<group>[^&]+)", sanitizer.Regex);
         }
 
         [Test]
         public void CanSanitizeQueryParamsInUri()
         {
             var sanitizer = UriRegexSanitizer.CreateWithQueryParameter("queryParameter", "value");
-            Assert.AreEqual(@"([\x0026|&|?]queryParameter=)(?<group>[\w\d%]+)", sanitizer.Regex);
+            Assert.AreEqual(@"([\x0026|&|?]queryParameter=)(?<group>[^&]+)", sanitizer.Regex);
         }
     }
 }
