@@ -12,7 +12,8 @@
 
 - Add `200` to the response code of the `SyncFunctionTriggers`
 - SiteFunctionResource.GetFunctionKeysAsync /SiteSlotFunctionResource.GetFunctionKeysSlotAsync fixed: can not populated with function keys
-  
+- Add more enum values for `TriggeredWebJobStatus`
+
 ### Other Changes
 
 ## 1.1.0-beta.4 (2023-11-30)
