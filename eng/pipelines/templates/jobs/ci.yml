@@ -157,6 +157,12 @@ jobs:
         inputs:
           ignoreDirectories: '.nuget'
 
+  - template: /eng/pipelines/templates/jobs/apiview.yml
+    parameters:
+      Artifacts: ${{ parameters.Artifacts }}
+      ArtifactName: ${{ parameters.ArtifactName }}
+      DependsOn: Build
+
   - job: "Analyze"
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
