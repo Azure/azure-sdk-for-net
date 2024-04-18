@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ScheduledEventsPolicy))
             {
                 writer.WritePropertyName("scheduledEventsPolicy"u8);
-                writer.WriteObjectValue<ScheduledEventsPolicy>(ScheduledEventsPolicy, options);
+                writer.WriteObjectValue(ScheduledEventsPolicy, options);
             }
             if (Optional.IsDefined(AutomaticRepairsPolicy))
             {

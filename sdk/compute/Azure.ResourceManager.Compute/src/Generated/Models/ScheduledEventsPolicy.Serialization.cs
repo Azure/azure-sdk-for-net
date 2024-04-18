@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ScheduledEventsPolicy : IUtf8JsonSerializable, IJsonModel<ScheduledEventsPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledEventsPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledEventsPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScheduledEventsPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(UserInitiatedRedeploy))
             {
                 writer.WritePropertyName("userInitiatedRedeploy"u8);
-                writer.WriteObjectValue<UserInitiatedRedeploy>(UserInitiatedRedeploy, options);
+                writer.WriteObjectValue(UserInitiatedRedeploy, options);
             }
             if (Optional.IsDefined(UserInitiatedReboot))
             {
                 writer.WritePropertyName("userInitiatedReboot"u8);
-                writer.WriteObjectValue<UserInitiatedReboot>(UserInitiatedReboot, options);
+                writer.WriteObjectValue(UserInitiatedReboot, options);
             }
             if (Optional.IsDefined(ScheduledEventsAdditionalPublishingTargets))
             {
                 writer.WritePropertyName("scheduledEventsAdditionalPublishingTargets"u8);
-                writer.WriteObjectValue<ScheduledEventsAdditionalPublishingTargets>(ScheduledEventsAdditionalPublishingTargets, options);
+                writer.WriteObjectValue(ScheduledEventsAdditionalPublishingTargets, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ScheduledEventsPolicy DeserializeScheduledEventsPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
