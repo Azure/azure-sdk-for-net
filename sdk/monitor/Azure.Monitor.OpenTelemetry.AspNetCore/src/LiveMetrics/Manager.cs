@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
         private readonly string _streamId = Guid.NewGuid().ToString(); // StreamId should be unique per application instance.
         private bool _disposedValue;
 
-        public Manager(LiveMetricsExporterOptions options, IPlatform platform)
+        public Manager(AzureMonitorOptions options, IPlatform platform)
         {
             options.Retry.MaxRetries = 0; // prevent Azure.Core from automatically retrying.
 
@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
 
         public LiveMetricsResource? LiveMetricsResource { get; set; }
 
-        internal static ConnectionVars InitializeConnectionVars(LiveMetricsExporterOptions options, IPlatform platform)
+        internal static ConnectionVars InitializeConnectionVars(AzureMonitorOptions options, IPlatform platform)
         {
             if (options.ConnectionString == null)
             {
@@ -58,7 +58,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             throw new InvalidOperationException("A connection string was not found. Please set your connection string.");
         }
 
-        private static LiveMetricsRestAPIsForClientSDKsRestClient InitializeRestClient(LiveMetricsExporterOptions options, ConnectionVars connectionVars, out bool isAadEnabled)
+        private static LiveMetricsRestAPIsForClientSDKsRestClient InitializeRestClient(AzureMonitorOptions options, ConnectionVars connectionVars, out bool isAadEnabled)
         {
             HttpPipeline pipeline;
 
