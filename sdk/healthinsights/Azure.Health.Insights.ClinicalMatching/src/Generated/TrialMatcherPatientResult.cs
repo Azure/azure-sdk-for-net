@@ -57,7 +57,6 @@ namespace Azure.Health.Insights.ClinicalMatching
 
             Id = id;
             Inferences = inferences.ToList();
-            NeededClinicalInfo = new ChangeTrackingList<ExtendedClinicalCodedElement>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TrialMatcherPatientResult"/>. </summary>
@@ -65,7 +64,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <param name="neededClinicalInfo"> Clinical information which is needed to provide better trial matching results for the patient. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrialMatcherPatientResult(string id, IReadOnlyList<TrialMatcherInference> inferences, IReadOnlyList<ExtendedClinicalCodedElement> neededClinicalInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrialMatcherPatientResult(string id, IReadOnlyList<TrialMatcherInference> inferences, NeededClinicalInfo neededClinicalInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Inferences = inferences;
@@ -83,6 +82,6 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <summary> The model's inferences for the given patient. </summary>
         public IReadOnlyList<TrialMatcherInference> Inferences { get; }
         /// <summary> Clinical information which is needed to provide better trial matching results for the patient. </summary>
-        public IReadOnlyList<ExtendedClinicalCodedElement> NeededClinicalInfo { get; }
+        public NeededClinicalInfo NeededClinicalInfo { get; }
     }
 }
