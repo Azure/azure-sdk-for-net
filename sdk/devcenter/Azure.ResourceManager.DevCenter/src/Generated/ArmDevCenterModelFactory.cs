@@ -364,14 +364,14 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterOperationStatus"/>. </summary>
-        /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="name"> Name of the async operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="operations"> The operations list. </param>
-        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="status"> The status. </param>
+        /// <param name="percentComplete"> The percentComplete. </param>
+        /// <param name="startOn"> The startOn. </param>
+        /// <param name="endOn"> The endOn. </param>
+        /// <param name="operations"> The operations. </param>
+        /// <param name="error"> The error. </param>
         /// <param name="resourceId"> The id of the resource. </param>
         /// <param name="properties"> Custom operation properties, populated only for a successful operation. </param>
         /// <returns> A new <see cref="Models.DevCenterOperationStatus"/> instance for mocking. </returns>
