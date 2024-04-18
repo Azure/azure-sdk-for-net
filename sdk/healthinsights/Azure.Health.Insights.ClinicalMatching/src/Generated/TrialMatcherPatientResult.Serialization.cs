@@ -35,15 +35,10 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(NeededClinicalInfo))
+            if (Optional.IsDefined(NeededClinicalInfo))
             {
                 writer.WritePropertyName("neededClinicalInfo"u8);
-                writer.WriteStartArray();
-                foreach (var item in NeededClinicalInfo)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(NeededClinicalInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -85,7 +80,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
             string id = default;
             IReadOnlyList<TrialMatcherInference> inferences = default;
-            IReadOnlyList<ExtendedClinicalCodedElement> neededClinicalInfo = default;
+            NeededClinicalInfo neededClinicalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,12 +106,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     {
                         continue;
                     }
-                    List<ExtendedClinicalCodedElement> array = new List<ExtendedClinicalCodedElement>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ExtendedClinicalCodedElement.DeserializeExtendedClinicalCodedElement(item, options));
-                    }
-                    neededClinicalInfo = array;
+                    neededClinicalInfo = NeededClinicalInfo.DeserializeNeededClinicalInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +115,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TrialMatcherPatientResult(id, inferences, neededClinicalInfo ?? new ChangeTrackingList<ExtendedClinicalCodedElement>(), serializedAdditionalRawData);
+            return new TrialMatcherPatientResult(id, inferences, neededClinicalInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrialMatcherPatientResult>.Write(ModelReaderWriterOptions options)

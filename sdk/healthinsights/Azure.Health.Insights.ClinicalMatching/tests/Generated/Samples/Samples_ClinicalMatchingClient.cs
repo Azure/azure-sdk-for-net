@@ -142,7 +142,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+createdDateTime = "2022-05-10T18:57:31.2311892Z",
 content = new
 {
 sourceType = "inline",
@@ -321,12 +321,7 @@ radius = 123.45,
             Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("city").ToString());
             Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("state").ToString());
             Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("countryOrRegion").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("system").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("semanticType").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("category").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo").ToString());
             Console.WriteLine(result.GetProperty("modelVersion").ToString());
             Console.WriteLine(result.GetProperty("knowledgeGraphLastUpdateDate").ToString());
         }
@@ -369,7 +364,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+createdDateTime = "2022-05-10T18:57:31.2311892Z",
 content = new
 {
 sourceType = "inline",
@@ -548,12 +543,7 @@ radius = 123.45,
             Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("city").ToString());
             Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("state").ToString());
             Console.WriteLine(result.GetProperty("patients")[0].GetProperty("inferences")[0].GetProperty("metadata").GetProperty("facilities")[0].GetProperty("countryOrRegion").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("system").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("semanticType").ToString());
-            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo")[0].GetProperty("category").ToString());
+            Console.WriteLine(result.GetProperty("patients")[0].GetProperty("neededClinicalInfo").ToString());
             Console.WriteLine(result.GetProperty("modelVersion").ToString());
             Console.WriteLine(result.GetProperty("knowledgeGraphLastUpdateDate").ToString());
         }
@@ -584,7 +574,7 @@ Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(Docum
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 }},
 }
             })
@@ -675,7 +665,7 @@ Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(Docum
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 }},
 }
             })

@@ -99,12 +99,11 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="inferences"> The model's inferences for the given patient. </param>
         /// <param name="neededClinicalInfo"> Clinical information which is needed to provide better trial matching results for the patient. </param>
         /// <returns> A new <see cref="ClinicalMatching.TrialMatcherPatientResult"/> instance for mocking. </returns>
-        public static TrialMatcherPatientResult TrialMatcherPatientResult(string id = null, IEnumerable<TrialMatcherInference> inferences = null, IEnumerable<ExtendedClinicalCodedElement> neededClinicalInfo = null)
+        public static TrialMatcherPatientResult TrialMatcherPatientResult(string id = null, IEnumerable<TrialMatcherInference> inferences = null, NeededClinicalInfo neededClinicalInfo = null)
         {
             inferences ??= new List<TrialMatcherInference>();
-            neededClinicalInfo ??= new List<ExtendedClinicalCodedElement>();
 
-            return new TrialMatcherPatientResult(id, inferences?.ToList(), neededClinicalInfo?.ToList(), serializedAdditionalRawData: null);
+            return new TrialMatcherPatientResult(id, inferences?.ToList(), neededClinicalInfo, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ClinicalMatching.TrialMatcherInference"/>. </summary>
@@ -156,6 +155,16 @@ namespace Azure.Health.Insights.ClinicalMatching
         public static ClinicalNoteEvidence ClinicalNoteEvidence(string id = null, string text = null, int offset = default, int length = default)
         {
             return new ClinicalNoteEvidence(id, text, offset, length, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClinicalMatching.NeededClinicalInfo"/>. </summary>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="ClinicalMatching.NeededClinicalInfo"/> instance for mocking. </returns>
+        public static NeededClinicalInfo NeededClinicalInfo(IReadOnlyDictionary<string, ExtendedClinicalCodedElement> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, ExtendedClinicalCodedElement>();
+
+            return new NeededClinicalInfo(additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="ClinicalMatching.ExtendedClinicalCodedElement"/>. </summary>
