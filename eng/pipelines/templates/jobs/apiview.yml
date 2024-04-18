@@ -24,19 +24,17 @@ jobs:
       - checkout: self
         fetchDepth: 0
 
-      - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
-
       - template: /eng/common/pipelines/templates/steps/create-apireview.yml
         parameters:
           Artifacts: ${{parameters.Artifacts}}
-          ArtifactPath: ${{parameters.ArtifactPath}}
+          ArtifactPath: ${{parameters.ArtifactPath}}/${{parameters.ArtifactName}}
 
       - template: /eng/common/pipelines/templates/steps/detect-api-changes.yml
         parameters:
           Artifacts: ${{ parameters.Artifacts }}
-          ArtifactPath: ${{parameters.ArtifactPath}}
+          ArtifactPath: ${{parameters.ArtifactPath}}/${{parameters.ArtifactName}}
 
       - template: /eng/common/pipelines/templates/steps/validate-all-packages.yml
         parameters:
           Artifacts: ${{ parameters.Artifacts }}
-          ArtifactPath: ${{parameters.ArtifactPath}}
+          ArtifactPath: ${{parameters.ArtifactPath}}/${{parameters.ArtifactName}}
