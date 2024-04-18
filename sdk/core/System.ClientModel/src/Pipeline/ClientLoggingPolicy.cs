@@ -18,7 +18,7 @@ namespace System.ClientModel.Primitives;
 public class ClientLoggingPolicy : PipelinePolicy
 {
     private const double RequestTooLongTime = 3.0; // sec
-    private static readonly ClientModelEventSource s_eventSource = ClientModelEventSource.Singleton;
+    private readonly ClientModelEventSource s_eventSource = ClientModelEventSource.Singleton("System.ClientModel");
 
     private readonly bool _logContent;
     private readonly int _maxLength;
@@ -423,6 +423,8 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         private async ValueTask<byte[]> FormatAsync(Stream content, bool async)
         {
+            content.Seek(0, SeekOrigin.Begin);
+
             using var memoryStream = new MaxLengthStream(_maxLength);
 
             if (async)
