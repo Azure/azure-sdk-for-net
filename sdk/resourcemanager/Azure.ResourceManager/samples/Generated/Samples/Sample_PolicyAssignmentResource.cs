@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Samples
@@ -221,7 +220,10 @@ namespace Azure.ResourceManager.Resources.Samples
             PolicyAssignmentPatch patch = new PolicyAssignmentPatch()
             {
                 Location = new AzureLocation("eastus"),
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Identity = new PolicyAssignmentIdentity()
+                {
+                    IdentityType = PolicyAssignmentIdentityType.SystemAssigned,
+                },
             };
             PolicyAssignmentResource result = await policyAssignment.UpdateAsync(patch);
 
@@ -256,11 +258,12 @@ namespace Azure.ResourceManager.Resources.Samples
             PolicyAssignmentPatch patch = new PolicyAssignmentPatch()
             {
                 Location = new AzureLocation("eastus"),
-                Identity = new ManagedServiceIdentity("UserAssigned")
+                Identity = new PolicyAssignmentIdentity()
                 {
+                    IdentityType = PolicyAssignmentIdentityType.UserAssigned,
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/resourceGroups/testResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity")] = new UserAssignedIdentity(),
+["/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/resourceGroups/testResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity"] = new UserAssignedIdentitiesValue(),
 },
                 },
             };

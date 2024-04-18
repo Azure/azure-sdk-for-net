@@ -16,88 +16,57 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class RedisOperationStatus : IUtf8JsonSerializable, IJsonModel<RedisOperationStatus>
+    public partial class OperationStatusResult : IUtf8JsonSerializable, IJsonModel<OperationStatusResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisOperationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationStatusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RedisOperationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OperationStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisOperationStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationStatusResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteStartObject();
-                foreach (var item in Properties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status);
+            if (Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartOn))
             {
-                writer.WritePropertyName("startOn"u8);
-                writer.WriteStringValue(StartOn.Value);
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndOn))
             {
-                writer.WritePropertyName("endOn"u8);
-                writer.WriteStringValue(EndOn.Value);
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Operations))
+            if (Optional.IsCollectionDefined(Operations))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -120,19 +89,19 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteEndObject();
         }
 
-        RedisOperationStatus IJsonModel<RedisOperationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        OperationStatusResult IJsonModel<OperationStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisOperationStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationStatusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRedisOperationStatus(document.RootElement, options);
+            return DeserializeOperationStatusResult(document.RootElement, options);
         }
 
-        internal static RedisOperationStatus DeserializeRedisOperationStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static OperationStatusResult DeserializeOperationStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -140,40 +109,18 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            IReadOnlyDictionary<string, BinaryData> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             string status = default;
             float? percentComplete = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IReadOnlyList<ResourceManager.Models.OperationStatusResult> operations = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    properties = dictionary;
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -202,22 +149,22 @@ namespace Azure.ResourceManager.Redis.Models
                     percentComplete = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("startOn"u8))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startOn = property.Value.GetDateTimeOffset(null);
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endOn"u8))
+                if (property.NameEquals("endTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endOn = property.Value.GetDateTimeOffset(null);
+                    endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("operations"u8))
@@ -229,14 +176,7 @@ namespace Azure.ResourceManager.Redis.Models
                     List<ResourceManager.Models.OperationStatusResult> array = new List<ResourceManager.Models.OperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(JsonSerializer.Deserialize<ResourceManager.Models.OperationStatusResult>(item.GetRawText()));
-                        }
+                        array.Add(JsonSerializer.Deserialize<ResourceManager.Models.OperationStatusResult>(item.GetRawText()));
                     }
                     operations = array;
                     continue;
@@ -256,16 +196,15 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RedisOperationStatus(
+            return new OperationStatusResult(
                 id,
                 name,
                 status,
                 percentComplete,
-                startOn,
-                endOn,
+                startTime,
+                endTime,
                 operations ?? new ChangeTrackingList<ResourceManager.Models.OperationStatusResult>(),
                 error,
-                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 serializedAdditionalRawData);
         }
 
@@ -279,34 +218,6 @@ namespace Azure.ResourceManager.Redis.Models
             string propertyOverride = null;
 
             builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
-            if (Optional.IsCollectionDefined(Properties) || hasPropertyOverride)
-            {
-                if (Properties.Any() || hasPropertyOverride)
-                {
-                    builder.Append("  properties: ");
-                    if (hasPropertyOverride)
-                    {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
-                        builder.AppendLine("{");
-                        foreach (var item in Properties)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"'{item.Value.ToString()}'");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (Optional.IsDefined(Id) || hasPropertyOverride)
@@ -383,7 +294,7 @@ namespace Azure.ResourceManager.Redis.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
             if (Optional.IsDefined(StartOn) || hasPropertyOverride)
             {
-                builder.Append("  startOn: ");
+                builder.Append("  startTime: ");
                 if (hasPropertyOverride)
                 {
                     builder.AppendLine($"{propertyOverride}");
@@ -398,7 +309,7 @@ namespace Azure.ResourceManager.Redis.Models
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
             if (Optional.IsDefined(EndOn) || hasPropertyOverride)
             {
-                builder.Append("  endOn: ");
+                builder.Append("  endTime: ");
                 if (hasPropertyOverride)
                 {
                     builder.AppendLine($"{propertyOverride}");
@@ -425,12 +336,7 @@ namespace Azure.ResourceManager.Redis.Models
                         builder.AppendLine("[");
                         foreach (var item in Operations)
                         {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"    '{item.ToString()}'");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  operations: ");
                         }
                         builder.AppendLine("  ]");
                     }
@@ -447,7 +353,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 else
                 {
-                    builder.AppendLine($"'{Error.ToString()}'");
+                    BicepSerializationHelpers.AppendChildObject(builder, Error, options, 2, false, "  error: ");
                 }
             }
 
@@ -455,9 +361,9 @@ namespace Azure.ResourceManager.Redis.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<RedisOperationStatus>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<OperationStatusResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -466,26 +372,26 @@ namespace Azure.ResourceManager.Redis.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisOperationStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RedisOperationStatus IPersistableModel<RedisOperationStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        OperationStatusResult IPersistableModel<OperationStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRedisOperationStatus(document.RootElement, options);
+                        return DeserializeOperationStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisOperationStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RedisOperationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OperationStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

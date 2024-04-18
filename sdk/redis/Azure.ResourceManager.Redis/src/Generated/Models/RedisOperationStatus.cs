@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Asynchronous operation status. </summary>
-    public partial class RedisOperationStatus : OperationStatusResult
+    public partial class RedisOperationStatus : ResourceManager.Models.OperationStatusResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.Redis.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RedisOperationStatus"/>. </summary>
-        /// <param name="status"> Operation status. </param>
+        /// <param name="status"> The status. </param>
         internal RedisOperationStatus(string status) : base(status)
         {
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisOperationStatus"/>. </summary>
-        /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="name"> Name of the async operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="operations"> The operations list. </param>
-        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="status"> The status. </param>
+        /// <param name="percentComplete"> The percentComplete. </param>
+        /// <param name="startOn"> The startOn. </param>
+        /// <param name="endOn"> The endOn. </param>
+        /// <param name="operations"> The operations. </param>
+        /// <param name="error"> The error. </param>
         /// <param name="properties"> Additional properties from RP, only when operation is successful. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisOperationStatus(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, IReadOnlyDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, status, percentComplete, startOn, endOn, operations, error)
+        internal RedisOperationStatus(ResourceIdentifier id, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ResourceManager.Models.OperationStatusResult> operations, ResponseError error, IReadOnlyDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, status, percentComplete, startOn, endOn, operations, error)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;

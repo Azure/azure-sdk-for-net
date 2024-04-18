@@ -13,7 +13,6 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
@@ -78,8 +77,15 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
             if (Optional.IsDefined(Parent))
             {
-                writer.WritePropertyName("parent"u8);
-                JsonSerializer.Serialize(writer, Parent);
+                if (Parent != null)
+                {
+                    writer.WritePropertyName("parent"u8);
+                    writer.WriteObjectValue(Parent, options);
+                }
+                else
+                {
+                    writer.WriteNull("parent");
+                }
             }
             if (Optional.IsDefined(Permissions))
             {
@@ -220,7 +226,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             SystemData systemData = default;
             Guid? tenantId = default;
             string displayName = default;
-            SubResource parent = default;
+            EntityParentGroupInfo parent = default;
             EntityPermission? permissions = default;
             EntityPermission? inheritedPermissions = default;
             int? numberOfDescendants = default;
@@ -289,9 +295,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                parent = null;
                                 continue;
                             }
-                            parent = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            parent = EntityParentGroupInfo.DeserializeEntityParentGroupInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("permissions"u8))

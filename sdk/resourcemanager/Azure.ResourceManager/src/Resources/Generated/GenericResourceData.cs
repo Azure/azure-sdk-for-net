@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="createdOn"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation, serializedAdditionalRawData)
+        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceManagerPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, GenericResourceIdentity identity, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation, serializedAdditionalRawData)
         {
             Plan = plan;
             Properties = properties;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> The plan of the resource. </summary>
         [WirePath("plan")]
-        public ArmPlan Plan { get; set; }
+        public ResourceManagerPlan Plan { get; set; }
         /// <summary>
         /// The resource properties.
         /// <para>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Resources
         public ResourcesSku Sku { get; set; }
         /// <summary> The identity of the resource. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
+        public GenericResourceIdentity Identity { get; set; }
         /// <summary> The created time of the resource. This is only present if requested via the $expand query parameter. </summary>
         [WirePath("createdTime")]
         public DateTimeOffset? CreatedOn { get; }

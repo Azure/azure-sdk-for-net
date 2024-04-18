@@ -274,6 +274,32 @@ namespace Azure.ResourceManager.Redis.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.OperationStatusResult"/>. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <returns> A new <see cref="Models.OperationStatusResult"/> instance for mocking. </returns>
+        public static OperationStatusResult OperationStatusResult(ResourceIdentifier id = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<ResourceManager.Models.OperationStatusResult> operations = null, ResponseError error = null)
+        {
+            operations ??= new List<ResourceManager.Models.OperationStatusResult>();
+
+            return new OperationStatusResult(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations?.ToList(),
+                error,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Redis.RedisFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -388,19 +414,19 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisOperationStatus"/>. </summary>
-        /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="name"> Name of the async operation. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
-        /// <param name="operations"> The operations list. </param>
-        /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="status"> The status. </param>
+        /// <param name="percentComplete"> The percentComplete. </param>
+        /// <param name="startOn"> The startOn. </param>
+        /// <param name="endOn"> The endOn. </param>
+        /// <param name="operations"> The operations. </param>
+        /// <param name="error"> The error. </param>
         /// <param name="properties"> Additional properties from RP, only when operation is successful. </param>
         /// <returns> A new <see cref="Models.RedisOperationStatus"/> instance for mocking. </returns>
-        public static RedisOperationStatus RedisOperationStatus(ResourceIdentifier id = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, IReadOnlyDictionary<string, BinaryData> properties = null)
+        public static RedisOperationStatus RedisOperationStatus(ResourceIdentifier id = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<ResourceManager.Models.OperationStatusResult> operations = null, ResponseError error = null, IReadOnlyDictionary<string, BinaryData> properties = null)
         {
-            operations ??= new List<OperationStatusResult>();
+            operations ??= new List<ResourceManager.Models.OperationStatusResult>();
             properties ??= new Dictionary<string, BinaryData>();
 
             return new RedisOperationStatus(

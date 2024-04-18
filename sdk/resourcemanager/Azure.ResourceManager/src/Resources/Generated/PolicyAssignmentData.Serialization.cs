@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, ManagedIdentity);
+                writer.WriteObjectValue(ManagedIdentity, options);
             }
             if (options.Format != "W")
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Resources
                 return null;
             }
             AzureLocation? location = default;
-            ManagedServiceIdentity identity = default;
+            PolicyAssignmentIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = PolicyAssignmentIdentity.DeserializePolicyAssignmentIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Samples
@@ -101,7 +100,10 @@ new NonComplianceMessage("Resource names must start with 'DeptA' and end with '-
             PolicyAssignmentData data = new PolicyAssignmentData()
             {
                 Location = new AzureLocation("eastus"),
-                ManagedIdentity = new ManagedServiceIdentity("SystemAssigned"),
+                ManagedIdentity = new PolicyAssignmentIdentity()
+                {
+                    IdentityType = PolicyAssignmentIdentityType.SystemAssigned,
+                },
                 DisplayName = "Enforce resource naming rules",
                 PolicyDefinitionId = "/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming",
                 Parameters =
@@ -158,11 +160,12 @@ Value = BinaryData.FromString("\"-LC\""),
             PolicyAssignmentData data = new PolicyAssignmentData()
             {
                 Location = new AzureLocation("eastus"),
-                ManagedIdentity = new ManagedServiceIdentity("UserAssigned")
+                ManagedIdentity = new PolicyAssignmentIdentity()
                 {
+                    IdentityType = PolicyAssignmentIdentityType.UserAssigned,
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/resourceGroups/testResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity")] = new UserAssignedIdentity(),
+["/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/resourceGroups/testResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity"] = new UserAssignedIdentitiesValue(),
 },
                 },
                 DisplayName = "Enforce resource naming rules",

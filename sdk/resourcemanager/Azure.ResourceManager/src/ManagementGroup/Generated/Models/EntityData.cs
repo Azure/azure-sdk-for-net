@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         /// <param name="parentDisplayNameChain"> The parent display name chain from the root group to the immediate parent. </param>
         /// <param name="parentNameChain"> The parent name chain from the root group to the immediate parent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string displayName, SubResource parent, EntityPermission? permissions, EntityPermission? inheritedPermissions, int? numberOfDescendants, int? numberOfChildren, int? numberOfChildGroups, IReadOnlyList<string> parentDisplayNameChain, IReadOnlyList<string> parentNameChain, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? tenantId, string displayName, EntityParentGroupInfo parent, EntityPermission? permissions, EntityPermission? inheritedPermissions, int? numberOfDescendants, int? numberOfChildren, int? numberOfChildGroups, IReadOnlyList<string> parentDisplayNameChain, IReadOnlyList<string> parentNameChain, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             TenantId = tenantId;
             DisplayName = displayName;
@@ -93,10 +92,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> (Optional) The ID of the parent management group. </summary>
-        internal SubResource Parent { get; }
-        /// <summary> Gets Id. </summary>
+        internal EntityParentGroupInfo Parent { get; }
+        /// <summary> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
         [WirePath("properties.parent.id")]
-        public ResourceIdentifier ParentId
+        public string ParentId
         {
             get => Parent?.Id;
         }

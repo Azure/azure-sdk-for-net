@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                JsonSerializer.Serialize(writer, Plan);
+                writer.WriteObjectValue(Plan, options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                writer.WriteObjectValue(Identity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                writer.WriteObjectValue(ExtendedLocation, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -158,12 +158,12 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            ArmPlan plan = default;
+            ResourceManagerPlan plan = default;
             BinaryData properties = default;
             string kind = default;
             string managedBy = default;
             ResourcesSku sku = default;
-            ManagedServiceIdentity identity = default;
+            GenericResourceIdentity identity = default;
             DateTimeOffset? createdTime = default;
             DateTimeOffset? changedTime = default;
             string provisioningState = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.GetRawText());
+                    plan = ResourceManagerPlan.DeserializeResourceManagerPlan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = GenericResourceIdentity.DeserializeGenericResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdTime"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
-        /// <param name="managedIdentity"> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="managedIdentity"> The managed identity associated with the policy assignment. </param>
         /// <param name="displayName"> The display name of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition being assigned. </param>
         /// <param name="scope"> The scope for the policy assignment. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
         /// <param name="overrides"> The policy property value override. </param>
         /// <returns> A new <see cref="Resources.PolicyAssignmentData"/> instance for mocking. </returns>
-        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ManagedServiceIdentity managedIdentity = null, string displayName = null, string policyDefinitionId = null, string scope = null, IEnumerable<string> excludedScopes = null, IDictionary<string, ArmPolicyParameterValue> parameters = null, string description = null, BinaryData metadata = null, EnforcementMode? enforcementMode = null, IEnumerable<NonComplianceMessage> nonComplianceMessages = null, IEnumerable<ResourceSelector> resourceSelectors = null, IEnumerable<PolicyOverride> overrides = null)
+        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, PolicyAssignmentIdentity managedIdentity = null, string displayName = null, string policyDefinitionId = null, string scope = null, IEnumerable<string> excludedScopes = null, IDictionary<string, ArmPolicyParameterValue> parameters = null, string description = null, BinaryData metadata = null, EnforcementMode? enforcementMode = null, IEnumerable<NonComplianceMessage> nonComplianceMessages = null, IEnumerable<ResourceSelector> resourceSelectors = null, IEnumerable<PolicyOverride> overrides = null)
         {
             excludedScopes ??= new List<string>();
             parameters ??= new Dictionary<string, ArmPolicyParameterValue>();
@@ -63,6 +63,28 @@ namespace Azure.ResourceManager.Models
                 resourceSelectors?.ToList(),
                 overrides?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PolicyAssignmentIdentity"/>. </summary>
+        /// <param name="principalId"> The principal ID of the resource identity.  This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant ID of the resource identity.  This property will only be provided for a system assigned identity. </param>
+        /// <param name="identityType"> The identity type. This is the only required field when adding a system or user assigned identity to a resource. </param>
+        /// <param name="userAssignedIdentities"> The user identity associated with the policy. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
+        /// <returns> A new <see cref="Resources.Models.PolicyAssignmentIdentity"/> instance for mocking. </returns>
+        public static PolicyAssignmentIdentity PolicyAssignmentIdentity(string principalId = null, Guid? tenantId = null, PolicyAssignmentIdentityType? identityType = null, IDictionary<string, UserAssignedIdentitiesValue> userAssignedIdentities = null)
+        {
+            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentitiesValue>();
+
+            return new PolicyAssignmentIdentity(principalId, tenantId, identityType, userAssignedIdentities, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.UserAssignedIdentitiesValue"/>. </summary>
+        /// <param name="principalId"> The principal id of user assigned identity. </param>
+        /// <param name="clientId"> The client id of user assigned identity. </param>
+        /// <returns> A new <see cref="Resources.Models.UserAssignedIdentitiesValue"/> instance for mocking. </returns>
+        public static UserAssignedIdentitiesValue UserAssignedIdentitiesValue(string principalId = null, string clientId = null)
+        {
+            return new UserAssignedIdentitiesValue(principalId, clientId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.PolicyDefinitionData"/>. </summary>
@@ -448,7 +470,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <returns> A new <see cref="Resources.GenericResourceData"/> instance for mocking. </returns>
-        public static GenericResourceData GenericResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ArmPlan plan = null, BinaryData properties = null, string kind = null, string managedBy = null, ResourcesSku sku = null, ManagedServiceIdentity identity = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, string provisioningState = null)
+        public static GenericResourceData GenericResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ResourceManagerPlan plan = null, BinaryData properties = null, string kind = null, string managedBy = null, ResourcesSku sku = null, GenericResourceIdentity identity = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, string provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -470,6 +492,28 @@ namespace Azure.ResourceManager.Models
                 createdOn,
                 changedOn,
                 provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.GenericResourceIdentity"/>. </summary>
+        /// <param name="principalId"> The principal ID of resource identity. </param>
+        /// <param name="tenantId"> The tenant ID of resource. </param>
+        /// <param name="identityType"> The identity type. </param>
+        /// <param name="userAssignedIdentities"> The list of user identities associated with the resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
+        /// <returns> A new <see cref="Resources.Models.GenericResourceIdentity"/> instance for mocking. </returns>
+        public static GenericResourceIdentity GenericResourceIdentity(string principalId = null, Guid? tenantId = null, GenericResourceIdentityType identityType = default, IDictionary<string, IdentityUserAssignedIdentitiesValue> userAssignedIdentities = null)
+        {
+            userAssignedIdentities ??= new Dictionary<string, IdentityUserAssignedIdentitiesValue>();
+
+            return new GenericResourceIdentity(principalId, tenantId, identityType, userAssignedIdentities, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.IdentityUserAssignedIdentitiesValue"/>. </summary>
+        /// <param name="principalId"> The principal id of user assigned identity. </param>
+        /// <param name="clientId"> The client id of user assigned identity. </param>
+        /// <returns> A new <see cref="Resources.Models.IdentityUserAssignedIdentitiesValue"/> instance for mocking. </returns>
+        public static IdentityUserAssignedIdentitiesValue IdentityUserAssignedIdentitiesValue(string principalId = null, string clientId = null)
+        {
+            return new IdentityUserAssignedIdentitiesValue(principalId, clientId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.TrackedResourceExtendedData"/>. </summary>

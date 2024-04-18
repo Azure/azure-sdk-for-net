@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="parentDisplayNameChain"> The parent display name chain from the root group to the immediate parent. </param>
         /// <param name="parentNameChain"> The parent name chain from the root group to the immediate parent. </param>
         /// <returns> A new <see cref="ManagementGroups.Models.EntityData"/> instance for mocking. </returns>
-        public static EntityData EntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, string displayName = null, ResourceIdentifier parentId = null, EntityPermission? permissions = null, EntityPermission? inheritedPermissions = null, int? numberOfDescendants = null, int? numberOfChildren = null, int? numberOfChildGroups = null, IEnumerable<string> parentDisplayNameChain = null, IEnumerable<string> parentNameChain = null)
+        public static EntityData EntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, string displayName = null, string parentId = null, EntityPermission? permissions = null, EntityPermission? inheritedPermissions = null, int? numberOfDescendants = null, int? numberOfChildren = null, int? numberOfChildGroups = null, IEnumerable<string> parentDisplayNameChain = null, IEnumerable<string> parentNameChain = null)
         {
             parentDisplayNameChain ??= new List<string>();
             parentNameChain ??= new List<string>();
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Models
                 systemData,
                 tenantId,
                 displayName,
-                parentId != null ? ResourceManagerModelFactory.SubResource(parentId) : null,
+                parentId != null ? new EntityParentGroupInfo(parentId, serializedAdditionalRawData: null) : null,
                 permissions,
                 inheritedPermissions,
                 numberOfDescendants,

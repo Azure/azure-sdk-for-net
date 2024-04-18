@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                writer.WriteObjectValue(Identity, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             AzureLocation? location = default;
-            ManagedServiceIdentity identity = default;
+            PolicyAssignmentIdentity identity = default;
             IList<ResourceSelector> resourceSelectors = default;
             IList<PolicyOverride> overrides = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = PolicyAssignmentIdentity.DeserializePolicyAssignmentIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

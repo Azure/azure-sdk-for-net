@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
-        /// <param name="managedIdentity"> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="managedIdentity"> The managed identity associated with the policy assignment. </param>
         /// <param name="displayName"> The display name of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition being assigned. </param>
         /// <param name="scope"> The scope for the policy assignment. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
         /// <param name="overrides"> The policy property value override. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ManagedServiceIdentity managedIdentity, string displayName, string policyDefinitionId, string scope, IList<string> excludedScopes, IDictionary<string, ArmPolicyParameterValue> parameters, string description, BinaryData metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages, IList<ResourceSelector> resourceSelectors, IList<PolicyOverride> overrides, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, PolicyAssignmentIdentity managedIdentity, string displayName, string policyDefinitionId, string scope, IList<string> excludedScopes, IDictionary<string, ArmPolicyParameterValue> parameters, string description, BinaryData metadata, EnforcementMode? enforcementMode, IList<NonComplianceMessage> nonComplianceMessages, IList<ResourceSelector> resourceSelectors, IList<PolicyOverride> overrides, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ManagedIdentity = managedIdentity;
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The location of the policy assignment. Only required when utilizing managed identity. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; set; }
-        /// <summary> The managed identity associated with the policy assignment. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary> The managed identity associated with the policy assignment. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity ManagedIdentity { get; set; }
+        public PolicyAssignmentIdentity ManagedIdentity { get; set; }
         /// <summary> The display name of the policy assignment. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
