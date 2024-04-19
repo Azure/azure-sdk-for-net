@@ -191,7 +191,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 }
                 else if (tag.Key == SemanticConventions.AttributeServerPort)
                 {
-                    serverPort = tag.Value.ToString()!;
+                    serverPort = $":{tag.Value.ToString()!}";
                 }
                 else if (tag.Key == SemanticConventions.AttributeUrlPath)
                 {
@@ -212,7 +212,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 .Append(urlScheme)
                 .Append(Uri.SchemeDelimiter)
                 .Append(serverAddress)
-                .Append($":{serverPort}")
+                .Append(serverPort)
                 .Append(urlPath)
                 .Append(urlQuery)
                 .ToString();
