@@ -40,10 +40,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (Optional.IsDefined(CreatedDateTime))
+            if (Optional.IsDefined(CreatedAt))
             {
-                writer.WritePropertyName("createdDateTime"u8);
-                writer.WriteStringValue(CreatedDateTime.Value, "O");
+                writer.WritePropertyName("createdAt"u8);
+                writer.WriteStringValue(CreatedAt.Value, "O");
             }
             if (Optional.IsCollectionDefined(Authors))
             {
@@ -109,7 +109,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             ClinicalDocumentType? clinicalType = default;
             string id = default;
             string language = default;
-            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? createdAt = default;
             IList<DocumentAuthor> authors = default;
             SpecialtyType? specialtyType = default;
             DocumentAdministrativeMetadata administrativeMetadata = default;
@@ -142,13 +142,13 @@ namespace Azure.Health.Insights.RadiologyInsights
                     language = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdDateTime"u8))
+                if (property.NameEquals("createdAt"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdDateTime = property.Value.GetDateTimeOffset("O");
+                    createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("authors"u8))
@@ -199,7 +199,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 clinicalType,
                 id,
                 language,
-                createdDateTime,
+                createdAt,
                 authors ?? new ChangeTrackingList<DocumentAuthor>(),
                 specialtyType,
                 administrativeMetadata,

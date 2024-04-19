@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    public partial class Encounter : IUtf8JsonSerializable, IJsonModel<Encounter>
+    public partial class PatientEncounter : IUtf8JsonSerializable, IJsonModel<PatientEncounter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Encounter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PatientEncounter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Encounter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PatientEncounter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Encounter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PatientEncounter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Encounter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PatientEncounter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteEndObject();
         }
 
-        Encounter IJsonModel<Encounter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PatientEncounter IJsonModel<PatientEncounter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Encounter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PatientEncounter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Encounter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PatientEncounter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEncounter(document.RootElement, options);
+            return DeserializePatientEncounter(document.RootElement, options);
         }
 
-        internal static Encounter DeserializeEncounter(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PatientEncounter DeserializePatientEncounter(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -112,46 +112,46 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Encounter(id, period, @class, serializedAdditionalRawData);
+            return new PatientEncounter(id, period, @class, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Encounter>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PatientEncounter>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Encounter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PatientEncounter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Encounter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatientEncounter)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Encounter IPersistableModel<Encounter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PatientEncounter IPersistableModel<PatientEncounter>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Encounter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PatientEncounter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEncounter(document.RootElement, options);
+                        return DeserializePatientEncounter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Encounter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatientEncounter)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Encounter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PatientEncounter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Encounter FromResponse(Response response)
+        internal static PatientEncounter FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEncounter(document.RootElement);
+            return DeserializePatientEncounter(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

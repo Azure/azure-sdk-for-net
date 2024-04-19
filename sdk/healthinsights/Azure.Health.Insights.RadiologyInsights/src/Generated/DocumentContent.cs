@@ -86,8 +86,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// In case the source type is 'inline', the content is given as a string (for instance, text).
         /// In case the source type is 'reference', the content is given as a URI.
         /// </summary>
-        public DocumentContentSourceType SourceType { get; }
+        public DocumentContentSourceType SourceType { get; set; }
         /// <summary> The content of the document, given either inline (as a string) or as a reference (URI). </summary>
-        public string Value { get; }
+        public string Value { get; set; }
     }
 }
