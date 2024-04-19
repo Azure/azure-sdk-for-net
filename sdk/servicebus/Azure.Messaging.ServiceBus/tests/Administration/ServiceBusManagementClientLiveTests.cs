@@ -223,9 +223,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
         }
 
         [RecordedTest]
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task BasicTopicCrudOperations(bool premium)
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(true, true)]
+        public async Task BasicTopicCrudOperations(bool premium, bool supportOrdering)
         {
             var topicName = nameof(BasicTopicCrudOperations).ToLower() + Recording.Random.NewGuid().ToString("D").Substring(0, 8);
             var client = CreateClient(premium);
@@ -240,7 +242,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 MaxSizeInMegabytes = 1024,
                 RequiresDuplicateDetection = true,
                 UserMetadata = nameof(BasicTopicCrudOperations),
-                SupportOrdering = true
+                SupportOrdering = supportOrdering
             };
 
             if (CanSetMaxMessageSize(premium))
