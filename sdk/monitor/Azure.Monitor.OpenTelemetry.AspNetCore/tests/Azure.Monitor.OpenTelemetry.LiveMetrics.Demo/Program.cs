@@ -4,9 +4,14 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using OpenTelemetry;
-using OpenTelemetry.Trace;
 using Azure.Monitor.OpenTelemetry.AspNetCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using OpenTelemetry.Trace;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using OpenTelemetry;
+using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 {
@@ -14,6 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
     {
         private const string ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
         private static readonly ActivitySource s_activitySource = new(ActivitySourceName);
+        private static ILogger? _logger;
 
         private const string ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
 
@@ -24,10 +30,23 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
         public static async Task Main(string[] args)
         {
+            var azureMonitorOptions = new AzureMonitorOptions
+            {
+                ConnectionString = ConnectionString
+            };
+
+            var manager = new Manager(azureMonitorOptions, new DefaultPlatform());
+
             using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
-                            .AddSource(ActivitySourceName)
-                            //.AddLiveMetrics(configure => configure.ConnectionString = ConnectionString) // TODO: FIX THIS IN FOLLOW UP PR
-                            .Build();
+                .AddSource(ActivitySourceName)
+                .AddProcessor(new LiveMetricsActivityProcessor(manager))
+                .Build();
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options => options.AddProcessor(new LiveMetricsLogProcessor(manager)));
+            });
+            _logger = loggerFactory.CreateLogger<Program>();
 
             Console.WriteLine("Press any key to stop the loop.");
 
@@ -69,16 +88,21 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                     // Exception
                     if (GetRandomBool(percent: 40))
                     {
+                        activity?.SetTag("url.path", "/request/fail");
                         Console.WriteLine("Request Exception");
                         try
                         {
-                            throw new Exception("Test exception");
+                            throw new Exception("Test Request Exception");
                         }
                         catch (Exception ex)
                         {
                             activity?.SetStatus(ActivityStatusCode.Error);
                             activity?.RecordException(ex);
                         }
+                    }
+                    else
+                    {
+                        activity?.SetTag("url.path", "/request/success");
                     }
                 }
             }
@@ -95,13 +119,45 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                         Console.WriteLine("Dependency Exception");
                         try
                         {
-                            throw new Exception("Test exception");
+                            throw new Exception("Test Dependency Exception");
                         }
                         catch (Exception ex)
                         {
                             activity?.SetStatus(ActivityStatusCode.Error);
                             activity?.RecordException(ex);
                         }
+                    }
+                }
+            }
+
+            // Logs
+            if (GetRandomBool(percent: 70))
+            {
+                Console.WriteLine("Log");
+
+                _logger?.Log(
+                    logLevel: LogLevel.Information,
+                    eventId: 0,
+                    exception: null,
+                    message: "Hello {name}.",
+                    args: new object[] { "World" });
+
+                // Exception
+                if (GetRandomBool(percent: 40))
+                {
+                    Console.WriteLine("Log Exception");
+                    try
+                    {
+                        throw new Exception("Test Log Exception");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger?.Log(
+                            logLevel: LogLevel.Error,
+                            eventId: 0,
+                            exception: ex,
+                            message: "Hello {name}.",
+                            args: new object[] { "World" });
                     }
                 }
             }

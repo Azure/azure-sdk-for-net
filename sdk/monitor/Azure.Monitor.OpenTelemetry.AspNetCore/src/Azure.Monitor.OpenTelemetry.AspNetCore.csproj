@@ -9,7 +9,7 @@
     <PackageTags>Azure Monitor OpenTelemetry Exporter Distro ApplicationInsights</PackageTags>
     <TargetFrameworks>net6.0;$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <NoWarn>SA1636</NoWarn>
+    <NoWarn>SA1636;AZC0011</NoWarn>
     <DefineConstants>$(DefineConstants);ASP_NET_CORE_DISTRO;</DefineConstants>
   </PropertyGroup>
 
