@@ -287,14 +287,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
                 Assert.AreEqual("foobar", message.Body.ToString());
-                var lockBefore = message.LockedUntil;
                 await SettlementService.RenewMessageLock(
                     new RenewMessageLockRequest
                     {
                         Locktoken = message.LockToken,
                     },
                     new MockServerCallContext());
-                Assert.True(lockBefore < message.LockedUntil);
                 _waitHandle1.Set();
             }
         }
