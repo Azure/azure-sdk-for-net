@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContinuousCapture))
+            if (Optional.IsDefined(IsContinuousCapture))
             {
                 writer.WritePropertyName("continuousCapture"u8);
-                writer.WriteBooleanValue(ContinuousCapture.Value);
+                writer.WriteBooleanValue(IsContinuousCapture.Value);
             }
             if (Optional.IsDefined(CaptureSettings))
             {

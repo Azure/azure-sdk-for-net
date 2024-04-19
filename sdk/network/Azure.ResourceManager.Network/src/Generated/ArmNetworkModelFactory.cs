@@ -4952,10 +4952,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
         /// <param name="filters"> A list of packet capture filters. </param>
-        /// <param name="continuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
+        /// <param name="isContinuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
         /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
         /// <returns> A new <see cref="Models.PacketCaptureCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static PacketCaptureCreateOrUpdateContent PacketCaptureCreateOrUpdateContent(string target = null, PacketCaptureMachineScope scope = null, PacketCaptureTargetType? targetType = null, long? bytesToCapturePerPacket = null, long? totalBytesPerSession = null, int? timeLimitInSeconds = null, PacketCaptureStorageLocation storageLocation = null, IEnumerable<PacketCaptureFilter> filters = null, bool? continuousCapture = null, PacketCaptureSettings captureSettings = null)
+        public static PacketCaptureCreateOrUpdateContent PacketCaptureCreateOrUpdateContent(string target = null, PacketCaptureMachineScope scope = null, PacketCaptureTargetType? targetType = null, long? bytesToCapturePerPacket = null, long? totalBytesPerSession = null, int? timeLimitInSeconds = null, PacketCaptureStorageLocation storageLocation = null, IEnumerable<PacketCaptureFilter> filters = null, bool? isContinuousCapture = null, PacketCaptureSettings captureSettings = null)
         {
             filters ??= new List<PacketCaptureFilter>();
 
@@ -4968,7 +4968,7 @@ namespace Azure.ResourceManager.Network.Models
                 timeLimitInSeconds,
                 storageLocation,
                 filters?.ToList(),
-                continuousCapture,
+                isContinuousCapture,
                 captureSettings,
                 serializedAdditionalRawData: null);
         }
@@ -4987,11 +4987,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
         /// <param name="filters"> A list of packet capture filters. </param>
-        /// <param name="continuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
+        /// <param name="isContinuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
         /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
         /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
         /// <returns> A new <see cref="Network.PacketCaptureData"/> instance for mocking. </returns>
-        public static PacketCaptureData PacketCaptureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string target = null, PacketCaptureMachineScope scope = null, PacketCaptureTargetType? targetType = null, long? bytesToCapturePerPacket = null, long? totalBytesPerSession = null, int? timeLimitInSeconds = null, PacketCaptureStorageLocation storageLocation = null, IEnumerable<PacketCaptureFilter> filters = null, bool? continuousCapture = null, PacketCaptureSettings captureSettings = null, NetworkProvisioningState? provisioningState = null)
+        public static PacketCaptureData PacketCaptureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string target = null, PacketCaptureMachineScope scope = null, PacketCaptureTargetType? targetType = null, long? bytesToCapturePerPacket = null, long? totalBytesPerSession = null, int? timeLimitInSeconds = null, PacketCaptureStorageLocation storageLocation = null, IEnumerable<PacketCaptureFilter> filters = null, bool? isContinuousCapture = null, PacketCaptureSettings captureSettings = null, NetworkProvisioningState? provisioningState = null)
         {
             filters ??= new List<PacketCaptureFilter>();
 
@@ -5009,7 +5009,7 @@ namespace Azure.ResourceManager.Network.Models
                 timeLimitInSeconds,
                 storageLocation,
                 filters?.ToList(),
-                continuousCapture,
+                isContinuousCapture,
                 captureSettings,
                 provisioningState,
                 serializedAdditionalRawData: null);
@@ -5917,12 +5917,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
         /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
-        /// <param name="peerCompleteVnets"> Whether complete virtual network address space is peered. </param>
+        /// <param name="areCompleteVnetsPeered"> Whether complete virtual network address space is peered. </param>
         /// <param name="enableOnlyIPv6Peering"> Whether only Ipv6 address space is peered for subnet peering. </param>
         /// <param name="localSubnetNames"> List of local subnet names that are subnet peered with remote virtual network. </param>
         /// <param name="remoteSubnetNames"> List of remote subnet names from remote virtual network that are subnet peered. </param>
         /// <returns> A new <see cref="Network.VirtualNetworkPeeringData"/> instance for mocking. </returns>
-        public static VirtualNetworkPeeringData VirtualNetworkPeeringData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, bool? allowVirtualNetworkAccess = null, bool? allowForwardedTraffic = null, bool? allowGatewayTransit = null, bool? useRemoteGateways = null, ResourceIdentifier remoteVirtualNetworkId = null, IEnumerable<string> localAddressPrefixes = null, IEnumerable<string> localVirtualNetworkAddressPrefixes = null, IEnumerable<string> remoteAddressPrefixes = null, IEnumerable<string> remoteVirtualNetworkAddressPrefixes = null, VirtualNetworkBgpCommunities remoteBgpCommunities = null, VirtualNetworkEncryption remoteVirtualNetworkEncryption = null, VirtualNetworkPeeringState? peeringState = null, VirtualNetworkPeeringLevel? peeringSyncLevel = null, NetworkProvisioningState? provisioningState = null, bool? doNotVerifyRemoteGateways = null, Guid? resourceGuid = null, bool? peerCompleteVnets = null, bool? enableOnlyIPv6Peering = null, IEnumerable<string> localSubnetNames = null, IEnumerable<string> remoteSubnetNames = null)
+        public static VirtualNetworkPeeringData VirtualNetworkPeeringData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, bool? allowVirtualNetworkAccess = null, bool? allowForwardedTraffic = null, bool? allowGatewayTransit = null, bool? useRemoteGateways = null, ResourceIdentifier remoteVirtualNetworkId = null, IEnumerable<string> localAddressPrefixes = null, IEnumerable<string> localVirtualNetworkAddressPrefixes = null, IEnumerable<string> remoteAddressPrefixes = null, IEnumerable<string> remoteVirtualNetworkAddressPrefixes = null, VirtualNetworkBgpCommunities remoteBgpCommunities = null, VirtualNetworkEncryption remoteVirtualNetworkEncryption = null, VirtualNetworkPeeringState? peeringState = null, VirtualNetworkPeeringLevel? peeringSyncLevel = null, NetworkProvisioningState? provisioningState = null, bool? doNotVerifyRemoteGateways = null, Guid? resourceGuid = null, bool? areCompleteVnetsPeered = null, bool? enableOnlyIPv6Peering = null, IEnumerable<string> localSubnetNames = null, IEnumerable<string> remoteSubnetNames = null)
         {
             localAddressPrefixes ??= new List<string>();
             localVirtualNetworkAddressPrefixes ??= new List<string>();
@@ -5953,7 +5953,7 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState,
                 doNotVerifyRemoteGateways,
                 resourceGuid,
-                peerCompleteVnets,
+                areCompleteVnetsPeered,
                 enableOnlyIPv6Peering,
                 localSubnetNames?.ToList(),
                 remoteSubnetNames?.ToList());
@@ -8208,7 +8208,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PacketCaptureCreateOrUpdateContent PacketCaptureCreateOrUpdateContent(string target, PacketCaptureMachineScope scope, PacketCaptureTargetType? targetType, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IEnumerable<PacketCaptureFilter> filters)
         {
-            return PacketCaptureCreateOrUpdateContent(target: target, scope: scope, targetType: targetType, bytesToCapturePerPacket: bytesToCapturePerPacket, totalBytesPerSession: totalBytesPerSession, timeLimitInSeconds: timeLimitInSeconds, storageLocation: storageLocation, filters: filters, continuousCapture: default, captureSettings: default);
+            return PacketCaptureCreateOrUpdateContent(target: target, scope: scope, targetType: targetType, bytesToCapturePerPacket: bytesToCapturePerPacket, totalBytesPerSession: totalBytesPerSession, timeLimitInSeconds: timeLimitInSeconds, storageLocation: storageLocation, filters: filters, isContinuousCapture: default, captureSettings: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.PacketCaptureData" />. </summary>
@@ -8230,7 +8230,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PacketCaptureData PacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string target, PacketCaptureMachineScope scope, PacketCaptureTargetType? targetType, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IEnumerable<PacketCaptureFilter> filters, NetworkProvisioningState? provisioningState)
         {
-            return PacketCaptureData(id: id, name: name, resourceType: resourceType, systemData: systemData, etag: etag, target: target, scope: scope, targetType: targetType, bytesToCapturePerPacket: bytesToCapturePerPacket, totalBytesPerSession: totalBytesPerSession, timeLimitInSeconds: timeLimitInSeconds, storageLocation: storageLocation, filters: filters, continuousCapture: default, captureSettings: default, provisioningState: provisioningState);
+            return PacketCaptureData(id: id, name: name, resourceType: resourceType, systemData: systemData, etag: etag, target: target, scope: scope, targetType: targetType, bytesToCapturePerPacket: bytesToCapturePerPacket, totalBytesPerSession: totalBytesPerSession, timeLimitInSeconds: timeLimitInSeconds, storageLocation: storageLocation, filters: filters, isContinuousCapture: default, captureSettings: default, provisioningState: provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.VirtualNetworkPeeringData" />. </summary>
@@ -8256,7 +8256,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualNetworkPeeringData VirtualNetworkPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, bool? allowVirtualNetworkAccess, bool? allowForwardedTraffic, bool? allowGatewayTransit, bool? useRemoteGateways, ResourceIdentifier remoteVirtualNetworkId, IEnumerable<string> remoteAddressPrefixes, IEnumerable<string> remoteVirtualNetworkAddressPrefixes, VirtualNetworkBgpCommunities remoteBgpCommunities, VirtualNetworkEncryption remoteVirtualNetworkEncryption, VirtualNetworkPeeringState? peeringState, VirtualNetworkPeeringLevel? peeringSyncLevel, NetworkProvisioningState? provisioningState, bool? doNotVerifyRemoteGateways, Guid? resourceGuid)
         {
-            return VirtualNetworkPeeringData(id: id, name: name, resourceType: resourceType, etag: etag, allowVirtualNetworkAccess: allowVirtualNetworkAccess, allowForwardedTraffic: allowForwardedTraffic, allowGatewayTransit: allowGatewayTransit, useRemoteGateways: useRemoteGateways, remoteVirtualNetworkId: remoteVirtualNetworkId, localAddressPrefixes: default, localVirtualNetworkAddressPrefixes: default, remoteAddressPrefixes: remoteAddressPrefixes, remoteVirtualNetworkAddressPrefixes: remoteVirtualNetworkAddressPrefixes, remoteBgpCommunities: remoteBgpCommunities, remoteVirtualNetworkEncryption: remoteVirtualNetworkEncryption, peeringState: peeringState, peeringSyncLevel: peeringSyncLevel, provisioningState: provisioningState, doNotVerifyRemoteGateways: doNotVerifyRemoteGateways, resourceGuid: resourceGuid, peerCompleteVnets: default, enableOnlyIPv6Peering: default, localSubnetNames: default, remoteSubnetNames: default);
+            return VirtualNetworkPeeringData(id: id, name: name, resourceType: resourceType, etag: etag, allowVirtualNetworkAccess: allowVirtualNetworkAccess, allowForwardedTraffic: allowForwardedTraffic, allowGatewayTransit: allowGatewayTransit, useRemoteGateways: useRemoteGateways, remoteVirtualNetworkId: remoteVirtualNetworkId, localAddressPrefixes: default, localVirtualNetworkAddressPrefixes: default, remoteAddressPrefixes: remoteAddressPrefixes, remoteVirtualNetworkAddressPrefixes: remoteVirtualNetworkAddressPrefixes, remoteBgpCommunities: remoteBgpCommunities, remoteVirtualNetworkEncryption: remoteVirtualNetworkEncryption, peeringState: peeringState, peeringSyncLevel: peeringSyncLevel, provisioningState: provisioningState, doNotVerifyRemoteGateways: doNotVerifyRemoteGateways, resourceGuid: resourceGuid, areCompleteVnetsPeered: default, enableOnlyIPv6Peering: default, localSubnetNames: default, remoteSubnetNames: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Network.VpnSiteLinkConnectionData" />. </summary>

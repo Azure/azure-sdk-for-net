@@ -3,6 +3,7 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
+
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
@@ -32,14 +33,16 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
-#mgmt-debug:
+# mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
   ConnectionMonitor: ConnectionMonitorInput
   ConnectionMonitorResult: ConnectionMonitor
   PacketCapture: PacketCaptureInput
+  PacketCapture.properties.continuousCapture: IsContinuousCapture
   PacketCaptureResult: PacketCapture
+  PacketCaptureResult.properties.continuousCapture: IsContinuousCapture
   IPConfigurationBgpPeeringAddress.ipconfigurationId: IPConfigurationId
   VirtualNetworkGatewayNatRule.properties.type: VpnNatRuleType
   SubResource: NetworkSubResource
@@ -148,7 +151,9 @@ rename-mapping:
   SignatureOverridesFilterValuesResponse: SignatureOverridesFilterValuesResult
   SlotType: SwapSlotType
   UseHubGateway: HubGatewayUsageFlag
+  VirtualApplianceIPConfigurationProperties.primary: IsPrimary
   VirtualNetworkEncryption.enabled: IsEnabled
+  VirtualNetworkPeering.properties.peerCompleteVnets: AreCompleteVnetsPeered
   VpnPolicyMemberAttributeType.AADGroupId: AadGroupId
   CustomIpPrefix.properties.customIpPrefixParent: ParentCustomIpPrefix
   CustomIpPrefix.properties.childCustomIpPrefixes: ChildCustomIpPrefixList
@@ -603,4 +608,5 @@ directive:
   #     {
   #         delete $[param];
   #     }
+
 ```

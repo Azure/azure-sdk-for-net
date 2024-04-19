@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
             }
-            if (Optional.IsDefined(PeerCompleteVnets))
+            if (Optional.IsDefined(AreCompleteVnetsPeered))
             {
                 writer.WritePropertyName("peerCompleteVnets"u8);
-                writer.WriteBooleanValue(PeerCompleteVnets.Value);
+                writer.WriteBooleanValue(AreCompleteVnetsPeered.Value);
             }
             if (Optional.IsDefined(EnableOnlyIPv6Peering))
             {

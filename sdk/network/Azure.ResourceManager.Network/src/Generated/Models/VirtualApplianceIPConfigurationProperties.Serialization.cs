@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Primary))
+            if (Optional.IsDefined(IsPrimary))
             {
                 writer.WritePropertyName("primary"u8);
-                writer.WriteBooleanValue(Primary.Value);
+                writer.WriteBooleanValue(IsPrimary.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

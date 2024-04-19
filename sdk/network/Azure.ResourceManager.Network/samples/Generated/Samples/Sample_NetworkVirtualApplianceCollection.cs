@@ -184,11 +184,11 @@ VirtualApplianceNetworkInterfaceIPConfigurations =
 new VirtualApplianceIPConfiguration()
 {
 Name = "publicnicipconfig",
-Primary = true,
+IsPrimary = true,
 },new VirtualApplianceIPConfiguration()
 {
 Name = "publicnicipconfig-2",
-Primary = false,
+IsPrimary = false,
 }
 },
 },new VirtualApplianceNetworkInterfaceConfiguration()
@@ -199,11 +199,11 @@ VirtualApplianceNetworkInterfaceIPConfigurations =
 new VirtualApplianceIPConfiguration()
 {
 Name = "privatenicipconfig",
-Primary = true,
+IsPrimary = true,
 },new VirtualApplianceIPConfiguration()
 {
 Name = "privatenicipconfig-2",
-Primary = false,
+IsPrimary = false,
 }
 },
 }
