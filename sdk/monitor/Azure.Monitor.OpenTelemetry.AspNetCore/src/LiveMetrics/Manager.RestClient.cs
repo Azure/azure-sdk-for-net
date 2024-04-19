@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 
@@ -59,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             }
             catch (System.Exception ex)
             {
-                LiveMetricsExporterEventSource.Log.PingFailedWithUnknownException(ex);
+                AzureMonitorAspNetCoreEventSource.Log.PingFailedWithUnknownException(ex);
                 Debug.WriteLine(ex);
             }
         }
@@ -117,7 +114,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             }
             catch (System.Exception ex)
             {
-                LiveMetricsExporterEventSource.Log.PostFailedWithUnknownException(ex);
+                AzureMonitorAspNetCoreEventSource.Log.PostFailedWithUnknownException(ex);
                 Debug.WriteLine(ex);
             }
         }

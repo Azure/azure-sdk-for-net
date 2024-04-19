@@ -3,7 +3,6 @@
 
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
@@ -72,7 +71,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
 
                 isAadEnabled = true;
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
-                LiveMetricsExporterEventSource.Log.SetAADCredentialsToPipeline(options.Credential.GetType().Name, scope);
+                AzureMonitorAspNetCoreEventSource.Log.SetAADCredentialsToPipeline(options.Credential.GetType().Name, scope);
             }
             else
             {

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection

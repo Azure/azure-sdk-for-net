@@ -3,16 +3,11 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text.Json;
-using System.Threading;
 using Azure.Core.Pipeline;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
 {
@@ -83,11 +78,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = ServiceError.DeserializeServiceError(document.RootElement);
-                            LiveMetricsExporterEventSource.Log.PingFailedWithServiceError(message.Response.Status, value);
+                            AzureMonitorAspNetCoreEventSource.Log.PingFailedWithServiceError(message.Response.Status, value);
                         }
 
                         Debug.WriteLine($"{DateTime.Now}: Ping FAILED: {message.Response.Status} {message.Response.ReasonPhrase}.");
-                        LiveMetricsExporterEventSource.Log.PingFailed(message.Response);
+                        AzureMonitorAspNetCoreEventSource.Log.PingFailed(message.Response);
                         return new QuickPulseResponse(success: false);
                     }
                 default:
@@ -142,11 +137,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         {
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = ServiceError.DeserializeServiceError(document.RootElement);
-                            LiveMetricsExporterEventSource.Log.PostFailedWithServiceError(message.Response.Status, value);
+                            AzureMonitorAspNetCoreEventSource.Log.PostFailedWithServiceError(message.Response.Status, value);
                         }
 
                         Debug.WriteLine($"{DateTime.Now}: Post FAILED: {message.Response.Status} {message.Response.ReasonPhrase}.");
-                        LiveMetricsExporterEventSource.Log.PostFailed(message.Response);
+                        AzureMonitorAspNetCoreEventSource.Log.PostFailed(message.Response);
                         return new QuickPulseResponse(success: false);
                     }
                 default:

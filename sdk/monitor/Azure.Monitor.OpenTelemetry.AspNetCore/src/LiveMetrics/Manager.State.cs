@@ -1,11 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Diagnostics;
-using System.Threading;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
@@ -150,7 +146,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             }
             catch (Exception ex)
             {
-                LiveMetricsExporterEventSource.Log.StateMachineFailedWithUnknownException(ex);
+                AzureMonitorAspNetCoreEventSource.Log.StateMachineFailedWithUnknownException(ex);
                 Debug.WriteLine(ex);
             }
         }

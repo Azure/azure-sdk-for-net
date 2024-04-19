@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Net;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry.Resources;

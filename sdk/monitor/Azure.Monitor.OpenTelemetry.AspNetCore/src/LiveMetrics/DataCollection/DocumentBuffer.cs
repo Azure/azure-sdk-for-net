@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Threading;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
@@ -30,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             }
             else
             {
-                LiveMetricsExporterEventSource.Log.DroppedDocument(documentType: document.DocumentType);
+                AzureMonitorAspNetCoreEventSource.Log.DroppedDocument(documentType: document.DocumentType);
             }
         }
 
