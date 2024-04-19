@@ -5,6 +5,7 @@ using System.Reflection;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
+using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Microsoft.Extensions.DependencyInjection;

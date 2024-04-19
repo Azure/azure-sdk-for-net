@@ -1,16 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
 {
@@ -273,7 +268,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             if (period < 0)
             {
                 // Not likely to happen but being safe here incase of clock issues in multi-core.
-                LiveMetricsExporterEventSource.Log.ProcessCountersUnexpectedNegativeTimeSpan(
+                AzureMonitorAspNetCoreEventSource.Log.ProcessCountersUnexpectedNegativeTimeSpan(
                     previousCollectedTime: previousCollectedTime.Ticks,
                     recentCollectedTime: recentCollectedTime.Ticks);
                 Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} period less than zero");
@@ -284,7 +279,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             var diff = recentCollectedValue - previousCollectedValue;
             if (diff < 0)
             {
-                LiveMetricsExporterEventSource.Log.ProcessCountersUnexpectedNegativeValue(
+                AzureMonitorAspNetCoreEventSource.Log.ProcessCountersUnexpectedNegativeValue(
                     previousCollectedValue: previousCollectedValue,
                     recentCollectedValue: recentCollectedValue);
                 Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} diff less than zero");
@@ -295,7 +290,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             period = period != 0 ? period : 1;
             calculatedValue = diff * 100.0 / period;
             normalizedValue = calculatedValue / _processorCount;
-            LiveMetricsExporterEventSource.Log.ProcessCountersCpuCounter(
+            AzureMonitorAspNetCoreEventSource.Log.ProcessCountersCpuCounter(
                 period: previousCollectedValue,
                 diffValue: recentCollectedValue,
                 calculatedValue: calculatedValue,

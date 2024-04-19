@@ -1,16 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using OpenTelemetry.Logs;
 using ExceptionDocument = Azure.Monitor.OpenTelemetry.AspNetCore.Models.Exception;
-using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
 {
@@ -31,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             }
             catch (System.Exception ex)
             {
-                LiveMetricsExporterEventSource.Log.FailedToCreateTelemetryDocument("ExceptionDocument", ex);
+                AzureMonitorAspNetCoreEventSource.Log.FailedToCreateTelemetryDocument("ExceptionDocument", ex);
             }
         }
 
@@ -44,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             }
             catch (System.Exception ex)
             {
-                LiveMetricsExporterEventSource.Log.FailedToCreateTelemetryDocument("ExceptionDocument", ex);
+                AzureMonitorAspNetCoreEventSource.Log.FailedToCreateTelemetryDocument("ExceptionDocument", ex);
             }
         }
 
@@ -57,7 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             }
             catch (System.Exception ex)
             {
-                LiveMetricsExporterEventSource.Log.FailedToCreateTelemetryDocument("LogDocument", ex);
+                AzureMonitorAspNetCoreEventSource.Log.FailedToCreateTelemetryDocument("LogDocument", ex);
             }
         }
 
@@ -70,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             }
             catch (System.Exception ex)
             {
-                LiveMetricsExporterEventSource.Log.FailedToCreateTelemetryDocument("LogDocument", ex);
+                AzureMonitorAspNetCoreEventSource.Log.FailedToCreateTelemetryDocument("LogDocument", ex);
             }
         }
 
@@ -83,7 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             }
             catch (System.Exception ex)
             {
-                LiveMetricsExporterEventSource.Log.FailedToCreateTelemetryDocument("DependencyDocument", ex);
+                AzureMonitorAspNetCoreEventSource.Log.FailedToCreateTelemetryDocument("DependencyDocument", ex);
             }
         }
 
@@ -96,7 +93,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             }
             catch (System.Exception ex)
             {
-                LiveMetricsExporterEventSource.Log.FailedToCreateTelemetryDocument("RequestDocument", ex);
+                AzureMonitorAspNetCoreEventSource.Log.FailedToCreateTelemetryDocument("RequestDocument", ex);
             }
         }
         #endregion
