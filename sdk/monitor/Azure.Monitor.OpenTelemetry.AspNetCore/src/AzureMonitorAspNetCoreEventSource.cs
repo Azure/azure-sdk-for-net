@@ -90,8 +90,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         [Event(7, Message = "Found existing Microsoft.Extensions.Azure.AzureEventSourceLogForwarder registration.", Level = EventLevel.Informational)]
         public void LogForwarderIsAlreadyRegistered() => WriteEvent(7);
 
-        #region LiveMetrics
-
         [NonEvent]
         public void FailedToParseConnectionString(System.Exception ex)
         {
@@ -265,6 +263,5 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
         [Event(23, Message = "Failed to create telemetry document due to an exception. DocumentType: {0}. Exception: {1}", Level = EventLevel.Error)]
         public void FailedToCreateTelemetryDocument(string documentTypeName, string exceptionMessage) => WriteEvent(23, documentTypeName, exceptionMessage);
-        #endregion
     }
 }
