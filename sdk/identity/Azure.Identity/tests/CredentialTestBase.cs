@@ -356,6 +356,92 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task ClaimsSetCorrectlyOnRequest()
+        {
+            // Configure the transport
+            var token = Guid.NewGuid().ToString();
+            var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
+            bool calledDiscoveryEndpoint = false;
+            bool isPubClient = false;
+            const string Claims = "myClaims";
+
+            var mockTransport = new MockTransport(req =>
+            {
+                calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
+
+                MockResponse response = new(200);
+                if (req.Uri.Path.EndsWith("/devicecode"))
+                {
+                    response = CredentialTestHelpers.CreateMockMsalDeviceCodeResponse();
+                }
+                else if (req.Uri.Path.Contains("/userrealm/"))
+                {
+                    response.SetContent(UserrealmResponse);
+                }
+                else
+                {
+                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions) || typeof(TCredOptions) == typeof(OnBehalfOfCredentialOptions))
+                    {
+                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, TenantId, ExpectedUsername, ObjectId);
+                    }
+                    else
+                    {
+                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
+                    }
+                    if (req.Content != null)
+                    {
+                        var stream = new MemoryStream();
+                        req.Content.WriteTo(stream, default);
+                        var content = new BinaryData(stream.ToArray()).ToString();
+                        var queryString = Uri.UnescapeDataString(content)
+                            .Split('&')
+                            .Select(q => q.Split('='))
+                            .ToDictionary(kvp => kvp[0], kvp => kvp[1]);
+                        bool containsClaims = queryString.TryGetValue("claims", out var claimsJson);
+
+                        if (req.ClientRequestId == "NoClaims")
+                        {
+                            Assert.False(containsClaims, "(NoClaims) Claims should not be present. Claims=" + claimsJson);
+                        }
+                        if (req.ClientRequestId == "WithClaims")
+                        {
+                            Assert.True(containsClaims, "(WithClaims) Claims should be present");
+                            Assert.AreEqual(Claims, claimsJson, "(WithClaims) Claims should match");
+                        }
+                    }
+                }
+
+                return response;
+            });
+
+            var config = new CommonCredentialTestConfig()
+            {
+                Transport = mockTransport,
+                TenantId = TenantId,
+                RedirectUri = new Uri("http://localhost:8400/")
+            };
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore("EnableCAE tests do not apply to the non-MSAL credentials.");
+            }
+            isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+
+            using (HttpPipeline.CreateClientRequestIdScope("NoClaims"))
+            {
+                // First call to populate the account record for confidential client creds
+                await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+                var actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate), default);
+                Assert.AreEqual(token, actualToken.Token);
+            }
+            using (HttpPipeline.CreateClientRequestIdScope("WithClaims"))
+            {
+                var actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate2, claims: Claims), default);
+                Assert.AreEqual(token, actualToken.Token);
+            }
+        }
+
+        [Test]
         public async Task TokenRequestContextClaimsPassedToMSAL()
         {
             var caeClaim = new CaeClaim();
@@ -624,6 +710,7 @@ namespace Azure.Identity.Tests
             public TokenRequestContext RequestContext { get; set; }
             public string TenantId { get; set; }
             public IList<string> AdditionallyAllowedTenants { get; set; } = new List<string>();
+            public Uri RedirectUri { get; set; }
             internal TenantIdResolverBase TestTentantIdResolver { get; set; }
             internal MockMsalConfidentialClient MockConfidentialMsalClient { get; set; }
             internal MockMsalPublicClient MockPublicMsalClient { get; set; }
