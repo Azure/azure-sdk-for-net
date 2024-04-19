@@ -8,6 +8,10 @@ using Azure.Monitor.OpenTelemetry.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Trace;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using OpenTelemetry;
+using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 {
@@ -31,19 +35,18 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                 ConnectionString = ConnectionString
             };
 
-            IServiceCollection services = new ServiceCollection();
-            services.AddOpenTelemetry().UseAzureMonitor(x => x.ConnectionString = ConnectionString)
-                .WithTracing(configure: builder => builder.AddSource(ActivitySourceName));
-            var serviceProvider = services.BuildServiceProvider();
+            var manager = new Manager(azureMonitorOptions, new DefaultPlatform());
 
-            // Retrieve the TracerProvider - this is only necessary because this is a Console app.
-            // In an ASP.NET Core app, this is handled by the OpenTelemetry.Extensions.Hosting package.
-            var tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
-            Debug.Assert(tracerProvider != null);
+            using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource(ActivitySourceName)
+                .AddProcessor(new LiveMetricsActivityProcessor(manager))
+                .Build();
 
-            // Retrieve an instance of the logger
-            _logger = serviceProvider.GetService<ILogger<Program>>();
-            Debug.Assert(_logger != null);
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options => options.AddProcessor(new LiveMetricsLogProcessor(manager)));
+            });
+            _logger = loggerFactory.CreateLogger<Program>();
 
             Console.WriteLine("Press any key to stop the loop.");
 
