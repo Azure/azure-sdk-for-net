@@ -191,7 +191,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 }
                 else if (tag.Key == SemanticConventions.AttributeServerPort)
                 {
-                    serverPort = $":{tag.Value.ToString()!}";
+                    object port80 = 80;
+                    object port443 = 443;
+
+                    if (tag.Value != port80 && tag.Value != port443)
+                    {
+                        serverPort = $":{tag.Value.ToString()}";
+                    }
                 }
                 else if (tag.Key == SemanticConventions.AttributeUrlPath)
                 {
