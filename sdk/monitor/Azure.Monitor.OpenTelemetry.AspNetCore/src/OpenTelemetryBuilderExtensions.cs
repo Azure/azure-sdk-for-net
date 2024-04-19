@@ -129,8 +129,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
             builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) =>
             {
-                var options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
-                if (options.EnableLiveMetrics)
+                var azureMonitorOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
+                if (azureMonitorOptions.EnableLiveMetrics)
                 {
                     var manager = sp.GetRequiredService<Manager>();
                     builder.AddProcessor(new LiveMetricsActivityProcessor(manager));
