@@ -651,6 +651,12 @@
       ]
     },
     {
+      "filename": "**/sdk/maps/**/*.cs",
+      "words": [
+        "Bbox"
+      ]
+    },
+    {
       "filename": "**/sdk/migrationdiscoverysap/**/*.cs",
       "words": [
         "Hana",
