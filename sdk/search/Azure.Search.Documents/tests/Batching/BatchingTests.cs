@@ -213,6 +213,7 @@ namespace Azure.Search.Documents.Tests
 
         #region Champion
         [Test]
+        [Ignore(Consistently exceeding global timeout in Core runs.  Tracked by #43540")]
         public async Task Champion_OneShotUpload()
         {
             await using SearchResources resources = await SearchResources.CreateWithEmptyIndexAsync<SimpleDocument>(this);
