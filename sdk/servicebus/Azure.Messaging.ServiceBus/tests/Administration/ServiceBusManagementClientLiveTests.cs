@@ -240,6 +240,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 MaxSizeInMegabytes = 1024,
                 RequiresDuplicateDetection = true,
                 UserMetadata = nameof(BasicTopicCrudOperations),
+                SupportOrdering = true
             };
 
             if (CanSetMaxMessageSize(premium))
