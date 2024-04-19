@@ -51,14 +51,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             Dictionary<string, AccumulatedValues> metricAccumulators = CreateMetricAccumulators(_collectionConfiguration);
             LiveMetricsBuffer liveMetricsBuffer = new();
             DocumentBuffer filledBuffer = _documentBuffer.FlipDocumentBuffers();
+            IEnumerable<DocumentStream> documentStreams = _collectionConfiguration.DocumentStreams;
             foreach (var item in filledBuffer.ReadAllAndClear())
             {
-                // TODO: item.DocumentStreamIds = new List<string> { "" }; - Will add the identifier for the specific filtering rules (if applicable). See also "matchingDocumentStreamIds" in AI SDK.
+                bool matchesDocumentStreamFilter = false;
 
-                dataPoint.Documents.Add(item);
+                CollectionConfigurationError[] groupErrors;
 
                 if (item is Request request)
                 {
+                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
+                        documentStreams,
+                        documentStream => documentStream.RequestQuotaTracker,
+                        documentStream => documentStream.CheckFilters(request, out groupErrors));
                     ApplyFilters(metricAccumulators, _collectionConfiguration.RequestMetrics, request, out filteringErrors, ref projectionError);
                     if (item.Extension_IsSuccess)
                     {
@@ -71,6 +76,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (item is RemoteDependency remoteDependency)
                 {
+                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
+                        documentStreams,
+                        documentStream => documentStream.DependencyQuotaTracker,
+                        documentStream => documentStream.CheckFilters(remoteDependency, out groupErrors));
                     ApplyFilters(metricAccumulators, _collectionConfiguration.DependencyMetrics, remoteDependency, out filteringErrors, ref projectionError);
                     if (item.Extension_IsSuccess)
                     {
@@ -83,16 +92,29 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (item is Models.Exception exception)
                 {
+                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
+                        documentStreams,
+                        documentStream => documentStream.ExceptionQuotaTracker,
+                        documentStream => documentStream.CheckFilters(exception, out groupErrors));
                     ApplyFilters(metricAccumulators, _collectionConfiguration.ExceptionMetrics, exception, out filteringErrors, ref projectionError);
                     liveMetricsBuffer.RecordException();
                 }
                 else if (item is Models.Trace trace)
                 {
+                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
+                        documentStreams,
+                        documentStream => documentStream.TraceQuotaTracker,
+                        documentStream => documentStream.CheckFilters(trace, out groupErrors));
                     ApplyFilters(metricAccumulators, _collectionConfiguration.TraceMetrics, trace, out filteringErrors, ref projectionError);
                 }
                 else
                 {
                     Debug.WriteLine($"Unknown DocumentType: {item.DocumentType}");
+                }
+
+                if (matchesDocumentStreamFilter)
+                {
+                    dataPoint.Documents.Add(item);
                 }
             }
 
@@ -279,6 +301,26 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 processorCount: _processorCount,
                 normalizedValue: normalizedValue);
             return true;
+        }
+
+        private bool MatchesDocumentStreamFilters(
+            IEnumerable<DocumentStream> documentStreams,
+            Func<DocumentStream, QuickPulseQuotaTracker> getQuotaTracker,
+            Func<DocumentStream, bool> checkDocumentStreamFilters)
+        {
+            // check which document streams are interested in this telemetry
+            var interested = false;
+
+            foreach (DocumentStream matchingDocumentStream in documentStreams.Where(checkDocumentStreamFilters))
+            {
+                // for each interested document stream only let the document through if there's quota available for that stream
+                if (getQuotaTracker(matchingDocumentStream).ApplyQuota())
+                {
+                    interested = true;
+                }
+            }
+
+            return interested;
         }
     }
 }
