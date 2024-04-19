@@ -101,8 +101,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
         }
 
-        [Event(1, Message = "Failed to parse ConnectionString due to an exception: {0}", Level = EventLevel.Error)]
-        public void FailedToParseConnectionString(string exceptionMessage) => WriteEvent(1, exceptionMessage);
+        [Event(8, Message = "Failed to parse ConnectionString due to an exception: {0}", Level = EventLevel.Error)]
+        public void FailedToParseConnectionString(string exceptionMessage) => WriteEvent(8, exceptionMessage);
 
         [NonEvent]
         public void FailedToReadEnvironmentVariables(System.Exception ex)
@@ -113,8 +113,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
         }
 
-        [Event(2, Message = "Failed to read environment variables due to an exception. This may prevent the Exporter from initializing. {0}", Level = EventLevel.Warning)]
-        public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(2, errorMessage);
+        [Event(9, Message = "Failed to read environment variables due to an exception. This may prevent the Exporter from initializing. {0}", Level = EventLevel.Warning)]
+        public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(9, errorMessage);
 
         [NonEvent]
         public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, System.Exception ex)
@@ -125,8 +125,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
         }
 
-        [Event(3, Message = "Accessing environment variable - {0} failed with exception: {1}.", Level = EventLevel.Warning)]
-        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, string exceptionMessage) => WriteEvent(3, environmentVariable, exceptionMessage);
+        [Event(10, Message = "Accessing environment variable - {0} failed with exception: {1}.", Level = EventLevel.Warning)]
+        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, string exceptionMessage) => WriteEvent(10, environmentVariable, exceptionMessage);
 
         [NonEvent]
         public void SdkVersionCreateFailed(System.Exception ex)
@@ -137,11 +137,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
         }
 
-        [Event(4, Message = "Failed to create an SDK version due to an exception. Not user actionable. {0}", Level = EventLevel.Warning)]
-        public void SdkVersionCreateFailed(string exceptionMessage) => WriteEvent(4, exceptionMessage);
+        [Event(11, Message = "Failed to create an SDK version due to an exception. Not user actionable. {0}", Level = EventLevel.Warning)]
+        public void SdkVersionCreateFailed(string exceptionMessage) => WriteEvent(11, exceptionMessage);
 
-        [Event(5, Message = "Version string exceeds expected length. This is only for internal telemetry and can safely be ignored. Type Name: {0}. Version: {1}", Level = EventLevel.Verbose)]
-        public void VersionStringUnexpectedLength(string typeName, string value) => WriteEvent(5, typeName, value);
+        [Event(12, Message = "Version string exceeds expected length. This is only for internal telemetry and can safely be ignored. Type Name: {0}. Version: {1}", Level = EventLevel.Verbose)]
+        public void VersionStringUnexpectedLength(string typeName, string value) => WriteEvent(12, typeName, value);
 
         [NonEvent]
         public void ErrorInitializingPartOfSdkVersion(string typeName, System.Exception ex)
@@ -152,11 +152,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
         }
 
-        [Event(6, Message = "Failed to get Type version while initialize SDK version due to an exception. Not user actionable. Type: {0}. {1}", Level = EventLevel.Warning)]
-        public void ErrorInitializingPartOfSdkVersion(string typeName, string exceptionMessage) => WriteEvent(6, typeName, exceptionMessage);
+        [Event(13, Message = "Failed to get Type version while initialize SDK version due to an exception. Not user actionable. Type: {0}. {1}", Level = EventLevel.Warning)]
+        public void ErrorInitializingPartOfSdkVersion(string typeName, string exceptionMessage) => WriteEvent(13, typeName, exceptionMessage);
 
-        [Event(7, Message = "HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {0} Scope: {1}", Level = EventLevel.Informational)]
-        public void SetAADCredentialsToPipeline(string credentialTypeName, string scope) => WriteEvent(7, credentialTypeName, scope);
+        [Event(14, Message = "HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {0} Scope: {1}", Level = EventLevel.Informational)]
+        public void SetAADCredentialsToPipeline(string credentialTypeName, string scope) => WriteEvent(14, credentialTypeName, scope);
 
         [NonEvent]
         public void PingFailed(Response response)
@@ -212,14 +212,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
         }
 
-        [Event(8, Message = "Service call failed. Name: {0}. Status Code: {1} Reason: {2}.", Level = EventLevel.Error)]
-        public void ServiceCallFailed(string name, int statusCode, string reasonPhrase) => WriteEvent(8, name, statusCode, reasonPhrase);
+        [Event(15, Message = "Service call failed. Name: {0}. Status Code: {1} Reason: {2}.", Level = EventLevel.Error)]
+        public void ServiceCallFailed(string name, int statusCode, string reasonPhrase) => WriteEvent(15, name, statusCode, reasonPhrase);
 
-        [Event(9, Message = "Service call failed with exception. Name: {0}. Exception: {1}", Level = EventLevel.Error)]
-        public void ServiceCallFailedWithUnknownException(string name, string exceptionMessage) => WriteEvent(9, name, exceptionMessage);
+        [Event(16, Message = "Service call failed with exception. Name: {0}. Exception: {1}", Level = EventLevel.Error)]
+        public void ServiceCallFailedWithUnknownException(string name, string exceptionMessage) => WriteEvent(16, name, exceptionMessage);
 
-        [Event(10, Message = "Service call failed. Name: {0}. Status Code: {1}. Code: {2}. Message: {3}. Exception: {4}.", Level = EventLevel.Error)]
-        public void ServiceCallFailedWithServiceError(string name, int statusCode, string code, string message, string exception) => WriteEvent(10, name, statusCode, code, message, exception);
+        [Event(17, Message = "Service call failed. Name: {0}. Status Code: {1}. Code: {2}. Message: {3}. Exception: {4}.", Level = EventLevel.Error)]
+        public void ServiceCallFailedWithServiceError(string name, int statusCode, string code, string message, string exception) => WriteEvent(17, name, statusCode, code, message, exception);
 
         [NonEvent]
         public void StateMachineFailedWithUnknownException(System.Exception ex)
@@ -230,8 +230,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
         }
 
-        [Event(11, Message = "LiveMetrics State Machine failed with exception: {0}", Level = EventLevel.Error)]
-        public void StateMachineFailedWithUnknownException(string exceptionMessage) => WriteEvent(11, exceptionMessage);
+        [Event(18, Message = "LiveMetrics State Machine failed with exception: {0}", Level = EventLevel.Error)]
+        public void StateMachineFailedWithUnknownException(string exceptionMessage) => WriteEvent(18, exceptionMessage);
 
         [NonEvent]
         public void DroppedDocument(DocumentType documentType)
@@ -242,17 +242,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
         }
 
-        [Event(12, Message = "Document was dropped. DocumentType: {0}. Not user actionable.", Level = EventLevel.Warning)]
-        public void DroppedDocument(string documentType) => WriteEvent(12, documentType);
+        [Event(19, Message = "Document was dropped. DocumentType: {0}. Not user actionable.", Level = EventLevel.Warning)]
+        public void DroppedDocument(string documentType) => WriteEvent(19, documentType);
 
-        [Event(13, Message = "Failure to calculate CPU Counter. Unexpected negative timespan: PreviousCollectedTime: {0}. RecentCollectedTime: {0}. Not user actionable.", Level = EventLevel.Error)]
-        public void ProcessCountersUnexpectedNegativeTimeSpan(long previousCollectedTime, long recentCollectedTime) => WriteEvent(13, previousCollectedTime, recentCollectedTime);
+        [Event(20, Message = "Failure to calculate CPU Counter. Unexpected negative timespan: PreviousCollectedTime: {0}. RecentCollectedTime: {0}. Not user actionable.", Level = EventLevel.Error)]
+        public void ProcessCountersUnexpectedNegativeTimeSpan(long previousCollectedTime, long recentCollectedTime) => WriteEvent(20, previousCollectedTime, recentCollectedTime);
 
-        [Event(14, Message = "Failure to calculate CPU Counter. Unexpected negative value: PreviousCollectedValue: {0}. RecentCollectedValue: {0}. Not user actionable.", Level = EventLevel.Error)]
-        public void ProcessCountersUnexpectedNegativeValue(long previousCollectedValue, long recentCollectedValue) => WriteEvent(14, previousCollectedValue, recentCollectedValue);
+        [Event(21, Message = "Failure to calculate CPU Counter. Unexpected negative value: PreviousCollectedValue: {0}. RecentCollectedValue: {0}. Not user actionable.", Level = EventLevel.Error)]
+        public void ProcessCountersUnexpectedNegativeValue(long previousCollectedValue, long recentCollectedValue) => WriteEvent(21, previousCollectedValue, recentCollectedValue);
 
-        [Event(15, Message = "Calculated Cpu Counter: Period: {0}. DiffValue: {1}. CalculatedValue: {2}. ProcessorCount: {3}. NormalizedValue: {4}", Level = EventLevel.Verbose)]
-        public void ProcessCountersCpuCounter(long period, long diffValue, double calculatedValue, int processorCount, double normalizedValue) => WriteEvent(15, period, diffValue, calculatedValue, processorCount, normalizedValue);
+        [Event(22, Message = "Calculated Cpu Counter: Period: {0}. DiffValue: {1}. CalculatedValue: {2}. ProcessorCount: {3}. NormalizedValue: {4}", Level = EventLevel.Verbose)]
+        public void ProcessCountersCpuCounter(long period, long diffValue, double calculatedValue, int processorCount, double normalizedValue) => WriteEvent(22, period, diffValue, calculatedValue, processorCount, normalizedValue);
 
         [NonEvent]
         public void FailedToCreateTelemetryDocument(string documentTypeName, System.Exception ex)
@@ -263,8 +263,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
         }
 
-        [Event(16, Message = "Failed to create telemetry document due to an exception. DocumentType: {0}. Exception: {1}", Level = EventLevel.Error)]
-        public void FailedToCreateTelemetryDocument(string documentTypeName, string exceptionMessage) => WriteEvent(16, documentTypeName, exceptionMessage);
+        [Event(23, Message = "Failed to create telemetry document due to an exception. DocumentType: {0}. Exception: {1}", Level = EventLevel.Error)]
+        public void FailedToCreateTelemetryDocument(string documentTypeName, string exceptionMessage) => WriteEvent(23, documentTypeName, exceptionMessage);
         #endregion
     }
 }
