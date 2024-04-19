@@ -289,7 +289,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GeocodingBatchRequestBody>(geocodingBatchRequestBody);
+            content.JsonWriter.WriteObjectValue(geocodingBatchRequestBody);
             request.Content = content;
             return message;
         }
@@ -729,7 +729,7 @@ namespace Azure.Maps.Search
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ReverseGeocodingBatchRequestBody>(reverseGeocodingBatchRequestBody);
+            content.JsonWriter.WriteObjectValue(reverseGeocodingBatchRequestBody);
             request.Content = content;
             return message;
         }
