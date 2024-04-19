@@ -363,6 +363,7 @@ namespace Azure.Identity.Tests
             var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
             bool calledDiscoveryEndpoint = false;
             bool isPubClient = false;
+            const string Claims = "myClaims";
 
             var mockTransport = new MockTransport(req =>
             {
@@ -405,6 +406,7 @@ namespace Azure.Identity.Tests
                         if (req.ClientRequestId == "WithClaims")
                         {
                             Assert.True(containsClaims, "(WithClaims) Claims should be present");
+                            Assert.AreEqual(Claims, claimsJson, "(WithClaims) Claims should match");
                         }
                     }
                 }
@@ -416,7 +418,7 @@ namespace Azure.Identity.Tests
             {
                 Transport = mockTransport,
                 TenantId = TenantId,
-                RedirectUri =  new Uri("http://localhost:8400/")
+                RedirectUri = new Uri("http://localhost:8400/")
             };
             var credential = GetTokenCredential(config);
             if (!CredentialTestHelpers.IsMsalCredential(credential))
@@ -425,17 +427,16 @@ namespace Azure.Identity.Tests
             }
             isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
 
-            // First call to populate the account record for confidential client creds
-            await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
-
             using (HttpPipeline.CreateClientRequestIdScope("NoClaims"))
             {
+                // First call to populate the account record for confidential client creds
+                await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
                 var actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate), default);
                 Assert.AreEqual(token, actualToken.Token);
             }
             using (HttpPipeline.CreateClientRequestIdScope("WithClaims"))
             {
-                var actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate2, claims: "myClaims"), default);
+                var actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Alternate2, claims: Claims), default);
                 Assert.AreEqual(token, actualToken.Token);
             }
         }
