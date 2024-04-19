@@ -412,7 +412,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 {
                     receiveActions.EndExecutionScope();
                     _messagingProvider.ActionsCache.TryRemove(args.Message.LockToken, out _);
-                    _messagingProvider.SessionActionsCache.TryRemove(args.Message.SessionId, out _);
+                    if (_isSessionsEnabled)
+                    {
+                        _messagingProvider.SessionActionsCache.TryRemove(args.Message.SessionId, out _);
+                    }
                 }
             }
         }

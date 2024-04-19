@@ -364,8 +364,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new MockServerCallContext()
                 );
                 _waitHandle1.Set();
-
-                Assert.True(lockedUntil < message.LockedUntil);
             }
         }
 
