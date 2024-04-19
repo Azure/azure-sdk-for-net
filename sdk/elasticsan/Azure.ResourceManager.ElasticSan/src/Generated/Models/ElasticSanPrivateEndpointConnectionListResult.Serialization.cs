@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 {
     internal partial class ElasticSanPrivateEndpointConnectionListResult : IUtf8JsonSerializable, IJsonModel<ElasticSanPrivateEndpointConnectionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanPrivateEndpointConnectionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanPrivateEndpointConnectionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ElasticSanPrivateEndpointConnectionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<ElasticSanPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         internal static ElasticSanPrivateEndpointConnectionListResult DeserializeElasticSanPrivateEndpointConnectionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

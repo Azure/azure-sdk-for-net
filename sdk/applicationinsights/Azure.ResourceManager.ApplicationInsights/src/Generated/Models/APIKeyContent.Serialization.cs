@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class APIKeyContent : IUtf8JsonSerializable, IJsonModel<APIKeyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<APIKeyContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<APIKeyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<APIKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static APIKeyContent DeserializeAPIKeyContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

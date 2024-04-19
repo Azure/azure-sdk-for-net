@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public partial class StatefulServiceProperties : IUtf8JsonSerializable, IJsonModel<StatefulServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatefulServiceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatefulServiceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StatefulServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WritePropertyName("serviceTypeName"u8);
             writer.WriteStringValue(ServiceTypeName);
             writer.WritePropertyName("partitionDescription"u8);
-            writer.WriteObjectValue<ManagedServicePartitionScheme>(PartitionDescription, options);
+            writer.WriteObjectValue(PartitionDescription, options);
             if (Optional.IsDefined(ServicePackageActivationMode))
             {
                 writer.WritePropertyName("servicePackageActivationMode"u8);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in CorrelationScheme)
                 {
-                    writer.WriteObjectValue<ManagedServiceCorrelation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceLoadMetrics)
                 {
-                    writer.WriteObjectValue<ManagedServiceLoadMetric>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in ServicePlacementPolicies)
                 {
-                    writer.WriteObjectValue<ManagedServicePlacementPolicy>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in ScalingPolicies)
                 {
-                    writer.WriteObjectValue<ManagedServiceScalingPolicy>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static StatefulServiceProperties DeserializeStatefulServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

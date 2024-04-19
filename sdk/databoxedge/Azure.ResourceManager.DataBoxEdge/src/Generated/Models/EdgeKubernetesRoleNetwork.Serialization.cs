@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     public partial class EdgeKubernetesRoleNetwork : IUtf8JsonSerializable, IJsonModel<EdgeKubernetesRoleNetwork>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesRoleNetwork>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesRoleNetwork>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EdgeKubernetesRoleNetwork>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(CniConfig))
             {
                 writer.WritePropertyName("cniConfig"u8);
-                writer.WriteObjectValue<CniConfig>(CniConfig, options);
+                writer.WriteObjectValue(CniConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LoadBalancerConfig))
             {
                 writer.WritePropertyName("loadBalancerConfig"u8);
-                writer.WriteObjectValue<DataBoxEdgeLoadBalancerConfig>(LoadBalancerConfig, options);
+                writer.WriteObjectValue(LoadBalancerConfig, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeKubernetesRoleNetwork DeserializeEdgeKubernetesRoleNetwork(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

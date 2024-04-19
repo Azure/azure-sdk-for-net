@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     public partial class ClusterUpgrade : IUtf8JsonSerializable, IJsonModel<ClusterUpgrade>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterUpgrade>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterUpgrade>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterUpgrade>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<ClusterUpgradeProperties>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static ClusterUpgrade DeserializeClusterUpgrade(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

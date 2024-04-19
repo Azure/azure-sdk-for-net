@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class AppServicePlanResourceListResult : IUtf8JsonSerializable, IJsonModel<AppServicePlanResourceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServicePlanResourceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServicePlanResourceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServicePlanResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServicePlanResourceListResult DeserializeAppServicePlanResourceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

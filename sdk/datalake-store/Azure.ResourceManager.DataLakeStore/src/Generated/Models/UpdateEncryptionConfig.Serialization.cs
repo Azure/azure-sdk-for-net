@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 {
     internal partial class UpdateEncryptionConfig : IUtf8JsonSerializable, IJsonModel<UpdateEncryptionConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateEncryptionConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateEncryptionConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UpdateEncryptionConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             if (Optional.IsDefined(KeyVaultMetaInfo))
             {
                 writer.WritePropertyName("keyVaultMetaInfo"u8);
-                writer.WriteObjectValue<UpdateKeyVaultMetaInfo>(KeyVaultMetaInfo, options);
+                writer.WriteObjectValue(KeyVaultMetaInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         internal static UpdateEncryptionConfig DeserializeUpdateEncryptionConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

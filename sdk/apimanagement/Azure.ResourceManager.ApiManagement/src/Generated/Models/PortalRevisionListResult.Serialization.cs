@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal partial class PortalRevisionListResult : IUtf8JsonSerializable, IJsonModel<PortalRevisionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PortalRevisionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PortalRevisionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PortalRevisionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<ApiManagementPortalRevisionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static PortalRevisionListResult DeserializePortalRevisionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

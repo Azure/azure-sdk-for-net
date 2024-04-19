@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
     internal partial class QuotaListResult : IUtf8JsonSerializable, IJsonModel<QuotaListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuotaListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<PlaywrightTestingQuotaData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
 
         internal static QuotaListResult DeserializeQuotaListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

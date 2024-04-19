@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class OSSapConfiguration : IUtf8JsonSerializable, IJsonModel<OSSapConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSSapConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSSapConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OSSapConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(DeployerVmPackages))
             {
                 writer.WritePropertyName("deployerVmPackages"u8);
-                writer.WriteObjectValue<DeployerVmPackages>(DeployerVmPackages, options);
+                writer.WriteObjectValue(DeployerVmPackages, options);
             }
             if (Optional.IsDefined(SapFqdn))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static OSSapConfiguration DeserializeOSSapConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

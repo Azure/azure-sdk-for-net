@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal partial class SubscriptionListResult : IUtf8JsonSerializable, IJsonModel<SubscriptionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SubscriptionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<SubscriptionContractData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static SubscriptionListResult DeserializeSubscriptionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

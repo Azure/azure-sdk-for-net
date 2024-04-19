@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class ExternalFqdnResponse : IUtf8JsonSerializable, IJsonModel<ExternalFqdnResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExternalFqdnResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExternalFqdnResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExternalFqdnResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<MachineLearningFqdnEndpoints>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ExternalFqdnResponse DeserializeExternalFqdnResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

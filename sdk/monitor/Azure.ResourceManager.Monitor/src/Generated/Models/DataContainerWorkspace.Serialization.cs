@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class DataContainerWorkspace : IUtf8JsonSerializable, IJsonModel<DataContainerWorkspace>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataContainerWorkspace>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataContainerWorkspace>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataContainerWorkspace>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static DataContainerWorkspace DeserializeDataContainerWorkspace(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

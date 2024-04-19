@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     internal partial class UnknownFabricSpecificDetails : IUtf8JsonSerializable, IJsonModel<FabricSpecificDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricSpecificDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FabricSpecificDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FabricSpecificDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static UnknownFabricSpecificDetails DeserializeUnknownFabricSpecificDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

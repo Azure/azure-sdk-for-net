@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class OfferData : IUtf8JsonSerializable, IJsonModel<OfferData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OfferData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OfferData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OfferData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in SkuMappings)
                 {
-                    writer.WriteObjectValue<HciSkuMappings>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Hci
 
         internal static OfferData DeserializeOfferData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

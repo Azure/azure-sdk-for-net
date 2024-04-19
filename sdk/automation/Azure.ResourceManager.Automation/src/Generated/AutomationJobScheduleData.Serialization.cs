@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationJobScheduleData : IUtf8JsonSerializable, IJsonModel<AutomationJobScheduleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationJobScheduleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationJobScheduleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationJobScheduleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue<ScheduleAssociationProperty>(Schedule, options);
+                writer.WriteObjectValue(Schedule, options);
             }
             if (Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
-                writer.WriteObjectValue<RunbookAssociationProperty>(Runbook, options);
+                writer.WriteObjectValue(Runbook, options);
             }
             if (Optional.IsDefined(RunOn))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Automation
 
         internal static AutomationJobScheduleData DeserializeAutomationJobScheduleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

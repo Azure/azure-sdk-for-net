@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class StreamingEndpointCurrentSku : IUtf8JsonSerializable, IJsonModel<StreamingEndpointCurrentSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingEndpointCurrentSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingEndpointCurrentSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamingEndpointCurrentSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingEndpointCurrentSku DeserializeStreamingEndpointCurrentSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

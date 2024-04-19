@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationRefundPolicyResultProperty : IUtf8JsonSerializable, IJsonModel<ReservationRefundPolicyResultProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRefundPolicyResultProperty>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationRefundPolicyResultProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationRefundPolicyResultProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ConsumedRefundsTotal))
             {
                 writer.WritePropertyName("consumedRefundsTotal"u8);
-                writer.WriteObjectValue<PurchasePrice>(ConsumedRefundsTotal, options);
+                writer.WriteObjectValue(ConsumedRefundsTotal, options);
             }
             if (Optional.IsDefined(MaxRefundLimit))
             {
                 writer.WritePropertyName("maxRefundLimit"u8);
-                writer.WriteObjectValue<PurchasePrice>(MaxRefundLimit, options);
+                writer.WriteObjectValue(MaxRefundLimit, options);
             }
             if (Optional.IsCollectionDefined(PolicyErrors))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyErrors)
                 {
-                    writer.WriteObjectValue<ReservationRefundPolicyError>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationRefundPolicyResultProperty DeserializeReservationRefundPolicyResultProperty(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

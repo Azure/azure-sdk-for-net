@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class LateralityDiscrepancyInference : IUtf8JsonSerializable, IJsonModel<LateralityDiscrepancyInference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LateralityDiscrepancyInference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LateralityDiscrepancyInference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LateralityDiscrepancyInference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(LateralityIndication))
             {
                 writer.WritePropertyName("lateralityIndication"u8);
-                writer.WriteObjectValue<FhirR4CodeableConcept>(LateralityIndication, options);
+                writer.WriteObjectValue(LateralityIndication, options);
             }
             writer.WritePropertyName("discrepancyType"u8);
             writer.WriteStringValue(DiscrepancyType.ToString());
@@ -41,7 +41,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue<FhirR4Extension>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static LateralityDiscrepancyInference DeserializeLateralityDiscrepancyInference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,11 +172,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeLateralityDiscrepancyInference(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<LateralityDiscrepancyInference>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

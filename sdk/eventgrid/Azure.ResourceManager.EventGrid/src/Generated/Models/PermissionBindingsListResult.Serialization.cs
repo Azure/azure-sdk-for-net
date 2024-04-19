@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     internal partial class PermissionBindingsListResult : IUtf8JsonSerializable, IJsonModel<PermissionBindingsListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PermissionBindingsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PermissionBindingsListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PermissionBindingsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<EventGridNamespacePermissionBindingData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static PermissionBindingsListResult DeserializePermissionBindingsListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

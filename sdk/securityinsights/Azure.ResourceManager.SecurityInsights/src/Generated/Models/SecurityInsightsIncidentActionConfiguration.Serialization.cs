@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsIncidentActionConfiguration : IUtf8JsonSerializable, IJsonModel<SecurityInsightsIncidentActionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentActionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentActionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsIncidentActionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue<SecurityInsightsIncidentOwnerInfo>(Owner, options);
+                writer.WriteObjectValue(Owner, options);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue<SecurityInsightsIncidentLabel>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsIncidentActionConfiguration DeserializeSecurityInsightsIncidentActionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ManagedInstanceEncryptionProtectorData : IUtf8JsonSerializable, IJsonModel<ManagedInstanceEncryptionProtectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceEncryptionProtectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceEncryptionProtectorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedInstanceEncryptionProtectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static ManagedInstanceEncryptionProtectorData DeserializeManagedInstanceEncryptionProtectorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Redis.Models
 {
     public partial class RedisCommonConfiguration : IUtf8JsonSerializable, IJsonModel<RedisCommonConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCommonConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCommonConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisCommonConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisCommonConfiguration DeserializeRedisCommonConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

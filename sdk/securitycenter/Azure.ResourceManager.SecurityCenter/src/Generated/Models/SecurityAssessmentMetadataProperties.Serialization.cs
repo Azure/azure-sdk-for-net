@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecurityAssessmentMetadataProperties : IUtf8JsonSerializable, IJsonModel<SecurityAssessmentMetadataProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAssessmentMetadataProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAssessmentMetadataProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityAssessmentMetadataProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(PartnerData))
             {
                 writer.WritePropertyName("partnerData"u8);
-                writer.WriteObjectValue<SecurityAssessmentMetadataPartner>(PartnerData, options);
+                writer.WriteObjectValue(PartnerData, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAssessmentMetadataProperties DeserializeSecurityAssessmentMetadataProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

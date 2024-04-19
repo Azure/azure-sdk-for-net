@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     internal partial class PolicyTrackedResourcesQueryResults : IUtf8JsonSerializable, IJsonModel<PolicyTrackedResourcesQueryResults>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyTrackedResourcesQueryResults>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyTrackedResourcesQueryResults>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicyTrackedResourcesQueryResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<PolicyTrackedResourceRecord>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static PolicyTrackedResourcesQueryResults DeserializePolicyTrackedResourcesQueryResults(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

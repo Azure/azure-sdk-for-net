@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 {
     public partial class ContainerResourceRequestsContent : IUtf8JsonSerializable, IJsonModel<ContainerResourceRequestsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerResourceRequestsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerResourceRequestsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerResourceRequestsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Gpu))
             {
                 writer.WritePropertyName("gpu"u8);
-                writer.WriteObjectValue<ContainerGpuResourceInfo>(Gpu, options);
+                writer.WriteObjectValue(Gpu, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerResourceRequestsContent DeserializeContainerResourceRequestsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

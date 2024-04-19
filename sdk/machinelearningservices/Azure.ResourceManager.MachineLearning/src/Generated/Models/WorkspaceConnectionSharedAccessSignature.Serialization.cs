@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class WorkspaceConnectionSharedAccessSignature : IUtf8JsonSerializable, IJsonModel<WorkspaceConnectionSharedAccessSignature>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkspaceConnectionSharedAccessSignature>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkspaceConnectionSharedAccessSignature>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkspaceConnectionSharedAccessSignature>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static WorkspaceConnectionSharedAccessSignature DeserializeWorkspaceConnectionSharedAccessSignature(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

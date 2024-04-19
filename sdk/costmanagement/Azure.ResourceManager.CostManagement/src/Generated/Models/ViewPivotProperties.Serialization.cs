@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class ViewPivotProperties : IUtf8JsonSerializable, IJsonModel<ViewPivotProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ViewPivotProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ViewPivotProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ViewPivotProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static ViewPivotProperties DeserializeViewPivotProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

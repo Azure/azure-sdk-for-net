@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (CorsOptions != null)
                 {
                     writer.WritePropertyName("corsOptions"u8);
-                    writer.WriteObjectValue<CorsOptions>(CorsOptions);
+                    writer.WriteObjectValue(CorsOptions);
                 }
                 else
                 {
@@ -117,7 +117,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
+                    writer.WriteObjectValue(EncryptionKey);
                 }
                 else
                 {
@@ -127,14 +127,14 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Similarity))
             {
                 writer.WritePropertyName("similarity"u8);
-                writer.WriteObjectValue<SimilarityAlgorithm>(Similarity);
+                writer.WriteObjectValue(Similarity);
             }
             if (Optional.IsDefined(SemanticSearch))
             {
                 if (SemanticSearch != null)
                 {
                     writer.WritePropertyName("semantic"u8);
-                    writer.WriteObjectValue<SemanticSearch>(SemanticSearch);
+                    writer.WriteObjectValue(SemanticSearch);
                 }
                 else
                 {
@@ -146,7 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (VectorSearch != null)
                 {
                     writer.WritePropertyName("vectorSearch"u8);
-                    writer.WriteObjectValue<VectorSearch>(VectorSearch);
+                    writer.WriteObjectValue(VectorSearch);
                 }
                 else
                 {
@@ -385,11 +385,11 @@ namespace Azure.Search.Documents.Indexes.Models
             return DeserializeSearchIndex(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndex>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

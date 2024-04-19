@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBFirewallRuleData : IUtf8JsonSerializable, IJsonModel<CosmosDBFirewallRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBFirewallRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBFirewallRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static CosmosDBFirewallRuleData DeserializeCosmosDBFirewallRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

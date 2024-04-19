@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CassandraKeyspacePropertiesConfig : IUtf8JsonSerializable, IJsonModel<CassandraKeyspacePropertiesConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraKeyspacePropertiesConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraKeyspacePropertiesConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CassandraKeyspacePropertiesConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
-                writer.WriteObjectValue<AutoscaleSettings>(AutoscaleSettings, options);
+                writer.WriteObjectValue(AutoscaleSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraKeyspacePropertiesConfig DeserializeCassandraKeyspacePropertiesConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

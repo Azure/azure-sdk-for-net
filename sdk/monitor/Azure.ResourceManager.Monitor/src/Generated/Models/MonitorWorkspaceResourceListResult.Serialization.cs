@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal partial class MonitorWorkspaceResourceListResult : IUtf8JsonSerializable, IJsonModel<MonitorWorkspaceResourceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorWorkspaceResourceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorWorkspaceResourceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorWorkspaceResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<MonitorWorkspaceResourceData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorWorkspaceResourceListResult DeserializeMonitorWorkspaceResourceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

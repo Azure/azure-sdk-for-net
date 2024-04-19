@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ContainerServiceTimeInWeek : IUtf8JsonSerializable, IJsonModel<ContainerServiceTimeInWeek>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceTimeInWeek>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceTimeInWeek>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServiceTimeInWeek>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceTimeInWeek DeserializeContainerServiceTimeInWeek(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

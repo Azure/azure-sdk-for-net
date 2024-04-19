@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformAppProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformAppProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformAppProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformAppProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformAppProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(TemporaryDisk))
             {
                 writer.WritePropertyName("temporaryDisk"u8);
-                writer.WriteObjectValue<AppTemporaryDisk>(TemporaryDisk, options);
+                writer.WriteObjectValue(TemporaryDisk, options);
             }
             if (Optional.IsDefined(PersistentDisk))
             {
                 writer.WritePropertyName("persistentDisk"u8);
-                writer.WriteObjectValue<AppPersistentDisk>(PersistentDisk, options);
+                writer.WriteObjectValue(PersistentDisk, options);
             }
             if (Optional.IsCollectionDefined(CustomPersistentDisks))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomPersistentDisks)
                 {
-                    writer.WriteObjectValue<AppCustomPersistentDisk>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,19 +116,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadedCertificates)
                 {
-                    writer.WriteObjectValue<AppLoadedCertificate>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VnetAddons))
             {
                 writer.WritePropertyName("vnetAddons"u8);
-                writer.WriteObjectValue<AppVnetAddons>(VnetAddons, options);
+                writer.WriteObjectValue(VnetAddons, options);
             }
             if (Optional.IsDefined(IngressSettings))
             {
                 writer.WritePropertyName("ingressSettings"u8);
-                writer.WriteObjectValue<AppIngressSettings>(IngressSettings, options);
+                writer.WriteObjectValue(IngressSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformAppProperties DeserializeAppPlatformAppProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

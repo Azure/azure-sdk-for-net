@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class FirewallPolicyInsights : IUtf8JsonSerializable, IJsonModel<FirewallPolicyInsights>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyInsights>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyInsights>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallPolicyInsights>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(LogAnalyticsResources))
             {
                 writer.WritePropertyName("logAnalyticsResources"u8);
-                writer.WriteObjectValue<FirewallPolicyLogAnalyticsResources>(LogAnalyticsResources, options);
+                writer.WriteObjectValue(LogAnalyticsResources, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyInsights DeserializeFirewallPolicyInsights(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

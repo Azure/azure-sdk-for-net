@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class DefenderForServersGcpOfferingMdeAutoProvisioning : IUtf8JsonSerializable, IJsonModel<DefenderForServersGcpOfferingMdeAutoProvisioning>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForServersGcpOfferingMdeAutoProvisioning>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForServersGcpOfferingMdeAutoProvisioning>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DefenderForServersGcpOfferingMdeAutoProvisioning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForServersGcpOfferingMdeAutoProvisioning DeserializeDefenderForServersGcpOfferingMdeAutoProvisioning(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

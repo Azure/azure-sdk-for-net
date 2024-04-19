@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class GlobalRulestackPrefixData : IUtf8JsonSerializable, IJsonModel<GlobalRulestackPrefixData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GlobalRulestackPrefixData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GlobalRulestackPrefixData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GlobalRulestackPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         internal static GlobalRulestackPrefixData DeserializeGlobalRulestackPrefixData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

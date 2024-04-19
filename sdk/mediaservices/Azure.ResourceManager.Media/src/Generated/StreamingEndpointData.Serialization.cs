@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media
 {
     public partial class StreamingEndpointData : IUtf8JsonSerializable, IJsonModel<StreamingEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamingEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<StreamingEndpointCurrentSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media
                 if (AccessControl != null)
                 {
                     writer.WritePropertyName("accessControl"u8);
-                    writer.WriteObjectValue<StreamingEndpointAccessControl>(AccessControl, options);
+                    writer.WriteObjectValue(AccessControl, options);
                 }
                 else
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Media
                 if (CrossSiteAccessPolicies != null)
                 {
                     writer.WritePropertyName("crossSiteAccessPolicies"u8);
-                    writer.WriteObjectValue<CrossSiteAccessPolicies>(CrossSiteAccessPolicies, options);
+                    writer.WriteObjectValue(CrossSiteAccessPolicies, options);
                 }
                 else
                 {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Media
 
         internal static StreamingEndpointData DeserializeStreamingEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class SignalRSku : IUtf8JsonSerializable, IJsonModel<SignalRSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignalRSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.SignalR.Models
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<SignalRResourceSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue<SignalRSkuCapacity>(Capacity, options);
+                writer.WriteObjectValue(Capacity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRSku DeserializeSignalRSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

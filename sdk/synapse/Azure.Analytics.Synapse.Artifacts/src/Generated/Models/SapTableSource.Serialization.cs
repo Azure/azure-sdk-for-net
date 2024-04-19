@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue<SapTablePartitionSettings>(PartitionSettings);
+                writer.WriteObjectValue(PartitionSettings);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -285,11 +285,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeSapTableSource(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SapTableSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -297,7 +297,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SapTableSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SapTableSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SapTableSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

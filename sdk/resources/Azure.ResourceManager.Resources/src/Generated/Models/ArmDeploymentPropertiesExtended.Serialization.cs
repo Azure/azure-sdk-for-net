@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmDeploymentPropertiesExtended : IUtf8JsonSerializable, IJsonModel<ArmDeploymentPropertiesExtended>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentPropertiesExtended>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentPropertiesExtended>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmDeploymentPropertiesExtended>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Dependencies)
                 {
-                    writer.WriteObjectValue<ArmDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
-                writer.WriteObjectValue<ArmDeploymentTemplateLink>(TemplateLink, options);
+                writer.WriteObjectValue(TemplateLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Parameters))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink"u8);
-                writer.WriteObjectValue<ArmDeploymentParametersLink>(ParametersLink, options);
+                writer.WriteObjectValue(ParametersLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Mode))
             {
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting"u8);
-                writer.WriteObjectValue<DebugSetting>(DebugSetting, options);
+                writer.WriteObjectValue(DebugSetting, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
-                writer.WriteObjectValue<ErrorDeploymentExtended>(ErrorDeployment, options);
+                writer.WriteObjectValue(ErrorDeployment, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TemplateHash))
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmDeploymentPropertiesExtended DeserializeArmDeploymentPropertiesExtended(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

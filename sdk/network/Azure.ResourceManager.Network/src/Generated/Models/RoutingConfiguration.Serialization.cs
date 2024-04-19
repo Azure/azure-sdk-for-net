@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class RoutingConfiguration : IUtf8JsonSerializable, IJsonModel<RoutingConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoutingConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PropagatedRouteTables))
             {
                 writer.WritePropertyName("propagatedRouteTables"u8);
-                writer.WriteObjectValue<PropagatedRouteTable>(PropagatedRouteTables, options);
+                writer.WriteObjectValue(PropagatedRouteTables, options);
             }
             if (Optional.IsDefined(VnetRoutes))
             {
                 writer.WritePropertyName("vnetRoutes"u8);
-                writer.WriteObjectValue<VnetRoute>(VnetRoutes, options);
+                writer.WriteObjectValue(VnetRoutes, options);
             }
             if (Optional.IsDefined(InboundRouteMap))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static RoutingConfiguration DeserializeRoutingConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

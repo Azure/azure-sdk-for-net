@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoSkuDescription : IUtf8JsonSerializable, IJsonModel<KustoSkuDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoSkuDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoSkuDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoSkuDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue<KustoSkuLocationInfoItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoSkuDescription DeserializeKustoSkuDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

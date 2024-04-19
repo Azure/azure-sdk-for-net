@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Net.Http;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
 using NUnit.Framework;
 using Payload = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;
 
@@ -75,13 +75,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             {
                 Test = Payload.TokenIssuanceStart.RequestWithoutSourcePayload,
                 Message = "Testing request payload without source field passed and verifies it throws an error",
-                ExceptionMessage = "TokenIssuanceStartRequest: The Source field is required."
+                ExceptionMessage = "WebJobsTokenIssuanceStartRequest: The Source field is required."
             }.ToArray;
             yield return new TestCaseStructure()
             {
                 Test = Payload.TokenIssuanceStart.RequestWithoutODataTypePayload,
                 Message = "Testing request payload without ODataType field passed and verifies it throws an error",
-                ExceptionMessage = "TokenIssuanceStartRequest: The ODataType field is required."
+                ExceptionMessage = "WebJobsTokenIssuanceStartRequest: The ODataType field is required."
             }.ToArray;
 #endregion
 

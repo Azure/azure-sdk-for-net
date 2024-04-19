@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationCatalog : IUtf8JsonSerializable, IJsonModel<ReservationCatalog>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationCatalog>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationCatalog>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationCatalog>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in SkuProperties)
                 {
-                    writer.WriteObjectValue<SkuProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Msrp))
             {
                 writer.WritePropertyName("msrp"u8);
-                writer.WriteObjectValue<ReservationCatalogMsrp>(Msrp, options);
+                writer.WriteObjectValue(Msrp, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Restrictions))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue<SkuRestriction>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue<SkuCapability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationCatalog DeserializeReservationCatalog(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

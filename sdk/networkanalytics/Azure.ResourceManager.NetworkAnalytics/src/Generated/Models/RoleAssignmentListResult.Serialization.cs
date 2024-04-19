@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     public partial class RoleAssignmentListResult : IUtf8JsonSerializable, IJsonModel<RoleAssignmentListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleAssignmentListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in RoleAssignmentResponse)
             {
-                writer.WriteObjectValue<RoleAssignmentDetail>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 
         internal static RoleAssignmentListResult DeserializeRoleAssignmentListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

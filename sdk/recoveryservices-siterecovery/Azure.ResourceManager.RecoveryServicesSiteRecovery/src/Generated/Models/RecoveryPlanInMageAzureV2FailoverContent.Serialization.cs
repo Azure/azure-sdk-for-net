@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class RecoveryPlanInMageAzureV2FailoverContent : IUtf8JsonSerializable, IJsonModel<RecoveryPlanInMageAzureV2FailoverContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanInMageAzureV2FailoverContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanInMageAzureV2FailoverContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RecoveryPlanInMageAzureV2FailoverContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static RecoveryPlanInMageAzureV2FailoverContent DeserializeRecoveryPlanInMageAzureV2FailoverContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

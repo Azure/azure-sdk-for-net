@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Qumulo.Models
 {
     internal partial class QumuloFileSystemResourceListResult : IUtf8JsonSerializable, IJsonModel<QumuloFileSystemResourceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QumuloFileSystemResourceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QumuloFileSystemResourceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QumuloFileSystemResourceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<QumuloFileSystemResourceData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Qumulo.Models
 
         internal static QumuloFileSystemResourceListResult DeserializeQumuloFileSystemResourceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

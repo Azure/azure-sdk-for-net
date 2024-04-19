@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformConfigServerData : IUtf8JsonSerializable, IJsonModel<AppPlatformConfigServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformConfigServerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformConfigServerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformConfigServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppPlatform
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<AppPlatformConfigServerProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppPlatform
 
         internal static AppPlatformConfigServerData DeserializeAppPlatformConfigServerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

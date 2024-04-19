@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class WebResult : IUtf8JsonSerializable, IJsonModel<WebResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in SearchResults)
                 {
-                    writer.WriteObjectValue<SearchResult>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static WebResult DeserializeWebResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

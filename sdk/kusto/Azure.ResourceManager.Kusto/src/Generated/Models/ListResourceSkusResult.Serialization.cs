@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Kusto.Models
 {
     internal partial class ListResourceSkusResult : IUtf8JsonSerializable, IJsonModel<ListResourceSkusResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListResourceSkusResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListResourceSkusResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ListResourceSkusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<KustoAvailableSkuDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static ListResourceSkusResult DeserializeListResourceSkusResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

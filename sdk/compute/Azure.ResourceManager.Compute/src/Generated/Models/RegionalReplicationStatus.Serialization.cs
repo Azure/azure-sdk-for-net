@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class RegionalReplicationStatus : IUtf8JsonSerializable, IJsonModel<RegionalReplicationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegionalReplicationStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegionalReplicationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RegionalReplicationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RegionalReplicationStatus DeserializeRegionalReplicationStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

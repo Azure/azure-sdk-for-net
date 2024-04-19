@@ -77,11 +77,11 @@ namespace Azure.Communication
             return DeserializeMicrosoftTeamsUserIdentifierModel(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new CallAutomation.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MicrosoftTeamsUserIdentifierModel>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

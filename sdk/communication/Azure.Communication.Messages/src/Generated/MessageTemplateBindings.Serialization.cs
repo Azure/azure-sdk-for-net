@@ -16,7 +16,7 @@ namespace Azure.Communication.Messages
     [PersistableModelProxy(typeof(UnknownMessageTemplateBindings))]
     public partial class MessageTemplateBindings : IUtf8JsonSerializable, IJsonModel<MessageTemplateBindings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTemplateBindings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageTemplateBindings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MessageTemplateBindings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -61,7 +61,7 @@ namespace Azure.Communication.Messages
 
         internal static MessageTemplateBindings DeserializeMessageTemplateBindings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,11 +116,11 @@ namespace Azure.Communication.Messages
             return DeserializeMessageTemplateBindings(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MessageTemplateBindings>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

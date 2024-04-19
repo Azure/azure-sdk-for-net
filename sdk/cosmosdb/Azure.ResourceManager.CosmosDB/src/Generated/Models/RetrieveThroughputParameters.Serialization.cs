@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class RetrieveThroughputParameters : IUtf8JsonSerializable, IJsonModel<RetrieveThroughputParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RetrieveThroughputParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RetrieveThroughputParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RetrieveThroughputParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("resource"u8);
-            writer.WriteObjectValue<RetrieveThroughputPropertiesResource>(Resource, options);
+            writer.WriteObjectValue(Resource, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static RetrieveThroughputParameters DeserializeRetrieveThroughputParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

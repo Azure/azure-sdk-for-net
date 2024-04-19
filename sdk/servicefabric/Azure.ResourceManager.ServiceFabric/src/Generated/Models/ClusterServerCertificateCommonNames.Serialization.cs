@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 {
     public partial class ClusterServerCertificateCommonNames : IUtf8JsonSerializable, IJsonModel<ClusterServerCertificateCommonNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterServerCertificateCommonNames>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterServerCertificateCommonNames>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterServerCertificateCommonNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in CommonNames)
                 {
-                    writer.WriteObjectValue<ClusterServerCertificateCommonName>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterServerCertificateCommonNames DeserializeClusterServerCertificateCommonNames(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

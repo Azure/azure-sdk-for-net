@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public partial class ServicePlacementInvalidDomainPolicy : IUtf8JsonSerializable, IJsonModel<ServicePlacementInvalidDomainPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePlacementInvalidDomainPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePlacementInvalidDomainPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServicePlacementInvalidDomainPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ServicePlacementInvalidDomainPolicy DeserializeServicePlacementInvalidDomainPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

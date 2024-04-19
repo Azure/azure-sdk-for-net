@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 {
     internal partial class ScVmmNetworkProfileUpdate : IUtf8JsonSerializable, IJsonModel<ScVmmNetworkProfileUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmNetworkProfileUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmNetworkProfileUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScVmmNetworkProfileUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue<ScVmmNetworkInterfaceUpdate>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         internal static ScVmmNetworkProfileUpdate DeserializeScVmmNetworkProfileUpdate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

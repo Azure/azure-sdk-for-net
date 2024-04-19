@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class PaymentDetail : IUtf8JsonSerializable, IJsonModel<PaymentDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaymentDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaymentDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PaymentDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue<PurchasePrice>(PricingCurrencyTotal, options);
+                writer.WriteObjectValue(PricingCurrencyTotal, options);
             }
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyTotal, options);
+                writer.WriteObjectValue(BillingCurrencyTotal, options);
             }
             if (Optional.IsDefined(BillingAccount))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue<ExtendedStatusInfo>(ExtendedStatusInfo, options);
+                writer.WriteObjectValue(ExtendedStatusInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static PaymentDetail DeserializePaymentDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

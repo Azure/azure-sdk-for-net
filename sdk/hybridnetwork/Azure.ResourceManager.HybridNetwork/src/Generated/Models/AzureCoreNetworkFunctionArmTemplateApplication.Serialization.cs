@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class AzureCoreNetworkFunctionArmTemplateApplication : IUtf8JsonSerializable, IJsonModel<AzureCoreNetworkFunctionArmTemplateApplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCoreNetworkFunctionArmTemplateApplication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCoreNetworkFunctionArmTemplateApplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureCoreNetworkFunctionArmTemplateApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ArtifactProfile))
             {
                 writer.WritePropertyName("artifactProfile"u8);
-                writer.WriteObjectValue<AzureCoreArmTemplateArtifactProfile>(ArtifactProfile, options);
+                writer.WriteObjectValue(ArtifactProfile, options);
             }
             if (Optional.IsDefined(DeployParametersMappingRuleProfile))
             {
                 writer.WritePropertyName("deployParametersMappingRuleProfile"u8);
-                writer.WriteObjectValue<AzureCoreArmTemplateDeployMappingRuleProfile>(DeployParametersMappingRuleProfile, options);
+                writer.WriteObjectValue(DeployParametersMappingRuleProfile, options);
             }
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(DependsOnProfile))
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
-                writer.WriteObjectValue<DependsOnProfile>(DependsOnProfile, options);
+                writer.WriteObjectValue(DependsOnProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static AzureCoreNetworkFunctionArmTemplateApplication DeserializeAzureCoreNetworkFunctionArmTemplateApplication(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

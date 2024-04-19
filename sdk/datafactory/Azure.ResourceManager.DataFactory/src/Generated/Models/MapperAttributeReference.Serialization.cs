@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class MapperAttributeReference : IUtf8JsonSerializable, IJsonModel<MapperAttributeReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapperAttributeReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapperAttributeReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MapperAttributeReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EntityConnectionReference))
             {
                 writer.WritePropertyName("entityConnectionReference"u8);
-                writer.WriteObjectValue<MapperConnectionReference>(EntityConnectionReference, options);
+                writer.WriteObjectValue(EntityConnectionReference, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MapperAttributeReference DeserializeMapperAttributeReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

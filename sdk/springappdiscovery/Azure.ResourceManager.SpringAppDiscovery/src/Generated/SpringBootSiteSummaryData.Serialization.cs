@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
 {
     public partial class SpringBootSiteSummaryData : IUtf8JsonSerializable, IJsonModel<SpringBootSiteSummaryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootSiteSummaryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootSiteSummaryData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SpringBootSiteSummaryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<SpringBootSiteSummariesProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
 
         internal static SpringBootSiteSummaryData DeserializeSpringBootSiteSummaryData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

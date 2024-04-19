@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class LiveTokenResponse : IUtf8JsonSerializable, IJsonModel<LiveTokenResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LiveTokenResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LiveTokenResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LiveTokenResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static LiveTokenResponse DeserializeLiveTokenResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

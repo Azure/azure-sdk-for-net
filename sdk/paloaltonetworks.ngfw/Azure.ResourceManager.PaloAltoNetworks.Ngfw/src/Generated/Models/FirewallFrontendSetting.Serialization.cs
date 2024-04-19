@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     public partial class FirewallFrontendSetting : IUtf8JsonSerializable, IJsonModel<FirewallFrontendSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallFrontendSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallFrontendSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallFrontendSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
             writer.WritePropertyName("frontendConfiguration"u8);
-            writer.WriteObjectValue<FirewallEndpointConfiguration>(FrontendConfiguration, options);
+            writer.WriteObjectValue(FrontendConfiguration, options);
             writer.WritePropertyName("backendConfiguration"u8);
-            writer.WriteObjectValue<FirewallEndpointConfiguration>(BackendConfiguration, options);
+            writer.WriteObjectValue(BackendConfiguration, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         internal static FirewallFrontendSetting DeserializeFirewallFrontendSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

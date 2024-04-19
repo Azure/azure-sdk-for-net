@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<KustoClusterData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -231,7 +230,7 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<KustoClusterPatch>(patch, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -528,7 +527,7 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<ClusterMigrateContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -686,7 +685,7 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<KustoFollowerDatabaseDefinition>(followerDatabaseToRemove, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(followerDatabaseToRemove, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1041,7 +1040,7 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<KustoClusterNameAvailabilityContent>(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1359,7 +1358,7 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<KustoLanguageExtensionList>(languageExtensionsToAdd, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(languageExtensionsToAdd, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1438,7 +1437,7 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<KustoLanguageExtensionList>(languageExtensionsToRemove, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(languageExtensionsToRemove, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;

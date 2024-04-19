@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class AgentUpgrade : IUtf8JsonSerializable, IJsonModel<AgentUpgrade>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentUpgrade>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentUpgrade>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AgentUpgrade>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static AgentUpgrade DeserializeAgentUpgrade(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Redis.Models
 {
     public partial class RedisCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<RedisCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(RedisConfiguration))
             {
                 writer.WritePropertyName("redisConfiguration"u8);
-                writer.WriteObjectValue<RedisCommonConfiguration>(RedisConfiguration, options);
+                writer.WriteObjectValue(RedisConfiguration, options);
             }
             if (Optional.IsDefined(RedisVersion))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WriteStringValue(UpdateChannel.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<RedisSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         internal static RedisCreateOrUpdateContent DeserializeRedisCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class LicenseProfileMachineInstanceView : IUtf8JsonSerializable, IJsonModel<LicenseProfileMachineInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LicenseProfileMachineInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LicenseProfileMachineInstanceView>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LicenseProfileMachineInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(EsuProfile))
             {
                 writer.WritePropertyName("esuProfile"u8);
-                writer.WriteObjectValue<LicenseProfileMachineInstanceViewEsuProperties>(EsuProfile, options);
+                writer.WriteObjectValue(EsuProfile, options);
             }
             writer.WritePropertyName("productProfile"u8);
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ProductFeatures)
                 {
-                    writer.WriteObjectValue<HybridComputeProductFeature>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static LicenseProfileMachineInstanceView DeserializeLicenseProfileMachineInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

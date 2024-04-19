@@ -47,11 +47,11 @@ namespace Azure.Storage.Files.Shares.Models
             return DeserializeSharePermission(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SharePermission>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

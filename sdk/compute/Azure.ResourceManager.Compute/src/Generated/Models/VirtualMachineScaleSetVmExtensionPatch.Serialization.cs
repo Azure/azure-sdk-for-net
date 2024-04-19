@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class VirtualMachineScaleSetVmExtensionPatch : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetVmExtensionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetVmExtensionPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetVmExtensionPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineScaleSetVmExtensionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue<KeyVaultSecretReference>(KeyVaultProtectedSettings, options);
+                writer.WriteObjectValue(KeyVaultProtectedSettings, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetVmExtensionPatch DeserializeVirtualMachineScaleSetVmExtensionPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

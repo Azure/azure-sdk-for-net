@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsAwsCloudTrailDataConnector : IUtf8JsonSerializable, IJsonModel<SecurityInsightsAwsCloudTrailDataConnector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAwsCloudTrailDataConnector>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAwsCloudTrailDataConnector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsAwsCloudTrailDataConnector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue<AwsCloudTrailDataConnectorDataTypes>(DataTypes, options);
+                writer.WriteObjectValue(DataTypes, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsAwsCloudTrailDataConnector DeserializeSecurityInsightsAwsCloudTrailDataConnector(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

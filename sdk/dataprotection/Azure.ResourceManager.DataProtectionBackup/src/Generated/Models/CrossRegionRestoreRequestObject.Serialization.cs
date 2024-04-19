@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class CrossRegionRestoreRequestObject : IUtf8JsonSerializable, IJsonModel<CrossRegionRestoreRequestObject>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CrossRegionRestoreRequestObject>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CrossRegionRestoreRequestObject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CrossRegionRestoreRequestObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("restoreRequestObject"u8);
-            writer.WriteObjectValue<BackupRestoreContent>(RestoreRequestObject, options);
+            writer.WriteObjectValue(RestoreRequestObject, options);
             writer.WritePropertyName("crossRegionRestoreDetails"u8);
-            writer.WriteObjectValue<CrossRegionRestoreDetails>(CrossRegionRestoreDetails, options);
+            writer.WriteObjectValue(CrossRegionRestoreDetails, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static CrossRegionRestoreRequestObject DeserializeCrossRegionRestoreRequestObject(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

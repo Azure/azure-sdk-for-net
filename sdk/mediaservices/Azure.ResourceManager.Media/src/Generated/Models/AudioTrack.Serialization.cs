@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class AudioTrack : IUtf8JsonSerializable, IJsonModel<AudioTrack>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AudioTrack>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AudioTrack>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AudioTrack>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(HlsSettings))
             {
                 writer.WritePropertyName("hlsSettings"u8);
-                writer.WriteObjectValue<HlsSettings>(HlsSettings, options);
+                writer.WriteObjectValue(HlsSettings, options);
             }
             if (Optional.IsDefined(DashSettings))
             {
                 writer.WritePropertyName("dashSettings"u8);
-                writer.WriteObjectValue<TrackDashSettings>(DashSettings, options);
+                writer.WriteObjectValue(DashSettings, options);
             }
             if (Optional.IsDefined(Mpeg4TrackId))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static AudioTrack DeserializeAudioTrack(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

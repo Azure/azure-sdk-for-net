@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sphere.Models
 {
     public partial class GenerateCapabilityImageContent : IUtf8JsonSerializable, IJsonModel<GenerateCapabilityImageContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenerateCapabilityImageContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenerateCapabilityImageContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GenerateCapabilityImageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         internal static GenerateCapabilityImageContent DeserializeGenerateCapabilityImageContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

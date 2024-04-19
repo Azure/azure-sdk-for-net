@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class ServiceInitiatedSoftwareConfiguration : IUtf8JsonSerializable, IJsonModel<ServiceInitiatedSoftwareConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceInitiatedSoftwareConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceInitiatedSoftwareConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceInitiatedSoftwareConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
             {
                 writer.WritePropertyName("highAvailabilitySoftwareConfiguration"u8);
-                writer.WriteObjectValue<HighAvailabilitySoftwareConfiguration>(HighAvailabilitySoftwareConfiguration, options);
+                writer.WriteObjectValue(HighAvailabilitySoftwareConfiguration, options);
             }
             writer.WritePropertyName("softwareInstallationType"u8);
             writer.WriteStringValue(SoftwareInstallationType.ToString());
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static ServiceInitiatedSoftwareConfiguration DeserializeServiceInitiatedSoftwareConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

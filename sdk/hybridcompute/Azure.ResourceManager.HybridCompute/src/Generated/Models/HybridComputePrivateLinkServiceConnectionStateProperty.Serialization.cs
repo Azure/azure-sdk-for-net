@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class HybridComputePrivateLinkServiceConnectionStateProperty : IUtf8JsonSerializable, IJsonModel<HybridComputePrivateLinkServiceConnectionStateProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputePrivateLinkServiceConnectionStateProperty>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputePrivateLinkServiceConnectionStateProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridComputePrivateLinkServiceConnectionStateProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static HybridComputePrivateLinkServiceConnectionStateProperty DeserializeHybridComputePrivateLinkServiceConnectionStateProperty(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

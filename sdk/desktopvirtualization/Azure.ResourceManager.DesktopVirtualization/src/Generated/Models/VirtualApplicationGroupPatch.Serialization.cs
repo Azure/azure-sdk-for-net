@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class VirtualApplicationGroupPatch : IUtf8JsonSerializable, IJsonModel<VirtualApplicationGroupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualApplicationGroupPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualApplicationGroupPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualApplicationGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static VirtualApplicationGroupPatch DeserializeVirtualApplicationGroupPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

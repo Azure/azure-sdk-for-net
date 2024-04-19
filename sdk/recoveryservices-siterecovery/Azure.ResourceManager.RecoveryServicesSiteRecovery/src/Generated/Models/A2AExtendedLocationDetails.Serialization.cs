@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class A2AExtendedLocationDetails : IUtf8JsonSerializable, IJsonModel<A2AExtendedLocationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AExtendedLocationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AExtendedLocationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<A2AExtendedLocationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(PrimaryExtendedLocation))
             {
                 writer.WritePropertyName("primaryExtendedLocation"u8);
-                writer.WriteObjectValue<SiteRecoveryExtendedLocation>(PrimaryExtendedLocation, options);
+                writer.WriteObjectValue(PrimaryExtendedLocation, options);
             }
             if (Optional.IsDefined(RecoveryExtendedLocation))
             {
                 writer.WritePropertyName("recoveryExtendedLocation"u8);
-                writer.WriteObjectValue<SiteRecoveryExtendedLocation>(RecoveryExtendedLocation, options);
+                writer.WriteObjectValue(RecoveryExtendedLocation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static A2AExtendedLocationDetails DeserializeA2AExtendedLocationDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

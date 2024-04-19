@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class AppCertificateData : IUtf8JsonSerializable, IJsonModel<AppCertificateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCertificateData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCertificateData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W" && Optional.IsDefined(HostingEnvironmentProfile))
             {
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                writer.WriteObjectValue<HostingEnvironmentProfile>(HostingEnvironmentProfile, options);
+                writer.WriteObjectValue(HostingEnvironmentProfile, options);
             }
             if (Optional.IsDefined(KeyVaultId))
             {

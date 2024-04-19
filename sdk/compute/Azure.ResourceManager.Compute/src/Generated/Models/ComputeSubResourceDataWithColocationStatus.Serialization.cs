@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeSubResourceDataWithColocationStatus : IUtf8JsonSerializable, IJsonModel<ComputeSubResourceDataWithColocationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSubResourceDataWithColocationStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSubResourceDataWithColocationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComputeSubResourceDataWithColocationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ColocationStatus))
             {
                 writer.WritePropertyName("colocationStatus"u8);
-                writer.WriteObjectValue<InstanceViewStatus>(ColocationStatus, options);
+                writer.WriteObjectValue(ColocationStatus, options);
             }
             if (Optional.IsDefined(Id))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ComputeSubResourceDataWithColocationStatus DeserializeComputeSubResourceDataWithColocationStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

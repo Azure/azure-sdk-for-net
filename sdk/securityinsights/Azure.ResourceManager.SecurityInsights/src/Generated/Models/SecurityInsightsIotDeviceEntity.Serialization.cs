@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsIotDeviceEntity : IUtf8JsonSerializable, IJsonModel<SecurityInsightsIotDeviceEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIotDeviceEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIotDeviceEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsIotDeviceEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ThreatIntelligence)
                 {
-                    writer.WriteObjectValue<SecurityInsightsThreatIntelligence>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsIotDeviceEntity DeserializeSecurityInsightsIotDeviceEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

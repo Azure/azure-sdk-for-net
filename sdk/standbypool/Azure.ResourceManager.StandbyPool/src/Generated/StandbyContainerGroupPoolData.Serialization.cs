@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StandbyPool
 {
     public partial class StandbyContainerGroupPoolData : IUtf8JsonSerializable, IJsonModel<StandbyContainerGroupPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyContainerGroupPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyContainerGroupPoolData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StandbyContainerGroupPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.StandbyPool
             if (Optional.IsDefined(ElasticityProfile))
             {
                 writer.WritePropertyName("elasticityProfile"u8);
-                writer.WriteObjectValue<StandbyContainerGroupPoolElasticityProfile>(ElasticityProfile, options);
+                writer.WriteObjectValue(ElasticityProfile, options);
             }
             if (Optional.IsDefined(ContainerGroupProperties))
             {
                 writer.WritePropertyName("containerGroupProperties"u8);
-                writer.WriteObjectValue<StandbyContainerGroupProperties>(ContainerGroupProperties, options);
+                writer.WriteObjectValue(ContainerGroupProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StandbyPool
 
         internal static StandbyContainerGroupPoolData DeserializeStandbyContainerGroupPoolData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

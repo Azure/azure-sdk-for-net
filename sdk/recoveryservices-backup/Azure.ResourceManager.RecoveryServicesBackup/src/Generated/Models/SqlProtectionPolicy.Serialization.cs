@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class SqlProtectionPolicy : IUtf8JsonSerializable, IJsonModel<SqlProtectionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlProtectionPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlProtectionPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlProtectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue<BackupRetentionPolicy>(RetentionPolicy, options);
+                writer.WriteObjectValue(RetentionPolicy, options);
             }
             if (Optional.IsDefined(ProtectedItemsCount))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static SqlProtectionPolicy DeserializeSqlProtectionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

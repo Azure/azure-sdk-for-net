@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class UEQosFlow : IUtf8JsonSerializable, IJsonModel<UEQosFlow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UEQosFlow>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UEQosFlow>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UEQosFlow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static UEQosFlow DeserializeUEQosFlow(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

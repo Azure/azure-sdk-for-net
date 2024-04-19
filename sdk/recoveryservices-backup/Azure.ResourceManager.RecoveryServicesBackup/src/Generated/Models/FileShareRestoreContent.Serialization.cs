@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class FileShareRestoreContent : IUtf8JsonSerializable, IJsonModel<FileShareRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileShareRestoreContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileShareRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FileShareRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreFileSpecs)
                 {
-                    writer.WriteObjectValue<RestoreFileSpecs>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TargetDetails))
             {
                 writer.WritePropertyName("targetDetails"u8);
-                writer.WriteObjectValue<TargetAfsRestoreInfo>(TargetDetails, options);
+                writer.WriteObjectValue(TargetDetails, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static FileShareRestoreContent DeserializeFileShareRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

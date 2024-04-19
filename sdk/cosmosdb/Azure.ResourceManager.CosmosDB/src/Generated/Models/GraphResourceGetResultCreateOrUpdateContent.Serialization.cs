@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class GraphResourceGetResultCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<GraphResourceGetResultCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GraphResourceGetResultCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GraphResourceGetResultCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GraphResourceGetResultCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue<CosmosDBCreateUpdateConfig>(Options, options);
+                writer.WriteObjectValue(Options, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static GraphResourceGetResultCreateOrUpdateContent DeserializeGraphResourceGetResultCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

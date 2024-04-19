@@ -838,4 +838,15 @@ directive:
                 }
             }
         };
+  # Fix for issue https://github.com/Azure/azure-sdk-for-net/issues/43295
+  - from: WebApps.json
+    where: $.definitions.TriggeredJobRun.properties.status
+    transform: >
+        $["enum"] = [
+            "Success",
+            "Failed",
+            "Error",
+            "Aborted",
+            "Running"
+        ]
 ```

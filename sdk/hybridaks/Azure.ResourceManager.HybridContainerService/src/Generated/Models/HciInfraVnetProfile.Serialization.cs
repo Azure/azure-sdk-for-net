@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 {
     public partial class HciInfraVnetProfile : IUtf8JsonSerializable, IJsonModel<HciInfraVnetProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciInfraVnetProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciInfraVnetProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HciInfraVnetProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static HciInfraVnetProfile DeserializeHciInfraVnetProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

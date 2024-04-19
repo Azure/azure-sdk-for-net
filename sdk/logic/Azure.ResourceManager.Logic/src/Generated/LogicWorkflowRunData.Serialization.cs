@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class LogicWorkflowRunData : IUtf8JsonSerializable, IJsonModel<LogicWorkflowRunData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRunData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRunData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicWorkflowRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -95,17 +95,17 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue<Correlation>(Correlation, options);
+                writer.WriteObjectValue(Correlation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
-                writer.WriteObjectValue<LogicResourceReference>(Workflow, options);
+                writer.WriteObjectValue(Workflow, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
-                writer.WriteObjectValue<LogicWorkflowRunTrigger>(Trigger, options);
+                writer.WriteObjectValue(Trigger, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Outputs))
             {
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.Logic
                 foreach (var item in Outputs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<LogicWorkflowOutputParameterInfo>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue<LogicWorkflowRunTrigger>(Response, options);
+                writer.WriteObjectValue(Response, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Logic
 
         internal static LogicWorkflowRunData DeserializeLogicWorkflowRunData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class HciClusterData : IUtf8JsonSerializable, IJsonModel<HciClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HciClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(SoftwareAssuranceProperties))
             {
                 writer.WritePropertyName("softwareAssuranceProperties"u8);
-                writer.WriteObjectValue<SoftwareAssuranceProperties>(SoftwareAssuranceProperties, options);
+                writer.WriteObjectValue(SoftwareAssuranceProperties, options);
             }
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
-                writer.WriteObjectValue<HciClusterDesiredProperties>(DesiredProperties, options);
+                writer.WriteObjectValue(DesiredProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReportedProperties))
             {
                 writer.WritePropertyName("reportedProperties"u8);
-                writer.WriteObjectValue<HciClusterReportedProperties>(ReportedProperties, options);
+                writer.WriteObjectValue(ReportedProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TrialDaysRemaining))
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Hci
 
         internal static HciClusterData DeserializeHciClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

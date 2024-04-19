@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class StorageCapability : IUtf8JsonSerializable, IJsonModel<StorageCapability>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCapability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static StorageCapability DeserializeStorageCapability(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

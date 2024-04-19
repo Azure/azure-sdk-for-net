@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class GatewayTokenRequestContract : IUtf8JsonSerializable, IJsonModel<GatewayTokenRequestContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayTokenRequestContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayTokenRequestContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GatewayTokenRequestContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static GatewayTokenRequestContract DeserializeGatewayTokenRequestContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

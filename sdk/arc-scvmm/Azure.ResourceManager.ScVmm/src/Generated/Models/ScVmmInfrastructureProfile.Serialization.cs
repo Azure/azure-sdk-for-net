@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 {
     public partial class ScVmmInfrastructureProfile : IUtf8JsonSerializable, IJsonModel<ScVmmInfrastructureProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmInfrastructureProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmInfrastructureProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScVmmInfrastructureProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             if (options.Format != "W" && Optional.IsDefined(LastRestoredVmCheckpoint))
             {
                 writer.WritePropertyName("lastRestoredVMCheckpoint"u8);
-                writer.WriteObjectValue<ScVmmCheckpoint>(LastRestoredVmCheckpoint, options);
+                writer.WriteObjectValue(LastRestoredVmCheckpoint, options);
             }
             if (Optional.IsCollectionDefined(Checkpoints))
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in Checkpoints)
                 {
-                    writer.WriteObjectValue<ScVmmCheckpoint>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         internal static ScVmmInfrastructureProfile DeserializeScVmmInfrastructureProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

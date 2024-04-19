@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 {
     public partial class PostRestoreContent : IUtf8JsonSerializable, IJsonModel<PostRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostRestoreContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreFileSpec)
                 {
-                    writer.WriteObjectValue<RestoreFileSpec>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         internal static PostRestoreContent DeserializePostRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

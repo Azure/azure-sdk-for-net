@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class MatchedRule : IUtf8JsonSerializable, IJsonModel<MatchedRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MatchedRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MatchedRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MatchedRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static MatchedRule DeserializeMatchedRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

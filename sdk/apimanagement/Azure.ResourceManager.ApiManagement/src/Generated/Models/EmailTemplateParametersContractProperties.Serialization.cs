@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class EmailTemplateParametersContractProperties : IUtf8JsonSerializable, IJsonModel<EmailTemplateParametersContractProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmailTemplateParametersContractProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmailTemplateParametersContractProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EmailTemplateParametersContractProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static EmailTemplateParametersContractProperties DeserializeEmailTemplateParametersContractProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

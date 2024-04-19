@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     internal partial class SoftwareUpdateConfigurationListResult : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SoftwareUpdateConfigurationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<SoftwareUpdateConfigurationCollectionItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static SoftwareUpdateConfigurationListResult DeserializeSoftwareUpdateConfigurationListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

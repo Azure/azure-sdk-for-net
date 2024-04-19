@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
     public partial class MySqlFlexibleServerEditionCapability : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerEditionCapability>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerEditionCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerEditionCapability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlFlexibleServerEditionCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageEditions)
                 {
-                    writer.WriteObjectValue<MySqlFlexibleServerStorageEditionCapability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedServerVersions)
                 {
-                    writer.WriteObjectValue<MySqlFlexibleServerServerVersionCapability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerEditionCapability DeserializeMySqlFlexibleServerEditionCapability(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

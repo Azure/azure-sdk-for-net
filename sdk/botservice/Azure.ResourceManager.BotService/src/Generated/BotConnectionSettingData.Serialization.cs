@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.BotService
 {
     public partial class BotConnectionSettingData : IUtf8JsonSerializable, IJsonModel<BotConnectionSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotConnectionSettingData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotConnectionSettingData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BotConnectionSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.BotService
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<BotConnectionSettingProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<BotServiceSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.BotService
 
         internal static BotConnectionSettingData DeserializeBotConnectionSettingData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

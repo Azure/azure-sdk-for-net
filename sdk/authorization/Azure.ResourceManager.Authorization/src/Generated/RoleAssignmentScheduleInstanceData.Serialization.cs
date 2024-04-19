@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization
 {
     public partial class RoleAssignmentScheduleInstanceData : IUtf8JsonSerializable, IJsonModel<RoleAssignmentScheduleInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentScheduleInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentScheduleInstanceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleAssignmentScheduleInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
-                writer.WriteObjectValue<RoleManagementExpandedProperties>(ExpandedProperties, options);
+                writer.WriteObjectValue(ExpandedProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Authorization
 
         internal static RoleAssignmentScheduleInstanceData DeserializeRoleAssignmentScheduleInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

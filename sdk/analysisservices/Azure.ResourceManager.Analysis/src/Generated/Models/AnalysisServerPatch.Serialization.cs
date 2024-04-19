@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Analysis.Models
 {
     public partial class AnalysisServerPatch : IUtf8JsonSerializable, IJsonModel<AnalysisServerPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisServerPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisServerPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AnalysisServerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<AnalysisResourceSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(AsAdministrators))
             {
                 writer.WritePropertyName("asAdministrators"u8);
-                writer.WriteObjectValue<ServerAdministrators>(AsAdministrators, options);
+                writer.WriteObjectValue(AsAdministrators, options);
             }
             if (Optional.IsDefined(BackupBlobContainerUri))
             {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Analysis.Models
             if (Optional.IsDefined(GatewayDetails))
             {
                 writer.WritePropertyName("gatewayDetails"u8);
-                writer.WriteObjectValue<AnalysisGatewayDetails>(GatewayDetails, options);
+                writer.WriteObjectValue(GatewayDetails, options);
             }
             if (Optional.IsDefined(IPV4FirewallSettings))
             {
                 writer.WritePropertyName("ipV4FirewallSettings"u8);
-                writer.WriteObjectValue<AnalysisIPv4FirewallSettings>(IPV4FirewallSettings, options);
+                writer.WriteObjectValue(IPV4FirewallSettings, options);
             }
             if (Optional.IsDefined(QuerypoolConnectionMode))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Analysis.Models
 
         internal static AnalysisServerPatch DeserializeAnalysisServerPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

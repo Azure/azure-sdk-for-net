@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class GalleryImageVersionStorageProfile : IUtf8JsonSerializable, IJsonModel<GalleryImageVersionStorageProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageVersionStorageProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageVersionStorageProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GalleryImageVersionStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue<GalleryOSDiskImage>(OSDiskImage, options);
+                writer.WriteObjectValue(OSDiskImage, options);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskImages)
                 {
-                    writer.WriteObjectValue<GalleryDataDiskImage>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static GalleryImageVersionStorageProfile DeserializeGalleryImageVersionStorageProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

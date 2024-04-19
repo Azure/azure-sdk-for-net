@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     internal partial class CognitiveServicesSkuAvailabilityListResult : IUtf8JsonSerializable, IJsonModel<CognitiveServicesSkuAvailabilityListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesSkuAvailabilityListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesSkuAvailabilityListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CognitiveServicesSkuAvailabilityListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<CognitiveServicesSkuAvailabilityList>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesSkuAvailabilityListResult DeserializeCognitiveServicesSkuAvailabilityListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

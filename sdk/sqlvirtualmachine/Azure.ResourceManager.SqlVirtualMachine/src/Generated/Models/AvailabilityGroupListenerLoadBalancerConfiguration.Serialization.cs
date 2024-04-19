@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
     public partial class AvailabilityGroupListenerLoadBalancerConfiguration : IUtf8JsonSerializable, IJsonModel<AvailabilityGroupListenerLoadBalancerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilityGroupListenerLoadBalancerConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilityGroupListenerLoadBalancerConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailabilityGroupListenerLoadBalancerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteObjectValue<AvailabilityGroupListenerPrivateIPAddress>(PrivateIPAddress, options);
+                writer.WriteObjectValue(PrivateIPAddress, options);
             }
             if (Optional.IsDefined(PublicIPAddressResourceId))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static AvailabilityGroupListenerLoadBalancerConfiguration DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

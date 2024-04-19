@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     internal partial class SecurityOperatorList : IUtf8JsonSerializable, IJsonModel<SecurityOperatorList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityOperatorList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityOperatorList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityOperatorList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<SecurityOperatorData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityOperatorList DeserializeSecurityOperatorList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

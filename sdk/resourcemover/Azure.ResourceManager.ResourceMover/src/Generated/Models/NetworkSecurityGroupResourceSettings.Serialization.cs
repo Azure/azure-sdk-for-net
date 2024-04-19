@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class NetworkSecurityGroupResourceSettings : IUtf8JsonSerializable, IJsonModel<NetworkSecurityGroupResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityGroupResourceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityGroupResourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkSecurityGroupResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in SecurityRules)
                 {
-                    writer.WriteObjectValue<NetworkSecurityGroupSecurityRule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static NetworkSecurityGroupResourceSettings DeserializeNetworkSecurityGroupResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

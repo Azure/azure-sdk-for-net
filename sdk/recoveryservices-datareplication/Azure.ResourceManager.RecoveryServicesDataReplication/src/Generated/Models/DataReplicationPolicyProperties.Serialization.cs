@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     public partial class DataReplicationPolicyProperties : IUtf8JsonSerializable, IJsonModel<DataReplicationPolicyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationPolicyProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationPolicyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataReplicationPolicyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue<PolicyModelCustomProperties>(CustomProperties, options);
+            writer.WriteObjectValue(CustomProperties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static DataReplicationPolicyProperties DeserializeDataReplicationPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class AutomationSourceControlPatch : IUtf8JsonSerializable, IJsonModel<AutomationSourceControlPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationSourceControlPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationSourceControlPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationSourceControlPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(SecurityToken))
             {
                 writer.WritePropertyName("securityToken"u8);
-                writer.WriteObjectValue<SourceControlSecurityTokenProperties>(SecurityToken, options);
+                writer.WriteObjectValue(SecurityToken, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationSourceControlPatch DeserializeAutomationSourceControlPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

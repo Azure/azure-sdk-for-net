@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class FieldRestrictions : IUtf8JsonSerializable, IJsonModel<FieldRestrictions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FieldRestrictions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FieldRestrictions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FieldRestrictions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue<FieldRestriction>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static FieldRestrictions DeserializeFieldRestrictions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

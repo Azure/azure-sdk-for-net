@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WebAppDeploymentData : IUtf8JsonSerializable, IJsonModel<WebAppDeploymentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppDeploymentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppDeploymentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebAppDeploymentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static WebAppDeploymentData DeserializeWebAppDeploymentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

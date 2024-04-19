@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     internal partial class PolicyMetadataCollection : IUtf8JsonSerializable, IJsonModel<PolicyMetadataCollection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyMetadataCollection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyMetadataCollection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PolicyMetadataCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<SlimPolicyMetadata>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static PolicyMetadataCollection DeserializePolicyMetadataCollection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

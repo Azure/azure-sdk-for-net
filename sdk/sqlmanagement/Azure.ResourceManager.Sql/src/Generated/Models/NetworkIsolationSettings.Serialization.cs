@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class NetworkIsolationSettings : IUtf8JsonSerializable, IJsonModel<NetworkIsolationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkIsolationSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkIsolationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkIsolationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static NetworkIsolationSettings DeserializeNetworkIsolationSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

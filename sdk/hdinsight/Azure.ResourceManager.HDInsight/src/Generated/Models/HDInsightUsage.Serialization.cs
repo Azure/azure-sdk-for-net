@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightUsage : IUtf8JsonSerializable, IJsonModel<HDInsightUsage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightUsage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightUsage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HDInsightUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue<HDInsightLocalizedName>(Name, options);
+                writer.WriteObjectValue(Name, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightUsage DeserializeHDInsightUsage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

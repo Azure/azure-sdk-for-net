@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class DomainOwnershipIdentifierListResult : IUtf8JsonSerializable, IJsonModel<DomainOwnershipIdentifierListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainOwnershipIdentifierListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainOwnershipIdentifierListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DomainOwnershipIdentifierListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<DomainOwnershipIdentifierData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DomainOwnershipIdentifierListResult DeserializeDomainOwnershipIdentifierListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class ExtendedUEInfoData : IUtf8JsonSerializable, IJsonModel<ExtendedUEInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedUEInfoData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedUEInfoData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExtendedUEInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue<ExtendedUEInfoProperties>(Properties, options);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal static ExtendedUEInfoData DeserializeExtendedUEInfoData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

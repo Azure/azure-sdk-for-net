@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     internal partial class UnknownDatabase : IUtf8JsonSerializable, IJsonModel<SynapseDatabaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseDatabaseData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseDatabaseData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static UnknownDatabase DeserializeUnknownDatabase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

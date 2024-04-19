@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class AgentPoolUpgradeProfilePropertiesUpgradesItem : IUtf8JsonSerializable, IJsonModel<AgentPoolUpgradeProfilePropertiesUpgradesItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolUpgradeProfilePropertiesUpgradesItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolUpgradeProfilePropertiesUpgradesItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AgentPoolUpgradeProfilePropertiesUpgradesItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static AgentPoolUpgradeProfilePropertiesUpgradesItem DeserializeAgentPoolUpgradeProfilePropertiesUpgradesItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

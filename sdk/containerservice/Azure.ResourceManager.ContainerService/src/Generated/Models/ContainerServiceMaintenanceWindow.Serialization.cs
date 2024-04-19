@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ContainerServiceMaintenanceWindow : IUtf8JsonSerializable, IJsonModel<ContainerServiceMaintenanceWindow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceMaintenanceWindow>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceMaintenanceWindow>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServiceMaintenanceWindow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue<ContainerServiceMaintenanceSchedule>(Schedule, options);
+            writer.WriteObjectValue(Schedule, options);
             writer.WritePropertyName("durationHours"u8);
             writer.WriteNumberValue(DurationHours);
             if (Optional.IsDefined(UtcOffset))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in NotAllowedDates)
                 {
-                    writer.WriteObjectValue<ContainerServiceDateSpan>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceMaintenanceWindow DeserializeContainerServiceMaintenanceWindow(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

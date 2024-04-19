@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class ManagementPolicyTagFilter : IUtf8JsonSerializable, IJsonModel<ManagementPolicyTagFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicyTagFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicyTagFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagementPolicyTagFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyTagFilter DeserializeManagementPolicyTagFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

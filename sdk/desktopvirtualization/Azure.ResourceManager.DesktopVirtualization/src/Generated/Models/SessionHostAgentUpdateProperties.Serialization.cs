@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class SessionHostAgentUpdateProperties : IUtf8JsonSerializable, IJsonModel<SessionHostAgentUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionHostAgentUpdateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionHostAgentUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SessionHostAgentUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in MaintenanceWindows)
                 {
-                    writer.WriteObjectValue<SessionHostMaintenanceWindowProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static SessionHostAgentUpdateProperties DeserializeSessionHostAgentUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

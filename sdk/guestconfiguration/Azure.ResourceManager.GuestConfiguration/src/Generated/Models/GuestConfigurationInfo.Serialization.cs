@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     public partial class GuestConfigurationInfo : IUtf8JsonSerializable, IJsonModel<GuestConfigurationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GuestConfigurationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GuestConfigurationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static GuestConfigurationInfo DeserializeGuestConfigurationInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

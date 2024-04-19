@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class AzureFirewallNetworkRule : IUtf8JsonSerializable, IJsonModel<AzureFirewallNetworkRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFirewallNetworkRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFirewallNetworkRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureFirewallNetworkRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AzureFirewallNetworkRule DeserializeAzureFirewallNetworkRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

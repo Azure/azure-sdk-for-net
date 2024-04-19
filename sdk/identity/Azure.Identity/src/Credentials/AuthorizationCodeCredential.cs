@@ -181,7 +181,15 @@ namespace Azure.Identity
         private async Task<AccessToken> AcquireTokenWithCode(bool async, TokenRequestContext requestContext, AccessToken token, string tenantId, CancellationToken cancellationToken)
         {
             AuthenticationResult result = await Client
-                                    .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, _redirectUri, requestContext.Claims, requestContext.IsCaeEnabled, async, cancellationToken)
+                                    .AcquireTokenByAuthorizationCodeAsync(
+                                        scopes: requestContext.Scopes,
+                                        code: _authCode,
+                                        tenantId: tenantId,
+                                        redirectUri: _redirectUri,
+                                        claims: requestContext.Claims,
+                                        enableCae: requestContext.IsCaeEnabled,
+                                        async,
+                                        cancellationToken)
                                     .ConfigureAwait(false);
             _record = new AuthenticationRecord(result, _clientId);
             token = new AccessToken(result.AccessToken, result.ExpiresOn);

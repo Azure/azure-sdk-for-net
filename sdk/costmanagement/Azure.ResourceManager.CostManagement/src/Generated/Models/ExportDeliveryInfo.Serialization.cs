@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class ExportDeliveryInfo : IUtf8JsonSerializable, IJsonModel<ExportDeliveryInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportDeliveryInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportDeliveryInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExportDeliveryInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue<ExportDeliveryDestination>(Destination, options);
+            writer.WriteObjectValue(Destination, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static ExportDeliveryInfo DeserializeExportDeliveryInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

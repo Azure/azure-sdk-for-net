@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CosmosDBClientEncryptionIncludedPath : IUtf8JsonSerializable, IJsonModel<CosmosDBClientEncryptionIncludedPath>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBClientEncryptionIncludedPath>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBClientEncryptionIncludedPath>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBClientEncryptionIncludedPath>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBClientEncryptionIncludedPath DeserializeCosmosDBClientEncryptionIncludedPath(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

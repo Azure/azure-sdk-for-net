@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
     [PersistableModelProxy(typeof(UnknownFirewallPolicyRule))]
     public partial class FirewallPolicyRule : IUtf8JsonSerializable, IJsonModel<FirewallPolicyRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallPolicyRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyRule DeserializeFirewallPolicyRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

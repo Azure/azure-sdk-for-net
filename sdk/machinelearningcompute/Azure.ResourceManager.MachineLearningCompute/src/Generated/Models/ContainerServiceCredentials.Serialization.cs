@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     public partial class ContainerServiceCredentials : IUtf8JsonSerializable, IJsonModel<ContainerServiceCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerServiceCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (options.Format != "W" && Optional.IsDefined(ServicePrincipalConfiguration))
             {
                 writer.WritePropertyName("servicePrincipalConfiguration"u8);
-                writer.WriteObjectValue<ServicePrincipalProperties>(ServicePrincipalConfiguration, options);
+                writer.WriteObjectValue(ServicePrincipalConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ImagePullSecretName))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static ContainerServiceCredentials DeserializeContainerServiceCredentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

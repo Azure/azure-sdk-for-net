@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 {
     public partial class HybridContainerServiceVmSkuCapabilities : IUtf8JsonSerializable, IJsonModel<HybridContainerServiceVmSkuCapabilities>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridContainerServiceVmSkuCapabilities>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridContainerServiceVmSkuCapabilities>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridContainerServiceVmSkuCapabilities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static HybridContainerServiceVmSkuCapabilities DeserializeHybridContainerServiceVmSkuCapabilities(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

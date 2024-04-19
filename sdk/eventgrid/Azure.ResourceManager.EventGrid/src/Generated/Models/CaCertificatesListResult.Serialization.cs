@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     internal partial class CaCertificatesListResult : IUtf8JsonSerializable, IJsonModel<CaCertificatesListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CaCertificatesListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CaCertificatesListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CaCertificatesListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<CaCertificateData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static CaCertificatesListResult DeserializeCaCertificatesListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

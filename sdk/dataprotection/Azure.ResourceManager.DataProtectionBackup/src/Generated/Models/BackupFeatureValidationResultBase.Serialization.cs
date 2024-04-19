@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownFeatureValidationResponseBase))]
     public partial class BackupFeatureValidationResultBase : IUtf8JsonSerializable, IJsonModel<BackupFeatureValidationResultBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupFeatureValidationResultBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupFeatureValidationResultBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupFeatureValidationResultBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupFeatureValidationResultBase DeserializeBackupFeatureValidationResultBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

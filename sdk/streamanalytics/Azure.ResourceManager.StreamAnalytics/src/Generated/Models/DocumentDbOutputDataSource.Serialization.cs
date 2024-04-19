@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     public partial class DocumentDbOutputDataSource : IUtf8JsonSerializable, IJsonModel<DocumentDbOutputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentDbOutputDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentDbOutputDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DocumentDbOutputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static DocumentDbOutputDataSource DeserializeDocumentDbOutputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

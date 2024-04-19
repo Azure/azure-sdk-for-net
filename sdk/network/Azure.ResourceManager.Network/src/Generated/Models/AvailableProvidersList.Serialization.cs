@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class AvailableProvidersList : IUtf8JsonSerializable, IJsonModel<AvailableProvidersList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableProvidersList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableProvidersList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailableProvidersList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in Countries)
             {
-                writer.WriteObjectValue<AvailableProvidersListCountry>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static AvailableProvidersList DeserializeAvailableProvidersList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

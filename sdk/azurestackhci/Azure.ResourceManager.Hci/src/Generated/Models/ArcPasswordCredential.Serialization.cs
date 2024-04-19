@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class ArcPasswordCredential : IUtf8JsonSerializable, IJsonModel<ArcPasswordCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcPasswordCredential>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcPasswordCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArcPasswordCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static ArcPasswordCredential DeserializeArcPasswordCredential(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

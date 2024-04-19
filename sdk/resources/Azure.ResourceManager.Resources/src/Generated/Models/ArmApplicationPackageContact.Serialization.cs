@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ArmApplicationPackageContact : IUtf8JsonSerializable, IJsonModel<ArmApplicationPackageContact>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationPackageContact>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationPackageContact>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmApplicationPackageContact>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationPackageContact DeserializeArmApplicationPackageContact(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

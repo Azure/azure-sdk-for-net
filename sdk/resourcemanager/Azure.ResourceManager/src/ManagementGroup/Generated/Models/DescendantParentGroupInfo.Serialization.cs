@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 {
     internal partial class DescendantParentGroupInfo : IUtf8JsonSerializable, IJsonModel<DescendantParentGroupInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DescendantParentGroupInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DescendantParentGroupInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DescendantParentGroupInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         internal static DescendantParentGroupInfo DeserializeDescendantParentGroupInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

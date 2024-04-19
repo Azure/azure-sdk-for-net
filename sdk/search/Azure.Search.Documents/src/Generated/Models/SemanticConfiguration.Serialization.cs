@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("prioritizedFields"u8);
-            writer.WriteObjectValue<SemanticPrioritizedFields>(PrioritizedFields);
+            writer.WriteObjectValue(PrioritizedFields);
             writer.WriteEndObject();
         }
 
@@ -54,11 +54,11 @@ namespace Azure.Search.Documents.Indexes.Models
             return DeserializeSemanticConfiguration(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SemanticConfiguration>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

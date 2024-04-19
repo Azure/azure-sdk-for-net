@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class MapperPolicy : IUtf8JsonSerializable, IJsonModel<MapperPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapperPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapperPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MapperPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue<MapperPolicyRecurrence>(Recurrence, options);
+                writer.WriteObjectValue(Recurrence, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MapperPolicy DeserializeMapperPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

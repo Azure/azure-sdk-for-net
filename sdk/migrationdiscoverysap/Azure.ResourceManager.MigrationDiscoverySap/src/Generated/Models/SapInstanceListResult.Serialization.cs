@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
     internal partial class SapInstanceListResult : IUtf8JsonSerializable, IJsonModel<SapInstanceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapInstanceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapInstanceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapInstanceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<SapInstanceData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         internal static SapInstanceListResult DeserializeSapInstanceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

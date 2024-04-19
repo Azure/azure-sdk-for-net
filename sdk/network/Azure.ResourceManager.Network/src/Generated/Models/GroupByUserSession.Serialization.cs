@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class GroupByUserSession : IUtf8JsonSerializable, IJsonModel<GroupByUserSession>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GroupByUserSession>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GroupByUserSession>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GroupByUserSession>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in GroupByVariables)
             {
-                writer.WriteObjectValue<GroupByVariable>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static GroupByUserSession DeserializeGroupByUserSession(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

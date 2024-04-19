@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 {
     internal partial class MonitoredResourceListResponse : IUtf8JsonSerializable, IJsonModel<MonitoredResourceListResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoredResourceListResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoredResourceListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitoredResourceListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<DynatraceMonitoredResourceDetails>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static MonitoredResourceListResponse DeserializeMonitoredResourceListResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

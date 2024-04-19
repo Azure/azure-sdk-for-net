@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class VerifiedPartnerData : IUtf8JsonSerializable, IJsonModel<VerifiedPartnerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VerifiedPartnerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VerifiedPartnerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VerifiedPartnerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PartnerTopicDetails))
             {
                 writer.WritePropertyName("partnerTopicDetails"u8);
-                writer.WriteObjectValue<PartnerDetails>(PartnerTopicDetails, options);
+                writer.WriteObjectValue(PartnerTopicDetails, options);
             }
             if (Optional.IsDefined(PartnerDestinationDetails))
             {
                 writer.WritePropertyName("partnerDestinationDetails"u8);
-                writer.WriteObjectValue<PartnerDetails>(PartnerDestinationDetails, options);
+                writer.WriteObjectValue(PartnerDestinationDetails, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static VerifiedPartnerData DeserializeVerifiedPartnerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

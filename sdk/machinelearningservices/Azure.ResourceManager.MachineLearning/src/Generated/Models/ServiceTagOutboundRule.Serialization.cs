@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class ServiceTagOutboundRule : IUtf8JsonSerializable, IJsonModel<ServiceTagOutboundRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceTagOutboundRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceTagOutboundRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceTagOutboundRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue<ServiceTagDestination>(Destination, options);
+                writer.WriteObjectValue(Destination, options);
             }
             if (Optional.IsDefined(Category))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ServiceTagOutboundRule DeserializeServiceTagOutboundRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

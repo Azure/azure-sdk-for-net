@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class ServerConnectionPolicyListResult : IUtf8JsonSerializable, IJsonModel<ServerConnectionPolicyListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerConnectionPolicyListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerConnectionPolicyListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServerConnectionPolicyListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<SqlServerConnectionPolicyData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ServerConnectionPolicyListResult DeserializeServerConnectionPolicyListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

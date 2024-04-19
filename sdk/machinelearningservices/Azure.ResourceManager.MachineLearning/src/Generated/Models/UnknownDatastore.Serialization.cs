@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     internal partial class UnknownDatastore : IUtf8JsonSerializable, IJsonModel<MachineLearningDatastoreProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDatastoreProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDatastoreProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningDatastoreProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue<MachineLearningDatastoreCredentials>(Credentials, options);
+            writer.WriteObjectValue(Credentials, options);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
             if (Optional.IsDefined(IntellectualProperty))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue<IntellectualProperty>(IntellectualProperty, options);
+                    writer.WriteObjectValue(IntellectualProperty, options);
                 }
                 else
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static UnknownDatastore DeserializeUnknownDatastore(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

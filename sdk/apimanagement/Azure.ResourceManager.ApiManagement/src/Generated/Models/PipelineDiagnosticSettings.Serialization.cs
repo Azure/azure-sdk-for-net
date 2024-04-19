@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class PipelineDiagnosticSettings : IUtf8JsonSerializable, IJsonModel<PipelineDiagnosticSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineDiagnosticSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineDiagnosticSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PipelineDiagnosticSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue<HttpMessageDiagnostic>(Request, options);
+                writer.WriteObjectValue(Request, options);
             }
             if (Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue<HttpMessageDiagnostic>(Response, options);
+                writer.WriteObjectValue(Response, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static PipelineDiagnosticSettings DeserializePipelineDiagnosticSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

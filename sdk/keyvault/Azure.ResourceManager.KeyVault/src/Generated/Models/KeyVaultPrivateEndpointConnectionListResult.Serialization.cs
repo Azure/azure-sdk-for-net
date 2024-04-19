@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 {
     internal partial class KeyVaultPrivateEndpointConnectionListResult : IUtf8JsonSerializable, IJsonModel<KeyVaultPrivateEndpointConnectionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultPrivateEndpointConnectionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultPrivateEndpointConnectionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KeyVaultPrivateEndpointConnectionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<KeyVaultPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static KeyVaultPrivateEndpointConnectionListResult DeserializeKeyVaultPrivateEndpointConnectionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ManagedClusterSecurityProfileImageCleaner : IUtf8JsonSerializable, IJsonModel<ManagedClusterSecurityProfileImageCleaner>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterSecurityProfileImageCleaner>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterSecurityProfileImageCleaner>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterSecurityProfileImageCleaner>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterSecurityProfileImageCleaner DeserializeManagedClusterSecurityProfileImageCleaner(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

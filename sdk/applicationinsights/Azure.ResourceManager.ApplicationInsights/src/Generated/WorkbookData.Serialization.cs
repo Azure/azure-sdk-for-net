@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     public partial class WorkbookData : IUtf8JsonSerializable, IJsonModel<WorkbookData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkbookData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkbookData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkbookData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         internal static WorkbookData DeserializeWorkbookData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

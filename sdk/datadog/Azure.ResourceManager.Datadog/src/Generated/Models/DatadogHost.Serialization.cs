@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Datadog.Models
 {
     public partial class DatadogHost : IUtf8JsonSerializable, IJsonModel<DatadogHost>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogHost>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogHost>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatadogHost>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue<DatadogHostMetadata>(Meta, options);
+                writer.WriteObjectValue(Meta, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogHost DeserializeDatadogHost(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

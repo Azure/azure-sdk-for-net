@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     [PersistableModelProxy(typeof(UnknownAzureArcKubernetesNetworkFunctionApplication))]
     public partial class AzureArcKubernetesNetworkFunctionApplication : IUtf8JsonSerializable, IJsonModel<AzureArcKubernetesNetworkFunctionApplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureArcKubernetesNetworkFunctionApplication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureArcKubernetesNetworkFunctionApplication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureArcKubernetesNetworkFunctionApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(DependsOnProfile))
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
-                writer.WriteObjectValue<DependsOnProfile>(DependsOnProfile, options);
+                writer.WriteObjectValue(DependsOnProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static AzureArcKubernetesNetworkFunctionApplication DeserializeAzureArcKubernetesNetworkFunctionApplication(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

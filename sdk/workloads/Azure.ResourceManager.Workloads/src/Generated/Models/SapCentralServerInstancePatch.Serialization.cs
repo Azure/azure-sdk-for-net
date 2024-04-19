@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class SapCentralServerInstancePatch : IUtf8JsonSerializable, IJsonModel<SapCentralServerInstancePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapCentralServerInstancePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapCentralServerInstancePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapCentralServerInstancePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapCentralServerInstancePatch DeserializeSapCentralServerInstancePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

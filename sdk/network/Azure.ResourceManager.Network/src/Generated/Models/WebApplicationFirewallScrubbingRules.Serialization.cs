@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class WebApplicationFirewallScrubbingRules : IUtf8JsonSerializable, IJsonModel<WebApplicationFirewallScrubbingRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApplicationFirewallScrubbingRules>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApplicationFirewallScrubbingRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebApplicationFirewallScrubbingRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static WebApplicationFirewallScrubbingRules DeserializeWebApplicationFirewallScrubbingRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

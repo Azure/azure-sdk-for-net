@@ -16,9 +16,9 @@ namespace Azure.AI.TextAnalytics.Legacy
         {
             writer.WriteStartObject();
             writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue<MultiLanguageBatchInput>(AnalysisInput);
+            writer.WriteObjectValue(AnalysisInput);
             writer.WritePropertyName("tasks"u8);
-            writer.WriteObjectValue<JobManifestTasks>(Tasks);
+            writer.WriteObjectValue(Tasks);
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -27,11 +27,11 @@ namespace Azure.AI.TextAnalytics.Legacy
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeBatchInput>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

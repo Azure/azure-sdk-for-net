@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
     public partial class DataLakeAnalyticsAccountCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsAccountCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsAccountCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsAccountCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataLakeAnalyticsAccountCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in DataLakeStoreAccounts)
             {
-                writer.WriteObjectValue<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(StorageAccounts))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in ComputePolicies)
                 {
-                    writer.WriteObjectValue<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
 
         internal static DataLakeAnalyticsAccountCreateOrUpdateContent DeserializeDataLakeAnalyticsAccountCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

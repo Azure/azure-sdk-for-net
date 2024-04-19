@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     public partial class BatchNetworkSecurityGroupRule : IUtf8JsonSerializable, IJsonModel<BatchNetworkSecurityGroupRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNetworkSecurityGroupRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchNetworkSecurityGroupRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BatchNetworkSecurityGroupRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchNetworkSecurityGroupRule DeserializeBatchNetworkSecurityGroupRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

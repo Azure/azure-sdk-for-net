@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class VirtualHardDiskStatusProvisioningStatus : IUtf8JsonSerializable, IJsonModel<VirtualHardDiskStatusProvisioningStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualHardDiskStatusProvisioningStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualHardDiskStatusProvisioningStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualHardDiskStatusProvisioningStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static VirtualHardDiskStatusProvisioningStatus DeserializeVirtualHardDiskStatusProvisioningStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

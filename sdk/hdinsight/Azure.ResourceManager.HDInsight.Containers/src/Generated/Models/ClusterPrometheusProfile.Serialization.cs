@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     internal partial class ClusterPrometheusProfile : IUtf8JsonSerializable, IJsonModel<ClusterPrometheusProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterPrometheusProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterPrometheusProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterPrometheusProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static ClusterPrometheusProfile DeserializeClusterPrometheusProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

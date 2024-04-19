@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaServicesPrivateEndpointConnectionData : IUtf8JsonSerializable, IJsonModel<MediaServicesPrivateEndpointConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaServicesPrivateEndpointConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaServicesPrivateEndpointConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaServicesPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue<MediaPrivateLinkServiceConnectionState>(ConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media
 
         internal static MediaServicesPrivateEndpointConnectionData DeserializeMediaServicesPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsPropertyArrayChangedConditionProperties : IUtf8JsonSerializable, IJsonModel<SecurityInsightsPropertyArrayChangedConditionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsPropertyArrayChangedConditionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsPropertyArrayChangedConditionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsPropertyArrayChangedConditionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(ConditionProperties))
             {
                 writer.WritePropertyName("conditionProperties"u8);
-                writer.WriteObjectValue<AutomationRulePropertyArrayChangedValuesCondition>(ConditionProperties, options);
+                writer.WriteObjectValue(ConditionProperties, options);
             }
             writer.WritePropertyName("conditionType"u8);
             writer.WriteStringValue(ConditionType.ToString());
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         internal static SecurityInsightsPropertyArrayChangedConditionProperties DeserializeSecurityInsightsPropertyArrayChangedConditionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

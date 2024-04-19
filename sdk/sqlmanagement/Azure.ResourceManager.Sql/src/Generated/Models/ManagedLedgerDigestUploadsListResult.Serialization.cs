@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class ManagedLedgerDigestUploadsListResult : IUtf8JsonSerializable, IJsonModel<ManagedLedgerDigestUploadsListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedLedgerDigestUploadsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedLedgerDigestUploadsListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedLedgerDigestUploadsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<ManagedLedgerDigestUploadData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedLedgerDigestUploadsListResult DeserializeManagedLedgerDigestUploadsListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

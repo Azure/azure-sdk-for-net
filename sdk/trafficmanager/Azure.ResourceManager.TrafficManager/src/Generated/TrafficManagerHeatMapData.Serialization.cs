@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.TrafficManager
 {
     public partial class TrafficManagerHeatMapData : IUtf8JsonSerializable, IJsonModel<TrafficManagerHeatMapData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerHeatMapData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerHeatMapData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrafficManagerHeatMapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue<TrafficManagerHeatMapEndpoint>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in TrafficFlows)
                 {
-                    writer.WriteObjectValue<TrafficManagerHeatMapTrafficFlow>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.TrafficManager
 
         internal static TrafficManagerHeatMapData DeserializeTrafficManagerHeatMapData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

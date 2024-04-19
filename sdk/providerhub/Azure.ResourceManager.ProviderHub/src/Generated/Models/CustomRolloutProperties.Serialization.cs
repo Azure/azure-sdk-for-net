@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 {
     public partial class CustomRolloutProperties : IUtf8JsonSerializable, IJsonModel<CustomRolloutProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomRolloutProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomRolloutProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomRolloutProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("specification"u8);
-            writer.WriteObjectValue<CustomRolloutSpecification>(Specification, options);
+            writer.WriteObjectValue(Specification, options);
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<CustomRolloutStatus>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CustomRolloutProperties DeserializeCustomRolloutProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

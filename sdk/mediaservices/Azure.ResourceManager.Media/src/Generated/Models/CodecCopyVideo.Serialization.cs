@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class CodecCopyVideo : IUtf8JsonSerializable, IJsonModel<CodecCopyVideo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CodecCopyVideo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CodecCopyVideo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CodecCopyVideo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static CodecCopyVideo DeserializeCodecCopyVideo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

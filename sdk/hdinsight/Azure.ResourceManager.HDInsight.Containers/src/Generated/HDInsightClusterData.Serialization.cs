@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
 {
     public partial class HDInsightClusterData : IUtf8JsonSerializable, IJsonModel<HDInsightClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HDInsightClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue<ComputeProfile>(ComputeProfile, options);
+                writer.WriteObjectValue(ComputeProfile, options);
             }
             if (Optional.IsDefined(ClusterProfile))
             {
                 writer.WritePropertyName("clusterProfile"u8);
-                writer.WriteObjectValue<ClusterProfile>(ClusterProfile, options);
+                writer.WriteObjectValue(ClusterProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
 
         internal static HDInsightClusterData DeserializeHDInsightClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

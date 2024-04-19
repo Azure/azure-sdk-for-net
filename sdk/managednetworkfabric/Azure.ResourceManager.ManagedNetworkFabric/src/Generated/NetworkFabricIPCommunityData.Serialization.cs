@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricIPCommunityData : IUtf8JsonSerializable, IJsonModel<NetworkFabricIPCommunityData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricIPCommunityData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricIPCommunityData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkFabricIPCommunityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in IPCommunityRules)
                 {
-                    writer.WriteObjectValue<IPCommunityRule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         internal static NetworkFabricIPCommunityData DeserializeNetworkFabricIPCommunityData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppAvailableWorkloadProfileProperties : IUtf8JsonSerializable, IJsonModel<ContainerAppAvailableWorkloadProfileProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppAvailableWorkloadProfileProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppAvailableWorkloadProfileProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppAvailableWorkloadProfileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppAvailableWorkloadProfileProperties DeserializeContainerAppAvailableWorkloadProfileProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

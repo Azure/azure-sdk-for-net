@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class RepresentationContract : IUtf8JsonSerializable, IJsonModel<RepresentationContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RepresentationContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RepresentationContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RepresentationContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in FormParameters)
                 {
-                    writer.WriteObjectValue<ParameterContract>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 foreach (var item in Examples)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ParameterExampleContract>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static RepresentationContract DeserializeRepresentationContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

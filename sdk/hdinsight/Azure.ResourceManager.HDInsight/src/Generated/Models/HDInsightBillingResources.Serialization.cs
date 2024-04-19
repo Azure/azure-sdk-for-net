@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightBillingResources : IUtf8JsonSerializable, IJsonModel<HDInsightBillingResources>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightBillingResources>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightBillingResources>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HDInsightBillingResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in BillingMeters)
                 {
-                    writer.WriteObjectValue<HDInsightBillingMeters>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in DiskBillingMeters)
                 {
-                    writer.WriteObjectValue<HDInsightDiskBillingMeters>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightBillingResources DeserializeHDInsightBillingResources(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

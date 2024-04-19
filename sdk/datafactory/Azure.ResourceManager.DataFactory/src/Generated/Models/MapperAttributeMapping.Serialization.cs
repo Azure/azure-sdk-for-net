@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class MapperAttributeMapping : IUtf8JsonSerializable, IJsonModel<MapperAttributeMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapperAttributeMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapperAttributeMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MapperAttributeMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AttributeReference))
             {
                 writer.WritePropertyName("attributeReference"u8);
-                writer.WriteObjectValue<MapperAttributeReference>(AttributeReference, options);
+                writer.WriteObjectValue(AttributeReference, options);
             }
             if (Optional.IsCollectionDefined(AttributeReferences))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in AttributeReferences)
                 {
-                    writer.WriteObjectValue<MapperAttributeReference>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static MapperAttributeMapping DeserializeMapperAttributeMapping(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

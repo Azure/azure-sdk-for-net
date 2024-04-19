@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ScVmm
 {
     public partial class ScVmmCloudData : IUtf8JsonSerializable, IJsonModel<ScVmmCloudData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmCloudData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmCloudData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScVmmCloudData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ScVmm
             if (options.Format != "W" && Optional.IsDefined(CloudCapacity))
             {
                 writer.WritePropertyName("cloudCapacity"u8);
-                writer.WriteObjectValue<ScVmmCloudCapacity>(CloudCapacity, options);
+                writer.WriteObjectValue(CloudCapacity, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(StorageQosPolicies))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ScVmm
                 writer.WriteStartArray();
                 foreach (var item in StorageQosPolicies)
                 {
-                    writer.WriteObjectValue<ScVmmStorageQosPolicy>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ScVmm
 
         internal static ScVmmCloudData DeserializeScVmmCloudData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Datadog.Models
 {
     public partial class DatadogAgreementResourceProperties : IUtf8JsonSerializable, IJsonModel<DatadogAgreementResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogAgreementResourceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatadogAgreementResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatadogAgreementResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<DatadogAgreementProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogAgreementResourceProperties DeserializeDatadogAgreementResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

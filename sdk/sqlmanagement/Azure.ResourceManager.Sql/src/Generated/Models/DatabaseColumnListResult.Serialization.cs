@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal partial class DatabaseColumnListResult : IUtf8JsonSerializable, IJsonModel<DatabaseColumnListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseColumnListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseColumnListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DatabaseColumnListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<DatabaseColumnData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static DatabaseColumnListResult DeserializeDatabaseColumnListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

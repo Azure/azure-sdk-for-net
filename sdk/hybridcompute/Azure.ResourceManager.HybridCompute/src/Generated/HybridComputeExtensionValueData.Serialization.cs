@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputeExtensionValueData : IUtf8JsonSerializable, IJsonModel<HybridComputeExtensionValueData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeExtensionValueData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeExtensionValueData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridComputeExtensionValueData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridCompute
 
         internal static HybridComputeExtensionValueData DeserializeHybridComputeExtensionValueData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

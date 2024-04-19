@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryTriggerUpdateContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTriggerUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTriggerUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTriggerUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerRegistryTriggerUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in TimerTriggers)
                 {
-                    writer.WriteObjectValue<ContainerRegistryTimerTriggerUpdateContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,14 +42,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceTriggers)
                 {
-                    writer.WriteObjectValue<ContainerRegistrySourceTriggerUpdateContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BaseImageTrigger))
             {
                 writer.WritePropertyName("baseImageTrigger"u8);
-                writer.WriteObjectValue<ContainerRegistryBaseImageTriggerUpdateContent>(BaseImageTrigger, options);
+                writer.WriteObjectValue(BaseImageTrigger, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTriggerUpdateContent DeserializeContainerRegistryTriggerUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

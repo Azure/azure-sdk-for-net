@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class CbcsDrmConfiguration : IUtf8JsonSerializable, IJsonModel<CbcsDrmConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CbcsDrmConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CbcsDrmConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CbcsDrmConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(FairPlay))
             {
                 writer.WritePropertyName("fairPlay"u8);
-                writer.WriteObjectValue<StreamingPolicyFairPlayConfiguration>(FairPlay, options);
+                writer.WriteObjectValue(FairPlay, options);
             }
             if (Optional.IsDefined(PlayReady))
             {
                 writer.WritePropertyName("playReady"u8);
-                writer.WriteObjectValue<StreamingPolicyPlayReadyConfiguration>(PlayReady, options);
+                writer.WriteObjectValue(PlayReady, options);
             }
             if (Optional.IsDefined(Widevine))
             {
                 writer.WritePropertyName("widevine"u8);
-                writer.WriteObjectValue<StreamingPolicyWidevineConfiguration>(Widevine, options);
+                writer.WriteObjectValue(Widevine, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static CbcsDrmConfiguration DeserializeCbcsDrmConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

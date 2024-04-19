@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.Models
 {
     public partial class MySqlServerPropertiesForGeoRestore : IUtf8JsonSerializable, IJsonModel<MySqlServerPropertiesForGeoRestore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerPropertiesForGeoRestore>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerPropertiesForGeoRestore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlServerPropertiesForGeoRestore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MySql.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue<MySqlStorageProfile>(StorageProfile, options);
+                writer.WriteObjectValue(StorageProfile, options);
             }
             writer.WritePropertyName("createMode"u8);
             writer.WriteStringValue(CreateMode.ToString());
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlServerPropertiesForGeoRestore DeserializeMySqlServerPropertiesForGeoRestore(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

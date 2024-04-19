@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class ResourcesResponseCustomDomainsItem : IUtf8JsonSerializable, IJsonModel<ResourcesResponseCustomDomainsItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourcesResponseCustomDomainsItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourcesResponseCustomDomainsItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourcesResponseCustomDomainsItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ResourcesResponseCustomDomainsItem DeserializeResourcesResponseCustomDomainsItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 {
     public partial class DataLakeStoreAccountPatch : IUtf8JsonSerializable, IJsonModel<DataLakeStoreAccountPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreAccountPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreAccountPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataLakeStoreAccountPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             if (Optional.IsDefined(EncryptionConfig))
             {
                 writer.WritePropertyName("encryptionConfig"u8);
-                writer.WriteObjectValue<UpdateEncryptionConfig>(EncryptionConfig, options);
+                writer.WriteObjectValue(EncryptionConfig, options);
             }
             if (Optional.IsCollectionDefined(FirewallRules))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue<FirewallRuleForDataLakeStoreAccountUpdateContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in TrustedIdProviders)
                 {
-                    writer.WriteObjectValue<TrustedIdProviderForDataLakeStoreAccountUpdateContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         internal static DataLakeStoreAccountPatch DeserializeDataLakeStoreAccountPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

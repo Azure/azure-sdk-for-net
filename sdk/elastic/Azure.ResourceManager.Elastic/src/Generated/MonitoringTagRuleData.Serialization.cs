@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Elastic
 {
     public partial class MonitoringTagRuleData : IUtf8JsonSerializable, IJsonModel<MonitoringTagRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringTagRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringTagRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitoringTagRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Elastic
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<MonitoringTagRulesProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Elastic
 
         internal static MonitoringTagRuleData DeserializeMonitoringTagRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

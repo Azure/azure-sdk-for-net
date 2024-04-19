@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class PhysicalPartitionStorageInfo : IUtf8JsonSerializable, IJsonModel<PhysicalPartitionStorageInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhysicalPartitionStorageInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhysicalPartitionStorageInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PhysicalPartitionStorageInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static PhysicalPartitionStorageInfo DeserializePhysicalPartitionStorageInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

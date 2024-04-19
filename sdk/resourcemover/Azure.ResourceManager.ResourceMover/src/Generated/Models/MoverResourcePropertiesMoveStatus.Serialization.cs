@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class MoverResourcePropertiesMoveStatus : IUtf8JsonSerializable, IJsonModel<MoverResourcePropertiesMoveStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourcePropertiesMoveStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourcePropertiesMoveStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MoverResourcePropertiesMoveStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (JobStatus != null)
                 {
                     writer.WritePropertyName("jobStatus"u8);
-                    writer.WriteObjectValue<MoverResourceJobStatus>(JobStatus, options);
+                    writer.WriteObjectValue(JobStatus, options);
                 }
                 else
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (Errors != null)
                 {
                     writer.WritePropertyName("errors"u8);
-                    writer.WriteObjectValue<MoveResourceError>(Errors, options);
+                    writer.WriteObjectValue(Errors, options);
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverResourcePropertiesMoveStatus DeserializeMoverResourcePropertiesMoveStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
