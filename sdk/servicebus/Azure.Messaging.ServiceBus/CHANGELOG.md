@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Fixed issue where the `SupportsOrdering` property was not being respected when set on `CreateTopicOptions`.
+- Fixed issue where the `SupportOrdering` property was not being respected when set on `CreateTopicOptions`.
 
 ### Other Changes
 
