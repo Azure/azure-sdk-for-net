@@ -6,36 +6,12 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonFeatureData : IUtf8JsonSerializable
+    public partial class GeoJsonFeatureData
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue(Geometry);
-            if (Common.Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<object>(Properties);
-            }
-            if (Common.Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Common.Optional.IsDefined(FeatureType))
-            {
-                writer.WritePropertyName("featureType"u8);
-                writer.WriteStringValue(FeatureType);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonFeatureData DeserializeGeoJsonFeatureData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -82,14 +58,6 @@ namespace Azure.Maps.Search.Models
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeGeoJsonFeatureData(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

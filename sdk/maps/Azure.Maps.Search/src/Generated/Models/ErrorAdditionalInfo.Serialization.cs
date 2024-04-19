@@ -10,7 +10,7 @@ using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class ErrorAdditionalInfo
+    public partial class ErrorAdditionalInfo
     {
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {

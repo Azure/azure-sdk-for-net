@@ -13,13 +13,15 @@ namespace Azure.Maps.Search
     /// <summary> Client options for SearchClient. </summary>
     public partial class MapsSearchClientOptions : ClientOptions
     {
-        internal const ServiceVersion LatestVersion = ServiceVersion.V1_0;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2_0;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "1.0". </summary>
             V1_0 = 1,
+            /// <summary> Service version "2.0". </summary>
+            V2_0 = 2,
         }
 
         internal string Version { get; }
@@ -33,6 +35,7 @@ namespace Azure.Maps.Search
             Version = version switch
             {
                 ServiceVersion.V1_0 => "1.0",
+                ServiceVersion.V2_0 => "2023-06-01",
                 _ => throw new NotSupportedException()
             };
 
