@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0-beta.2 (2024-05-07)
 
 ### Features Added
 
@@ -9,10 +9,6 @@
   ([#42174](https://github.com/Azure/azure-sdk-for-net/pull/42174))
 * Turned off internal spans and logs in exporter HTTP pipeline
   ([#43359](https://github.com/Azure/azure-sdk-for-net/pull/43359))
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 
