@@ -2,20 +2,18 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace System.ClientModel;
 
 #pragma warning disable CS1591 // public XML comments
-public abstract class EnumerableClientResult<T> : ClientResult, IEnumerable<T>
+public abstract class AsyncClientResultCollection<T> : ClientResult, IAsyncEnumerable<T>
 {
-    protected internal EnumerableClientResult(PipelineResponse response) : base(response)
+    protected internal AsyncClientResultCollection(PipelineResponse response) : base(response)
     {
     }
 
-    public abstract IEnumerator<T> GetEnumerator();
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    public abstract IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default);
 }
 #pragma warning restore CS1591 // public XML comments

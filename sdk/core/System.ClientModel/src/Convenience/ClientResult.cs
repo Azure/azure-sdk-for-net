@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 
 namespace System.ClientModel;
@@ -31,8 +32,8 @@ public class ClientResult
     /// <exception cref="InvalidOperationException">No
     /// <see cref="PipelineResponse"/> value is currently available for this
     /// <see cref="ClientResult"/> instance.  This can happen when the instance
-    /// is a collection type like <see cref="AsyncEnumerableResult{T}"/> that
-    /// has not yet been enumerated.</exception>
+    /// is a collection type like <see cref="AsyncClientResultCollection{T}"/>
+    /// that has not yet been enumerated.</exception>
     public PipelineResponse GetRawResponse()
     {
         if (_response is null)
@@ -71,7 +72,11 @@ public class ClientResult
     /// provided <paramref name="response"/>.
     /// </returns>
     public static ClientResult FromResponse(PipelineResponse response)
-        => new ClientResult(response);
+    {
+        Argument.AssertNotNull(response, nameof(response));
+
+        return new ClientResult(response);
+    }
 
     /// <summary>
     /// Creates a new instance of <see cref="ClientResult{T}"/> that holds the
@@ -87,6 +92,8 @@ public class ClientResult
     /// </returns>
     public static ClientResult<T> FromValue<T>(T value, PipelineResponse response)
     {
+        Argument.AssertNotNull(response, nameof(response));
+
         if (value is null)
         {
             string message = "ClientResult<T> contract guarantees that ClientResult<T>.Value is non-null. " +
@@ -117,7 +124,11 @@ public class ClientResult
     /// provided <paramref name="value"/> and <paramref name="response"/>.
     /// </returns>
     public static ClientResult<T?> FromOptionalValue<T>(T? value, PipelineResponse response)
-        => new ClientResult<T?>(value, response);
+    {
+        Argument.AssertNotNull(response, nameof(response));
+
+        return new ClientResult<T?>(value, response);
+    }
 
     #endregion
 }
