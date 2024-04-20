@@ -22,14 +22,19 @@ namespace Azure.Communication.Sms
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
+            if (Optional.IsDefined(DeliveryReportTimeoutInSeconds))
+            {
+                writer.WritePropertyName("deliveryReportTimeoutInSeconds"u8);
+                writer.WriteNumberValue(DeliveryReportTimeoutInSeconds.Value);
+            }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SmsSendOptions>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

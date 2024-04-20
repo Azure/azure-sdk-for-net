@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,25 +15,21 @@ namespace Azure.Core
         private readonly OperationInternal<T> _operation;
         private readonly NextLinkOperationImplementation _nextLinkOperation;
 
-        public RehydrationOperation(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions options = null)
+        public RehydrationOperation(NextLinkOperationImplementation nextLinkOperation, OperationState<T> operationState, IOperation<T> operation, ClientOptions? options = null)
         {
-            Argument.AssertNotNull(pipeline, nameof(pipeline));
-            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
-
-            IOperationSource<T> source = new GenericOperationSource<T>();
-            _nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
-            var operation = NextLinkOperationImplementation.Create(source, _nextLinkOperation);
-            var clientDiagnostics = new ClientDiagnostics(options ?? ClientOptions.Default);
-            _operation = new OperationInternal<T>(operation, clientDiagnostics, null);
+            _nextLinkOperation = nextLinkOperation;
+            _operation = operationState.HasCompleted
+                    ? new OperationInternal<T>(operationState)
+                    :  new OperationInternal<T>(operation, new ClientDiagnostics(options ?? ClientOptions.Default), operationState.RawResponse);
         }
 
         public override T Value => _operation.Value;
 
         public override bool HasValue => _operation.HasValue;
 
-        public override string Id => _nextLinkOperation.OperationId ?? null;
+        public override string Id => _nextLinkOperation.OperationId;
 
-        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken();
+        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation.GetRehydrationToken();
 
         public override bool HasCompleted => _operation.HasCompleted;
 

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class IotSecurityAggregatedAlertData : IUtf8JsonSerializable, IJsonModel<IotSecurityAggregatedAlertData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotSecurityAggregatedAlertData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotSecurityAggregatedAlertData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotSecurityAggregatedAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in TopDevicesList)
                 {
-                    writer.WriteObjectValue<IotSecurityAggregatedAlertTopDevice>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static IotSecurityAggregatedAlertData DeserializeIotSecurityAggregatedAlertData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

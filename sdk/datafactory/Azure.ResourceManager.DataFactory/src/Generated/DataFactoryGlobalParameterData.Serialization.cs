@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory
 {
     public partial class DataFactoryGlobalParameterData : IUtf8JsonSerializable, IJsonModel<DataFactoryGlobalParameterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryGlobalParameterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryGlobalParameterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataFactoryGlobalParameterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory
             foreach (var item in Properties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<DataFactoryGlobalParameterProperties>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && Optional.IsDefined(ETag))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static DataFactoryGlobalParameterData DeserializeDataFactoryGlobalParameterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

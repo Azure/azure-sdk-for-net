@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal partial class JobDeliveryInfo : IUtf8JsonSerializable, IJsonModel<JobDeliveryInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobDeliveryInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobDeliveryInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<JobDeliveryInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static JobDeliveryInfo DeserializeJobDeliveryInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

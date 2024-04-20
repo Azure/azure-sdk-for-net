@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxJobPatch : IUtf8JsonSerializable, IJsonModel<DataBoxJobPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxJobPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxJobPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxJobPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue<UpdateJobDetails>(Details, options);
+                writer.WriteObjectValue(Details, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxJobPatch DeserializeDataBoxJobPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

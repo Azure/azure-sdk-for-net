@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Text
 {
     public partial class Translation : IUtf8JsonSerializable, IJsonModel<Translation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Translation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Translation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<Translation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,17 +33,17 @@ namespace Azure.AI.Translation.Text
             if (Optional.IsDefined(Transliteration))
             {
                 writer.WritePropertyName("transliteration"u8);
-                writer.WriteObjectValue<TransliteratedText>(Transliteration, options);
+                writer.WriteObjectValue(Transliteration, options);
             }
             if (Optional.IsDefined(Alignment))
             {
                 writer.WritePropertyName("alignment"u8);
-                writer.WriteObjectValue<TranslatedTextAlignment>(Alignment, options);
+                writer.WriteObjectValue(Alignment, options);
             }
             if (Optional.IsDefined(SentLen))
             {
                 writer.WritePropertyName("sentLen"u8);
-                writer.WriteObjectValue<SentenceLength>(SentLen, options);
+                writer.WriteObjectValue(SentLen, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,7 +77,7 @@ namespace Azure.AI.Translation.Text
 
         internal static Translation DeserializeTranslation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -183,11 +183,11 @@ namespace Azure.AI.Translation.Text
             return DeserializeTranslation(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<Translation>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

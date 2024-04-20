@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotCentral.Models
 {
     public partial class IotCentralAppSkuInfo : IUtf8JsonSerializable, IJsonModel<IotCentralAppSkuInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotCentralAppSkuInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotCentralAppSkuInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotCentralAppSkuInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotCentral.Models
 
         internal static IotCentralAppSkuInfo DeserializeIotCentralAppSkuInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

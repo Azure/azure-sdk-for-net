@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     public partial class SynapseKustoPoolPatch : IUtf8JsonSerializable, IJsonModel<SynapseKustoPoolPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseKustoPoolPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseKustoPoolPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseKustoPoolPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<SynapseDataSourceSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (options.Format != "W")
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(OptimizedAutoscale))
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
-                writer.WriteObjectValue<SynapseOptimizedAutoscale>(OptimizedAutoscale, options);
+                writer.WriteObjectValue(OptimizedAutoscale, options);
             }
             if (Optional.IsDefined(EnableStreamingIngest))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (options.Format != "W" && Optional.IsDefined(LanguageExtensions))
             {
                 writer.WritePropertyName("languageExtensions"u8);
-                writer.WriteObjectValue<SynapseLanguageExtensionsList>(LanguageExtensions, options);
+                writer.WriteObjectValue(LanguageExtensions, options);
             }
             if (Optional.IsDefined(WorkspaceUid))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseKustoPoolPatch DeserializeSynapseKustoPoolPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

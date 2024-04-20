@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MixedReality
 {
     public partial class SpatialAnchorsAccountData : IUtf8JsonSerializable, IJsonModel<SpatialAnchorsAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpatialAnchorsAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpatialAnchorsAccountData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SpatialAnchorsAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.MixedReality
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<MixedRealitySku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteObjectValue<MixedRealitySku>(Kind, options);
+                writer.WriteObjectValue(Kind, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MixedReality
 
         internal static SpatialAnchorsAccountData DeserializeSpatialAnchorsAccountData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

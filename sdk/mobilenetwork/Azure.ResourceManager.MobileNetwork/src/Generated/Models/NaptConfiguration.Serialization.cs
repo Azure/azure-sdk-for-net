@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class NaptConfiguration : IUtf8JsonSerializable, IJsonModel<NaptConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NaptConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NaptConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NaptConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(PortRange))
             {
                 writer.WritePropertyName("portRange"u8);
-                writer.WriteObjectValue<MobileNetworkPortRange>(PortRange, options);
+                writer.WriteObjectValue(PortRange, options);
             }
             if (Optional.IsDefined(PortReuseHoldTime))
             {
                 writer.WritePropertyName("portReuseHoldTime"u8);
-                writer.WriteObjectValue<MobileNetworkPortReuseHoldTimes>(PortReuseHoldTime, options);
+                writer.WriteObjectValue(PortReuseHoldTime, options);
             }
             if (Optional.IsDefined(PinholeLimits))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(PinholeTimeouts))
             {
                 writer.WritePropertyName("pinholeTimeouts"u8);
-                writer.WriteObjectValue<PinholeTimeouts>(PinholeTimeouts, options);
+                writer.WriteObjectValue(PinholeTimeouts, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static NaptConfiguration DeserializeNaptConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

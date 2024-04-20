@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     public partial class PostgreSqlMigrationSecretParameters : IUtf8JsonSerializable, IJsonModel<PostgreSqlMigrationSecretParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlMigrationSecretParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlMigrationSecretParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlMigrationSecretParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("adminCredentials"u8);
-            writer.WriteObjectValue<PostgreSqlMigrationAdminCredentials>(AdminCredentials, options);
+            writer.WriteObjectValue(AdminCredentials, options);
             if (Optional.IsDefined(SourceServerUsername))
             {
                 writer.WritePropertyName("sourceServerUsername"u8);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlMigrationSecretParameters DeserializePostgreSqlMigrationSecretParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

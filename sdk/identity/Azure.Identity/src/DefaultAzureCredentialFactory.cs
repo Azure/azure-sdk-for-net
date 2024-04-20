@@ -121,16 +121,13 @@ namespace Azure.Identity
         public virtual TokenCredential CreateManagedIdentityCredential()
         {
             var options = Options.Clone<DefaultAzureCredentialOptions>();
-            // Set the custom retry policy
-            options.Retry.MaxRetries = 4;
-            options.RetryPolicy ??= new DefaultAzureCredentialImdsRetryPolicy(options.Retry);
             options.IsChainedCredential = true;
 
             var miOptions = new ManagedIdentityClientOptions
             {
                 ResourceIdentifier = options.ManagedIdentityResourceId,
                 ClientId = options.ManagedIdentityClientId,
-                Pipeline = CredentialPipeline.GetInstance(options),
+                Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true),
                 Options = options,
                 InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1),
                 ExcludeTokenExchangeManagedIdentitySource = options.ExcludeWorkloadIdentityCredential

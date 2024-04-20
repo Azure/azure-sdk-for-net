@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     internal partial class FormulaPropertiesFromVm : IUtf8JsonSerializable, IJsonModel<FormulaPropertiesFromVm>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FormulaPropertiesFromVm>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FormulaPropertiesFromVm>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FormulaPropertiesFromVm>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static FormulaPropertiesFromVm DeserializeFormulaPropertiesFromVm(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

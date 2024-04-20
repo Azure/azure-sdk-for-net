@@ -120,7 +120,7 @@ namespace Azure.Identity.Tests
 
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
 
-            var expectedTimeouts = new TimeSpan?[] { null, null, null, null };
+            var expectedTimeouts = new TimeSpan?[] { null, null, null, null, null, null };
             CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
         }
 

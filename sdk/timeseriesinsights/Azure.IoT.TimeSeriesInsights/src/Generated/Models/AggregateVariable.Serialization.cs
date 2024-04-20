@@ -16,13 +16,13 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             writer.WriteStartObject();
             writer.WritePropertyName("aggregation"u8);
-            writer.WriteObjectValue<TimeSeriesExpression>(Aggregation);
+            writer.WriteObjectValue(Aggregation);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue<TimeSeriesExpression>(Filter);
+                writer.WriteObjectValue(Filter);
             }
             writer.WriteEndObject();
         }
@@ -69,11 +69,11 @@ namespace Azure.IoT.TimeSeriesInsights
             return DeserializeAggregateVariable(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AggregateVariable>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

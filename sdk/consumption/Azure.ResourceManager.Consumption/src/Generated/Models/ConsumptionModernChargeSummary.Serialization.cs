@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionModernChargeSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionModernChargeSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionModernChargeSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionModernChargeSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionModernChargeSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(AzureCharges))
             {
                 writer.WritePropertyName("azureCharges"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(AzureCharges, options);
+                writer.WriteObjectValue(AzureCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
             {
                 writer.WritePropertyName("chargesBilledSeparately"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(ChargesBilledSeparately, options);
+                writer.WriteObjectValue(ChargesBilledSeparately, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
             {
                 writer.WritePropertyName("marketplaceCharges"u8);
-                writer.WriteObjectValue<ConsumptionAmount>(MarketplaceCharges, options);
+                writer.WriteObjectValue(MarketplaceCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionModernChargeSummary DeserializeConsumptionModernChargeSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

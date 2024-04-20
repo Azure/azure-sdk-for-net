@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 {
     public partial class ContainerGroupIPAddress : IUtf8JsonSerializable, IJsonModel<ContainerGroupIPAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupIPAddress>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupIPAddress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerGroupIPAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartArray();
             foreach (var item in Ports)
             {
-                writer.WriteObjectValue<ContainerGroupPort>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGroupIPAddress DeserializeContainerGroupIPAddress(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBThroughputPoolAccountData : IUtf8JsonSerializable, IJsonModel<CosmosDBThroughputPoolAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBThroughputPoolAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBThroughputPoolAccountData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CosmosDBThroughputPoolAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         internal static CosmosDBThroughputPoolAccountData DeserializeCosmosDBThroughputPoolAccountData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

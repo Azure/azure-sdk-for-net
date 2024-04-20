@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataExportDetails : IUtf8JsonSerializable, IJsonModel<DataExportDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataExportDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataExportDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataExportDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataBox.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("transferConfiguration"u8);
-            writer.WriteObjectValue<TransferConfiguration>(TransferConfiguration, options);
+            writer.WriteObjectValue(TransferConfiguration, options);
             if (Optional.IsDefined(LogCollectionLevel))
             {
                 writer.WritePropertyName("logCollectionLevel"u8);
                 writer.WriteStringValue(LogCollectionLevel.Value.ToSerialString());
             }
             writer.WritePropertyName("accountDetails"u8);
-            writer.WriteObjectValue<DataAccountDetails>(AccountDetails, options);
+            writer.WriteObjectValue(AccountDetails, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataExportDetails DeserializeDataExportDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

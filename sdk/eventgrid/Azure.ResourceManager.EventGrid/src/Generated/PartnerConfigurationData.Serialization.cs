@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class PartnerConfigurationData : IUtf8JsonSerializable, IJsonModel<PartnerConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PartnerConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PartnerAuthorization))
             {
                 writer.WritePropertyName("partnerAuthorization"u8);
-                writer.WriteObjectValue<PartnerAuthorization>(PartnerAuthorization, options);
+                writer.WriteObjectValue(PartnerAuthorization, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static PartnerConfigurationData DeserializePartnerConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

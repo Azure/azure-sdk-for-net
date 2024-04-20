@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Advisor
 {
     public partial class MetadataEntityData : IUtf8JsonSerializable, IJsonModel<MetadataEntityData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetadataEntityData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetadataEntityData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MetadataEntityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Advisor
                 writer.WriteStartArray();
                 foreach (var item in SupportedValues)
                 {
-                    writer.WriteObjectValue<MetadataSupportedValueDetail>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Advisor
 
         internal static MetadataEntityData DeserializeMetadataEntityData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

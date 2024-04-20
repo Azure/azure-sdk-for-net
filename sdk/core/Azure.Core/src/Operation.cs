@@ -25,8 +25,17 @@ namespace Azure
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The client options.</param>
         /// <returns>The long-running operation.</returns>
-        public static Operation<T> Rehydrate<T>(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions? options = null) where T : IPersistableModel<T>
-            => new RehydrationOperation<T>(pipeline, rehydrationToken, options);
+        public static Operation<T> Rehydrate<T>(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions? options = null) where T : IPersistableModel<T>
+        {
+            Argument.AssertNotNull(pipeline, nameof(pipeline));
+            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+
+            IOperationSource<T> source = new GenericOperationSource<T>();
+            var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
+            var operation = NextLinkOperationImplementation.Create(source, nextLinkOperation);
+            var operationState = operation.UpdateStateAsync(async: false, default).EnsureCompleted();
+            return new RehydrationOperation<T>(nextLinkOperation, operationState, operation, options);
+        }
 
         /// <summary>
         /// Rehydrates an operation from a <see cref="RehydrationToken"/>.
@@ -35,8 +44,51 @@ namespace Azure
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The client options.</param>
         /// <returns>The long-running operation.</returns>
-        public static Operation Rehydrate(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions? options = null)
-            => new RehydrationOperation(pipeline, rehydrationToken, options);
+        public static Operation Rehydrate(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions? options = null)
+        {
+            Argument.AssertNotNull(pipeline, nameof(pipeline));
+            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+
+            var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
+            var operationState = nextLinkOperation.UpdateStateAsync(async: false, default).EnsureCompleted();
+            return new RehydrationOperation(nextLinkOperation, operationState);
+        }
+
+        /// <summary>
+        /// Rehydrates an operation from a <see cref="RehydrationToken"/>.
+        /// </summary>
+        /// <param name="pipeline">The Http pipeline.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="options">The client options.</param>
+        /// <returns>The long-running operation.</returns>
+        public static async Task<Operation<T>> RehydrateAsync<T>(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions? options = null) where T : IPersistableModel<T>
+        {
+            Argument.AssertNotNull(pipeline, nameof(pipeline));
+            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+
+            IOperationSource<T> source = new GenericOperationSource<T>();
+            var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
+            var operation = NextLinkOperationImplementation.Create(source, nextLinkOperation);
+            var operationState = await operation.UpdateStateAsync(async: true, default).ConfigureAwait(false);
+            return new RehydrationOperation<T>(nextLinkOperation, operationState, operation, options);
+        }
+
+        /// <summary>
+        /// Rehydrates an operation from a <see cref="RehydrationToken"/>.
+        /// </summary>
+        /// <param name="pipeline">The Http pipeline.</param>
+        /// <param name="rehydrationToken">The rehydration token.</param>
+        /// <param name="options">The client options.</param>
+        /// <returns>The long-running operation.</returns>
+        public static async Task<Operation> RehydrateAsync(HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions? options = null)
+        {
+            Argument.AssertNotNull(pipeline, nameof(pipeline));
+            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
+
+            var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
+            var operationState = await nextLinkOperation.UpdateStateAsync(async: true, default).ConfigureAwait(false);
+            return new RehydrationOperation(nextLinkOperation, operationState);
+        }
 
         /// <summary>
         /// Get a token that can be used to rehydrate the operation.
@@ -46,6 +98,7 @@ namespace Azure
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
         /// the status of the long-running operation.
+        /// There are cases that operation id is not available, we return "NOT_SET" for unavailable operation id.
         /// </summary>
         public abstract string Id { get; }
 

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
     public partial class SapDiscoverySitePatch : IUtf8JsonSerializable, IJsonModel<SapDiscoverySitePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDiscoverySitePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDiscoverySitePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapDiscoverySitePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         internal static SapDiscoverySitePatch DeserializeSapDiscoverySitePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

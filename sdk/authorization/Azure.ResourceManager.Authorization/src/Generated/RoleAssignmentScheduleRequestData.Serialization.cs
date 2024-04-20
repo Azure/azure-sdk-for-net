@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization
 {
     public partial class RoleAssignmentScheduleRequestData : IUtf8JsonSerializable, IJsonModel<RoleAssignmentScheduleRequestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentScheduleRequestData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentScheduleRequestData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleAssignmentScheduleRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(TicketInfo))
             {
                 writer.WritePropertyName("ticketInfo"u8);
-                writer.WriteObjectValue<RoleAssignmentScheduleTicketInfo>(TicketInfo, options);
+                writer.WriteObjectValue(TicketInfo, options);
             }
             if (Optional.IsDefined(Condition))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Authorization
             if (options.Format != "W" && Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
-                writer.WriteObjectValue<RoleManagementExpandedProperties>(ExpandedProperties, options);
+                writer.WriteObjectValue(ExpandedProperties, options);
             }
             writer.WritePropertyName("scheduleInfo"u8);
             writer.WriteStartObject();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Authorization
 
         internal static RoleAssignmentScheduleRequestData DeserializeRoleAssignmentScheduleRequestData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

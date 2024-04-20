@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataShare.Models
 {
     public partial class TableLevelSharingProperties : IUtf8JsonSerializable, IJsonModel<TableLevelSharingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TableLevelSharingProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TableLevelSharingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TableLevelSharingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static TableLevelSharingProperties DeserializeTableLevelSharingProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

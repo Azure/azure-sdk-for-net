@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class StorageApplianceConfiguration : IUtf8JsonSerializable, IJsonModel<StorageApplianceConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageApplianceConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageApplianceConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageApplianceConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("adminCredentials"u8);
-            writer.WriteObjectValue<AdministrativeCredentials>(AdminCredentials, options);
+            writer.WriteObjectValue(AdminCredentials, options);
             writer.WritePropertyName("rackSlot"u8);
             writer.WriteNumberValue(RackSlot);
             writer.WritePropertyName("serialNumber"u8);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static StorageApplianceConfiguration DeserializeStorageApplianceConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

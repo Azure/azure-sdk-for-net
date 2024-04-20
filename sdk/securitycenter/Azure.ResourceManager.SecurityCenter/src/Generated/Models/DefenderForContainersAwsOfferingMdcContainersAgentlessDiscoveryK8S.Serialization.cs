@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S : IUtf8JsonSerializable, IJsonModel<DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S DeserializeDefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

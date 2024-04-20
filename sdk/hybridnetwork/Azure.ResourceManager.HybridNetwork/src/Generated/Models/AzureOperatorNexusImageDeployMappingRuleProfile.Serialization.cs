@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class AzureOperatorNexusImageDeployMappingRuleProfile : IUtf8JsonSerializable, IJsonModel<AzureOperatorNexusImageDeployMappingRuleProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOperatorNexusImageDeployMappingRuleProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOperatorNexusImageDeployMappingRuleProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureOperatorNexusImageDeployMappingRuleProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ImageMappingRuleProfile))
             {
                 writer.WritePropertyName("imageMappingRuleProfile"u8);
-                writer.WriteObjectValue<ImageMappingRuleProfile>(ImageMappingRuleProfile, options);
+                writer.WriteObjectValue(ImageMappingRuleProfile, options);
             }
             if (Optional.IsDefined(ApplicationEnablement))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static AzureOperatorNexusImageDeployMappingRuleProfile DeserializeAzureOperatorNexusImageDeployMappingRuleProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

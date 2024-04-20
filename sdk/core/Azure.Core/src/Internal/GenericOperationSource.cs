@@ -17,6 +17,6 @@ namespace Azure.Core
             => new ValueTask<T>(CreateResult(response));
 
         private T CreateResult(Response response)
-            => (T)ModelReaderWriter.Read(response.Content, typeof(T))!;
+            => ModelReaderWriter.Read<T>(response.Content)!;
     }
 }

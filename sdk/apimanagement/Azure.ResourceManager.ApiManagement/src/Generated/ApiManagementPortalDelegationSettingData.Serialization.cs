@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiManagementPortalDelegationSettingData : IUtf8JsonSerializable, IJsonModel<ApiManagementPortalDelegationSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementPortalDelegationSettingData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementPortalDelegationSettingData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementPortalDelegationSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue<SubscriptionDelegationSettingProperties>(Subscriptions, options);
+                writer.WriteObjectValue(Subscriptions, options);
             }
             if (Optional.IsDefined(UserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue<RegistrationDelegationSettingProperties>(UserRegistration, options);
+                writer.WriteObjectValue(UserRegistration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiManagementPortalDelegationSettingData DeserializeApiManagementPortalDelegationSettingData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

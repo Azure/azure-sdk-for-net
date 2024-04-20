@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 {
     public partial class ResourceHealthAvailabilityStatusProperties : IUtf8JsonSerializable, IJsonModel<ResourceHealthAvailabilityStatusProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthAvailabilityStatusProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthAvailabilityStatusProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceHealthAvailabilityStatusProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (Optional.IsDefined(RecentlyResolved))
             {
                 writer.WritePropertyName("recentlyResolved"u8);
-                writer.WriteObjectValue<ResourceHealthAvailabilityStateRecentlyResolved>(RecentlyResolved, options);
+                writer.WriteObjectValue(RecentlyResolved, options);
             }
             if (Optional.IsCollectionDefined(RecommendedActions))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in RecommendedActions)
                 {
-                    writer.WriteObjectValue<ResourceHealthRecommendedAction>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceImpactingEvents)
                 {
-                    writer.WriteObjectValue<ServiceImpactingEvent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         internal static ResourceHealthAvailabilityStatusProperties DeserializeResourceHealthAvailabilityStatusProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

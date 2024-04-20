@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Quantum.Models
 {
     public partial class QuantumQuotaDimension : IUtf8JsonSerializable, IJsonModel<QuantumQuotaDimension>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuantumQuotaDimension>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuantumQuotaDimension>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QuantumQuotaDimension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Quantum.Models
 
         internal static QuantumQuotaDimension DeserializeQuantumQuotaDimension(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

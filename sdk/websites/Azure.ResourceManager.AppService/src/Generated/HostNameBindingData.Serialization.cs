@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class HostNameBindingData : IUtf8JsonSerializable, IJsonModel<HostNameBindingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostNameBindingData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostNameBindingData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HostNameBindingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static HostNameBindingData DeserializeHostNameBindingData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

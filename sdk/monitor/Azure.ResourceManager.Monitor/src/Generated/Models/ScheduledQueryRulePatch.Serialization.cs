@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class ScheduledQueryRulePatch : IUtf8JsonSerializable, IJsonModel<ScheduledQueryRulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledQueryRulePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledQueryRulePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScheduledQueryRulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Criteria))
             {
                 writer.WritePropertyName("criteria"u8);
-                writer.WriteObjectValue<ScheduledQueryRuleCriteria>(Criteria, options);
+                writer.WriteObjectValue(Criteria, options);
             }
             if (Optional.IsDefined(MuteActionsDuration))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue<ScheduledQueryRuleActions>(Actions, options);
+                writer.WriteObjectValue(Actions, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsWorkspaceAlertsStorageConfigured))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ScheduledQueryRulePatch DeserializeScheduledQueryRulePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

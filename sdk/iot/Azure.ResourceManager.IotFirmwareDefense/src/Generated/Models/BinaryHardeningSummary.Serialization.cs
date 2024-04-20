@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     public partial class BinaryHardeningSummary : IUtf8JsonSerializable, IJsonModel<BinaryHardeningSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BinaryHardeningSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BinaryHardeningSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BinaryHardeningSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         internal static BinaryHardeningSummary DeserializeBinaryHardeningSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

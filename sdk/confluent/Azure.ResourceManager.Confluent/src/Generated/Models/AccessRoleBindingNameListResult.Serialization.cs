@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     public partial class AccessRoleBindingNameListResult : IUtf8JsonSerializable, IJsonModel<AccessRoleBindingNameListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessRoleBindingNameListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessRoleBindingNameListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AccessRoleBindingNameListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<ConfluentListMetadata>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (Optional.IsCollectionDefined(Data))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static AccessRoleBindingNameListResult DeserializeAccessRoleBindingNameListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

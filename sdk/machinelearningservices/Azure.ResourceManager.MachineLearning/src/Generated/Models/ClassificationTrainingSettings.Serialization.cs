@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class ClassificationTrainingSettings : IUtf8JsonSerializable, IJsonModel<ClassificationTrainingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClassificationTrainingSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClassificationTrainingSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClassificationTrainingSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (StackEnsembleSettings != null)
                 {
                     writer.WritePropertyName("stackEnsembleSettings"u8);
-                    writer.WriteObjectValue<MachineLearningStackEnsembleSettings>(StackEnsembleSettings, options);
+                    writer.WriteObjectValue(StackEnsembleSettings, options);
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ClassificationTrainingSettings DeserializeClassificationTrainingSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

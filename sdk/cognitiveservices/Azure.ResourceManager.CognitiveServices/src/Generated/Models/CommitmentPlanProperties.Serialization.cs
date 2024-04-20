@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CommitmentPlanProperties : IUtf8JsonSerializable, IJsonModel<CommitmentPlanProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentPlanProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentPlanProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommitmentPlanProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Current))
             {
                 writer.WritePropertyName("current"u8);
-                writer.WriteObjectValue<CommitmentPeriod>(Current, options);
+                writer.WriteObjectValue(Current, options);
             }
             if (Optional.IsDefined(AutoRenew))
             {
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Next))
             {
                 writer.WritePropertyName("next"u8);
-                writer.WriteObjectValue<CommitmentPeriod>(Next, options);
+                writer.WriteObjectValue(Next, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
-                writer.WriteObjectValue<CommitmentPeriod>(Last, options);
+                writer.WriteObjectValue(Last, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningIssues))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CommitmentPlanProperties DeserializeCommitmentPlanProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

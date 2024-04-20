@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI.Assistants
 {
     public partial class AssistantThreadCreationOptions : IUtf8JsonSerializable, IJsonModel<AssistantThreadCreationOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssistantThreadCreationOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssistantThreadCreationOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AssistantThreadCreationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
-                    writer.WriteObjectValue<ThreadInitializationMessage>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +86,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         internal static AssistantThreadCreationOptions DeserializeAssistantThreadCreationOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -174,11 +174,11 @@ namespace Azure.AI.OpenAI.Assistants
             return DeserializeAssistantThreadCreationOptions(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AssistantThreadCreationOptions>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

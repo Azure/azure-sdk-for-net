@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class DeletedSiteData : IUtf8JsonSerializable, IJsonModel<DeletedSiteData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedSiteData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedSiteData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeletedSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static DeletedSiteData DeserializeDeletedSiteData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

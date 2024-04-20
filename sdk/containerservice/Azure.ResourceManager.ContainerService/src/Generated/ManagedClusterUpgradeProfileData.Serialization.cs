@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService
 {
     public partial class ManagedClusterUpgradeProfileData : IUtf8JsonSerializable, IJsonModel<ManagedClusterUpgradeProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterUpgradeProfileData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterUpgradeProfileData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterUpgradeProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.ContainerService
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("controlPlaneProfile"u8);
-            writer.WriteObjectValue<ManagedClusterPoolUpgradeProfile>(ControlPlaneProfile, options);
+            writer.WriteObjectValue(ControlPlaneProfile, options);
             writer.WritePropertyName("agentPoolProfiles"u8);
             writer.WriteStartArray();
             foreach (var item in AgentPoolProfiles)
             {
-                writer.WriteObjectValue<ManagedClusterPoolUpgradeProfile>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerService
 
         internal static ManagedClusterUpgradeProfileData DeserializeManagedClusterUpgradeProfileData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

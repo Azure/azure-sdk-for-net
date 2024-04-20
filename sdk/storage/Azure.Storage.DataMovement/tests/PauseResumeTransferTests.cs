@@ -593,7 +593,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlockBlobStorageResourceOptions testOptions = new()
             {
                 Metadata = new(DataProvider.BuildMetadata()),
-                AccessTier =new(AccessTier.Cool),
+                AccessTier = AccessTier.Cool,
                 ContentLanguage = new("en-US"),
             };
 

@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
+using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -10,7 +13,7 @@ namespace Azure.Core.Tests
     public class NextLinkOperationImplementationTests
     {
         [Test]
-        public void ConstructRehydrationTokenTest()
+        public void ConstructRehydrationToken()
         {
             var requetMethod = RequestMethod.Get;
             var startRequestUri = new Uri("https://test");
@@ -28,41 +31,69 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ConstructNextLinkOperationTest()
+        public void CreateWithIncompleteNextRequestUri()
         {
+            var pipeline = CreateMockHttpPipeline(HttpStatusCode.Accepted);
+            var resourceId = Guid.NewGuid().ToString();
             var operationId = Guid.NewGuid().ToString();
-            var requestMethod = RequestMethod.Delete;
-            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://management.azure.com/subscriptions/subscription-id/providers/Microsoft.Compute/locations/region/operations/{operationId}?api-version=2019-12-01", "https://test", requestMethod, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
-            var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken, null);
+            var requestMethod = RequestMethod.Put;
+            var lastKnowLocation = $"/operations/{operationId}?api-version=xxx";
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"/resource/{resourceId}?api-version=xxx", "https://test", requestMethod, lastKnowLocation, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
             Assert.NotNull(operation);
-            Assert.AreEqual(operationId, operation.OperationId);
+            Assert.AreEqual(NextLinkOperationImplementation.NotSet, operation.OperationId);
             Assert.AreEqual(requestMethod, operation.RequestMethod);
         }
 
         [Test]
-        public void GetNullOperationIdWithIvalidNextRequestUri()
+        public void ConstructNextLinkOperation()
         {
-            var rehydrationToken = new RehydrationToken(null, null, "None", $"invalidNextRequestUri", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
-            var operation = NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken, null);
-            Assert.Null(((NextLinkOperationImplementation)operation).OperationId);
+            var operationId = Guid.NewGuid().ToString();
+            var requestMethod = RequestMethod.Delete;
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://test.com/operations/{operationId}?api-version=2019-12-01", "https://test", requestMethod, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken);
+            Assert.NotNull(operation);
+            Assert.AreEqual(NextLinkOperationImplementation.NotSet, operation.OperationId);
+            Assert.AreEqual(requestMethod, operation.RequestMethod);
         }
 
         [Test]
-        public void ThrowOnNextLinkOperationImplementationCreateWithNullRehydrationToken()
+        public async Task FinalGetForDeleteLRO()
         {
-            Assert.Throws<ArgumentNullException>(() => NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), null));
+            var operationId = Guid.NewGuid().ToString();
+            var requestMethod = RequestMethod.Delete;
+            var rehydrationToken = new RehydrationToken(null, null, "None", $"https://test.com/operations/{operationId}?api-version=2019-12-01", "https://test", requestMethod, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(CreateMockHttpPipeline(HttpStatusCode.NotFound), rehydrationToken);
+            Assert.NotNull(operation);
+
+            var result = await operation.UpdateStateAsync(async: true, default);
+            Assert.AreEqual(204, result.RawResponse.Status);
+        }
+
+        [Test]
+        public void ThrowWithDefaultRehydrationToken()
+        {
+            Assert.Throws<ArgumentException>(() => NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), default));
         }
 
         [Test]
         public void ThrowOnInvalidUri()
         {
-            Assert.Throws<ArgumentException>(() => NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), default(RehydrationToken)));
+            Assert.Throws<ArgumentException>(() => NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), default));
         }
 
         [Test]
         public void ThrowOnNextLinkOperationImplementationCreateWithNullHttpPipeline()
         {
-            Assert.Throws<ArgumentNullException>(() => NextLinkOperationImplementation.Create(null, new RehydrationToken(null, null, "None", "nextRequestUri", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString()), null));
+            Assert.Throws<ArgumentNullException>(() => NextLinkOperationImplementation.Create(null, new RehydrationToken(null, null, "None", "nextRequestUri", "https://test", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString())));
+        }
+
+        private static HttpPipeline CreateMockHttpPipeline(HttpStatusCode statusCode)
+        {
+            var mockResponse = new MockResponse((int)statusCode);
+            var transport = new MockTransport(mockResponse, mockResponse);
+            var pipeline = new HttpPipeline(transport, default);
+            return pipeline;
         }
 
         private class MockClientOptions : ClientOptions

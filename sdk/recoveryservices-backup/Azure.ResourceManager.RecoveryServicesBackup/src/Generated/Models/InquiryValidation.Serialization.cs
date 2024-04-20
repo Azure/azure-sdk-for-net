@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class InquiryValidation : IUtf8JsonSerializable, IJsonModel<InquiryValidation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InquiryValidation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InquiryValidation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InquiryValidation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("errorDetail"u8);
-                writer.WriteObjectValue<BackupErrorDetail>(ErrorDetail, options);
+                writer.WriteObjectValue(ErrorDetail, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AdditionalDetail))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static InquiryValidation DeserializeInquiryValidation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

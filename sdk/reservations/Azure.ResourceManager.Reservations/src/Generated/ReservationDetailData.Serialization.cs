@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations
 {
     public partial class ReservationDetailData : IUtf8JsonSerializable, IJsonModel<ReservationDetailData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationDetailData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationDetailData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Reservations
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<ReservationsSkuName>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<ReservationProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Reservations
 
         internal static ReservationDetailData DeserializeReservationDetailData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

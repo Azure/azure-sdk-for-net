@@ -100,6 +100,7 @@ namespace Azure.Provisioning
         protected object ResourceData { get { throw null; } }
         public Azure.Provisioning.IConstruct Scope { get { throw null; } }
         public string Version { get { throw null; } }
+        public void AddDependency(Azure.Provisioning.Resource resource) { }
         public Azure.Provisioning.RoleAssignment AssignRole(Azure.Provisioning.RoleDefinition roleDefinition, System.Guid? principalId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?)) { throw null; }
         protected virtual Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         protected virtual string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }

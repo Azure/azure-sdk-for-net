@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Peering.Models
 {
     internal partial class PeeringServiceSku : IUtf8JsonSerializable, IJsonModel<PeeringServiceSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringServiceSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringServiceSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PeeringServiceSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringServiceSku DeserializePeeringServiceSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

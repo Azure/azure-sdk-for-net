@@ -20,7 +20,7 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(PlayPrompt))
             {
                 writer.WritePropertyName("playPrompt"u8);
-                writer.WriteObjectValue<PlaySourceInternal>(PlayPrompt);
+                writer.WriteObjectValue(PlayPrompt);
             }
             if (Optional.IsDefined(InterruptCallMediaOperation))
             {
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallingServer
                 writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
             }
             writer.WritePropertyName("recognizeOptions"u8);
-            writer.WriteObjectValue<RecognizeOptionsInternal>(RecognizeOptions);
+            writer.WriteObjectValue(RecognizeOptions);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
@@ -37,11 +37,11 @@ namespace Azure.Communication.CallingServer
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RecognizeRequestInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

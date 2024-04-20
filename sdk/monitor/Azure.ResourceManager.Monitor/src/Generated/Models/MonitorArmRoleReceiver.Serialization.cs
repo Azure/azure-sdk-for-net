@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorArmRoleReceiver : IUtf8JsonSerializable, IJsonModel<MonitorArmRoleReceiver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorArmRoleReceiver>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorArmRoleReceiver>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorArmRoleReceiver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorArmRoleReceiver DeserializeMonitorArmRoleReceiver(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class LogicWorkflowVersionData : IUtf8JsonSerializable, IJsonModel<LogicWorkflowVersionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowVersionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowVersionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicWorkflowVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -96,22 +96,22 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
-                writer.WriteObjectValue<FlowEndpointsConfiguration>(EndpointsConfiguration, options);
+                writer.WriteObjectValue(EndpointsConfiguration, options);
             }
             if (Optional.IsDefined(AccessControl))
             {
                 writer.WritePropertyName("accessControl"u8);
-                writer.WriteObjectValue<FlowAccessControlConfiguration>(AccessControl, options);
+                writer.WriteObjectValue(AccessControl, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<LogicSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(IntegrationAccount))
             {
                 writer.WritePropertyName("integrationAccount"u8);
-                writer.WriteObjectValue<LogicResourceReference>(IntegrationAccount, options);
+                writer.WriteObjectValue(IntegrationAccount, options);
             }
             if (Optional.IsDefined(Definition))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Logic
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<LogicWorkflowParameterInfo>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Logic
 
         internal static LogicWorkflowVersionData DeserializeLogicWorkflowVersionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

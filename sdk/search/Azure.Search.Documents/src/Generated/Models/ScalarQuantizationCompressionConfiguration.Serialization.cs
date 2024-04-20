@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("scalarQuantizationParameters"u8);
-                writer.WriteObjectValue<ScalarQuantizationParameters>(Parameters);
+                writer.WriteObjectValue(Parameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -107,11 +107,11 @@ namespace Azure.Search.Documents.Indexes.Models
             return DeserializeScalarQuantizationCompressionConfiguration(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ScalarQuantizationCompressionConfiguration>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

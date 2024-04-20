@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class AutoMLJob : IUtf8JsonSerializable, IJsonModel<AutoMLJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoMLJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoMLJob>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoMLJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Outputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue<MachineLearningJobOutput>(item.Value, options);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (QueueSettings != null)
                 {
                     writer.WritePropertyName("queueSettings"u8);
-                    writer.WriteObjectValue<JobQueueSettings>(QueueSettings, options);
+                    writer.WriteObjectValue(QueueSettings, options);
                 }
                 else
                 {
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue<MachineLearningJobResourceConfiguration>(Resources, options);
+                writer.WriteObjectValue(Resources, options);
             }
             writer.WritePropertyName("taskDetails"u8);
-            writer.WriteObjectValue<AutoMLVertical>(TaskDetails, options);
+            writer.WriteObjectValue(TaskDetails, options);
             if (Optional.IsDefined(ComponentId))
             {
                 if (ComponentId != null)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue<MachineLearningIdentityConfiguration>(Identity, options);
+                    writer.WriteObjectValue(Identity, options);
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NotificationSetting != null)
                 {
                     writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue<NotificationSetting>(NotificationSetting, options);
+                    writer.WriteObjectValue(NotificationSetting, options);
                 }
                 else
                 {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in SecretsConfiguration)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue<SecretConfiguration>(item.Value, options);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Services)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue<MachineLearningJobService>(item.Value, options);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AutoMLJob DeserializeAutoMLJob(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

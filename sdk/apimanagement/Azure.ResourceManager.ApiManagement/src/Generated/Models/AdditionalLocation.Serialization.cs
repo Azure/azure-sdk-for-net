@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class AdditionalLocation : IUtf8JsonSerializable, IJsonModel<AdditionalLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdditionalLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdditionalLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdditionalLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<ApiManagementServiceSkuProperties>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
-                writer.WriteObjectValue<VirtualNetworkConfiguration>(VirtualNetworkConfiguration, options);
+                writer.WriteObjectValue(VirtualNetworkConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GatewayRegionalUri))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static AdditionalLocation DeserializeAdditionalLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

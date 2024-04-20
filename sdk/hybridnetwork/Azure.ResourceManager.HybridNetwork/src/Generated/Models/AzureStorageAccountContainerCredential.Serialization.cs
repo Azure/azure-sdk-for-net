@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class AzureStorageAccountContainerCredential : IUtf8JsonSerializable, IJsonModel<AzureStorageAccountContainerCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureStorageAccountContainerCredential>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureStorageAccountContainerCredential>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureStorageAccountContainerCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static AzureStorageAccountContainerCredential DeserializeAzureStorageAccountContainerCredential(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

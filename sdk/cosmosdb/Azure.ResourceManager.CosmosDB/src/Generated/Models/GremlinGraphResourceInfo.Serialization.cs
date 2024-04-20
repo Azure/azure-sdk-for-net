@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class GremlinGraphResourceInfo : IUtf8JsonSerializable, IJsonModel<GremlinGraphResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GremlinGraphResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GremlinGraphResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GremlinGraphResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy"u8);
-                writer.WriteObjectValue<CosmosDBIndexingPolicy>(IndexingPolicy, options);
+                writer.WriteObjectValue(IndexingPolicy, options);
             }
             if (Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
-                writer.WriteObjectValue<CosmosDBContainerPartitionKey>(PartitionKey, options);
+                writer.WriteObjectValue(PartitionKey, options);
             }
             if (Optional.IsDefined(DefaultTtl))
             {
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(UniqueKeyPolicy))
             {
                 writer.WritePropertyName("uniqueKeyPolicy"u8);
-                writer.WriteObjectValue<CosmosDBUniqueKeyPolicy>(UniqueKeyPolicy, options);
+                writer.WriteObjectValue(UniqueKeyPolicy, options);
             }
             if (Optional.IsDefined(ConflictResolutionPolicy))
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
-                writer.WriteObjectValue<ConflictResolutionPolicy>(ConflictResolutionPolicy, options);
+                writer.WriteObjectValue(ConflictResolutionPolicy, options);
             }
             if (Optional.IsDefined(AnalyticalStorageTtl))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue<ResourceRestoreParameters>(RestoreParameters, options);
+                writer.WriteObjectValue(RestoreParameters, options);
             }
             if (Optional.IsDefined(CreateMode))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static GremlinGraphResourceInfo DeserializeGremlinGraphResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class FrontDoorRoutePatch : IUtf8JsonSerializable, IJsonModel<FrontDoorRoutePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorRoutePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorRoutePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorRoutePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue<FrontDoorActivatedResourceInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (CacheConfiguration != null)
                 {
                     writer.WritePropertyName("cacheConfiguration"u8);
-                    writer.WriteObjectValue<FrontDoorRouteCacheConfiguration>(CacheConfiguration, options);
+                    writer.WriteObjectValue(CacheConfiguration, options);
                 }
                 else
                 {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static FrontDoorRoutePatch DeserializeFrontDoorRoutePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

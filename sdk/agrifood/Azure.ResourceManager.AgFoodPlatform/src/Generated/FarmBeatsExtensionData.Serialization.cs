@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     public partial class FarmBeatsExtensionData : IUtf8JsonSerializable, IJsonModel<FarmBeatsExtensionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FarmBeatsExtensionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FarmBeatsExtensionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FarmBeatsExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 writer.WriteStartArray();
                 foreach (var item in DetailedInformation)
                 {
-                    writer.WriteObjectValue<DetailedInformation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
 
         internal static FarmBeatsExtensionData DeserializeFarmBeatsExtensionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

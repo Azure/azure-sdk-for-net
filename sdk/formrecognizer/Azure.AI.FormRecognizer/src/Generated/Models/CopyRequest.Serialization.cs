@@ -20,15 +20,15 @@ namespace Azure.AI.FormRecognizer.Models
             writer.WritePropertyName("targetResourceRegion"u8);
             writer.WriteStringValue(TargetResourceRegion);
             writer.WritePropertyName("copyAuthorization"u8);
-            writer.WriteObjectValue<CopyAuthorizationResult>(CopyAuthorization);
+            writer.WriteObjectValue(CopyAuthorization);
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CopyRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

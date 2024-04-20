@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Kubernetes
 {
     public partial class ConnectedClusterData : IUtf8JsonSerializable, IJsonModel<ConnectedClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectedClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Kubernetes
 
         internal static ConnectedClusterData DeserializeConnectedClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

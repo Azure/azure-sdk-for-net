@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ConnectivityContent : IUtf8JsonSerializable, IJsonModel<ConnectivityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectivityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Network.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue<ConnectivitySource>(Source, options);
+            writer.WriteObjectValue(Source, options);
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue<ConnectivityDestination>(Destination, options);
+            writer.WriteObjectValue(Destination, options);
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
-                writer.WriteObjectValue<ProtocolConfiguration>(ProtocolConfiguration, options);
+                writer.WriteObjectValue(ProtocolConfiguration, options);
             }
             if (Optional.IsDefined(PreferredIPVersion))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectivityContent DeserializeConnectivityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevSpaces
 {
     public partial class ControllerData : IUtf8JsonSerializable, IJsonModel<ControllerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControllerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControllerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ControllerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DevSpaces
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<DevSpacesSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DevSpaces
 
         internal static ControllerData DeserializeControllerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

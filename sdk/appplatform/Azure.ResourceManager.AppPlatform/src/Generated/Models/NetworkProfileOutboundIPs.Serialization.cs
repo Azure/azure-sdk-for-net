@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     internal partial class NetworkProfileOutboundIPs : IUtf8JsonSerializable, IJsonModel<NetworkProfileOutboundIPs>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkProfileOutboundIPs>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkProfileOutboundIPs>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkProfileOutboundIPs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static NetworkProfileOutboundIPs DeserializeNetworkProfileOutboundIPs(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class SecurityContactPropertiesAlertNotifications : IUtf8JsonSerializable, IJsonModel<SecurityContactPropertiesAlertNotifications>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityContactPropertiesAlertNotifications>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityContactPropertiesAlertNotifications>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityContactPropertiesAlertNotifications>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityContactPropertiesAlertNotifications DeserializeSecurityContactPropertiesAlertNotifications(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

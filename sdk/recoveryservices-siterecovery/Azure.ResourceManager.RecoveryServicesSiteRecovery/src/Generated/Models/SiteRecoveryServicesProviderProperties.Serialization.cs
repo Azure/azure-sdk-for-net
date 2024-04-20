@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class SiteRecoveryServicesProviderProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryServicesProviderProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryServicesProviderProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryServicesProviderProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SiteRecoveryServicesProviderProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrorDetails)
                 {
-                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,22 +119,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AuthenticationIdentityDetails))
             {
                 writer.WritePropertyName("authenticationIdentityDetails"u8);
-                writer.WriteObjectValue<IdentityProviderDetails>(AuthenticationIdentityDetails, options);
+                writer.WriteObjectValue(AuthenticationIdentityDetails, options);
             }
             if (Optional.IsDefined(ResourceAccessIdentityDetails))
             {
                 writer.WritePropertyName("resourceAccessIdentityDetails"u8);
-                writer.WriteObjectValue<IdentityProviderDetails>(ResourceAccessIdentityDetails, options);
+                writer.WriteObjectValue(ResourceAccessIdentityDetails, options);
             }
             if (Optional.IsDefined(DataPlaneAuthenticationIdentityDetails))
             {
                 writer.WritePropertyName("dataPlaneAuthenticationIdentityDetails"u8);
-                writer.WriteObjectValue<IdentityProviderDetails>(DataPlaneAuthenticationIdentityDetails, options);
+                writer.WriteObjectValue(DataPlaneAuthenticationIdentityDetails, options);
             }
             if (Optional.IsDefined(ProviderVersionDetails))
             {
                 writer.WritePropertyName("providerVersionDetails"u8);
-                writer.WriteObjectValue<SiteRecoveryVersionDetails>(ProviderVersionDetails, options);
+                writer.WriteObjectValue(ProviderVersionDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static SiteRecoveryServicesProviderProperties DeserializeSiteRecoveryServicesProviderProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

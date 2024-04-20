@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabCustomImageData : IUtf8JsonSerializable, IJsonModel<DevTestLabCustomImageData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabCustomImageData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabCustomImageData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabCustomImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue<DevTestLabCustomImageVm>(Vm, options);
+                writer.WriteObjectValue(Vm, options);
             }
             if (Optional.IsDefined(Vhd))
             {
                 writer.WritePropertyName("vhd"u8);
-                writer.WriteObjectValue<DevTestLabCustomImageVhd>(Vhd, options);
+                writer.WriteObjectValue(Vhd, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in DataDiskStorageInfo)
                 {
-                    writer.WriteObjectValue<DevTestLabDataDiskStorageTypeInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CustomImagePlan))
             {
                 writer.WritePropertyName("customImagePlan"u8);
-                writer.WriteObjectValue<DevTestLabCustomImagePlan>(CustomImagePlan, options);
+                writer.WriteObjectValue(CustomImagePlan, options);
             }
             if (Optional.IsDefined(IsPlanAuthorized))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static DevTestLabCustomImageData DeserializeDevTestLabCustomImageData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

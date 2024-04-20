@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningComputeData : IUtf8JsonSerializable, IJsonModel<MachineLearningComputeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningComputeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning
                 if (Sku != null)
                 {
                     writer.WritePropertyName("sku"u8);
-                    writer.WriteObjectValue<MachineLearningSku>(Sku, options);
+                    writer.WriteObjectValue(Sku, options);
                 }
                 else
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<MachineLearningComputeProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning
 
         internal static MachineLearningComputeData DeserializeMachineLearningComputeData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

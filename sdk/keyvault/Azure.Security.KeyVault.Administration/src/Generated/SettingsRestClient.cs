@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Administration
             request.Headers.Add("Content-Type", "application/json");
             var model = new UpdateSettingRequest(value);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UpdateSettingRequest>(model);
+            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }

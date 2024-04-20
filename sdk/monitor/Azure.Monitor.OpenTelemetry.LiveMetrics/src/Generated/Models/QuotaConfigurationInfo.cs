@@ -7,7 +7,7 @@
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> Control document quotas for QuickPulse. </summary>
+    /// <summary> Controls document quotas to be sent to Live Metrics. </summary>
     internal partial class QuotaConfigurationInfo
     {
         /// <summary> Initializes a new instance of <see cref="QuotaConfigurationInfo"/>. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class QueryInboundNatRulePortMappingContent : IUtf8JsonSerializable, IJsonModel<QueryInboundNatRulePortMappingContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryInboundNatRulePortMappingContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryInboundNatRulePortMappingContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<QueryInboundNatRulePortMappingContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static QueryInboundNatRulePortMappingContent DeserializeQueryInboundNatRulePortMappingContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class B2BPartnerContent : IUtf8JsonSerializable, IJsonModel<B2BPartnerContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<B2BPartnerContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<B2BPartnerContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<B2BPartnerContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in BusinessIdentities)
                 {
-                    writer.WriteObjectValue<IntegrationAccountBusinessIdentity>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static B2BPartnerContent DeserializeB2BPartnerContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

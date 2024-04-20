@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseDataWarehouseUserActivityData : IUtf8JsonSerializable, IJsonModel<SynapseDataWarehouseUserActivityData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseDataWarehouseUserActivityData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseDataWarehouseUserActivityData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseDataWarehouseUserActivityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseDataWarehouseUserActivityData DeserializeSynapseDataWarehouseUserActivityData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

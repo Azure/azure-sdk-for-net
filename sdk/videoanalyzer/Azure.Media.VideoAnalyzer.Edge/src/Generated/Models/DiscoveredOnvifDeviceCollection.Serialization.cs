@@ -22,7 +22,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<DiscoveredOnvifDevice>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,11 +64,11 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             return DeserializeDiscoveredOnvifDeviceCollection(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DiscoveredOnvifDeviceCollection>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -14,17 +12,17 @@ namespace Azure.Core
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly OperationInternal _operation;
 
-        public RehydrationOperation(HttpPipeline pipeline, RehydrationToken? rehydrationToken, ClientOptions options = null)
+        public RehydrationOperation(NextLinkOperationImplementation nextLinkOperation, OperationState operationState, ClientOptions? options = null)
         {
-            Argument.AssertNotNull(pipeline, nameof(pipeline));
-            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
-            _nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
-            _operation = new OperationInternal(_nextLinkOperation, new ClientDiagnostics(options ?? ClientOptions.Default), null, requestMethod: _nextLinkOperation.RequestMethod);
+            _nextLinkOperation = nextLinkOperation;
+            _operation = operationState.HasCompleted
+                ? _operation = new OperationInternal(operationState)
+                : new OperationInternal(_nextLinkOperation, new ClientDiagnostics(options ?? ClientOptions.Default), operationState.RawResponse);
         }
 
-        public override string Id => _nextLinkOperation?.OperationId ?? null;
+        public override string Id => _nextLinkOperation.OperationId;
 
-        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken();
+        public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation.GetRehydrationToken();
 
         public override bool HasCompleted => _operation.HasCompleted;
 

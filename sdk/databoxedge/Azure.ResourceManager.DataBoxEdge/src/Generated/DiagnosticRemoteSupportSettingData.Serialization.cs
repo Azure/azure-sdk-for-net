@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DiagnosticRemoteSupportSettingData : IUtf8JsonSerializable, IJsonModel<DiagnosticRemoteSupportSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticRemoteSupportSettingData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticRemoteSupportSettingData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiagnosticRemoteSupportSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in RemoteSupportSettingsList)
                 {
-                    writer.WriteObjectValue<EdgeRemoteSupportSettings>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DiagnosticRemoteSupportSettingData DeserializeDiagnosticRemoteSupportSettingData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

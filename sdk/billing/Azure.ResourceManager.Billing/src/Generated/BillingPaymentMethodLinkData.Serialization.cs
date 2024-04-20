@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingPaymentMethodLinkData : IUtf8JsonSerializable, IJsonModel<BillingPaymentMethodLinkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingPaymentMethodLinkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingPaymentMethodLinkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BillingPaymentMethodLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(PaymentMethod))
             {
                 writer.WritePropertyName("paymentMethod"u8);
-                writer.WriteObjectValue<PaymentMethodProjectionProperties>(PaymentMethod, options);
+                writer.WriteObjectValue(PaymentMethod, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Billing
 
         internal static BillingPaymentMethodLinkData DeserializeBillingPaymentMethodLinkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

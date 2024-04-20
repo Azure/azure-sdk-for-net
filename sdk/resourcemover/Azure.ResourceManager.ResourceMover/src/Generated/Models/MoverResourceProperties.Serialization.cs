@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 {
     public partial class MoverResourceProperties : IUtf8JsonSerializable, IJsonModel<MoverResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MoverResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (ResourceSettings != null)
                 {
                     writer.WritePropertyName("resourceSettings"u8);
-                    writer.WriteObjectValue<MoverResourceSettings>(ResourceSettings, options);
+                    writer.WriteObjectValue(ResourceSettings, options);
                 }
                 else
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (SourceResourceSettings != null)
                 {
                     writer.WritePropertyName("sourceResourceSettings"u8);
-                    writer.WriteObjectValue<MoverResourceSettings>(SourceResourceSettings, options);
+                    writer.WriteObjectValue(SourceResourceSettings, options);
                 }
                 else
                 {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (options.Format != "W" && Optional.IsDefined(MoveStatus))
             {
                 writer.WritePropertyName("moveStatus"u8);
-                writer.WriteObjectValue<MoverResourcePropertiesMoveStatus>(MoveStatus, options);
+                writer.WriteObjectValue(MoveStatus, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DependsOn))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<MoverResourceDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOnOverrides)
                 {
-                    writer.WriteObjectValue<MoverResourceDependencyOverride>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (Errors != null)
                 {
                     writer.WritePropertyName("errors"u8);
-                    writer.WriteObjectValue<MoveResourcePropertiesErrors>(Errors, options);
+                    writer.WriteObjectValue(Errors, options);
                 }
                 else
                 {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverResourceProperties DeserializeMoverResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
