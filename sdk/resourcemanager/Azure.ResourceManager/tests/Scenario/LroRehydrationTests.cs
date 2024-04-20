@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Tests
             var originalOperation = await Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, rgName)).ExportTemplateAsync(WaitUntil.Started, parameters);
             var originalOperationToken = originalOperation.GetRehydrationToken();
             Assert.NotNull(originalOperationToken);
-            var rehydratedOperation = ArmOperation.Rehydrate<ResourceGroupExportResult>(Client, (RehydrationToken)originalOperationToken!);
+            var rehydratedOperation = await ArmOperation.RehydrateAsync<ResourceGroupExportResult>(Client, (RehydrationToken)originalOperationToken!);
             await rehydratedOperation.WaitForCompletionResponseAsync();
             Assert.AreEqual(rehydratedOperation.HasValue, true);
             var rehydratedResult = rehydratedOperation.Value;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Tests
             var originalDeleteOperation = await rg.DeleteAsync(WaitUntil.Started);
             var originalDeleteOperationToken = originalDeleteOperation.GetRehydrationToken();
             Assert.NotNull(originalDeleteOperationToken);
-            var rehydratedDeleteOperation = ArmOperation.Rehydrate(Client, (RehydrationToken)originalDeleteOperationToken!);
+            var rehydratedDeleteOperation = await ArmOperation.RehydrateAsync(Client, (RehydrationToken)originalDeleteOperationToken!);
             await rehydratedDeleteOperation.WaitForCompletionResponseAsync();
             Assert.AreEqual(rehydratedDeleteOperation.HasCompleted, true);
             var token = rehydratedDeleteOperation.GetRehydrationToken();

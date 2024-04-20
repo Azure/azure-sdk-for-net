@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,18 +16,15 @@ namespace Azure.ResourceManager
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly OperationInternal _operation;
 
-        public RehydrationOperation(ArmClient client, RehydrationToken rehydrationToken, ClientOptions options = null)
+        public RehydrationOperation(NextLinkOperationImplementation nextLinkOperation, OperationState operationState, ClientOptions? options = null)
         {
-            AssertNotNull(client, nameof(client));
-            AssertNotNull(rehydrationToken, nameof(rehydrationToken));
-            _nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(client.Pipeline, rehydrationToken);
-            var operationState = _nextLinkOperation.UpdateStateAsync(false, default).EnsureCompleted();
+            _nextLinkOperation = nextLinkOperation;
             _operation = operationState.HasCompleted
-                ? _operation = new OperationInternal(operationState)
-                : new OperationInternal(_nextLinkOperation, new ClientDiagnostics(options ?? ClientOptions.Default), operationState.RawResponse);
+                ? new OperationInternal(operationState)
+                : new OperationInternal(nextLinkOperation, new ClientDiagnostics(options ?? ClientOptions.Default), operationState.RawResponse);
         }
 
-        public override string Id => _nextLinkOperation?.OperationId ?? null;
+        public override string Id => _nextLinkOperation.OperationId;
 
         public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken();
 
