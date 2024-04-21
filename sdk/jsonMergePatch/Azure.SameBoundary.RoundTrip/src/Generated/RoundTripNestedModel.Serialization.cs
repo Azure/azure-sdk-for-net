@@ -43,6 +43,14 @@ namespace Azure.SameBoundary.RoundTrip
                 writer.WritePropertyName("requiredModel"u8);
                 ((IJsonModel<RoundTripDummy>)RequiredModel).Write(writer, options);
             }
+            // Thread 1: do nothing and expect {}
+            // Thread 2: do OptionalModel.Properties = "new", so it expects {"optionalModel": {"property": "new"}}
+            // The process is:
+            // Thread 1 do nothing and call serialization. It reads `_optionalModelChanged` as false.
+            // Thread 2 sets `OptionalModel.Properties` to "new" and calls serialization.
+            // Thread 1 reads `OptionalModel.IsChanged()` as true and writes {"optionalModel": {"property": "new"}}
+            // Thread 2 writes {"optionalModel": {"property": "new"}} again.
+            // Though we write the same payload twice, there is no data corruption.
             if (_optionalModelChanged || OptionalModel.IsChanged())
             {
                 writer.WritePropertyName("optionalModel"u8);
