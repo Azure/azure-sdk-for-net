@@ -1,0 +1,103 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.IO;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
+
+namespace Azure.AI.Vision.Face.Samples
+{
+    public partial class FaceSamples
+    {
+        [RecordedTest]
+        [TestCase("", true)]
+        public async Task SessionSample_DetectLivenessWithVerifySession(string sessionId, bool deleteSession)
+        {
+            var sessionClient = CreateSessionClient();
+
+            if (string.IsNullOrEmpty(sessionId))
+            {
+                #region Snippet:CreateLivenessWithVerifySession
+                var parameters = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
+                    SendResultsToClient = true,
+                    DeviceCorrelationId = Guid.NewGuid().ToString(),
+                };
+
+                using var fileStream = new FileStream(LocalSampleImage, FileMode.Open, FileAccess.Read);
+
+                var createResponse = await sessionClient.CreateLivenessWithVerifySessionAsync(parameters, fileStream);
+
+                sessionId = createResponse.Value.SessionId;
+                Console.WriteLine($"Session created, SessionId: {sessionId}");
+                Console.WriteLine($"AuthToken: {createResponse.Value.AuthToken}");
+                Console.WriteLine($"VerifyImage.FaceRectangle: {createResponse.Value.VerifyImage.FaceRectangle.Top}, {createResponse.Value.VerifyImage.FaceRectangle.Left}, {createResponse.Value.VerifyImage.FaceRectangle.Width}, {createResponse.Value.VerifyImage.FaceRectangle.Height}");
+                Console.WriteLine($"VerifyImage.QualityForRecognition: {createResponse.Value.VerifyImage.QualityForRecognition}");
+                #endregion
+            }
+
+            #region Snippet:GetLivenessWithVerifySessionResult
+            var getResultResponse = await sessionClient.GetLivenessWithVerifySessionResultAsync(sessionId);
+            var sessionResult = getResultResponse.Value;
+            Console.WriteLine($"Id: {sessionResult.Id}");
+            Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
+            Console.WriteLine($"SessionExpired: {sessionResult.SessionExpired}");
+            Console.WriteLine($"DeviceCorrelationId: {sessionResult.DeviceCorrelationId}");
+            Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
+            Console.WriteLine($"Status: {sessionResult.Status}");
+            Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
+            if (sessionResult.Result != null) {
+                WriteLivenessWithVerifySessionAuditEntry(sessionResult.Result);
+            }
+            #endregion
+
+            #region Snippet:GetLivenessWithVerifySessionAuditEntries
+            var getAuditEntriesResponse = await sessionClient.GetLivenessWithVerifySessionAuditEntriesAsync(sessionId);
+            foreach (var auditEntry in getAuditEntriesResponse.Value)
+            {
+                WriteLivenessWithVerifySessionAuditEntry(auditEntry);
+            }
+            #endregion
+
+            if (deleteSession)
+            {
+                #region Snippet:DeleteLivenessWithVerifySession
+                await sessionClient.DeleteLivenessWithVerifySessionAsync(sessionId);
+                #endregion
+            }
+        }
+
+        #region Snippet:WriteLivenessWithVerifySessionAuditEntry
+        public void WriteLivenessWithVerifySessionAuditEntry(LivenessSessionAuditEntry auditEntry)
+        {
+            Console.WriteLine($"Id: {auditEntry.Id}");
+            Console.WriteLine($"SessionId: {auditEntry.SessionId}");
+            Console.WriteLine($"RequestId: {auditEntry.RequestId}");
+            Console.WriteLine($"ClientRequestId: {auditEntry.ClientRequestId}");
+            Console.WriteLine($"ReceivedDateTime: {auditEntry.ReceivedDateTime}");
+            Console.WriteLine($"Digest: {auditEntry.Digest}");
+
+            Console.WriteLine($"    Request Url: {auditEntry.Request.Url}");
+            Console.WriteLine($"    Request Method: {auditEntry.Request.Method}");
+            Console.WriteLine($"    Request ContentLength: {auditEntry.Request.ContentLength}");
+            Console.WriteLine($"    Request ContentType: {auditEntry.Request.ContentType}");
+            Console.WriteLine($"    Request UserAgent: {auditEntry.Request.UserAgent}");
+
+            Console.WriteLine($"    Response StatusCode: {auditEntry.Response.StatusCode}");
+            Console.WriteLine($"    Response LatencyInMilliseconds: {auditEntry.Response.LatencyInMilliseconds}");
+            Console.WriteLine($"        Response Body LivenessDecision: {auditEntry.Response.Body.LivenessDecision}");
+            Console.WriteLine($"        Response Body ModelVersionUsed: {auditEntry.Response.Body.ModelVersionUsed}");
+            Console.WriteLine($"        Response Body Target FaceRectangle: {auditEntry.Response.Body.Target.FaceRectangle.Top}, {auditEntry.Response.Body.Target.FaceRectangle.Left}, {auditEntry.Response.Body.Target.FaceRectangle.Width}, {auditEntry.Response.Body.Target.FaceRectangle.Height}");
+            Console.WriteLine($"        Response Body Target FileName: {auditEntry.Response.Body.Target.FileName}");
+            Console.WriteLine($"        Response Body Target TimeOffsetWithinFile: {auditEntry.Response.Body.Target.TimeOffsetWithinFile}");
+            Console.WriteLine($"        Response Body Target FaceImageType: {auditEntry.Response.Body.Target.ImageType}");
+
+            Console.WriteLine($"        Response Body VerifyResult IsIdentical: {auditEntry.Response.Body.VerifyResult.IsIdentical}");
+            Console.WriteLine($"        Response Body VerifyResult MatchConfidence: {auditEntry.Response.Body.VerifyResult.MatchConfidence}");
+            Console.WriteLine($"        Response Body VerifyResult VerifyImage.FaceRectangle: {auditEntry.Response.Body.VerifyResult.VerifyImage.FaceRectangle.Top}, {auditEntry.Response.Body.VerifyResult.VerifyImage.FaceRectangle.Left}, {auditEntry.Response.Body.VerifyResult.VerifyImage.FaceRectangle.Width}, {auditEntry.Response.Body.VerifyResult.VerifyImage.FaceRectangle.Height}");
+            Console.WriteLine($"        Response Body VerifyResult VerifyImage.QualityForRecognition: {auditEntry.Response.Body.VerifyResult.VerifyImage.QualityForRecognition}");
+        }
+        #endregion
+    }
+}
