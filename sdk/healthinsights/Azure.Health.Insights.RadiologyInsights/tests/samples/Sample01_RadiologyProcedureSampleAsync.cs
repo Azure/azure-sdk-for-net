@@ -51,14 +51,15 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
             #endregion
 
-            RadiologyInsightsData radiologyInsightsData = GetRadiologyInsightsData();
+            RadiologyInsightsJob radiologyInsightsjob = GetRadiologyInsightsJob();
 
             #region Snippet:Radiology_Procedure_Async_Tests_Samples_synccall
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+            var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, jobId, radiologyInsightsjob);
             #endregion
 
             RadiologyInsightsInferenceResult responseData = operation.Value;
-            IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
+            IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
             foreach (RadiologyInsightsInference inference in inferences)
             {
@@ -67,14 +68,14 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     #region Snippet:Radiology_Procedure_Async_Tests_Samples_RadiologyProcedureInference
                     Console.Write("Radiology Procedure Inference found");
                     Console.Write("   Procedure codes:");
-                    IReadOnlyList<FhirR4CodeableConcept> procedureCodes = radiologyProcedureInference.ProcedureCodes;
+                    IList<FhirR4CodeableConcept> procedureCodes = radiologyProcedureInference.ProcedureCodes;
                     foreach (FhirR4CodeableConcept procedureCode in procedureCodes)
                     {
                         DisplayCodes(procedureCode, 2);
                     }
 
                     Console.Write("   Imaging procedures:");
-                    IReadOnlyList<ImagingProcedure> imagingProcedures = radiologyProcedureInference.ImagingProcedures;
+                    IList<ImagingProcedure> imagingProcedures = radiologyProcedureInference.ImagingProcedures;
 
                     foreach (ImagingProcedure imagingProcedure in imagingProcedures)
                     {
@@ -90,13 +91,20 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     }
 
                     Console.Write("   Ordered procedures:");
-                    FhirR4Extendible orderedProcedure = radiologyProcedureInference.OrderedProcedure;
+                    OrderedProcedure orderedProcedure = radiologyProcedureInference.OrderedProcedure;
                     FhirR4CodeableConcept code = orderedProcedure.Code;
                     DisplayCodes(code, 2);
                     Console.Write("   Description: " + orderedProcedure.Description);
                     #endregion
                 }
             }
+        }
+
+        private static RadiologyInsightsJob GetRadiologyInsightsJob()
+        {
+            RadiologyInsightsJob radiologyInsightsJob = new RadiologyInsightsJob();
+            radiologyInsightsJob.JobData = GetRadiologyInsightsData();
+            return radiologyInsightsJob;
         }
 
         private static void DisplayCodes(FhirR4CodeableConcept codeableConcept, int indentation)
@@ -172,7 +180,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 BirthDate = new System.DateTime(1959, 11, 11),
                 Sex = PatientSex.Female,
             };
-            Encounter encounter = new("encounterid1")
+            PatientEncounter encounter = new("encounterid1")
             {
                 Class = EncounterClass.InPatient,
                 Period = new TimePeriod
@@ -181,16 +189,16 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     End = new System.DateTime(2021, 08, 28)
                 }
             };
-            List<Encounter> encounterList = new() { encounter };
+            List<PatientEncounter> encounterList = new() { encounter };
             DocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
             PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent)
             {
                 ClinicalType = ClinicalDocumentType.RadiologyReport,
-                CreatedDateTime = new System.DateTime(2021, 08, 28),
+                CreatedAt = new System.DateTime(2021, 08, 28),
                 AdministrativeMetadata = CreateDocumentAdministrativeMetadata()
             };
             PatientRecord patientRecord = new(id);
-            patientRecord.Info = patientInfo;
+            patientRecord.Details = patientInfo;
             patientRecord.Encounters.Add(encounter);
             patientRecord.PatientDocuments.Add(patientDocument);
             #endregion
@@ -212,7 +220,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             FhirR4CodeableConcept codeableConcept = new();
             codeableConcept.Coding.Add(coding);
 
-            FhirR4Extendible orderedProcedure = new()
+            OrderedProcedure orderedProcedure = new()
             {
                 Description = "US PELVIS COMPLETE",
                 Code = codeableConcept
