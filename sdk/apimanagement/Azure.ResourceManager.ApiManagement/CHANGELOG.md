@@ -1,19 +1,15 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2024-04-22)
 
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - Fixed [a bug](https://github.com/Azure/azure-sdk-for-net/issues/38076) by changing the way how `BackendResponseCode` is serialized and deserialized.
 - Fixed [a bug](https://github.com/Azure/azure-sdk-for-net/issues/42865) by by changing `TermsOfServiceUri` and `ServiceUri` to string
-
-### Other Changes
 
 ## 1.1.0 (2023-11-27)
 

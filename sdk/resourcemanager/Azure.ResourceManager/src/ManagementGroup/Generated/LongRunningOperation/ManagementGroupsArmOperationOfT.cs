@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -60,18 +59,10 @@ namespace Azure.ResourceManager.ManagementGroups
                 return null;
             }
             var lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
-            var nextRequestUri = lroDetails["nextRequestUri"];
-            if (Uri.TryCreate(nextRequestUri, UriKind.Absolute, out var uri))
-            {
-                return uri.Segments.LastOrDefault();
-            }
-            else
-            {
-                return null;
-            }
+            return lroDetails["id"];
         }
         /// <inheritdoc />
-        public override string Id => _operationId ?? null;
+        public override string Id => _operationId ?? NextLinkOperationImplementation.NotSet;
 
         /// <inheritdoc />
         public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation?.GetRehydrationToken() ?? _completeRehydrationToken;
