@@ -1,6 +1,6 @@
 # Release History
 
-## 5.15.0-beta.1 (Unreleased)
+## 5.16.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.15.1 (2024-04-17)
+
+### Other Changes
+
+- To mitigate a [disclosure vulnerability](https://github.com/advisories/GHSA-wvxc-855f-jvrv), updating the transitive dependency for `Azure.Identity` to v1.11.1 via version bump to `Microsoft.Extensions.Azure`. 
 
 ## 5.14.0 (2024-03-14)
 

@@ -10,7 +10,12 @@
 
 ### Other Changes
 
-## 1.11.1 (2024-05-07)
+## 1.11.2 (2024-04-19)
+
+### Bugs Fixed
+- Fixed an issue which caused claims to be incorrectly added to confidential client credentials such as `DeviceCodeCredential` [#43468](https://github.com/Azure/azure-sdk-for-net/issues/43468)
+
+## 1.11.1 (2024-04-16)
 
 ### Other Changes
 - Updated Microsoft.Identity.Client and related dependencies to version 4.60.3

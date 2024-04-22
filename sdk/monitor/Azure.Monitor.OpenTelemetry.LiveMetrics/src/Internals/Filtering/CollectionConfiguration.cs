@@ -7,6 +7,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using Azure.Monitor.OpenTelemetry.Exporter.Internals;
     using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
     using ExceptionDocument = Azure.Monitor.OpenTelemetry.LiveMetrics.Models.Exception;
@@ -35,6 +36,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             new List<DerivedMetric<ExceptionDocument>>();
 
         private readonly List<DerivedMetric<Trace>> traceTelemetryMetrics = new List<DerivedMetric<Trace>>();
+
+        private readonly List<DocumentStream> documentStreams = new List<DocumentStream>();
         #endregion
 
         #region Metadata used by other components
@@ -43,7 +46,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         public CollectionConfiguration(
            CollectionConfigurationInfo info,
-           out CollectionConfigurationError[] errors)
+           out CollectionConfigurationError[] errors,
+           IEnumerable<DocumentStream>? previousDocumentStreams = null)
         {
             this.info = info ?? throw new ArgumentNullException(nameof(info));
 
@@ -54,28 +58,45 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             // this includes both telemetry metrics and Metric metrics
             this.CreateMetadata();
 
-            errors = metricErrors.ToArray();
+            // create document streams based on description in info
+            this.CreateDocumentStreams(previousDocumentStreams ?? Array.Empty<DocumentStream>(), out CollectionConfigurationError[] documentStreamErrors);
 
-            foreach (var error in errors)
+            errors = metricErrors.Concat(documentStreamErrors).ToArray();
+
+            UpdateAllErrorsWithKeyValue(errors, "ETag", this.info.ETag);
+        }
+
+        private void UpdateAllErrorsWithKeyValue(CollectionConfigurationError[] errors, string key, string value)
+        {
+            for (int i = 0; i < errors.Length; i++)
             {
-                UpdateMetricIdOfError(error, this.info.ETag);
+                var newError = UpdateOrCreateError(errors[i], key, value);
+                if (newError != null)
+                {
+                    errors[i] = newError;
+                }
             }
         }
 
-        private void UpdateMetricIdOfError(CollectionConfigurationError error, string id)
+        private CollectionConfigurationError? UpdateOrCreateError(CollectionConfigurationError error, string key, string value)
         {
             for (int i = 0; i < error.Data.Count; i++)
             {
-                if (error.Data[i].Key == "ETag")
+                if (error.Data[i].Key == key)
                 {
-                    error.Data[i] = new KeyValuePairString(error.Data[i].Key, id);
+                    error.Data[i] = new KeyValuePairString(error.Data[i].Key, value);
 
                     // TODO: MODEL CHANGED TO READONLY. I'M INVESTIGATING IF WE CAN REVERT THIS CHANGE. (2024-03-22)
-                    //error.Data[i].Value = id;
+                    //error.Data[i].Value = value;
 
-                    return;
+                    return null;
                 }
             }
+            var newData = new List<KeyValuePairString>(error.Data)
+            {
+                new KeyValuePairString(key, value)
+            };
+            return new CollectionConfigurationError(error.CollectionConfigurationErrorType, error.Message, error.FullException, newData);
         }
 
         public IEnumerable<DerivedMetric<Request>> RequestMetrics => this.requestDocumentIngressMetrics;
@@ -91,10 +112,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         /// </summary>
         public IEnumerable<Tuple<string, Models.AggregationType?>> TelemetryMetadata => this.telemetryMetadata;
 
-        ///// <summary>
-        ///// Gets document streams. Telemetry items are provided by QuickPulseTelemetryProcessor.
-        ///// </summary>
-        //public IEnumerable<DocumentStream> DocumentStreams => this.documentStreams;
+        /// <summary>
+        /// Gets document streams. Telemetry items are provided by QuickPulseTelemetryProcessor.
+        /// </summary>
+        public IEnumerable<DocumentStream> DocumentStreams => this.documentStreams;
 
         public string ETag => this.info.ETag;
 
@@ -123,6 +144,91 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                                 Tuple.Create("MetricId", metricInfo.Id)),
                         }).ToArray();
             }
+        }
+
+        private void CreateDocumentStreams(IEnumerable<DocumentStream> previousDocumentStreams,
+            out CollectionConfigurationError[] errors)
+        {
+            var errorList = new List<CollectionConfigurationError>();
+            var documentStreamIds = new HashSet<string>();
+
+            // quota might be changing concurrently on the collection thread, but we don't need the exact value at any given time
+            // we will try to carry over the last known values to this new configuration
+            Dictionary<string, Tuple<float, float, float, float, float>> previousQuotasByStreamId =
+                previousDocumentStreams.ToDictionary(
+                    documentStream => documentStream.Id,
+                    documentStream =>
+                    Tuple.Create(
+                        documentStream.RequestQuotaTracker.CurrentQuota,
+                        documentStream.DependencyQuotaTracker.CurrentQuota,
+                        documentStream.ExceptionQuotaTracker.CurrentQuota,
+                        documentStream.EventQuotaTracker.CurrentQuota,
+                        documentStream.TraceQuotaTracker.CurrentQuota));
+
+            if (this.info.DocumentStreams != null)
+            {
+                float? maxQuota = this.info.QuotaInfo?.MaxQuota;
+                float? quotaAccrualRatePerSec = this.info.QuotaInfo?.QuotaAccrualRatePerSec;
+
+                foreach (DocumentStreamInfo documentStreamInfo in this.info.DocumentStreams)
+                {
+                    if (documentStreamIds.Contains(documentStreamInfo.Id))
+                    {
+                        // there must not be streams with duplicate ids
+                        errorList.Add(
+                            CollectionConfigurationError.CreateError(
+                                CollectionConfigurationErrorType.DocumentStreamDuplicateIds,
+                                string.Format(CultureInfo.InvariantCulture, "Document stream with a duplicate id ignored: {0}", documentStreamInfo.Id),
+                                null,
+                                Tuple.Create("DocumentStreamId", documentStreamInfo.Id)));
+
+                        continue;
+                    }
+
+                    CollectionConfigurationError[]? localErrors = null;
+                    try
+                    {
+                        previousQuotasByStreamId.TryGetValue(documentStreamInfo.Id, out Tuple<float, float, float, float, float>? previousQuotas);
+                        float? initialQuota = this.info.QuotaInfo?.InitialQuota;
+
+                        var documentStream = new DocumentStream(
+                            documentStreamInfo,
+                            out localErrors,
+                            initialRequestQuota: initialQuota ?? previousQuotas?.Item1,
+                            initialDependencyQuota: initialQuota ?? previousQuotas?.Item2,
+                            initialExceptionQuota: initialQuota ?? previousQuotas?.Item3,
+                            initialEventQuota: initialQuota ?? previousQuotas?.Item4,
+                            initialTraceQuota: initialQuota ?? previousQuotas?.Item5,
+                            maxRequestQuota: maxQuota,
+                            maxDependencyQuota: maxQuota,
+                            maxExceptionQuota: maxQuota,
+                            maxEventQuota: maxQuota,
+                            maxTraceQuota: maxQuota,
+                            quotaAccrualRatePerSec: quotaAccrualRatePerSec);
+
+                        documentStreamIds.Add(documentStreamInfo.Id);
+                        this.documentStreams.Add(documentStream);
+                    }
+                    catch (System.Exception e)
+                    {
+                        errorList.Add(
+                            CollectionConfigurationError.CreateError(
+                                CollectionConfigurationErrorType.DocumentStreamFailureToCreate,
+                                string.Format(CultureInfo.InvariantCulture, "Failed to create document stream {0}", documentStreamInfo),
+                                e,
+                                Tuple.Create("DocumentStreamId", documentStreamInfo.Id)));
+                    }
+
+                    if (localErrors != null)
+                    {
+                        UpdateAllErrorsWithKeyValue(localErrors, "DocumentStreamId", documentStreamInfo.Id);
+
+                        errorList.AddRange(localErrors);
+                    }
+                }
+            }
+
+            errors = errorList.ToArray();
         }
 
         private void CreateTelemetryMetrics(out CollectionConfigurationError[] errors)
