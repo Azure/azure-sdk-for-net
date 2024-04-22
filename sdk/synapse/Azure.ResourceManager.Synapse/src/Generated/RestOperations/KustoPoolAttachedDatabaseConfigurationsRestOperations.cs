@@ -36,6 +36,23 @@ namespace Azure.ResourceManager.Synapse
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByKustoPoolRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Synapse/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/kustoPools/", false);
+            uri.AppendPath(kustoPoolName, true);
+            uri.AppendPath("/attachedDatabaseConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByKustoPoolRequest(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName)
         {
             var message = _pipeline.CreateMessage();
@@ -119,6 +136,24 @@ namespace Azure.ResourceManager.Synapse
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string attachedDatabaseConfigurationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Synapse/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/kustoPools/", false);
+            uri.AppendPath(kustoPoolName, true);
+            uri.AppendPath("/attachedDatabaseConfigurations/", false);
+            uri.AppendPath(attachedDatabaseConfigurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string attachedDatabaseConfigurationName)
@@ -215,6 +250,24 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string attachedDatabaseConfigurationName, SynapseAttachedDatabaseConfigurationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Synapse/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/kustoPools/", false);
+            uri.AppendPath(kustoPoolName, true);
+            uri.AppendPath("/attachedDatabaseConfigurations/", false);
+            uri.AppendPath(attachedDatabaseConfigurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string attachedDatabaseConfigurationName, SynapseAttachedDatabaseConfigurationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -305,6 +358,24 @@ namespace Azure.ResourceManager.Synapse
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string attachedDatabaseConfigurationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Synapse/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/kustoPools/", false);
+            uri.AppendPath(kustoPoolName, true);
+            uri.AppendPath("/attachedDatabaseConfigurations/", false);
+            uri.AppendPath(attachedDatabaseConfigurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string workspaceName, string kustoPoolName, string attachedDatabaseConfigurationName)

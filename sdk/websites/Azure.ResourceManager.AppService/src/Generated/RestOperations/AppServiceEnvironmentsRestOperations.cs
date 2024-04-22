@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.AppService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -102,6 +113,19 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -175,6 +199,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string name)
@@ -259,6 +297,20 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentData data)
         {
             var message = _pipeline.CreateMessage();
@@ -339,6 +391,24 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string name, bool? forceDelete)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            if (forceDelete != null)
+            {
+                uri.AppendQuery("forceDelete", forceDelete.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string name, bool? forceDelete)
         {
             var message = _pipeline.CreateMessage();
@@ -413,6 +483,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string name, AppServiceEnvironmentPatch patch)
@@ -505,6 +589,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListCapacitiesRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/capacities/compute", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListCapacitiesRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -584,6 +683,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetVipInfoRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/capacities/virtualip", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetVipInfoRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -661,6 +775,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAseV3NetworkingConfigurationRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/configurations/networking", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAseV3NetworkingConfigurationRequest(string subscriptionId, string resourceGroupName, string name)
@@ -744,6 +873,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateAseNetworkingConfigurationRequestUri(string subscriptionId, string resourceGroupName, string name, AseV3NetworkingConfigurationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/configurations/networking", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateAseNetworkingConfigurationRequest(string subscriptionId, string resourceGroupName, string name, AseV3NetworkingConfigurationData data)
@@ -831,6 +975,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListDiagnosticsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/diagnostics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListDiagnosticsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -922,6 +1081,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetDiagnosticsItemRequestUri(string subscriptionId, string resourceGroupName, string name, string diagnosticsName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/diagnostics/", false);
+            uri.AppendPath(diagnosticsName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetDiagnosticsItemRequest(string subscriptionId, string resourceGroupName, string name, string diagnosticsName)
         {
             var message = _pipeline.CreateMessage();
@@ -1006,6 +1181,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetInboundNetworkDependenciesEndpointsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/inboundNetworkDependenciesEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetInboundNetworkDependenciesEndpointsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -1085,6 +1275,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListMultiRolePoolsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListMultiRolePoolsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -1162,6 +1367,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetMultiRolePoolRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetMultiRolePoolRequest(string subscriptionId, string resourceGroupName, string name)
@@ -1247,6 +1467,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateMultiRolePoolRequestUri(string subscriptionId, string resourceGroupName, string name, AppServiceWorkerPoolData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateMultiRolePoolRequest(string subscriptionId, string resourceGroupName, string name, AppServiceWorkerPoolData data)
         {
             var message = _pipeline.CreateMessage();
@@ -1324,6 +1559,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateMultiRolePoolRequestUri(string subscriptionId, string resourceGroupName, string name, AppServiceWorkerPoolData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateMultiRolePoolRequest(string subscriptionId, string resourceGroupName, string name, AppServiceWorkerPoolData data)
@@ -1415,6 +1665,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListMultiRolePoolInstanceMetricDefinitionsRequestUri(string subscriptionId, string resourceGroupName, string name, string instance)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default/instances/", false);
+            uri.AppendPath(instance, true);
+            uri.AppendPath("/metricdefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListMultiRolePoolInstanceMetricDefinitionsRequest(string subscriptionId, string resourceGroupName, string name, string instance)
         {
             var message = _pipeline.CreateMessage();
@@ -1500,6 +1767,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListMultiRoleMetricDefinitionsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default/metricdefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListMultiRoleMetricDefinitionsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -1577,6 +1859,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMultiRolePoolSkusRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListMultiRolePoolSkusRequest(string subscriptionId, string resourceGroupName, string name)
@@ -1658,6 +1955,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListMultiRoleUsagesRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/multiRolePools/default/usages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListMultiRoleUsagesRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -1735,6 +2047,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOperationsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/operations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListOperationsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -1826,6 +2153,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetOutboundNetworkDependenciesEndpointsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetOutboundNetworkDependenciesEndpointsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -1905,6 +2247,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetPrivateEndpointConnectionListRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetPrivateEndpointConnectionListRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -1982,6 +2339,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateEndpointConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
@@ -2072,6 +2445,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateApproveOrRejectPrivateEndpointConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateApproveOrRejectPrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info)
         {
             var message = _pipeline.CreateMessage();
@@ -2156,6 +2545,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDeletePrivateEndpointConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeletePrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
         {
             var message = _pipeline.CreateMessage();
@@ -2232,6 +2637,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateLinkResourcesRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, string name)
@@ -2313,6 +2733,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateRebootRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/reboot", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRebootRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -2380,6 +2815,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAppServicePlansRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/serverfarms", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListAppServicePlansRequest(string subscriptionId, string resourceGroupName, string name)
@@ -2459,6 +2909,25 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWebAppsRequestUri(string subscriptionId, string resourceGroupName, string name, string propertiesToInclude)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/sites", false);
+            if (propertiesToInclude != null)
+            {
+                uri.AppendQuery("propertiesToInclude", propertiesToInclude, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListWebAppsRequest(string subscriptionId, string resourceGroupName, string name, string propertiesToInclude)
@@ -2546,6 +3015,25 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListUsagesRequestUri(string subscriptionId, string resourceGroupName, string name, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/usages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, false);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListUsagesRequest(string subscriptionId, string resourceGroupName, string name, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -2631,6 +3119,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListWorkerPoolsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListWorkerPoolsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -2708,6 +3211,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetWorkerPoolRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetWorkerPoolRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
@@ -2798,6 +3317,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateWorkerPoolRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName, AppServiceWorkerPoolData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateWorkerPoolRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName, AppServiceWorkerPoolData data)
         {
             var message = _pipeline.CreateMessage();
@@ -2880,6 +3415,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateWorkerPoolRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName, AppServiceWorkerPoolData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateWorkerPoolRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName, AppServiceWorkerPoolData data)
@@ -2976,6 +3527,25 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListWorkerPoolInstanceMetricDefinitionsRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendPath("/instances/", false);
+            uri.AppendPath(instance, true);
+            uri.AppendPath("/metricdefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListWorkerPoolInstanceMetricDefinitionsRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance)
         {
             var message = _pipeline.CreateMessage();
@@ -3067,6 +3637,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListWebWorkerMetricDefinitionsRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendPath("/metricdefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListWebWorkerMetricDefinitionsRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
         {
             var message = _pipeline.CreateMessage();
@@ -3150,6 +3737,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWorkerPoolSkusRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListWorkerPoolSkusRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
@@ -3237,6 +3841,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListWebWorkerUsagesRequestUri(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/workerPools/", false);
+            uri.AppendPath(workerPoolName, true);
+            uri.AppendPath("/usages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListWebWorkerUsagesRequest(string subscriptionId, string resourceGroupName, string name, string workerPoolName)
         {
             var message = _pipeline.CreateMessage();
@@ -3322,6 +3943,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -3388,6 +4017,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -3460,6 +4097,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListCapacitiesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListCapacitiesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -3538,6 +4183,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetInboundNetworkDependenciesEndpointsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetInboundNetworkDependenciesEndpointsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -3614,6 +4267,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListMultiRolePoolsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListMultiRolePoolsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -3688,6 +4349,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMultiRolePoolInstanceMetricDefinitionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string instance)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListMultiRolePoolInstanceMetricDefinitionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string instance)
@@ -3770,6 +4439,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListMultiRoleMetricDefinitionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListMultiRoleMetricDefinitionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -3844,6 +4521,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMultiRolePoolSkusNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListMultiRolePoolSkusNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -3922,6 +4607,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListMultiRoleUsagesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListMultiRoleUsagesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -3996,6 +4689,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetOutboundNetworkDependenciesEndpointsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetOutboundNetworkDependenciesEndpointsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -4074,6 +4775,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetPrivateEndpointConnectionListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetPrivateEndpointConnectionListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -4150,6 +4859,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListAppServicePlansNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListAppServicePlansNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -4224,6 +4941,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWebAppsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string propertiesToInclude)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListWebAppsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string propertiesToInclude)
@@ -4304,6 +5029,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListUsagesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListUsagesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -4382,6 +5115,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListWorkerPoolsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListWorkerPoolsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -4456,6 +5197,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWorkerPoolInstanceMetricDefinitionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListWorkerPoolInstanceMetricDefinitionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName, string instance)
@@ -4542,6 +5291,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListWebWorkerMetricDefinitionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListWebWorkerMetricDefinitionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName)
         {
             var message = _pipeline.CreateMessage();
@@ -4622,6 +5379,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListWorkerPoolSkusNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListWorkerPoolSkusNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName)
         {
             var message = _pipeline.CreateMessage();
@@ -4700,6 +5465,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListWebWorkerUsagesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListWebWorkerUsagesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string workerPoolName)
