@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             try
             {
                 var response = await _workbookRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, sourceId, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationInsightsArmOperation<WorkbookResource>(Response.FromValue(new WorkbookResource(Client, response), response.GetRawResponse()));
+                var uri = _workbookRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, sourceId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApplicationInsightsArmOperation<WorkbookResource>(Response.FromValue(new WorkbookResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             try
             {
                 var response = _workbookRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, sourceId, cancellationToken);
-                var operation = new ApplicationInsightsArmOperation<WorkbookResource>(Response.FromValue(new WorkbookResource(Client, response), response.GetRawResponse()));
+                var uri = _workbookRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, sourceId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApplicationInsightsArmOperation<WorkbookResource>(Response.FromValue(new WorkbookResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -36,6 +36,25 @@ namespace Azure.ResourceManager.Chaos
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListAllRequestUri(string subscriptionId, bool? running, string continuationToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/experiments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (running != null)
+            {
+                uri.AppendQuery("running", running.Value, true);
+            }
+            if (continuationToken != null)
+            {
+                uri.AppendQuery("continuationToken", continuationToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListAllRequest(string subscriptionId, bool? running, string continuationToken)
         {
             var message = _pipeline.CreateMessage();
@@ -113,6 +132,27 @@ namespace Azure.ResourceManager.Chaos
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, bool? running, string continuationToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/experiments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (running != null)
+            {
+                uri.AppendQuery("running", running.Value, true);
+            }
+            if (continuationToken != null)
+            {
+                uri.AppendQuery("continuationToken", continuationToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, bool? running, string continuationToken)
@@ -200,6 +240,20 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string experimentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
+            uri.AppendPath(experimentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string experimentName)
         {
             var message = _pipeline.CreateMessage();
@@ -266,6 +320,20 @@ namespace Azure.ResourceManager.Chaos
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string experimentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
+            uri.AppendPath(experimentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string experimentName)
@@ -350,6 +418,20 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
+            uri.AppendPath(experimentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentData data)
         {
             var message = _pipeline.CreateMessage();
@@ -428,6 +510,20 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
+            uri.AppendPath(experimentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -504,6 +600,21 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
+        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId, string resourceGroupName, string experimentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
+            uri.AppendPath(experimentName, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelRequest(string subscriptionId, string resourceGroupName, string experimentName)
         {
             var message = _pipeline.CreateMessage();
@@ -573,6 +684,21 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
+        internal RequestUriBuilder CreateStartRequestUri(string subscriptionId, string resourceGroupName, string experimentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
+            uri.AppendPath(experimentName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string experimentName)
         {
             var message = _pipeline.CreateMessage();
@@ -640,6 +766,21 @@ namespace Azure.ResourceManager.Chaos
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAllExecutionsRequestUri(string subscriptionId, string resourceGroupName, string experimentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
+            uri.AppendPath(experimentName, true);
+            uri.AppendPath("/executions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListAllExecutionsRequest(string subscriptionId, string resourceGroupName, string experimentName)
@@ -719,6 +860,22 @@ namespace Azure.ResourceManager.Chaos
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetExecutionRequestUri(string subscriptionId, string resourceGroupName, string experimentName, string executionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
+            uri.AppendPath(experimentName, true);
+            uri.AppendPath("/executions/", false);
+            uri.AppendPath(executionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetExecutionRequest(string subscriptionId, string resourceGroupName, string experimentName, string executionId)
@@ -809,6 +966,23 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
+        internal RequestUriBuilder CreateExecutionDetailsRequestUri(string subscriptionId, string resourceGroupName, string experimentName, string executionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
+            uri.AppendPath(experimentName, true);
+            uri.AppendPath("/executions/", false);
+            uri.AppendPath(executionId, true);
+            uri.AppendPath("/getExecutionDetails", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateExecutionDetailsRequest(string subscriptionId, string resourceGroupName, string experimentName, string executionId)
         {
             var message = _pipeline.CreateMessage();
@@ -894,6 +1068,14 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
+        internal RequestUriBuilder CreateListAllNextPageRequestUri(string nextLink, string subscriptionId, bool? running, string continuationToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListAllNextPageRequest(string nextLink, string subscriptionId, bool? running, string continuationToken)
         {
             var message = _pipeline.CreateMessage();
@@ -964,6 +1146,14 @@ namespace Azure.ResourceManager.Chaos
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, bool? running, string continuationToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, bool? running, string continuationToken)
@@ -1040,6 +1230,14 @@ namespace Azure.ResourceManager.Chaos
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAllExecutionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string experimentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAllExecutionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string experimentName)
