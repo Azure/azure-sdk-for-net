@@ -534,7 +534,15 @@ namespace Azure.Core
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        public RehydrationToken(string? id, string? version, string headerSource, string nextRequestUri, string initialUri, Azure.Core.RequestMethod requestMethod, string? lastKnownLocation, string finalStateVia) { throw null; }
+        public string FinalStateVia { get { throw null; } }
+        public string HeaderSource { get { throw null; } }
         public string Id { get { throw null; } }
+        public string InitialUri { get { throw null; } }
+        public string? LastKnownLocation { get { throw null; } }
+        public string NextRequestUri { get { throw null; } }
+        public Azure.Core.RequestMethod RequestMethod { get { throw null; } }
+        public string Version { get { throw null; } }
         Azure.Core.RehydrationToken System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         object System.ClientModel.Primitives.IJsonModel<object>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
