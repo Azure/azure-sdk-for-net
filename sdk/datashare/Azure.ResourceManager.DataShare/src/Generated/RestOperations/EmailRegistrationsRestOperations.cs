@@ -36,6 +36,17 @@ namespace Azure.ResourceManager.DataShare
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateActivateEmailRequestUri(AzureLocation location, DataShareEmailRegistration emailRegistration)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.DataShare/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/activateEmail", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateActivateEmailRequest(AzureLocation location, DataShareEmailRegistration emailRegistration)
         {
             var message = _pipeline.CreateMessage();
@@ -105,6 +116,17 @@ namespace Azure.ResourceManager.DataShare
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegisterEmailRequestUri(AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.DataShare/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/registerEmail", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegisterEmailRequest(AzureLocation location)

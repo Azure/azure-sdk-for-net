@@ -198,7 +198,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _vCenterInventoryItemInventoryItemsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation(response);
+                var uri = _vCenterInventoryItemInventoryItemsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ConnectedVMwarevSphereArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -240,7 +242,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _vCenterInventoryItemInventoryItemsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation(response);
+                var uri = _vCenterInventoryItemInventoryItemsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ConnectedVMwarevSphereArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -286,7 +290,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = await _vCenterInventoryItemInventoryItemsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConnectedVMwarevSphereArmOperation<VCenterInventoryItemResource>(Response.FromValue(new VCenterInventoryItemResource(Client, response), response.GetRawResponse()));
+                var uri = _vCenterInventoryItemInventoryItemsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ConnectedVMwarevSphereArmOperation<VCenterInventoryItemResource>(Response.FromValue(new VCenterInventoryItemResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -332,7 +338,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             try
             {
                 var response = _vCenterInventoryItemInventoryItemsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ConnectedVMwarevSphereArmOperation<VCenterInventoryItemResource>(Response.FromValue(new VCenterInventoryItemResource(Client, response), response.GetRawResponse()));
+                var uri = _vCenterInventoryItemInventoryItemsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ConnectedVMwarevSphereArmOperation<VCenterInventoryItemResource>(Response.FromValue(new VCenterInventoryItemResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
