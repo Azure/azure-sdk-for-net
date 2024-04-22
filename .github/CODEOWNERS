@@ -949,7 +949,7 @@
 # ServiceOwners:                                                   @8Gitbrix
 
 # PRLabel: %Network - Front Door
-/sdk/frontdoor/                                                    @ptnan7
+/sdk/frontdoor/Azure.ResourceManager.*/                            @ptnan7
 
 # ServiceLabel: %Network - Front Door %Mgmt
 # ServiceOwners:                                                   @ptnan7
