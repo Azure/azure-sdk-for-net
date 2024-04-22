@@ -942,14 +942,14 @@
 # PRLabel: %Large Instance
 /sdk/azurelargeinstance/Azure.ResourceManager.*/                   @8Gitbrix @archerzz @ArcturusZhang @ArthurMa1978
 
+# ServiceLabel: %Large Instance %Mgmt
+# ServiceOwners:                                                   @8Gitbrix
+
 # PRLabel: %Network - CDN
-/sdk/cdn/                                                          @ptnan7
+/sdk/cdn/Azure.ResourceManager.*/                                  @ptnan7
 
 # ServiceLabel: %Network - CDN %Mgmt
 # ServiceOwners:                                                   @ptnan7
-
-# ServiceLabel: %Large Instance %Mgmt
-# ServiceOwners:                                                   @8Gitbrix
 
 # ServiceLabel: %Recovery Services Backup %Mgmt
 # ServiceOwners:                                                   @Daya-Patil
