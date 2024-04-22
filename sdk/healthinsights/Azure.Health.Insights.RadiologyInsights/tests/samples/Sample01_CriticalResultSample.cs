@@ -47,13 +47,14 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             AzureKeyCredential credential = new AzureKeyCredential(apiKey);
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
             #endregion
-            RadiologyInsightsData radiologyInsightsData = GetRadiologyInsightsData();
+            RadiologyInsightsJob radiologyInsightsjob = GetRadiologyInsightsJob();
             #region Snippet:Critical_Result_Sync_Tests_Samples_synccall
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+            var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, jobId, radiologyInsightsjob);
             #endregion
             #region Snippet:Critical_Result_Sync_Tests_Samples_CriticalResultInference
             RadiologyInsightsInferenceResult responseData = operation.Value;
-            IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
+            IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
             foreach (RadiologyInsightsInference inference in inferences)
             {
@@ -63,6 +64,13 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 }
             }
             #endregion
+        }
+
+        private static RadiologyInsightsJob GetRadiologyInsightsJob()
+        {
+            RadiologyInsightsJob radiologyInsightsJob = new RadiologyInsightsJob();
+            radiologyInsightsJob.JobData = GetRadiologyInsightsData();
+            return radiologyInsightsJob;
         }
 
         private static RadiologyInsightsData GetRadiologyInsightsData()
@@ -116,7 +124,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 BirthDate = new System.DateTime(1959, 11, 11),
                 Sex = PatientSex.Female,
             };
-            Encounter encounter = new("encounterid1")
+            PatientEncounter encounter = new("encounterid1")
             {
                 Class = EncounterClass.InPatient,
                 Period = new TimePeriod
@@ -125,16 +133,16 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     End = new System.DateTime(2021, 08, 28)
                 }
             };
-            List<Encounter> encounterList = new() { encounter };
+            List<PatientEncounter> encounterList = new() { encounter };
             DocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
             PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent)
             {
                 ClinicalType = ClinicalDocumentType.RadiologyReport,
-                CreatedDateTime = new System.DateTime(2021, 08, 28),
+                CreatedAt = new System.DateTime(2021, 08, 28),
                 AdministrativeMetadata = CreateDocumentAdministrativeMetadata()
             };
             PatientRecord patientRecord = new(id);
-            patientRecord.Info = patientInfo;
+            patientRecord.Details = patientInfo;
             patientRecord.Encounters.Add(encounter);
             patientRecord.PatientDocuments.Add(patientDocument);
             #endregion
