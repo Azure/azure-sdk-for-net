@@ -9420,6 +9420,8 @@ namespace Azure.ResourceManager.AppService.Models
         Success = 0,
         Failed = 1,
         Error = 2,
+        Aborted = 3,
+        Running = 4,
     }
     public partial class TwitterRegistration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.TwitterRegistration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TwitterRegistration>
     {
