@@ -16,7 +16,7 @@ namespace Azure.Core
         public string Id { get; } = NextLinkOperationImplementation.NotSet;
 
         /// <summary>
-        /// Version the <see cref="RehydrationToken"/> struct.
+        /// The version of the <see cref="RehydrationToken"/> struct.
         /// </summary>
         public string Version { get; } = NextLinkOperationImplementation.RehydrationTokenVersion;
 
@@ -53,14 +53,14 @@ namespace Azure.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="RehydrationToken"/> struct.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="version"></param>
-        /// <param name="headerSource"></param>
-        /// <param name="nextRequestUri"></param>
-        /// <param name="initialUri"></param>
-        /// <param name="requestMethod"></param>
-        /// <param name="lastKnownLocation"></param>
-        /// <param name="finalStateVia"></param>
+        /// <param name="id">The id representing the operation that can be used to poll for the status of the long-running operation.</param>
+        /// <param name="version">The version of the <see cref="RehydrationToken"/> struct.</param>
+        /// <param name="headerSource">The header source of the operation, could be None, OperationLocation, AzureAsyncOperation or Location.</param>
+        /// <param name="nextRequestUri">The polling Uri of the operation.</param>
+        /// <param name="initialUri">The initial Uri of the operation.</param>
+        /// <param name="requestMethod">The Http request method of the operation.</param>
+        /// <param name="lastKnownLocation">The last known location of the operation.</param>
+        /// <param name="finalStateVia">The final state of the operation, could be AzureAsyncOperation, Location, OriginalUri, OperationLocation or LocationOverride.</param>
         public RehydrationToken(string? id, string? version, string headerSource, string nextRequestUri, string initialUri, RequestMethod requestMethod, string? lastKnownLocation, string finalStateVia)
         {
             if (id is not null)
