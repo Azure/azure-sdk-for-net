@@ -35,6 +35,22 @@ namespace Azure.ResourceManager.StreamAnalytics
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrReplaceRequestUri(string subscriptionId, string resourceGroupName, string jobName, string transformationName, StreamingJobTransformationData data, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/streamingjobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/transformations/", false);
+            uri.AppendPath(transformationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrReplaceRequest(string subscriptionId, string resourceGroupName, string jobName, string transformationName, StreamingJobTransformationData data, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -141,6 +157,22 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string jobName, string transformationName, StreamingJobTransformationData data, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/streamingjobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/transformations/", false);
+            uri.AppendPath(transformationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string jobName, string transformationName, StreamingJobTransformationData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -237,6 +269,22 @@ namespace Azure.ResourceManager.StreamAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string jobName, string transformationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.StreamAnalytics/streamingjobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/transformations/", false);
+            uri.AppendPath(transformationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string jobName, string transformationName)

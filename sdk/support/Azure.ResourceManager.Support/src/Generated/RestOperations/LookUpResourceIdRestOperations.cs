@@ -36,6 +36,15 @@ namespace Azure.ResourceManager.Support
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreatePostRequestUri(LookUpResourceIdContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/lookUpResourceId", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePostRequest(LookUpResourceIdContent content)
         {
             var message = _pipeline.CreateMessage();

@@ -36,6 +36,25 @@ namespace Azure.ResourceManager.Orbital
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string spacecraftName, string skiptoken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/spacecrafts/", false);
+            uri.AppendPath(spacecraftName, true);
+            uri.AppendPath("/contacts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string spacecraftName, string skiptoken)
         {
             var message = _pipeline.CreateMessage();
@@ -119,6 +138,22 @@ namespace Azure.ResourceManager.Orbital
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/spacecrafts/", false);
+            uri.AppendPath(spacecraftName, true);
+            uri.AppendPath("/contacts/", false);
+            uri.AppendPath(contactName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName)
@@ -209,6 +244,22 @@ namespace Azure.ResourceManager.Orbital
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName, OrbitalContactData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/spacecrafts/", false);
+            uri.AppendPath(spacecraftName, true);
+            uri.AppendPath("/contacts/", false);
+            uri.AppendPath(contactName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName, OrbitalContactData data)
         {
             var message = _pipeline.CreateMessage();
@@ -293,6 +344,22 @@ namespace Azure.ResourceManager.Orbital
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/spacecrafts/", false);
+            uri.AppendPath(spacecraftName, true);
+            uri.AppendPath("/contacts/", false);
+            uri.AppendPath(contactName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName)
         {
             var message = _pipeline.CreateMessage();
@@ -369,6 +436,14 @@ namespace Azure.ResourceManager.Orbital
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string spacecraftName, string skiptoken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string spacecraftName, string skiptoken)

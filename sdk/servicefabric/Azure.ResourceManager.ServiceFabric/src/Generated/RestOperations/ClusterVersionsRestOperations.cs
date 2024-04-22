@@ -36,6 +36,20 @@ namespace Azure.ResourceManager.ServiceFabric
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string clusterVersion)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/clusterVersions/", false);
+            uri.AppendPath(clusterVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string clusterVersion)
         {
             var message = _pipeline.CreateMessage();
@@ -110,6 +124,22 @@ namespace Azure.ResourceManager.ServiceFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetByEnvironmentRequestUri(string subscriptionId, AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environment.ToString(), true);
+            uri.AppendPath("/clusterVersions/", false);
+            uri.AppendPath(clusterVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByEnvironmentRequest(string subscriptionId, AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion)
@@ -192,6 +222,19 @@ namespace Azure.ResourceManager.ServiceFabric
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/clusterVersions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
@@ -261,6 +304,21 @@ namespace Azure.ResourceManager.ServiceFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByEnvironmentRequestUri(string subscriptionId, AzureLocation location, ClusterVersionsEnvironment environment)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ServiceFabric/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/environments/", false);
+            uri.AppendPath(environment.ToString(), true);
+            uri.AppendPath("/clusterVersions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByEnvironmentRequest(string subscriptionId, AzureLocation location, ClusterVersionsEnvironment environment)

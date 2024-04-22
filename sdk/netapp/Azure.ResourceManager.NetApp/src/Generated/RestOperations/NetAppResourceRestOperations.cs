@@ -36,6 +36,19 @@ namespace Azure.ResourceManager.NetApp
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, AzureLocation location, NetAppNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, NetAppNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -113,6 +126,19 @@ namespace Azure.ResourceManager.NetApp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckFilePathAvailabilityRequestUri(string subscriptionId, AzureLocation location, NetAppFilePathAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkFilePathAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckFilePathAvailabilityRequest(string subscriptionId, AzureLocation location, NetAppFilePathAvailabilityContent content)
@@ -194,6 +220,19 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateCheckQuotaAvailabilityRequestUri(string subscriptionId, AzureLocation location, NetAppQuotaAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkQuotaAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckQuotaAvailabilityRequest(string subscriptionId, AzureLocation location, NetAppQuotaAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -273,6 +312,19 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateQueryRegionInfoRequestUri(string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/regionInfo", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateQueryRegionInfoRequest(string subscriptionId, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
@@ -342,6 +394,19 @@ namespace Azure.ResourceManager.NetApp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateQueryNetworkSiblingSetRequestUri(string subscriptionId, AzureLocation location, QueryNetworkSiblingSetContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/queryNetworkSiblingSet", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateQueryNetworkSiblingSetRequest(string subscriptionId, AzureLocation location, QueryNetworkSiblingSetContent content)
@@ -421,6 +486,19 @@ namespace Azure.ResourceManager.NetApp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateNetworkSiblingSetRequestUri(string subscriptionId, AzureLocation location, UpdateNetworkSiblingSetContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/updateNetworkSiblingSet", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateNetworkSiblingSetRequest(string subscriptionId, AzureLocation location, UpdateNetworkSiblingSetContent content)

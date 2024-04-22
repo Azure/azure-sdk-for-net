@@ -78,7 +78,9 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = await _blueprintRestClient.CreateOrUpdateAsync(Id, blueprintName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<BlueprintResource>(Response.FromValue(new BlueprintResource(Client, response), response.GetRawResponse()));
+                var uri = _blueprintRestClient.CreateCreateOrUpdateRequestUri(Id, blueprintName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<BlueprintResource>(Response.FromValue(new BlueprintResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +129,9 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = _blueprintRestClient.CreateOrUpdate(Id, blueprintName, data, cancellationToken);
-                var operation = new BlueprintArmOperation<BlueprintResource>(Response.FromValue(new BlueprintResource(Client, response), response.GetRawResponse()));
+                var uri = _blueprintRestClient.CreateCreateOrUpdateRequestUri(Id, blueprintName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<BlueprintResource>(Response.FromValue(new BlueprintResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -36,6 +36,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateExecuteRequestUri(string subscriptionId, AzureLocation locationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/capabilities", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateExecuteRequest(string subscriptionId, AzureLocation locationName)
         {
             var message = _pipeline.CreateMessage();
@@ -105,6 +118,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExecuteNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation locationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateExecuteNextPageRequest(string nextLink, string subscriptionId, AzureLocation locationName)

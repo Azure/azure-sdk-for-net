@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.Attestation
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByProviderRequestUri(string subscriptionId, string resourceGroupName, string providerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Attestation/attestationProviders/", false);
+            uri.AppendPath(providerName, true);
+            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByProviderRequest(string subscriptionId, string resourceGroupName, string providerName)
         {
             var message = _pipeline.CreateMessage();

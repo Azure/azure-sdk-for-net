@@ -36,6 +36,25 @@ namespace Azure.ResourceManager.DevCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByDevCenterRequestUri(string subscriptionId, string resourceGroupName, string devCenterName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/devcenters/", false);
+            uri.AppendPath(devCenterName, true);
+            uri.AppendPath("/environmentTypes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListByDevCenterRequest(string subscriptionId, string resourceGroupName, string devCenterName, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -119,6 +138,22 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string devCenterName, string environmentTypeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/devcenters/", false);
+            uri.AppendPath(devCenterName, true);
+            uri.AppendPath("/environmentTypes/", false);
+            uri.AppendPath(environmentTypeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string devCenterName, string environmentTypeName)
@@ -207,6 +242,22 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string devCenterName, string environmentTypeName, DevCenterEnvironmentTypeData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/devcenters/", false);
+            uri.AppendPath(devCenterName, true);
+            uri.AppendPath("/environmentTypes/", false);
+            uri.AppendPath(environmentTypeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string devCenterName, string environmentTypeName, DevCenterEnvironmentTypeData data)
@@ -301,6 +352,22 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string devCenterName, string environmentTypeName, DevCenterEnvironmentTypePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/devcenters/", false);
+            uri.AppendPath(devCenterName, true);
+            uri.AppendPath("/environmentTypes/", false);
+            uri.AppendPath(environmentTypeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string devCenterName, string environmentTypeName, DevCenterEnvironmentTypePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -393,6 +460,22 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string devCenterName, string environmentTypeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/devcenters/", false);
+            uri.AppendPath(devCenterName, true);
+            uri.AppendPath("/environmentTypes/", false);
+            uri.AppendPath(environmentTypeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string devCenterName, string environmentTypeName)
         {
             var message = _pipeline.CreateMessage();
@@ -467,6 +550,14 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByDevCenterNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByDevCenterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top)

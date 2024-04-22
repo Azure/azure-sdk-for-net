@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationWatcherWatcherRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, watcherName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationWatcherResource>(Response.FromValue(new AutomationWatcherResource(Client, response), response.GetRawResponse()));
+                var uri = _automationWatcherWatcherRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, watcherName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationWatcherResource>(Response.FromValue(new AutomationWatcherResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationWatcherWatcherRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, watcherName, data, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationWatcherResource>(Response.FromValue(new AutomationWatcherResource(Client, response), response.GetRawResponse()));
+                var uri = _automationWatcherWatcherRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, watcherName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationWatcherResource>(Response.FromValue(new AutomationWatcherResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

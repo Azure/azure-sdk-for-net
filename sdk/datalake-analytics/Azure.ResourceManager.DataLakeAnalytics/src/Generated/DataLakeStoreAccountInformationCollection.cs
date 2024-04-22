@@ -89,7 +89,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             try
             {
                 var response = await _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.AddAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataLakeStoreAccountName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new DataLakeAnalyticsArmOperation(response);
+                var uri = _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.CreateAddRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataLakeStoreAccountName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataLakeAnalyticsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -138,7 +140,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             try
             {
                 var response = _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.Add(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataLakeStoreAccountName, content, cancellationToken);
-                var operation = new DataLakeAnalyticsArmOperation(response);
+                var uri = _dataLakeStoreAccountInformationDataLakeStoreAccountsRestClient.CreateAddRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataLakeStoreAccountName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataLakeAnalyticsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

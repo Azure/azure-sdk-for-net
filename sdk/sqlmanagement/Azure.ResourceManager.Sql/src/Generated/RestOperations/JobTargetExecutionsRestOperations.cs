@@ -36,6 +36,55 @@ namespace Azure.ResourceManager.Sql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByJobExecutionRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/jobAgents/", false);
+            uri.AppendPath(jobAgentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/executions/", false);
+            uri.AppendPath(jobExecutionId, true);
+            uri.AppendPath("/targets", false);
+            if (createTimeMin != null)
+            {
+                uri.AppendQuery("createTimeMin", createTimeMin.Value, "O", true);
+            }
+            if (createTimeMax != null)
+            {
+                uri.AppendQuery("createTimeMax", createTimeMax.Value, "O", true);
+            }
+            if (endTimeMin != null)
+            {
+                uri.AppendQuery("endTimeMin", endTimeMin.Value, "O", true);
+            }
+            if (endTimeMax != null)
+            {
+                uri.AppendQuery("endTimeMax", endTimeMax.Value, "O", true);
+            }
+            if (isActive != null)
+            {
+                uri.AppendQuery("isActive", isActive.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByJobExecutionRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -171,6 +220,57 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByStepRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/jobAgents/", false);
+            uri.AppendPath(jobAgentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/executions/", false);
+            uri.AppendPath(jobExecutionId, true);
+            uri.AppendPath("/steps/", false);
+            uri.AppendPath(stepName, true);
+            uri.AppendPath("/targets", false);
+            if (createTimeMin != null)
+            {
+                uri.AppendQuery("createTimeMin", createTimeMin.Value, "O", true);
+            }
+            if (createTimeMax != null)
+            {
+                uri.AppendQuery("createTimeMax", createTimeMax.Value, "O", true);
+            }
+            if (endTimeMin != null)
+            {
+                uri.AppendQuery("endTimeMin", endTimeMin.Value, "O", true);
+            }
+            if (endTimeMax != null)
+            {
+                uri.AppendQuery("endTimeMax", endTimeMax.Value, "O", true);
+            }
+            if (isActive != null)
+            {
+                uri.AppendQuery("isActive", isActive.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByStepRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
@@ -316,6 +416,30 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, Guid targetId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/jobAgents/", false);
+            uri.AppendPath(jobAgentName, true);
+            uri.AppendPath("/jobs/", false);
+            uri.AppendPath(jobName, true);
+            uri.AppendPath("/executions/", false);
+            uri.AppendPath(jobExecutionId, true);
+            uri.AppendPath("/steps/", false);
+            uri.AppendPath(stepName, true);
+            uri.AppendPath("/targets/", false);
+            uri.AppendPath(targetId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, Guid targetId)
         {
             var message = _pipeline.CreateMessage();
@@ -424,6 +548,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateListByJobExecutionNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByJobExecutionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -522,6 +654,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByStepNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByStepNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, DateTimeOffset? createTimeMin, DateTimeOffset? createTimeMax, DateTimeOffset? endTimeMin, DateTimeOffset? endTimeMax, bool? isActive, int? skip, int? top)

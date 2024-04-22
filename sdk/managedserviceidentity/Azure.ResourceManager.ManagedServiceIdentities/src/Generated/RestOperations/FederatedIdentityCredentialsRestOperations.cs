@@ -36,6 +36,29 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName, int? top, string skiptoken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedIdentity/userAssignedIdentities/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/federatedIdentityCredentials", false);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName, int? top, string skiptoken)
         {
             var message = _pipeline.CreateMessage();
@@ -125,6 +148,22 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName, FederatedIdentityCredentialData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedIdentity/userAssignedIdentities/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/federatedIdentityCredentials/", false);
+            uri.AppendPath(federatedIdentityCredentialResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName, FederatedIdentityCredentialData data)
@@ -221,6 +260,22 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedIdentity/userAssignedIdentities/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/federatedIdentityCredentials/", false);
+            uri.AppendPath(federatedIdentityCredentialResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName)
         {
             var message = _pipeline.CreateMessage();
@@ -309,6 +364,22 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedIdentity/userAssignedIdentities/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/federatedIdentityCredentials/", false);
+            uri.AppendPath(federatedIdentityCredentialResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName)
         {
             var message = _pipeline.CreateMessage();
@@ -383,6 +454,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, int? top, string skiptoken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, int? top, string skiptoken)

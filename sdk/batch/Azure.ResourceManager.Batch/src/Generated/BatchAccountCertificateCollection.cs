@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = await _batchAccountCertificateCertificateRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, content, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new BatchArmOperation<BatchAccountCertificateResource>(Response.FromValue(new BatchAccountCertificateResource(Client, response), response.GetRawResponse()));
+                var uri = _batchAccountCertificateCertificateRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, content, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BatchArmOperation<BatchAccountCertificateResource>(Response.FromValue(new BatchAccountCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,7 +144,9 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = _batchAccountCertificateCertificateRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, content, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new BatchArmOperation<BatchAccountCertificateResource>(Response.FromValue(new BatchAccountCertificateResource(Client, response), response.GetRawResponse()));
+                var uri = _batchAccountCertificateCertificateRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, content, ifMatch, ifNoneMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BatchArmOperation<BatchAccountCertificateResource>(Response.FromValue(new BatchAccountCertificateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

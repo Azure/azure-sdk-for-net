@@ -36,6 +36,17 @@ namespace Azure.ResourceManager.NewRelicObservability
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/NewRelic.Observability/monitors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -101,6 +112,19 @@ namespace Azure.ResourceManager.NewRelicObservability
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/NewRelic.Observability/monitors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -174,6 +198,20 @@ namespace Azure.ResourceManager.NewRelicObservability
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string monitorName)
@@ -258,6 +296,20 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMonitorResourceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMonitorResourceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -334,6 +386,20 @@ namespace Azure.ResourceManager.NewRelicObservability
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMonitorResourcePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMonitorResourcePatch patch)
@@ -422,6 +488,21 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string monitorName, string userEmail)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("userEmail", userEmail, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string monitorName, string userEmail)
         {
             var message = _pipeline.CreateMessage();
@@ -497,6 +578,21 @@ namespace Azure.ResourceManager.NewRelicObservability
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetMetricRulesRequestUri(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMetricsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/getMetricRules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetMetricRulesRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMetricsContent content)
@@ -586,6 +682,21 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
+        internal RequestUriBuilder CreateGetMetricStatusRequestUri(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMetricsStatusContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/getMetricStatus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetMetricStatusRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicMetricsStatusContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -673,6 +784,21 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
+        internal RequestUriBuilder CreateListAppServicesRequestUri(string subscriptionId, string resourceGroupName, string monitorName, NewRelicAppServicesGetContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/listAppServices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListAppServicesRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicAppServicesGetContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -758,6 +884,21 @@ namespace Azure.ResourceManager.NewRelicObservability
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSwitchBillingRequestUri(string subscriptionId, string resourceGroupName, string monitorName, NewRelicSwitchBillingContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/switchBilling", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSwitchBillingRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicSwitchBillingContent content)
@@ -853,6 +994,21 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
+        internal RequestUriBuilder CreateListHostsRequestUri(string subscriptionId, string resourceGroupName, string monitorName, NewRelicHostsGetContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/listHosts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListHostsRequest(string subscriptionId, string resourceGroupName, string monitorName, NewRelicHostsGetContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -940,6 +1096,21 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
+        internal RequestUriBuilder CreateListMonitoredResourcesRequestUri(string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/monitoredResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListMonitoredResourcesRequest(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var message = _pipeline.CreateMessage();
@@ -1017,6 +1188,21 @@ namespace Azure.ResourceManager.NewRelicObservability
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateVmHostPayloadRequestUri(string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/NewRelic.Observability/monitors/", false);
+            uri.AppendPath(monitorName, true);
+            uri.AppendPath("/vmHostPayloads", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateVmHostPayloadRequest(string subscriptionId, string resourceGroupName, string monitorName)
@@ -1098,6 +1284,14 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -1164,6 +1358,14 @@ namespace Azure.ResourceManager.NewRelicObservability
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -1236,6 +1438,14 @@ namespace Azure.ResourceManager.NewRelicObservability
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAppServicesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, NewRelicAppServicesGetContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListAppServicesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, NewRelicAppServicesGetContent content)
@@ -1318,6 +1528,14 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
         }
 
+        internal RequestUriBuilder CreateListHostsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, NewRelicHostsGetContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListHostsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string monitorName, NewRelicHostsGetContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -1396,6 +1614,14 @@ namespace Azure.ResourceManager.NewRelicObservability
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMonitoredResourcesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string monitorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListMonitoredResourcesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string monitorName)

@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.ServiceBus
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string namespaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/disasterRecoveryConfigs", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string namespaceName)
         {
             var message = _pipeline.CreateMessage();
@@ -113,6 +128,22 @@ namespace Azure.ResourceManager.ServiceBus
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, ServiceBusDisasterRecoveryData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/disasterRecoveryConfigs/", false);
+            uri.AppendPath(@alias, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, ServiceBusDisasterRecoveryData data)
@@ -211,6 +242,22 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string @alias)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/disasterRecoveryConfigs/", false);
+            uri.AppendPath(@alias, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string namespaceName, string @alias)
         {
             var message = _pipeline.CreateMessage();
@@ -285,6 +332,22 @@ namespace Azure.ResourceManager.ServiceBus
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string @alias)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/disasterRecoveryConfigs/", false);
+            uri.AppendPath(@alias, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string namespaceName, string @alias)
@@ -375,6 +438,23 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        internal RequestUriBuilder CreateBreakPairingRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string @alias)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/disasterRecoveryConfigs/", false);
+            uri.AppendPath(@alias, true);
+            uri.AppendPath("/breakPairing", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateBreakPairingRequest(string subscriptionId, string resourceGroupName, string namespaceName, string @alias)
         {
             var message = _pipeline.CreateMessage();
@@ -448,6 +528,23 @@ namespace Azure.ResourceManager.ServiceBus
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateFailOverRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, FailoverProperties failoverProperties)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/disasterRecoveryConfigs/", false);
+            uri.AppendPath(@alias, true);
+            uri.AppendPath("/failover", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateFailOverRequest(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, FailoverProperties failoverProperties)
@@ -532,6 +629,21 @@ namespace Azure.ResourceManager.ServiceBus
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/disasterRecoveryConfigs/CheckNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNameAvailabilityContent content)
@@ -619,6 +731,14 @@ namespace Azure.ResourceManager.ServiceBus
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName)

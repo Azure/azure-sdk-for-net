@@ -85,7 +85,9 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = await _appConfigurationKeyValueKeyValuesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation<AppConfigurationKeyValueResource>(Response.FromValue(new AppConfigurationKeyValueResource(Client, response), response.GetRawResponse()));
+                var uri = _appConfigurationKeyValueKeyValuesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppConfigurationArmOperation<AppConfigurationKeyValueResource>(Response.FromValue(new AppConfigurationKeyValueResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -134,7 +136,9 @@ namespace Azure.ResourceManager.AppConfiguration
             try
             {
                 var response = _appConfigurationKeyValueKeyValuesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data, cancellationToken);
-                var operation = new AppConfigurationArmOperation<AppConfigurationKeyValueResource>(Response.FromValue(new AppConfigurationKeyValueResource(Client, response), response.GetRawResponse()));
+                var uri = _appConfigurationKeyValueKeyValuesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keyValueName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppConfigurationArmOperation<AppConfigurationKeyValueResource>(Response.FromValue(new AppConfigurationKeyValueResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

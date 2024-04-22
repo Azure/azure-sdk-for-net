@@ -36,6 +36,22 @@ namespace Azure.ResourceManager.MobileNetwork
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/sims/", false);
+            uri.AppendPath(simName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
         {
             var message = _pipeline.CreateMessage();
@@ -112,6 +128,22 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/sims/", false);
+            uri.AppendPath(simName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string simGroupName, string simName)
@@ -202,6 +234,22 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, string simName, MobileNetworkSimData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/sims/", false);
+            uri.AppendPath(simName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string simGroupName, string simName, MobileNetworkSimData data)
         {
             var message = _pipeline.CreateMessage();
@@ -286,6 +334,21 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
+        internal RequestUriBuilder CreateListByGroupRequestUri(string subscriptionId, string resourceGroupName, string simGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/sims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByGroupRequest(string subscriptionId, string resourceGroupName, string simGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -365,6 +428,21 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
+        internal RequestUriBuilder CreateBulkUploadRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, SimUploadList simUploadList)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/uploadSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateBulkUploadRequest(string subscriptionId, string resourceGroupName, string simGroupName, SimUploadList simUploadList)
         {
             var message = _pipeline.CreateMessage();
@@ -442,6 +520,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateBulkDeleteRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, SimDeleteList simDeleteList)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/deleteSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateBulkDeleteRequest(string subscriptionId, string resourceGroupName, string simGroupName, SimDeleteList simDeleteList)
@@ -525,6 +618,21 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
+        internal RequestUriBuilder CreateBulkUploadEncryptedRequestUri(string subscriptionId, string resourceGroupName, string simGroupName, EncryptedSimUploadList encryptedSimUploadList)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/simGroups/", false);
+            uri.AppendPath(simGroupName, true);
+            uri.AppendPath("/uploadEncryptedSims", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateBulkUploadEncryptedRequest(string subscriptionId, string resourceGroupName, string simGroupName, EncryptedSimUploadList encryptedSimUploadList)
         {
             var message = _pipeline.CreateMessage();
@@ -602,6 +710,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string simGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string simGroupName)

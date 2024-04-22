@@ -78,7 +78,9 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = await _roleAssignmentScheduleRequestRestClient.CreateAsync(Id, roleAssignmentScheduleRequestName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AuthorizationArmOperation<RoleAssignmentScheduleRequestResource>(Response.FromValue(new RoleAssignmentScheduleRequestResource(Client, response), response.GetRawResponse()));
+                var uri = _roleAssignmentScheduleRequestRestClient.CreateCreateRequestUri(Id, roleAssignmentScheduleRequestName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AuthorizationArmOperation<RoleAssignmentScheduleRequestResource>(Response.FromValue(new RoleAssignmentScheduleRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +129,9 @@ namespace Azure.ResourceManager.Authorization
             try
             {
                 var response = _roleAssignmentScheduleRequestRestClient.Create(Id, roleAssignmentScheduleRequestName, data, cancellationToken);
-                var operation = new AuthorizationArmOperation<RoleAssignmentScheduleRequestResource>(Response.FromValue(new RoleAssignmentScheduleRequestResource(Client, response), response.GetRawResponse()));
+                var uri = _roleAssignmentScheduleRequestRestClient.CreateCreateRequestUri(Id, roleAssignmentScheduleRequestName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AuthorizationArmOperation<RoleAssignmentScheduleRequestResource>(Response.FromValue(new RoleAssignmentScheduleRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

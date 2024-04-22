@@ -36,6 +36,33 @@ namespace Azure.ResourceManager.Consumption
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string scope, string startDate, string endDate, string filter, string apply)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Consumption/charges", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (startDate != null)
+            {
+                uri.AppendQuery("startDate", startDate, true);
+            }
+            if (endDate != null)
+            {
+                uri.AppendQuery("endDate", endDate, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (apply != null)
+            {
+                uri.AppendQuery("$apply", apply, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string scope, string startDate, string endDate, string filter, string apply)
         {
             var message = _pipeline.CreateMessage();

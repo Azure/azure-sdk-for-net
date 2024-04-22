@@ -36,6 +36,17 @@ namespace Azure.ResourceManager.Billing
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByBillingAccountRequestUri(string billingAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingSubscriptionAliases", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByBillingAccountRequest(string billingAccountName)
         {
             var message = _pipeline.CreateMessage();
@@ -101,6 +112,18 @@ namespace Azure.ResourceManager.Billing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string billingAccountName, string aliasName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingSubscriptionAliases/", false);
+            uri.AppendPath(aliasName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string billingAccountName, string aliasName)
@@ -179,6 +202,18 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string billingAccountName, string aliasName, BillingSubscriptionAliasData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingSubscriptionAliases/", false);
+            uri.AppendPath(aliasName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string billingAccountName, string aliasName, BillingSubscriptionAliasData data)
         {
             var message = _pipeline.CreateMessage();
@@ -249,6 +284,14 @@ namespace Azure.ResourceManager.Billing
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByBillingAccountNextPageRequestUri(string nextLink, string billingAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByBillingAccountNextPageRequest(string nextLink, string billingAccountName)

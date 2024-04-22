@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.Search
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByServiceRequestUri(string subscriptionId, string resourceGroupName, string searchServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Search/searchServices/", false);
+            uri.AppendPath(searchServiceName, true);
+            uri.AppendPath("/networkSecurityPerimeterConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByServiceRequest(string subscriptionId, string resourceGroupName, string searchServiceName)
         {
             var message = _pipeline.CreateMessage();
@@ -113,6 +128,22 @@ namespace Azure.ResourceManager.Search
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string searchServiceName, string nspConfigName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Search/searchServices/", false);
+            uri.AppendPath(searchServiceName, true);
+            uri.AppendPath("/networkSecurityPerimeterConfigurations/", false);
+            uri.AppendPath(nspConfigName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string searchServiceName, string nspConfigName)
@@ -203,6 +234,23 @@ namespace Azure.ResourceManager.Search
             }
         }
 
+        internal RequestUriBuilder CreateReconcileRequestUri(string subscriptionId, string resourceGroupName, string searchServiceName, string nspConfigName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Search/searchServices/", false);
+            uri.AppendPath(searchServiceName, true);
+            uri.AppendPath("/networkSecurityPerimeterConfigurations/", false);
+            uri.AppendPath(nspConfigName, true);
+            uri.AppendPath("/reconcile", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateReconcileRequest(string subscriptionId, string resourceGroupName, string searchServiceName, string nspConfigName)
         {
             var message = _pipeline.CreateMessage();
@@ -276,6 +324,14 @@ namespace Azure.ResourceManager.Search
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByServiceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string searchServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByServiceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string searchServiceName)

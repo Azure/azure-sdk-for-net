@@ -270,7 +270,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _tableServiceRestClient.SetServicePropertiesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<TableServiceResource>(Response.FromValue(new TableServiceResource(Client, response), response.GetRawResponse()));
+                var uri = _tableServiceRestClient.CreateSetServicePropertiesRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<TableServiceResource>(Response.FromValue(new TableServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -316,7 +318,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _tableServiceRestClient.SetServiceProperties(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new StorageArmOperation<TableServiceResource>(Response.FromValue(new TableServiceResource(Client, response), response.GetRawResponse()));
+                var uri = _tableServiceRestClient.CreateSetServicePropertiesRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<TableServiceResource>(Response.FromValue(new TableServiceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -36,6 +36,22 @@ namespace Azure.ResourceManager.MobileNetwork
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, MobileNetworkPacketCaptureData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/", false);
+            uri.AppendPath(packetCoreControlPlaneName, true);
+            uri.AppendPath("/packetCaptures/", false);
+            uri.AppendPath(packetCaptureName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, MobileNetworkPacketCaptureData data)
         {
             var message = _pipeline.CreateMessage();
@@ -118,6 +134,22 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/", false);
+            uri.AppendPath(packetCoreControlPlaneName, true);
+            uri.AppendPath("/packetCaptures/", false);
+            uri.AppendPath(packetCaptureName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName)
@@ -208,6 +240,22 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/", false);
+            uri.AppendPath(packetCoreControlPlaneName, true);
+            uri.AppendPath("/packetCaptures/", false);
+            uri.AppendPath(packetCaptureName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName)
         {
             var message = _pipeline.CreateMessage();
@@ -284,6 +332,23 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStopRequestUri(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/", false);
+            uri.AppendPath(packetCoreControlPlaneName, true);
+            uri.AppendPath("/packetCaptures/", false);
+            uri.AppendPath(packetCaptureName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName)
@@ -363,6 +428,21 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
+        internal RequestUriBuilder CreateListByPacketCoreControlPlaneRequestUri(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/", false);
+            uri.AppendPath(packetCoreControlPlaneName, true);
+            uri.AppendPath("/packetCaptures", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByPacketCoreControlPlaneRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName)
         {
             var message = _pipeline.CreateMessage();
@@ -440,6 +520,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByPacketCoreControlPlaneNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByPacketCoreControlPlaneNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName)

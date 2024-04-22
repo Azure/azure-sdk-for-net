@@ -36,6 +36,19 @@ namespace Azure.ResourceManager.AppService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreatePreviewWorkflowRequestUri(string subscriptionId, AzureLocation location, StaticSitesWorkflowPreviewContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/previewStaticSiteWorkflowFile", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePreviewWorkflowRequest(string subscriptionId, AzureLocation location, StaticSitesWorkflowPreviewContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -115,6 +128,17 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -180,6 +204,19 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStaticSitesByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetStaticSitesByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -253,6 +290,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetStaticSiteRequest(string subscriptionId, string resourceGroupName, string name)
@@ -337,6 +388,20 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, StaticSiteData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteData data)
         {
             var message = _pipeline.CreateMessage();
@@ -415,6 +480,20 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDeleteStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteStaticSiteRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -483,6 +562,20 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, StaticSitePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSitePatch patch)
@@ -573,6 +666,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListStaticSiteUsersRequestUri(string subscriptionId, string resourceGroupName, string name, string authprovider)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/authproviders/", false);
+            uri.AppendPath(authprovider, true);
+            uri.AppendPath("/listUsers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListStaticSiteUsersRequest(string subscriptionId, string resourceGroupName, string name, string authprovider)
         {
             var message = _pipeline.CreateMessage();
@@ -658,6 +768,24 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDeleteStaticSiteUserRequestUri(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/authproviders/", false);
+            uri.AppendPath(authprovider, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userid, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteStaticSiteUserRequest(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid)
         {
             var message = _pipeline.CreateMessage();
@@ -736,6 +864,24 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateStaticSiteUserRequestUri(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, StaticSiteUser staticSiteUserEnvelope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/authproviders/", false);
+            uri.AppendPath(authprovider, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userid, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateStaticSiteUserRequest(string subscriptionId, string resourceGroupName, string name, string authprovider, string userid, StaticSiteUser staticSiteUserEnvelope)
@@ -836,6 +982,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetStaticSiteBuildsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetStaticSiteBuildsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -913,6 +1074,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName)
@@ -1003,6 +1180,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDeleteStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -1079,6 +1272,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateStaticSiteBuildAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/config/appsettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateStaticSiteBuildAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings)
@@ -1174,6 +1384,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateStaticSiteBuildFunctionAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/config/functionappsettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateStaticSiteBuildFunctionAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, AppServiceConfigurationDictionary appSettings)
         {
             var message = _pipeline.CreateMessage();
@@ -1267,6 +1494,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListStaticSiteBuildFunctionsRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/functions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListStaticSiteBuildFunctionsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -1350,6 +1594,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteBuildAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/listAppSettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteBuildAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName)
@@ -1437,6 +1698,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListStaticSiteBuildFunctionAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/listFunctionAppSettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListStaticSiteBuildFunctionAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, string environmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -1522,6 +1800,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetUserProvidedFunctionAppsForStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/userProvidedFunctionApps", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUserProvidedFunctionAppsForStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -1605,6 +1900,24 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUserProvidedFunctionAppForStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/userProvidedFunctionApps/", false);
+            uri.AppendPath(functionAppName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUserProvidedFunctionAppForStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName)
@@ -1699,6 +2012,28 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/userProvidedFunctionApps/", false);
+            uri.AppendPath(functionAppName, true);
+            if (isForced != null)
+            {
+                uri.AppendQuery("isForced", isForced.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegisterUserProvidedFunctionAppWithStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced)
@@ -1797,6 +2132,24 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDetachUserProvidedFunctionAppFromStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/userProvidedFunctionApps/", false);
+            uri.AppendPath(functionAppName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDetachUserProvidedFunctionAppFromStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, string functionAppName)
         {
             var message = _pipeline.CreateMessage();
@@ -1877,6 +2230,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateZipDeploymentForStaticSiteBuildRequestUri(string subscriptionId, string resourceGroupName, string name, string environmentName, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/builds/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/zipdeploy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateZipDeploymentForStaticSiteBuildRequest(string subscriptionId, string resourceGroupName, string name, string environmentName, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope)
@@ -1962,6 +2332,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateStaticSiteAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/config/appsettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateStaticSiteAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings)
@@ -2051,6 +2436,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateStaticSiteFunctionAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/config/functionappsettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateStaticSiteFunctionAppSettingsRequest(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings)
         {
             var message = _pipeline.CreateMessage();
@@ -2136,6 +2536,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateUserRolesInvitationLinkRequestUri(string subscriptionId, string resourceGroupName, string name, StaticSiteUserInvitationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/createUserInvitation", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateUserRolesInvitationLinkRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteUserInvitationContent content)
@@ -2225,6 +2640,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListStaticSiteCustomDomainsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/customDomains", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListStaticSiteCustomDomainsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -2302,6 +2732,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStaticSiteCustomDomainRequestUri(string subscriptionId, string resourceGroupName, string name, string domainName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetStaticSiteCustomDomainRequest(string subscriptionId, string resourceGroupName, string name, string domainName)
@@ -2392,6 +2838,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateStaticSiteCustomDomainRequestUri(string subscriptionId, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateStaticSiteCustomDomainRequest(string subscriptionId, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -2476,6 +2938,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDeleteStaticSiteCustomDomainRequestUri(string subscriptionId, string resourceGroupName, string name, string domainName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteStaticSiteCustomDomainRequest(string subscriptionId, string resourceGroupName, string name, string domainName)
         {
             var message = _pipeline.CreateMessage();
@@ -2550,6 +3028,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateValidateCustomDomainCanBeAddedToStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/customDomains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateValidateCustomDomainCanBeAddedToStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, string domainName, StaticSiteCustomDomainContent content)
@@ -2637,6 +3132,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDetachStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/detach", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDetachStaticSiteRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -2706,6 +3216,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteFunctionsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/functions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteFunctionsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -2787,6 +3312,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListStaticSiteAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/listAppSettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListStaticSiteAppSettingsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -2864,6 +3404,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteConfiguredRolesRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/listConfiguredRoles", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteConfiguredRolesRequest(string subscriptionId, string resourceGroupName, string name)
@@ -2945,6 +3500,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListStaticSiteFunctionAppSettingsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/listFunctionAppSettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListStaticSiteFunctionAppSettingsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -3022,6 +3592,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteSecretsRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/listSecrets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteSecretsRequest(string subscriptionId, string resourceGroupName, string name)
@@ -3103,6 +3688,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetPrivateEndpointConnectionListRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetPrivateEndpointConnectionListRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -3180,6 +3780,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateEndpointConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
@@ -3270,6 +3886,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateApproveOrRejectPrivateEndpointConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateApproveOrRejectPrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info)
         {
             var message = _pipeline.CreateMessage();
@@ -3354,6 +3986,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDeletePrivateEndpointConnectionRequestUri(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateEndpointConnections/", false);
+            uri.AppendPath(privateEndpointConnectionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeletePrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
         {
             var message = _pipeline.CreateMessage();
@@ -3430,6 +4078,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetPrivateLinkResourcesRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, string name)
@@ -3511,6 +4174,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateResetStaticSiteApiKeyRequestUri(string subscriptionId, string resourceGroupName, string name, StaticSiteResetContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/resetapikey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateResetStaticSiteApiKeyRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteResetContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -3586,6 +4264,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUserProvidedFunctionAppsForStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/userProvidedFunctionApps", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUserProvidedFunctionAppsForStaticSiteRequest(string subscriptionId, string resourceGroupName, string name)
@@ -3665,6 +4358,22 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUserProvidedFunctionAppForStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, string functionAppName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/userProvidedFunctionApps/", false);
+            uri.AppendPath(functionAppName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetUserProvidedFunctionAppForStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, string functionAppName)
@@ -3753,6 +4462,26 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegisterUserProvidedFunctionAppWithStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/userProvidedFunctionApps/", false);
+            uri.AppendPath(functionAppName, true);
+            if (isForced != null)
+            {
+                uri.AppendQuery("isForced", isForced.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegisterUserProvidedFunctionAppWithStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, string functionAppName, StaticSiteUserProvidedFunctionAppData data, bool? isForced)
@@ -3845,6 +4574,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDetachUserProvidedFunctionAppFromStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, string functionAppName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/userProvidedFunctionApps/", false);
+            uri.AppendPath(functionAppName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDetachUserProvidedFunctionAppFromStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, string functionAppName)
         {
             var message = _pipeline.CreateMessage();
@@ -3919,6 +4664,21 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateZipDeploymentForStaticSiteRequestUri(string subscriptionId, string resourceGroupName, string name, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/staticSites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/zipdeploy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateZipDeploymentForStaticSiteRequest(string subscriptionId, string resourceGroupName, string name, StaticSiteZipDeployment staticSiteZipDeploymentEnvelope)
@@ -4000,6 +4760,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -4066,6 +4834,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStaticSitesByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetStaticSitesByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -4138,6 +4914,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteUsersNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string authprovider)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteUsersNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string authprovider)
@@ -4220,6 +5004,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetStaticSiteBuildsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetStaticSiteBuildsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -4294,6 +5086,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteBuildFunctionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteBuildFunctionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string environmentName)
@@ -4376,6 +5176,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetUserProvidedFunctionAppsForStaticSiteBuildNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetUserProvidedFunctionAppsForStaticSiteBuildNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string environmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -4456,6 +5264,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListStaticSiteCustomDomainsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListStaticSiteCustomDomainsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -4530,6 +5346,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStaticSiteFunctionsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListStaticSiteFunctionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
@@ -4608,6 +5432,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateGetPrivateEndpointConnectionListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateGetPrivateEndpointConnectionListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -4682,6 +5514,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetUserProvidedFunctionAppsForStaticSiteNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetUserProvidedFunctionAppsForStaticSiteNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)

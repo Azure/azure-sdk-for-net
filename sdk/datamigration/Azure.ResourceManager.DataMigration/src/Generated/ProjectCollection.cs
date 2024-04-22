@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _projectRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation<ProjectResource>(Response.FromValue(new ProjectResource(Client, response), response.GetRawResponse()));
+                var uri = _projectRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataMigrationArmOperation<ProjectResource>(Response.FromValue(new ProjectResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _projectRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data, cancellationToken);
-                var operation = new DataMigrationArmOperation<ProjectResource>(Response.FromValue(new ProjectResource(Client, response), response.GetRawResponse()));
+                var uri = _projectRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataMigrationArmOperation<ProjectResource>(Response.FromValue(new ProjectResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

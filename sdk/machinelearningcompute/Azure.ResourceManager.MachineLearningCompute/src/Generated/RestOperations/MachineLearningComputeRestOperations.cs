@@ -36,6 +36,15 @@ namespace Azure.ResourceManager.MachineLearningCompute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListAvailableOperationsRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.MachineLearningCompute/operations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListAvailableOperationsRequest()
         {
             var message = _pipeline.CreateMessage();

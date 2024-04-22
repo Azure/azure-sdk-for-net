@@ -36,6 +36,23 @@ namespace Azure.ResourceManager.Automation
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByJobRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, Guid jobId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/compilationjobs/", false);
+            uri.AppendPath(jobId, true);
+            uri.AppendPath("/streams", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByJobRequest(string subscriptionId, string resourceGroupName, string automationAccountName, Guid jobId)
         {
             var message = _pipeline.CreateMessage();

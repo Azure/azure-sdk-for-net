@@ -36,6 +36,20 @@ namespace Azure.ResourceManager.DataMigration
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/sqlMigrationServices/", false);
+            uri.AppendPath(sqlMigrationServiceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
         {
             var message = _pipeline.CreateMessage();
@@ -118,6 +132,20 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, SqlMigrationServiceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/sqlMigrationServices/", false);
+            uri.AppendPath(sqlMigrationServiceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, SqlMigrationServiceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -196,6 +224,20 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/sqlMigrationServices/", false);
+            uri.AppendPath(sqlMigrationServiceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
         {
             var message = _pipeline.CreateMessage();
@@ -265,6 +307,20 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, SqlMigrationServicePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/sqlMigrationServices/", false);
+            uri.AppendPath(sqlMigrationServiceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, SqlMigrationServicePatch patch)
@@ -345,6 +401,19 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/sqlMigrationServices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
@@ -416,6 +485,21 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAuthKeysRequestUri(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/sqlMigrationServices/", false);
+            uri.AppendPath(sqlMigrationServiceName, true);
+            uri.AppendPath("/listAuthKeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListAuthKeysRequest(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
@@ -495,6 +579,21 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegenerateAuthKeysRequestUri(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, RegenAuthKeys regenAuthKeys)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/sqlMigrationServices/", false);
+            uri.AppendPath(sqlMigrationServiceName, true);
+            uri.AppendPath("/regenerateAuthKeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegenerateAuthKeysRequest(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, RegenAuthKeys regenAuthKeys)
@@ -584,6 +683,21 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
+        internal RequestUriBuilder CreateDeleteNodeRequestUri(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, DeleteNode deleteNode)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/sqlMigrationServices/", false);
+            uri.AppendPath(sqlMigrationServiceName, true);
+            uri.AppendPath("/deleteNode", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteNodeRequest(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, DeleteNode deleteNode)
         {
             var message = _pipeline.CreateMessage();
@@ -671,6 +785,21 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
+        internal RequestUriBuilder CreateListMigrationsRequestUri(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/sqlMigrationServices/", false);
+            uri.AppendPath(sqlMigrationServiceName, true);
+            uri.AppendPath("/listMigrations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListMigrationsRequest(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
         {
             var message = _pipeline.CreateMessage();
@@ -748,6 +877,21 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMonitoringDataRequestUri(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/sqlMigrationServices/", false);
+            uri.AppendPath(sqlMigrationServiceName, true);
+            uri.AppendPath("/listMonitoringData", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListMonitoringDataRequest(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
@@ -829,6 +973,17 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/sqlMigrationServices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -894,6 +1049,14 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -966,6 +1129,14 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListMigrationsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListMigrationsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
@@ -1042,6 +1213,14 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)

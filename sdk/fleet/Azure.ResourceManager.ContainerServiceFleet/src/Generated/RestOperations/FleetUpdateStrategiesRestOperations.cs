@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByFleetRequestUri(string subscriptionId, string resourceGroupName, string fleetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
+            uri.AppendPath(fleetName, true);
+            uri.AppendPath("/updateStrategies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByFleetRequest(string subscriptionId, string resourceGroupName, string fleetName)
         {
             var message = _pipeline.CreateMessage();
@@ -113,6 +128,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string updateStrategyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
+            uri.AppendPath(fleetName, true);
+            uri.AppendPath("/updateStrategies/", false);
+            uri.AppendPath(updateStrategyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string fleetName, string updateStrategyName)
@@ -201,6 +232,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string updateStrategyName, FleetUpdateStrategyData data, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
+            uri.AppendPath(fleetName, true);
+            uri.AppendPath("/updateStrategies/", false);
+            uri.AppendPath(updateStrategyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string fleetName, string updateStrategyName, FleetUpdateStrategyData data, string ifMatch, string ifNoneMatch)
@@ -299,6 +346,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string updateStrategyName, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/fleets/", false);
+            uri.AppendPath(fleetName, true);
+            uri.AppendPath("/updateStrategies/", false);
+            uri.AppendPath(updateStrategyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string fleetName, string updateStrategyName, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -381,6 +444,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFleetNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string fleetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByFleetNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string fleetName)

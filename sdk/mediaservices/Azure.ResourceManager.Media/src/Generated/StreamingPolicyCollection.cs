@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = await _streamingPolicyRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MediaArmOperation<StreamingPolicyResource>(Response.FromValue(new StreamingPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _streamingPolicyRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<StreamingPolicyResource>(Response.FromValue(new StreamingPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.Media
             try
             {
                 var response = _streamingPolicyRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingPolicyName, data, cancellationToken);
-                var operation = new MediaArmOperation<StreamingPolicyResource>(Response.FromValue(new StreamingPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _streamingPolicyRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingPolicyName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MediaArmOperation<StreamingPolicyResource>(Response.FromValue(new StreamingPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

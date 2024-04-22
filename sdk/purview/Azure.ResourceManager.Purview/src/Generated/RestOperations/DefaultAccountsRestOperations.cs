@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.Purview
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Purview/getDefaultAccount", false);
+            uri.AppendQuery("scopeTenantId", scopeTenantId, true);
+            uri.AppendQuery("scopeType", scopeType.ToString(), true);
+            if (scope != null)
+            {
+                uri.AppendQuery("scope", scope, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
         {
             var message = _pipeline.CreateMessage();
@@ -103,6 +118,21 @@ namespace Azure.ResourceManager.Purview
             }
         }
 
+        internal RequestUriBuilder CreateRemoveRequestUri(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Purview/removeDefaultAccount", false);
+            uri.AppendQuery("scopeTenantId", scopeTenantId, true);
+            uri.AppendQuery("scopeType", scopeType.ToString(), true);
+            if (scope != null)
+            {
+                uri.AppendQuery("scope", scope, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRemoveRequest(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope)
         {
             var message = _pipeline.CreateMessage();
@@ -160,6 +190,15 @@ namespace Azure.ResourceManager.Purview
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSetRequestUri(DefaultPurviewAccountPayload defaultAccountPayload)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Purview/setDefaultAccount", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSetRequest(DefaultPurviewAccountPayload defaultAccountPayload)

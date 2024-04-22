@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteDomainOwnershipIdentifierWebAppsRestClient.CreateOrUpdateDomainOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteDomainOwnershipIdentifierResource>(Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response), response.GetRawResponse()));
+                var uri = _siteDomainOwnershipIdentifierWebAppsRestClient.CreateCreateOrUpdateDomainOwnershipIdentifierRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<SiteDomainOwnershipIdentifierResource>(Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteDomainOwnershipIdentifierWebAppsRestClient.CreateOrUpdateDomainOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteDomainOwnershipIdentifierResource>(Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response), response.GetRawResponse()));
+                var uri = _siteDomainOwnershipIdentifierWebAppsRestClient.CreateCreateOrUpdateDomainOwnershipIdentifierRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainOwnershipIdentifierName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<SiteDomainOwnershipIdentifierResource>(Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

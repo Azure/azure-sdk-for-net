@@ -35,6 +35,22 @@ namespace Azure.ResourceManager.CosmosDB
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/throughputPools/", false);
+            uri.AppendPath(throughputPoolName, true);
+            uri.AppendPath("/throughputPoolAccounts/", false);
+            uri.AppendPath(throughputPoolAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName)
         {
             var message = _pipeline.CreateMessage();
@@ -123,6 +139,22 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName, CosmosDBThroughputPoolAccountData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/throughputPools/", false);
+            uri.AppendPath(throughputPoolName, true);
+            uri.AppendPath("/throughputPoolAccounts/", false);
+            uri.AppendPath(throughputPoolAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName, CosmosDBThroughputPoolAccountData data)
         {
             var message = _pipeline.CreateMessage();
@@ -205,6 +237,22 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/throughputPools/", false);
+            uri.AppendPath(throughputPoolName, true);
+            uri.AppendPath("/throughputPoolAccounts/", false);
+            uri.AppendPath(throughputPoolAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName)

@@ -37,6 +37,25 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AgreementOfferType offerType, string publisherId, string offerId, string planId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/offerTypes/", false);
+            uri.AppendPath(offerType.ToString(), true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendPath("/plans/", false);
+            uri.AppendPath(planId, true);
+            uri.AppendPath("/agreements/current", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, AgreementOfferType offerType, string publisherId, string offerId, string planId)
         {
             var message = _pipeline.CreateMessage();
@@ -128,6 +147,25 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, AgreementOfferType offerType, string publisherId, string offerId, string planId, MarketplaceAgreementTermData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/offerTypes/", false);
+            uri.AppendPath(offerType.ToString(), true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendPath("/plans/", false);
+            uri.AppendPath(planId, true);
+            uri.AppendPath("/agreements/current", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, AgreementOfferType offerType, string publisherId, string offerId, string planId, MarketplaceAgreementTermData data)
@@ -227,6 +265,23 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             }
         }
 
+        internal RequestUriBuilder CreateSignRequestUri(string subscriptionId, string publisherId, string offerId, string planId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/agreements/", false);
+            uri.AppendPath(publisherId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendPath("/plans/", false);
+            uri.AppendPath(planId, true);
+            uri.AppendPath("/sign", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSignRequest(string subscriptionId, string publisherId, string offerId, string planId)
         {
             var message = _pipeline.CreateMessage();
@@ -312,6 +367,23 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             }
         }
 
+        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId, string publisherId, string offerId, string planId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/agreements/", false);
+            uri.AppendPath(publisherId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendPath("/plans/", false);
+            uri.AppendPath(planId, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelRequest(string subscriptionId, string publisherId, string offerId, string planId)
         {
             var message = _pipeline.CreateMessage();
@@ -395,6 +467,22 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAgreementRequestUri(string subscriptionId, string publisherId, string offerId, string planId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/agreements/", false);
+            uri.AppendPath(publisherId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendPath("/plans/", false);
+            uri.AppendPath(planId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetAgreementRequest(string subscriptionId, string publisherId, string offerId, string planId)
@@ -483,6 +571,17 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.MarketplaceOrdering/agreements", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)
