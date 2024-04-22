@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.ClientModel.Options;
 
 namespace System.ClientModel.Primitives;
 
@@ -23,6 +24,7 @@ public class ClientPipelineOptions
     private PipelinePolicy? _loggingPolicy;
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
+    private DiagnosticsOptions? _diagnostics;
 
     #region Pipeline creation: Overrides of default pipeline policies
 
@@ -86,6 +88,20 @@ public class ClientPipelineOptions
     #endregion
 
     #region Pipeline creation: Policy settings
+
+    /// <summary>
+    /// TODO
+    /// </summary>
+    public DiagnosticsOptions? Diagnostics
+    {
+        get => _diagnostics;
+        set
+        {
+            AssertNotFrozen();
+
+            _diagnostics = value;
+        }
+    }
 
     /// <summary>
     /// The timeout applied to an individual network operation.

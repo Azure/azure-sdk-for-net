@@ -27,7 +27,7 @@ namespace System.ClientModel.Tests
         [TestCase("?d", "?d")]
         public void QueryIsSanitized(string input, string expected)
         {
-            var sanitizer = new PipelineMessageSanitizer(new List<string>(new string[]{ "A", "a1", "a-2" }), new List<string>(), "*");
+            var sanitizer = new PipelineMessageSanitizer(new string[]{ "A", "a1", "a-2" }, Array.Empty<string>(), "*");
 
             Assert.AreEqual("http://localhost/" + expected, sanitizer.SanitizeUrl("http://localhost/" + input));
         }
@@ -35,7 +35,7 @@ namespace System.ClientModel.Tests
         [Test]
         public void HeaderIsSanitized()
         {
-            var sanitizer = new PipelineMessageSanitizer(new List<string>(), new List<string>(new string[]{ "header-1" }), "*");
+            var sanitizer = new PipelineMessageSanitizer(Array.Empty<string>(), new string[]{ "header-1" }, "*");
 
             Assert.AreEqual("value1", sanitizer.SanitizeHeader("header-1", "value1"));
             Assert.AreEqual("*", sanitizer.SanitizeHeader("header-2", "value2"));
@@ -44,7 +44,7 @@ namespace System.ClientModel.Tests
         [Test]
         public void EverythingIsSanitizedByDefault()
         {
-            var sanitizer = new PipelineMessageSanitizer(new List<string>(), new List<string>(), "*");
+            var sanitizer = new PipelineMessageSanitizer(Array.Empty<string>(), Array.Empty<string>(), "*");
 
             var uri = new Uri("http://localhost/?a=b");
 
