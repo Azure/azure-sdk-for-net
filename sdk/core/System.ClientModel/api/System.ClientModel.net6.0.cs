@@ -109,7 +109,7 @@ namespace System.ClientModel.Primitives
     }
     public partial interface IJsonModel
     {
-        System.Collections.Generic.Dictionary<string, System.BinaryData> AdditionalProperties { get; }
+        System.Collections.Generic.Dictionary<string, object> AdditionalProperties { get; }
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {
@@ -125,8 +125,7 @@ namespace System.ClientModel.Primitives
     public abstract partial class JsonModel<T> : System.ClientModel.Primitives.IJsonModel, System.ClientModel.Primitives.IJsonModel<T>, System.ClientModel.Primitives.IPersistableModel<T>
     {
         protected JsonModel() { }
-        public string? AdditionalProperties { get { throw null; } set { } }
-        System.Collections.Generic.Dictionary<string, System.BinaryData> System.ClientModel.Primitives.IJsonModel.AdditionalProperties { get { throw null; } }
+        System.Collections.Generic.Dictionary<string, object> System.ClientModel.Primitives.IJsonModel.AdditionalProperties { get { throw null; } }
         protected abstract T CreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options);
         protected virtual string GetFormatFromOptionsCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected void ReadUnknownProperty(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

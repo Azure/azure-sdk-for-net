@@ -10,9 +10,9 @@ namespace System.ClientModel.Primitives;
 #pragma warning disable CS1591 // public XML comments
 public abstract class JsonModel<T> : IJsonModel, IJsonModel<T>
 {
-    private Dictionary<string, BinaryData>? _unknownProperties;
+    private Dictionary<string, object>? _unknownProperties;
 
-    Dictionary<string, BinaryData> IJsonModel.AdditionalProperties
+    Dictionary<string, object> IJsonModel.AdditionalProperties
         => _unknownProperties ??= new();
 
 #pragma warning disable AZC0014 // Avoid using banned types in public API
@@ -154,7 +154,12 @@ public abstract class JsonModel<T> : IJsonModel, IJsonModel<T>
             {
                 writer.WritePropertyName(property.Key);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(property.Value);
+
+                // TODO: serialize or not as appropriate
+                // This is different depending on whether we decide on BinaryData
+                // dictionary or object dictionary.
+
+                //writer.WriteRawValue(property.Value);
 #endif
             }
         }
