@@ -1,19 +1,26 @@
 # Release History
 
-## 1.1.0-beta.5 (Unreleased)
+## 1.1.0-beta.6 (Unreleased)
 
 ### Features Added
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 1.1.0-beta.5 (2024-04-19)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Bugs Fixed
+
 - Add `200` to the response code of the `SyncFunctionTriggers`
 - SiteFunctionResource.GetFunctionKeysAsync /SiteSlotFunctionResource.GetFunctionKeysSlotAsync fixed: can not populated with function keys
-  
-### Other Changes
+- Add more enum values for `TriggeredWebJobStatus`
 
 ## 1.1.0-beta.4 (2023-11-30)
 

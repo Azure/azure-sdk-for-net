@@ -125,12 +125,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                                 return true;
                             })
                             .AddProcessor<ProfilingSessionTraceProcessor>()
-                            .AddProcessor(sp =>
-                            {
-                                var manager = sp.GetRequiredService<Manager>();
-                                return new LiveMetricsActivityProcessor(manager);
-                            })
                             .AddAzureMonitorTraceExporter());
+
+            builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) =>
+            {
+                var azureMonitorOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
+                if (azureMonitorOptions.EnableLiveMetrics)
+                {
+                    var manager = sp.GetRequiredService<Manager>();
+                    builder.AddProcessor(new LiveMetricsActivityProcessor(manager));
+                }
+            });
 
             builder.WithMetrics(b => b
                             .AddHttpClientAndServerMetrics()
@@ -141,11 +146,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 logging.AddOpenTelemetry(builderOptions =>
                 {
                     builderOptions.IncludeFormattedMessage = true;
-                    builderOptions.AddProcessor(sp =>
-                    {
-                        var manager = sp.GetRequiredService<Manager>();
-                        return new LiveMetricsLogProcessor(manager);
-                    });
                 });
             });
 
@@ -177,6 +177,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         else
                         {
                             loggingOptions.AddAzureMonitorLogExporter(o => azureMonitorOptions.SetValueToExporterOptions(o));
+                        }
+
+                        if (azureMonitorOptions.EnableLiveMetrics)
+                        {
+                            loggingOptions.AddProcessor(sp =>
+                            {
+                                var manager = sp.GetRequiredService<Manager>();
+                                return new LiveMetricsLogProcessor(manager);
+                            });
                         }
                     });
 
