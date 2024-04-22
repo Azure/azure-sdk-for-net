@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Make members of `RehydrationToken` public
+
 ### Breaking Changes
 
 ### Bugs Fixed
