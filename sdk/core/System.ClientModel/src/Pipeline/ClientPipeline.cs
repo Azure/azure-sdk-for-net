@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.ClientModel.Options;
 using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
@@ -147,10 +148,13 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        var loggingPolicy = options.LoggingPolicy ?? ClientLoggingPolicy.Default;
+        var diagnosticsOptions = options.Diagnostics ?? new DiagnosticsOptions();
+        var loggingPolicy = options.LoggingPolicy ?? new ClientLoggingPolicy(options: diagnosticsOptions);
         if (loggingPolicy is ClientLoggingPolicy clientLoggingPolicy)
         {
-            clientLoggingPolicy.Sanitizer = new PipelineMessageSanitizer(clientLoggingPolicy.LoggedQueryParameters, clientLoggingPolicy.LoggedHeaderNames);
+            var loggedHeaders = diagnosticsOptions.LoggedHeaderNames?.ToArray() ?? Array.Empty<string>();
+            var loggedQueries = diagnosticsOptions.LoggedQueryParameters?.ToArray() ?? Array.Empty<string>();
+            clientLoggingPolicy.Sanitizer = new PipelineMessageSanitizer(loggedQueries, loggedHeaders);
         }
         policies[index++] = loggingPolicy;
 

@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Internal;
+using System.ClientModel.Options;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -39,8 +40,8 @@ namespace System.ClientModel.Tests.Internal
 
         private TestClientEventListener _listener;
 
-        private static List<string> s_allowedHeaders = new List<string> (new[] { "Date", "Custom-Header", "Custom-Response-Header" });
-        private static List<string> s_allowedQueryParameters = new List<string>(new[] { "api-version" });
+        private static string[] s_allowedHeaders = new[] { "Date", "Custom-Header", "Custom-Response-Header" };
+        private static string[] s_allowedQueryParameters = new[] { "api-version" };
         private static PipelineMessageSanitizer _sanitizer = new PipelineMessageSanitizer(s_allowedQueryParameters, s_allowedHeaders);
 
         public EventSourceTests(bool isAsync) : base(isAsync)
@@ -82,7 +83,14 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineResponseTransport("Transport", i => response),
-                LoggingPolicy = new ClientLoggingPolicy(logContent: true, maxLength: int.MaxValue, assemblyName: "Test-SDK", requestIdHeaderName: "Client-Identifier")
+                Diagnostics = new DiagnosticsOptions
+                {
+                    IsLoggingEnabled = true,
+                    IsLoggingContentEnabled = true,
+                    LoggedHeaderNames = new List<string> { "Custom-Response-Header", "Custom-Header" },
+                    LoggedClientAssemblyName = "Test-SDK",
+                    RequestIdHeaderName = "Client-Identifier"
+                }
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -135,7 +143,12 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineResponseTransport("Transport", i => throw exception),
-                LoggingPolicy = new ClientLoggingPolicy(logContent: true, maxLength: int.MaxValue, assemblyName: "Test-SDK", requestIdHeaderName: "Client-Identifier")
+                Diagnostics = new DiagnosticsOptions
+                {
+                    IsLoggingEnabled = true,
+                    IsLoggingContentEnabled = true,
+                    LoggedHeaderNames = new List<string> { "Custom-Response-Header", "Custom-Header" },
+                    LoggedClientAssemblyName = "Test-SDK", RequestIdHeaderName = "Client-Identifier" }
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -215,12 +228,15 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineResponseTransport("Transport", i => response),
-                LoggingPolicy = new ClientLoggingPolicy(
-                    logContent: true,
-                    maxLength: int.MaxValue,
-                    assemblyName: "Test-SDK",
-                    requestIdHeaderName: "Client-Identifier",
-                    loggedHeaderNames: new List<string>(){ "Custom-Response-Header", "Custom-Header"})
+                RetryPolicy = new ObservablePolicy("RetryPolicy"),
+                Diagnostics = new DiagnosticsOptions
+                {
+                    IsLoggingContentEnabled = true,
+                    LoggedContentSizeLimit = int.MaxValue,
+                    LoggedClientAssemblyName = "Test-SDK",
+                    RequestIdHeaderName = "Client-Identifier",
+                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                }
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -258,12 +274,14 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineResponseTransport("Transport", i => response),
-                LoggingPolicy = new ClientLoggingPolicy(
-                    logContent: true,
-                    maxLength: int.MaxValue,
-                    assemblyName: "Test-SDK",
-                    requestIdHeaderName: "x-client-id",
-                    loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
+                Diagnostics = new DiagnosticsOptions
+                {
+                    IsLoggingContentEnabled = true,
+                    LoggedContentSizeLimit = int.MaxValue,
+                    LoggedClientAssemblyName = "Test-SDK",
+                    RequestIdHeaderName = "x-client-id",
+                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                }
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -299,12 +317,14 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineResponseTransport("Transport", i => response),
-                LoggingPolicy = new ClientLoggingPolicy(
-                    logContent: false,
-                    maxLength: int.MaxValue,
-                    assemblyName: "Test-SDK",
-                    requestIdHeaderName: "x-client-id",
-                    loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
+                Diagnostics = new DiagnosticsOptions
+                {
+                    IsLoggingContentEnabled = false,
+                    LoggedContentSizeLimit = int.MaxValue,
+                    LoggedClientAssemblyName = "Test-SDK",
+                    RequestIdHeaderName = "x-client-id",
+                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                }
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -333,12 +353,12 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineResponseTransport("Transport", i => response),
-                LoggingPolicy = new ClientLoggingPolicy(
-                    logContent: false,
-                    maxLength: int.MaxValue,
-                    assemblyName: "Test-SDK",
-                    requestIdHeaderName: "Client-Identifier",
-                    loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
+                Diagnostics = new DiagnosticsOptions
+                {
+                    LoggedClientAssemblyName = "Test-SDK",
+                    RequestIdHeaderName = "Client-Identifier",
+                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                }
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -363,12 +383,12 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineResponseTransport("Transport", i => response),
-                LoggingPolicy = new ClientLoggingPolicy(
-                    logContent: false,
-                    maxLength: int.MaxValue,
-                    assemblyName: "Test-SDK",
-                    requestIdHeaderName: "Client-Identifier",
-                    loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
+                Diagnostics = new DiagnosticsOptions
+                {
+                    LoggedClientAssemblyName = "Test-SDK",
+                    RequestIdHeaderName = "Client-Identifier",
+                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                }
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -562,12 +582,14 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineResponseTransport("Transport", i => response),
-                LoggingPolicy = new ClientLoggingPolicy(
-                    logContent: true,
-                    maxLength: 5,
-                    assemblyName: "Test-SDK",
-                    requestIdHeaderName: "Client-Identifier",
-                    loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
+                Diagnostics = new DiagnosticsOptions
+                {
+                    IsLoggingContentEnabled = true,
+                    LoggedContentSizeLimit = 5,
+                    LoggedClientAssemblyName = "Test-SDK",
+                    RequestIdHeaderName = "Client-Identifier",
+                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                }
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -623,12 +645,12 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineResponseTransport("Transport", i => response),
-                LoggingPolicy = new ClientLoggingPolicy(
-                    logContent: false,
-                    maxLength: int.MaxValue,
-                    assemblyName: "Test-SDK",
-                    requestIdHeaderName: "Client-Identifier",
-                    loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
+                Diagnostics = new DiagnosticsOptions
+                {
+                    LoggedClientAssemblyName = "Test-SDK",
+                    RequestIdHeaderName = "Client-Identifier",
+                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" },
+                }
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -674,13 +696,13 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineResponseTransport("Transport", i => response),
-                LoggingPolicy = new ClientLoggingPolicy(
-                    logContent: false,
-                    maxLength: int.MaxValue,
-                    assemblyName: "Test-SDK",
-                    requestIdHeaderName: "Client-Identifier",
-                    loggedQueryParameters: new List<string>() { "*" },
-                    loggedHeaderNames: new List<string>() { "*" })
+                Diagnostics = new DiagnosticsOptions
+                {
+                    LoggedClientAssemblyName = "Test-SDK",
+                    RequestIdHeaderName = "Client-Identifier",
+                    LoggedHeaderNames = new List<string>() { "*" },
+                    LoggedQueryParameters = new List<string>() { "*" }
+                }
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -702,7 +724,7 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
             Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=123", e.GetProperty<string>("uri"));
             Assert.AreEqual("GET", e.GetProperty<string>("method"));
-            StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
+            StringAssert.Contains($"Date:4/18/2024{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Secret-Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
             Assert.AreEqual("Test-SDK", e.GetProperty<string>("clientAssembly"));
@@ -732,12 +754,15 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineResponseTransport("Transport", i => response),
-                LoggingPolicy = new ClientLoggingPolicy(
-                    logContent: true,
-                    maxLength: int.MaxValue,
-                    assemblyName: "Test-SDK",
-                    requestIdHeaderName: "x-client-id",
-                    loggedHeaderNames: new List<string>() { "Custom-Response-Header", "Custom-Header" })
+                RetryPolicy = new ObservablePolicy("RetryPolicy"),
+                Diagnostics = new DiagnosticsOptions
+                {
+                    IsLoggingContentEnabled = true,
+                    LoggedContentSizeLimit = maxLength,
+                    LoggedClientAssemblyName = "Test-SDK",
+                    RequestIdHeaderName = "x-client-id",
+                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                }
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);

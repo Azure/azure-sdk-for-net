@@ -42,6 +42,20 @@ namespace System.ClientModel
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
 }
+namespace System.ClientModel.Options
+{
+    public partial class DiagnosticsOptions
+    {
+        public DiagnosticsOptions() { }
+        public bool IsLoggingContentEnabled { get { throw null; } set { } }
+        public bool IsLoggingEnabled { get { throw null; } set { } }
+        public string? LoggedClientAssemblyName { get { throw null; } set { } }
+        public int LoggedContentSizeLimit { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<string>? LoggedHeaderNames { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<string>? LoggedQueryParameters { get { throw null; } set { } }
+        public string? RequestIdHeaderName { get { throw null; } set { } }
+    }
+}
 namespace System.ClientModel.Primitives
 {
     public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
@@ -61,10 +75,7 @@ namespace System.ClientModel.Primitives
     }
     public partial class ClientLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public ClientLoggingPolicy(bool isLoggingEnabled = true, System.Collections.Generic.List<string>? loggedHeaderNames = null, System.Collections.Generic.List<string>? loggedQueryParameters = null, string? requestIdHeaderName = null, bool logContent = false, int maxLength = 4096, string? assemblyName = null) { }
-        public static System.ClientModel.Primitives.ClientLoggingPolicy Default { get { throw null; } }
-        public System.Collections.Generic.List<string> LoggedHeaderNames { get { throw null; } }
-        public System.Collections.Generic.List<string> LoggedQueryParameters { get { throw null; } }
+        public ClientLoggingPolicy(string? assemblyName = null, System.ClientModel.Options.DiagnosticsOptions? options = null) { }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
@@ -80,6 +91,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
+        public System.ClientModel.Options.DiagnosticsOptions? Diagnostics { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }

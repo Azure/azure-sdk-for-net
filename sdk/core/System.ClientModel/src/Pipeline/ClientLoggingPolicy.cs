@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.ClientModel.Options;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
@@ -18,6 +19,7 @@ namespace System.ClientModel.Primitives;
 public class ClientLoggingPolicy : PipelinePolicy
 {
     private const double RequestTooLongTime = 3.0; // sec
+    private const int DefaultLoggedContentSizeLimit = 4 * 1024;
     private readonly ClientModelEventSource s_eventSource = ClientModelEventSource.Singleton("System.ClientModel");
 
     private readonly bool _logContent;
@@ -29,45 +31,16 @@ public class ClientLoggingPolicy : PipelinePolicy
     /// <summary>
     /// TODO.
     /// </summary>
-    /// <param name="isLoggingEnabled"></param>
-    /// <param name="loggedHeaderNames"></param>
-    /// <param name="loggedQueryParameters"></param>
-    /// <param name="requestIdHeaderName"></param>
-    /// <param name="logContent"></param>
-    /// <param name="maxLength"></param>
     /// <param name="assemblyName"></param>
-    public ClientLoggingPolicy(
-        bool isLoggingEnabled = true,
-        List<string>? loggedHeaderNames = default,
-        List<string>? loggedQueryParameters = default,
-        string? requestIdHeaderName = default,
-        bool logContent = false,
-        int maxLength = 4 * 1024,
-        string? assemblyName = default)
+    /// <param name="options"></param>
+    public ClientLoggingPolicy(string? assemblyName = default, DiagnosticsOptions? options = default)
     {
-        LoggedHeaderNames = loggedHeaderNames ?? new List<string>();
-        LoggedQueryParameters = loggedQueryParameters ?? new List<string>();
-        _logContent = logContent;
-        _maxLength = maxLength;
+        _logContent = options?.IsLoggingContentEnabled ?? false;
+        _maxLength = options?.LoggedContentSizeLimit ?? DefaultLoggedContentSizeLimit;
         _assemblyName = assemblyName;
-        _clientRequestIdHeaderName = requestIdHeaderName;
-        _isLoggingEnabled = isLoggingEnabled;
+        _clientRequestIdHeaderName = options?.RequestIdHeaderName;
+        _isLoggingEnabled = options?.IsLoggingEnabled ?? true;
     }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    public static ClientLoggingPolicy Default { get; } = new ClientLoggingPolicy();
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    public List<string> LoggedHeaderNames { get; internal set; }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    public List<string> LoggedQueryParameters { get; internal set; }
 
     /// <summary>
     /// TODO.
@@ -96,22 +69,6 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
 
         await ProcessSyncOrAsync(message, pipeline, currentIndex, async: true).ConfigureAwait(false);
-    }
-
-    internal virtual void LogRequest()
-    {
-        if (!s_eventSource.IsEnabled())
-        {
-            return;
-        }
-    }
-
-    internal virtual void LogResponse()
-    {
-        if (!s_eventSource.IsEnabled())
-        {
-            return;
-        }
     }
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
