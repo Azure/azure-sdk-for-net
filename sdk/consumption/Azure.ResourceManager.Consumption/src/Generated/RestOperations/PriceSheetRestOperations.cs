@@ -36,6 +36,29 @@ namespace Azure.ResourceManager.Consumption
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string expand, string skipToken, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/pricesheets/default", false);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skiptoken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string expand, string skipToken, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -119,6 +142,31 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetByBillingPeriodRequestUri(string subscriptionId, string billingPeriodName, string expand, string skipToken, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Billing/billingPeriods/", false);
+            uri.AppendPath(billingPeriodName, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/pricesheets/default", false);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skiptoken", skipToken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByBillingPeriodRequest(string subscriptionId, string billingPeriodName, string expand, string skipToken, int? top)
