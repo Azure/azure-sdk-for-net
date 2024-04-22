@@ -36,6 +36,23 @@ namespace Azure.ResourceManager.ResourceHealth
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionIdAndEventIdRequestUri(string subscriptionId, string eventTrackingId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events/", false);
+            uri.AppendPath(eventTrackingId, true);
+            uri.AppendPath("/listSecurityAdvisoryImpactedResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionIdAndEventIdRequest(string subscriptionId, string eventTrackingId, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -115,6 +132,21 @@ namespace Azure.ResourceManager.ResourceHealth
             }
         }
 
+        internal RequestUriBuilder CreateListByTenantIdAndEventIdRequestUri(string eventTrackingId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events/", false);
+            uri.AppendPath(eventTrackingId, true);
+            uri.AppendPath("/listSecurityAdvisoryImpactedResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListByTenantIdAndEventIdRequest(string eventTrackingId, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -186,6 +218,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionIdAndEventIdNextPageRequestUri(string nextLink, string subscriptionId, string eventTrackingId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionIdAndEventIdNextPageRequest(string nextLink, string subscriptionId, string eventTrackingId, string filter)
@@ -260,6 +300,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByTenantIdAndEventIdNextPageRequestUri(string nextLink, string eventTrackingId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByTenantIdAndEventIdNextPageRequest(string nextLink, string eventTrackingId, string filter)
