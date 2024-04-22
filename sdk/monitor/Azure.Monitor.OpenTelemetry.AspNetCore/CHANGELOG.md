@@ -1,10 +1,21 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.4 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0-beta.3 (2024-04-19)
+
+### Features Added
+
+* Added support for OpenTelemetry Logs to be sent to LiveMetrics.
+  ([#43081](https://github.com/Azure/azure-sdk-for-net/pull/43081))
 
 ### Bugs Fixed
 
