@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-preview.6 (Unreleased)
+## 1.0.0-preview.6 (2024-04-22)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Updates the DTMI convention to be aligned with DTDL v3 requirements, to allow _versionless_ and `major.minor`
 
 ## 1.0.0-preview.5 (2021-11-04)
 

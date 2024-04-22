@@ -3,7 +3,6 @@
 
 using System.Linq;
 using Azure.Provisioning.ResourceManager;
-using Azure.Provisioning.Storage;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Tests
@@ -20,18 +19,6 @@ namespace Azure.Provisioning.Tests
 
             // the only construct is the infrastructure itself which doesn't get included in GetConstructs
             Assert.AreEqual(0, constructs.Count());
-        }
-
-        [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void GetConstructsChildConstructs(bool recursive)
-        {
-            var infra = new TestInfrastructure();
-            infra.AddCommonSqlDatabase();
-            var constructs = infra.GetConstructs(recursive);
-
-            Assert.AreEqual(1, constructs.Count());
         }
 
         [Test]
@@ -73,10 +60,10 @@ namespace Azure.Provisioning.Tests
             var infra = new TestInfrastructure();
             var rg1 = new ResourceGroup(infra, "rg1");
 
-            var childScope = infra.AddCommonSqlDatabase();
+            var childScope = new TestConstruct(infra);
             _ = new ResourceGroup(childScope, "rg2");
 
-            var expected = recursive ? 12 : 4;
+            var expected = recursive ? 4 : 3;
             var resources = infra.GetResources(recursive);
 
             Assert.AreEqual(expected, resources.Count());
@@ -106,11 +93,11 @@ namespace Azure.Provisioning.Tests
             var rg1 = new ResourceGroup(infra, "rg1");
             rg1.AssignProperty(r => r.Location, new Parameter("location"));
 
-            var childScope = infra.AddAppInsightsConstruct();
+            var childScope = new TestConstruct(infra);
             var rg2 = new ResourceGroup(childScope, "rg2");
             rg2.AssignProperty(r => r.Location, new Parameter("location"));
 
-            var expected = recursive ? 3 : 2;
+            var expected = recursive ? 2 : 1;
             var parameters = infra.GetParameters(recursive);
 
             Assert.AreEqual(expected, parameters.Count());
@@ -139,12 +126,11 @@ namespace Azure.Provisioning.Tests
             var rg1 = new ResourceGroup(infra, "rg1");
             rg1.AddOutput("location", r => r.Location);
 
-            var childScope = infra.AddAppInsightsConstruct();
+            var childScope = new TestConstruct(infra);
             var rg2 = new ResourceGroup(childScope, "rg2");
             rg2.AddOutput("location", r => r.Location);
 
-            // appinsights construct has an output
-            var expected = recursive ? 3 : 2;
+            var expected = recursive ? 2 : 1;
             var outputs = infra.GetOutputs(recursive);
 
             Assert.AreEqual(expected, outputs.Count());

@@ -201,7 +201,7 @@
    ],
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "Azure Communication Messages Versions",
-   "IsExtensible": true,
+   "IsExtensible": false,
    "IsNullable": false,
    "Usage": "None"
   }
@@ -430,7 +430,7 @@
       "IsNullable": false
      },
      "IsRequired": false,
-     "IsReadOnly": true
+     "IsReadOnly": false
     }
    ]
   },
@@ -445,7 +445,7 @@
    "Accessibility": "internal",
    "Description": "A data stream.",
    "IsNullable": false,
-   "Usage": "Output",
+   "Usage": "None",
    "Properties": [
     {
      "$id": "55",

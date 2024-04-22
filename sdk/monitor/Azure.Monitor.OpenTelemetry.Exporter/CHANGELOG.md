@@ -7,12 +7,18 @@
 * All three signals (Traces, Metrics, and Logs) now support OpenTelemetry's ["service.version"](https://github.com/open-telemetry/semantic-conventions/tree/main/docs/resource#service) in Resource attributes.
   This is mapped as [Application Version](https://learn.microsoft.com/azure/azure-monitor/app/data-model-complete#application-version) in Application Insights.
   ([#42174](https://github.com/Azure/azure-sdk-for-net/pull/42174))
+* Turned off internal spans and logs in exporter HTTP pipeline
+  ([#43359](https://github.com/Azure/azure-sdk-for-net/pull/43359))
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#43197](https://github.com/Azure/azure-sdk-for-net/pull/43197))
+  - OpenTelemetry 1.8.0
 
 ## 1.3.0-beta.1 (2024-02-08)
 

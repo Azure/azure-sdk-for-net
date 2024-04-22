@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class OperationalInsightsTableData : IUtf8JsonSerializable, IJsonModel<OperationalInsightsTableData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsTableData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsTableData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationalInsightsTableData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(SearchResults))
             {
                 writer.WritePropertyName("searchResults"u8);
-                writer.WriteObjectValue<OperationalInsightsTableSearchResults>(SearchResults, options);
+                writer.WriteObjectValue(SearchResults, options);
             }
             if (Optional.IsDefined(RestoredLogs))
             {
                 writer.WritePropertyName("restoredLogs"u8);
-                writer.WriteObjectValue<OperationalInsightsTableRestoredLogs>(RestoredLogs, options);
+                writer.WriteObjectValue(RestoredLogs, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResultStatistics))
             {
                 writer.WritePropertyName("resultStatistics"u8);
-                writer.WriteObjectValue<OperationalInsightsTableResultStatistics>(ResultStatistics, options);
+                writer.WriteObjectValue(ResultStatistics, options);
             }
             if (Optional.IsDefined(Plan))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-                writer.WriteObjectValue<OperationalInsightsSchema>(Schema, options);
+                writer.WriteObjectValue(Schema, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static OperationalInsightsTableData DeserializeOperationalInsightsTableData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.OperationalInsights
             bool? retentionInDaysAsDefault = default;
             bool? totalRetentionInDaysAsDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -312,10 +312,10 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OperationalInsightsTableData(
                 id,
                 name,

@@ -20,7 +20,10 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
         public PhoneNumbersClientLiveTestBase(bool isAsync) : base(isAsync)
         {
-            SanitizedHeaders.Add("location");
+            HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("location", SanitizeValue)
+            {
+                Regex = PhoneNumberRegEx
+            });
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(PhoneNumberRegEx, SanitizeValue));
             UriRegexSanitizers.Add(new UriRegexSanitizer(PhoneNumberRegEx, SanitizeValue));
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));

@@ -26,6 +26,8 @@ namespace Azure.AI.OpenAI
         private const string OpusValue = "opus";
         private const string AacValue = "aac";
         private const string FlacValue = "flac";
+        private const string WavValue = "wav";
+        private const string PcmValue = "pcm";
 
         /// <summary> Use MP3 as the audio output format. MP3 is the default, general-purpose format. </summary>
         public static SpeechGenerationResponseFormat Mp3 { get; } = new SpeechGenerationResponseFormat(Mp3Value);
@@ -35,6 +37,10 @@ namespace Azure.AI.OpenAI
         public static SpeechGenerationResponseFormat Aac { get; } = new SpeechGenerationResponseFormat(AacValue);
         /// <summary> Use FLAC as the audio output format. FLAC is a fully lossless format optimized for maximum quality at the expense of size. </summary>
         public static SpeechGenerationResponseFormat Flac { get; } = new SpeechGenerationResponseFormat(FlacValue);
+        /// <summary> Use uncompressed WAV as the audio output format, suitable for low-latency applications to avoid decoding overhead. </summary>
+        public static SpeechGenerationResponseFormat Wav { get; } = new SpeechGenerationResponseFormat(WavValue);
+        /// <summary> Use uncompressed PCM as the audio output format, which is similar to WAV but contains raw samples in 24kHz (16-bit signed, low-endian), without the header. </summary>
+        public static SpeechGenerationResponseFormat Pcm { get; } = new SpeechGenerationResponseFormat(PcmValue);
         /// <summary> Determines if two <see cref="SpeechGenerationResponseFormat"/> values are the same. </summary>
         public static bool operator ==(SpeechGenerationResponseFormat left, SpeechGenerationResponseFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SpeechGenerationResponseFormat"/> values are not the same. </summary>

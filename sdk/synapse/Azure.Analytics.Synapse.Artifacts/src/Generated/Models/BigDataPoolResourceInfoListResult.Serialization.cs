@@ -48,12 +48,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new BigDataPoolResourceInfoListResult(nextLink, value ?? new ChangeTrackingList<BigDataPoolResourceInfo>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static BigDataPoolResourceInfoListResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBigDataPoolResourceInfoListResult(document.RootElement);
+        }
+
         internal partial class BigDataPoolResourceInfoListResultConverter : JsonConverter<BigDataPoolResourceInfoListResult>
         {
             public override void Write(Utf8JsonWriter writer, BigDataPoolResourceInfoListResult model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override BigDataPoolResourceInfoListResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceDomainPatch : IUtf8JsonSerializable, IJsonModel<AppServiceDomainPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceDomainPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceDomainPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceDomainPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ContactAdmin))
             {
                 writer.WritePropertyName("contactAdmin"u8);
-                writer.WriteObjectValue<RegistrationContactInfo>(ContactAdmin, options);
+                writer.WriteObjectValue(ContactAdmin, options);
             }
             if (Optional.IsDefined(ContactBilling))
             {
                 writer.WritePropertyName("contactBilling"u8);
-                writer.WriteObjectValue<RegistrationContactInfo>(ContactBilling, options);
+                writer.WriteObjectValue(ContactBilling, options);
             }
             if (Optional.IsDefined(ContactRegistrant))
             {
                 writer.WritePropertyName("contactRegistrant"u8);
-                writer.WriteObjectValue<RegistrationContactInfo>(ContactRegistrant, options);
+                writer.WriteObjectValue(ContactRegistrant, options);
             }
             if (Optional.IsDefined(ContactTech))
             {
                 writer.WritePropertyName("contactTech"u8);
-                writer.WriteObjectValue<RegistrationContactInfo>(ContactTech, options);
+                writer.WriteObjectValue(ContactTech, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RegistrationStatus))
             {
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagedHostNames)
                 {
-                    writer.WriteObjectValue<AppServiceHostName>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Consent))
             {
                 writer.WritePropertyName("consent"u8);
-                writer.WriteObjectValue<DomainPurchaseConsent>(Consent, options);
+                writer.WriteObjectValue(Consent, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DomainNotRenewableReasons))
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceDomainPatch DeserializeAppServiceDomainPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppService.Models
             AppServiceDnsType? targetDnsType = default;
             string authCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -469,10 +469,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AppServiceDomainPatch(
                 id,
                 name,

@@ -17,7 +17,7 @@ namespace Azure.Maps.Routing.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue<GeoJsonGeometry>(Geometry);
+            writer.WriteObjectValue(Geometry);
             if (Common.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -34,6 +34,14 @@ namespace Azure.Maps.Routing.Models
                 writer.WriteStringValue(FeatureType);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

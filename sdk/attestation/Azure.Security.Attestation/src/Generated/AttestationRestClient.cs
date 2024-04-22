@@ -50,7 +50,7 @@ namespace Azure.Security.Attestation
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AttestOpenEnclaveRequest>(request);
+            content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
         }
@@ -124,7 +124,7 @@ namespace Azure.Security.Attestation
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AttestSgxEnclaveRequest>(request);
+            content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
         }
@@ -198,7 +198,7 @@ namespace Azure.Security.Attestation
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TpmAttestationRequest>(request);
+            content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
         }

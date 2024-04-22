@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
 {
     internal partial class AzureSearchChatExtensionParameters : IUtf8JsonSerializable, IJsonModel<AzureSearchChatExtensionParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSearchChatExtensionParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSearchChatExtensionParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureSearchChatExtensionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue<OnYourDataAuthenticationOptions>(Authentication, options);
+                writer.WriteObjectValue(Authentication, options);
             }
             if (Optional.IsDefined(DocumentCount))
             {
@@ -58,7 +58,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(FieldMappingOptions))
             {
                 writer.WritePropertyName("fields_mapping"u8);
-                writer.WriteObjectValue<AzureSearchIndexFieldMappingOptions>(FieldMappingOptions, options);
+                writer.WriteObjectValue(FieldMappingOptions, options);
             }
             if (Optional.IsDefined(QueryType))
             {
@@ -78,7 +78,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(EmbeddingDependency))
             {
                 writer.WritePropertyName("embedding_dependency"u8);
-                writer.WriteObjectValue<OnYourDataVectorizationSource>(EmbeddingDependency, options);
+                writer.WriteObjectValue(EmbeddingDependency, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.AI.OpenAI
 
         internal static AzureSearchChatExtensionParameters DeserializeAzureSearchChatExtensionParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,7 +131,7 @@ namespace Azure.AI.OpenAI
             string filter = default;
             OnYourDataVectorizationSource embeddingDependency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authentication"u8))
@@ -224,10 +224,10 @@ namespace Azure.AI.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureSearchChatExtensionParameters(
                 authentication,
                 topNDocuments,
@@ -283,11 +283,11 @@ namespace Azure.AI.OpenAI
             return DeserializeAzureSearchChatExtensionParameters(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureSearchChatExtensionParameters>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

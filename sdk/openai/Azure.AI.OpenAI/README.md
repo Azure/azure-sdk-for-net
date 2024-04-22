@@ -653,6 +653,10 @@ Console.WriteLine($"Generated image available at: {generatedImage.Url.AbsoluteUr
 
 ### Transcribe audio data with Whisper speech models
 
+Audio data is provided to `GetAudioTranscription()` as `BinaryData`, which may originate from a file, stream, or other
+source. By default, the `Filename` property will be inferred as `test.wav` for the purpose of identifying the audio
+format. For formats other than WAV, specify a matching file extension via `Filename`, e.g. `placeholder.mp3`.
+
 ```C# Snippet:TranscribeAudio
 using Stream audioStreamFromFile = File.OpenRead("myAudioFile.mp3");
 
@@ -660,6 +664,7 @@ var transcriptionOptions = new AudioTranscriptionOptions()
 {
     DeploymentName = "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
     AudioData = BinaryData.FromStream(audioStreamFromFile),
+    Filename = "test.mp3",
     ResponseFormat = AudioTranscriptionFormat.Verbose,
 };
 
@@ -670,6 +675,27 @@ AudioTranscription transcription = transcriptionResponse.Value;
 // When using Simple, SRT, or VTT formats, only transcription.Text will be populated
 Console.WriteLine($"Transcription ({transcription.Duration.Value.TotalSeconds}s):");
 Console.WriteLine(transcription.Text);
+```
+
+Transcriptions can also provide timing information for audio processing segments and/or individual words. The `Verbose`
+response format must be used for timestamp information to be populated.
+
+- Segment-level information is provided by default and incurs no additional latency when processing audio
+- Word-level information incurs non-negligible, additional computational latency while processing audio
+- Options can request word-level timing, segment-level timing, or both via the granularities flags
+
+```C# Snippet:RequestAudioTimestamps
+// To request timestamps for segments and/or words, specify the Verbose response format and provide the desired
+// combination of enum flags for the available timestamp granularities. If not otherwise specified, segments
+// will be provided. Note that words, unlike segments, will introduce additional processing latency to compute.
+AudioTranscriptionOptions optionsForTimestamps = new()
+{
+    DeploymentName = "my-whisper-deployment",
+    AudioData = BinaryData.FromStream(audioDataStream),
+    Filename = "hello-world.mp3",
+    ResponseFormat = AudioTranscriptionFormat.Verbose,
+    TimestampGranularityFlags = AudioTimestampGranularity.Word | AudioTimestampGranularity.Segment,
+};
 ```
 
 ### Translate audio data to English with Whisper speech models
