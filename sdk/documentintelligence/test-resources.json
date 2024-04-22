@@ -11,7 +11,7 @@
         },
         "location": {
             "type": "string",
-            "defaultValue": "eastus",
+            "defaultValue": "[resourceGroup().location]",
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
@@ -21,10 +21,13 @@
             "type": "string"
         },
         "cognitiveServicesEndpointSuffix": {
-            "type": "string",
             "defaultValue": ".cognitiveservices.azure.com",
+            "type": "string"
+        },
+        "testApplicationOid": {
+            "type": "string",
             "metadata": {
-                "description": "Endpoint suffix for the Cognitive Services resource. Defaults to '.cognitiveservices.azure.com'"
+                "description": "The principal to assign the role to. This is application object id."
             }
         },
         "trainingDataAccount": {
@@ -41,7 +44,7 @@
         },
         "trainingDataResourceId": {
             "type": "string",
-            "defaultValue": "[resourceId('2cd617ea-1866-46b1-90e3-fffb087ebf9b', 'TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
+            "defaultValue": "[resourceId('TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
         },
         "trainingDataSasProperties": {
             "type": "object",
@@ -63,28 +66,38 @@
         }
     },
     "variables": {
+        "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/a97b65f3-24c7-4388-baec-2e87135dc908')]",
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
         "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('cognitiveServicesEndpointSuffix'))]"
     },
     "resources": [
         {
             "type": "Microsoft.CognitiveServices/accounts",
+            "apiVersion": "2017-04-18",
             "name": "[variables('uniqueSubDomainName')]",
-            "apiVersion": "2023-10-01-preview",
+            "location":"[parameters('location')]",
             "sku": {
                 "name": "S0"
             },
             "kind": "FormRecognizer",
-            "location": "[parameters('location')]",
             "properties": {
                 "customSubDomainName": "[variables('uniqueSubDomainName')]"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2018-09-01-preview",
+            "name": "[guid(resourceGroup().id)]",
+            "properties": {
+                "roleDefinitionId": "[variables('roleDefinitionId')]",
+                "principalId": "[parameters('testApplicationOid')]"
             }
         }
     ],
     "outputs": {
         "API_KEY": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('uniqueSubDomainName')), '2023-10-01-preview').key1]"
+            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts',variables('uniqueSubDomainName')), '2017-04-18').key1]"
         },
         "ENDPOINT": {
             "type": "string",
