@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
 ### Breaking Changes
 
 ### Bugs Fixed
