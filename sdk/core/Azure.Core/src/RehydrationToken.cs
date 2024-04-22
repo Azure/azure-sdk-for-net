@@ -15,31 +15,58 @@ namespace Azure.Core
         /// </summary>
         public string Id { get; } = NextLinkOperationImplementation.NotSet;
 
-        // Version for this contract itself since we might change the members in the future.
-        internal string Version { get; } = NextLinkOperationImplementation.RehydrationTokenVersion;
+        /// <summary>
+        /// Version the <see cref="RehydrationToken"/> struct.
+        /// </summary>
+        public string Version { get; } = NextLinkOperationImplementation.RehydrationTokenVersion;
 
-        // The below members are used to re-construct <cref="NextLinkOperationImplemenation">.
-        // Value of <cref="NextLinkOperationImplemenration.HeaderSrouce">.
-        internal string HeaderSource { get; }
+        /// <summary>
+        /// The header source of the operation, could be None, OperationLocation, AzureAsyncOperation or Location.
+        /// </summary>
+        public string HeaderSource { get; }
 
-        // The polling Uri of the operation.
-        internal string NextRequestUri { get; }
+        /// <summary>
+        /// The polling Uri of the operation.
+        /// </summary>
+        public string NextRequestUri { get; }
 
-        // The initial Uri of the operation.
-        internal string InitialUri { get; }
+        /// <summary>
+        /// The initial Uri of the operation.
+        /// </summary>
+        public string InitialUri { get; }
 
-        // The Http request method of the operation.
-        internal RequestMethod RequestMethod { get; }
+        /// <summary>
+        /// The Http request method of the operation.
+        /// </summary>
+        public RequestMethod RequestMethod { get; }
 
-        // The last known location of the operation.
-        internal string? LastKnownLocation { get; }
+        /// <summary>
+        /// The last known location of the operation.
+        /// </summary>
+        public string? LastKnownLocation { get; }
 
-        // The final state of the operation, could be azure-async-operation, location, original-uri or operation-location.
-        internal string FinalStateVia { get; }
+        /// <summary>
+        /// The final state of the operation, could be AzureAsyncOperation, Location, OriginalUri, OperationLocation or LocationOverride.
+        /// </summary>
+        public string FinalStateVia { get; }
 
-        internal RehydrationToken(string id, string? version, string headerSource, string nextRequestUri, string initialUri, RequestMethod requestMethod, string? lastKnownLocation, string finalStateVia)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RehydrationToken"/> struct.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="version"></param>
+        /// <param name="headerSource"></param>
+        /// <param name="nextRequestUri"></param>
+        /// <param name="initialUri"></param>
+        /// <param name="requestMethod"></param>
+        /// <param name="lastKnownLocation"></param>
+        /// <param name="finalStateVia"></param>
+        public RehydrationToken(string? id, string? version, string headerSource, string nextRequestUri, string initialUri, RequestMethod requestMethod, string? lastKnownLocation, string finalStateVia)
         {
-            Id = id;
+            if (id is not null)
+            {
+                Id = id;
+            }
             if (version is not null)
             {
                 Version = version;
