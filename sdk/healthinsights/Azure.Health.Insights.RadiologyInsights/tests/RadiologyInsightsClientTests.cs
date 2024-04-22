@@ -27,9 +27,11 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             patientRecord.PatientDocuments[0].AdministrativeMetadata = CreateDocumentAdministrativeMetadata();
             List<PatientRecord> patientRecords = new List<PatientRecord> { patientRecord };
             RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(patientRecords);
+            RadiologyInsightsJob radiologyInsightsJob = new RadiologyInsightsJob();
+            radiologyInsightsJob.JobData = radiologyInsightsData;
             radiologyInsightsData.Configuration = CreateConfiguration();
-
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+            var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, jobId, radiologyInsightsJob);
             RadiologyInsightsInferenceResult responseData = operation.Value;
             var inferences = responseData.PatientResults.First().Inferences;
 
@@ -86,7 +88,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 BirthDate = new System.DateTime(1959, 11, 11),
                 Sex = PatientSex.Female,
             };
-            Encounter encounter = new Encounter("encounterid1")
+            PatientEncounter encounter = new PatientEncounter("encounterid1")
             {
                 Class = EncounterClass.InPatient,
                 Period = new TimePeriod
@@ -99,10 +101,10 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             PatientDocument patientDocument = new PatientDocument(DocumentType.Note, "doc2", documentContent)
             {
                 ClinicalType = ClinicalDocumentType.RadiologyReport,
-                CreatedDateTime = new System.DateTime(2021, 08, 28)
+                CreatedAt = new System.DateTime(2021, 08, 28)
             };
             PatientRecord patientRecord = new PatientRecord(id);
-            patientRecord.Info = patientInfo;
+            patientRecord.Details = patientInfo;
             patientRecord.Encounters.Add(encounter);
             patientRecord.PatientDocuments.Add(patientDocument);
             return patientRecord;
