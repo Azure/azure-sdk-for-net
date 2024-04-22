@@ -34,6 +34,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("answeredBy"u8);
                 writer.WriteObjectValue(AnsweredBy);
             }
+            if (MediaStreamingConfiguration != null)
+            {
+                writer.WritePropertyName("mediaStreamingConfiguration"u8);
+                writer.WriteObjectValue(MediaStreamingConfiguration);
+            }
             writer.WriteEndObject();
         }
     }

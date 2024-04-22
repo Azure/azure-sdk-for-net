@@ -45,7 +45,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions)
+        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingConfiguration mediaStreamingConfiguration)
         {
             Targets = targets;
             SourceCallerIdNumber = sourceCallerIdNumber;
@@ -54,6 +55,7 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
             CallbackUri = callbackUri;
             CallIntelligenceOptions = callIntelligenceOptions;
+            MediaStreamingConfiguration = mediaStreamingConfiguration;
         }
 
         /// <summary> The targets of the call. </summary>
@@ -73,5 +75,7 @@ namespace Azure.Communication.CallAutomation
         public string CallbackUri { get; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
+        /// <summary> Media Streaming Configuration. </summary>
+        public MediaStreamingConfiguration MediaStreamingConfiguration { get; set; }
     }
 }

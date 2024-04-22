@@ -38,13 +38,15 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy)
+        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, MediaStreamingConfiguration mediaStreamingConfiguration)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
             OperationContext = operationContext;
             CallIntelligenceOptions = callIntelligenceOptions;
             AnsweredBy = answeredBy;
+            MediaStreamingConfiguration = mediaStreamingConfiguration;
         }
 
         /// <summary> The context associated with the call. </summary>
@@ -57,5 +59,7 @@ namespace Azure.Communication.CallAutomation
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
         /// <summary> The identifier of the call automation entity which answers the call. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
+        /// <summary> Media Streaming Configuration. </summary>
+        public MediaStreamingConfiguration MediaStreamingConfiguration { get; set; }
     }
 }
