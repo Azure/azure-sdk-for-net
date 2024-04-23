@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0 (2024-04-23)
+## 1.3.0 (2024-04-30)
 
 ### Features Added
 
@@ -16,12 +16,6 @@
 - Add ProfileChangeSkuWafMapping 
 - Add ManagedServiceIdentity support for profile
 - Add ValidateSecret
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.0 (2023-11-21)
 
