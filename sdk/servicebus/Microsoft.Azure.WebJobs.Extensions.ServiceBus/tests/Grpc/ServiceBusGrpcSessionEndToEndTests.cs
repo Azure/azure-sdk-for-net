@@ -166,6 +166,26 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task BindToSessionMessageAndSetAndGetBinaryData()
+        {
+            var host = BuildHost<ServiceBusBindToSessionMessageAndSetAndGet>();
+            var settlementImpl = host.Services.GetRequiredService<SettlementService>();
+            var provider = host.Services.GetRequiredService<MessagingProvider>();
+            ServiceBusBindToSessionMessageAndSetAndGet.SettlementService = settlementImpl;
+            await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+
+            using (host)
+            {
+                var message = new ServiceBusMessage(new BinaryData("foobar")) { SessionId = "sessionId" };
+                var sender = client.CreateSender(FirstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+        }
+
+        [Test]
         public async Task BindToSessionMessageAndReleaseSession()
         {
             var host = BuildHost<ServiceBusBindToSessionMessageAndReleaseSession>();

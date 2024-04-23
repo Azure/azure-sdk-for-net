@@ -174,7 +174,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
             {
                 if (_provider.SessionActionsCache.TryGetValue(request.SessionId, out var actions))
                 {
-                    await actions.SetSessionStateAsync(BinaryData.FromString(request.SessionState.ToStringUtf8()),
+                    await actions.SetSessionStateAsync(BinaryData.FromBytes(request.SessionState.ToByteArray()),
                                                        context.CancellationToken).ConfigureAwait(false);
                     return new Empty();
                 }
