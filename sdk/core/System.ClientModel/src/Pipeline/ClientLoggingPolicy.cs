@@ -321,16 +321,11 @@ public class ClientLoggingPolicy : PipelinePolicy
     private class LoggingStream : Stream
     {
         private readonly string _requestId;
-
         private int _maxLoggedBytes;
         private int _originalMaxLength;
-
         private readonly Stream _originalStream;
-
         private readonly bool _error;
-
         private readonly Encoding? _textEncoding;
-
         private int _blockNumber;
 
         public LoggingStream(string requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding)

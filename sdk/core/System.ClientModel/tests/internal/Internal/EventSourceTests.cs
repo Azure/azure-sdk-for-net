@@ -82,7 +82,7 @@ namespace System.ClientModel.Tests.Internal
 
             ClientPipelineOptions options = new()
             {
-                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                Transport = new MockPipelineTransport("Transport", i => response),
                 Diagnostics = new DiagnosticsOptions
                 {
                     IsLoggingEnabled = true,
@@ -142,7 +142,7 @@ namespace System.ClientModel.Tests.Internal
             var exception = new InvalidOperationException();
             ClientPipelineOptions options = new()
             {
-                Transport = new MockPipelineResponseTransport("Transport", i => throw exception),
+                Transport = new MockPipelineTransport("Transport", (PipelineMessage i) => throw exception),
                 Diagnostics = new DiagnosticsOptions
                 {
                     IsLoggingEnabled = true,
@@ -227,7 +227,7 @@ namespace System.ClientModel.Tests.Internal
 
             ClientPipelineOptions options = new()
             {
-                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                Transport = new MockPipelineTransport("Transport", i => response),
                 RetryPolicy = new ObservablePolicy("RetryPolicy"),
                 Diagnostics = new DiagnosticsOptions
                 {
@@ -273,7 +273,7 @@ namespace System.ClientModel.Tests.Internal
 
             ClientPipelineOptions options = new()
             {
-                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                Transport = new MockPipelineTransport("Transport", i => response),
                 RetryPolicy = new ObservablePolicy("RetryPolicy"),
                 Diagnostics = new DiagnosticsOptions
                 {
@@ -316,7 +316,7 @@ namespace System.ClientModel.Tests.Internal
 
             ClientPipelineOptions options = new()
             {
-                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                Transport = new MockPipelineTransport("Transport", i => response),
                 Diagnostics = new DiagnosticsOptions
                 {
                     IsLoggingContentEnabled = false,
@@ -352,7 +352,7 @@ namespace System.ClientModel.Tests.Internal
 
             ClientPipelineOptions options = new()
             {
-                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                Transport = new MockPipelineTransport("Transport", i => response),
                 Diagnostics = new DiagnosticsOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
@@ -382,7 +382,7 @@ namespace System.ClientModel.Tests.Internal
 
             ClientPipelineOptions options = new()
             {
-                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                Transport = new MockPipelineTransport("Transport", i => response),
                 Diagnostics = new DiagnosticsOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
@@ -581,7 +581,7 @@ namespace System.ClientModel.Tests.Internal
 
             ClientPipelineOptions options = new()
             {
-                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                Transport = new MockPipelineTransport("Transport", i => response),
                 RetryPolicy = new ObservablePolicy("RetryPolicy"),
                 Diagnostics = new DiagnosticsOptions
                 {
@@ -645,7 +645,7 @@ namespace System.ClientModel.Tests.Internal
 
             ClientPipelineOptions options = new()
             {
-                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                Transport = new MockPipelineTransport("Transport", i => response),
                 Diagnostics = new DiagnosticsOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
@@ -698,7 +698,7 @@ namespace System.ClientModel.Tests.Internal
 
             ClientPipelineOptions options = new()
             {
-                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                Transport = new MockPipelineTransport("Transport", i => response),
                 Diagnostics = new DiagnosticsOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
@@ -756,7 +756,7 @@ namespace System.ClientModel.Tests.Internal
 
             ClientPipelineOptions options = new()
             {
-                Transport = new MockPipelineResponseTransport("Transport", i => response),
+                Transport = new MockPipelineTransport("Transport", i => response),
                 RetryPolicy = new ObservablePolicy("RetryPolicy"),
                 Diagnostics = new DiagnosticsOptions
                 {
