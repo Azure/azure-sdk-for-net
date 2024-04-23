@@ -4,9 +4,11 @@
 using System.ClientModel.Internal;
 using System.ClientModel.Options;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +22,8 @@ public class ClientLoggingPolicy : PipelinePolicy
 {
     private const double RequestTooLongTime = 3.0; // sec
     private const int DefaultLoggedContentSizeLimit = 4 * 1024;
-    private readonly ClientModelEventSource s_eventSource = ClientModelEventSource.Singleton("System.ClientModel");
+    private static ClientModelEventSource? s_eventSource;
+    private const string DefaultEventSourceName = "System.ClientModel";
 
     private readonly bool _logContent;
     private readonly int _maxLength;
@@ -28,18 +31,40 @@ public class ClientLoggingPolicy : PipelinePolicy
     private readonly string? _clientRequestIdHeaderName;
     private readonly bool _isLoggingEnabled;
 
+    internal static ClientModelEventSource Singleton { get => s_eventSource ??= ClientModelEventSource.Create(DefaultEventSourceName, Array.Empty<string>()); } //TODO add traits
+
     /// <summary>
     /// TODO.
     /// </summary>
-    /// <param name="assemblyName"></param>
     /// <param name="options"></param>
-    public ClientLoggingPolicy(string? assemblyName = default, DiagnosticsOptions? options = default)
+    public ClientLoggingPolicy(DiagnosticsOptions? options = default) : this(null, Array.Empty<string>(), options)
+    {
+    }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="eventSourceName"></param>
+    /// <param name="eventSourceTraits"></param>
+    /// <param name="options"></param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public ClientLoggingPolicy(string? eventSourceName = default, string[]? eventSourceTraits = default, DiagnosticsOptions? options = default)
     {
         _logContent = options?.IsLoggingContentEnabled ?? false;
         _maxLength = options?.LoggedContentSizeLimit ?? DefaultLoggedContentSizeLimit;
-        _assemblyName = assemblyName;
+        _assemblyName = options?.LoggedClientAssemblyName;
         _clientRequestIdHeaderName = options?.RequestIdHeaderName;
         _isLoggingEnabled = options?.IsLoggingEnabled ?? true;
+
+        if (s_eventSource != null && !string.IsNullOrEmpty(eventSourceName) && eventSourceName != s_eventSource.Name)
+        {
+            throw new ArgumentException("Cannot use multiple event source names in the same application.");
+        }
+
+        if (s_eventSource == null)
+        {
+            s_eventSource = ClientModelEventSource.Create(eventSourceName ?? DefaultEventSourceName, eventSourceTraits);
+        }
     }
 
     /// <summary>
@@ -48,46 +73,35 @@ public class ClientLoggingPolicy : PipelinePolicy
     internal PipelineMessageSanitizer? Sanitizer { get; set; }
 
     /// <inheritdoc/>
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        if (!_isLoggingEnabled)
-        {
-            ProcessNext(message, pipeline, currentIndex);
-            return;
-        }
-
+    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex) =>
         ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).EnsureCompleted();
-    }
 
     /// <inheritdoc/>
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        if (!_isLoggingEnabled)
-        {
-            await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
-            return;
-        }
-
+    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex) =>
         await ProcessSyncOrAsync(message, pipeline, currentIndex, async: true).ConfigureAwait(false);
-    }
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        PipelineRequest request = message.Request;
-        string requestId = string.IsNullOrEmpty(_clientRequestIdHeaderName) ? string.Empty : GetRequestIdFromHeaders(request.Headers, _clientRequestIdHeaderName!);
-
-        s_eventSource.Request(request, requestId, _assemblyName, Sanitizer!);
-
-        Encoding? requestTextEncoding = null;
-
-        if (request.Headers.TryGetValue("Content-Type", out string? contentType))
+        if (!_isLoggingEnabled || !Singleton.IsEnabled())
         {
-            ContentTypeUtilities.TryGetTextEncoding(contentType!, out requestTextEncoding);
+            if (async)
+            {
+                await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+            }
+            else
+            {
+                ProcessNext(message, pipeline, currentIndex);
+            }
+            return;
         }
 
-        var logWrapper = new ContentEventSourceWrapper(s_eventSource, _logContent, _maxLength, message.CancellationToken);
+        // Log the request
 
-        await logWrapper.LogAsync(requestId, request.Content, requestTextEncoding, async).ConfigureAwait(false).EnsureCompleted(async);
+        PipelineRequest request = message.Request;
+        string? requestId = GetRequestIdFromHeaders(request.Headers);
+
+        LogRequest(request, requestId);
+        LogRequestContent(request, requestId, async, message.CancellationToken);
 
         var before = Stopwatch.GetTimestamp();
 
@@ -104,71 +118,198 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
         catch (Exception ex)
         {
-            s_eventSource.ExceptionResponse(requestId, ex.ToString());
+            Singleton.ExceptionResponse(requestId ?? string.Empty, ex.ToString());
             throw;
         }
 
         var after = Stopwatch.GetTimestamp();
 
+        // Log the response
+
         PipelineResponse response = message.Response!;
-        bool isError = response.IsError;
-
-        response.Headers.TryGetValue("Content-Type", out string? responseContentType);
-        ContentTypeUtilities.TryGetTextEncoding(responseContentType!, out Encoding? responseTextEncoding);
-
-        bool wrapResponseContent = !message.BufferResponse &&
-                                   response.ContentStream != null &&
-                                   response.ContentStream?.CanSeek == false &&
-                                   logWrapper.IsEnabled(isError);
 
         double elapsed = (after - before) / (double)Stopwatch.Frequency;
 
-        string responseId = string.IsNullOrEmpty(_clientRequestIdHeaderName) ? string.Empty : GetResponseIdFromHeaders(response.Headers);
-        responseId = string.IsNullOrEmpty(responseId) ? requestId : responseId;
+        string? responseId = GetResponseIdFromHeaders(response.Headers);
+        responseId = string.IsNullOrEmpty(responseId) ? requestId : responseId; // Use the request ID if there was no response id
 
-        if (isError)
-        {
-            s_eventSource.ErrorResponse(response, responseId, Sanitizer!, elapsed);
-        }
-        else
-        {
-            s_eventSource.Response(response, responseId, Sanitizer!, elapsed);
-        }
-
-        if (wrapResponseContent)
-        {
-            response.ContentStream = new LoggingStream(responseId, logWrapper, _maxLength, response.ContentStream!, isError, responseTextEncoding);
-        }
-        else
-        {
-            await logWrapper.LogAsync(responseId, isError, response.ContentStream, responseTextEncoding, async).ConfigureAwait(false).EnsureCompleted(async);
-        }
+        LogResponse(response, responseId, elapsed);
+        LogResponseContent(response, responseId, message.BufferResponse, message.CancellationToken);
 
         if (elapsed > RequestTooLongTime)
         {
-            s_eventSource.ResponseDelay(responseId, elapsed);
+            Singleton.ResponseDelay(responseId ?? string.Empty, elapsed);
         }
     }
 
-    private string GetResponseIdFromHeaders(PipelineResponseHeaders keyValuePairs)
+    private void LogRequest(PipelineRequest request, string? requestId)
     {
-        keyValuePairs.TryGetValue(_clientRequestIdHeaderName!, out var clientRequestId);
-        return clientRequestId ?? string.Empty;
+        Singleton.Request(request, requestId ?? string.Empty, _assemblyName, Sanitizer!);
     }
 
-    private string GetRequestIdFromHeaders(PipelineRequestHeaders keyValuePairs, string clientRequestIdHeaderName)
+    private async Task LogRequestContent(PipelineRequest request, string? requestId, bool async, CancellationToken cancellationToken)
     {
-        keyValuePairs.TryGetValue(clientRequestIdHeaderName, out var clientRequestId);
-        return clientRequestId ?? string.Empty;
+        // If logging content is disabled, or the request content is null, or informational logs are not enabled, return
+        // Checking the log level prevents expensive operations from being executed
+        if (!_logContent || request.Content == null || !Singleton.IsEnabled(EventLevel.Informational, EventKeywords.All))
+        {
+            return; // nothing to log
+        }
+
+        // Convert binary content to bytes
+        using var memoryStream = new MaxLengthStream(_maxLength);
+        if (async)
+        {
+            await request.Content.WriteToAsync(memoryStream, cancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            request.Content.WriteTo(memoryStream, cancellationToken);
+        }
+        var bytes = memoryStream.ToArray();
+
+        // Try to extract a text encoding from the headers
+        Encoding? requestTextEncoding = null;
+
+        if (request.Headers.TryGetValue("Content-Type", out var contentType) && contentType != null)
+        {
+            ContentTypeUtilities.TryGetTextEncoding(contentType, out requestTextEncoding);
+        }
+
+        // Log to event source
+        Singleton.RequestContent(requestId ?? string.Empty, bytes, requestTextEncoding);
     }
+
+    private void LogResponse(PipelineResponse response, string? responseId, double elapsed)
+    {
+        bool isError = response.IsError;
+        if (isError)
+        {
+            Singleton.ErrorResponse(response, responseId ?? string.Empty, Sanitizer!, elapsed);
+        }
+        else
+        {
+            Singleton.Response(response, responseId ?? string.Empty, Sanitizer!, elapsed);
+        }
+    }
+
+    private async Task LogResponseContent(PipelineResponse response, string? responseId, bool bufferResponse, bool async, CancellationToken cancellationToken)
+    {
+        // If logging content is disabled, or the request content is null, or informational logs are not enabled, return.
+        // Checking the log level prevents expensive operations from being executed
+        // TODO - consider moving this down to LoggingStream
+        var logErrorResponseContent = response.IsError && Singleton.IsEnabled(EventLevel.Warning, EventKeywords.All);
+        var logResponseContent = Singleton.IsEnabled(EventLevel.Informational, EventKeywords.All) || logErrorResponseContent;
+
+        if (!_logContent || !logResponseContent)
+        {
+            return; // nothing to log
+        }
+
+        // Determine if the content stream should be wrapped in a logging stream, which logs the stream in blocks as it is being read
+        var wrapContent =
+            !bufferResponse // Content is not buffered - content should be in the content stream
+            && response.ContentStream != null // Content stream is available
+            && response.ContentStream?.CanSeek == false; // Content stream is not seekable - if it's seekable we can just log directly
+
+        if (wrapContent)
+        {
+            response.ContentStream = new LoggingStream(responseId ?? string.Empty, _maxLength, response.ContentStream!, response.IsError, null);
+        }
+        else
+        {
+            byte[]? bytes = null;
+            if (bufferResponse)
+            {
+                bytes = response.Content.ToArray();
+            }
+            else
+            {
+                if (response.ContentStream != null)
+                {
+                    using var memoryStream = new MaxLengthStream(_maxLength);
+                    if (async)
+                    {
+                        await response.ContentStream.CopyToAsync(memoryStream, cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response.ContentStream.CopyTo(memoryStream);
+                    }
+                    response.ContentStream.Seek(0, SeekOrigin.Begin);
+
+                    bytes = memoryStream.ToArray();
+                }
+            }
+            if (response.IsError)
+            {
+                Singleton.ErrorResponseContent(responseId ?? string.Empty, bytes ?? Array.Empty<byte>(), null); // TODO - add text encoding
+            }
+            else
+            {
+                Singleton.ResponseContent(responseId ?? string.Empty, bytes ?? Array.Empty<byte>(), null); // TODO - add text encoding
+            }
+        }
+    }
+
+    private string? GetResponseIdFromHeaders(PipelineResponseHeaders keyValuePairs)
+    {
+        if (string.IsNullOrEmpty(_clientRequestIdHeaderName))
+        {
+            return null;
+        }
+        keyValuePairs.TryGetValue(_clientRequestIdHeaderName!, out var clientRequestId);
+        return clientRequestId;
+    }
+
+    private string? GetRequestIdFromHeaders(PipelineRequestHeaders keyValuePairs)
+    {
+        if (string.IsNullOrEmpty(_clientRequestIdHeaderName))
+        {
+            return null;
+        }
+        keyValuePairs.TryGetValue(_clientRequestIdHeaderName, out var clientRequestId);
+        return clientRequestId;
+    }
+
+    #region MaxLengthStream
+    private class MaxLengthStream : MemoryStream
+    {
+        private int _bytesLeft;
+
+        public MaxLengthStream(int maxLength) : base()
+        {
+            _bytesLeft = maxLength;
+        }
+
+        public override void Write(byte[] buffer, int offset, int count)
+        {
+            DecrementLength(ref count);
+            if (count > 0)
+            {
+                base.Write(buffer, offset, count);
+            }
+        }
+
+        public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+        {
+            return count > 0 ? base.WriteAsync(buffer, offset, count, cancellationToken) : Task.CompletedTask;
+        }
+
+        private void DecrementLength(ref int count)
+        {
+            var left = Math.Min(count, _bytesLeft);
+            count = left;
+
+            _bytesLeft -= count;
+        }
+    }
+    #endregion
 
     #region LoggingStream
-
     private class LoggingStream : Stream
     {
         private readonly string _requestId;
-
-        private readonly ContentEventSourceWrapper _eventSourceWrapper;
 
         private int _maxLoggedBytes;
 
@@ -180,12 +321,11 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         private int _blockNumber;
 
-        public LoggingStream(string requestId, ContentEventSourceWrapper eventSourceWrapper, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding)
+        public LoggingStream(string requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding)
         {
             // Should only wrap non-seekable streams
             Debug.Assert(!originalStream.CanSeek);
             _requestId = requestId;
-            _eventSourceWrapper = eventSourceWrapper;
             _maxLoggedBytes = maxLoggedBytes;
             _originalStream = originalStream;
             _error = error;
@@ -208,14 +348,37 @@ public class ClientLoggingPolicy : PipelinePolicy
             return result;
         }
 
-        private void LogBuffer(byte[] buffer, int offset, int count)
+        private void LogBuffer(byte[] buffer, int offset, int length)
         {
-            if (count == 0)
+            if (length == 0 || buffer == null) // TODO - more checks needed
             {
                 return;
             }
 
-            _eventSourceWrapper.Log(_requestId, _error, buffer, offset, count, _textEncoding, _blockNumber);
+            //_eventSourceWrapper.Log(_requestId, _error, buffer, offset, count, _textEncoding, _blockNumber);
+            var logLength = Math.Min(length, _maxLoggedBytes); // TODO - should be a dif value?
+
+            byte[] bytes;
+            if (length == logLength && offset == 0)
+            {
+                bytes = buffer;
+            }
+            else
+            {
+                bytes = new byte[logLength];
+                Buffer.BlockCopy(buffer, offset, bytes, 0, logLength);
+                // Array.Copy(buffer, offset, bytes, 0, logLength); TODO - will it break to use buffer. instead?
+            }
+
+            if (_error)
+            {
+                // TODO - store event source in LoggingStream? might need if I move above checks back
+                Singleton.ErrorResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
+            }
+            else
+            {
+                Singleton.ResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
+            }
 
             _blockNumber++;
         }
@@ -242,6 +405,25 @@ public class ClientLoggingPolicy : PipelinePolicy
             set => _originalStream.Position = value;
         }
 
+        // Make this stream readonly
+        public override bool CanWrite => false;
+
+        // Make this stream readonly
+        public override void Write(byte[] buffer, int offset, int count)
+        {
+            throw new NotSupportedException("This stream is read-only.");
+        }
+
+        // Make this stream readonly
+        public override void SetLength(long value)
+        {
+            throw new NotSupportedException("This stream is read-only.");
+        }
+
+        public override void Flush()
+        {
+        }
+
         public override void Close()
         {
             _originalStream.Close();
@@ -259,217 +441,6 @@ public class ClientLoggingPolicy : PipelinePolicy
             var left = Math.Min(count, _maxLoggedBytes);
             count = left;
             _maxLoggedBytes -= count;
-        }
-
-        public override bool CanWrite => false;
-
-        public override void Write(byte[] buffer, int offset, int count)
-        {
-            throw new NotSupportedException();
-        }
-
-        public override void SetLength(long value)
-        {
-            throw new NotSupportedException();
-        }
-
-        public override void Flush()
-        {
-            // Flush is allowed on read-only stream
-        }
-    }
-    #endregion
-
-    #region ContentEventSourceWrapper
-
-    private readonly struct ContentEventSourceWrapper
-    {
-        private const int CopyBufferSize = 8 * 1024;
-        private readonly ClientModelEventSource? _eventSource;
-
-        private readonly int _maxLength;
-
-        private readonly CancellationToken _cancellationToken;
-
-        public ContentEventSourceWrapper(ClientModelEventSource eventSource, bool logContent, int maxLength, CancellationToken cancellationToken)
-        {
-            _eventSource = logContent ? eventSource : null;
-            _maxLength = maxLength;
-            _cancellationToken = cancellationToken;
-        }
-
-        public async ValueTask LogAsync(string requestId, bool isError, Stream? stream, Encoding? textEncoding, bool async)
-        {
-            EventType eventType = ResponseOrError(isError);
-
-            if (stream == null || !IsEnabled(eventType))
-            {
-                return;
-            }
-
-            var bytes = await FormatAsync(stream, async).ConfigureAwait(false).EnsureCompleted(async);
-            Log(requestId, eventType, bytes, textEncoding);
-        }
-
-        public async ValueTask LogAsync(string requestId, BinaryContent? content, Encoding? textEncoding, bool async)
-        {
-            EventType eventType = EventType.Request;
-
-            if (content == null || !IsEnabled(eventType))
-            {
-                return;
-            }
-
-            var bytes = await FormatAsync(content, async).ConfigureAwait(false).EnsureCompleted(async);
-
-            Log(requestId, eventType, bytes, textEncoding);
-        }
-
-        public void Log(string requestId, bool isError, byte[] buffer, int offset, int length, Encoding? textEncoding, int? block = null)
-        {
-            EventType eventType = ResponseOrError(isError);
-
-            if (buffer == null || !IsEnabled(eventType))
-            {
-                return;
-            }
-
-            var logLength = Math.Min(length, _maxLength);
-
-            byte[] bytes;
-            if (length == logLength && offset == 0)
-            {
-                bytes = buffer;
-            }
-            else
-            {
-                bytes = new byte[logLength];
-                Array.Copy(buffer, offset, bytes, 0, logLength);
-            }
-
-            Log(requestId, eventType, bytes, textEncoding, block);
-        }
-
-        public bool IsEnabled(bool isError)
-        {
-            return IsEnabled(ResponseOrError(isError));
-        }
-
-        private bool IsEnabled(EventType errorResponse)
-        {
-            return _eventSource != null &&
-                   (_eventSource.IsEnabled(EventLevel.Informational, EventKeywords.All) ||
-                   (errorResponse == EventType.ErrorResponse && _eventSource.IsEnabled(EventLevel.Warning, EventKeywords.All)));
-        }
-
-        private async ValueTask<byte[]> FormatAsync(BinaryContent requestContent, bool async)
-        {
-            using var memoryStream = new MaxLengthStream(_maxLength);
-
-            if (async)
-            {
-                await requestContent.WriteToAsync(memoryStream, _cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                requestContent.WriteTo(memoryStream, _cancellationToken);
-            }
-
-            return memoryStream.ToArray();
-        }
-
-        private async ValueTask<byte[]> FormatAsync(Stream content, bool async)
-        {
-            content.Seek(0, SeekOrigin.Begin);
-
-            using var memoryStream = new MaxLengthStream(_maxLength);
-
-            if (async)
-            {
-                await content.CopyToAsync(memoryStream, CopyBufferSize, _cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                content.CopyTo(memoryStream);
-            }
-
-            content.Seek(0, SeekOrigin.Begin);
-
-            return memoryStream.ToArray();
-        }
-
-        private void Log(string requestId, EventType eventType, byte[] bytes, Encoding? textEncoding, int? block = null)
-        {
-            // We checked IsEnabled before we got here
-            Debug.Assert(_eventSource != null);
-            ClientModelEventSource azureCoreEventSource = _eventSource!;
-
-            switch (eventType)
-            {
-                case EventType.Request:
-                    azureCoreEventSource.RequestContent(requestId, bytes, textEncoding);
-                    break;
-
-                // Response
-                case EventType.Response when block != null:
-                    azureCoreEventSource.ResponseContentBlock(requestId, block.Value, bytes, textEncoding);
-                    break;
-                case EventType.Response:
-                    azureCoreEventSource.ResponseContent(requestId, bytes, textEncoding);
-                    break;
-
-                // ResponseError
-                case EventType.ErrorResponse when block != null:
-                    azureCoreEventSource.ErrorResponseContentBlock(requestId, block.Value, bytes, textEncoding);
-                    break;
-                case EventType.ErrorResponse:
-                    azureCoreEventSource.ErrorResponseContent(requestId, bytes, textEncoding);
-                    break;
-            }
-        }
-
-        private static EventType ResponseOrError(bool isError)
-        {
-            return isError ? EventType.ErrorResponse : EventType.Response;
-        }
-
-        private enum EventType
-        {
-            Request,
-            Response,
-            ErrorResponse
-        }
-
-        private class MaxLengthStream : MemoryStream
-        {
-            private int _bytesLeft;
-
-            public MaxLengthStream(int maxLength) : base()
-            {
-                _bytesLeft = maxLength;
-            }
-
-            public override void Write(byte[] buffer, int offset, int count)
-            {
-                DecrementLength(ref count);
-                if (count > 0)
-                {
-                    base.Write(buffer, offset, count);
-                }
-            }
-
-            public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
-            {
-                return count > 0 ? base.WriteAsync(buffer, offset, count, cancellationToken) : Task.CompletedTask;
-            }
-
-            private void DecrementLength(ref int count)
-            {
-                var left = Math.Min(count, _bytesLeft);
-                count = left;
-
-                _bytesLeft -= count;
-            }
         }
     }
     #endregion
