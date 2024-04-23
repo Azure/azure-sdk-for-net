@@ -1,0 +1,12 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Analytics.Defender.Easm",
+  "library-name": "Azure.Analytics.Defender.Easm",
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/Easm/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/Easm/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "model-namespace": false,
+  "flavor": "azure",
+  "use-model-reader-writer": true
+}
