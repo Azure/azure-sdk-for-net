@@ -32,11 +32,6 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackUri { get; }
 
         /// <summary>
-        /// Media Streaming Configuration.
-        /// </summary>
-        public MediaStreamingOptions MediaStreamingOptions { get; set; }
-
-        /// <summary>
         /// Live Transcription Configuration.
         /// </summary>
         public TranscriptionOptions TranscriptionOptions { get; set; }

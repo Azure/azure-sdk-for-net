@@ -9,12 +9,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of CallParticipant. </summary>
         /// <param name="identifier"> The communication identifier. </param>
         /// <param name="isMuted"> Is participant muted. </param>
-        /// <param name="isOnHold"> Is participant on hold. </param>
-        internal CallParticipant(CommunicationIdentifier identifier, bool isMuted, bool isOnHold)
+        internal CallParticipant(CommunicationIdentifier identifier, bool isMuted)
         {
             Identifier = identifier;
             IsMuted = isMuted;
-            IsOnHold = isOnHold;
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>
@@ -23,7 +21,6 @@ namespace Azure.Communication.CallAutomation
         {
             Identifier = CommunicationIdentifierSerializer.Deserialize(callParticipantInternal.Identifier);
             IsMuted = (bool)callParticipantInternal.IsMuted;
-            IsOnHold = callParticipantInternal.IsOnHold.GetValueOrDefault(false);
         }
 
         /// <summary> The communication identifier. </summary>
@@ -31,8 +28,5 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Is participant muted. </summary>
         public bool IsMuted { get; }
-
-        /// <summary> Is participant on hold. </summary>
-        public bool IsOnHold { get; }
     }
 }

@@ -47,17 +47,6 @@ namespace Azure.Communication.CallAutomation
 
             switch (kind)
             {
-                #region Audio
-                case "AudioMetadata":
-                    return JsonSerializer.Deserialize<AudioMetadata>(package.GetProperty("audioMetadata").ToString());
-
-                case "AudioData":
-                    AudioDataInternal audioInternal = JsonSerializer.Deserialize<AudioDataInternal>(package.GetProperty("audioData").ToString());
-                    return new AudioData(
-                        audioInternal.Data, audioInternal.Timestamp, audioInternal.ParticipantRawId, audioInternal.Silent);
-
-                #endregion
-
                 #region Transcription
                 case "TranscriptionMetadata":
                     return JsonSerializer.Deserialize<TranscriptionMetadata>(package.GetProperty("transcriptionMetadata").ToString());
