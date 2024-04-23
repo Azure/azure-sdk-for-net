@@ -5,7 +5,17 @@
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Update api version to 2024-02-01, add support for canMigrate and Migrate API, add log-scrubbing support for profile, add new customization for CDN Endpoint.
+- Update Apiversion from 2021-06-01 to 2024-02-01
+- Add canMigrate API
+- Add Migrate API
+- Add log-scrubbing support for profile
+- Add new customization for CDN Endpoint.
+- Use DeepCreatedCustomDomain for CDN Endpoint API to replace CustomDomain
+- Add secretSource support for AzureFirstPartyManagedCertificateProperties
+- Fix ManagedRuleGroupOverrideSetting error in comment
+- Add ProfileChangeSkuWafMapping 
+- Add ManagedServiceIdentity support for profile
+- Add ValidateSecret
 
 ### Breaking Changes
 
