@@ -1,10 +1,12 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2024-04-23)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details..
+- Use swagger with apiversion 2024-02-01
+- Add log-scrubbing support
 
 ### Breaking Changes
 
