@@ -5,7 +5,7 @@
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Update api version to 2024-02-01, add support for canMigrate and Migrate API.
+- Update api version to 2024-02-01, add support for canMigrate and Migrate API, add log-scrubbing support for profile, add new customization for CDN Endpoint.
 
 ### Breaking Changes
 
