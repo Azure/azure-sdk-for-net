@@ -8,4 +8,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup Condition="'$(AssemblyName)' != 'Azure.Provisioning'">
+    <ProjectReference Include="../../Azure.Provisioning/src/Azure.Provisioning.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+
 </Project>

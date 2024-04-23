@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 {
     internal partial class AppliancePropertiesInfrastructureConfig : IUtf8JsonSerializable, IJsonModel<AppliancePropertiesInfrastructureConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppliancePropertiesInfrastructureConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppliancePropertiesInfrastructureConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppliancePropertiesInfrastructureConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
 
         internal static AppliancePropertiesInfrastructureConfig DeserializeAppliancePropertiesInfrastructureConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

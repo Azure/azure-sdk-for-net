@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 {
     public partial class TrialMatcherInference : IUtf8JsonSerializable, IJsonModel<TrialMatcherInference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrialMatcherInference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrialMatcherInference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrialMatcherInference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -46,7 +46,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Evidence)
                 {
-                    writer.WriteObjectValue<TrialMatcherInferenceEvidence>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,7 +63,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue<ClinicalTrialMetadata>(Metadata, options);
+                writer.WriteObjectValue(Metadata, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -97,7 +97,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         internal static TrialMatcherInference DeserializeTrialMatcherInference(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -233,11 +233,11 @@ namespace Azure.Health.Insights.ClinicalMatching
             return DeserializeTrialMatcherInference(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TrialMatcherInference>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class MonitorMetricSingleDimension : IUtf8JsonSerializable, IJsonModel<MonitorMetricSingleDimension>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorMetricSingleDimension>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorMetricSingleDimension>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitorMetricSingleDimension>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorMetricSingleDimension DeserializeMonitorMetricSingleDimension(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

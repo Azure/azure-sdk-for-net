@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 {
     public partial class MetricsBasedChart : IUtf8JsonSerializable, IJsonModel<MetricsBasedChart>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsBasedChart>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsBasedChart>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MetricsBasedChart>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(FilterGroup))
             {
                 writer.WritePropertyName("filterGroup"u8);
-                writer.WriteObjectValue<FilterGroup>(FilterGroup, options);
+                writer.WriteObjectValue(FilterGroup, options);
             }
             if (Optional.IsDefined(ReplacementKey))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         internal static MetricsBasedChart DeserializeMetricsBasedChart(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

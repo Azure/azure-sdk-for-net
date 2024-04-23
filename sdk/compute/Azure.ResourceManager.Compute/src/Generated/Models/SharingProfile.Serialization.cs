@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class SharingProfile : IUtf8JsonSerializable, IJsonModel<SharingProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharingProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharingProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SharingProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue<SharingProfileGroup>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CommunityGalleryInfo))
             {
                 writer.WritePropertyName("communityGalleryInfo"u8);
-                writer.WriteObjectValue<CommunityGalleryInfo>(CommunityGalleryInfo, options);
+                writer.WriteObjectValue(CommunityGalleryInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SharingProfile DeserializeSharingProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

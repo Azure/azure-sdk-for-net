@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Text
 {
     public partial class DictionaryTranslation : IUtf8JsonSerializable, IJsonModel<DictionaryTranslation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DictionaryTranslation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DictionaryTranslation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DictionaryTranslation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -40,7 +40,7 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartArray();
             foreach (var item in BackTranslations)
             {
-                writer.WriteObjectValue<BackTranslation>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -75,7 +75,7 @@ namespace Azure.AI.Translation.Text
 
         internal static DictionaryTranslation DeserializeDictionaryTranslation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -181,11 +181,11 @@ namespace Azure.AI.Translation.Text
             return DeserializeDictionaryTranslation(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DictionaryTranslation>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.CancerProfiling
 {
     public partial class InferenceEvidence : IUtf8JsonSerializable, IJsonModel<InferenceEvidence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InferenceEvidence>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InferenceEvidence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InferenceEvidence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.Health.Insights.CancerProfiling
             if (Optional.IsDefined(PatientDataEvidence))
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
-                writer.WriteObjectValue<ClinicalNoteEvidence>(PatientDataEvidence, options);
+                writer.WriteObjectValue(PatientDataEvidence, options);
             }
             if (Optional.IsDefined(PatientInfoEvidence))
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
-                writer.WriteObjectValue<ClinicalCodedElement>(PatientInfoEvidence, options);
+                writer.WriteObjectValue(PatientInfoEvidence, options);
             }
             if (Optional.IsDefined(Importance))
             {
@@ -73,7 +73,7 @@ namespace Azure.Health.Insights.CancerProfiling
 
         internal static InferenceEvidence DeserializeInferenceEvidence(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -161,11 +161,11 @@ namespace Azure.Health.Insights.CancerProfiling
             return DeserializeInferenceEvidence(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<InferenceEvidence>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

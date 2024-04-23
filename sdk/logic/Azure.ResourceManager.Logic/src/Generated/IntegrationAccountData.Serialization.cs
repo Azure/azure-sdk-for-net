@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class IntegrationAccountData : IUtf8JsonSerializable, IJsonModel<IntegrationAccountData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<IntegrationAccountSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue<LogicResourceReference>(IntegrationServiceEnvironment, options);
+                writer.WriteObjectValue(IntegrationServiceEnvironment, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Logic
 
         internal static IntegrationAccountData DeserializeIntegrationAccountData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

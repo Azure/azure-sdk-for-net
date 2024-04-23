@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FrontDoor
 {
     public partial class FrontDoorData : IUtf8JsonSerializable, IJsonModel<FrontDoorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in RoutingRules)
                 {
-                    writer.WriteObjectValue<RoutingRuleData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancingSettings)
                 {
-                    writer.WriteObjectValue<FrontDoorLoadBalancingSettingsData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in HealthProbeSettings)
                 {
-                    writer.WriteObjectValue<FrontDoorHealthProbeSettingsData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in BackendPools)
                 {
-                    writer.WriteObjectValue<FrontDoorBackendPool>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in FrontendEndpoints)
                 {
-                    writer.WriteObjectValue<FrontendEndpointData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BackendPoolsSettings))
             {
                 writer.WritePropertyName("backendPoolsSettings"u8);
-                writer.WriteObjectValue<BackendPoolsSettings>(BackendPoolsSettings, options);
+                writer.WriteObjectValue(BackendPoolsSettings, options);
             }
             if (Optional.IsDefined(EnabledState))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in RulesEngines)
                 {
-                    writer.WriteObjectValue<FrontDoorRulesEngineData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.FrontDoor
 
         internal static FrontDoorData DeserializeFrontDoorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

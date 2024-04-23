@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class ContainerCpuStatistics : IUtf8JsonSerializable, IJsonModel<ContainerCpuStatistics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerCpuStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerCpuStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerCpuStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CpuUsage))
             {
                 writer.WritePropertyName("cpuUsage"u8);
-                writer.WriteObjectValue<ContainerCpuUsage>(CpuUsage, options);
+                writer.WriteObjectValue(CpuUsage, options);
             }
             if (Optional.IsDefined(SystemCpuUsage))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ThrottlingData))
             {
                 writer.WritePropertyName("throttlingData"u8);
-                writer.WriteObjectValue<ContainerThrottlingInfo>(ThrottlingData, options);
+                writer.WriteObjectValue(ThrottlingData, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ContainerCpuStatistics DeserializeContainerCpuStatistics(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

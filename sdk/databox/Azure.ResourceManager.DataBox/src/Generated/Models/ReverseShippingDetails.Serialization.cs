@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class ReverseShippingDetails : IUtf8JsonSerializable, IJsonModel<ReverseShippingDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReverseShippingDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReverseShippingDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReverseShippingDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue<ContactInfo>(ContactDetails, options);
+                writer.WriteObjectValue(ContactDetails, options);
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue<DataBoxShippingAddress>(ShippingAddress, options);
+                writer.WriteObjectValue(ShippingAddress, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsUpdated))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static ReverseShippingDetails DeserializeReverseShippingDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

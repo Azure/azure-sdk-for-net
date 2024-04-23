@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.1 (2024-04-17)
+
+### Bugs Fixed
+- Fixed a bug introduced in version 1.3.0 where the `GetConfigurationSetting` method incorrectly logged 304 responses as failures in distributed tracing.
+
+## 1.4.0 (2024-04-10)
+
+### Features Added
+
+- Added `ConfigurationSettingPageableExtensions` class to support new `Pageable<ConfigurationSetting>.AsPages` and `AsyncPageable<ConfigurationSetting>.AsPages` extension methods. This replaces `SettingSelector.MatchConditions`.
+
+### Breaking Changes
+
+- Removed property `MatchConditions` from `SettingSelector`.
 
 ## 1.4.0-beta.1 (2024-03-07)
 

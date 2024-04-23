@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class VpnGatewayPacketCaptureStopContent : IUtf8JsonSerializable, IJsonModel<VpnGatewayPacketCaptureStopContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnGatewayPacketCaptureStopContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnGatewayPacketCaptureStopContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VpnGatewayPacketCaptureStopContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnGatewayPacketCaptureStopContent DeserializeVpnGatewayPacketCaptureStopContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

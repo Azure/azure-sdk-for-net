@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class GovernanceAssignmentData : IUtf8JsonSerializable, IJsonModel<GovernanceAssignmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GovernanceAssignmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GovernanceAssignmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GovernanceAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(RemediationEta))
             {
                 writer.WritePropertyName("remediationEta"u8);
-                writer.WriteObjectValue<RemediationEta>(RemediationEta, options);
+                writer.WriteObjectValue(RemediationEta, options);
             }
             if (Optional.IsDefined(IsGracePeriod))
             {
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(GovernanceEmailNotification))
             {
                 writer.WritePropertyName("governanceEmailNotification"u8);
-                writer.WriteObjectValue<GovernanceEmailNotification>(GovernanceEmailNotification, options);
+                writer.WriteObjectValue(GovernanceEmailNotification, options);
             }
             if (Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue<GovernanceAssignmentAdditionalInfo>(AdditionalData, options);
+                writer.WriteObjectValue(AdditionalData, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static GovernanceAssignmentData DeserializeGovernanceAssignmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

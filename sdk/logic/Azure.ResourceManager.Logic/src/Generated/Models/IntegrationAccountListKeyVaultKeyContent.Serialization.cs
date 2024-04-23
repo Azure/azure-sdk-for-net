@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class IntegrationAccountListKeyVaultKeyContent : IUtf8JsonSerializable, IJsonModel<IntegrationAccountListKeyVaultKeyContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountListKeyVaultKeyContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountListKeyVaultKeyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IntegrationAccountListKeyVaultKeyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("keyVault"u8);
-            writer.WriteObjectValue<IntegrationAccountKeyVaultNameReference>(KeyVault, options);
+            writer.WriteObjectValue(KeyVault, options);
             if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountListKeyVaultKeyContent DeserializeIntegrationAccountListKeyVaultKeyContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

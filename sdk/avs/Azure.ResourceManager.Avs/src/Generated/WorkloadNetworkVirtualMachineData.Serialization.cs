@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class WorkloadNetworkVirtualMachineData : IUtf8JsonSerializable, IJsonModel<WorkloadNetworkVirtualMachineData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadNetworkVirtualMachineData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkloadNetworkVirtualMachineData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WorkloadNetworkVirtualMachineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
 
         internal static WorkloadNetworkVirtualMachineData DeserializeWorkloadNetworkVirtualMachineData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

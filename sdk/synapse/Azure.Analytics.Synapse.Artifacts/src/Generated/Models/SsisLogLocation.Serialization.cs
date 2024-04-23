@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue<SsisAccessCredential>(AccessCredential);
+                writer.WriteObjectValue(AccessCredential);
             }
             if (Optional.IsDefined(LogRefreshInterval))
             {
@@ -94,12 +94,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SsisLogLocation(logPath, type, accessCredential, logRefreshInterval);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SsisLogLocation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSsisLogLocation(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
+
         internal partial class SsisLogLocationConverter : JsonConverter<SsisLogLocation>
         {
             public override void Write(Utf8JsonWriter writer, SsisLogLocation model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SsisLogLocation>(model);
+                writer.WriteObjectValue(model);
             }
+
             public override SsisLogLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

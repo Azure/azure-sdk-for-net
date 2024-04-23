@@ -28,38 +28,42 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         public MonitoringDataPoint GetDataPoint()
         {
-            var dataPoint = new MonitoringDataPoint
+            var dataPoint = new MonitoringDataPoint(
+                version: SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
+                invariantVersion: 5,
+                instance: LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
+                roleName: LiveMetricsResource?.RoleName ?? "UNKNOWN_NAME",
+                machineName: Environment.MachineName, // TODO: MOVE TO PLATFORM
+                streamId: _streamId,
+                isWebApp: _isAzureWebApp,
+                performanceCollectionSupported: true)
             {
-                Version = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
-                InvariantVersion = 5,
-                Instance = LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
-                RoleName = LiveMetricsResource?.RoleName,
-                MachineName = Environment.MachineName, // TODO: MOVE TO PLATFORM
-                StreamId = _streamId,
                 Timestamp = DateTime.UtcNow, // Represents timestamp sample was created
                 TransmissionTime = DateTime.UtcNow, // represents timestamp transmission was sent
-                IsWebApp = _isAzureWebApp,
-                PerformanceCollectionSupported = true,
-                // AI SDK relies on PerformanceCounter to collect CPU and Memory metrics.
-                // Follow up with service team to get this removed for OTEL based live metrics.
-                // TopCpuProcesses = null,
-                // TODO: Configuration errors are thrown when filter is applied.
-                // CollectionConfigurationErrors = null,
+                //TopCpuProcesses = null, // TODO
             };
+
+            // TODO: Configuration errors are thrown when filter is applied.
+            // CollectionConfigurationErrors = null,
 
             CollectionConfigurationError[] filteringErrors;
             string projectionError = string.Empty;
             Dictionary<string, AccumulatedValues> metricAccumulators = CreateMetricAccumulators(_collectionConfiguration);
             LiveMetricsBuffer liveMetricsBuffer = new();
             DocumentBuffer filledBuffer = _documentBuffer.FlipDocumentBuffers();
+            IEnumerable<DocumentStream> documentStreams = _collectionConfiguration.DocumentStreams;
             foreach (var item in filledBuffer.ReadAllAndClear())
             {
-                // TODO: item.DocumentStreamIds = new List<string> { "" }; - Will add the identifier for the specific filtering rules (if applicable). See also "matchingDocumentStreamIds" in AI SDK.
+                bool matchesDocumentStreamFilter = false;
 
-                dataPoint.Documents.Add(item);
+                CollectionConfigurationError[] groupErrors;
 
                 if (item is Request request)
                 {
+                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
+                        documentStreams,
+                        documentStream => documentStream.RequestQuotaTracker,
+                        documentStream => documentStream.CheckFilters(request, out groupErrors));
                     ApplyFilters(metricAccumulators, _collectionConfiguration.RequestMetrics, request, out filteringErrors, ref projectionError);
                     if (item.Extension_IsSuccess)
                     {
@@ -72,6 +76,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (item is RemoteDependency remoteDependency)
                 {
+                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
+                        documentStreams,
+                        documentStream => documentStream.DependencyQuotaTracker,
+                        documentStream => documentStream.CheckFilters(remoteDependency, out groupErrors));
                     ApplyFilters(metricAccumulators, _collectionConfiguration.DependencyMetrics, remoteDependency, out filteringErrors, ref projectionError);
                     if (item.Extension_IsSuccess)
                     {
@@ -84,16 +92,29 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 }
                 else if (item is Models.Exception exception)
                 {
+                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
+                        documentStreams,
+                        documentStream => documentStream.ExceptionQuotaTracker,
+                        documentStream => documentStream.CheckFilters(exception, out groupErrors));
                     ApplyFilters(metricAccumulators, _collectionConfiguration.ExceptionMetrics, exception, out filteringErrors, ref projectionError);
                     liveMetricsBuffer.RecordException();
                 }
                 else if (item is Models.Trace trace)
                 {
+                    matchesDocumentStreamFilter = MatchesDocumentStreamFilters(
+                        documentStreams,
+                        documentStream => documentStream.TraceQuotaTracker,
+                        documentStream => documentStream.CheckFilters(trace, out groupErrors));
                     ApplyFilters(metricAccumulators, _collectionConfiguration.TraceMetrics, trace, out filteringErrors, ref projectionError);
                 }
                 else
                 {
                     Debug.WriteLine($"Unknown DocumentType: {item.DocumentType}");
+                }
+
+                if (matchesDocumentStreamFilter)
+                {
+                    dataPoint.Documents.Add(item);
                 }
             }
 
@@ -131,21 +152,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             _process.Refresh();
 
-            yield return new Models.MetricPoint
-            {
-                Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
-                Value = _process.PrivateMemorySize64,
-                Weight = 1
-            };
+            // OLD METRIC NAME. TODO: Remove this after the UX is updated to use the new metrics
+            yield return new Models.MetricPoint(name: LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue, value: _process.PrivateMemorySize64, weight: 1);
+
+            yield return new Models.MetricPoint(name: LiveMetricConstants.MetricId.ProcessPhysicalBytesMetricIdValue, value: _process.PrivateMemorySize64, weight: 1);
 
             if (TryCalculateCPUCounter(out var processorValue))
             {
-                yield return new Models.MetricPoint
-                {
-                    Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
-                    Value = Convert.ToSingle(processorValue),
-                    Weight = 1
-                };
+                // OLD METRIC NAME. TODO: Remove this after the UX is updated to use the new metrics
+                yield return new Models.MetricPoint(name: LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue, value: Convert.ToSingle(processorValue), weight: 1);
+
+                yield return new Models.MetricPoint(name: LiveMetricConstants.MetricId.ProcessProcessorTimeNormalizedMetricIdValue, value: Convert.ToSingle(processorValue), weight: 1);
             }
         }
 
@@ -163,13 +180,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             {
                 try
                 {
-                    MetricPoint metricPoint = new MetricPoint
-                    {
-                        Name = metricAccumulatedValues.MetricId,
-                        Value = (float)metricAccumulatedValues.CalculateAggregation(out long count),
-                        Weight = (int)count,
-                    };
-
+                    MetricPoint metricPoint = new MetricPoint(name: metricAccumulatedValues.MetricId, value: (float)metricAccumulatedValues.CalculateAggregation(out long count), weight: (int)count);
                     metrics.Add(metricPoint);
                 }
                 catch (System.Exception)
@@ -188,8 +199,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             Dictionary<string, AccumulatedValues> metricAccumulators = new();
 
             // prepare the accumulators based on the collection configuration
-            IEnumerable<Tuple<string, DerivedMetricInfoAggregation?>> allMetrics = collectionConfiguration.TelemetryMetadata;
-            foreach (Tuple<string, DerivedMetricInfoAggregation?> metricId in allMetrics ?? Enumerable.Empty<Tuple<string, DerivedMetricInfoAggregation?>>())
+            IEnumerable<Tuple<string, Models.AggregationType?>> allMetrics = collectionConfiguration.TelemetryMetadata;
+            foreach (Tuple<string, Models.AggregationType?> metricId in allMetrics)
             {
                 var derivedMetricInfoAggregation = metricId.Item2;
                 if (!derivedMetricInfoAggregation.HasValue)
@@ -197,7 +208,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     continue;
                 }
 
-                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out AggregationType aggregationType))
+                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out Filtering.AggregationType aggregationType))
                 {
                     var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
 
@@ -290,6 +301,26 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 processorCount: _processorCount,
                 normalizedValue: normalizedValue);
             return true;
+        }
+
+        private bool MatchesDocumentStreamFilters(
+            IEnumerable<DocumentStream> documentStreams,
+            Func<DocumentStream, QuickPulseQuotaTracker> getQuotaTracker,
+            Func<DocumentStream, bool> checkDocumentStreamFilters)
+        {
+            // check which document streams are interested in this telemetry
+            var interested = false;
+
+            foreach (DocumentStream matchingDocumentStream in documentStreams.Where(checkDocumentStreamFilters))
+            {
+                // for each interested document stream only let the document through if there's quota available for that stream
+                if (getQuotaTracker(matchingDocumentStream).ApplyQuota())
+                {
+                    interested = true;
+                }
+            }
+
+            return interested;
         }
     }
 }

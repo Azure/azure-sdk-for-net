@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class ForecastDataset : IUtf8JsonSerializable, IJsonModel<ForecastDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ForecastDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,20 +34,20 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue<ForecastDatasetConfiguration>(Configuration, options);
+                writer.WriteObjectValue(Configuration, options);
             }
             writer.WritePropertyName("aggregation"u8);
             writer.WriteStartObject();
             foreach (var item in Aggregation)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<ForecastAggregation>(item.Value, options);
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue<ForecastFilter>(Filter, options);
+                writer.WriteObjectValue(Filter, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static ForecastDataset DeserializeForecastDataset(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class ExportSchedule : IUtf8JsonSerializable, IJsonModel<ExportSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExportSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RecurrencePeriod))
             {
                 writer.WritePropertyName("recurrencePeriod"u8);
-                writer.WriteObjectValue<ExportRecurrencePeriod>(RecurrencePeriod, options);
+                writer.WriteObjectValue(RecurrencePeriod, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static ExportSchedule DeserializeExportSchedule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Support
 {
     public partial class ChatTranscriptDetailData : IUtf8JsonSerializable, IJsonModel<ChatTranscriptDetailData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatTranscriptDetailData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatTranscriptDetailData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChatTranscriptDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Support
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
-                    writer.WriteObjectValue<ChatTranscriptMessageProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Support
 
         internal static ChatTranscriptDetailData DeserializeChatTranscriptDetailData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

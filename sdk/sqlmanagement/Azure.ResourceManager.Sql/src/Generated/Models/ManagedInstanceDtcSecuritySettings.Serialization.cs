@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ManagedInstanceDtcSecuritySettings : IUtf8JsonSerializable, IJsonModel<ManagedInstanceDtcSecuritySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceDtcSecuritySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceDtcSecuritySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedInstanceDtcSecuritySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(TransactionManagerCommunicationSettings))
             {
                 writer.WritePropertyName("transactionManagerCommunicationSettings"u8);
-                writer.WriteObjectValue<ManagedInstanceDtcTransactionManagerCommunicationSettings>(TransactionManagerCommunicationSettings, options);
+                writer.WriteObjectValue(TransactionManagerCommunicationSettings, options);
             }
             if (Optional.IsDefined(IsXATransactionsEnabled))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedInstanceDtcSecuritySettings DeserializeManagedInstanceDtcSecuritySettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

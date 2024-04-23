@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class CheckPolicyRestrictionsContent : IUtf8JsonSerializable, IJsonModel<CheckPolicyRestrictionsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckPolicyRestrictionsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckPolicyRestrictionsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CheckPolicyRestrictionsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceDetails"u8);
-            writer.WriteObjectValue<CheckRestrictionsResourceDetails>(ResourceDetails, options);
+            writer.WriteObjectValue(ResourceDetails, options);
             if (Optional.IsCollectionDefined(PendingFields))
             {
                 writer.WritePropertyName("pendingFields"u8);
                 writer.WriteStartArray();
                 foreach (var item in PendingFields)
                 {
-                    writer.WriteObjectValue<PendingField>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static CheckPolicyRestrictionsContent DeserializeCheckPolicyRestrictionsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

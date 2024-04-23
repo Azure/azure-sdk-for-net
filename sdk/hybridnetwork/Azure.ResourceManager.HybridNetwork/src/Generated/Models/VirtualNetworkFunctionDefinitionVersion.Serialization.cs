@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     public partial class VirtualNetworkFunctionDefinitionVersion : IUtf8JsonSerializable, IJsonModel<VirtualNetworkFunctionDefinitionVersion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkFunctionDefinitionVersion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkFunctionDefinitionVersion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualNetworkFunctionDefinitionVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(NetworkFunctionTemplate))
             {
                 writer.WritePropertyName("networkFunctionTemplate"u8);
-                writer.WriteObjectValue<VirtualNetworkFunctionTemplate>(NetworkFunctionTemplate, options);
+                writer.WriteObjectValue(NetworkFunctionTemplate, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static VirtualNetworkFunctionDefinitionVersion DeserializeVirtualNetworkFunctionDefinitionVersion(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

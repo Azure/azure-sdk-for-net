@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Consumption.Models
 {
     public partial class ConsumptionAmountWithExchangeRate : IUtf8JsonSerializable, IJsonModel<ConsumptionAmountWithExchangeRate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionAmountWithExchangeRate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionAmountWithExchangeRate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConsumptionAmountWithExchangeRate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static ConsumptionAmountWithExchangeRate DeserializeConsumptionAmountWithExchangeRate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

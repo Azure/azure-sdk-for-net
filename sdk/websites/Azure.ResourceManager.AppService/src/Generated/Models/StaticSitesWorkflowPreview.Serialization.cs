@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class StaticSitesWorkflowPreview : IUtf8JsonSerializable, IJsonModel<StaticSitesWorkflowPreview>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSitesWorkflowPreview>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSitesWorkflowPreview>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StaticSitesWorkflowPreview>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StaticSitesWorkflowPreview DeserializeStaticSitesWorkflowPreview(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlAdvisorData : IUtf8JsonSerializable, IJsonModel<SqlAdvisorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlAdvisorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlAdvisorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlAdvisorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in RecommendedActions)
                 {
-                    writer.WriteObjectValue<RecommendedActionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlAdvisorData DeserializeSqlAdvisorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     internal partial class EHNamespaceIdListResult : IUtf8JsonSerializable, IJsonModel<EHNamespaceIdListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EHNamespaceIdListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EHNamespaceIdListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EHNamespaceIdListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EHNamespaceIdListResult DeserializeEHNamespaceIdListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

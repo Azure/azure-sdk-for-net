@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServicePoolSkuInfo : IUtf8JsonSerializable, IJsonModel<AppServicePoolSkuInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServicePoolSkuInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServicePoolSkuInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServicePoolSkuInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<AppServiceSkuDescription>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue<AppServiceSkuCapacity>(Capacity, options);
+                writer.WriteObjectValue(Capacity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServicePoolSkuInfo DeserializeAppServicePoolSkuInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

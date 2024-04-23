@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.Models
 {
     public partial class MySqlSku : IUtf8JsonSerializable, IJsonModel<MySqlSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlSku DeserializeMySqlSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

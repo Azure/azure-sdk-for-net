@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class ThreeTierFullResourceNames : IUtf8JsonSerializable, IJsonModel<ThreeTierFullResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierFullResourceNames>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierFullResourceNames>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ThreeTierFullResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(CentralServer))
             {
                 writer.WritePropertyName("centralServer"u8);
-                writer.WriteObjectValue<CentralServerFullResourceNames>(CentralServer, options);
+                writer.WriteObjectValue(CentralServer, options);
             }
             if (Optional.IsDefined(ApplicationServer))
             {
                 writer.WritePropertyName("applicationServer"u8);
-                writer.WriteObjectValue<ApplicationServerFullResourceNames>(ApplicationServer, options);
+                writer.WriteObjectValue(ApplicationServer, options);
             }
             if (Optional.IsDefined(DatabaseServer))
             {
                 writer.WritePropertyName("databaseServer"u8);
-                writer.WriteObjectValue<DatabaseServerFullResourceNames>(DatabaseServer, options);
+                writer.WriteObjectValue(DatabaseServer, options);
             }
             if (Optional.IsDefined(SharedStorage))
             {
                 writer.WritePropertyName("sharedStorage"u8);
-                writer.WriteObjectValue<SharedStorageResourceNames>(SharedStorage, options);
+                writer.WriteObjectValue(SharedStorage, options);
             }
             writer.WritePropertyName("namingPatternType"u8);
             writer.WriteStringValue(NamingPatternType.ToString());
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static ThreeTierFullResourceNames DeserializeThreeTierFullResourceNames(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

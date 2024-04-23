@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Quantum.Models
 {
     public partial class ProviderSkuDescription : IUtf8JsonSerializable, IJsonModel<ProviderSkuDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderSkuDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderSkuDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProviderSkuDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in QuotaDimensions)
                 {
-                    writer.WriteObjectValue<QuantumQuotaDimension>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in PricingDetails)
                 {
-                    writer.WriteObjectValue<QuantumPricingDetail>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Quantum.Models
 
         internal static ProviderSkuDescription DeserializeProviderSkuDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

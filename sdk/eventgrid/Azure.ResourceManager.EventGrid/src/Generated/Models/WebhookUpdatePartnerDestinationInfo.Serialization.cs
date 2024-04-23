@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class WebhookUpdatePartnerDestinationInfo : IUtf8JsonSerializable, IJsonModel<WebhookUpdatePartnerDestinationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebhookUpdatePartnerDestinationInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebhookUpdatePartnerDestinationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebhookUpdatePartnerDestinationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(ClientAuthentication))
             {
                 writer.WritePropertyName("clientAuthentication"u8);
-                writer.WriteObjectValue<PartnerClientAuthentication>(ClientAuthentication, options);
+                writer.WriteObjectValue(ClientAuthentication, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static WebhookUpdatePartnerDestinationInfo DeserializeWebhookUpdatePartnerDestinationInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

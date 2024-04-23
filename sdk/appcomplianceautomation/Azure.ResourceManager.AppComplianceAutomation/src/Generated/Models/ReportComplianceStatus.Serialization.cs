@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     internal partial class ReportComplianceStatus : IUtf8JsonSerializable, IJsonModel<ReportComplianceStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportComplianceStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportComplianceStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReportComplianceStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (Optional.IsDefined(M365))
             {
                 writer.WritePropertyName("m365"u8);
-                writer.WriteObjectValue<OverviewStatus>(M365, options);
+                writer.WriteObjectValue(M365, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static ReportComplianceStatus DeserializeReportComplianceStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

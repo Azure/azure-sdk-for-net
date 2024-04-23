@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     public partial class HybridContainerServiceVirtualNetworkData : IUtf8JsonSerializable, IJsonModel<HybridContainerServiceVirtualNetworkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridContainerServiceVirtualNetworkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridContainerServiceVirtualNetworkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HybridContainerServiceVirtualNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.HybridContainerService
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<HybridContainerServiceVirtualNetworkProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue<HybridContainerServiceExtendedLocation>(ExtendedLocation, options);
+                writer.WriteObjectValue(ExtendedLocation, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridContainerService
 
         internal static HybridContainerServiceVirtualNetworkData DeserializeHybridContainerServiceVirtualNetworkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
 {
     public partial class ChatCompletions : IUtf8JsonSerializable, IJsonModel<ChatCompletions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChatCompletions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,16 +34,21 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Choices)
             {
-                writer.WriteObjectValue<ChatChoice>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
             if (Optional.IsCollectionDefined(PromptFilterResults))
             {
                 writer.WritePropertyName("prompt_filter_results"u8);
                 writer.WriteStartArray();
                 foreach (var item in PromptFilterResults)
                 {
-                    writer.WriteObjectValue<ContentFilterResultsForPrompt>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +58,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(SystemFingerprint);
             }
             writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue<CompletionsUsage>(Usage, options);
+            writer.WriteObjectValue(Usage, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -201,11 +206,11 @@ namespace Azure.AI.OpenAI
             return DeserializeChatCompletions(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ChatCompletions>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

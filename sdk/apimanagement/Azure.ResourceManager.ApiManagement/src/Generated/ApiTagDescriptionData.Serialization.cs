@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ApiTagDescriptionData : IUtf8JsonSerializable, IJsonModel<ApiTagDescriptionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiTagDescriptionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiTagDescriptionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiTagDescriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiTagDescriptionData DeserializeApiTagDescriptionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

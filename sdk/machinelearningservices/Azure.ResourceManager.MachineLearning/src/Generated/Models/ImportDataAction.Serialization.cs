@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class ImportDataAction : IUtf8JsonSerializable, IJsonModel<ImportDataAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImportDataAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImportDataAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ImportDataAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("dataImportDefinition"u8);
-            writer.WriteObjectValue<DataImport>(DataImportDefinition, options);
+            writer.WriteObjectValue(DataImportDefinition, options);
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImportDataAction DeserializeImportDataAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

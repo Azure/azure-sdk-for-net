@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class AuthorizationClassicAdministrator : IUtf8JsonSerializable, IJsonModel<AuthorizationClassicAdministrator>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizationClassicAdministrator>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizationClassicAdministrator>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AuthorizationClassicAdministrator>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static AuthorizationClassicAdministrator DeserializeAuthorizationClassicAdministrator(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

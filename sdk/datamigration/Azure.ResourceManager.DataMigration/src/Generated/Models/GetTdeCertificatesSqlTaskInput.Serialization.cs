@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class GetTdeCertificatesSqlTaskInput : IUtf8JsonSerializable, IJsonModel<GetTdeCertificatesSqlTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetTdeCertificatesSqlTaskInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetTdeCertificatesSqlTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GetTdeCertificatesSqlTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue<SqlConnectionInfo>(ConnectionInfo, options);
+            writer.WriteObjectValue(ConnectionInfo, options);
             writer.WritePropertyName("backupFileShare"u8);
-            writer.WriteObjectValue<FileShare>(BackupFileShare, options);
+            writer.WriteObjectValue(BackupFileShare, options);
             writer.WritePropertyName("selectedCertificates"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedCertificates)
             {
-                writer.WriteObjectValue<SelectedCertificateInput>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetTdeCertificatesSqlTaskInput DeserializeGetTdeCertificatesSqlTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

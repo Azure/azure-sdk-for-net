@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class KubernetesClusterNetworkConfiguration : IUtf8JsonSerializable, IJsonModel<KubernetesClusterNetworkConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterNetworkConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterNetworkConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubernetesClusterNetworkConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AttachedNetworkConfiguration))
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
-                writer.WriteObjectValue<AttachedNetworkConfiguration>(AttachedNetworkConfiguration, options);
+                writer.WriteObjectValue(AttachedNetworkConfiguration, options);
             }
             if (Optional.IsDefined(BgpServiceLoadBalancerConfiguration))
             {
                 writer.WritePropertyName("bgpServiceLoadBalancerConfiguration"u8);
-                writer.WriteObjectValue<BgpServiceLoadBalancerConfiguration>(BgpServiceLoadBalancerConfiguration, options);
+                writer.WriteObjectValue(BgpServiceLoadBalancerConfiguration, options);
             }
             writer.WritePropertyName("cloudServicesNetworkId"u8);
             writer.WriteStringValue(CloudServicesNetworkId);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static KubernetesClusterNetworkConfiguration DeserializeKubernetesClusterNetworkConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class VirtualMachineInstancePropertiesStorageProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineInstancePropertiesStorageProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineInstancePropertiesStorageProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineInstancePropertiesStorageProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineInstancePropertiesStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue<VirtualMachineInstancePropertiesStorageProfileOSDisk>(OSDisk, options);
+                writer.WriteObjectValue(OSDisk, options);
             }
             if (Optional.IsDefined(VmConfigStoragePathId))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static VirtualMachineInstancePropertiesStorageProfile DeserializeVirtualMachineInstancePropertiesStorageProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

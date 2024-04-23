@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     public partial class RangerUsersyncSpec : IUtf8JsonSerializable, IJsonModel<RangerUsersyncSpec>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RangerUsersyncSpec>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RangerUsersyncSpec>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RangerUsersyncSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         internal static RangerUsersyncSpec DeserializeRangerUsersyncSpec(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

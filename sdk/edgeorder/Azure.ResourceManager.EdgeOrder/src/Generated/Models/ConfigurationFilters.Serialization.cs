@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 {
     public partial class ConfigurationFilters : IUtf8JsonSerializable, IJsonModel<ConfigurationFilters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationFilters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationFilters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConfigurationFilters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("hierarchyInformation"u8);
-            writer.WriteObjectValue<HierarchyInformation>(HierarchyInformation, options);
+            writer.WriteObjectValue(HierarchyInformation, options);
             if (Optional.IsCollectionDefined(FilterableProperty))
             {
                 writer.WritePropertyName("filterableProperty"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilterableProperty)
                 {
-                    writer.WriteObjectValue<FilterableProperty>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static ConfigurationFilters DeserializeConfigurationFilters(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

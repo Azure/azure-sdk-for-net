@@ -630,7 +630,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         }
 
         [Test]
-        public async Task CancellingReceiveLogsVerboseCancellationEvent()
+        public async Task CancelingReceiveLogsVerboseCancellationEvent()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {

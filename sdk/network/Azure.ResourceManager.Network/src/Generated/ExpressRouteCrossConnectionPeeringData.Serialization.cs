@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRouteCrossConnectionPeeringData : IUtf8JsonSerializable, IJsonModel<ExpressRouteCrossConnectionPeeringData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCrossConnectionPeeringData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCrossConnectionPeeringData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExpressRouteCrossConnectionPeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
-                writer.WriteObjectValue<ExpressRouteCircuitPeeringConfig>(MicrosoftPeeringConfig, options);
+                writer.WriteObjectValue(MicrosoftPeeringConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(IPv6PeeringConfig))
             {
                 writer.WritePropertyName("ipv6PeeringConfig"u8);
-                writer.WriteObjectValue<IPv6ExpressRouteCircuitPeeringConfig>(IPv6PeeringConfig, options);
+                writer.WriteObjectValue(IPv6PeeringConfig, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ExpressRouteCrossConnectionPeeringData DeserializeExpressRouteCrossConnectionPeeringData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

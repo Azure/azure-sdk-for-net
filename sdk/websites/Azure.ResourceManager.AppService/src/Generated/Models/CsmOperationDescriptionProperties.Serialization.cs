@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class CsmOperationDescriptionProperties : IUtf8JsonSerializable, IJsonModel<CsmOperationDescriptionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CsmOperationDescriptionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CsmOperationDescriptionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CsmOperationDescriptionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ServiceSpecification))
             {
                 writer.WritePropertyName("serviceSpecification"u8);
-                writer.WriteObjectValue<ServiceSpecification>(ServiceSpecification, options);
+                writer.WriteObjectValue(ServiceSpecification, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static CsmOperationDescriptionProperties DeserializeCsmOperationDescriptionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

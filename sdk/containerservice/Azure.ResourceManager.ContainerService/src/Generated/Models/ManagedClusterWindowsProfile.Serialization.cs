@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ManagedClusterWindowsProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterWindowsProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterWindowsProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterWindowsProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterWindowsProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(GmsaProfile))
             {
                 writer.WritePropertyName("gmsaProfile"u8);
-                writer.WriteObjectValue<WindowsGmsaProfile>(GmsaProfile, options);
+                writer.WriteObjectValue(GmsaProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterWindowsProfile DeserializeManagedClusterWindowsProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

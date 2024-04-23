@@ -44,5 +44,13 @@ namespace Azure.Search.Documents.Models
             }
             return new AutocompleteResults(searchCoverage, value);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AutocompleteResults FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAutocompleteResults(document.RootElement);
+        }
     }
 }

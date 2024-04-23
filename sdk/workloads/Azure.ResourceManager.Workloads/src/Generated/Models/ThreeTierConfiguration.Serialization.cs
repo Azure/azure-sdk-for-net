@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Workloads.Models
 {
     public partial class ThreeTierConfiguration : IUtf8JsonSerializable, IJsonModel<ThreeTierConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ThreeTierConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue<NetworkConfiguration>(NetworkConfiguration, options);
+                writer.WriteObjectValue(NetworkConfiguration, options);
             }
             writer.WritePropertyName("centralServer"u8);
-            writer.WriteObjectValue<CentralServerConfiguration>(CentralServer, options);
+            writer.WriteObjectValue(CentralServer, options);
             writer.WritePropertyName("applicationServer"u8);
-            writer.WriteObjectValue<ApplicationServerConfiguration>(ApplicationServer, options);
+            writer.WriteObjectValue(ApplicationServer, options);
             writer.WritePropertyName("databaseServer"u8);
-            writer.WriteObjectValue<DatabaseConfiguration>(DatabaseServer, options);
+            writer.WriteObjectValue(DatabaseServer, options);
             if (Optional.IsDefined(HighAvailabilityConfig))
             {
                 writer.WritePropertyName("highAvailabilityConfig"u8);
-                writer.WriteObjectValue<HighAvailabilityConfiguration>(HighAvailabilityConfig, options);
+                writer.WriteObjectValue(HighAvailabilityConfig, options);
             }
             if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfiguration"u8);
-                writer.WriteObjectValue<SapStorageConfiguration>(StorageConfiguration, options);
+                writer.WriteObjectValue(StorageConfiguration, options);
             }
             if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
-                writer.WriteObjectValue<ThreeTierCustomResourceNames>(CustomResourceNames, options);
+                writer.WriteObjectValue(CustomResourceNames, options);
             }
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static ThreeTierConfiguration DeserializeThreeTierConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

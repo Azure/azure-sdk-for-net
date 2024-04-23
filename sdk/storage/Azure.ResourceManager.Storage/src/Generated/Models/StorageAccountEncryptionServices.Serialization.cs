@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageAccountEncryptionServices : IUtf8JsonSerializable, IJsonModel<StorageAccountEncryptionServices>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountEncryptionServices>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountEncryptionServices>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StorageAccountEncryptionServices>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,22 +30,22 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Blob))
             {
                 writer.WritePropertyName("blob"u8);
-                writer.WriteObjectValue<StorageEncryptionService>(Blob, options);
+                writer.WriteObjectValue(Blob, options);
             }
             if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
-                writer.WriteObjectValue<StorageEncryptionService>(File, options);
+                writer.WriteObjectValue(File, options);
             }
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
-                writer.WriteObjectValue<StorageEncryptionService>(Table, options);
+                writer.WriteObjectValue(Table, options);
             }
             if (Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue"u8);
-                writer.WriteObjectValue<StorageEncryptionService>(Queue, options);
+                writer.WriteObjectValue(Queue, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountEncryptionServices DeserializeStorageAccountEncryptionServices(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -32,12 +32,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new ApiManagementGatewayCertificateAuthorityDeletedEventData(resourceUri);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ApiManagementGatewayCertificateAuthorityDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeApiManagementGatewayCertificateAuthorityDeletedEventData(document.RootElement);
+        }
+
         internal partial class ApiManagementGatewayCertificateAuthorityDeletedEventDataConverter : JsonConverter<ApiManagementGatewayCertificateAuthorityDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ApiManagementGatewayCertificateAuthorityDeletedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override ApiManagementGatewayCertificateAuthorityDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class InboundEnvironmentEndpointListResult : IUtf8JsonSerializable, IJsonModel<InboundEnvironmentEndpointListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundEnvironmentEndpointListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundEnvironmentEndpointListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InboundEnvironmentEndpointListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<InboundEnvironmentEndpoint>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static InboundEnvironmentEndpointListResult DeserializeInboundEnvironmentEndpointListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
 {
     public partial class PineconeChatExtensionParameters : IUtf8JsonSerializable, IJsonModel<PineconeChatExtensionParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PineconeChatExtensionParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PineconeChatExtensionParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PineconeChatExtensionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue<OnYourDataAuthenticationOptions>(Authentication, options);
+                writer.WriteObjectValue(Authentication, options);
             }
             if (Optional.IsDefined(DocumentCount))
             {
@@ -91,7 +91,7 @@ namespace Azure.AI.OpenAI
 
         internal static PineconeChatExtensionParameters DeserializePineconeChatExtensionParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -229,11 +229,11 @@ namespace Azure.AI.OpenAI
             return DeserializePineconeChatExtensionParameters(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PineconeChatExtensionParameters>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

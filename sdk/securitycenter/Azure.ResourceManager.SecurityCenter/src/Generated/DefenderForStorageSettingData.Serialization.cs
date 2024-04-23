@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class DefenderForStorageSettingData : IUtf8JsonSerializable, IJsonModel<DefenderForStorageSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForStorageSettingData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForStorageSettingData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DefenderForStorageSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W" && Optional.IsDefined(SensitiveDataDiscoveryOperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
-                writer.WriteObjectValue<ExtensionOperationStatus>(SensitiveDataDiscoveryOperationStatus, options);
+                writer.WriteObjectValue(SensitiveDataDiscoveryOperationStatus, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("malwareScanning"u8);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W" && Optional.IsDefined(MalwareScanningOperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
-                writer.WriteObjectValue<ExtensionOperationStatus>(MalwareScanningOperationStatus, options);
+                writer.WriteObjectValue(MalwareScanningOperationStatus, options);
             }
             writer.WritePropertyName("onUpload"u8);
             writer.WriteStartObject();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static DefenderForStorageSettingData DeserializeDefenderForStorageSettingData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

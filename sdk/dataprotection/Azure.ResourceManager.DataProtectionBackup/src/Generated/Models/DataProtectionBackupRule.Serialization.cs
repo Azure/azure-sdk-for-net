@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class DataProtectionBackupRule : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataProtectionBackupRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(BackupParameters))
             {
                 writer.WritePropertyName("backupParameters"u8);
-                writer.WriteObjectValue<DataProtectionBackupSettingsBase>(BackupParameters, options);
+                writer.WriteObjectValue(BackupParameters, options);
             }
             writer.WritePropertyName("dataStore"u8);
-            writer.WriteObjectValue<DataStoreInfoBase>(DataStore, options);
+            writer.WriteObjectValue(DataStore, options);
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue<DataProtectionBackupTriggerContext>(Trigger, options);
+            writer.WriteObjectValue(Trigger, options);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("objectType"u8);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupRule DeserializeDataProtectionBackupRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

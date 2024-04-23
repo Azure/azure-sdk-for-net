@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class LogAnalyticsQueryData : IUtf8JsonSerializable, IJsonModel<LogAnalyticsQueryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsQueryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsQueryData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogAnalyticsQueryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Related))
             {
                 writer.WritePropertyName("related"u8);
-                writer.WriteObjectValue<LogAnalyticsQueryRelatedMetadata>(Related, options);
+                writer.WriteObjectValue(Related, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static LogAnalyticsQueryData DeserializeLogAnalyticsQueryData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

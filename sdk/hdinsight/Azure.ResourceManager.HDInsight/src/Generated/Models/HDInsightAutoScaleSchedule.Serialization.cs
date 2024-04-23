@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class HDInsightAutoScaleSchedule : IUtf8JsonSerializable, IJsonModel<HDInsightAutoScaleSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightAutoScaleSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightAutoScaleSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HDInsightAutoScaleSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(TimeAndCapacity))
             {
                 writer.WritePropertyName("timeAndCapacity"u8);
-                writer.WriteObjectValue<HDInsightAutoScaleTimeAndCapacity>(TimeAndCapacity, options);
+                writer.WriteObjectValue(TimeAndCapacity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightAutoScaleSchedule DeserializeHDInsightAutoScaleSchedule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

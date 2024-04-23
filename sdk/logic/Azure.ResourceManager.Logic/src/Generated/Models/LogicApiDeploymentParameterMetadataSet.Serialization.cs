@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     public partial class LogicApiDeploymentParameterMetadataSet : IUtf8JsonSerializable, IJsonModel<LogicApiDeploymentParameterMetadataSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiDeploymentParameterMetadataSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiDeploymentParameterMetadataSet>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LogicApiDeploymentParameterMetadataSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(PackageContentLink))
             {
                 writer.WritePropertyName("packageContentLink"u8);
-                writer.WriteObjectValue<LogicApiDeploymentParameterMetadata>(PackageContentLink, options);
+                writer.WriteObjectValue(PackageContentLink, options);
             }
             if (Optional.IsDefined(RedisCacheConnectionString))
             {
                 writer.WritePropertyName("redisCacheConnectionString"u8);
-                writer.WriteObjectValue<LogicApiDeploymentParameterMetadata>(RedisCacheConnectionString, options);
+                writer.WriteObjectValue(RedisCacheConnectionString, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicApiDeploymentParameterMetadataSet DeserializeLogicApiDeploymentParameterMetadataSet(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

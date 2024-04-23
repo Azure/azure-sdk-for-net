@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class NetworkTapPatchableParametersDestinationsItem : IUtf8JsonSerializable, IJsonModel<NetworkTapPatchableParametersDestinationsItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapPatchableParametersDestinationsItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapPatchableParametersDestinationsItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkTapPatchableParametersDestinationsItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(IsolationDomainProperties))
             {
                 writer.WritePropertyName("isolationDomainProperties"u8);
-                writer.WriteObjectValue<IsolationDomainProperties>(IsolationDomainProperties, options);
+                writer.WriteObjectValue(IsolationDomainProperties, options);
             }
             if (Optional.IsDefined(DestinationTapRuleId))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static NetworkTapPatchableParametersDestinationsItem DeserializeNetworkTapPatchableParametersDestinationsItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

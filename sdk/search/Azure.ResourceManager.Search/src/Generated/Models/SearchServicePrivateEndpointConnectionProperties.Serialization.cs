@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     public partial class SearchServicePrivateEndpointConnectionProperties : IUtf8JsonSerializable, IJsonModel<SearchServicePrivateEndpointConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServicePrivateEndpointConnectionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServicePrivateEndpointConnectionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SearchServicePrivateEndpointConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue<SearchServicePrivateLinkServiceConnectionState>(ConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
             }
             if (Optional.IsDefined(GroupId))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static SearchServicePrivateEndpointConnectionProperties DeserializeSearchServicePrivateEndpointConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

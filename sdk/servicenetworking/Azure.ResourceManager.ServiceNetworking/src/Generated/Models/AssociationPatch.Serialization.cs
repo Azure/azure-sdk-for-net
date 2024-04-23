@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     public partial class AssociationPatch : IUtf8JsonSerializable, IJsonModel<AssociationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssociationPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssociationPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AssociationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         internal static AssociationPatch DeserializeAssociationPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

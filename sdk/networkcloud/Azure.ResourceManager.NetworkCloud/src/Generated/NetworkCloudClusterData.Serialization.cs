@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudClusterData : IUtf8JsonSerializable, IJsonModel<NetworkCloudClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudClusterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkCloudClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue<ExtendedLocation>(ExtendedLocation, options);
+            writer.WriteObjectValue(ExtendedLocation, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
-            writer.WriteObjectValue<NetworkCloudRackDefinition>(AggregatorOrSingleRackDefinition, options);
+            writer.WriteObjectValue(AggregatorOrSingleRackDefinition, options);
             if (Optional.IsDefined(AnalyticsWorkspaceId))
             {
                 writer.WritePropertyName("analyticsWorkspaceId"u8);
@@ -78,14 +78,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in AvailableUpgradeVersions)
                 {
-                    writer.WriteObjectValue<ClusterAvailableUpgradeVersion>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ClusterCapacity))
             {
                 writer.WritePropertyName("clusterCapacity"u8);
-                writer.WriteObjectValue<ClusterCapacity>(ClusterCapacity, options);
+                writer.WriteObjectValue(ClusterCapacity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClusterConnectionStatus))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(ClusterExtendedLocation))
             {
                 writer.WritePropertyName("clusterExtendedLocation"u8);
-                writer.WriteObjectValue<ExtendedLocation>(ClusterExtendedLocation, options);
+                writer.WriteObjectValue(ClusterExtendedLocation, options);
             }
             if (Optional.IsDefined(ClusterLocation))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ClusterServicePrincipal))
             {
                 writer.WritePropertyName("clusterServicePrincipal"u8);
-                writer.WriteObjectValue<ServicePrincipalInformation>(ClusterServicePrincipal, options);
+                writer.WriteObjectValue(ClusterServicePrincipal, options);
             }
             writer.WritePropertyName("clusterType"u8);
             writer.WriteStringValue(ClusterType.ToString());
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ComputeDeploymentThreshold))
             {
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
-                writer.WriteObjectValue<ValidationThreshold>(ComputeDeploymentThreshold, options);
+                writer.WriteObjectValue(ComputeDeploymentThreshold, options);
             }
             if (Optional.IsCollectionDefined(ComputeRackDefinitions))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in ComputeRackDefinitions)
                 {
-                    writer.WriteObjectValue<NetworkCloudRackDefinition>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(HybridAksExtendedLocation))
             {
                 writer.WritePropertyName("hybridAksExtendedLocation"u8);
-                writer.WriteObjectValue<ExtendedLocation>(HybridAksExtendedLocation, options);
+                writer.WriteObjectValue(HybridAksExtendedLocation, options);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue<ManagedResourceGroupConfiguration>(ManagedResourceGroupConfiguration, options);
+                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManualActionCount))
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
         internal static NetworkCloudClusterData DeserializeNetworkCloudClusterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

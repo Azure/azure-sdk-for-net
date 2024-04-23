@@ -1,12 +1,32 @@
 # Release History
 
+## 1.12.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.11.2 (2024-04-19)
+
+### Bugs Fixed
+- Fixed an issue which caused claims to be incorrectly added to confidential client credentials such as `DeviceCodeCredential` [#43468](https://github.com/Azure/azure-sdk-for-net/issues/43468)
+
+## 1.11.1 (2024-04-16)
+
+### Other Changes
+- Updated Microsoft.Identity.Client and related dependencies to version 4.60.3
+
 ## 1.11.0 (2024-04-09)
 
 ### Bugs Fixed
 - `AzurePowerShellCredential` now handles the case where it falls back to legacy PowerShell without relying on the error message string.
 
-### Other Changes
-- `DefaultAzureCredential` now sends a probe request with no retries for IMDS managed identity environments to avoid excessive retry delays when the IMDS endpoint is not available. This should improve credential chain resolution for local development scenarios.
+### Breaking Changes
+- `DefaultAzureCredential` now sends a probe request with no retries for IMDS managed identity environments to avoid excessive retry delays when the IMDS endpoint is not available. This should improve credential chain resolution for local development scenarios. See [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#1110).
 
 ## 1.11.0-beta.1 (2024-02-06)
 

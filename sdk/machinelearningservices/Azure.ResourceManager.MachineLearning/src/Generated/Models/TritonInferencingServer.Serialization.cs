@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class TritonInferencingServer : IUtf8JsonSerializable, IJsonModel<TritonInferencingServer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TritonInferencingServer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TritonInferencingServer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TritonInferencingServer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (InferenceConfiguration != null)
                 {
                     writer.WritePropertyName("inferenceConfiguration"u8);
-                    writer.WriteObjectValue<OnlineInferenceConfiguration>(InferenceConfiguration, options);
+                    writer.WriteObjectValue(InferenceConfiguration, options);
                 }
                 else
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TritonInferencingServer DeserializeTritonInferencingServer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

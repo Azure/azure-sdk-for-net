@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageEnableProtectionContent : IUtf8JsonSerializable, IJsonModel<InMageEnableProtectionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageEnableProtectionContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageEnableProtectionContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InMageEnableProtectionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskExclusionContent))
             {
                 writer.WritePropertyName("diskExclusionInput"u8);
-                writer.WriteObjectValue<InMageDiskExclusionContent>(DiskExclusionContent, options);
+                writer.WriteObjectValue(DiskExclusionContent, options);
             }
             if (Optional.IsCollectionDefined(DisksToInclude))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static InMageEnableProtectionContent DeserializeInMageEnableProtectionContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

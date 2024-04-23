@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 {
     public partial class DiskPoolIscsiTargetPatch : IUtf8JsonSerializable, IJsonModel<DiskPoolIscsiTargetPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskPoolIscsiTargetPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskPoolIscsiTargetPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskPoolIscsiTargetPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticAcls)
                 {
-                    writer.WriteObjectValue<DiskPoolIscsiTargetPortalGroupAcl>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Luns)
                 {
-                    writer.WriteObjectValue<ManagedDiskIscsiLun>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static DiskPoolIscsiTargetPatch DeserializeDiskPoolIscsiTargetPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

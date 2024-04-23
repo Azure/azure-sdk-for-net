@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsWatchlistData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsWatchlistData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsWatchlistData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsWatchlistData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsWatchlistData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue<SecurityInsightsUserInfo>(CreatedBy, options);
+                writer.WriteObjectValue(CreatedBy, options);
             }
             if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue<SecurityInsightsUserInfo>(UpdatedBy, options);
+                writer.WriteObjectValue(UpdatedBy, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsWatchlistData DeserializeSecurityInsightsWatchlistData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

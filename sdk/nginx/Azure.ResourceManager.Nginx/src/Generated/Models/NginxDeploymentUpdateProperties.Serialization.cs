@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Nginx.Models
 {
     public partial class NginxDeploymentUpdateProperties : IUtf8JsonSerializable, IJsonModel<NginxDeploymentUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentUpdateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NginxDeploymentUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
-                writer.WriteObjectValue<NginxLogging>(Logging, options);
+                writer.WriteObjectValue(Logging, options);
             }
             if (Optional.IsDefined(ScalingProperties))
             {
                 writer.WritePropertyName("scalingProperties"u8);
-                writer.WriteObjectValue<NginxDeploymentScalingProperties>(ScalingProperties, options);
+                writer.WriteObjectValue(ScalingProperties, options);
             }
             if (Optional.IsDefined(UserProfile))
             {
                 writer.WritePropertyName("userProfile"u8);
-                writer.WriteObjectValue<NginxDeploymentUserProfile>(UserProfile, options);
+                writer.WriteObjectValue(UserProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxDeploymentUpdateProperties DeserializeNginxDeploymentUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

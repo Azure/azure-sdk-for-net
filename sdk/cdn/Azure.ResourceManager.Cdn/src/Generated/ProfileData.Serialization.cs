@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class ProfileData : IUtf8JsonSerializable, IJsonModel<ProfileData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProfileData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProfileData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Cdn
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue<CdnSku>(Sku, options);
+            writer.WriteObjectValue(Sku, options);
             if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Cdn
 
         internal static ProfileData DeserializeProfileData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class VMwareVCenterData : IUtf8JsonSerializable, IJsonModel<VMwareVCenterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareVCenterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareVCenterData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareVCenterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue<VICredential>(Credentials, options);
+                writer.WriteObjectValue(Credentials, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue<VMwareResourceStatus>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static VMwareVCenterData DeserializeVMwareVCenterData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

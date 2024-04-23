@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue<InnerErrorModel>(Innererror);
+                writer.WriteObjectValue(Innererror);
             }
             writer.WriteEndObject();
         }
@@ -97,6 +97,22 @@ namespace Azure.AI.TextAnalytics.Models
                 }
             }
             return new InnerErrorModel(code, message, details ?? new ChangeTrackingDictionary<string, string>(), target, innererror);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InnerErrorModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInnerErrorModel(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

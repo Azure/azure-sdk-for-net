@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal partial class PhysicalPartitionThroughputInfoResultPropertiesResource : IUtf8JsonSerializable, IJsonModel<PhysicalPartitionThroughputInfoResultPropertiesResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhysicalPartitionThroughputInfoResultPropertiesResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PhysicalPartitionThroughputInfoResultPropertiesResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PhysicalPartitionThroughputInfoResultPropertiesResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in PhysicalPartitionThroughputInfo)
                 {
-                    writer.WriteObjectValue<PhysicalPartitionThroughputInfoResource>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static PhysicalPartitionThroughputInfoResultPropertiesResource DeserializePhysicalPartitionThroughputInfoResultPropertiesResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

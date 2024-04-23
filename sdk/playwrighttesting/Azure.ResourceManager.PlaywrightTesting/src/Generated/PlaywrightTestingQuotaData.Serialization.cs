@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
 {
     public partial class PlaywrightTestingQuotaData : IUtf8JsonSerializable, IJsonModel<PlaywrightTestingQuotaData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlaywrightTestingQuotaData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlaywrightTestingQuotaData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PlaywrightTestingQuotaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             if (Optional.IsDefined(FreeTrial))
             {
                 writer.WritePropertyName("freeTrial"u8);
-                writer.WriteObjectValue<FreeTrialProperties>(FreeTrial, options);
+                writer.WriteObjectValue(FreeTrial, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
 
         internal static PlaywrightTestingQuotaData DeserializePlaywrightTestingQuotaData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

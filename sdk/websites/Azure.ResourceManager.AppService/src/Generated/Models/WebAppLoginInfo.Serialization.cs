@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class WebAppLoginInfo : IUtf8JsonSerializable, IJsonModel<WebAppLoginInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppLoginInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppLoginInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebAppLoginInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
-                writer.WriteObjectValue<LoginRoutes>(Routes, options);
+                writer.WriteObjectValue(Routes, options);
             }
             if (Optional.IsDefined(TokenStore))
             {
                 writer.WritePropertyName("tokenStore"u8);
-                writer.WriteObjectValue<AppServiceTokenStore>(TokenStore, options);
+                writer.WriteObjectValue(TokenStore, options);
             }
             if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CookieExpiration))
             {
                 writer.WritePropertyName("cookieExpiration"u8);
-                writer.WriteObjectValue<WebAppCookieExpiration>(CookieExpiration, options);
+                writer.WriteObjectValue(CookieExpiration, options);
             }
             if (Optional.IsDefined(Nonce))
             {
                 writer.WritePropertyName("nonce"u8);
-                writer.WriteObjectValue<LoginFlowNonceSettings>(Nonce, options);
+                writer.WriteObjectValue(Nonce, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppLoginInfo DeserializeWebAppLoginInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AppServiceHttpSettings : IUtf8JsonSerializable, IJsonModel<AppServiceHttpSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceHttpSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceHttpSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppServiceHttpSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
-                writer.WriteObjectValue<AppServiceHttpSettingsRoutes>(Routes, options);
+                writer.WriteObjectValue(Routes, options);
             }
             if (Optional.IsDefined(ForwardProxy))
             {
                 writer.WritePropertyName("forwardProxy"u8);
-                writer.WriteObjectValue<AppServiceForwardProxy>(ForwardProxy, options);
+                writer.WriteObjectValue(ForwardProxy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceHttpSettings DeserializeAppServiceHttpSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

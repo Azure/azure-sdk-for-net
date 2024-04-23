@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     public partial class NetworkAnalyticsIPRules : IUtf8JsonSerializable, IJsonModel<NetworkAnalyticsIPRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkAnalyticsIPRules>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkAnalyticsIPRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkAnalyticsIPRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 
         internal static NetworkAnalyticsIPRules DeserializeNetworkAnalyticsIPRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

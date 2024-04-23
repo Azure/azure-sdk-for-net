@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class ConditionFailingPeriods : IUtf8JsonSerializable, IJsonModel<ConditionFailingPeriods>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConditionFailingPeriods>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConditionFailingPeriods>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConditionFailingPeriods>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ConditionFailingPeriods DeserializeConditionFailingPeriods(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

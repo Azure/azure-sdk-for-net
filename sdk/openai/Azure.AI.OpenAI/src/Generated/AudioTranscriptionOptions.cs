@@ -79,9 +79,15 @@ namespace Azure.AI.OpenAI
         /// Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
         /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
         /// </param>
+        /// <param name="timestampGranularities">
+        /// The timestamp granularities to populate for this transcription.
+        /// `response_format` must be set `verbose_json` to use timestamp granularities.
+        /// Either or both of these options are supported: `word`, or `segment`.
+        /// Note: There is no additional latency for segment timestamps, but generating word timestamps incurs additional latency.
+        /// </param>
         /// <param name="deploymentName"> The model to use for this transcription request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AudioTranscriptionOptions(BinaryData audioData, string filename, AudioTranscriptionFormat? responseFormat, string language, string prompt, float? temperature, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AudioTranscriptionOptions(BinaryData audioData, string filename, AudioTranscriptionFormat? responseFormat, string language, string prompt, float? temperature, IList<AudioTranscriptionTimestampGranularity> timestampGranularities, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AudioData = audioData;
             Filename = filename;
@@ -89,6 +95,7 @@ namespace Azure.AI.OpenAI
             Language = language;
             Prompt = prompt;
             Temperature = temperature;
+            TimestampGranularities = timestampGranularities;
             DeploymentName = deploymentName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
