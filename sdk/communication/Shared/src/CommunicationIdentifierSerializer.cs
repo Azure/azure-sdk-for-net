@@ -45,10 +45,10 @@ namespace Azure.Communication
             if (kind == CommunicationIdentifierModelKind.MicrosoftTeamsApp
                 && identifier.MicrosoftTeamsApp is not null)
             {
-                var user = identifier.MicrosoftTeamsApp;
+                var app = identifier.MicrosoftTeamsApp;
                 return new MicrosoftTeamsAppIdentifier(
-                    AssertNotNull(user.AppId, nameof(user.AppId), nameof(MicrosoftTeamsAppIdentifierModel)),
-                    Deserialize(AssertNotNull(user.Cloud, nameof(user.Cloud), nameof(MicrosoftTeamsAppIdentifierModel))));
+                    AssertNotNull(app.AppId, nameof(app.AppId), nameof(MicrosoftTeamsAppIdentifierModel)),
+                    Deserialize(AssertNotNull(app.Cloud, nameof(app.Cloud), nameof(MicrosoftTeamsAppIdentifierModel))));
             }
 
             return new UnknownIdentifier(rawId);
@@ -62,6 +62,8 @@ namespace Azure.Communication
                     presentProperties.Add(nameof(identifier.PhoneNumber));
                 if (identifier.MicrosoftTeamsUser is not null)
                     presentProperties.Add(nameof(identifier.MicrosoftTeamsUser));
+                if (identifier.MicrosoftTeamsApp is not null)
+                    presentProperties.Add(nameof(identifier.MicrosoftTeamsApp));
 
                 if (presentProperties.Count > 1)
                     throw new JsonException($"Only one of the properties in {{{string.Join(", ", presentProperties)}}} should be present.");
@@ -127,12 +129,12 @@ namespace Azure.Communication
                         Cloud = Serialize(u.Cloud),
                     }
                 },
-                MicrosoftTeamsAppIdentifier u => new CommunicationIdentifierModel
+                MicrosoftTeamsAppIdentifier app => new CommunicationIdentifierModel
                 {
-                    RawId = u.RawId,
-                    MicrosoftTeamsApp = new MicrosoftTeamsAppIdentifierModel(u.AppId)
+                    RawId = app.RawId,
+                    MicrosoftTeamsApp = new MicrosoftTeamsAppIdentifierModel(app.AppId)
                     {
-                        Cloud = Serialize(u.Cloud),
+                        Cloud = Serialize(app.Cloud),
                     }
                 },
                 UnknownIdentifier u => new CommunicationIdentifierModel
