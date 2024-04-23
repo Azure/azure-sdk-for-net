@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The search query of advanced search request. </summary>
-    public partial class QueryConfig
+    public partial class QueryOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="QueryConfig"/>. </summary>
-        public QueryConfig()
+        /// <summary> Initializes a new instance of <see cref="QueryOptions"/>. </summary>
+        public QueryOptions()
         {
             Orderby = new ChangeTrackingList<BinaryData>();
             Facets = new ChangeTrackingList<SearchFacetItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QueryConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryOptions"/>. </summary>
         /// <param name="keywords"> The keywords applied to all searchable fields. </param>
         /// <param name="limit">
         /// The limit of the number of the search result. default value is 50; maximum
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="facets"> The facets for search. See examples for the usage of supported facets. </param>
         /// <param name="taxonomySetting"> The taxonomy setting for search. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QueryConfig(string keywords, int? limit, string continuationToken, IList<BinaryData> orderby, BinaryData filter, IList<SearchFacetItem> facets, SearchTaxonomySetting taxonomySetting, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QueryOptions(string keywords, int? limit, string continuationToken, IList<BinaryData> orderby, BinaryData filter, IList<SearchFacetItem> facets, SearchTaxonomySetting taxonomySetting, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Keywords = keywords;
             Limit = limit;

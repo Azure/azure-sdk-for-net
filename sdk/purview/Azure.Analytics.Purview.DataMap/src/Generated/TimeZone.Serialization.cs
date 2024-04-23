@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    public partial class AtlasTimeZone : IUtf8JsonSerializable, IJsonModel<AtlasTimeZone>
+    public partial class TimeZone : IUtf8JsonSerializable, IJsonModel<TimeZone>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasTimeZone>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TimeZone>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AtlasTimeZone>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TimeZone>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasTimeZone>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TimeZone>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasTimeZone)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TimeZone)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,19 +79,19 @@ namespace Azure.Analytics.Purview.DataMap
             writer.WriteEndObject();
         }
 
-        AtlasTimeZone IJsonModel<AtlasTimeZone>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TimeZone IJsonModel<TimeZone>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasTimeZone>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TimeZone>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasTimeZone)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TimeZone)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAtlasTimeZone(document.RootElement, options);
+            return DeserializeTimeZone(document.RootElement, options);
         }
 
-        internal static AtlasTimeZone DeserializeAtlasTimeZone(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TimeZone DeserializeTimeZone(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -102,7 +102,7 @@ namespace Azure.Analytics.Purview.DataMap
             int? dstSavings = default;
             string id = default;
             IList<string> availableIds = default;
-            AtlasTimeZone @default = default;
+            TimeZone @default = default;
             string displayName = default;
             int? rawOffset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -143,7 +143,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    @default = DeserializeAtlasTimeZone(property.Value, options);
+                    @default = DeserializeTimeZone(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))
@@ -166,7 +166,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AtlasTimeZone(
+            return new TimeZone(
                 dstSavings,
                 id,
                 availableIds ?? new ChangeTrackingList<string>(),
@@ -176,43 +176,43 @@ namespace Azure.Analytics.Purview.DataMap
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AtlasTimeZone>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TimeZone>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasTimeZone>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TimeZone>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasTimeZone)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TimeZone)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AtlasTimeZone IPersistableModel<AtlasTimeZone>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TimeZone IPersistableModel<TimeZone>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasTimeZone>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TimeZone>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAtlasTimeZone(document.RootElement, options);
+                        return DeserializeTimeZone(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasTimeZone)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TimeZone)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AtlasTimeZone>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TimeZone>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AtlasTimeZone FromResponse(Response response)
+        internal static TimeZone FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAtlasTimeZone(document.RootElement);
+            return DeserializeTimeZone(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -1539,7 +1539,7 @@ Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("m
 Console.WriteLine(result.GetProperty("partialUpdatedEntities")[0].GetProperty("status").ToString());
 ]]></code></example>
     </member>
-    <member name="AddClassificationAsync(ClassificationAssociateConfig,CancellationToken)">
+    <member name="AddClassificationAsync(ClassificationAssociateOptions,CancellationToken)">
       <example>
 This sample shows how to call AddClassificationAsync.
 <code><![CDATA[
@@ -1547,8 +1547,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig();
-Response response = await client.AddClassificationAsync(classificationAssociateConfig);
+ClassificationAssociateOptions classificationAssociateOptions = new ClassificationAssociateOptions();
+Response response = await client.AddClassificationAsync(classificationAssociateOptions);
 ]]></code>
 This sample shows how to call AddClassificationAsync with all parameters.
 <code><![CDATA[
@@ -1556,7 +1556,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig
+ClassificationAssociateOptions classificationAssociateOptions = new ClassificationAssociateOptions
 {
     Classification = new AtlasClassification
     {
@@ -1578,10 +1578,10 @@ ClassificationAssociateConfig classificationAssociateConfig = new Classification
     },
     EntityGuids = { "<entityGuids>" },
 };
-Response response = await client.AddClassificationAsync(classificationAssociateConfig);
+Response response = await client.AddClassificationAsync(classificationAssociateOptions);
 ]]></code></example>
     </member>
-    <member name="AddClassification(ClassificationAssociateConfig,CancellationToken)">
+    <member name="AddClassification(ClassificationAssociateOptions,CancellationToken)">
       <example>
 This sample shows how to call AddClassification.
 <code><![CDATA[
@@ -1589,8 +1589,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig();
-Response response = client.AddClassification(classificationAssociateConfig);
+ClassificationAssociateOptions classificationAssociateOptions = new ClassificationAssociateOptions();
+Response response = client.AddClassification(classificationAssociateOptions);
 ]]></code>
 This sample shows how to call AddClassification with all parameters.
 <code><![CDATA[
@@ -1598,7 +1598,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig
+ClassificationAssociateOptions classificationAssociateOptions = new ClassificationAssociateOptions
 {
     Classification = new AtlasClassification
     {
@@ -1620,7 +1620,7 @@ ClassificationAssociateConfig classificationAssociateConfig = new Classification
     },
     EntityGuids = { "<entityGuids>" },
 };
-Response response = client.AddClassification(classificationAssociateConfig);
+Response response = client.AddClassification(classificationAssociateOptions);
 ]]></code></example>
     </member>
     <member name="AddClassificationAsync(RequestContent,RequestContext)">
@@ -6387,7 +6387,7 @@ Response response = client.AddLabelsByUniqueAttribute("<typeName>", content, att
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="MoveEntitiesToCollectionAsync(string,MoveEntitiesConfig,CancellationToken)">
+    <member name="MoveEntitiesToCollectionAsync(string,MoveEntitiesOptions,CancellationToken)">
       <example>
 This sample shows how to call MoveEntitiesToCollectionAsync.
 <code><![CDATA[
@@ -6395,8 +6395,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig();
-Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesConfig);
+MoveEntitiesOptions moveEntitiesOptions = new MoveEntitiesOptions();
+Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesOptions);
 ]]></code>
 This sample shows how to call MoveEntitiesToCollectionAsync with all parameters.
 <code><![CDATA[
@@ -6404,14 +6404,14 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig
+MoveEntitiesOptions moveEntitiesOptions = new MoveEntitiesOptions
 {
     EntityGuids = { "<entityGuids>" },
 };
-Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesConfig);
+Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesOptions);
 ]]></code></example>
     </member>
-    <member name="MoveEntitiesToCollection(string,MoveEntitiesConfig,CancellationToken)">
+    <member name="MoveEntitiesToCollection(string,MoveEntitiesOptions,CancellationToken)">
       <example>
 This sample shows how to call MoveEntitiesToCollection.
 <code><![CDATA[
@@ -6419,8 +6419,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig();
-Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesConfig);
+MoveEntitiesOptions moveEntitiesOptions = new MoveEntitiesOptions();
+Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesOptions);
 ]]></code>
 This sample shows how to call MoveEntitiesToCollection with all parameters.
 <code><![CDATA[
@@ -6428,11 +6428,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig
+MoveEntitiesOptions moveEntitiesOptions = new MoveEntitiesOptions
 {
     EntityGuids = { "<entityGuids>" },
 };
-Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesConfig);
+Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesOptions);
 ]]></code></example>
     </member>
     <member name="MoveEntitiesToCollectionAsync(string,RequestContent,RequestContext)">

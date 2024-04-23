@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The timezone information. </summary>
-    public partial class AtlasTimeZone
+    public partial class TimeZone
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasTimeZone"/>. </summary>
-        public AtlasTimeZone()
+        /// <summary> Initializes a new instance of <see cref="TimeZone"/>. </summary>
+        public TimeZone()
         {
             AvailableIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasTimeZone"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TimeZone"/>. </summary>
         /// <param name="dstSavings"> The value of the daylight saving time. </param>
         /// <param name="id"> The ID of the timezone. </param>
         /// <param name="availableIds"> An array of available IDs. </param>
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="displayName"> The display name of the timezone. </param>
         /// <param name="rawOffset"> The raw offset of the timezone. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasTimeZone(int? dstSavings, string id, IList<string> availableIds, AtlasTimeZone @default, string displayName, int? rawOffset, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TimeZone(int? dstSavings, string id, IList<string> availableIds, TimeZone @default, string displayName, int? rawOffset, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DstSavings = dstSavings;
             Id = id;
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> An array of available IDs. </summary>
         public IList<string> AvailableIds { get; }
         /// <summary> The timezone information. </summary>
-        public AtlasTimeZone Default { get; set; }
+        public TimeZone Default { get; set; }
         /// <summary> The display name of the timezone. </summary>
         public string DisplayName { get; set; }
         /// <summary> The raw offset of the timezone. </summary>

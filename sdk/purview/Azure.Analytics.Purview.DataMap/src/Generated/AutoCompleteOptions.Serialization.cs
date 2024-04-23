@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    public partial class AutoCompleteConfig : IUtf8JsonSerializable, IJsonModel<AutoCompleteConfig>
+    public partial class AutoCompleteOptions : IUtf8JsonSerializable, IJsonModel<AutoCompleteOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoCompleteConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoCompleteOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AutoCompleteConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AutoCompleteOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoCompleteConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutoCompleteOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoCompleteConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoCompleteOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,19 +66,19 @@ namespace Azure.Analytics.Purview.DataMap
             writer.WriteEndObject();
         }
 
-        AutoCompleteConfig IJsonModel<AutoCompleteConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AutoCompleteOptions IJsonModel<AutoCompleteOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoCompleteConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutoCompleteOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoCompleteConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoCompleteOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAutoCompleteConfig(document.RootElement, options);
+            return DeserializeAutoCompleteOptions(document.RootElement, options);
         }
 
-        internal static AutoCompleteConfig DeserializeAutoCompleteConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AutoCompleteOptions DeserializeAutoCompleteOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -122,46 +122,46 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AutoCompleteConfig(keywords, limit, filter, serializedAdditionalRawData);
+            return new AutoCompleteOptions(keywords, limit, filter, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AutoCompleteConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AutoCompleteOptions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoCompleteConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutoCompleteOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoCompleteConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoCompleteOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AutoCompleteConfig IPersistableModel<AutoCompleteConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AutoCompleteOptions IPersistableModel<AutoCompleteOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AutoCompleteConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AutoCompleteOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAutoCompleteConfig(document.RootElement, options);
+                        return DeserializeAutoCompleteOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoCompleteConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoCompleteOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AutoCompleteConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AutoCompleteOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AutoCompleteConfig FromResponse(Response response)
+        internal static AutoCompleteOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAutoCompleteConfig(document.RootElement);
+            return DeserializeAutoCompleteOptions(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

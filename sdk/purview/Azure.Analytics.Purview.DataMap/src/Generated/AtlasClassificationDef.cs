@@ -98,7 +98,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="subTypes"> An array of sub types. </param>
         /// <param name="superTypes"> An array of super types. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasClassificationDef(TypeCategory? category, long? createTime, string createdBy, AtlasDateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, IList<AtlasAttributeDef> attributeDefs, IList<string> entityTypes, IList<string> subTypes, IList<string> superTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AtlasClassificationDef(TypeCategory? category, long? createTime, string createdBy, DateFormat dateFormatter, string description, string guid, string name, IDictionary<string, string> options, string serviceType, string typeVersion, long? updateTime, string updatedBy, long? version, string lastModifiedTS, IList<AtlasAttributeDef> attributeDefs, IList<string> entityTypes, IList<string> subTypes, IList<string> superTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             CreateTime = createTime;
@@ -128,7 +128,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> The user who created the record. </summary>
         public string CreatedBy { get; set; }
         /// <summary> The date format. </summary>
-        public AtlasDateFormat DateFormatter { get; set; }
+        public DateFormat DateFormatter { get; set; }
         /// <summary> The description of the type definition. </summary>
         public string Description { get; set; }
         /// <summary> The GUID of the type definition. </summary>

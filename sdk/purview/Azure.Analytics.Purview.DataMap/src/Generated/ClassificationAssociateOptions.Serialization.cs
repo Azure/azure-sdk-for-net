@@ -13,19 +13,24 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    public partial class MoveEntitiesConfig : IUtf8JsonSerializable, IJsonModel<MoveEntitiesConfig>
+    public partial class ClassificationAssociateOptions : IUtf8JsonSerializable, IJsonModel<ClassificationAssociateOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoveEntitiesConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClassificationAssociateOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MoveEntitiesConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClassificationAssociateOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MoveEntitiesConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationAssociateOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoveEntitiesConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClassificationAssociateOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Classification))
+            {
+                writer.WritePropertyName("classification"u8);
+                writer.WriteObjectValue(Classification, options);
+            }
             if (Optional.IsCollectionDefined(EntityGuids))
             {
                 writer.WritePropertyName("entityGuids"u8);
@@ -54,19 +59,19 @@ namespace Azure.Analytics.Purview.DataMap
             writer.WriteEndObject();
         }
 
-        MoveEntitiesConfig IJsonModel<MoveEntitiesConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClassificationAssociateOptions IJsonModel<ClassificationAssociateOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MoveEntitiesConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationAssociateOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoveEntitiesConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClassificationAssociateOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMoveEntitiesConfig(document.RootElement, options);
+            return DeserializeClassificationAssociateOptions(document.RootElement, options);
         }
 
-        internal static MoveEntitiesConfig DeserializeMoveEntitiesConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClassificationAssociateOptions DeserializeClassificationAssociateOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -74,11 +79,21 @@ namespace Azure.Analytics.Purview.DataMap
             {
                 return null;
             }
+            AtlasClassification classification = default;
             IList<string> entityGuids = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("classification"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    classification = AtlasClassification.DeserializeAtlasClassification(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("entityGuids"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -99,46 +114,46 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MoveEntitiesConfig(entityGuids ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ClassificationAssociateOptions(classification, entityGuids ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MoveEntitiesConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClassificationAssociateOptions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MoveEntitiesConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationAssociateOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoveEntitiesConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClassificationAssociateOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MoveEntitiesConfig IPersistableModel<MoveEntitiesConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClassificationAssociateOptions IPersistableModel<ClassificationAssociateOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MoveEntitiesConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClassificationAssociateOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMoveEntitiesConfig(document.RootElement, options);
+                        return DeserializeClassificationAssociateOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoveEntitiesConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClassificationAssociateOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MoveEntitiesConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClassificationAssociateOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MoveEntitiesConfig FromResponse(Response response)
+        internal static ClassificationAssociateOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMoveEntitiesConfig(document.RootElement);
+            return DeserializeClassificationAssociateOptions(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

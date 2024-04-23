@@ -1639,8 +1639,8 @@ Info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig();
-            Response response = client.AddClassification(classificationAssociateConfig);
+            ClassificationAssociateOptions classificationAssociateOptions = new ClassificationAssociateOptions();
+            Response response = client.AddClassification(classificationAssociateOptions);
         }
 
         [Test]
@@ -1651,8 +1651,8 @@ Info = "<info>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig();
-            Response response = await client.AddClassificationAsync(classificationAssociateConfig);
+            ClassificationAssociateOptions classificationAssociateOptions = new ClassificationAssociateOptions();
+            Response response = await client.AddClassificationAsync(classificationAssociateOptions);
         }
 
         [Test]
@@ -1745,7 +1745,7 @@ timeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig
+            ClassificationAssociateOptions classificationAssociateOptions = new ClassificationAssociateOptions
             {
                 Classification = new AtlasClassification
                 {
@@ -1767,7 +1767,7 @@ TimeZone = "<timeZone>",
                 },
                 EntityGuids = { "<entityGuids>" },
             };
-            Response response = client.AddClassification(classificationAssociateConfig);
+            Response response = client.AddClassification(classificationAssociateOptions);
         }
 
         [Test]
@@ -1778,7 +1778,7 @@ TimeZone = "<timeZone>",
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            ClassificationAssociateConfig classificationAssociateConfig = new ClassificationAssociateConfig
+            ClassificationAssociateOptions classificationAssociateOptions = new ClassificationAssociateOptions
             {
                 Classification = new AtlasClassification
                 {
@@ -1800,7 +1800,7 @@ TimeZone = "<timeZone>",
                 },
                 EntityGuids = { "<entityGuids>" },
             };
-            Response response = await client.AddClassificationAsync(classificationAssociateConfig);
+            Response response = await client.AddClassificationAsync(classificationAssociateOptions);
         }
 
         [Test]
@@ -6837,8 +6837,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig();
-            Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesConfig);
+            MoveEntitiesOptions moveEntitiesOptions = new MoveEntitiesOptions();
+            Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesOptions);
         }
 
         [Test]
@@ -6849,8 +6849,8 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig();
-            Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesConfig);
+            MoveEntitiesOptions moveEntitiesOptions = new MoveEntitiesOptions();
+            Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesOptions);
         }
 
         [Test]
@@ -7015,11 +7015,11 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig
+            MoveEntitiesOptions moveEntitiesOptions = new MoveEntitiesOptions
             {
                 EntityGuids = { "<entityGuids>" },
             };
-            Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesConfig);
+            Response<EntityMutationResult> response = client.MoveEntitiesToCollection("<collectionId>", moveEntitiesOptions);
         }
 
         [Test]
@@ -7030,11 +7030,11 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient(apiVersion: "2023-09-01");
 
-            MoveEntitiesConfig moveEntitiesConfig = new MoveEntitiesConfig
+            MoveEntitiesOptions moveEntitiesOptions = new MoveEntitiesOptions
             {
                 EntityGuids = { "<entityGuids>" },
             };
-            Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesConfig);
+            Response<EntityMutationResult> response = await client.MoveEntitiesToCollectionAsync("<collectionId>", moveEntitiesOptions);
         }
     }
 }

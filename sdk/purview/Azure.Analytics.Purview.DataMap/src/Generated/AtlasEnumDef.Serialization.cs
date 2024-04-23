@@ -158,7 +158,7 @@ namespace Azure.Analytics.Purview.DataMap
             TypeCategory? category = default;
             long? createTime = default;
             string createdBy = default;
-            AtlasDateFormat dateFormatter = default;
+            DateFormat dateFormatter = default;
             string description = default;
             string guid = default;
             string name = default;
@@ -204,7 +204,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    dateFormatter = AtlasDateFormat.DeserializeAtlasDateFormat(property.Value, options);
+                    dateFormatter = DateFormat.DeserializeDateFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

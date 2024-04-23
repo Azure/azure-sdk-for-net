@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    public partial class SuggestConfig : IUtf8JsonSerializable, IJsonModel<SuggestConfig>
+    public partial class SuggestOptions : IUtf8JsonSerializable, IJsonModel<SuggestOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuggestConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SuggestOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SuggestConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SuggestOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SuggestConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SuggestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuggestConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SuggestOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,19 +66,19 @@ namespace Azure.Analytics.Purview.DataMap
             writer.WriteEndObject();
         }
 
-        SuggestConfig IJsonModel<SuggestConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SuggestOptions IJsonModel<SuggestOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SuggestConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SuggestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SuggestConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SuggestOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSuggestConfig(document.RootElement, options);
+            return DeserializeSuggestOptions(document.RootElement, options);
         }
 
-        internal static SuggestConfig DeserializeSuggestConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SuggestOptions DeserializeSuggestOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -122,46 +122,46 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SuggestConfig(keywords, limit, filter, serializedAdditionalRawData);
+            return new SuggestOptions(keywords, limit, filter, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SuggestConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SuggestOptions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SuggestConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SuggestOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SuggestConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SuggestOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SuggestConfig IPersistableModel<SuggestConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SuggestOptions IPersistableModel<SuggestOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SuggestConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SuggestOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSuggestConfig(document.RootElement, options);
+                        return DeserializeSuggestOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SuggestConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SuggestOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SuggestConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SuggestOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SuggestConfig FromResponse(Response response)
+        internal static SuggestOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSuggestConfig(document.RootElement);
+            return DeserializeSuggestOptions(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

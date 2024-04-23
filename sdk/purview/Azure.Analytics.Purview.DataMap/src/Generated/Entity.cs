@@ -632,30 +632,30 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
-        /// <param name="classificationAssociateConfig"> The request payload for classification association. </param>
+        /// <param name="classificationAssociateOptions"> The request payload for classification association. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classificationAssociateConfig"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationAsync(ClassificationAssociateConfig,CancellationToken)']/*" />
-        public virtual async Task<Response> AddClassificationAsync(ClassificationAssociateConfig classificationAssociateConfig, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="classificationAssociateOptions"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassificationAsync(ClassificationAssociateOptions,CancellationToken)']/*" />
+        public virtual async Task<Response> AddClassificationAsync(ClassificationAssociateOptions classificationAssociateOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(classificationAssociateConfig, nameof(classificationAssociateConfig));
+            Argument.AssertNotNull(classificationAssociateOptions, nameof(classificationAssociateOptions));
 
-            using RequestContent content = classificationAssociateConfig.ToRequestContent();
+            using RequestContent content = classificationAssociateOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddClassificationAsync(content, context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> Associate a classification to multiple entities in bulk. </summary>
-        /// <param name="classificationAssociateConfig"> The request payload for classification association. </param>
+        /// <param name="classificationAssociateOptions"> The request payload for classification association. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classificationAssociateConfig"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassification(ClassificationAssociateConfig,CancellationToken)']/*" />
-        public virtual Response AddClassification(ClassificationAssociateConfig classificationAssociateConfig, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="classificationAssociateOptions"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='AddClassification(ClassificationAssociateOptions,CancellationToken)']/*" />
+        public virtual Response AddClassification(ClassificationAssociateOptions classificationAssociateOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(classificationAssociateConfig, nameof(classificationAssociateConfig));
+            Argument.AssertNotNull(classificationAssociateOptions, nameof(classificationAssociateOptions));
 
-            using RequestContent content = classificationAssociateConfig.ToRequestContent();
+            using RequestContent content = classificationAssociateOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddClassification(content, context);
             return response;
@@ -671,7 +671,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddClassificationAsync(ClassificationAssociateConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddClassificationAsync(ClassificationAssociateOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -710,7 +710,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddClassification(ClassificationAssociateConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddClassification(ClassificationAssociateOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4659,16 +4659,16 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Move existing entities to the target collection. </summary>
         /// <param name="collectionId"> The collection where entities will be moved to. </param>
-        /// <param name="moveEntitiesConfig"> MoveEntitiesOptions. </param>
+        /// <param name="moveEntitiesOptions"> MoveEntitiesOptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="moveEntitiesConfig"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(string,MoveEntitiesConfig,CancellationToken)']/*" />
-        public virtual async Task<Response<EntityMutationResult>> MoveEntitiesToCollectionAsync(string collectionId, MoveEntitiesConfig moveEntitiesConfig, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="moveEntitiesOptions"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(string,MoveEntitiesOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<EntityMutationResult>> MoveEntitiesToCollectionAsync(string collectionId, MoveEntitiesOptions moveEntitiesOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(moveEntitiesConfig, nameof(moveEntitiesConfig));
+            Argument.AssertNotNull(moveEntitiesOptions, nameof(moveEntitiesOptions));
 
-            using RequestContent content = moveEntitiesConfig.ToRequestContent();
+            using RequestContent content = moveEntitiesOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await MoveEntitiesToCollectionAsync(collectionId, content, context).ConfigureAwait(false);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
@@ -4676,16 +4676,16 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <summary> Move existing entities to the target collection. </summary>
         /// <param name="collectionId"> The collection where entities will be moved to. </param>
-        /// <param name="moveEntitiesConfig"> MoveEntitiesOptions. </param>
+        /// <param name="moveEntitiesOptions"> MoveEntitiesOptions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="moveEntitiesConfig"/> is null. </exception>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollection(string,MoveEntitiesConfig,CancellationToken)']/*" />
-        public virtual Response<EntityMutationResult> MoveEntitiesToCollection(string collectionId, MoveEntitiesConfig moveEntitiesConfig, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="moveEntitiesOptions"/> is null. </exception>
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='MoveEntitiesToCollection(string,MoveEntitiesOptions,CancellationToken)']/*" />
+        public virtual Response<EntityMutationResult> MoveEntitiesToCollection(string collectionId, MoveEntitiesOptions moveEntitiesOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(moveEntitiesConfig, nameof(moveEntitiesConfig));
+            Argument.AssertNotNull(moveEntitiesOptions, nameof(moveEntitiesOptions));
 
-            using RequestContent content = moveEntitiesConfig.ToRequestContent();
+            using RequestContent content = moveEntitiesOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = MoveEntitiesToCollection(collectionId, content, context);
             return Response.FromValue(EntityMutationResult.FromResponse(response), response);
@@ -4701,7 +4701,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="MoveEntitiesToCollectionAsync(string,MoveEntitiesConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="MoveEntitiesToCollectionAsync(string,MoveEntitiesOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4742,7 +4742,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="MoveEntitiesToCollection(string,MoveEntitiesConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="MoveEntitiesToCollection(string,MoveEntitiesOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

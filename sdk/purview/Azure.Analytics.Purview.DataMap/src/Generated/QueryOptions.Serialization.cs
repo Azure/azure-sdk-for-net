@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    public partial class QueryConfig : IUtf8JsonSerializable, IJsonModel<QueryConfig>
+    public partial class QueryOptions : IUtf8JsonSerializable, IJsonModel<QueryOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<QueryConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QueryOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QueryOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -108,19 +108,19 @@ namespace Azure.Analytics.Purview.DataMap
             writer.WriteEndObject();
         }
 
-        QueryConfig IJsonModel<QueryConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        QueryOptions IJsonModel<QueryOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QueryOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQueryConfig(document.RootElement, options);
+            return DeserializeQueryOptions(document.RootElement, options);
         }
 
-        internal static QueryConfig DeserializeQueryConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static QueryOptions DeserializeQueryOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new QueryConfig(
+            return new QueryOptions(
                 keywords,
                 limit,
                 continuationToken,
@@ -228,43 +228,43 @@ namespace Azure.Analytics.Purview.DataMap
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<QueryConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<QueryOptions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QueryOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        QueryConfig IPersistableModel<QueryConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        QueryOptions IPersistableModel<QueryOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QueryConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<QueryOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeQueryConfig(document.RootElement, options);
+                        return DeserializeQueryOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<QueryConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QueryOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static QueryConfig FromResponse(Response response)
+        internal static QueryOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeQueryConfig(document.RootElement);
+            return DeserializeQueryOptions(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
