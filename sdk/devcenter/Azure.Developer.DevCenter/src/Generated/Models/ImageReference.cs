@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Specifies information about the image used. </summary>
-    public partial class DevBoxImageReference
+    public partial class ImageReference
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.Developer.DevCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxImageReference"/>. </summary>
-        internal DevBoxImageReference()
+        /// <summary> Initializes a new instance of <see cref="ImageReference"/>. </summary>
+        internal ImageReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageReference"/>. </summary>
         /// <param name="name"> The name of the image used. </param>
         /// <param name="version"> The version of the image. </param>
         /// <param name="operatingSystem"> The operating system of the image. </param>
         /// <param name="osBuildNumber"> The operating system build number of the image. </param>
         /// <param name="publishedDate"> The datetime that the backing image version was published. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxImageReference(string name, string version, string operatingSystem, string osBuildNumber, DateTimeOffset? publishedDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImageReference(string name, string version, string operatingSystem, string osBuildNumber, DateTimeOffset? publishedDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Version = version;

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Request body to build a new custom document classifier. </summary>
-    internal partial class BuildDocumentClassifierContent
+    public partial class BuildDocumentClassifierRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierRequest"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="docTypes"> List of document types to classify against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="docTypes"/> is null. </exception>
-        internal BuildDocumentClassifierContent(string classifierId, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes)
+        public BuildDocumentClassifierRequest(string classifierId, IDictionary<string, ClassifierDocumentTypeDetails> docTypes)
         {
             Argument.AssertNotNull(classifierId, nameof(classifierId));
             Argument.AssertNotNull(docTypes, nameof(docTypes));
@@ -58,13 +58,13 @@ namespace Azure.AI.DocumentIntelligence
             DocTypes = docTypes;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierRequest"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="description"> Document classifier description. </param>
         /// <param name="baseClassifierId"> Base classifierId on top of which to train the classifier. </param>
         /// <param name="docTypes"> List of document types to classify against. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BuildDocumentClassifierContent(string classifierId, string description, string baseClassifierId, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BuildDocumentClassifierRequest(string classifierId, string description, string baseClassifierId, IDictionary<string, ClassifierDocumentTypeDetails> docTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClassifierId = classifierId;
             Description = description;
@@ -73,18 +73,18 @@ namespace Azure.AI.DocumentIntelligence
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierContent"/> for deserialization. </summary>
-        internal BuildDocumentClassifierContent()
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierRequest"/> for deserialization. </summary>
+        internal BuildDocumentClassifierRequest()
         {
         }
 
         /// <summary> Unique document classifier name. </summary>
         public string ClassifierId { get; }
         /// <summary> Document classifier description. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
         /// <summary> Base classifierId on top of which to train the classifier. </summary>
-        public string BaseClassifierId { get; }
+        public string BaseClassifierId { get; set; }
         /// <summary> List of document types to classify against. </summary>
-        public IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> DocTypes { get; }
+        public IDictionary<string, ClassifierDocumentTypeDetails> DocTypes { get; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class ComposeDocumentModelContent : IUtf8JsonSerializable, IJsonModel<ComposeDocumentModelContent>
+    internal partial class ComposeDocumentModelContent : IUtf8JsonSerializable, IJsonModel<ComposeDocumentModelContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComposeDocumentModelContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

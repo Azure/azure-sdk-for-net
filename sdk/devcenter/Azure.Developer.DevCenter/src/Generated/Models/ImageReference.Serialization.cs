@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class DevBoxImageReference : IUtf8JsonSerializable, IJsonModel<DevBoxImageReference>
+    public partial class ImageReference : IUtf8JsonSerializable, IJsonModel<ImageReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxImageReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DevBoxImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxImageReference)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,19 +69,19 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteEndObject();
         }
 
-        DevBoxImageReference IJsonModel<DevBoxImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ImageReference IJsonModel<ImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxImageReference)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDevBoxImageReference(document.RootElement, options);
+            return DeserializeImageReference(document.RootElement, options);
         }
 
-        internal static DevBoxImageReference DeserializeDevBoxImageReference(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ImageReference DeserializeImageReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -133,7 +133,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevBoxImageReference(
+            return new ImageReference(
                 name,
                 version,
                 operatingSystem,
@@ -142,43 +142,43 @@ namespace Azure.Developer.DevCenter.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DevBoxImageReference>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ImageReference>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImageReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxImageReference)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageReference)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DevBoxImageReference IPersistableModel<DevBoxImageReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ImageReference IPersistableModel<ImageReference>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImageReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDevBoxImageReference(document.RootElement, options);
+                        return DeserializeImageReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxImageReference)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageReference)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DevBoxImageReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ImageReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DevBoxImageReference FromResponse(Response response)
+        internal static ImageReference FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDevBoxImageReference(document.RootElement);
+            return DeserializeImageReference(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

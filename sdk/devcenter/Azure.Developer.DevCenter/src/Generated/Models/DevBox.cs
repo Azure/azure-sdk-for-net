@@ -74,7 +74,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="createdTime"> Creation time of this Dev Box. </param>
         /// <param name="localAdministratorStatus"> Indicates whether the owner of the Dev Box is a local administrator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBox(string name, string projectName, string poolName, HibernateSupport? hibernateSupport, DevBoxProvisioningState? provisioningState, string actionState, PowerState? powerState, Guid? uniqueId, ResponseError error, AzureLocation? location, DevBoxOSType? osType, Guid? userId, DevBoxHardwareProfile hardwareProfile, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, DateTimeOffset? createdTime, LocalAdministratorStatus? localAdministratorStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevBox(string name, string projectName, string poolName, HibernateSupport? hibernateSupport, DevBoxProvisioningState? provisioningState, string actionState, PowerState? powerState, Guid? uniqueId, ResponseError error, AzureLocation? location, DevBoxOSType? osType, Guid? userId, HardwareProfile hardwareProfile, StorageProfile storageProfile, ImageReference imageReference, DateTimeOffset? createdTime, LocalAdministratorStatus? localAdministratorStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ProjectName = projectName;
@@ -135,11 +135,11 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The AAD object id of the user this Dev Box is assigned to. </summary>
         public Guid? UserId { get; }
         /// <summary> Information about the Dev Box's hardware resources. </summary>
-        public DevBoxHardwareProfile HardwareProfile { get; }
+        public HardwareProfile HardwareProfile { get; }
         /// <summary> Storage settings for this Dev Box. </summary>
-        public DevBoxStorageProfile StorageProfile { get; }
+        public StorageProfile StorageProfile { get; }
         /// <summary> Information about the image used for this Dev Box. </summary>
-        public DevBoxImageReference ImageReference { get; }
+        public ImageReference ImageReference { get; }
         /// <summary> Creation time of this Dev Box. </summary>
         public DateTimeOffset? CreatedTime { get; }
         /// <summary> Indicates whether the owner of the Dev Box is a local administrator. </summary>

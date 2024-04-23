@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    internal partial class BuildDocumentClassifierContent : IUtf8JsonSerializable, IJsonModel<BuildDocumentClassifierContent>
+    public partial class BuildDocumentClassifierRequest : IUtf8JsonSerializable, IJsonModel<BuildDocumentClassifierRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildDocumentClassifierContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildDocumentClassifierRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BuildDocumentClassifierContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BuildDocumentClassifierRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentClassifierContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentClassifierRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuildDocumentClassifierContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BuildDocumentClassifierRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,19 +64,19 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteEndObject();
         }
 
-        BuildDocumentClassifierContent IJsonModel<BuildDocumentClassifierContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BuildDocumentClassifierRequest IJsonModel<BuildDocumentClassifierRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentClassifierContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentClassifierRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuildDocumentClassifierContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BuildDocumentClassifierRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBuildDocumentClassifierContent(document.RootElement, options);
+            return DeserializeBuildDocumentClassifierRequest(document.RootElement, options);
         }
 
-        internal static BuildDocumentClassifierContent DeserializeBuildDocumentClassifierContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BuildDocumentClassifierRequest DeserializeBuildDocumentClassifierRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -87,7 +87,7 @@ namespace Azure.AI.DocumentIntelligence
             string classifierId = default;
             string description = default;
             string baseClassifierId = default;
-            IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes = default;
+            IDictionary<string, ClassifierDocumentTypeDetails> docTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,46 +123,46 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BuildDocumentClassifierContent(classifierId, description, baseClassifierId, docTypes, serializedAdditionalRawData);
+            return new BuildDocumentClassifierRequest(classifierId, description, baseClassifierId, docTypes, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BuildDocumentClassifierContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BuildDocumentClassifierRequest>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentClassifierContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentClassifierRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BuildDocumentClassifierContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BuildDocumentClassifierRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BuildDocumentClassifierContent IPersistableModel<BuildDocumentClassifierContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BuildDocumentClassifierRequest IPersistableModel<BuildDocumentClassifierRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentClassifierContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentClassifierRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBuildDocumentClassifierContent(document.RootElement, options);
+                        return DeserializeBuildDocumentClassifierRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BuildDocumentClassifierContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BuildDocumentClassifierRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BuildDocumentClassifierContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BuildDocumentClassifierRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BuildDocumentClassifierContent FromResponse(Response response)
+        internal static BuildDocumentClassifierRequest FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeBuildDocumentClassifierContent(document.RootElement);
+            return DeserializeBuildDocumentClassifierRequest(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

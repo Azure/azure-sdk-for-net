@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Request body to create a composed document model from component document models. </summary>
-    internal partial class ComposeDocumentModelContent
+    public partial class ComposeDocumentModelRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ComposeDocumentModelContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComposeDocumentModelRequest"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="componentModels"> List of component document models to compose. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="componentModels"/> is null. </exception>
-        public ComposeDocumentModelContent(string modelId, IEnumerable<ComponentDocumentModelDetails> componentModels)
+        public ComposeDocumentModelRequest(string modelId, IEnumerable<ComponentDocumentModelDetails> componentModels)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
             Argument.AssertNotNull(componentModels, nameof(componentModels));
@@ -60,13 +60,13 @@ namespace Azure.AI.DocumentIntelligence
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComposeDocumentModelContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComposeDocumentModelRequest"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="componentModels"> List of component document models to compose. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComposeDocumentModelContent(string modelId, string description, IList<ComponentDocumentModelDetails> componentModels, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComposeDocumentModelRequest(string modelId, string description, IList<ComponentDocumentModelDetails> componentModels, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelId = modelId;
             Description = description;
@@ -75,8 +75,8 @@ namespace Azure.AI.DocumentIntelligence
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComposeDocumentModelContent"/> for deserialization. </summary>
-        internal ComposeDocumentModelContent()
+        /// <summary> Initializes a new instance of <see cref="ComposeDocumentModelRequest"/> for deserialization. </summary>
+        internal ComposeDocumentModelRequest()
         {
         }
 

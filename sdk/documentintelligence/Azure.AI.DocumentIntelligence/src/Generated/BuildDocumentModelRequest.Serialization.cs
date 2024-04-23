@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class AuthorizeCopyContent : IUtf8JsonSerializable, IJsonModel<AuthorizeCopyContent>
+    public partial class BuildDocumentModelRequest : IUtf8JsonSerializable, IJsonModel<BuildDocumentModelRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizeCopyContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildDocumentModelRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AuthorizeCopyContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BuildDocumentModelRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthorizeCopyContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentModelRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizeCopyContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BuildDocumentModelRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,6 +32,18 @@ namespace Azure.AI.DocumentIntelligence
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            writer.WritePropertyName("buildMode"u8);
+            writer.WriteStringValue(BuildMode.ToString());
+            if (Optional.IsDefined(AzureBlobSource))
+            {
+                writer.WritePropertyName("azureBlobSource"u8);
+                writer.WriteObjectValue(AzureBlobSource, options);
+            }
+            if (Optional.IsDefined(AzureBlobFileListSource))
+            {
+                writer.WritePropertyName("azureBlobFileListSource"u8);
+                writer.WriteObjectValue(AzureBlobFileListSource, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -62,19 +74,19 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteEndObject();
         }
 
-        AuthorizeCopyContent IJsonModel<AuthorizeCopyContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BuildDocumentModelRequest IJsonModel<BuildDocumentModelRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthorizeCopyContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentModelRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthorizeCopyContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BuildDocumentModelRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAuthorizeCopyContent(document.RootElement, options);
+            return DeserializeBuildDocumentModelRequest(document.RootElement, options);
         }
 
-        internal static AuthorizeCopyContent DeserializeAuthorizeCopyContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static BuildDocumentModelRequest DeserializeBuildDocumentModelRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -84,6 +96,9 @@ namespace Azure.AI.DocumentIntelligence
             }
             string modelId = default;
             string description = default;
+            DocumentBuildMode buildMode = default;
+            AzureBlobContentSource azureBlobSource = default;
+            AzureBlobFileListContentSource azureBlobFileListSource = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -97,6 +112,29 @@ namespace Azure.AI.DocumentIntelligence
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("buildMode"u8))
+                {
+                    buildMode = new DocumentBuildMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("azureBlobSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureBlobSource = AzureBlobContentSource.DeserializeAzureBlobContentSource(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("azureBlobFileListSource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureBlobFileListSource = AzureBlobFileListContentSource.DeserializeAzureBlobFileListContentSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -119,46 +157,53 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AuthorizeCopyContent(modelId, description, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new BuildDocumentModelRequest(
+                modelId,
+                description,
+                buildMode,
+                azureBlobSource,
+                azureBlobFileListSource,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AuthorizeCopyContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BuildDocumentModelRequest>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthorizeCopyContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentModelRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizeCopyContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BuildDocumentModelRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AuthorizeCopyContent IPersistableModel<AuthorizeCopyContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BuildDocumentModelRequest IPersistableModel<BuildDocumentModelRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthorizeCopyContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentModelRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAuthorizeCopyContent(document.RootElement, options);
+                        return DeserializeBuildDocumentModelRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthorizeCopyContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BuildDocumentModelRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AuthorizeCopyContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BuildDocumentModelRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AuthorizeCopyContent FromResponse(Response response)
+        internal static BuildDocumentModelRequest FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAuthorizeCopyContent(document.RootElement);
+            return DeserializeBuildDocumentModelRequest(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

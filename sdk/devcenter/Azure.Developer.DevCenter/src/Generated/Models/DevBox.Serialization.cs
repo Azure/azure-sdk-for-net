@@ -158,9 +158,9 @@ namespace Azure.Developer.DevCenter.Models
             AzureLocation? location = default;
             DevBoxOSType? osType = default;
             Guid? user = default;
-            DevBoxHardwareProfile hardwareProfile = default;
-            DevBoxStorageProfile storageProfile = default;
-            DevBoxImageReference imageReference = default;
+            HardwareProfile hardwareProfile = default;
+            StorageProfile storageProfile = default;
+            ImageReference imageReference = default;
             DateTimeOffset? createdTime = default;
             LocalAdministratorStatus? localAdministrator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -265,7 +265,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    hardwareProfile = DevBoxHardwareProfile.DeserializeDevBoxHardwareProfile(property.Value, options);
+                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))
@@ -274,7 +274,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    storageProfile = DevBoxStorageProfile.DeserializeDevBoxStorageProfile(property.Value, options);
+                    storageProfile = StorageProfile.DeserializeStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("imageReference"u8))
@@ -283,7 +283,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    imageReference = DevBoxImageReference.DeserializeDevBoxImageReference(property.Value, options);
+                    imageReference = ImageReference.DeserializeImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createdTime"u8))

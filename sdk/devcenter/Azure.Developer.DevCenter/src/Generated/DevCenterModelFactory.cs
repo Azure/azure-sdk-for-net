@@ -15,20 +15,20 @@ namespace Azure.Developer.DevCenter.Models
     /// <summary> Model factory for models. </summary>
     public static partial class DevCenterModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.DevCenterProject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.Project"/>. </summary>
         /// <param name="name"> Name of the project. </param>
         /// <param name="description"> Description of the project. </param>
         /// <param name="maxDevBoxesPerUser">
         /// When specified, indicates the maximum number of Dev Boxes a single user can
         /// create across all pools in the project.
         /// </param>
-        /// <returns> A new <see cref="Models.DevCenterProject"/> instance for mocking. </returns>
-        public static DevCenterProject DevCenterProject(string name = null, string description = null, int? maxDevBoxesPerUser = null)
+        /// <returns> A new <see cref="Models.Project"/> instance for mocking. </returns>
+        public static Project Project(string name = null, string description = null, int? maxDevBoxesPerUser = null)
         {
-            return new DevCenterProject(name, description, maxDevBoxesPerUser, serializedAdditionalRawData: null);
+            return new Project(name, description, maxDevBoxesPerUser, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevBoxPool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.Pool"/>. </summary>
         /// <param name="name"> Pool name. </param>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="osType"> The operating system type of Dev Boxes in this pool. </param>
@@ -45,10 +45,10 @@ namespace Azure.Developer.DevCenter.Models
         /// Overall health status of the Pool. Indicates whether or not the Pool is
         /// available to create Dev Boxes.
         /// </param>
-        /// <returns> A new <see cref="Models.DevBoxPool"/> instance for mocking. </returns>
-        public static DevBoxPool DevBoxPool(string name = null, AzureLocation location = default, DevBoxOSType? osType = null, DevBoxHardwareProfile hardwareProfile = null, HibernateSupport? hibernateSupport = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, LocalAdministratorStatus? localAdministratorStatus = null, StopOnDisconnectConfiguration stopOnDisconnect = null, PoolHealthStatus healthStatus = default)
+        /// <returns> A new <see cref="Models.Pool"/> instance for mocking. </returns>
+        public static Pool Pool(string name = null, AzureLocation location = default, DevBoxOSType? osType = null, HardwareProfile hardwareProfile = null, HibernateSupport? hibernateSupport = null, StorageProfile storageProfile = null, ImageReference imageReference = null, LocalAdministratorStatus? localAdministratorStatus = null, StopOnDisconnectConfiguration stopOnDisconnect = null, PoolHealthStatus healthStatus = default)
         {
-            return new DevBoxPool(
+            return new Pool(
                 name,
                 location,
                 osType,
@@ -62,42 +62,42 @@ namespace Azure.Developer.DevCenter.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevBoxHardwareProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HardwareProfile"/>. </summary>
         /// <param name="skuName"> The name of the SKU. </param>
         /// <param name="vcpUs"> The number of vCPUs available for the Dev Box. </param>
         /// <param name="memoryGB"> The amount of memory available for the Dev Box. </param>
-        /// <returns> A new <see cref="Models.DevBoxHardwareProfile"/> instance for mocking. </returns>
-        public static DevBoxHardwareProfile DevBoxHardwareProfile(SkuName? skuName = null, int? vcpUs = null, int? memoryGB = null)
+        /// <returns> A new <see cref="Models.HardwareProfile"/> instance for mocking. </returns>
+        public static HardwareProfile HardwareProfile(SkuName? skuName = null, int? vcpUs = null, int? memoryGB = null)
         {
-            return new DevBoxHardwareProfile(skuName, vcpUs, memoryGB, serializedAdditionalRawData: null);
+            return new HardwareProfile(skuName, vcpUs, memoryGB, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevBoxStorageProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.StorageProfile"/>. </summary>
         /// <param name="osDisk"> Settings for the operating system disk. </param>
-        /// <returns> A new <see cref="Models.DevBoxStorageProfile"/> instance for mocking. </returns>
-        public static DevBoxStorageProfile DevBoxStorageProfile(OSDisk osDisk = null)
+        /// <returns> A new <see cref="Models.StorageProfile"/> instance for mocking. </returns>
+        public static StorageProfile StorageProfile(OsDisk osDisk = null)
         {
-            return new DevBoxStorageProfile(osDisk, serializedAdditionalRawData: null);
+            return new StorageProfile(osDisk, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OSDisk"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OsDisk"/>. </summary>
         /// <param name="diskSizeGB"> The size of the OS Disk in gigabytes. </param>
-        /// <returns> A new <see cref="Models.OSDisk"/> instance for mocking. </returns>
-        public static OSDisk OSDisk(int? diskSizeGB = null)
+        /// <returns> A new <see cref="Models.OsDisk"/> instance for mocking. </returns>
+        public static OsDisk OsDisk(int? diskSizeGB = null)
         {
-            return new OSDisk(diskSizeGB, serializedAdditionalRawData: null);
+            return new OsDisk(diskSizeGB, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevBoxImageReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ImageReference"/>. </summary>
         /// <param name="name"> The name of the image used. </param>
         /// <param name="version"> The version of the image. </param>
         /// <param name="operatingSystem"> The operating system of the image. </param>
         /// <param name="osBuildNumber"> The operating system build number of the image. </param>
         /// <param name="publishedDate"> The datetime that the backing image version was published. </param>
-        /// <returns> A new <see cref="Models.DevBoxImageReference"/> instance for mocking. </returns>
-        public static DevBoxImageReference DevBoxImageReference(string name = null, string version = null, string operatingSystem = null, string osBuildNumber = null, DateTimeOffset? publishedDate = null)
+        /// <returns> A new <see cref="Models.ImageReference"/> instance for mocking. </returns>
+        public static ImageReference ImageReference(string name = null, string version = null, string operatingSystem = null, string osBuildNumber = null, DateTimeOffset? publishedDate = null)
         {
-            return new DevBoxImageReference(
+            return new ImageReference(
                 name,
                 version,
                 operatingSystem,
@@ -121,16 +121,16 @@ namespace Azure.Developer.DevCenter.Models
             return new StopOnDisconnectConfiguration(status, gracePeriodMinutes, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevBoxSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.Schedule"/>. </summary>
         /// <param name="name"> Display name for the Schedule. </param>
         /// <param name="scheduleType"> Supported type this scheduled task represents. </param>
         /// <param name="scheduleFrequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
-        /// <returns> A new <see cref="Models.DevBoxSchedule"/> instance for mocking. </returns>
-        public static DevBoxSchedule DevBoxSchedule(string name = null, ScheduleType scheduleType = default, ScheduleFrequency scheduleFrequency = default, string time = null, string timeZone = null)
+        /// <returns> A new <see cref="Models.Schedule"/> instance for mocking. </returns>
+        public static Schedule Schedule(string name = null, ScheduleType scheduleType = default, ScheduleFrequency scheduleFrequency = default, string time = null, string timeZone = null)
         {
-            return new DevBoxSchedule(
+            return new Schedule(
                 name,
                 scheduleType,
                 scheduleFrequency,
@@ -167,7 +167,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="createdTime"> Creation time of this Dev Box. </param>
         /// <param name="localAdministratorStatus"> Indicates whether the owner of the Dev Box is a local administrator. </param>
         /// <returns> A new <see cref="Models.DevBox"/> instance for mocking. </returns>
-        public static DevBox DevBox(string name = null, string projectName = null, string poolName = null, HibernateSupport? hibernateSupport = null, DevBoxProvisioningState? provisioningState = null, string actionState = null, PowerState? powerState = null, Guid? uniqueId = null, ResponseError error = null, AzureLocation? location = null, DevBoxOSType? osType = null, Guid? userId = null, DevBoxHardwareProfile hardwareProfile = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, DateTimeOffset? createdTime = null, LocalAdministratorStatus? localAdministratorStatus = null)
+        public static DevBox DevBox(string name = null, string projectName = null, string poolName = null, HibernateSupport? hibernateSupport = null, DevBoxProvisioningState? provisioningState = null, string actionState = null, PowerState? powerState = null, Guid? uniqueId = null, ResponseError error = null, AzureLocation? location = null, DevBoxOSType? osType = null, Guid? userId = null, HardwareProfile hardwareProfile = null, StorageProfile storageProfile = null, ImageReference imageReference = null, DateTimeOffset? createdTime = null, LocalAdministratorStatus? localAdministratorStatus = null)
         {
             return new DevBox(
                 name,
@@ -236,7 +236,7 @@ namespace Azure.Developer.DevCenter.Models
             return new DevBoxActionDelayResult(actionName, delayStatus, action, error, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevCenterEnvironment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.Environment"/>. </summary>
         /// <param name="parameters"> Parameters object for the environment. </param>
         /// <param name="name"> Environment name. </param>
         /// <param name="environmentTypeName"> Environment type. </param>
@@ -246,12 +246,12 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="catalogName"> Name of the catalog. </param>
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <param name="error"> Provisioning error details. Populated only for error states. </param>
-        /// <returns> A new <see cref="Models.DevCenterEnvironment"/> instance for mocking. </returns>
-        public static DevCenterEnvironment DevCenterEnvironment(IDictionary<string, BinaryData> parameters = null, string name = null, string environmentTypeName = null, Guid? userId = null, EnvironmentProvisioningState? provisioningState = null, ResourceIdentifier resourceGroupId = null, string catalogName = null, string environmentDefinitionName = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.Environment"/> instance for mocking. </returns>
+        public static Environment Environment(IDictionary<string, BinaryData> parameters = null, string name = null, string environmentTypeName = null, Guid? userId = null, EnvironmentProvisioningState? provisioningState = null, string resourceGroupId = null, string catalogName = null, string environmentDefinitionName = null, ResponseError error = null)
         {
             parameters ??= new Dictionary<string, BinaryData>();
 
-            return new DevCenterEnvironment(
+            return new Environment(
                 parameters,
                 name,
                 environmentTypeName,
@@ -264,12 +264,12 @@ namespace Azure.Developer.DevCenter.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevCenterCatalog"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.Catalog"/>. </summary>
         /// <param name="name"> Name of the catalog. </param>
-        /// <returns> A new <see cref="Models.DevCenterCatalog"/> instance for mocking. </returns>
-        public static DevCenterCatalog DevCenterCatalog(string name = null)
+        /// <returns> A new <see cref="Models.Catalog"/> instance for mocking. </returns>
+        public static Catalog Catalog(string name = null)
         {
-            return new DevCenterCatalog(name, serializedAdditionalRawData: null);
+            return new Catalog(name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EnvironmentDefinition"/>. </summary>
@@ -325,6 +325,48 @@ namespace Azure.Developer.DevCenter.Models
                 readOnly,
                 required,
                 allowed?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EnvironmentType"/>. </summary>
+        /// <param name="name"> Name of the environment type. </param>
+        /// <param name="deploymentTargetId">
+        /// Id of a subscription or management group that the environment type will be
+        /// mapped to. The environment's resources will be deployed into this subscription
+        /// or management group.
+        /// </param>
+        /// <param name="status"> Indicates whether this environment type is enabled for use in this project. </param>
+        /// <returns> A new <see cref="Models.EnvironmentType"/> instance for mocking. </returns>
+        public static EnvironmentType EnvironmentType(string name = null, string deploymentTargetId = null, EnvironmentTypeStatus status = default)
+        {
+            return new EnvironmentType(name, deploymentTargetId, status, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevCenterEnvironment"/>. </summary>
+        /// <param name="parameters"> Parameters object for the environment. </param>
+        /// <param name="name"> Environment name. </param>
+        /// <param name="environmentTypeName"> Environment type. </param>
+        /// <param name="userId"> The AAD object id of the owner of this Environment. </param>
+        /// <param name="provisioningState"> The provisioning state of the environment. </param>
+        /// <param name="resourceGroupId"> The identifier of the resource group containing the environment's resources. </param>
+        /// <param name="catalogName"> Name of the catalog. </param>
+        /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
+        /// <param name="error"> Provisioning error details. Populated only for error states. </param>
+        /// <returns> A new <see cref="Models.DevCenterEnvironment"/> instance for mocking. </returns>
+        public static DevCenterEnvironment DevCenterEnvironment(IDictionary<string, BinaryData> parameters = null, string name = null, string environmentTypeName = null, Guid? userId = null, EnvironmentProvisioningState? provisioningState = null, ResourceIdentifier resourceGroupId = null, string catalogName = null, string environmentDefinitionName = null, ResponseError error = null)
+        {
+            parameters ??= new Dictionary<string, BinaryData>();
+
+            return new DevCenterEnvironment(
+                parameters,
+                name,
+                environmentTypeName,
+                userId,
+                provisioningState,
+                resourceGroupId,
+                catalogName,
+                environmentDefinitionName,
+                error,
                 serializedAdditionalRawData: null);
         }
 

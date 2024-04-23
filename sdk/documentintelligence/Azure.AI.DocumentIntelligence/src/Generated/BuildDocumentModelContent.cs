@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Request body to build a new custom document model. </summary>
-    public partial class BuildDocumentModelContent
+    internal partial class BuildDocumentModelContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
