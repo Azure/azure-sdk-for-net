@@ -15,7 +15,8 @@ param(
   [string]$packageNewLibrary = "true",
   [string]$relatedWorkItemId = $null,
   [string]$tag = $null,
-  [string]$devops_pat = $env:DEVOPS_PAT
+  [string]$devops_pat = $env:DEVOPS_PAT,
+  [bool]$inRelease = $true
 )
 #Requires -Version 6.0
 Set-StrictMode -Version 3
@@ -92,13 +93,21 @@ Write-Host "Updated or created a release work item for a package release with th
 Write-Host "  Lanuage: $($workItem.fields['Custom.Language'])"
 Write-Host "  Version: $($workItem.fields['Custom.PackageVersionMajorMinor'])"
 Write-Host "  Package: $($workItem.fields['Custom.Package'])"
-Write-Host "  AssignedTo: $($workItem.fields['System.AssignedTo']["uniqueName"])"
+if ($workItem.fields['System.AssignedTo']) {
+  Write-Host "  AssignedTo: $($workItem.fields['System.AssignedTo']["uniqueName"])"
+}
+else {
+  Write-Host "  AssignedTo: unassigned"
+}
 Write-Host "  PackageDisplayName: $($workItem.fields['Custom.PackageDisplayName'])"
 Write-Host "  ServiceName: $($workItem.fields['Custom.ServiceName'])"
 Write-Host "  PackageType: $($workItem.fields['Custom.PackageType'])"
 Write-Host ""
-Write-Host "Marking item [$($workItem.id)]$($workItem.fields['System.Title']) as '$state' for '$releaseType'"
-$updatedWI = UpdatePackageWorkItemReleaseState -id $workItem.id -state "In Release" -releaseType $releaseType -outputCommand $false
+if ($inRelease)
+{
+  Write-Host "Marking item [$($workItem.id)]$($workItem.fields['System.Title']) as '$state' for '$releaseType'"
+  $updatedWI = UpdatePackageWorkItemReleaseState -id $workItem.id -state "In Release" -releaseType $releaseType -outputCommand $false
+}
 $updatedWI = UpdatePackageVersions $workItem -plannedVersions $plannedVersions
 
 Write-Host "Release tracking item is at https://dev.azure.com/azure-sdk/Release/_workitems/edit/$($updatedWI.id)/"

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -76,12 +75,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Group Id of the private link resource. </summary>
+        [WirePath("properties.groupId")]
         public string GroupId { get; set; }
         /// <summary> Required members of the private link resource. </summary>
+        [WirePath("properties.requiredMembers")]
         public IList<string> RequiredMembers { get; }
         /// <summary> Required private DNS zone names. </summary>
+        [WirePath("properties.requiredZoneNames")]
         public IList<string> RequiredZoneNames { get; }
         /// <summary> The list of resources that are onboarded to private link service. </summary>
+        [WirePath("properties.shareablePrivateLinkResourceTypes")]
         public IList<ShareablePrivateLinkType> ShareablePrivateLinkTypes { get; }
     }
 }

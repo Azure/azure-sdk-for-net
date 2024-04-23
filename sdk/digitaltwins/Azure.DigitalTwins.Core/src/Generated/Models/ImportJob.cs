@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure;
 
 namespace Azure.DigitalTwins.Core
 {

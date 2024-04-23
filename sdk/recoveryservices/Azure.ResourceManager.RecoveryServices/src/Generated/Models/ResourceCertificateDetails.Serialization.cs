@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     [PersistableModelProxy(typeof(UnknownResourceCertificateDetails))]
     public partial class ResourceCertificateDetails : IUtf8JsonSerializable, IJsonModel<ResourceCertificateDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceCertificateDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceCertificateDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceCertificateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceCertificateDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceCertificateDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceCertificateDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceCertificateDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static ResourceCertificateDetails DeserializeResourceCertificateDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceCertificateDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceCertificateDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeResourceCertificateDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceCertificateDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceCertificateDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

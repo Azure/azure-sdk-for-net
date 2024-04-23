@@ -21,6 +21,7 @@ modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
 # mgmt-debug:
 #  show-serialized-names: true
@@ -837,4 +838,15 @@ directive:
                 }
             }
         };
+  # Fix for issue https://github.com/Azure/azure-sdk-for-net/issues/43295
+  - from: WebApps.json
+    where: $.definitions.TriggeredJobRun.properties.status
+    transform: >
+        $["enum"] = [
+            "Success",
+            "Failed",
+            "Error",
+            "Aborted",
+            "Running"
+        ]
 ```

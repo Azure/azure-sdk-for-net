@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     internal partial class FormulaPropertiesFromVm : IUtf8JsonSerializable, IJsonModel<FormulaPropertiesFromVm>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FormulaPropertiesFromVm>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FormulaPropertiesFromVm>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FormulaPropertiesFromVm>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FormulaPropertiesFromVm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<FormulaPropertiesFromVm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static FormulaPropertiesFromVm DeserializeFormulaPropertiesFromVm(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             string labVmId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("labVmId"u8))
@@ -82,10 +81,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FormulaPropertiesFromVm(labVmId, serializedAdditionalRawData);
         }
 
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeFormulaPropertiesFromVm(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support reading '{options.Format}' format.");
             }
         }
 

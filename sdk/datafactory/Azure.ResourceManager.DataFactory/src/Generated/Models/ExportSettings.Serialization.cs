@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     [PersistableModelProxy(typeof(UnknownExportSettings))]
     public partial class ExportSettings : IUtf8JsonSerializable, IJsonModel<ExportSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExportSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExportSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ExportSettings DeserializeExportSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeExportSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

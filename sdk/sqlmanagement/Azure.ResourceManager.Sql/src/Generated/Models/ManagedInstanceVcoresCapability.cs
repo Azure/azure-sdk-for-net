@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -79,22 +78,31 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The virtual cores identifier. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The virtual cores value. </summary>
+        [WirePath("value")]
         public int? Value { get; }
         /// <summary> Included size. </summary>
+        [WirePath("includedMaxSize")]
         public MaxSizeCapability IncludedMaxSize { get; }
         /// <summary> Storage size ranges. </summary>
+        [WirePath("supportedStorageSizes")]
         public IReadOnlyList<MaxSizeRangeCapability> SupportedStorageSizes { get; }
         /// <summary> True if this service objective is supported for managed instances in an instance pool. </summary>
+        [WirePath("instancePoolSupported")]
         public bool? IsInstancePoolSupported { get; }
         /// <summary> True if this service objective is supported for standalone managed instances. </summary>
+        [WirePath("standaloneSupported")]
         public bool? IsStandaloneSupported { get; }
         /// <summary> List of supported maintenance configurations. </summary>
+        [WirePath("supportedMaintenanceConfigurations")]
         public IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> SupportedMaintenanceConfigurations { get; }
         /// <summary> The status of the capability. </summary>
+        [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

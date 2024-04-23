@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
     public partial class RouterQueue : IUtf8JsonSerializable, IJsonModel<RouterQueue>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouterQueue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouterQueue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RouterQueue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RouterQueue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouterQueue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouterQueue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +58,7 @@ namespace Azure.Communication.JobRouter
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -91,7 +90,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<RouterQueue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouterQueue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouterQueue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,7 +99,7 @@ namespace Azure.Communication.JobRouter
 
         internal static RouterQueue DeserializeRouterQueue(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -113,7 +112,7 @@ namespace Azure.Communication.JobRouter
             IDictionary<string, object> labels = default;
             string exceptionPolicyId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -164,10 +163,10 @@ namespace Azure.Communication.JobRouter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RouterQueue(
                 etag,
                 id,
@@ -187,7 +186,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouterQueue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouterQueue)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +202,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeRouterQueue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouterQueue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouterQueue)} does not support reading '{options.Format}' format.");
             }
         }
 

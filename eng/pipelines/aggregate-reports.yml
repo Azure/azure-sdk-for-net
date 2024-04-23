@@ -108,7 +108,7 @@ stages:
               artifactName: reports
               path: '$(Build.ArtifactStagingDirectory)/reports'
 
-          - task: AzureFileCopy@4
+          - task: AzureFileCopy@6
             displayName: 'Upload Dependency Report'
             inputs:
               sourcePath: '$(Build.ArtifactStagingDirectory)/reports/*'
@@ -119,7 +119,7 @@ stages:
               blobPrefix: dependencies
               AdditionalArgumentsForBlobCopy: '--exclude-pattern=*data.js*'
 
-          - task: AzureFileCopy@4
+          - task: AzureFileCopy@6
             displayName: 'Upload Dependency Graph'
             inputs:
               sourcePath: '$(Build.ArtifactStagingDirectory)/reports/*'
@@ -152,11 +152,7 @@ stages:
 
           - template: /eng/common/pipelines/templates/steps/credscan.yml
             parameters:
-              BaselineFilePath: $(Build.SourcesDirectory)\eng\dotnet.gdnbaselines
-
-          - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
-            displayName: 'Publish Security Analysis Logs'
-            condition: succeededOrFailed()
+              BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
 
       - job: APIScan
         timeoutInMinutes: 180

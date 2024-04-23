@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     public partial class ManagedClusterMonitorProfileKubeStateMetrics : IUtf8JsonSerializable, IJsonModel<ManagedClusterMonitorProfileKubeStateMetrics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterMonitorProfileKubeStateMetrics>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterMonitorProfileKubeStateMetrics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedClusterMonitorProfileKubeStateMetrics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterMonitorProfileKubeStateMetrics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterMonitorProfileKubeStateMetrics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterMonitorProfileKubeStateMetrics DeserializeManagedClusterMonitorProfileKubeStateMetrics(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string metricLabelsAllowlist = default;
             string metricAnnotationsAllowList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricLabelsAllowlist"u8))
@@ -93,10 +92,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedClusterMonitorProfileKubeStateMetrics(metricLabelsAllowlist, metricAnnotationsAllowList, serializedAdditionalRawData);
         }
 
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterMonitorProfileKubeStateMetrics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterMonitorProfileKubeStateMetrics)} does not support reading '{options.Format}' format.");
             }
         }
 

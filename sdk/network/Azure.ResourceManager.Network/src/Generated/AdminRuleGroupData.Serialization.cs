@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -18,14 +17,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class AdminRuleGroupData : IUtf8JsonSerializable, IJsonModel<AdminRuleGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdminRuleGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdminRuleGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdminRuleGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AdminRuleGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdminRuleGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdminRuleGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AppliesToGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<AdminRuleGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdminRuleGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdminRuleGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.Network
 
         internal static AdminRuleGroupData DeserializeAdminRuleGroupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.Network
             NetworkProvisioningState? provisioningState = default;
             Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -217,10 +216,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AdminRuleGroupData(
                 id,
                 name,
@@ -243,7 +242,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdminRuleGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdminRuleGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +258,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeAdminRuleGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdminRuleGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdminRuleGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

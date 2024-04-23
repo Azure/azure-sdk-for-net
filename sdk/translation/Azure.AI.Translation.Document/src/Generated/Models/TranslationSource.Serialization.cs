@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 
@@ -17,14 +16,14 @@ namespace Azure.AI.Translation.Document
 {
     public partial class TranslationSource : IUtf8JsonSerializable, IJsonModel<TranslationSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranslationSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranslationSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TranslationSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TranslationSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TranslationSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TranslationSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.AI.Translation.Document
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<DocumentFilter>(Filter, options);
             }
             if (Optional.IsDefined(LanguageCode))
             {
@@ -68,7 +67,7 @@ namespace Azure.AI.Translation.Document
             var format = options.Format == "W" ? ((IPersistableModel<TranslationSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TranslationSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TranslationSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +76,7 @@ namespace Azure.AI.Translation.Document
 
         internal static TranslationSource DeserializeTranslationSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +87,7 @@ namespace Azure.AI.Translation.Document
             string language = default;
             string storageSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceUrl"u8))
@@ -117,10 +116,10 @@ namespace Azure.AI.Translation.Document
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TranslationSource(sourceUrl, filter, language, storageSource, serializedAdditionalRawData);
         }
 
@@ -133,7 +132,7 @@ namespace Azure.AI.Translation.Document
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TranslationSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TranslationSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +148,7 @@ namespace Azure.AI.Translation.Document
                         return DeserializeTranslationSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TranslationSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TranslationSource)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -163,11 +162,11 @@ namespace Azure.AI.Translation.Document
             return DeserializeTranslationSource(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

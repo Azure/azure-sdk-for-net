@@ -11,6 +11,7 @@ namespace System.ClientModel
     {
         protected BinaryContent() { }
         public static System.ClientModel.BinaryContent Create(System.BinaryData value) { throw null; }
+        public static System.ClientModel.BinaryContent Create(System.IO.Stream stream) { throw null; }
         public static System.ClientModel.BinaryContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
@@ -147,7 +148,7 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public System.ClientModel.Primitives.PipelineResponse? Response { get { throw null; } protected internal set { } }
         public System.ClientModel.Primitives.PipelineMessageClassifier ResponseClassifier { get { throw null; } set { } }
-        public void Apply(System.ClientModel.Primitives.RequestOptions options) { }
+        public void Apply(System.ClientModel.Primitives.RequestOptions? options) { }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public System.ClientModel.Primitives.PipelineResponse? ExtractResponse() { throw null; }

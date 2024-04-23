@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AzureBlobStorageReadSettings : IUtf8JsonSerializable, IJsonModel<AzureBlobStorageReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBlobStorageReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureBlobStorageReadSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureBlobStorageReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureBlobStorageReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureBlobStorageReadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureBlobStorageReadSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureBlobStorageReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureBlobStorageReadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureBlobStorageReadSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureBlobStorageReadSettings DeserializeAzureBlobStorageReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -284,7 +283,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureBlobStorageReadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureBlobStorageReadSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +299,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAzureBlobStorageReadSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureBlobStorageReadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureBlobStorageReadSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

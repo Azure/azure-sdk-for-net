@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -74,8 +73,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The name of the resource for which availability needs to be checked. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The resource type. </summary>
+        [WirePath("type")]
         public ResourceType? ResourceType { get; set; }
     }
 }

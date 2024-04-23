@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -15,13 +14,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     public partial class FlinkJobProperties : ClusterJobProperties
     {
         /// <summary> Initializes a new instance of <see cref="FlinkJobProperties"/>. </summary>
-        /// <param name="jobName"> Name of job. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public FlinkJobProperties(string jobName)
+        public FlinkJobProperties()
         {
-            Argument.AssertNotNull(jobName, nameof(jobName));
-
-            JobName = jobName;
             FlinkConfiguration = new ChangeTrackingDictionary<string, string>();
             JobType = ClusterJobType.FlinkJob;
         }
@@ -29,6 +23,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of <see cref="FlinkJobProperties"/>. </summary>
         /// <param name="jobType"> Type of cluster job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="runId"> Run id of job. </param>
         /// <param name="jobName"> Name of job. </param>
         /// <param name="jobJarDirectory"> A string property that specifies the directory where the job JAR is located. </param>
         /// <param name="jarName"> A string property that represents the name of the job JAR. </param>
@@ -42,8 +37,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="jobOutput"> Output of job. </param>
         /// <param name="actionResult"> Action result of job. </param>
         /// <param name="lastSavePoint"> The last savepoint. </param>
-        internal FlinkJobProperties(ClusterJobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, string jobName, string jobJarDirectory, string jarName, string entryClass, string args, string savePointName, FlinkJobAction? action, IDictionary<string, string> flinkConfiguration, string jobId, string status, string jobOutput, string actionResult, string lastSavePoint) : base(jobType, serializedAdditionalRawData)
+        internal FlinkJobProperties(ClusterJobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, string runId, string jobName, string jobJarDirectory, string jarName, string entryClass, string args, string savePointName, FlinkJobAction? action, IDictionary<string, string> flinkConfiguration, string jobId, string status, string jobOutput, string actionResult, string lastSavePoint) : base(jobType, serializedAdditionalRawData)
         {
+            RunId = runId;
             JobName = jobName;
             JobJarDirectory = jobJarDirectory;
             JarName = jarName;
@@ -60,11 +56,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             JobType = jobType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FlinkJobProperties"/> for deserialization. </summary>
-        internal FlinkJobProperties()
-        {
-        }
-
+        /// <summary> Run id of job. </summary>
+        public string RunId { get; set; }
         /// <summary> Name of job. </summary>
         public string JobName { get; set; }
         /// <summary> A string property that specifies the directory where the job JAR is located. </summary>

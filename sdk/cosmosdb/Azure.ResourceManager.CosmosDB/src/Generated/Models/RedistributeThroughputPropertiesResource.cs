@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -81,10 +80,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> ThroughputPolicy to apply for throughput redistribution. </summary>
+        [WirePath("throughputPolicy")]
         public ThroughputPolicyType ThroughputPolicy { get; set; }
         /// <summary> Array of PhysicalPartitionThroughputInfoResource objects. </summary>
+        [WirePath("targetPhysicalPartitionThroughputInfo")]
         public IList<PhysicalPartitionThroughputInfoResource> TargetPhysicalPartitionThroughputInfo { get; }
         /// <summary> Array of PhysicalPartitionThroughputInfoResource objects. </summary>
+        [WirePath("sourcePhysicalPartitionThroughputInfo")]
         public IList<PhysicalPartitionThroughputInfoResource> SourcePhysicalPartitionThroughputInfo { get; }
     }
 }

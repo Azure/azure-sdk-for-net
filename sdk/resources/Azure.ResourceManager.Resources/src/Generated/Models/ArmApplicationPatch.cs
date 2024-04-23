@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -80,14 +79,19 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The plan information. </summary>
+        [WirePath("plan")]
         public ArmPlan Plan { get; set; }
         /// <summary> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ArmApplicationManagedIdentity Identity { get; set; }
         /// <summary> The managed resource group Id. </summary>
+        [WirePath("properties.managedResourceGroupId")]
         public ResourceIdentifier ManagedResourceGroupId { get; set; }
         /// <summary> The fully qualified path of managed application definition Id. </summary>
+        [WirePath("properties.applicationDefinitionId")]
         public ResourceIdentifier ApplicationDefinitionId { get; set; }
         /// <summary>
         /// Name and value pairs that define the managed application parameters. It can be a JObject or a well formed JSON string.
@@ -119,6 +123,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.parameters")]
         public BinaryData Parameters { get; set; }
         /// <summary>
         /// Name and value pairs that define the managed application outputs.
@@ -150,34 +155,46 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.outputs")]
         public BinaryData Outputs { get; }
         /// <summary> The managed application provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public ResourcesProvisioningState? ProvisioningState { get; }
         /// <summary> The managed application billing details. </summary>
         internal ArmApplicationBillingDetails BillingDetails { get; }
         /// <summary> The managed application resource usage Id. </summary>
+        [WirePath("properties.billingDetails.resourceUsageId")]
         public string BillingDetailsResourceUsageId
         {
             get => BillingDetails?.ResourceUsageId;
         }
 
         /// <summary> The managed application Jit access policy. </summary>
+        [WirePath("properties.jitAccessPolicy")]
         public ArmApplicationJitAccessPolicy JitAccessPolicy { get; set; }
         /// <summary> The publisher tenant Id. </summary>
+        [WirePath("properties.publisherTenantId")]
         public Guid? PublisherTenantId { get; }
         /// <summary> The  read-only authorizations property that is retrieved from the application package. </summary>
+        [WirePath("properties.authorizations")]
         public IReadOnlyList<ArmApplicationAuthorization> Authorizations { get; }
         /// <summary> The managed application management mode. </summary>
+        [WirePath("properties.managementMode")]
         public ArmApplicationManagementMode? ManagementMode { get; }
         /// <summary> The read-only customer support property that is retrieved from the application package. </summary>
+        [WirePath("properties.customerSupport")]
         public ArmApplicationPackageContact CustomerSupport { get; }
         /// <summary> The read-only support URLs property that is retrieved from the application package. </summary>
+        [WirePath("properties.supportUrls")]
         public ArmApplicationPackageSupportUris SupportUris { get; }
         /// <summary> The collection of managed application artifacts. </summary>
+        [WirePath("properties.artifacts")]
         public IReadOnlyList<ArmApplicationArtifact> Artifacts { get; }
         /// <summary> The client entity that created the JIT request. </summary>
+        [WirePath("properties.createdBy")]
         public ArmApplicationDetails CreatedBy { get; }
         /// <summary> The client entity that last updated the JIT request. </summary>
+        [WirePath("properties.updatedBy")]
         public ArmApplicationDetails UpdatedBy { get; }
     }
 }

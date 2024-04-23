@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
@@ -90,7 +88,9 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronizationSettingName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<DataShareSynchronizationSettingResource>(Response.FromValue(new DataShareSynchronizationSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronizationSettingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataShareArmOperation<DataShareSynchronizationSettingResource>(Response.FromValue(new DataShareSynchronizationSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +139,9 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _dataShareSynchronizationSettingSynchronizationSettingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronizationSettingName, data, cancellationToken);
-                var operation = new DataShareArmOperation<DataShareSynchronizationSettingResource>(Response.FromValue(new DataShareSynchronizationSettingResource(Client, response), response.GetRawResponse()));
+                var uri = _dataShareSynchronizationSettingSynchronizationSettingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, synchronizationSettingName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataShareArmOperation<DataShareSynchronizationSettingResource>(Response.FromValue(new DataShareSynchronizationSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

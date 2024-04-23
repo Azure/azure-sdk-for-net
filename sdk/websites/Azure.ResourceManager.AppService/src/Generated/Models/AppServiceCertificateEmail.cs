@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Email id. </summary>
+        [WirePath("properties.emailId")]
         public string EmailId { get; set; }
         /// <summary> Time stamp. </summary>
+        [WirePath("properties.timeStamp")]
         public DateTimeOffset? TimeStamp { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

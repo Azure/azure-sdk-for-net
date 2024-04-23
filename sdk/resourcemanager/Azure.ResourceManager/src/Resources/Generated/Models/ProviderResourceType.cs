@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -86,24 +85,34 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The resource type. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
         /// <summary> The collection of locations where this resource type can be created. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<string> Locations { get; }
         /// <summary> The location mappings that are supported by this resource type. </summary>
+        [WirePath("locationMappings")]
         public IReadOnlyList<ProviderExtendedLocation> LocationMappings { get; }
         /// <summary> The aliases that are supported by this resource type. </summary>
+        [WirePath("aliases")]
         public IReadOnlyList<ResourceTypeAlias> Aliases { get; }
         /// <summary> The API version. </summary>
+        [WirePath("apiVersions")]
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> The default API version. </summary>
+        [WirePath("defaultApiVersion")]
         public string DefaultApiVersion { get; }
         /// <summary> Gets the zone mappings. </summary>
+        [WirePath("zoneMappings")]
         public IReadOnlyList<ZoneMapping> ZoneMappings { get; }
         /// <summary> The API profiles for the resource provider. </summary>
+        [WirePath("apiProfiles")]
         public IReadOnlyList<ApiProfile> ApiProfiles { get; }
         /// <summary> The additional capabilities offered by this resource type. </summary>
+        [WirePath("capabilities")]
         public string Capabilities { get; }
         /// <summary> The properties. </summary>
+        [WirePath("properties")]
         public IReadOnlyDictionary<string, string> Properties { get; }
     }
 }

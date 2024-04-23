@@ -9,13 +9,13 @@ using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> Exception type document. </summary>
+    /// <summary> Exception document type. </summary>
     internal partial class Exception : DocumentIngress
     {
         /// <summary> Initializes a new instance of <see cref="Exception"/>. </summary>
         public Exception()
         {
-            DocumentType = DocumentIngressDocumentType.Exception;
+            DocumentType = DocumentType.Exception;
         }
 
         /// <summary> Initializes a new instance of <see cref="Exception"/>. </summary>
@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="exceptionType"> Exception type name. </param>
         /// <param name="exceptionMessage"> Exception message. </param>
-        internal Exception(DocumentIngressDocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string exceptionType, string exceptionMessage) : base(documentType, documentStreamIds, properties)
+        internal Exception(DocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string exceptionType, string exceptionMessage) : base(documentType, documentStreamIds, properties)
         {
             ExceptionType = exceptionType;
             ExceptionMessage = exceptionMessage;

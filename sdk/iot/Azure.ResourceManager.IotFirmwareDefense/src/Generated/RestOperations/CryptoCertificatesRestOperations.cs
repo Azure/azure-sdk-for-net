@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.IotFirmwareDefense.Models;
@@ -35,6 +34,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2024-01-10";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByFirmwareRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.IoTFirmwareDefense/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/firmwares/", false);
+            uri.AppendPath(firmwareId, true);
+            uri.AppendPath("/cryptoCertificates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByFirmwareRequest(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)
@@ -120,6 +136,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFirmwareNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByFirmwareNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId)

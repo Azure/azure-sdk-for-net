@@ -1,6 +1,6 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.12.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.12.0-beta.1 (2024-03-22)
+
+### Features Added
+
+- Enable long-running operation rehydration.
+
+## 1.11.0 (2024-03-22)
+
+### Features Added
+
+- Added `BicepModelReaderWriterOptions`.
+
+### Other Changes
+
+- Removed long-running operation rehydration support for the GA. These will be added back in a subsequent release.
 
 ## 1.10.2 (2024-03-01)
 
@@ -25,6 +41,12 @@
 ### Bugs Fixed
 
 - Changed the private ctor `OperationStatusResult` to protected.
+
+## 1.11.0-beta.1 (2024-01-12)
+
+### Features Added
+
+- Enable long-running operation rehydration.
 
 ## 1.10.0 (2024-01-12)
 

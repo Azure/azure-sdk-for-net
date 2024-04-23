@@ -37,12 +37,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Fast provisioning supported tier name. </summary>
+        [WirePath("supportedTier")]
         public string SupportedTier { get; }
         /// <summary> Fast provisioning supported sku name. </summary>
+        [WirePath("supportedSku")]
         public string SupportedSku { get; }
         /// <summary> Fast provisioning supported version. </summary>
+        [WirePath("supportedServerVersions")]
         public string SupportedServerVersions { get; }
         /// <summary> Count of servers in cache matching the spec. </summary>
+        [WirePath("serverCount")]
         public int? ServerCount { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -70,14 +69,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> The lowest permitted capacity for this resource. </summary>
+        [WirePath("minimum")]
         public int? Minimum { get; }
         /// <summary> The highest permitted capacity for this resource. </summary>
+        [WirePath("maximum")]
         public int? Maximum { get; }
         /// <summary> The default capacity. </summary>
+        [WirePath("default")]
         public int? Default { get; }
         /// <summary> Allows capacity value list. </summary>
+        [WirePath("allowedValues")]
         public IReadOnlyList<int> AllowedValues { get; }
         /// <summary> The scale type applicable to the sku. </summary>
+        [WirePath("scaleType")]
         public WebPubSubScaleType? ScaleType { get; }
     }
 }

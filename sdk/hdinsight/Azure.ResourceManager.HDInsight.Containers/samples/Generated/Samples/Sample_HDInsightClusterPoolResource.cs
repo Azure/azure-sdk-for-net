@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HDInsight.Containers;
 using Azure.ResourceManager.HDInsight.Containers.Models;
 using Azure.ResourceManager.Resources;
 
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ClusterPoolGet()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-06-01-preview/examples/GetClusterPool.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/GetClusterPool.json
             // this example is just showing the usage of "ClusterPools_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_ClusterPoolsPatchTags()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-06-01-preview/examples/PatchClusterPool.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/PatchClusterPool.json
             // this example is just showing the usage of "ClusterPools_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +92,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_ClusterPoolDelete()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-06-01-preview/examples/DeleteClusterPool.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/DeleteClusterPool.json
             // this example is just showing the usage of "ClusterPools_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,7 +119,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetHDInsightClusterPools_ClusterPoolsListBySubscription()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-06-01-preview/examples/ListClusterPoolsSubscription.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/ListClusterPoolsSubscription.json
             // this example is just showing the usage of "ClusterPools_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,6 +141,106 @@ namespace Azure.ResourceManager.HDInsight.Containers.Samples
                 HDInsightClusterPoolData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // ClusterPoolsUpgradeAKSPatchVersion
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Upgrade_ClusterPoolsUpgradeAKSPatchVersion()
+        {
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/UpgradeAKSPatchVersionForClusterPool.json
+            // this example is just showing the usage of "ClusterPools_Upgrade" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HDInsightClusterPoolResource created on azure
+            // for more information of creating HDInsightClusterPoolResource, please refer to the document of HDInsightClusterPoolResource
+            string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
+            string resourceGroupName = "hiloResourcegroup";
+            string clusterPoolName = "clusterpool1";
+            ResourceIdentifier hdInsightClusterPoolResourceId = HDInsightClusterPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName);
+            HDInsightClusterPoolResource hdInsightClusterPool = client.GetHDInsightClusterPoolResource(hdInsightClusterPoolResourceId);
+
+            // invoke the operation
+            ClusterPoolUpgrade clusterPoolUpgradeRequest = new ClusterPoolUpgrade(new ClusterPoolAKSPatchVersionUpgradeProperties()
+            {
+                UpgradeClusterPool = true,
+                UpgradeAllClusterNodes = false,
+            });
+            ArmOperation<HDInsightClusterPoolResource> lro = await hdInsightClusterPool.UpgradeAsync(WaitUntil.Completed, clusterPoolUpgradeRequest);
+            HDInsightClusterPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HDInsightClusterPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // ClusterPoolsUpgradeNodeOs
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Upgrade_ClusterPoolsUpgradeNodeOs()
+        {
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/UpgradeNodeOsForClusterPool.json
+            // this example is just showing the usage of "ClusterPools_Upgrade" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HDInsightClusterPoolResource created on azure
+            // for more information of creating HDInsightClusterPoolResource, please refer to the document of HDInsightClusterPoolResource
+            string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
+            string resourceGroupName = "hiloResourcegroup";
+            string clusterPoolName = "clusterpool1";
+            ResourceIdentifier hdInsightClusterPoolResourceId = HDInsightClusterPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName);
+            HDInsightClusterPoolResource hdInsightClusterPool = client.GetHDInsightClusterPoolResource(hdInsightClusterPoolResourceId);
+
+            // invoke the operation
+            ClusterPoolUpgrade clusterPoolUpgradeRequest = new ClusterPoolUpgrade(new ClusterPoolNodeOSImageUpdateProperties());
+            ArmOperation<HDInsightClusterPoolResource> lro = await hdInsightClusterPool.UpgradeAsync(WaitUntil.Completed, clusterPoolUpgradeRequest);
+            HDInsightClusterPoolResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HDInsightClusterPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // GetClusterPoolAvailableUpgrade
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetClusterPoolAvailableUpgrades_GetClusterPoolAvailableUpgrade()
+        {
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/HDInsightOnAks/preview/2023-11-01-preview/examples/ListClusterPoolAvailableUpgrades.json
+            // this example is just showing the usage of "ClusterPoolAvailableUpgrades_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HDInsightClusterPoolResource created on azure
+            // for more information of creating HDInsightClusterPoolResource, please refer to the document of HDInsightClusterPoolResource
+            string subscriptionId = "10e32bab-26da-4cc4-a441-52b318f824e6";
+            string resourceGroupName = "hiloResourcegroup";
+            string clusterPoolName = "clusterpool1";
+            ResourceIdentifier hdInsightClusterPoolResourceId = HDInsightClusterPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterPoolName);
+            HDInsightClusterPoolResource hdInsightClusterPool = client.GetHDInsightClusterPoolResource(hdInsightClusterPoolResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (ClusterPoolAvailableUpgrade item in hdInsightClusterPool.GetClusterPoolAvailableUpgradesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine($"Succeeded");

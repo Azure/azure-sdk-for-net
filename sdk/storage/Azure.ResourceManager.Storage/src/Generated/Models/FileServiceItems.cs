@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> List of file services returned. </summary>
+        [WirePath("value")]
         public IReadOnlyList<FileServiceData> Value { get; }
     }
 }

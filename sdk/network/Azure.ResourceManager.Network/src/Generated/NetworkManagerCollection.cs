@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -91,7 +89,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkManagerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, networkManagerName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<NetworkManagerResource>(Response.FromValue(new NetworkManagerResource(Client, response), response.GetRawResponse()));
+                var uri = _networkManagerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, networkManagerName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<NetworkManagerResource>(Response.FromValue(new NetworkManagerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +140,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkManagerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, networkManagerName, data, cancellationToken);
-                var operation = new NetworkArmOperation<NetworkManagerResource>(Response.FromValue(new NetworkManagerResource(Client, response), response.GetRawResponse()));
+                var uri = _networkManagerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, networkManagerName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<NetworkManagerResource>(Response.FromValue(new NetworkManagerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

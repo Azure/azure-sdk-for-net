@@ -1,0 +1,10 @@
+steps:
+  - pwsh: |
+      Stop-Process -Id $(PROXY_PID)
+    displayName: 'Shut down the testproxy - windows'
+    condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'))
+
+  - bash: |
+      kill -9 $(PROXY_PID)
+    displayName: "Shut down the testproxy - linux/mac"
+    condition: and(succeeded(), ne(variables['Agent.OS'],'Windows_NT'))

@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
-using Azure.AI.Translation.Document;
 using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 using Azure.Identity;

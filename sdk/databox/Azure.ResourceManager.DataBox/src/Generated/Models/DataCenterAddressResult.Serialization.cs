@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
     [PersistableModelProxy(typeof(UnknownDataCenterAddressResponse))]
     public partial class DataCenterAddressResult : IUtf8JsonSerializable, IJsonModel<DataCenterAddressResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCenterAddressResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCenterAddressResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataCenterAddressResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataCenterAddressResult DeserializeDataCenterAddressResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataCenterAddressResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support reading '{options.Format}' format.");
             }
         }
 

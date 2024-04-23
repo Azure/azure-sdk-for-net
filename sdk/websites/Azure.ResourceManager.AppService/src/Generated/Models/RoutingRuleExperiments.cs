@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> List of ramp-up rules. </summary>
+        [WirePath("rampUpRules")]
         public IList<RampUpRule> RampUpRules { get; }
     }
 }

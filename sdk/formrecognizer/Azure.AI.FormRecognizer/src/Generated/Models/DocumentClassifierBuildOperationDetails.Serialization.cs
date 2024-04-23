@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.FormRecognizer;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -119,6 +117,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 error,
                 result);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DocumentClassifierBuildOperationDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentClassifierBuildOperationDetails(document.RootElement);
         }
     }
 }

@@ -1,7 +1,7 @@
 # Azure.Search.Documents Samples - Indexing Documents
 
 If we want to build a search experience for a product catalog, we need to get
-all of that data into Azure Cognitive Search.  If your data lives in Azure
+all of that data into Azure AI Search.  If your data lives in Azure
 Cosmos DB, Azure SQL Database, or Azure Blob Storage you can setup an indexer
 to do that for you.  But if your data lives elsewhere, this sample will show you
 how to move it into a search index.

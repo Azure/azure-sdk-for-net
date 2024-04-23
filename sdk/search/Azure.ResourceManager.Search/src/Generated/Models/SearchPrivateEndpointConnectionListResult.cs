@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Response containing a list of Private Endpoint connections. </summary>
+    /// <summary> Response containing a list of private endpoint connections. </summary>
     internal partial class SearchPrivateEndpointConnectionListResult
     {
         /// <summary>
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value"> The list of Private Endpoint connections. </param>
+        /// <param name="value"> The list of private endpoint connections. </param>
         /// <param name="nextLink"> Request URL that can be used to query next page of private endpoint connections. Returned when the total number of requested private endpoint connections exceed maximum page size. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SearchPrivateEndpointConnectionListResult(IReadOnlyList<SearchPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.Search.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of Private Endpoint connections. </summary>
+        /// <summary> The list of private endpoint connections. </summary>
         public IReadOnlyList<SearchPrivateEndpointConnectionData> Value { get; }
         /// <summary> Request URL that can be used to query next page of private endpoint connections. Returned when the total number of requested private endpoint connections exceed maximum page size. </summary>
         public string NextLink { get; }
