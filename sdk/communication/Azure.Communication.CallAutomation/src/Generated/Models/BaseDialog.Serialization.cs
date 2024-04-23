@@ -43,7 +43,6 @@ namespace Azure.Communication.CallAutomation
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureOpenAI": return AzureOpenAIDialog.DeserializeAzureOpenAIDialog(element);
                     case "PowerVirtualAgents": return PowerVirtualAgentsDialog.DeserializePowerVirtualAgentsDialog(element);
                 }
             }
