@@ -16,7 +16,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
     /// </summary>
     internal static class DocumentHelper
     {
-        private const int MaxProperties = 10;
+        private const int MaxPropertiesCount = 10;
 
         // TODO: NEED TO HANDLE UNIQUE MAXLENGTH VALUES FOR DOCUMENT TYPES. SEE SWAGGER FOR MAXLENGTH VALUES.
 
@@ -218,7 +218,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 {
                     requestDocument.ResponseCode = tag.Value.ToString()!;
                 }
-                else if (!ActivityTagsProcessor.s_semanticsSet.Contains(tag.Key) && propertiesCount < MaxProperties)
+                else if (!ActivityTagsProcessor.s_semanticsSet.Contains(tag.Key) && propertiesCount < MaxPropertiesCount)
                 {
                     requestDocument.Properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
                     propertiesCount++;
@@ -273,14 +273,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 {
                     // do nothing
                 }
-                else
+                else if (propertiesCount < MaxPropertiesCount)
                 {
                     exceptionDocument.Properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
-
-                    if (++propertiesCount >= MaxProperties)
-                    {
-                        break;
-                    }
+                    propertiesCount++;
                 }
             }
 
@@ -300,16 +296,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
-                if (item.Value != null)
+                if (item.Value != null && item.Key != "{OriginalFormat}")
                 {
-                    if (item.Key != "{OriginalFormat}")
-                    {
-                        exceptionDocument.Properties.Add(new KeyValuePairString(item.Key, item.Value.ToString()));
+                    exceptionDocument.Properties.Add(new KeyValuePairString(item.Key, item.Value.ToString()));
 
-                        if (++propertiesCount >= MaxProperties)
-                        {
-                            break;
-                        }
+                    if (++propertiesCount >= MaxPropertiesCount)
+                    {
+                        break;
                     }
                 }
             }
@@ -329,16 +322,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
-                if (item.Value != null)
+                if (item.Value != null && item.Key != "{OriginalFormat}")
                 {
-                    if (item.Key != "{OriginalFormat}")
-                    {
-                        traceDocument.Properties.Add(new KeyValuePairString(item.Key, item.Value.ToString()));
+                    traceDocument.Properties.Add(new KeyValuePairString(item.Key, item.Value.ToString()));
 
-                        if (++propertiesCount >= MaxProperties)
-                        {
-                            break;
-                        }
+                    if (++propertiesCount >= MaxPropertiesCount)
+                    {
+                        break;
                     }
                 }
             }
@@ -362,7 +352,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 {
                     traceDocument.Properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
 
-                    if (++propertiesCount >= MaxProperties)
+                    if (++propertiesCount >= MaxPropertiesCount)
                     {
                         break;
                     }
@@ -388,7 +378,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
 
         private static void SetProperties(DocumentIngress documentIngress, ActivityTagsProcessor atp)
         {
-            for (int i = 0; i < atp.UnMappedTags.Length && i < MaxProperties; i++)
+            for (int i = 0; i < atp.UnMappedTags.Length && i < MaxPropertiesCount; i++)
             {
                 var tag = atp.UnMappedTags[i];
                 if (tag.Value != null)
