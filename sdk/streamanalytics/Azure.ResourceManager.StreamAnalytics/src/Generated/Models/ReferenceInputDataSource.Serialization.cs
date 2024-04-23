@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     [PersistableModelProxy(typeof(UnknownReferenceInputDataSource))]
     public partial class ReferenceInputDataSource : IUtf8JsonSerializable, IJsonModel<ReferenceInputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReferenceInputDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReferenceInputDataSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReferenceInputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReferenceInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReferenceInputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReferenceInputDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReferenceInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReferenceInputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReferenceInputDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static ReferenceInputDataSource DeserializeReferenceInputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReferenceInputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReferenceInputDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeReferenceInputDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReferenceInputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReferenceInputDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

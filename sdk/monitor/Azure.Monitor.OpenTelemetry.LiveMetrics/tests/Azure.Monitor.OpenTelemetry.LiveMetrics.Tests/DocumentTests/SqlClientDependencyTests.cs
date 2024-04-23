@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using Microsoft.Data.SqlClient;
 using OpenTelemetry;
@@ -54,11 +54,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             dependencyActivity.SetTag("db.statement", "select * from sys.databases");
             dependencyActivity.Stop();
 
-            var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
+            var dependencyDocument = DocumentHelper.ConvertToDependencyDocument(dependencyActivity);
 
             // ASSERT
             Assert.Equal("select * from sys.databases", dependencyDocument.CommandName);
-            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
             Assert.Equal("(localdb)\\MSSQLLocalDB | MyDatabase", dependencyDocument.Name);
 
@@ -122,10 +122,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 
             var dependencyActivity = exportedActivities.First(x => x.Kind == ActivityKind.Client)!;
             PrintActivity(dependencyActivity);
-            var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
+            var dependencyDocument = DocumentHelper.ConvertToDependencyDocument(dependencyActivity);
 
             Assert.Equal(commandText, dependencyDocument.CommandName);
-            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
             Assert.Equal("(localdb)\\MSSQLLocalDB | MyDatabase", dependencyDocument.Name);
 
@@ -194,10 +194,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 
             var dependencyActivity = exportedActivities.First(x => x.Kind == ActivityKind.Client)!;
             PrintActivity(dependencyActivity);
-            var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
+            var dependencyDocument = DocumentHelper.ConvertToDependencyDocument(dependencyActivity);
 
             Assert.Equal(commandText, dependencyDocument.CommandName);
-            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
             Assert.Equal("(localdb)\\MSSQLLocalDB | MyDatabase", dependencyDocument.Name);
 

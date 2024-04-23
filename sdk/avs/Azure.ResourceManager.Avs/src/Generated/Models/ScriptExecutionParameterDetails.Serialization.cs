@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Avs.Models
     [PersistableModelProxy(typeof(UnknownScriptExecutionParameter))]
     public partial class ScriptExecutionParameterDetails : IUtf8JsonSerializable, IJsonModel<ScriptExecutionParameterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptExecutionParameterDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptExecutionParameterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScriptExecutionParameterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static ScriptExecutionParameterDetails DeserializeScriptExecutionParameterDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeScriptExecutionParameterDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptExecutionParameterDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

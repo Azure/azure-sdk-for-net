@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -91,7 +89,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationAccountPython2PackagePython2PackageRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationAccountPython2PackageResource>(Response.FromValue(new AutomationAccountPython2PackageResource(Client, response), response.GetRawResponse()));
+                var uri = _automationAccountPython2PackagePython2PackageRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationAccountPython2PackageResource>(Response.FromValue(new AutomationAccountPython2PackageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +140,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationAccountPython2PackagePython2PackageRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationAccountPython2PackageResource>(Response.FromValue(new AutomationAccountPython2PackageResource(Client, response), response.GetRawResponse()));
+                var uri = _automationAccountPython2PackagePython2PackageRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packageName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationAccountPython2PackageResource>(Response.FromValue(new AutomationAccountPython2PackageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

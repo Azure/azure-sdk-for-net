@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -71,10 +70,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Available regions. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<AppServiceGeoRegion> Locations { get; }
         /// <summary> Available App Service Environments with full descriptions of the environments. </summary>
+        [WirePath("hostingEnvironments")]
         public IReadOnlyList<AppServiceEnvironmentProperties> HostingEnvironments { get; }
         /// <summary> Available App Service Environments with basic information. </summary>
+        [WirePath("hostingEnvironmentDeploymentInfos")]
         public IReadOnlyList<HostingEnvironmentDeploymentInfo> HostingEnvironmentDeploymentInfos { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -34,6 +33,7 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The list of enabled rules. </summary>
+        [WirePath("enabledRules")]
         public IList<RoleAssignmentEnablementRuleType> EnablementRules { get; }
     }
 }

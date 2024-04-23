@@ -80,20 +80,28 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Level of the difference: Information, Warning or Error. </summary>
+        [WirePath("properties.level")]
         public string Level { get; }
         /// <summary> The type of the setting: General, AppSetting or ConnectionString. </summary>
+        [WirePath("properties.settingType")]
         public string SettingType { get; }
         /// <summary> Rule that describes how to process the setting difference during a slot swap. </summary>
+        [WirePath("properties.diffRule")]
         public string DiffRule { get; }
         /// <summary> Name of the setting. </summary>
+        [WirePath("properties.settingName")]
         public string SettingName { get; }
         /// <summary> Value of the setting in the current slot. </summary>
+        [WirePath("properties.valueInCurrentSlot")]
         public string ValueInCurrentSlot { get; }
         /// <summary> Value of the setting in the target slot. </summary>
+        [WirePath("properties.valueInTargetSlot")]
         public string ValueInTargetSlot { get; }
         /// <summary> Description of the setting difference. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

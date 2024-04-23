@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
     [PersistableModelProxy(typeof(UnknownRouteConfiguration))]
     public partial class RouteConfiguration : IUtf8JsonSerializable, IJsonModel<RouteConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RouteConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static RouteConfiguration DeserializeRouteConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouteConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeRouteConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouteConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

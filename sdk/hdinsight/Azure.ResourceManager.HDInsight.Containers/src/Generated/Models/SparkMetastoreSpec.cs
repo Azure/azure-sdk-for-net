@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -49,37 +48,30 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <summary> Initializes a new instance of <see cref="SparkMetastoreSpec"/>. </summary>
         /// <param name="dbServerHost"> The database server host. </param>
         /// <param name="dbName"> The database name. </param>
-        /// <param name="dbUserName"> The database user name. </param>
-        /// <param name="dbPasswordSecretName"> The secret name which contains the database user password. </param>
-        /// <param name="keyVaultId"> The key vault resource id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbServerHost"/>, <paramref name="dbName"/>, <paramref name="dbUserName"/>, <paramref name="dbPasswordSecretName"/> or <paramref name="keyVaultId"/> is null. </exception>
-        public SparkMetastoreSpec(string dbServerHost, string dbName, string dbUserName, string dbPasswordSecretName, string keyVaultId)
+        /// <exception cref="ArgumentNullException"> <paramref name="dbServerHost"/> or <paramref name="dbName"/> is null. </exception>
+        public SparkMetastoreSpec(string dbServerHost, string dbName)
         {
             Argument.AssertNotNull(dbServerHost, nameof(dbServerHost));
             Argument.AssertNotNull(dbName, nameof(dbName));
-            Argument.AssertNotNull(dbUserName, nameof(dbUserName));
-            Argument.AssertNotNull(dbPasswordSecretName, nameof(dbPasswordSecretName));
-            Argument.AssertNotNull(keyVaultId, nameof(keyVaultId));
 
             DBServerHost = dbServerHost;
             DBName = dbName;
-            DBUserName = dbUserName;
-            DBPasswordSecretName = dbPasswordSecretName;
-            KeyVaultId = keyVaultId;
         }
 
         /// <summary> Initializes a new instance of <see cref="SparkMetastoreSpec"/>. </summary>
         /// <param name="dbServerHost"> The database server host. </param>
         /// <param name="dbName"> The database name. </param>
+        /// <param name="dbConnectionAuthenticationMode"> The authentication mode to connect to your Hive metastore database. More details: https://learn.microsoft.com/en-us/azure/azure-sql/database/logins-create-manage?view=azuresql#authentication-and-authorization. </param>
         /// <param name="dbUserName"> The database user name. </param>
         /// <param name="dbPasswordSecretName"> The secret name which contains the database user password. </param>
         /// <param name="keyVaultId"> The key vault resource id. </param>
         /// <param name="thriftUriString"> The thrift url. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SparkMetastoreSpec(string dbServerHost, string dbName, string dbUserName, string dbPasswordSecretName, string keyVaultId, string thriftUriString, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SparkMetastoreSpec(string dbServerHost, string dbName, DBConnectionAuthenticationMode? dbConnectionAuthenticationMode, string dbUserName, string dbPasswordSecretName, string keyVaultId, string thriftUriString, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DBServerHost = dbServerHost;
             DBName = dbName;
+            DBConnectionAuthenticationMode = dbConnectionAuthenticationMode;
             DBUserName = dbUserName;
             DBPasswordSecretName = dbPasswordSecretName;
             KeyVaultId = keyVaultId;
@@ -96,6 +88,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public string DBServerHost { get; set; }
         /// <summary> The database name. </summary>
         public string DBName { get; set; }
+        /// <summary> The authentication mode to connect to your Hive metastore database. More details: https://learn.microsoft.com/en-us/azure/azure-sql/database/logins-create-manage?view=azuresql#authentication-and-authorization. </summary>
+        public DBConnectionAuthenticationMode? DBConnectionAuthenticationMode { get; set; }
         /// <summary> The database user name. </summary>
         public string DBUserName { get; set; }
         /// <summary> The secret name which contains the database user password. </summary>

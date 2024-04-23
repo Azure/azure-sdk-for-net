@@ -7,16 +7,38 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> Monitoring data point coming from SDK, which includes metrics, documents and other metadata info. </summary>
+    /// <summary> Monitoring data point coming from the client, which includes metrics, documents and other metadata info. </summary>
     internal partial class MonitoringDataPoint
     {
         /// <summary> Initializes a new instance of <see cref="MonitoringDataPoint"/>. </summary>
-        public MonitoringDataPoint()
+        /// <param name="version"> Application Insights SDK version. </param>
+        /// <param name="invariantVersion"> Version/generation of the data contract (MonitoringDataPoint) between SDK and Live Metrics. </param>
+        /// <param name="instance"> Service instance name where Application Insights SDK lives. </param>
+        /// <param name="roleName"> Service role name. </param>
+        /// <param name="machineName"> Computer name where Application Insights SDK lives. </param>
+        /// <param name="streamId"> Identifies an Application Insights SDK as a trusted agent to report metrics and documents. </param>
+        /// <param name="isWebApp"> True if the current application is an Azure Web App. </param>
+        /// <param name="performanceCollectionSupported"> True if performance counters collection is supported. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/>, <paramref name="instance"/>, <paramref name="roleName"/>, <paramref name="machineName"/> or <paramref name="streamId"/> is null. </exception>
+        public MonitoringDataPoint(string version, int invariantVersion, string instance, string roleName, string machineName, string streamId, bool isWebApp, bool performanceCollectionSupported)
         {
+            Argument.AssertNotNull(version, nameof(version));
+            Argument.AssertNotNull(instance, nameof(instance));
+            Argument.AssertNotNull(roleName, nameof(roleName));
+            Argument.AssertNotNull(machineName, nameof(machineName));
+            Argument.AssertNotNull(streamId, nameof(streamId));
+
+            Version = version;
+            InvariantVersion = invariantVersion;
+            Instance = instance;
+            RoleName = roleName;
+            MachineName = machineName;
+            StreamId = streamId;
+            IsWebApp = isWebApp;
+            PerformanceCollectionSupported = performanceCollectionSupported;
             Metrics = new ChangeTrackingList<MetricPoint>();
             Documents = new ChangeTrackingList<DocumentIngress>();
             TopCpuProcesses = new ChangeTrackingList<ProcessCpuData>();
@@ -24,25 +46,25 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitoringDataPoint"/>. </summary>
-        /// <param name="version"> AI SDK version. </param>
-        /// <param name="invariantVersion"> Version/generation of the data contract (MonitoringDataPoint) between SDK and QuickPulse. </param>
-        /// <param name="instance"> Service instance name where AI SDK lives. </param>
+        /// <param name="version"> Application Insights SDK version. </param>
+        /// <param name="invariantVersion"> Version/generation of the data contract (MonitoringDataPoint) between SDK and Live Metrics. </param>
+        /// <param name="instance"> Service instance name where Application Insights SDK lives. </param>
         /// <param name="roleName"> Service role name. </param>
-        /// <param name="machineName"> Computer name where AI SDK lives. </param>
-        /// <param name="streamId"> Identifies an AI SDK as a trusted agent to report metrics and documents. </param>
+        /// <param name="machineName"> Computer name where Application Insights SDK lives. </param>
+        /// <param name="streamId"> Identifies an Application Insights SDK as a trusted agent to report metrics and documents. </param>
         /// <param name="timestamp"> Data point generation timestamp. </param>
-        /// <param name="transmissionTime"> Timestamp when SDK transmits the metrics and documents to QuickPulse. A 8-byte long type of ticks. </param>
+        /// <param name="transmissionTime"> Timestamp when the client transmits the metrics and documents to Live Metrics. </param>
         /// <param name="isWebApp"> True if the current application is an Azure Web App. </param>
         /// <param name="performanceCollectionSupported"> True if performance counters collection is supported. </param>
-        /// <param name="metrics"> An array of meric data points. </param>
+        /// <param name="metrics"> An array of metric data points. </param>
         /// <param name="documents">
         /// An array of documents of a specific type {Request}, {RemoteDependency}, {Exception}, {Event}, or {Trace}
         /// Please note <see cref="DocumentIngress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Event"/>, <see cref="Exception"/>, <see cref="RemoteDependency"/>, <see cref="Request"/> and <see cref="Trace"/>.
         /// </param>
         /// <param name="topCpuProcesses"> An array of top cpu consumption data point. </param>
-        /// <param name="collectionConfigurationErrors"> An array of error while parsing and applying . </param>
-        internal MonitoringDataPoint(string version, int? invariantVersion, string instance, string roleName, string machineName, string streamId, DateTimeOffset? timestamp, DateTimeOffset? transmissionTime, bool? isWebApp, bool? performanceCollectionSupported, IList<MetricPoint> metrics, IList<DocumentIngress> documents, IList<ProcessCpuData> topCpuProcesses, IList<CollectionConfigurationError> collectionConfigurationErrors)
+        /// <param name="collectionConfigurationErrors"> An array of error while SDK parses and applies the {CollectionConfigurationInfo} provided by Live Metrics. </param>
+        internal MonitoringDataPoint(string version, int invariantVersion, string instance, string roleName, string machineName, string streamId, DateTimeOffset? timestamp, DateTimeOffset? transmissionTime, bool isWebApp, bool performanceCollectionSupported, IList<MetricPoint> metrics, IList<DocumentIngress> documents, IList<ProcessCpuData> topCpuProcesses, IList<CollectionConfigurationError> collectionConfigurationErrors)
         {
             Version = version;
             InvariantVersion = invariantVersion;
@@ -60,27 +82,27 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             CollectionConfigurationErrors = collectionConfigurationErrors;
         }
 
-        /// <summary> AI SDK version. </summary>
-        public string Version { get; set; }
-        /// <summary> Version/generation of the data contract (MonitoringDataPoint) between SDK and QuickPulse. </summary>
-        public int? InvariantVersion { get; set; }
-        /// <summary> Service instance name where AI SDK lives. </summary>
-        public string Instance { get; set; }
+        /// <summary> Application Insights SDK version. </summary>
+        public string Version { get; }
+        /// <summary> Version/generation of the data contract (MonitoringDataPoint) between SDK and Live Metrics. </summary>
+        public int InvariantVersion { get; }
+        /// <summary> Service instance name where Application Insights SDK lives. </summary>
+        public string Instance { get; }
         /// <summary> Service role name. </summary>
-        public string RoleName { get; set; }
-        /// <summary> Computer name where AI SDK lives. </summary>
-        public string MachineName { get; set; }
-        /// <summary> Identifies an AI SDK as a trusted agent to report metrics and documents. </summary>
-        public string StreamId { get; set; }
+        public string RoleName { get; }
+        /// <summary> Computer name where Application Insights SDK lives. </summary>
+        public string MachineName { get; }
+        /// <summary> Identifies an Application Insights SDK as a trusted agent to report metrics and documents. </summary>
+        public string StreamId { get; }
         /// <summary> Data point generation timestamp. </summary>
         public DateTimeOffset? Timestamp { get; set; }
-        /// <summary> Timestamp when SDK transmits the metrics and documents to QuickPulse. A 8-byte long type of ticks. </summary>
+        /// <summary> Timestamp when the client transmits the metrics and documents to Live Metrics. </summary>
         public DateTimeOffset? TransmissionTime { get; set; }
         /// <summary> True if the current application is an Azure Web App. </summary>
-        public bool? IsWebApp { get; set; }
+        public bool IsWebApp { get; }
         /// <summary> True if performance counters collection is supported. </summary>
-        public bool? PerformanceCollectionSupported { get; set; }
-        /// <summary> An array of meric data points. </summary>
+        public bool PerformanceCollectionSupported { get; }
+        /// <summary> An array of metric data points. </summary>
         public IList<MetricPoint> Metrics { get; }
         /// <summary>
         /// An array of documents of a specific type {Request}, {RemoteDependency}, {Exception}, {Event}, or {Trace}
@@ -90,7 +112,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         public IList<DocumentIngress> Documents { get; }
         /// <summary> An array of top cpu consumption data point. </summary>
         public IList<ProcessCpuData> TopCpuProcesses { get; }
-        /// <summary> An array of error while parsing and applying . </summary>
+        /// <summary> An array of error while SDK parses and applies the {CollectionConfigurationInfo} provided by Live Metrics. </summary>
         public IList<CollectionConfigurationError> CollectionConfigurationErrors { get; }
     }
 }

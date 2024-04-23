@@ -55,12 +55,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             "TryParse",
             new[] { typeof(string), typeof(NumberStyles), typeof(IFormatProvider), typeof(double).MakeByRefType() });
 
-        private static readonly MethodInfo DictionaryStringStringTryGetValueMethodInfo = typeof(IDictionary<string, string>).GetMethod("TryGetValue");
+        private static readonly MethodInfo ListStringTryGetValueMethodInfo =
+            GetMethodInfo<IList<KeyValuePairString>, string, string>((list, key) => Filter<int>.TryGetString(list, key));
 
         private static readonly MethodInfo DictionaryStringDoubleTryGetValueMethodInfo = typeof(IDictionary<string, double>).GetMethod("TryGetValue");
 
-        private static readonly MethodInfo DictionaryStringStringScanMethodInfo =
-            GetMethodInfo<IDictionary<string, string>, string, bool>((dict, searchValue) => Filter<int>.ScanDictionary(dict, searchValue));
+        private static readonly MethodInfo ListKeyValuePairStringScanMethodInfo =
+            GetMethodInfo<IList<KeyValuePairString>, string, bool>((list, searchValue) => Filter<int>.ScanList(list, searchValue));
 
         private static readonly MethodInfo DictionaryStringDoubleScanMethodInfo =
            GetMethodInfo<IDictionary<string, double>, string, bool>((dict, searchValue) => Filter<int>.ScanDictionary(dict, searchValue));
@@ -89,6 +90,46 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             ValidateInput(filterInfo);
 
             this.info = filterInfo;
+
+            if (typeof(TTelemetry) == typeof(Request))
+            {
+                if (filterInfo.FieldName == "Success")
+                {
+                    filterInfo = new FilterInfo(nameof(Request.Extension_IsSuccess), filterInfo.Predicate, filterInfo.Comparand);
+                }
+            }
+            else if (typeof(TTelemetry) == typeof(RemoteDependency))
+            {
+                var fieldName = filterInfo.FieldName;
+                if (fieldName == "Type" || fieldName == "Target")
+                {
+                    Expression<Func<TTelemetry, bool>> lambdaExpression = Expression.Lambda<Func<TTelemetry, bool>>(Expression.Constant(true), Expression.Variable(typeof(TTelemetry)));
+                    this.filterLambda = lambdaExpression.Compile();
+                    return;
+                }
+                else if (fieldName == "Success")
+                {
+                    filterInfo = new FilterInfo(nameof(RemoteDependency.Extension_IsSuccess), filterInfo.Predicate, filterInfo.Comparand);
+                }
+                else if (fieldName == "Data")
+                {
+                    filterInfo = new FilterInfo(nameof(RemoteDependency.CommandName), filterInfo.Predicate, filterInfo.Comparand);
+                }
+            }
+            else if (typeof(TTelemetry) == typeof(Models.Exception))
+            {
+                var fieldName = filterInfo.FieldName;
+                if (fieldName == "Exception.StackTrace")
+                {
+                    Expression<Func<TTelemetry, bool>> lambdaExpression = Expression.Lambda<Func<TTelemetry, bool>>(Expression.Constant(true), Expression.Variable(typeof(TTelemetry)));
+                    this.filterLambda = lambdaExpression.Compile();
+                    return;
+                }
+                else if (fieldName == "Exception.Message")
+                {
+                    filterInfo = new FilterInfo(nameof(Models.Exception.ExceptionMessage), filterInfo.Predicate, filterInfo.Comparand);
+                }
+            }
 
             this.fieldName = filterInfo.FieldName;
             this.predicate = (Predicate)FilterInfoPredicateUtility.ToPredicate(filterInfo.Predicate);
@@ -199,10 +240,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                         FieldNameCustomDimensionsPrefix.Length,
                         fieldName.Length - FieldNameCustomDimensionsPrefix.Length);
 
-                    return CreateDictionaryAccessExpression(
+                    return CreateListAccessExpression(
                         documentExpression,
                         CustomDimensionsPropertyName,
-                        DictionaryStringStringTryGetValueMethodInfo,
+                        ListStringTryGetValueMethodInfo,
                         typeof(string),
                         customDimensionName);
                 default:
@@ -233,6 +274,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             // no special case in filterInfo.FieldName, treat it as the name of a property in TTelemetry type
             fieldNameType = FieldNameType.FieldName;
             return GetPropertyTypeFromFieldName(fieldName);
+        }
+
+        private static Expression CreateListAccessExpression(ParameterExpression documentExpression, string listName, MethodInfo tryGetValueMethodInfo, Type valueType, string keyValue)
+        {
+            // return Filter<int>.TryGetString(document.listName, keyValue)
+            MemberExpression properties = Expression.Property(documentExpression, listName);
+            return Expression.Call(tryGetValueMethodInfo, properties, Expression.Constant(keyValue));
         }
 
         private static Expression CreateDictionaryAccessExpression(ParameterExpression documentExpression, string dictionaryName, MethodInfo tryGetValueMethodInfo, Type valueType, string keyValue)
@@ -278,6 +326,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                         typeof(TTelemetry),
                         (type, propertyName) => type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public).PropertyType);
 
+                if (fieldName == "Duration")
+                {
+                    propertyType = typeof(TimeSpan);
+                }
+
                 if (propertyType == null)
                 {
                     string propertyNotFoundMessage = string.Format(
@@ -318,9 +371,21 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
             }
         }
 
-        private static bool ScanDictionary(IDictionary<string, string> dict, string searchValue)
+        private static string TryGetString(IList<KeyValuePairString> list, string keyValue)
         {
-            return dict?.Values.Any(val => (val ?? string.Empty).IndexOf(searchValue ?? string.Empty, StringComparison.OrdinalIgnoreCase) != -1)
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (string.Equals(list[i].Key, keyValue, StringComparison.OrdinalIgnoreCase))
+                {
+                    return list[i].Value;
+                }
+            }
+            return null;
+        }
+
+        private static bool ScanList(IList<KeyValuePairString> list, string searchValue)
+        {
+            return list?.Any(val => (val.Value ?? string.Empty).IndexOf(searchValue ?? string.Empty, StringComparison.OrdinalIgnoreCase) != -1)
                    ?? false;
         }
 
@@ -535,6 +600,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     if (fieldType == typeof(TimeSpan))
                     {
                         this.ThrowOnInvalidFilter(fieldType, !this.comparandTimeSpan.HasValue);
+                        if (fieldExpression.Type == typeof(string))
+                        {
+                            MethodInfo parseMethod = typeof(TimeSpan).GetMethod("Parse", new[] { typeof(string) });
+                            fieldExpression = Expression.Call(parseMethod, fieldExpression);
+                        }
 
                         switch (this.predicate)
                         {
@@ -622,11 +692,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     Expression propertyComparatorExpression;
                     if (string.Equals(propertyInfo.Name, CustomDimensionsPropertyName, StringComparison.Ordinal))
                     {
-                        // ScanDictionary(document.<CustomDimensionsPropertyName>, <this.comparand>)
+                        // ScanList(document.<CustomDimensionsPropertyName>, <this.comparand>)
                         MemberExpression customDimensionsProperty = Expression.Property(documentExpression, CustomDimensionsPropertyName);
                         propertyComparatorExpression = Expression.Call(
                             null,
-                            DictionaryStringStringScanMethodInfo,
+                            ListKeyValuePairStringScanMethodInfo,
                             customDimensionsProperty,
                             Expression.Constant(this.comparand));
 

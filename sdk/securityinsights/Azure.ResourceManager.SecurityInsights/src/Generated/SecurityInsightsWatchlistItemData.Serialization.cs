@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -18,14 +17,14 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsWatchlistItemData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsWatchlistItemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsWatchlistItemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsWatchlistItemData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityInsightsWatchlistItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsWatchlistItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,12 +88,12 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                writer.WriteObjectValue(CreatedBy, options);
             }
             if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy);
+                writer.WriteObjectValue(UpdatedBy, options);
             }
             if (Optional.IsDefined(ItemsKeyValue))
             {
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.SecurityInsights
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsWatchlistItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static SecurityInsightsWatchlistItemData DeserializeSecurityInsightsWatchlistItemData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -175,7 +174,7 @@ namespace Azure.ResourceManager.SecurityInsights
             BinaryData itemsKeyValue = default;
             BinaryData entityMapping = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -307,10 +306,10 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsWatchlistItemData(
                 id,
                 name,
@@ -339,7 +338,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -355,7 +354,7 @@ namespace Azure.ResourceManager.SecurityInsights
                         return DeserializeSecurityInsightsWatchlistItemData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsWatchlistItemData)} does not support reading '{options.Format}' format.");
             }
         }
 

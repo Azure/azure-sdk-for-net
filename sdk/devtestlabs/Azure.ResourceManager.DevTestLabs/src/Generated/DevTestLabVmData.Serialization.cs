@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabVmData : IUtf8JsonSerializable, IJsonModel<DevTestLabVmData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabVmData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabVmData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabVmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabVmData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabVmData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -159,19 +159,19 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ArtifactDeploymentStatus))
             {
                 writer.WritePropertyName("artifactDeploymentStatus"u8);
-                writer.WriteObjectValue(ArtifactDeploymentStatus);
+                writer.WriteObjectValue(ArtifactDeploymentStatus, options);
             }
             if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
-                writer.WriteObjectValue(GalleryImageReference);
+                writer.WriteObjectValue(GalleryImageReference, options);
             }
             if (Optional.IsDefined(PlanId))
             {
@@ -181,17 +181,17 @@ namespace Azure.ResourceManager.DevTestLabs
             if (options.Format != "W" && Optional.IsDefined(ComputeVm))
             {
                 writer.WritePropertyName("computeVm"u8);
-                writer.WriteObjectValue(ComputeVm);
+                writer.WriteObjectValue(ComputeVm, options);
             }
             if (Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
-                writer.WriteObjectValue(NetworkInterface);
+                writer.WriteObjectValue(NetworkInterface, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ApplicableSchedule))
             {
                 writer.WritePropertyName("applicableSchedule"u8);
-                writer.WriteObjectValue(ApplicableSchedule);
+                writer.WriteObjectValue(ApplicableSchedule, options);
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in DataDiskParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in ScheduleParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabVmData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabVmData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabVmData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DevTestLabs
 
         internal static DevTestLabVmData DeserializeDevTestLabVmData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DevTestLabs
             string provisioningState = default;
             Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -656,10 +656,10 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DevTestLabVmData(
                 id,
                 name,
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabVmData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabVmData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.DevTestLabs
                         return DeserializeDevTestLabVmData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabVmData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabVmData)} does not support reading '{options.Format}' format.");
             }
         }
 

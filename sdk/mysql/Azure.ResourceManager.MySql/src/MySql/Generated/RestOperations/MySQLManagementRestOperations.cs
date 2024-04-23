@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.MySql.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.MySql
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2018-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateResetQueryPerformanceInsightDataRequestUri(string subscriptionId, string resourceGroupName, string serverName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforMySQL/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/resetQueryPerformanceInsightData", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateResetQueryPerformanceInsightDataRequest(string subscriptionId, string resourceGroupName, string serverName)
@@ -114,6 +128,24 @@ namespace Azure.ResourceManager.MySql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRecommendedActionSessionRequestUri(string subscriptionId, string resourceGroupName, string serverName, string advisorName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforMySQL/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/advisors/", false);
+            uri.AppendPath(advisorName, true);
+            uri.AppendPath("/createRecommendedActionSession", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("databaseName", databaseName, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRecommendedActionSessionRequest(string subscriptionId, string resourceGroupName, string serverName, string advisorName, string databaseName)

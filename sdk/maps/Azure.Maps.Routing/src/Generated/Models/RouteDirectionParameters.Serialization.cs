@@ -8,6 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.Maps.Common;
+using Azure.Maps.Routing.Models;
 
 namespace Azure.Maps.Routing
 {
@@ -19,7 +20,7 @@ namespace Azure.Maps.Routing
             if (Common.Optional.IsDefined(_GeoJsonSupportingPoints))
             {
                 writer.WritePropertyName("supportingPoints"u8);
-                writer.WriteObjectValue(_GeoJsonSupportingPoints);
+                writer.WriteObjectValue<GeoJsonGeometryCollection>(_GeoJsonSupportingPoints);
             }
             if (Common.Optional.IsCollectionDefined(AvoidVignette))
             {
@@ -44,9 +45,17 @@ namespace Azure.Maps.Routing
             if (Common.Optional.IsDefined(_GeoJsonAvoidAreas))
             {
                 writer.WritePropertyName("avoidAreas"u8);
-                writer.WriteObjectValue(_GeoJsonAvoidAreas);
+                writer.WriteObjectValue<GeoJsonMultiPolygon>(_GeoJsonAvoidAreas);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

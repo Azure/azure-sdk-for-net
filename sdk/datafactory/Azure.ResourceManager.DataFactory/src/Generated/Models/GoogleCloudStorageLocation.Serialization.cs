@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class GoogleCloudStorageLocation : IUtf8JsonSerializable, IJsonModel<GoogleCloudStorageLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GoogleCloudStorageLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GoogleCloudStorageLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GoogleCloudStorageLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GoogleCloudStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GoogleCloudStorageLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GoogleCloudStorageLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<GoogleCloudStorageLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GoogleCloudStorageLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GoogleCloudStorageLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static GoogleCloudStorageLocation DeserializeGoogleCloudStorageLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GoogleCloudStorageLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GoogleCloudStorageLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeGoogleCloudStorageLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GoogleCloudStorageLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GoogleCloudStorageLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

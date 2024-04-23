@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Blueprint
     [PersistableModelProxy(typeof(UnknownArtifact))]
     public partial class ArtifactData : IUtf8JsonSerializable, IJsonModel<ArtifactData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArtifactData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArtifactData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArtifactData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArtifactData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArtifactData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArtifactData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Blueprint
             var format = options.Format == "W" ? ((IPersistableModel<ArtifactData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArtifactData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArtifactData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Blueprint
 
         internal static ArtifactData DeserializeArtifactData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Blueprint
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArtifactData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArtifactData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Blueprint
                         return DeserializeArtifactData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArtifactData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArtifactData)} does not support reading '{options.Format}' format.");
             }
         }
 

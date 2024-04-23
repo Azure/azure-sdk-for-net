@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -75,8 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Value of pair. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> Type of database. </summary>
+        [WirePath("type")]
         public ConnectionStringType ConnectionStringType { get; set; }
     }
 }

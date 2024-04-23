@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -38,6 +37,14 @@ namespace Azure.Monitor.Query.Models
             writer.WritePropertyName("workspace"u8);
             writer.WriteStringValue(Workspace);
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

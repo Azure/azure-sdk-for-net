@@ -10,21 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class FrontDoorCustomDomainPatch : IUtf8JsonSerializable, IJsonModel<FrontDoorCustomDomainPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCustomDomainPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCustomDomainPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FrontDoorCustomDomainPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorCustomDomainPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorCustomDomainPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(TlsSettings))
             {
                 writer.WritePropertyName("tlsSettings"u8);
-                writer.WriteObjectValue(TlsSettings);
+                writer.WriteObjectValue(TlsSettings, options);
             }
             if (Optional.IsDefined(DnsZone))
             {
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (PreValidatedCustomDomainResource != null)
                 {
                     writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                    writer.WriteObjectValue(PreValidatedCustomDomainResource);
+                    writer.WriteObjectValue(PreValidatedCustomDomainResource, options);
                 }
                 else
                 {
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorCustomDomainPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorCustomDomainPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static FrontDoorCustomDomainPatch DeserializeFrontDoorCustomDomainPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -101,7 +100,7 @@ namespace Azure.ResourceManager.Cdn.Models
             WritableSubResource azureDnsZone = default;
             FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -151,10 +150,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FrontDoorCustomDomainPatch(profileName, tlsSettings, azureDnsZone, preValidatedCustomDomainResourceId, serializedAdditionalRawData);
         }
 
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeFrontDoorCustomDomainPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

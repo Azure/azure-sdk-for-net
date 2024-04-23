@@ -10,21 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppEnvironmentAuthToken : IUtf8JsonSerializable, IJsonModel<ContainerAppEnvironmentAuthToken>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppEnvironmentAuthToken>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppEnvironmentAuthToken>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppEnvironmentAuthToken>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppEnvironmentAuthToken>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppEnvironmentAuthToken)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppEnvironmentAuthToken)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppEnvironmentAuthToken>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppEnvironmentAuthToken)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppEnvironmentAuthToken)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppEnvironmentAuthToken DeserializeContainerAppEnvironmentAuthToken(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string token = default;
             DateTimeOffset? expires = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -195,10 +194,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppEnvironmentAuthToken(
                 id,
                 name,
@@ -220,7 +219,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppEnvironmentAuthToken)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppEnvironmentAuthToken)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppEnvironmentAuthToken(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppEnvironmentAuthToken)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppEnvironmentAuthToken)} does not support reading '{options.Format}' format.");
             }
         }
 

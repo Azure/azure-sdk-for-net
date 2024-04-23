@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     public partial class FirewallLogSettings : IUtf8JsonSerializable, IJsonModel<FirewallLogSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallLogSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallLogSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallLogSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirewallLogSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallLogSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallLogSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,27 +39,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(ApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights"u8);
-                writer.WriteObjectValue(ApplicationInsights);
+                writer.WriteObjectValue(ApplicationInsights, options);
             }
             if (Optional.IsDefined(CommonDestination))
             {
                 writer.WritePropertyName("commonDestination"u8);
-                writer.WriteObjectValue(CommonDestination);
+                writer.WriteObjectValue(CommonDestination, options);
             }
             if (Optional.IsDefined(TrafficLogDestination))
             {
                 writer.WritePropertyName("trafficLogDestination"u8);
-                writer.WriteObjectValue(TrafficLogDestination);
+                writer.WriteObjectValue(TrafficLogDestination, options);
             }
             if (Optional.IsDefined(ThreatLogDestination))
             {
                 writer.WritePropertyName("threatLogDestination"u8);
-                writer.WriteObjectValue(ThreatLogDestination);
+                writer.WriteObjectValue(ThreatLogDestination, options);
             }
             if (Optional.IsDefined(DecryptLogDestination))
             {
                 writer.WritePropertyName("decryptLogDestination"u8);
-                writer.WriteObjectValue(DecryptLogDestination);
+                writer.WriteObjectValue(DecryptLogDestination, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallLogSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallLogSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallLogSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         internal static FirewallLogSettings DeserializeFirewallLogSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             FirewallLogDestination threatLogDestination = default;
             FirewallLogDestination decryptLogDestination = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logType"u8))
@@ -176,10 +175,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FirewallLogSettings(
                 logType,
                 logOption,
@@ -200,7 +199,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallLogSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallLogSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +215,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeFirewallLogSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallLogSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallLogSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

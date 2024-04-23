@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     [PersistableModelProxy(typeof(UnknownInputProperties))]
     public partial class StreamingJobInputProperties : IUtf8JsonSerializable, IJsonModel<StreamingJobInputProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingJobInputProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingJobInputProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StreamingJobInputProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobInputProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,12 +31,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Serialization))
             {
                 writer.WritePropertyName("serialization"u8);
-                writer.WriteObjectValue(Serialization);
+                writer.WriteObjectValue(Serialization, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Diagnostics))
             {
                 writer.WritePropertyName("diagnostics"u8);
-                writer.WriteObjectValue(Diagnostics);
+                writer.WriteObjectValue(Diagnostics, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Compression))
             {
                 writer.WritePropertyName("compression"u8);
-                writer.WriteObjectValue(Compression);
+                writer.WriteObjectValue(Compression, options);
             }
             if (Optional.IsDefined(PartitionKey))
             {
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(WatermarkSettings))
             {
                 writer.WritePropertyName("watermarkSettings"u8);
-                writer.WriteObjectValue(WatermarkSettings);
+                writer.WriteObjectValue(WatermarkSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobInputProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamingJobInputProperties DeserializeStreamingJobInputProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamingJobInputProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobInputProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

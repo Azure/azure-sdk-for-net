@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -90,7 +88,9 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = await _updateRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HciArmOperation<UpdateResource>(Response.FromValue(new UpdateResource(Client, response), response.GetRawResponse()));
+                var uri = _updateRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HciArmOperation<UpdateResource>(Response.FromValue(new UpdateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +139,9 @@ namespace Azure.ResourceManager.Hci
             try
             {
                 var response = _updateRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateName, data, cancellationToken);
-                var operation = new HciArmOperation<UpdateResource>(Response.FromValue(new UpdateResource(Client, response), response.GetRawResponse()));
+                var uri = _updateRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, updateName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HciArmOperation<UpdateResource>(Response.FromValue(new UpdateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

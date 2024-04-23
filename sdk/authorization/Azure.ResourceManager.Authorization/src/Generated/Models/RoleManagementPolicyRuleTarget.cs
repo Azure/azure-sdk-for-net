@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -75,16 +74,22 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The caller of the setting. </summary>
+        [WirePath("caller")]
         public string Caller { get; set; }
         /// <summary> The type of operation. </summary>
+        [WirePath("operations")]
         public IList<string> Operations { get; }
         /// <summary> The assignment level to which rule is applied. </summary>
+        [WirePath("level")]
         public RoleManagementAssignmentLevel? Level { get; set; }
         /// <summary> The list of target objects. </summary>
+        [WirePath("targetObjects")]
         public IList<string> TargetObjects { get; }
         /// <summary> The list of inheritable settings. </summary>
+        [WirePath("inheritableSettings")]
         public IList<string> InheritableSettings { get; }
         /// <summary> The list of enforced settings. </summary>
+        [WirePath("enforcedSettings")]
         public IList<string> EnforcedSettings { get; }
     }
 }

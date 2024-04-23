@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.NetApp.Mocking
 
         public virtual NetAppVolumeBackupResource GetNetAppVolumeBackupResource(ResourceIdentifier id)
         {
-                NetAppVolumeBackupResource.ValidateResourceId(id);
-                return new NetAppVolumeBackupResource(Client, id);
+            NetAppVolumeBackupResource.ValidateResourceId(id);
+            return new NetAppVolumeBackupResource(Client, id);
         }
     }
 }

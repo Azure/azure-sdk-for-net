@@ -9,10 +9,8 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups.Models;
 
 namespace Azure.ResourceManager.ManagementGroups
@@ -36,6 +34,18 @@ namespace Azure.ResourceManager.ManagementGroups
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2021-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string groupId, string subscriptionId, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string groupId, string subscriptionId, string cacheControl)
@@ -122,6 +132,18 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string groupId, string subscriptionId, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string groupId, string subscriptionId, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
@@ -196,6 +218,18 @@ namespace Azure.ResourceManager.ManagementGroups
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSubscriptionRequestUri(string groupId, string subscriptionId, string cacheControl)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSubscriptionRequest(string groupId, string subscriptionId, string cacheControl)
@@ -286,6 +320,21 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
+        internal RequestUriBuilder CreateGetSubscriptionsUnderManagementGroupRequestUri(string groupId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/subscriptions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skiptoken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetSubscriptionsUnderManagementGroupRequest(string groupId, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -371,6 +420,14 @@ namespace Azure.ResourceManager.ManagementGroups
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSubscriptionsUnderManagementGroupNextPageRequestUri(string nextLink, string groupId, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetSubscriptionsUnderManagementGroupNextPageRequest(string nextLink, string groupId, string skipToken)

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     [PersistableModelProxy(typeof(UnknownApplyRecoveryPointProviderSpecificContent))]
     public partial class SiteRecoveryApplyRecoveryPointProviderSpecificContent : IUtf8JsonSerializable, IJsonModel<SiteRecoveryApplyRecoveryPointProviderSpecificContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryApplyRecoveryPointProviderSpecificContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryApplyRecoveryPointProviderSpecificContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SiteRecoveryApplyRecoveryPointProviderSpecificContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryApplyRecoveryPointProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryApplyRecoveryPointProviderSpecificContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static SiteRecoveryApplyRecoveryPointProviderSpecificContent DeserializeSiteRecoveryApplyRecoveryPointProviderSpecificContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryApplyRecoveryPointProviderSpecificContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryApplyRecoveryPointProviderSpecificContent)} does not support reading '{options.Format}' format.");
             }
         }
 

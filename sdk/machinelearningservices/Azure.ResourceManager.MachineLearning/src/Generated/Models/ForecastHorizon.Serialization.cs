@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     [PersistableModelProxy(typeof(UnknownForecastHorizon))]
     public partial class ForecastHorizon : IUtf8JsonSerializable, IJsonModel<ForecastHorizon>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastHorizon>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastHorizon>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ForecastHorizon>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ForecastHorizon>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastHorizon)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastHorizon)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastHorizon>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastHorizon)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastHorizon)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ForecastHorizon DeserializeForecastHorizon(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ForecastHorizon)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastHorizon)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeForecastHorizon(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ForecastHorizon)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastHorizon)} does not support reading '{options.Format}' format.");
             }
         }
 

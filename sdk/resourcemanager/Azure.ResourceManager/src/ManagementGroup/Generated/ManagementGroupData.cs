@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups.Models;
 using Azure.ResourceManager.Models;
 
@@ -78,12 +77,16 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <summary> The AAD Tenant ID associated with the management group. For example, 00000000-0000-0000-0000-000000000000. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; }
         /// <summary> The friendly name of the management group. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; }
         /// <summary> The details of a management group. </summary>
+        [WirePath("properties.details")]
         public ManagementGroupInfo Details { get; }
         /// <summary> The list of children. </summary>
+        [WirePath("properties.children")]
         public IReadOnlyList<ManagementGroupChildInfo> Children { get; }
     }
 }

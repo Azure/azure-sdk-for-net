@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ResourceGraph;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
     public partial class ResourceQueryContent : IUtf8JsonSerializable, IJsonModel<ResourceQueryContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceQueryContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceQueryContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceQueryContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                writer.WriteObjectValue(Options, options);
             }
             if (Optional.IsCollectionDefined(Facets))
             {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 writer.WriteStartArray();
                 foreach (var item in Facets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         internal static ResourceQueryContent DeserializeResourceQueryContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             ResourceQueryRequestOptions options0 = default;
             IList<FacetRequest> facets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subscriptions"u8))
@@ -169,10 +168,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceQueryContent(
                 subscriptions ?? new ChangeTrackingList<string>(),
                 managementGroups ?? new ChangeTrackingList<string>(),
@@ -191,7 +190,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +206,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                         return DeserializeResourceQueryContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceQueryContent)} does not support reading '{options.Format}' format.");
             }
         }
 

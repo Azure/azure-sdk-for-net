@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class SnapshotData : IUtf8JsonSerializable, IJsonModel<SnapshotData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                writer.WriteObjectValue(PurchasePlan, options);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities);
+                writer.WriteObjectValue(SupportedCapabilities, options);
             }
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData);
+                writer.WriteObjectValue(CreationData, options);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsGroup);
+                writer.WriteObjectValue(EncryptionSettingsGroup, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue(SecurityProfile, options);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(CopyCompletionError))
             {
                 writer.WritePropertyName("copyCompletionError"u8);
-                writer.WriteObjectValue(CopyCompletionError);
+                writer.WriteObjectValue(CopyCompletionError, options);
             }
             if (Optional.IsDefined(DataAccessAuthMode))
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static SnapshotData DeserializeSnapshotData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Compute
             CopyCompletionError copyCompletionError = default;
             DataAccessAuthMode? dataAccessAuthMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -544,10 +544,10 @@ namespace Azure.ResourceManager.Compute
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SnapshotData(
                 id,
                 name,
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeSnapshotData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotData)} does not support reading '{options.Format}' format.");
             }
         }
 

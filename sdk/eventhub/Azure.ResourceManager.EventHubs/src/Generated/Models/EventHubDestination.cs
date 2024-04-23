@@ -73,18 +73,25 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Name for capture destination. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Resource id of the storage account to be used to create the blobs. </summary>
+        [WirePath("properties.storageAccountResourceId")]
         public ResourceIdentifier StorageAccountResourceId { get; set; }
         /// <summary> Blob container Name. </summary>
+        [WirePath("properties.blobContainer")]
         public string BlobContainer { get; set; }
         /// <summary> Blob naming convention for archive, e.g. {Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}. Here all the parameters (Namespace,EventHub .. etc) are mandatory irrespective of order. </summary>
+        [WirePath("properties.archiveNameFormat")]
         public string ArchiveNameFormat { get; set; }
         /// <summary> Subscription Id of Azure Data Lake Store. </summary>
+        [WirePath("properties.dataLakeSubscriptionId")]
         public Guid? DataLakeSubscriptionId { get; set; }
         /// <summary> The Azure Data Lake Store name for the captured events. </summary>
+        [WirePath("properties.dataLakeAccountName")]
         public string DataLakeAccountName { get; set; }
         /// <summary> The destination folder path for the captured events. </summary>
+        [WirePath("properties.dataLakeFolderPath")]
         public string DataLakeFolderPath { get; set; }
     }
 }

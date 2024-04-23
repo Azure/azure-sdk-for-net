@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingPaymentMethodLinkData : IUtf8JsonSerializable, IJsonModel<BillingPaymentMethodLinkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingPaymentMethodLinkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingPaymentMethodLinkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BillingPaymentMethodLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BillingPaymentMethodLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingPaymentMethodLinkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingPaymentMethodLinkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(PaymentMethod))
             {
                 writer.WritePropertyName("paymentMethod"u8);
-                writer.WriteObjectValue(PaymentMethod);
+                writer.WriteObjectValue(PaymentMethod, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Billing
             var format = options.Format == "W" ? ((IPersistableModel<BillingPaymentMethodLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingPaymentMethodLinkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingPaymentMethodLinkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Billing
 
         internal static BillingPaymentMethodLinkData DeserializeBillingPaymentMethodLinkData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Billing
             SystemData systemData = default;
             PaymentMethodProjectionProperties paymentMethod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Billing
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BillingPaymentMethodLinkData(
                 id,
                 name,
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Billing
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingPaymentMethodLinkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingPaymentMethodLinkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Billing
                         return DeserializeBillingPaymentMethodLinkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingPaymentMethodLinkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingPaymentMethodLinkData)} does not support reading '{options.Format}' format.");
             }
         }
 

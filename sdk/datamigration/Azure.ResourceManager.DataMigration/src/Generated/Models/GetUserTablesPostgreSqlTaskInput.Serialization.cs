@@ -15,19 +15,19 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class GetUserTablesPostgreSqlTaskInput : IUtf8JsonSerializable, IJsonModel<GetUserTablesPostgreSqlTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetUserTablesPostgreSqlTaskInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetUserTablesPostgreSqlTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<GetUserTablesPostgreSqlTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesPostgreSqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetUserTablesPostgreSqlTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetUserTablesPostgreSqlTaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue(ConnectionInfo);
+            writer.WriteObjectValue(ConnectionInfo, options);
             writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesPostgreSqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetUserTablesPostgreSqlTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetUserTablesPostgreSqlTaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetUserTablesPostgreSqlTaskInput DeserializeGetUserTablesPostgreSqlTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             PostgreSqlConnectionInfo connectionInfo = default;
             IList<string> selectedDatabases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionInfo"u8))
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GetUserTablesPostgreSqlTaskInput(connectionInfo, selectedDatabases, serializedAdditionalRawData);
         }
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetUserTablesPostgreSqlTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetUserTablesPostgreSqlTaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeGetUserTablesPostgreSqlTaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetUserTablesPostgreSqlTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetUserTablesPostgreSqlTaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

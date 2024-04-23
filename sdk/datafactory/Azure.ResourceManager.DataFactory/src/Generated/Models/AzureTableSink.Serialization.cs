@@ -11,20 +11,19 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class AzureTableSink : IUtf8JsonSerializable, IJsonModel<AzureTableSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureTableSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureTableSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AzureTableSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureTableSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureTableSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureTableSink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureTableSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureTableSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureTableSink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureTableSink DeserializeAzureTableSink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -252,7 +251,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureTableSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureTableSink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -268,7 +267,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAzureTableSink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureTableSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureTableSink)} does not support reading '{options.Format}' format.");
             }
         }
 

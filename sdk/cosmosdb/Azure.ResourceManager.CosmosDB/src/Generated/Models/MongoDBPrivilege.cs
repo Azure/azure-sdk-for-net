@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> An Azure Cosmos DB Mongo DB Resource. </summary>
+        [WirePath("resource")]
         public MongoDBPrivilegeResourceInfo Resource { get; set; }
         /// <summary> An array of actions that are allowed. </summary>
+        [WirePath("actions")]
         public IList<string> Actions { get; }
     }
 }

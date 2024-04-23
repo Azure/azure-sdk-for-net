@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -71,6 +70,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Name to check the namespace name availability. </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

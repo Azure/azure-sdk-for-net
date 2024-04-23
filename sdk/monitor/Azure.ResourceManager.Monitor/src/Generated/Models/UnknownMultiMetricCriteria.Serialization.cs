@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     internal partial class UnknownMultiMetricCriteria : IUtf8JsonSerializable, IJsonModel<MultiMetricCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiMetricCriteria>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiMetricCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MultiMetricCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MultiMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MultiMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static UnknownMultiMetricCriteria DeserializeUnknownMultiMetricCriteria(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMultiMetricCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

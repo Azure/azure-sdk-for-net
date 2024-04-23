@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class BenefitsCommitment : IUtf8JsonSerializable, IJsonModel<BenefitsCommitment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BenefitsCommitment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BenefitsCommitment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BenefitsCommitment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BenefitsCommitment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitsCommitment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitsCommitment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenefitsCommitment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitsCommitment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitsCommitment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static BenefitsCommitment DeserializeBenefitsCommitment(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Reservations.Models
             string currencyCode = default;
             double? amount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("grain"u8))
@@ -112,10 +111,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BenefitsCommitment(currencyCode, amount, serializedAdditionalRawData, grain);
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BenefitsCommitment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitsCommitment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeBenefitsCommitment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BenefitsCommitment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitsCommitment)} does not support reading '{options.Format}' format.");
             }
         }
 

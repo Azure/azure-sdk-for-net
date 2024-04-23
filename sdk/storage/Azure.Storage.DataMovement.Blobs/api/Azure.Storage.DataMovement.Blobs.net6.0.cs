@@ -55,9 +55,12 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         public BlobStorageResourceOptions() { }
         public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<string> CacheControl { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<string> ContentDisposition { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<string> ContentEncoding { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<string> ContentLanguage { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<string> ContentType { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty<System.Collections.Generic.IDictionary<string, string>> Metadata { get { throw null; } set { } }
     }
     public partial class BlockBlobStorageResourceOptions : Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions
     {

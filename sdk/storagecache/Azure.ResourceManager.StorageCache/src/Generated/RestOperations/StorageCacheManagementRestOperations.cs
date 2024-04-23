@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.StorageCache.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.StorageCache
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckAmlFSSubnetsRequestUri(string subscriptionId, AmlFileSystemSubnetContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/checkAmlFSSubnets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckAmlFSSubnetsRequest(string subscriptionId, AmlFileSystemSubnetContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -54,7 +64,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -103,6 +113,17 @@ namespace Azure.ResourceManager.StorageCache
             }
         }
 
+        internal RequestUriBuilder CreateGetRequiredAmlFSSubnetsSizeRequestUri(string subscriptionId, RequiredAmlFileSystemSubnetsSizeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/getRequiredAmlFSSubnetsSize", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequiredAmlFSSubnetsSizeRequest(string subscriptionId, RequiredAmlFileSystemSubnetsSizeContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -120,7 +141,7 @@ namespace Azure.ResourceManager.StorageCache
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
                 request.Content = content0;
             }
             _userAgent.Apply(message);

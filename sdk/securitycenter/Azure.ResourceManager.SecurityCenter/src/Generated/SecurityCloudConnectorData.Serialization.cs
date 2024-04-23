@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityCloudConnectorData : IUtf8JsonSerializable, IJsonModel<SecurityCloudConnectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCloudConnectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityCloudConnectorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SecurityCloudConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCloudConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCloudConnectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCloudConnectorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(HybridComputeSettings))
             {
                 writer.WritePropertyName("hybridComputeSettings"u8);
-                writer.WriteObjectValue(HybridComputeSettings);
+                writer.WriteObjectValue(HybridComputeSettings, options);
             }
             if (Optional.IsDefined(AuthenticationDetails))
             {
                 writer.WritePropertyName("authenticationDetails"u8);
-                writer.WriteObjectValue(AuthenticationDetails);
+                writer.WriteObjectValue(AuthenticationDetails, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCloudConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCloudConnectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCloudConnectorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityCloudConnectorData DeserializeSecurityCloudConnectorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter
             HybridComputeSettingsProperties hybridComputeSettings = default;
             AuthenticationDetailsProperties authenticationDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityCloudConnectorData(
                 id,
                 name,
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCloudConnectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCloudConnectorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeSecurityCloudConnectorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCloudConnectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCloudConnectorData)} does not support reading '{options.Format}' format.");
             }
         }
 

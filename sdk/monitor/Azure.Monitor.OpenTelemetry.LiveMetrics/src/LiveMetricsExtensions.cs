@@ -45,30 +45,35 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                     // configuration delegate into options pipeline.
                     services.Configure(finalOptionsName, configure);
                 }
+
+                // Register Manager as a singleton
+                services.AddSingleton<Manager>(sp =>
+                {
+                    LiveMetricsExporterOptions exporterOptions;
+
+                    if (name == null)
+                    {
+                        exporterOptions = sp.GetRequiredService<IOptionsFactory<LiveMetricsExporterOptions>>().Create(finalOptionsName);
+
+                        // Configuration delegate is executed inline on the fresh instance.
+                        configure?.Invoke(exporterOptions);
+                    }
+                    else
+                    {
+                        // When using named options we can properly utilize Options
+                        // API to create or reuse an instance.
+                        exporterOptions = sp.GetRequiredService<IOptionsMonitor<LiveMetricsExporterOptions>>().Get(finalOptionsName);
+                    }
+
+                    // INITIALIZE INTERNALS
+                    return new Manager(exporterOptions, new DefaultPlatform());
+                });
             });
 
             return builder.AddProcessor(sp =>
             {
-                // SETUP OPTIONS
-                LiveMetricsExporterOptions exporterOptions;
-
-                if (name == null)
-                {
-                    exporterOptions = sp.GetRequiredService<IOptionsFactory<LiveMetricsExporterOptions>>().Create(finalOptionsName);
-
-                    // Configuration delegate is executed inline on the fresh instance.
-                    configure?.Invoke(exporterOptions);
-                }
-                else
-                {
-                    // When using named options we can properly utilize Options
-                    // API to create or reuse an instance.
-                    exporterOptions = sp.GetRequiredService<IOptionsMonitor<LiveMetricsExporterOptions>>().Get(finalOptionsName);
-                }
-
-                // INITIALIZE INTERNALS
-                var manager = new Manager(exporterOptions, new DefaultPlatform());
-                return new LiveMetricsExtractionProcessor(manager);
+                var manager = sp.GetRequiredService<Manager>();
+                return new LiveMetricsActivityProcessor(manager);
             });
         }
     }

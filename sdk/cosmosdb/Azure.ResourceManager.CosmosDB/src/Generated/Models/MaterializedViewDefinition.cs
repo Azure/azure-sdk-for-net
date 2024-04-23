@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -78,10 +77,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> An unique identifier for the source collection. This is a system generated property. </summary>
+        [WirePath("sourceCollectionRid")]
         public string SourceCollectionRid { get; }
         /// <summary> The name of the source container on which the Materialized View will be created. </summary>
+        [WirePath("sourceCollectionId")]
         public string SourceCollectionId { get; set; }
         /// <summary> The definition should be an SQL query which would be used to fetch data from the source container to populate into the Materialized View container. </summary>
+        [WirePath("definition")]
         public string Definition { get; set; }
     }
 }

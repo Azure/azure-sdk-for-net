@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     [PersistableModelProxy(typeof(UnknownUpdateReplicationProtectedItemProviderContent))]
     public partial class UpdateReplicationProtectedItemProviderContent : IUtf8JsonSerializable, IJsonModel<UpdateReplicationProtectedItemProviderContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateReplicationProtectedItemProviderContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateReplicationProtectedItemProviderContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<UpdateReplicationProtectedItemProviderContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UpdateReplicationProtectedItemProviderContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateReplicationProtectedItemProviderContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static UpdateReplicationProtectedItemProviderContent DeserializeUpdateReplicationProtectedItemProviderContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeUpdateReplicationProtectedItemProviderContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateReplicationProtectedItemProviderContent)} does not support reading '{options.Format}' format.");
             }
         }
 

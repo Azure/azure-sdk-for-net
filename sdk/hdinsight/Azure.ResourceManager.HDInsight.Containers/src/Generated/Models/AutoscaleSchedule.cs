@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.HDInsight.Containers;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -52,9 +51,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="endOn"> User has to set the end time of current schedule configuration, format like 10:30 (HH:MM). </param>
         /// <param name="count"> User has to set the node count anticipated at end of the scaling operation of the set current schedule configuration, format is integer. </param>
         /// <param name="days"> User has to set the days where schedule has to be set for autoscale operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="days"/> is null. </exception>
-        public AutoscaleSchedule(DateTimeOffset startOn, DateTimeOffset endOn, int count, IEnumerable<AutoscaleScheduleDay> days)
+        /// <exception cref="ArgumentNullException"> <paramref name="startOn"/>, <paramref name="endOn"/> or <paramref name="days"/> is null. </exception>
+        public AutoscaleSchedule(string startOn, string endOn, int count, IEnumerable<AutoscaleScheduleDay> days)
         {
+            Argument.AssertNotNull(startOn, nameof(startOn));
+            Argument.AssertNotNull(endOn, nameof(endOn));
             Argument.AssertNotNull(days, nameof(days));
 
             StartOn = startOn;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="count"> User has to set the node count anticipated at end of the scaling operation of the set current schedule configuration, format is integer. </param>
         /// <param name="days"> User has to set the days where schedule has to be set for autoscale operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutoscaleSchedule(DateTimeOffset startOn, DateTimeOffset endOn, int count, IList<AutoscaleScheduleDay> days, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutoscaleSchedule(string startOn, string endOn, int count, IList<AutoscaleScheduleDay> days, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -84,9 +85,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> User has to set the start time of current schedule configuration, format like 10:30 (HH:MM). </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public string StartOn { get; set; }
         /// <summary> User has to set the end time of current schedule configuration, format like 10:30 (HH:MM). </summary>
-        public DateTimeOffset EndOn { get; set; }
+        public string EndOn { get; set; }
         /// <summary> User has to set the node count anticipated at end of the scaling operation of the set current schedule configuration, format is integer. </summary>
         public int Count { get; set; }
         /// <summary> User has to set the days where schedule has to be set for autoscale operation. </summary>

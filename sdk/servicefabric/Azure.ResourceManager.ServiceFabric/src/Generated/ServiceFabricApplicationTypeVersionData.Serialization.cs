@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -17,14 +16,14 @@ namespace Azure.ResourceManager.ServiceFabric
 {
     public partial class ServiceFabricApplicationTypeVersionData : IUtf8JsonSerializable, IJsonModel<ServiceFabricApplicationTypeVersionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricApplicationTypeVersionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricApplicationTypeVersionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceFabricApplicationTypeVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationTypeVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricApplicationTypeVersionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricApplicationTypeVersionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.ServiceFabric
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricApplicationTypeVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricApplicationTypeVersionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricApplicationTypeVersionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +121,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         internal static ServiceFabricApplicationTypeVersionData DeserializeServiceFabricApplicationTypeVersionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.ServiceFabric
             Uri appPackageUrl = default;
             IReadOnlyDictionary<string, string> defaultParameterList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -236,10 +235,10 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceFabricApplicationTypeVersionData(
                 id,
                 name,
@@ -263,7 +262,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricApplicationTypeVersionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricApplicationTypeVersionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -279,7 +278,7 @@ namespace Azure.ResourceManager.ServiceFabric
                         return DeserializeServiceFabricApplicationTypeVersionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricApplicationTypeVersionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricApplicationTypeVersionData)} does not support reading '{options.Format}' format.");
             }
         }
 

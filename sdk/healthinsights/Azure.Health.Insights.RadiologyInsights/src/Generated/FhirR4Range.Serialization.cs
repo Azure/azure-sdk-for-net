@@ -9,33 +9,32 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class FhirR4Range : IUtf8JsonSerializable, IJsonModel<FhirR4Range>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Range>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Range>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FhirR4Range>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4Range>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4Range)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirR4Range)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Low))
             {
                 writer.WritePropertyName("low"u8);
-                writer.WriteObjectValue(Low);
+                writer.WriteObjectValue(Low, options);
             }
             if (Optional.IsDefined(High))
             {
                 writer.WritePropertyName("high"u8);
-                writer.WriteObjectValue(High);
+                writer.WriteObjectValue(High, options);
             }
             if (Optional.IsDefined(Id))
             {
@@ -48,7 +47,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +74,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4Range>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4Range)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirR4Range)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +83,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static FhirR4Range DeserializeFhirR4Range(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +94,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             string id = default;
             IReadOnlyList<FhirR4Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("low"u8))
@@ -137,10 +136,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FhirR4Range(id, extension ?? new ChangeTrackingList<FhirR4Extension>(), serializedAdditionalRawData, low, high);
         }
 
@@ -153,7 +152,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4Range)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirR4Range)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +168,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                         return DeserializeFhirR4Range(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4Range)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirR4Range)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -183,11 +182,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeFhirR4Range(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

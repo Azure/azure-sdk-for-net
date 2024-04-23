@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class CacheExpirationActionProperties : IUtf8JsonSerializable, IJsonModel<CacheExpirationActionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CacheExpirationActionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CacheExpirationActionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CacheExpirationActionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CacheExpirationActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheExpirationActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CacheExpirationActionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CacheExpirationActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheExpirationActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CacheExpirationActionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CacheExpirationActionProperties DeserializeCacheExpirationActionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CdnCacheLevel cacheType = default;
             TimeSpan? cacheDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -118,10 +117,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CacheExpirationActionProperties(typeName, cacheBehavior, cacheType, cacheDuration, serializedAdditionalRawData);
         }
 
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CacheExpirationActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CacheExpirationActionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeCacheExpirationActionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CacheExpirationActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CacheExpirationActionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

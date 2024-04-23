@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class LabelingJobProperties : IUtf8JsonSerializable, IJsonModel<LabelingJobProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabelingJobProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabelingJobProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabelingJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LabelingJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelingJobProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabelingJobProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DataConfiguration != null)
                 {
                     writer.WritePropertyName("dataConfiguration"u8);
-                    writer.WriteObjectValue(DataConfiguration);
+                    writer.WriteObjectValue(DataConfiguration, options);
                 }
                 else
                 {
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (JobInstructions != null)
                 {
                     writer.WritePropertyName("jobInstructions"u8);
-                    writer.WriteObjectValue(JobInstructions);
+                    writer.WriteObjectValue(JobInstructions, options);
                 }
                 else
                 {
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in LabelCategories)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LabelingJobMediaProperties != null)
                 {
                     writer.WritePropertyName("labelingJobMediaProperties"u8);
-                    writer.WriteObjectValue(LabelingJobMediaProperties);
+                    writer.WriteObjectValue(LabelingJobMediaProperties, options);
                 }
                 else
                 {
@@ -96,14 +95,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(MlAssistConfiguration))
             {
                 writer.WritePropertyName("mlAssistConfiguration"u8);
-                writer.WriteObjectValue(MlAssistConfiguration);
+                writer.WriteObjectValue(MlAssistConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProgressMetrics))
             {
                 if (ProgressMetrics != null)
                 {
                     writer.WritePropertyName("progressMetrics"u8);
-                    writer.WriteObjectValue(ProgressMetrics);
+                    writer.WriteObjectValue(ProgressMetrics, options);
                 }
                 else
                 {
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in StatusMessages)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue(Identity, options);
                 }
                 else
                 {
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NotificationSetting != null)
                 {
                     writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue(NotificationSetting);
+                    writer.WriteObjectValue(NotificationSetting, options);
                 }
                 else
                 {
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in SecretsConfiguration)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Services)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -321,7 +320,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabelingJobProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelingJobProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabelingJobProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -330,7 +329,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static LabelingJobProperties DeserializeLabelingJobProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -361,7 +360,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createdDateTime"u8))
@@ -621,10 +620,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LabelingJobProperties(
                 description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -662,7 +661,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabelingJobProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabelingJobProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -678,7 +677,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeLabelingJobProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabelingJobProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabelingJobProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

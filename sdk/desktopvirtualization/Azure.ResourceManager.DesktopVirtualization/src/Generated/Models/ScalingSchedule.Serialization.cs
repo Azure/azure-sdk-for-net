@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class ScalingSchedule : IUtf8JsonSerializable, IJsonModel<ScalingSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScalingSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScalingSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteObjectValue(RampUpStartTime);
+                writer.WriteObjectValue(RampUpStartTime, options);
             }
             if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
             {
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteObjectValue(PeakStartTime);
+                writer.WriteObjectValue(PeakStartTime, options);
             }
             if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
             {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteObjectValue(RampDownStartTime);
+                writer.WriteObjectValue(RampDownStartTime, options);
             }
             if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
             {
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteObjectValue(OffPeakStartTime);
+                writer.WriteObjectValue(OffPeakStartTime, options);
             }
             if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
             {
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScalingSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static ScalingSchedule DeserializeScalingSchedule(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +178,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ScalingActionTime offPeakStartTime = default;
             SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -343,10 +342,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ScalingSchedule(
                 name,
                 daysOfWeek ?? new ChangeTrackingList<ScalingScheduleDaysOfWeekItem>(),
@@ -378,7 +377,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScalingSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -394,7 +393,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeScalingSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScalingSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

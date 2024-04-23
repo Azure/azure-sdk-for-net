@@ -10,20 +10,19 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
     public partial class ClusterSpecEntity : IUtf8JsonSerializable, IJsonModel<ClusterSpecEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterSpecEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterSpecEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterSpecEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterSpecEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterSpecEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterSpecEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,22 +69,22 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
-                writer.WriteObjectValue(Config);
+                writer.WriteObjectValue(Config, options);
             }
             if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
-                writer.WriteObjectValue(Environment);
+                writer.WriteObjectValue(Environment, options);
             }
             if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network);
+                writer.WriteObjectValue(Network, options);
             }
             if (Optional.IsDefined(Byok))
             {
                 writer.WritePropertyName("byok"u8);
-                writer.WriteObjectValue(Byok);
+                writer.WriteObjectValue(Byok, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterSpecEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterSpecEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterSpecEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static ClusterSpecEntity DeserializeClusterSpecEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.Confluent.Models
             ClusterNetworkEntity network = default;
             ClusterByokEntity byok = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("display_name"u8))
@@ -219,10 +218,10 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClusterSpecEntity(
                 displayName,
                 availability,
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterSpecEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterSpecEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +263,7 @@ namespace Azure.ResourceManager.Confluent.Models
                         return DeserializeClusterSpecEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterSpecEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterSpecEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,21 +8,20 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     public partial class ChatCompletions : IUtf8JsonSerializable, IJsonModel<ChatCompletions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChatCompletions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatCompletions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatCompletions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,16 +33,21 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Choices)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
             if (Optional.IsCollectionDefined(PromptFilterResults))
             {
                 writer.WritePropertyName("prompt_filter_results"u8);
                 writer.WriteStartArray();
                 foreach (var item in PromptFilterResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +57,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(SystemFingerprint);
             }
             writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue(Usage);
+            writer.WriteObjectValue(Usage, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,7 +81,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatCompletions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatCompletions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +97,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatCompletions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -109,7 +113,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeChatCompletions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatCompletions)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -123,11 +127,11 @@ namespace Azure.AI.OpenAI
             return DeserializeChatCompletions(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

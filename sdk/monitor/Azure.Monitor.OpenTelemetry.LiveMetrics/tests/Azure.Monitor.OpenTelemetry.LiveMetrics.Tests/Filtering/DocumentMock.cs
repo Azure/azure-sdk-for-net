@@ -11,7 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
     {
         internal DocumentMock() { }
 
-        internal DocumentMock(IList<KeyValuePairString> properties) : base(DocumentIngressDocumentType.Request, new List<string>(), properties)
+        internal DocumentMock(IList<KeyValuePairString> properties) : base(DocumentType.Request, new List<string>(), properties)
         {
         }
 

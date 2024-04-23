@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.TrafficManager
 {
     public partial class TrafficManagerEndpointData : IUtf8JsonSerializable, IJsonModel<TrafficManagerEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerEndpointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrafficManagerEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerEndpointData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in CustomHeaders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.TrafficManager
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerEndpointData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerEndpointData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.TrafficManager
 
         internal static TrafficManagerEndpointData DeserializeTrafficManagerEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.TrafficManager
             IList<TrafficManagerEndpointCustomHeaderInfo> customHeaders = default;
             TrafficManagerEndpointAlwaysServeStatus? alwaysServe = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -383,10 +383,10 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TrafficManagerEndpointData(
                 id,
                 name,
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.TrafficManager
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerEndpointData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.TrafficManager
                         return DeserializeTrafficManagerEndpointData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerEndpointData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerEndpointData)} does not support reading '{options.Format}' format.");
             }
         }
 

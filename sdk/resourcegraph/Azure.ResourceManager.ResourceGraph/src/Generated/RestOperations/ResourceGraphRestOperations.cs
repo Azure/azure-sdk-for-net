@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ResourceGraph.Models;
@@ -37,6 +36,15 @@ namespace Azure.ResourceManager.ResourceGraph
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateResourcesRequestUri(ResourceQueryContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ResourceGraph/resources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateResourcesRequest(ResourceQueryContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -50,7 +58,7 @@ namespace Azure.ResourceManager.ResourceGraph
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -104,6 +112,15 @@ namespace Azure.ResourceManager.ResourceGraph
             }
         }
 
+        internal RequestUriBuilder CreateResourcesHistoryRequestUri(ResourcesHistoryContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ResourceGraph/resourcesHistory", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateResourcesHistoryRequest(ResourcesHistoryContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -117,7 +134,7 @@ namespace Azure.ResourceManager.ResourceGraph
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;

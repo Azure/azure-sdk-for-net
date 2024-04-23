@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -74,18 +73,25 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Requested number of top queries. </summary>
+        [WirePath("numberOfQueries")]
         public int? NumberOfQueries { get; }
         /// <summary> Aggregation function used to calculate query metrics. </summary>
+        [WirePath("aggregationFunction")]
         public string AggregationFunction { get; }
         /// <summary> Metric used to rank queries. </summary>
+        [WirePath("observationMetric")]
         public string ObservationMetric { get; }
         /// <summary> Interval type (length). </summary>
+        [WirePath("intervalType")]
         public QueryTimeGrainType? IntervalType { get; }
         /// <summary> The start time for the metric (ISO-8601 format). </summary>
+        [WirePath("startTime")]
         public string StartTime { get; }
         /// <summary> The end time for the metric (ISO-8601 format). </summary>
+        [WirePath("endTime")]
         public string EndTime { get; }
         /// <summary> List of top resource consuming queries with appropriate metric data. </summary>
+        [WirePath("queries")]
         public IReadOnlyList<QueryStatisticsProperties> Queries { get; }
     }
 }

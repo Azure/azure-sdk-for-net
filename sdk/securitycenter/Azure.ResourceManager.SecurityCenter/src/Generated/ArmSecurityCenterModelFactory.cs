@@ -8,11 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -444,11 +442,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
         /// <returns> A new <see cref="Models.AuthenticationDetailsProperties"/> instance for mocking. </returns>
-        public static AuthenticationDetailsProperties AuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState = null, IEnumerable<SecurityCenterCloudPermission> grantedPermissions = null, string authenticationType = "Unknown")
+        public static AuthenticationDetailsProperties AuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState = null, IEnumerable<SecurityCenterCloudPermission> grantedPermissions = null, string authenticationType = null)
         {
             grantedPermissions ??= new List<SecurityCenterCloudPermission>();
 
-            return new UnknownAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), authenticationType, serializedAdditionalRawData: null);
+            return new UnknownAuthenticationDetailsProperties(authenticationProvisioningState, grantedPermissions?.ToList(), authenticationType == null ? default : new AuthenticationType(authenticationType), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.SecurityContactData"/>. </summary>
@@ -1480,7 +1478,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="offerings">
         /// A collection of offerings for the security connector.
         /// Please note <see cref="Models.SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.CspmMonitorAwsOffering"/>, <see cref="Models.CspmMonitorAzureDevOpsOffering"/>, <see cref="Models.CspmMonitorGcpOffering"/>, <see cref="Models.CspmMonitorGitLabOffering"/>, <see cref="Models.CspmMonitorGithubOffering"/>, <see cref="Models.DefenderCspmAwsOffering"/>, <see cref="Models.DefenderCspmGcpOffering"/>, <see cref="Models.DefenderForContainersAwsOffering"/>, <see cref="Models.DefenderForContainersGcpOffering"/>, <see cref="Models.DefenderForDatabasesAwsOffering"/>, <see cref="Models.DefenderForDatabasesGcpOffering"/>, <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="Models.DefenderForDevOpsGitLabOffering"/>, <see cref="Models.DefenderForDevOpsGithubOffering"/>, <see cref="Models.DefenderForServersAwsOffering"/>, <see cref="Models.DefenderForServersGcpOffering"/> and <see cref="Models.InformationProtectionAwsOffering"/>.
+        /// The available derived classes include <see cref="Models.CspmMonitorAwsOffering"/>, <see cref="Models.CspmMonitorAzureDevOpsOffering"/>, <see cref="Models.CspmMonitorGcpOffering"/>, <see cref="Models.CspmMonitorGithubOffering"/>, <see cref="Models.CspmMonitorGitLabOffering"/>, <see cref="Models.DefenderCspmAwsOffering"/>, <see cref="Models.DefenderCspmGcpOffering"/>, <see cref="Models.DefenderForContainersAwsOffering"/>, <see cref="Models.DefenderForContainersGcpOffering"/>, <see cref="Models.DefenderForDatabasesAwsOffering"/>, <see cref="Models.DefenderForDatabasesGcpOffering"/>, <see cref="Models.DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="Models.DefenderForDevOpsGithubOffering"/>, <see cref="Models.DefenderForDevOpsGitLabOffering"/>, <see cref="Models.DefenderForServersAwsOffering"/>, <see cref="Models.DefenderForServersGcpOffering"/> and <see cref="Models.InformationProtectionAwsOffering"/>.
         /// </param>
         /// <param name="environmentData">
         /// The security connector environment data.
@@ -1516,9 +1514,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
         /// <returns> A new <see cref="Models.SecurityCenterCloudOffering"/> instance for mocking. </returns>
-        public static SecurityCenterCloudOffering SecurityCenterCloudOffering(string offeringType = "Unknown", string description = null)
+        public static SecurityCenterCloudOffering SecurityCenterCloudOffering(string offeringType = null, string description = null)
         {
-            return new UnknownCloudOffering(offeringType, description, serializedAdditionalRawData: null);
+            return new UnknownCloudOffering(offeringType == null ? default : new OfferingType(offeringType), description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenter.ComplianceResultData"/>. </summary>
@@ -2099,14 +2097,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="kind"> The kind of the external solution. </param>
         /// <param name="location"> Location where the resource is stored. </param>
         /// <returns> A new <see cref="Models.ExternalSecuritySolution"/> instance for mocking. </returns>
-        public static ExternalSecuritySolution ExternalSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", AzureLocation? location = null)
+        public static ExternalSecuritySolution ExternalSecuritySolution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null)
         {
             return new ExternalSecuritySolution(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? null : new ExternalSecuritySolutionKind?(kind),
                 location,
                 serializedAdditionalRawData: null);
         }
@@ -2670,14 +2668,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> the kind of the settings string. </param>
         /// <returns> A new <see cref="SecurityCenter.SecuritySettingData"/> instance for mocking. </returns>
-        public static SecuritySettingData SecuritySettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static SecuritySettingData SecuritySettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
             return new SecuritySettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new SettingKind(kind),
                 serializedAdditionalRawData: null);
         }
 
@@ -2749,14 +2747,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the server vulnerability assessments setting. </param>
         /// <returns> A new <see cref="SecurityCenter.ServerVulnerabilityAssessmentsSettingData"/> instance for mocking. </returns>
-        public static ServerVulnerabilityAssessmentsSettingData ServerVulnerabilityAssessmentsSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static ServerVulnerabilityAssessmentsSettingData ServerVulnerabilityAssessmentsSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
             return new UnknownServerVulnerabilityAssessmentsSetting(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new ServerVulnerabilityAssessmentsSettingKind(kind),
                 serializedAdditionalRawData: null);
         }
 

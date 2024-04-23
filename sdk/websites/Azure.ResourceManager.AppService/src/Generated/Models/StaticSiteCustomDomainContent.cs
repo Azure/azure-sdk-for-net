@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Validation method for adding a custom domain. </summary>
+        [WirePath("properties.validationMethod")]
         public string ValidationMethod { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

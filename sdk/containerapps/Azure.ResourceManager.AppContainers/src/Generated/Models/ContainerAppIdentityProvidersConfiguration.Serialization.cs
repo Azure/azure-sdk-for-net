@@ -10,57 +10,56 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     public partial class ContainerAppIdentityProvidersConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppIdentityProvidersConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppIdentityProvidersConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppIdentityProvidersConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ContainerAppIdentityProvidersConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentityProvidersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue(AzureActiveDirectory);
+                writer.WriteObjectValue(AzureActiveDirectory, options);
             }
             if (Optional.IsDefined(Facebook))
             {
                 writer.WritePropertyName("facebook"u8);
-                writer.WriteObjectValue(Facebook);
+                writer.WriteObjectValue(Facebook, options);
             }
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue(GitHub);
+                writer.WriteObjectValue(GitHub, options);
             }
             if (Optional.IsDefined(Google))
             {
                 writer.WritePropertyName("google"u8);
-                writer.WriteObjectValue(Google);
+                writer.WriteObjectValue(Google, options);
             }
             if (Optional.IsDefined(Twitter))
             {
                 writer.WritePropertyName("twitter"u8);
-                writer.WriteObjectValue(Twitter);
+                writer.WriteObjectValue(Twitter, options);
             }
             if (Optional.IsDefined(Apple))
             {
                 writer.WritePropertyName("apple"u8);
-                writer.WriteObjectValue(Apple);
+                writer.WriteObjectValue(Apple, options);
             }
             if (Optional.IsDefined(AzureStaticWebApps))
             {
                 writer.WritePropertyName("azureStaticWebApps"u8);
-                writer.WriteObjectValue(AzureStaticWebApps);
+                writer.WriteObjectValue(AzureStaticWebApps, options);
             }
             if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
             {
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 foreach (var item in CustomOpenIdConnectProviders)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIdentityProvidersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppIdentityProvidersConfiguration DeserializeContainerAppIdentityProvidersConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppAzureStaticWebAppsConfiguration azureStaticWebApps = default;
             IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration> customOpenIdConnectProviders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureActiveDirectory"u8))
@@ -202,10 +201,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppIdentityProvidersConfiguration(
                 azureActiveDirectory,
                 facebook,
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +242,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppIdentityProvidersConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIdentityProvidersConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

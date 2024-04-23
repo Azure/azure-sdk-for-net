@@ -10,27 +10,26 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class ParquetReadSettings : IUtf8JsonSerializable, IJsonModel<ParquetReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParquetReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParquetReadSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ParquetReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ParquetReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParquetReadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParquetReadSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue(CompressionProperties);
+                writer.WriteObjectValue(CompressionProperties, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FormatReadSettingsType);
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParquetReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParquetReadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParquetReadSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ParquetReadSettings DeserializeParquetReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ParquetReadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParquetReadSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeParquetReadSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ParquetReadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParquetReadSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Describes an resource type that has been onboarded to private link service, supported by Azure Cognitive Search. </summary>
+    /// <summary> Describes an resource type that has been onboarded to private link service, supported by Azure AI Search. </summary>
     public partial class ShareableSearchServicePrivateLinkResourceType
     {
         /// <summary>
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ShareableSearchServicePrivateLinkResourceType"/>. </summary>
-        /// <param name="name"> The name of the resource type that has been onboarded to private link service, supported by Azure Cognitive Search. </param>
-        /// <param name="properties"> Describes the properties of a resource type that has been onboarded to private link service, supported by Azure Cognitive Search. </param>
+        /// <param name="name"> The name of the resource type that has been onboarded to private link service, supported by Azure AI Search. </param>
+        /// <param name="properties"> Describes the properties of a resource type that has been onboarded to private link service, supported by Azure AI Search. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ShareableSearchServicePrivateLinkResourceType(string name, ShareableSearchServicePrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +61,11 @@ namespace Azure.ResourceManager.Search.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the resource type that has been onboarded to private link service, supported by Azure Cognitive Search. </summary>
+        /// <summary> The name of the resource type that has been onboarded to private link service, supported by Azure AI Search. </summary>
+        [WirePath("name")]
         public string Name { get; }
-        /// <summary> Describes the properties of a resource type that has been onboarded to private link service, supported by Azure Cognitive Search. </summary>
+        /// <summary> Describes the properties of a resource type that has been onboarded to private link service, supported by Azure AI Search. </summary>
+        [WirePath("properties")]
         public ShareableSearchServicePrivateLinkResourceProperties Properties { get; }
     }
 }

@@ -5,26 +5,39 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
+using System.Linq;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> Represents an error while SDK parsing and applying an instance of CollectionConfigurationInfo. </summary>
+    /// <summary> Represents an error while SDK parses and applies an instance of CollectionConfigurationInfo. </summary>
     internal partial class CollectionConfigurationError
     {
         /// <summary> Initializes a new instance of <see cref="CollectionConfigurationError"/>. </summary>
-        public CollectionConfigurationError()
+        /// <param name="collectionConfigurationErrorType"> Error type. </param>
+        /// <param name="message"> Error message. </param>
+        /// <param name="fullException"> Exception that led to the creation of the configuration error. </param>
+        /// <param name="data"> Custom properties to add more information to the error. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="message"/>, <paramref name="fullException"/> or <paramref name="data"/> is null. </exception>
+        public CollectionConfigurationError(CollectionConfigurationErrorType collectionConfigurationErrorType, string message, string fullException, IEnumerable<KeyValuePairString> data)
         {
-            Data = new ChangeTrackingList<KeyValuePairString>();
+            Argument.AssertNotNull(message, nameof(message));
+            Argument.AssertNotNull(fullException, nameof(fullException));
+            Argument.AssertNotNull(data, nameof(data));
+
+            CollectionConfigurationErrorType = collectionConfigurationErrorType;
+            Message = message;
+            FullException = fullException;
+            Data = data.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CollectionConfigurationError"/>. </summary>
-        /// <param name="collectionConfigurationErrorType"> Collection configuration error type reported by SDK. </param>
+        /// <param name="collectionConfigurationErrorType"> Error type. </param>
         /// <param name="message"> Error message. </param>
-        /// <param name="fullException"> Exception that leads to the creation of the configuration error. </param>
+        /// <param name="fullException"> Exception that led to the creation of the configuration error. </param>
         /// <param name="data"> Custom properties to add more information to the error. </param>
-        internal CollectionConfigurationError(CollectionConfigurationErrorType? collectionConfigurationErrorType, string message, string fullException, IList<KeyValuePairString> data)
+        internal CollectionConfigurationError(CollectionConfigurationErrorType collectionConfigurationErrorType, string message, string fullException, IList<KeyValuePairString> data)
         {
             CollectionConfigurationErrorType = collectionConfigurationErrorType;
             Message = message;
@@ -32,12 +45,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             Data = data;
         }
 
-        /// <summary> Collection configuration error type reported by SDK. </summary>
-        public CollectionConfigurationErrorType? CollectionConfigurationErrorType { get; set; }
+        /// <summary> Error type. </summary>
+        public CollectionConfigurationErrorType CollectionConfigurationErrorType { get; }
         /// <summary> Error message. </summary>
-        public string Message { get; set; }
-        /// <summary> Exception that leads to the creation of the configuration error. </summary>
-        public string FullException { get; set; }
+        public string Message { get; }
+        /// <summary> Exception that led to the creation of the configuration error. </summary>
+        public string FullException { get; }
         /// <summary> Custom properties to add more information to the error. </summary>
         public IList<KeyValuePairString> Data { get; }
     }

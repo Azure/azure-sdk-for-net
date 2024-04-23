@@ -9,10 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -164,7 +162,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         ///
         /// </param>
         /// <returns> A new <see cref="Models.ManagedServiceProperties"/> instance for mocking. </returns>
-        public static ManagedServiceProperties ManagedServiceProperties(string placementConstraints = null, IEnumerable<ManagedServiceCorrelation> correlationScheme = null, IEnumerable<ManagedServiceLoadMetric> serviceLoadMetrics = null, IEnumerable<ManagedServicePlacementPolicy> servicePlacementPolicies = null, ServiceFabricManagedServiceMoveCost? defaultMoveCost = null, IEnumerable<ManagedServiceScalingPolicy> scalingPolicies = null, string provisioningState = null, string serviceKind = "Unknown", string serviceTypeName = null, ManagedServicePartitionScheme partitionDescription = null, ManagedServicePackageActivationMode? servicePackageActivationMode = null, string serviceDnsName = null)
+        public static ManagedServiceProperties ManagedServiceProperties(string placementConstraints = null, IEnumerable<ManagedServiceCorrelation> correlationScheme = null, IEnumerable<ManagedServiceLoadMetric> serviceLoadMetrics = null, IEnumerable<ManagedServicePlacementPolicy> servicePlacementPolicies = null, ServiceFabricManagedServiceMoveCost? defaultMoveCost = null, IEnumerable<ManagedServiceScalingPolicy> scalingPolicies = null, string provisioningState = null, string serviceKind = null, string serviceTypeName = null, ManagedServicePartitionScheme partitionDescription = null, ManagedServicePackageActivationMode? servicePackageActivationMode = null, string serviceDnsName = null)
         {
             correlationScheme ??= new List<ManagedServiceCorrelation>();
             serviceLoadMetrics ??= new List<ManagedServiceLoadMetric>();
@@ -180,7 +178,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 scalingPolicies?.ToList(),
                 serializedAdditionalRawData: null,
                 provisioningState,
-                serviceKind,
+                serviceKind == null ? default : new ServiceKind(serviceKind),
                 serviceTypeName,
                 partitionDescription,
                 servicePackageActivationMode,
