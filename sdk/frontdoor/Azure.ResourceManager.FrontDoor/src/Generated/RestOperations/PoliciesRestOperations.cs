@@ -122,21 +122,15 @@ namespace Azure.ResourceManager.FrontDoor
             }
         }
 
-<<<<<<< HEAD
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
-=======
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string policyName)
-        {
->>>>>>> upstream/main
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-<<<<<<< HEAD
             uri.AppendPath("/providers/Microsoft.Network/frontDoorWebApplicationFirewallPolicies", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -193,14 +187,6 @@ namespace Azure.ResourceManager.FrontDoor
                 default:
                     throw new RequestFailedException(message.Response);
             }
-=======
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies/", false);
-            uri.AppendPath(policyName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
->>>>>>> upstream/main
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string policyName)
