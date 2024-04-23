@@ -113,7 +113,7 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual("http://example.com/", args.GetProperty<string>("uri"));
             Assert.AreEqual("GET", args.GetProperty<string>("method"));
             StringAssert.Contains($"Date:REDACTED{Environment.NewLine}", args.GetProperty<string>("headers"));
-            StringAssert.Contains($"Custom-Header:REDACTED{Environment.NewLine}", args.GetProperty<string>("headers"));
+            StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", args.GetProperty<string>("headers"));
             Assert.AreEqual("Test-SDK", args.GetProperty<string>("clientAssembly"));
 
             args = _listener.SingleEventById(RequestContentEvent);
@@ -127,7 +127,7 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual("Response", args.EventName);
             Assert.AreEqual("client1", args.GetProperty<string>("requestId"));
             Assert.AreEqual(args.GetProperty<int>("status"), 200);
-            StringAssert.Contains($"Custom-Response-Header:REDACTED{Environment.NewLine}", args.GetProperty<string>("headers"));
+            StringAssert.Contains($"Custom-Response-Header:Value{Environment.NewLine}", args.GetProperty<string>("headers"));
 
             args = _listener.SingleEventById(ResponseContentEvent);
             Assert.AreEqual(EventLevel.Verbose, args.Level);
@@ -274,6 +274,7 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineResponseTransport("Transport", i => response),
+                RetryPolicy = new ObservablePolicy("RetryPolicy"),
                 Diagnostics = new DiagnosticsOptions
                 {
                     IsLoggingContentEnabled = true,
@@ -294,7 +295,6 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Headers.Add("Date", "3/28/2024");
             message.Request.Headers.Add("Content-Type", "text/json");
             message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
-            message.Request.Headers.Add("x-client-id", "client-id");
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -428,13 +428,13 @@ namespace System.ClientModel.Tests.Internal
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
             Assert.AreEqual("ResponseContentBlock", contentEvents[0].EventName);
-            Assert.AreEqual("client1", contentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual("client-id", contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, contentEvents[0].GetProperty<byte[]>("content"));
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
             Assert.AreEqual("ResponseContentBlock", contentEvents[1].EventName);
-            Assert.AreEqual("client1", contentEvents[1].GetProperty<string>("requestId"));
+            Assert.AreEqual("client-id", contentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, contentEvents[1].GetProperty<byte[]>("content"));
 
@@ -582,6 +582,7 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineResponseTransport("Transport", i => response),
+                RetryPolicy = new ObservablePolicy("RetryPolicy"),
                 Diagnostics = new DiagnosticsOptions
                 {
                     IsLoggingContentEnabled = true,
@@ -639,7 +640,7 @@ namespace System.ClientModel.Tests.Internal
         public async Task HeadersAndQueryParametersAreSanitized()
         {
             var mockHeaders = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Improved value" }, { "Secret-Response-Header", "Very secret" } });
-            var response = new MockPipelineResponse(200);
+            var response = new MockPipelineResponse(200, mockHeaders: mockHeaders);
             response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
 
             ClientPipelineOptions options = new()
@@ -649,7 +650,8 @@ namespace System.ClientModel.Tests.Internal
                 {
                     LoggedClientAssemblyName = "Test-SDK",
                     RequestIdHeaderName = "Client-Identifier",
-                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" },
+                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header", "Date" },
+                    LoggedQueryParameters = new List<string>() { "api-version" }
                 }
             };
 
@@ -662,6 +664,7 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Headers.Add("Content-Type", "text/json");
             message.Request.Headers.Add("Client-Identifier", "client1");
             message.Request.Headers.Add("Date", "4/18/2024");
+            message.Request.Headers.Add("Custom-Header", "Value");
             message.Request.Headers.Add("Secret-Custom-Header", "Value");
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
@@ -672,7 +675,7 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
             Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=REDACTED", e.GetProperty<string>("uri"));
             Assert.AreEqual("GET", e.GetProperty<string>("method"));
-            StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
+            StringAssert.Contains($"Date:4/18/2024{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Secret-Custom-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
             Assert.AreEqual("Test-SDK", e.GetProperty<string>("clientAssembly"));
