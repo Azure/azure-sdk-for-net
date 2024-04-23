@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Parameters for the Azure Machine Learning vector index chat extension. The supported authentication types are AccessToken, SystemAssignedManagedIdentity and UserAssignedManagedIdentity. </summary>
-    internal partial class AzureMachineLearningIndexChatExtensionParameters
+    public partial class AzureMachineLearningIndexChatExtensionParameters
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,6 +46,22 @@ namespace Azure.AI.OpenAI
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningIndexChatExtensionParameters"/>. </summary>
+        /// <param name="projectResourceId"> The resource ID of the Azure Machine Learning project. </param>
+        /// <param name="name"> The Azure Machine Learning vector index name. </param>
+        /// <param name="version"> The version of the Azure Machine Learning vector index. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectResourceId"/>, <paramref name="name"/> or <paramref name="version"/> is null. </exception>
+        public AzureMachineLearningIndexChatExtensionParameters(string projectResourceId, string name, string version)
+        {
+            Argument.AssertNotNull(projectResourceId, nameof(projectResourceId));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(version, nameof(version));
+
+            ProjectResourceId = projectResourceId;
+            Name = name;
+            Version = version;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningIndexChatExtensionParameters"/>. </summary>
         /// <param name="authentication">
         /// The authentication method to use when accessing the defined data source.
         /// Each data source type supports a specific set of available authentication methods; please see the documentation of
@@ -78,6 +94,11 @@ namespace Azure.AI.OpenAI
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningIndexChatExtensionParameters"/> for deserialization. </summary>
+        internal AzureMachineLearningIndexChatExtensionParameters()
+        {
+        }
+
         /// <summary>
         /// The authentication method to use when accessing the defined data source.
         /// Each data source type supports a specific set of available authentication methods; please see the documentation of
@@ -96,6 +117,12 @@ namespace Azure.AI.OpenAI
         public int? Strictness { get; set; }
         /// <summary> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </summary>
         public string RoleInformation { get; set; }
+        /// <summary> The resource ID of the Azure Machine Learning project. </summary>
+        public string ProjectResourceId { get; }
+        /// <summary> The Azure Machine Learning vector index name. </summary>
+        public string Name { get; }
+        /// <summary> The version of the Azure Machine Learning vector index. </summary>
+        public string Version { get; }
         /// <summary> Search filter. Only supported if the Azure Machine Learning vector index is of type AzureSearch. </summary>
         public string Filter { get; set; }
     }

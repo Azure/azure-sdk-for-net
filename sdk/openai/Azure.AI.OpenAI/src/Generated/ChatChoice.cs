@@ -116,6 +116,8 @@ namespace Azure.AI.OpenAI
         /// The available derived classes include <see cref="MaxTokensFinishDetails"/> and <see cref="StopFinishDetails"/>.
         /// </summary>
         public ChatFinishDetails FinishDetails { get; }
+        /// <summary> The delta message content for a streaming response. </summary>
+        public ChatResponseMessage InternalStreamingDeltaMessage { get; }
         /// <summary>
         /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
         /// has been detected, as well as the severity level (very_low, low, medium, high-scale that

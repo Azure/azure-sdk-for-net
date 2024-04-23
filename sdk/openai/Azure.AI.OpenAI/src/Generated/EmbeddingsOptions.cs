@@ -51,6 +51,22 @@ namespace Azure.AI.OpenAI
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EmbeddingsOptions"/>. </summary>
+        /// <param name="input">
+        /// Input texts to get embeddings for, encoded as a an array of strings.
+        /// Each input must not exceed 2048 tokens in length.
+        ///
+        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
+        /// as we have observed inferior results when newlines are present.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public EmbeddingsOptions(IEnumerable<string> input)
+        {
+            Argument.AssertNotNull(input, nameof(input));
+
+            Input = input.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsOptions"/>. </summary>
         /// <param name="user">
         /// An identifier for the caller or end user of the operation. This may be used for tracking
         /// or rate-limiting purposes.
@@ -82,11 +98,22 @@ namespace Azure.AI.OpenAI
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsOptions"/> for deserialization. </summary>
+        internal EmbeddingsOptions()
+        {
+        }
+
         /// <summary>
         /// An identifier for the caller or end user of the operation. This may be used for tracking
         /// or rate-limiting purposes.
         /// </summary>
         public string User { get; set; }
+        /// <summary>
+        /// The model name to provide as part of this embeddings request.
+        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
+        /// resource URI that's connected to.
+        /// </summary>
+        public string DeploymentName { get; set; }
         /// <summary>
         /// Input texts to get embeddings for, encoded as a an array of strings.
         /// Each input must not exceed 2048 tokens in length.
@@ -95,6 +122,8 @@ namespace Azure.AI.OpenAI
         /// as we have observed inferior results when newlines are present.
         /// </summary>
         public IList<string> Input { get; }
+        /// <summary> The response encoding format to use for embedding data. </summary>
+        public EmbeddingEncodingFormat? EncodingFormat { get; set; }
         /// <summary> The number of dimensions the resulting output embeddings should have. Only supported in `text-embedding-3` and later models. </summary>
         public int? Dimensions { get; set; }
         /// <summary> When using Azure OpenAI, specifies the input type to use for embedding search. </summary>

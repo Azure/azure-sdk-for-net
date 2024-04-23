@@ -17,6 +17,17 @@ namespace Azure.AI.OpenAI
     public partial class AzureMachineLearningIndexChatExtensionConfiguration : AzureChatExtensionConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="AzureMachineLearningIndexChatExtensionConfiguration"/>. </summary>
+        /// <param name="parameters"> The parameters for the Azure Machine Learning vector index chat extension. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public AzureMachineLearningIndexChatExtensionConfiguration(AzureMachineLearningIndexChatExtensionParameters parameters)
+        {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            Type = AzureChatExtensionType.AzureMachineLearningIndex;
+            Parameters = parameters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningIndexChatExtensionConfiguration"/>. </summary>
         /// <param name="type">
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
@@ -27,5 +38,13 @@ namespace Azure.AI.OpenAI
         {
             Parameters = parameters;
         }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMachineLearningIndexChatExtensionConfiguration"/> for deserialization. </summary>
+        internal AzureMachineLearningIndexChatExtensionConfiguration()
+        {
+        }
+
+        /// <summary> The parameters for the Azure Machine Learning vector index chat extension. </summary>
+        public AzureMachineLearningIndexChatExtensionParameters Parameters { get; }
     }
 }

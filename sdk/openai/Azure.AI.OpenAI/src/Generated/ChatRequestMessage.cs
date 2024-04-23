@@ -62,5 +62,8 @@ namespace Azure.AI.OpenAI
             Role = role;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> The chat role associated with this message. </summary>
+        internal ChatRole Role { get; set; }
     }
 }

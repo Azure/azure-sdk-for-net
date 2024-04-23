@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
 
             writer.WriteStartObject();
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue<FunctionCall>(Function, options);
+            writer.WriteObjectValue(Function, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("id"u8);
