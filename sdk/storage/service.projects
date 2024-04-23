@@ -22,9 +22,9 @@
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(SDKType)' == 'functions'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.Storage.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.Storage*\**\*.csproj" />
   </ItemGroup>
   <ItemGroup Condition="'$(SDKType)' == 'datamovement'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Storage.DataMovement.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Storage.DataMovement*\**\*.csproj" />
   </ItemGroup>
 </Project>
