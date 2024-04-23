@@ -35,13 +35,5 @@ namespace Azure.ResourceManager
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
 
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
-
-        private static void AssertNotNull<T>(T value, string name)
-        {
-            if (value is null)
-            {
-                throw new ArgumentNullException(name);
-            }
-        }
     }
 }
