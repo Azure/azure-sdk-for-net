@@ -122,8 +122,7 @@ function GetPackageInfoJson ($packageInfoJsonLocation) {
   return $packageInfo
 }
 
-function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
-  $packageInfo = GetPackageInfoJson $packageInfoJsonLocation
+function UpdateDocsMsMetadataForPackage($packageInfo, $packageMetadataName) {
 
   $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
   $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name -and $_.Hide -ne 'true' -and $_.New -eq 'true' })
@@ -150,7 +149,6 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
     $metadataMoniker = 'preview'
     $readMePath = $docsMsMetadata.PreviewReadMeLocation
   }
-  $packageMetadataName = Split-Path $packageInfoJsonLocation -Leaf
   $packageInfoLocation = Join-Path $DocRepoLocation "metadata/$metadataMoniker"
   if (Test-Path "$packageInfoLocation/$packageMetadataName") {
     Write-Host "The docs metadata json $packageMetadataName exists, updating..."
@@ -193,10 +191,10 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
 $allSucceeded = $true
 foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
 
+  $packageInfo =  GetPackageInfoJson $packageInfoLocation
+
   if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
     Write-Host "Validating the packages..."
-
-    $packageInfo =  GetPackageInfoJson $packageInfoLocation
     # This calls a function named "Validate-${Language}-DocMsPackages"
     # declared in common.ps1, implemented in Language-Settings.ps1
     $isValid = &$ValidateDocsMsPackagesFn `
@@ -216,8 +214,9 @@ foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
   }
 
   Write-Host "Updating metadata for package: $packageInfoLocation"
+  $packageMetadataName = Split-Path $packageInfoJsonLocation -Leaf
   # Convert package metadata json file to metadata json property.
-  UpdateDocsMsMetadataForPackage $packageInfoLocation
+  UpdateDocsMsMetadataForPackage $packageInfo $packageMetadataName
 }
 
 # Set a variable which will be used by the pipeline later to fail the build if
