@@ -249,10 +249,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
 
         internal static ExceptionDocument ConvertToExceptionDocument(ActivityEvent activityEvent)
         {
-            string exceptionType = string.Empty;
-            string exceptionMessage = string.Empty;
-
-            var properties = new List<KeyValuePairString>();
+            ExceptionDocument exceptionDocument = new();
+            int propertiesCount = 0;
 
             foreach (ref readonly var tag in activityEvent.EnumerateTagObjects())
             {
@@ -262,12 +260,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 }
                 else if (tag.Key == SemanticConventions.AttributeExceptionType)
                 {
-                    exceptionType = tag.Value.ToString()!;
+                    exceptionDocument.ExceptionType = tag.Value.ToString()!;
                     continue;
                 }
                 else if (tag.Key == SemanticConventions.AttributeExceptionMessage)
                 {
-                    exceptionMessage = tag.Value.ToString()!;
+                    exceptionDocument.ExceptionMessage = tag.Value.ToString()!;
                     continue;
                 }
                 else if (tag.Key == SemanticConventions.AttributeExceptionStacktrace)
@@ -276,52 +274,46 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 }
                 else
                 {
-                    properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
+                    exceptionDocument.Properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
+
+                    if (++propertiesCount >= MaxProperties)
+                    {
+                        break;
+                    }
                 }
             }
 
-            ExceptionDocument exceptionDocumentIngress = new()
-            {
-                DocumentType = DocumentType.Exception,
-                ExceptionType = exceptionType,
-                ExceptionMessage = exceptionMessage,
-                // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
-            };
-
-            SetProperties(exceptionDocumentIngress, properties);
-
-            return exceptionDocumentIngress;
+            return exceptionDocument;
         }
 
         internal static ExceptionDocument ConvertToExceptionDocument(LogRecord logRecord, System.Exception exception)
         {
-            ExceptionDocument exceptionDocumentIngress = new()
+            ExceptionDocument exceptionDocument = new()
             {
                 DocumentType = DocumentType.Exception,
                 ExceptionType = exception.GetType().FullName,
                 ExceptionMessage = exception.Message,
             };
 
-            var properties = new List<KeyValuePairString>();
+            int propertiesCount = 0;
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
                 if (item.Value != null)
                 {
-                    if (item.Key == "{OriginalFormat}")
+                    if (item.Key != "{OriginalFormat}")
                     {
-                        // do nothing
-                    }
-                    else
-                    {
-                        properties.Add(new KeyValuePairString(item.Key, item.Value.ToString()));
+                        exceptionDocument.Properties.Add(new KeyValuePairString(item.Key, item.Value.ToString()));
+
+                        if (++propertiesCount >= MaxProperties)
+                        {
+                            break;
+                        }
                     }
                 }
             }
 
-            SetProperties(exceptionDocumentIngress, properties);
-
-            return exceptionDocumentIngress;
+            return exceptionDocument;
         }
 
         internal static Models.Trace ConvertToLogDocument(LogRecord logRecord)
@@ -330,27 +322,25 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             {
                 DocumentType = DocumentType.Trace,
                 Message = logRecord.FormattedMessage ?? logRecord.Body, // TODO: MAY NEED TO BUILD THE FORMATTED MESSAGE IF NOT AVAILABLE
-                // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
             };
 
-            var properties = new List<KeyValuePairString>();
+            int propertiesCount = 0;
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
                 if (item.Value != null)
                 {
-                    if (item.Key == "{OriginalFormat}")
+                    if (item.Key != "{OriginalFormat}")
                     {
-                        // do nothing
-                    }
-                    else
-                    {
-                        properties.Add(new KeyValuePairString(item.Key, item.Value.ToString()));
+                        traceDocument.Properties.Add(new KeyValuePairString(item.Key, item.Value.ToString()));
+
+                        if (++propertiesCount >= MaxProperties)
+                        {
+                            break;
+                        }
                     }
                 }
             }
-
-            SetProperties(traceDocument, properties);
 
             return traceDocument;
         }
@@ -363,21 +353,20 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 Message = activityEvent.Name,
             };
 
-            var properties = new List<KeyValuePairString>();
+            int propertiesCount = 0;
 
             foreach (ref readonly var tag in activityEvent.EnumerateTagObjects())
             {
-                if (tag.Value == null)
+                if (tag.Value != null)
                 {
-                    continue;
-                }
-                else
-                {
-                    properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
+                    traceDocument.Properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
+
+                    if (++propertiesCount >= MaxProperties)
+                    {
+                        break;
+                    }
                 }
             }
-
-            SetProperties(traceDocument, properties);
 
             return traceDocument;
         }
@@ -405,14 +394,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 {
                     documentIngress.Properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
                 }
-            }
-        }
-
-        private static void SetProperties(DocumentIngress documentIngress, List<KeyValuePairString> properties)
-        {
-            for (int i = 0; i < properties.Count && i < MaxProperties; i++)
-            {
-                documentIngress.Properties.Add(properties[i]);
             }
         }
     }
