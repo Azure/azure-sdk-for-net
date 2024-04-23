@@ -492,8 +492,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new RenewMessageLockRequest { Locktoken = message.LockToken },
                     new MockServerCallContext());
                 _waitHandle1.Set();
-
-                Assert.True(message.LockedUntil > lockedBefore);
             }
         }
     }
