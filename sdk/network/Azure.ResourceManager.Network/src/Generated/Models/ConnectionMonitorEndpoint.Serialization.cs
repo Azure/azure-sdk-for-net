@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
-                writer.WriteStringValue(SubscriptionId);
+                writer.WriteStringValue(SubscriptionId.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
             ConnectionMonitorEndpointScope scope = default;
             CoverageLevel? coverageLevel = default;
             ConnectionMonitorEndpointLocationDetails locationDetails = default;
-            string subscriptionId = default;
+            Guid? subscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subscriptionId = property.Value.GetGuid();
                     continue;
                 }
                 if (options.Format != "W")

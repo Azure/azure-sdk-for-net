@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="locationDetails"> Location details is optional and only being used for 'AzureArcNetwork' type endpoints, which contains region details. </param>
         /// <param name="subscriptionId"> Subscription ID for connection monitor endpoint. It's an optional parameter which is being used for 'AzureArcNetwork' type endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionMonitorEndpoint(string name, ConnectionMonitorEndpointType? endpointType, ResourceIdentifier resourceId, string address, ConnectionMonitorEndpointFilter filter, ConnectionMonitorEndpointScope scope, CoverageLevel? coverageLevel, ConnectionMonitorEndpointLocationDetails locationDetails, string subscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectionMonitorEndpoint(string name, ConnectionMonitorEndpointType? endpointType, ResourceIdentifier resourceId, string address, ConnectionMonitorEndpointFilter filter, ConnectionMonitorEndpointScope scope, CoverageLevel? coverageLevel, ConnectionMonitorEndpointLocationDetails locationDetails, Guid? subscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EndpointType = endpointType;
@@ -115,6 +115,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Subscription ID for connection monitor endpoint. It's an optional parameter which is being used for 'AzureArcNetwork' type endpoint. </summary>
-        public string SubscriptionId { get; set; }
+        public Guid? SubscriptionId { get; set; }
     }
 }

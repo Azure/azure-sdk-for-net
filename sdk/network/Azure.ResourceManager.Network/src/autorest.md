@@ -37,6 +37,7 @@ resource-model-requires-type: false
 #  show-serialized-names: true
 
 rename-mapping:
+  ConnectionMonitorEndpoint.subscriptionId: -|uuid
   ConnectionMonitor: ConnectionMonitorInput
   ConnectionMonitorResult: ConnectionMonitor
   PacketCapture: PacketCaptureInput
