@@ -2,7 +2,7 @@
 
 In this sample it is shown how you can construct a request, add a configuration, create a client, send a synchronous request and use the result returned to extract the procedure codes, imaging procedures and ordered procedure from the radiology procedure inference and print their code details.
 
-## Create a PatientRecord
+## Create a PatientRecord with patient details, encounter and document content.
 
 ```C# Snippet:Radiology_Procedure_Sync_Tests_Samples_CreatePatientRecord
 string id = "patient_id2";
@@ -11,7 +11,7 @@ PatientDetails patientInfo = new()
     BirthDate = new System.DateTime(1959, 11, 11),
     Sex = PatientSex.Female,
 };
-Encounter encounter = new("encounterid1")
+PatientEncounter encounter = new("encounterid1")
 {
     Class = EncounterClass.InPatient,
     Period = new TimePeriod
@@ -20,16 +20,16 @@ Encounter encounter = new("encounterid1")
         End = new System.DateTime(2021, 08, 28)
     }
 };
-List<Encounter> encounterList = new() { encounter };
+List<PatientEncounter> encounterList = new() { encounter };
 DocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
 PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent)
 {
     ClinicalType = ClinicalDocumentType.RadiologyReport,
-    CreatedDateTime = new System.DateTime(2021, 08, 28),
+    CreatedAt = new System.DateTime(2021, 08, 28),
     AdministrativeMetadata = CreateDocumentAdministrativeMetadata()
 };
 PatientRecord patientRecord = new(id);
-patientRecord.Info = patientInfo;
+patientRecord.Details = patientInfo;
 patientRecord.Encounters.Add(encounter);
 patientRecord.PatientDocuments.Add(patientDocument);
 ```
@@ -73,7 +73,7 @@ FhirR4Coding coding = new()
 FhirR4CodeableConcept codeableConcept = new();
 codeableConcept.Coding.Add(coding);
 
-FhirR4Extendible orderedProcedure = new()
+OrderedProcedure orderedProcedure = new()
 {
     Description = "US PELVIS COMPLETE",
     Code = codeableConcept
@@ -126,7 +126,9 @@ RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, creden
 ## Send a synchronous request to the RadiologyInsights client
 
 ```C# Snippet:Radiology_Procedure_Sync_Tests_Samples_synccall
-Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+RadiologyInsightsJob radiologyInsightsjob = GetRadiologyInsightsJob();
+var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
+Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, jobId, radiologyInsightsjob);
 ```
 
 ## From the result loop over the inferences, extract the procedure codes, imaging procedures and ordered procedure from the laterality discrepancy and print their code details.
@@ -134,13 +136,13 @@ Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyIns
 ```C# Snippet:Radiology_Procedure_Sync_Tests_Samples_RadiologyProcedureInference
 Console.Write("Radiology Procedure Inference found");
 Console.Write("   Procedure codes:");
-IReadOnlyList<FhirR4CodeableConcept> procedureCodes = radiologyProcedureInference.ProcedureCodes;
+IList<FhirR4CodeableConcept> procedureCodes = radiologyProcedureInference.ProcedureCodes;
 foreach (FhirR4CodeableConcept procedureCode in procedureCodes)
 {
     DisplayCodes(procedureCode, 2);
 }
 Console.Write("   Imaging procedures:");
-IReadOnlyList<ImagingProcedure> imagingProcedures = radiologyProcedureInference.ImagingProcedures;
+IList<ImagingProcedure> imagingProcedures = radiologyProcedureInference.ImagingProcedures;
 
 foreach (ImagingProcedure imagingProcedure in imagingProcedures)
 {
@@ -155,7 +157,7 @@ foreach (ImagingProcedure imagingProcedure in imagingProcedures)
     DisplayCodes(laterality, 3);
 }
 Console.Write("   Ordered procedures:");
-FhirR4Extendible orderedProcedure = radiologyProcedureInference.OrderedProcedure;
+OrderedProcedure orderedProcedure = radiologyProcedureInference.OrderedProcedure;
 FhirR4CodeableConcept code = orderedProcedure.Code;
 DisplayCodes(code, 2);
 Console.Write("   Description: " + orderedProcedure.Description);

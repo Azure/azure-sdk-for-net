@@ -43,20 +43,16 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             // Read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-
             #region Snippet:Followup_Communication_Sync_Tests_Samples_CreateClient
             Uri endpointUri = new Uri(endpoint);
             AzureKeyCredential credential = new AzureKeyCredential(apiKey);
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
             #endregion
-
-            RadiologyInsightsJob radiologyInsightsjob = GetRadiologyInsightsJob();
-
             #region Snippet:Followup_Communication_Sync_Tests_Samples_synccall
+            RadiologyInsightsJob radiologyInsightsjob = GetRadiologyInsightsJob();
             var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
             Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, jobId, radiologyInsightsjob);
             #endregion
-
             RadiologyInsightsInferenceResult responseData = operation.Value;
             IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 

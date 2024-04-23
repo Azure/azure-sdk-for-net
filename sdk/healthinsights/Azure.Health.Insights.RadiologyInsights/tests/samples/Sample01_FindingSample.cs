@@ -49,14 +49,11 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             AzureKeyCredential credential = new AzureKeyCredential(apiKey);
             RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
             #endregion
-
-            RadiologyInsightsJob radiologyInsightsjob = GetRadiologyInsightsJob();
-
             #region Snippet:Finding_Sync_Tests_Samples_synccall
+            RadiologyInsightsJob radiologyInsightsjob = GetRadiologyInsightsJob();
             var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
             Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, jobId, radiologyInsightsjob);
             #endregion
-
             #region Snippet:Finding_Sync_Tests_Samples_FindingInference
             RadiologyInsightsInferenceResult responseData = operation.Value;
             IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;

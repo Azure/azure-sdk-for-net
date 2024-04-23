@@ -2,7 +2,7 @@
 
 In this sample it is shown how you can construct a request, add a configuration, create a client, send a asynchronous request and use the result returned to extract the order type, missing body parts and missing body part measurements of the complete order discrepancy inference.
 
-## Create a PatientRecord
+## Create a PatientRecord with patient details, encounter and document content.
 
 ```C# Snippet:Complete_Order_Discrepancy_Async_Tests_Samples_CreatePatientRecord
 string id = "patient_id2";
@@ -11,7 +11,7 @@ PatientDetails patientInfo = new()
     BirthDate = new System.DateTime(1959, 11, 11),
     Sex = PatientSex.Female,
 };
-Encounter encounter = new("encounterid1")
+PatientEncounter encounter = new("encounterid1")
 {
     Class = EncounterClass.InPatient,
     Period = new TimePeriod
@@ -20,16 +20,16 @@ Encounter encounter = new("encounterid1")
         End = new System.DateTime(2021, 08, 28)
     }
 };
-List<Encounter> encounterList = new() { encounter };
+List<PatientEncounter> encounterList = new() { encounter };
 DocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
 PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent)
 {
     ClinicalType = ClinicalDocumentType.RadiologyReport,
-    CreatedDateTime = new System.DateTime(2021, 08, 28),
+    CreatedAt = new System.DateTime(2021, 08, 28),
     AdministrativeMetadata = CreateDocumentAdministrativeMetadata()
 };
 PatientRecord patientRecord = new(id);
-patientRecord.Info = patientInfo;
+patientRecord.Details = patientInfo;
 patientRecord.Encounters.Add(encounter);
 patientRecord.PatientDocuments.Add(patientDocument);
 ```
@@ -71,7 +71,7 @@ FhirR4Coding coding = new()
 FhirR4CodeableConcept codeableConcept = new();
 codeableConcept.Coding.Add(coding);
 
-FhirR4Extendible orderedProcedure = new()
+OrderedProcedure orderedProcedure = new()
 {
     Description = "US PELVIS COMPLETE",
     Code = codeableConcept
@@ -123,14 +123,16 @@ RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, creden
 ## Send an asynchronous request to the RadiologyInsights client
 
 ```C# Snippet:Complete_Order_Discrepancy_Async_Tests_Samples_synccall
-Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
+RadiologyInsightsJob radiologyInsightsjob = GetRadiologyInsightsJob();
+var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
+Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, jobId, radiologyInsightsjob);
 ```
 
 ## From the result loop over the inferences and display the order type, missing body parts and missing body part measurements of the complete order discrepancy inferences using the DisplayCodes method.
 
 ```C# Snippet:Complete_Order_Discrepancy_Async_Tests_Samples_CompleteOrderDiscrepancyInference
 RadiologyInsightsInferenceResult responseData = operation.Value;
-IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
+IList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 foreach (RadiologyInsightsInference inference in inferences)
 {
     if (inference is CompleteOrderDiscrepancyInference completeOrderDiscrepancyInference)
@@ -138,13 +140,13 @@ foreach (RadiologyInsightsInference inference in inferences)
         Console.Write("Complete Order Discrepancy Inference found: ");
         FhirR4CodeableConcept orderType = completeOrderDiscrepancyInference.OrderType;
         DisplayCodes(orderType, 1);
-        IReadOnlyList<FhirR4CodeableConcept> missingBodyParts = completeOrderDiscrepancyInference.MissingBodyParts;
+        IList<FhirR4CodeableConcept> missingBodyParts = completeOrderDiscrepancyInference.MissingBodyParts;
         Console.Write("   Missing body parts:");
         foreach (FhirR4CodeableConcept missingBodyPart in missingBodyParts)
         {
             DisplayCodes(missingBodyPart, 2);
         }
-        IReadOnlyList<FhirR4CodeableConcept> missingBodyPartMeasurements = completeOrderDiscrepancyInference.MissingBodyPartMeasurements;
+        IList<FhirR4CodeableConcept> missingBodyPartMeasurements = completeOrderDiscrepancyInference.MissingBodyPartMeasurements;
         Console.Write("   Missing body part measurements:");
         foreach (FhirR4CodeableConcept missingBodyPartMeasurement in missingBodyPartMeasurements)
         {
