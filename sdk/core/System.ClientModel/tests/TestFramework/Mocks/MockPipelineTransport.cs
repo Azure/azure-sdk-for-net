@@ -14,6 +14,8 @@ namespace ClientModel.Tests.Mocks;
 public class MockPipelineTransport : PipelineTransport
 {
     private readonly Func<int, int> _responseFactory;
+    private readonly Func<PipelineMessage, MockPipelineResponse> _mockResponseFactory;
+    private readonly bool _useMockResponseFactory = false;
     private int _retryCount;
 
     public string Id { get; }
@@ -30,10 +32,23 @@ public class MockPipelineTransport : PipelineTransport
     {
         Id = id;
         _responseFactory = responseFactory;
+        _mockResponseFactory = _ => throw new NotImplementedException();
+    }
+
+    public MockPipelineTransport(string id, Func<PipelineMessage, MockPipelineResponse> responseFactory)
+    {
+        Id = id;
+        _mockResponseFactory = responseFactory;
+        _useMockResponseFactory = true;
+        _responseFactory = _ => throw new NotImplementedException();
     }
 
     protected override PipelineMessage CreateMessageCore()
     {
+        if (_useMockResponseFactory)
+        {
+            return new MockPipelineMessage();
+        }
         return new RetriableTransportMessage();
     }
 
@@ -49,6 +64,10 @@ public class MockPipelineTransport : PipelineTransport
             {
                 int status = _responseFactory(_retryCount);
                 transportMessage.SetResponse(status);
+            }
+            if (message is MockPipelineMessage pipelineMessage)
+            {
+                pipelineMessage.SetResponse(_mockResponseFactory(message));
             }
 
             OnReceivedResponse?.Invoke(_retryCount);
@@ -71,6 +90,10 @@ public class MockPipelineTransport : PipelineTransport
             {
                 int status = _responseFactory(_retryCount);
                 transportMessage.SetResponse(status);
+            }
+            if (message is MockPipelineMessage pipelineMessage)
+            {
+                pipelineMessage.SetResponse(_mockResponseFactory(message));
             }
 
             OnReceivedResponse?.Invoke(_retryCount);
