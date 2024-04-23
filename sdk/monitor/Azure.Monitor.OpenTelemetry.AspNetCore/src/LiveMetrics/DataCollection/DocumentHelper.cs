@@ -169,6 +169,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
 
         internal static Request ConvertToRequestDocument(Activity activity)
         {
+            Request requestDocument = new()
+            {
+                DocumentType = DocumentType.Request,
+                Name = activity.DisplayName,
+                Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
+                                                ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
+                                                : SchemaConstants.Duration_MaxValue,
+            };
+
+            int propertiesCount = 0;
+
             string httpResponseStatusCode = string.Empty;
             string urlScheme = string.Empty;
             string serverAddress = string.Empty;
@@ -205,7 +216,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 }
                 else if (tag.Key == SemanticConventions.AttributeHttpResponseStatusCode)
                 {
-                    httpResponseStatusCode = tag.Value.ToString()!;
+                    requestDocument.ResponseCode = tag.Value.ToString()!;
+                }
+                else if (!ActivityTagsProcessor.s_semanticsSet.Contains(tag.Key) && propertiesCount < MaxProperties)
+                {
+                    requestDocument.Properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
+                    propertiesCount++;
                 }
             }
 
@@ -219,32 +235,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 .Append(urlQuery)
                 .ToString();
 
-            Request requestDocumentIngress = new()
-            {
-                DocumentType = DocumentType.Request,
-                Name = activity.DisplayName,
-                //Url = TODO: I'M TRYING TO GET THE TYPE OF URL CHANGED BACK TO STRING. THIS IS A TEMPORARY FIX. (2024-03-22)
-                ResponseCode = httpResponseStatusCode,
-                Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
-                                                ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
-                                                : SchemaConstants.Duration_MaxValue,
-                // The following properties are used to calculate metrics. These are not serialized.
-                Extension_IsSuccess = IsHttpSuccess(activity, httpResponseStatusCode),
-                Extension_Duration = activity.Duration.TotalMilliseconds,
-            };
-
-            // TODO: Investigate if we can have a minimal/optimized version of ActivityTagsProcessor for LiveMetric.
-            var atp = new ActivityTagsProcessor();
-            atp.CategorizeTags(activity);
-            SetProperties(requestDocumentIngress, atp);
-
             // TODO: I'M TRYING TO GET THE TYPE OF URL CHANGED BACK TO STRING. THIS IS A TEMPORARY FIX. (2024-03-22)
             if (Uri.TryCreate(url, UriKind.Absolute, out Uri? uri))
             {
-                requestDocumentIngress.Url = uri;
+                requestDocument.Url = uri;
             }
 
-            return requestDocumentIngress;
+            // The following properties are used to calculate metrics. These are not serialized.
+            requestDocument.Extension_IsSuccess = IsHttpSuccess(activity, httpResponseStatusCode);
+            requestDocument.Extension_Duration = activity.Duration.TotalMilliseconds;
+
+            return requestDocument;
         }
 
         internal static ExceptionDocument ConvertToExceptionDocument(ActivityEvent activityEvent)
