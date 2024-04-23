@@ -16,6 +16,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
     /// </summary>
     internal static class DocumentHelper
     {
+        private const int MaxProperties = 10;
+
         // TODO: NEED TO HANDLE UNIQUE MAXLENGTH VALUES FOR DOCUMENT TYPES. SEE SWAGGER FOR MAXLENGTH VALUES.
 
         #region Document Buffer Extension Methods
@@ -32,11 +34,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             }
         }
 
-        public static void AddExceptionDocument(this DoubleBuffer buffer, System.Exception exception)
+        public static void AddExceptionDocument(this DoubleBuffer buffer, LogRecord logRecord, System.Exception exception)
         {
             try
             {
-                var exceptionDocument = ConvertToExceptionDocument(exception);
+                var exceptionDocument = ConvertToExceptionDocument(logRecord, exception);
                 buffer.WriteDocument(exceptionDocument);
             }
             catch (System.Exception ex)
@@ -108,11 +110,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             {
                 DocumentType = DocumentType.RemoteDependency,
 
-                // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
-
                 // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
                 Extension_Duration = activity.Duration.TotalMilliseconds,
             };
+
+            SetProperties(remoteDependencyDocumentIngress, atp);
 
             // HACK: Remove the V2 for now. This Enum should be removed in the future.
             if (atp.activityType.HasFlag(OperationType.V2))
@@ -226,12 +228,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                                                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
                                                 : SchemaConstants.Duration_MaxValue,
-                // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
-
                 // The following properties are used to calculate metrics. These are not serialized.
                 Extension_IsSuccess = IsHttpSuccess(activity, httpResponseStatusCode),
                 Extension_Duration = activity.Duration.TotalMilliseconds,
             };
+
+            // TODO: Investigate if we can have a minimal/optimized version of ActivityTagsProcessor for LiveMetric.
+            var atp = new ActivityTagsProcessor();
+            atp.CategorizeTags(activity);
+            SetProperties(requestDocumentIngress, atp);
 
             // TODO: I'M TRYING TO GET THE TYPE OF URL CHANGED BACK TO STRING. THIS IS A TEMPORARY FIX. (2024-03-22)
             if (Uri.TryCreate(url, UriKind.Absolute, out Uri? uri))
@@ -246,6 +251,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
         {
             string exceptionType = string.Empty;
             string exceptionMessage = string.Empty;
+
+            var properties = new List<KeyValuePairString>();
 
             foreach (ref readonly var tag in activityEvent.EnumerateTagObjects())
             {
@@ -263,6 +270,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                     exceptionMessage = tag.Value.ToString()!;
                     continue;
                 }
+                else if (tag.Key == SemanticConventions.AttributeExceptionStacktrace)
+                {
+                    // do nothing
+                }
+                else
+                {
+                    properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
+                }
             }
 
             ExceptionDocument exceptionDocumentIngress = new()
@@ -273,10 +288,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
             };
 
+            SetProperties(exceptionDocumentIngress, properties);
+
             return exceptionDocumentIngress;
         }
 
-        internal static ExceptionDocument ConvertToExceptionDocument(System.Exception exception)
+        internal static ExceptionDocument ConvertToExceptionDocument(LogRecord logRecord, System.Exception exception)
         {
             ExceptionDocument exceptionDocumentIngress = new()
             {
@@ -285,27 +302,84 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 ExceptionMessage = exception.Message,
             };
 
+            var properties = new List<KeyValuePairString>();
+
+            foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
+            {
+                if (item.Value != null)
+                {
+                    if (item.Key == "{OriginalFormat}")
+                    {
+                        // do nothing
+                    }
+                    else
+                    {
+                        properties.Add(new KeyValuePairString(item.Key, item.Value.ToString()));
+                    }
+                }
+            }
+
+            SetProperties(exceptionDocumentIngress, properties);
+
             return exceptionDocumentIngress;
         }
 
         internal static Models.Trace ConvertToLogDocument(LogRecord logRecord)
         {
-            return new Models.Trace()
+            var traceDocument = new Models.Trace()
             {
                 DocumentType = DocumentType.Trace,
                 Message = logRecord.FormattedMessage ?? logRecord.Body, // TODO: MAY NEED TO BUILD THE FORMATTED MESSAGE IF NOT AVAILABLE
                 // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
             };
+
+            var properties = new List<KeyValuePairString>();
+
+            foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
+            {
+                if (item.Value != null)
+                {
+                    if (item.Key == "{OriginalFormat}")
+                    {
+                        // do nothing
+                    }
+                    else
+                    {
+                        properties.Add(new KeyValuePairString(item.Key, item.Value.ToString()));
+                    }
+                }
+            }
+
+            SetProperties(traceDocument, properties);
+
+            return traceDocument;
         }
 
         internal static Models.Trace ConvertToLogDocument(ActivityEvent activityEvent)
         {
-            return new Models.Trace()
+            var traceDocument = new Models.Trace()
             {
                 DocumentType = DocumentType.Trace,
                 Message = activityEvent.Name,
-                // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
             };
+
+            var properties = new List<KeyValuePairString>();
+
+            foreach (ref readonly var tag in activityEvent.EnumerateTagObjects())
+            {
+                if (tag.Value == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
+                }
+            }
+
+            SetProperties(traceDocument, properties);
+
+            return traceDocument;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -319,6 +393,26 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             else
             {
                 return activity.Status != ActivityStatusCode.Error;
+            }
+        }
+
+        private static void SetProperties(DocumentIngress documentIngress, ActivityTagsProcessor atp)
+        {
+            for (int i = 0; i < atp.UnMappedTags.Length && i < MaxProperties; i++)
+            {
+                var tag = atp.UnMappedTags[i];
+                if (tag.Value != null)
+                {
+                    documentIngress.Properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
+                }
+            }
+        }
+
+        private static void SetProperties(DocumentIngress documentIngress, List<KeyValuePairString> properties)
+        {
+            for (int i = 0; i < properties.Count && i < MaxProperties; i++)
+            {
+                documentIngress.Properties.Add(properties[i]);
             }
         }
     }
