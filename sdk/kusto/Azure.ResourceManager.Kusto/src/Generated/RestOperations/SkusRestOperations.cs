@@ -36,6 +36,19 @@ namespace Azure.ResourceManager.Kusto
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Kusto/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();

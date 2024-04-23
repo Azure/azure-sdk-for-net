@@ -78,7 +78,9 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = await _assignmentRestClient.CreateOrUpdateAsync(Id, assignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _assignmentRestClient.CreateCreateOrUpdateRequestUri(Id, assignmentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +129,9 @@ namespace Azure.ResourceManager.Blueprint
             try
             {
                 var response = _assignmentRestClient.CreateOrUpdate(Id, assignmentName, data, cancellationToken);
-                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _assignmentRestClient.CreateCreateOrUpdateRequestUri(Id, assignmentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BlueprintArmOperation<AssignmentResource>(Response.FromValue(new AssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

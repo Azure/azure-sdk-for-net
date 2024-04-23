@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.FrontDoor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FrontDoorExperimentResource : Azure.ResourceManager.ArmResource
+    public partial class FrontDoorExperimentResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected FrontDoorExperimentResource() { }
@@ -96,6 +96,11 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.FrontDoor.FrontDoorExperimentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.FrontDoor.FrontDoorExperimentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorExperimentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -158,7 +163,7 @@ namespace Azure.ResourceManager.FrontDoor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FrontDoorNetworkExperimentProfileResource : Azure.ResourceManager.ArmResource
+    public partial class FrontDoorNetworkExperimentProfileResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected FrontDoorNetworkExperimentProfileResource() { }
@@ -180,10 +185,15 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorNetworkExperimentProfilePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorNetworkExperimentProfilePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class FrontDoorResource : Azure.ResourceManager.ArmResource
+    public partial class FrontDoorResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected FrontDoorResource() { }
@@ -208,6 +218,11 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.FrontDoor.FrontDoorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.FrontDoor.FrontDoorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.FrontDoorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.FrontDoorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainResult> ValidateCustomDomain(Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -241,7 +256,7 @@ namespace Azure.ResourceManager.FrontDoor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FrontDoorRulesEngineResource : Azure.ResourceManager.ArmResource
+    public partial class FrontDoorRulesEngineResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected FrontDoorRulesEngineResource() { }
@@ -252,6 +267,11 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -291,7 +311,7 @@ namespace Azure.ResourceManager.FrontDoor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FrontDoorWebApplicationFirewallPolicyResource : Azure.ResourceManager.ArmResource
+    public partial class FrontDoorWebApplicationFirewallPolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected FrontDoorWebApplicationFirewallPolicyResource() { }
@@ -308,6 +328,11 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -343,7 +368,7 @@ namespace Azure.ResourceManager.FrontDoor
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontendEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontendEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FrontendEndpointResource : Azure.ResourceManager.ArmResource
+    public partial class FrontendEndpointResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontendEndpointData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontendEndpointData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected FrontendEndpointResource() { }
@@ -356,6 +381,11 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> EnableHttpsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.CustomHttpsConfiguration customHttpsConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontendEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontendEndpointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.FrontDoor.FrontendEndpointData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontendEndpointData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.FrontDoor.FrontendEndpointData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.FrontDoor.FrontendEndpointData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontendEndpointData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontendEndpointData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.FrontDoor.FrontendEndpointData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.FrontDoor.Mocking
