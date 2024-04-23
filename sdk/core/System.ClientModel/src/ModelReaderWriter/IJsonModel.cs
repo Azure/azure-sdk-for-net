@@ -8,6 +8,6 @@ namespace System.ClientModel.Primitives;
 #pragma warning disable CS1591 // public XML comments
 public interface IJsonModel
 {
-    Dictionary<string, object> AdditionalProperties { get; }
+    IDictionary<string, object> AdditionalProperties { get; }
 }
 #pragma warning restore CS1591 // public XML comments

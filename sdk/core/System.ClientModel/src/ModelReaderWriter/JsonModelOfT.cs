@@ -12,7 +12,7 @@ public abstract class JsonModel<T> : IJsonModel, IJsonModel<T>
 {
     private Dictionary<string, object>? _unknownProperties;
 
-    Dictionary<string, object> IJsonModel.AdditionalProperties
+    IDictionary<string, object> IJsonModel.AdditionalProperties
         => _unknownProperties ??= new();
 
 #pragma warning disable AZC0014 // Avoid using banned types in public API
@@ -152,14 +152,21 @@ public abstract class JsonModel<T> : IJsonModel, IJsonModel<T>
         {
             foreach (var property in _unknownProperties)
             {
+                // Skip non-serialized items for now
+                // TODO: serialize non-serialized items in some cases?
+                if (property.Value is not BinaryData serializedValue)
+                {
+                    continue;
+                }
+
                 writer.WritePropertyName(property.Key);
 #if NET6_0_OR_GREATER
-
-                // TODO: serialize or not as appropriate
-                // This is different depending on whether we decide on BinaryData
-                // dictionary or object dictionary.
-
-                //writer.WriteRawValue(property.Value);
+                writer.WriteRawValue(serializedValue);
+#else
+                using (JsonDocument document = JsonDocument.Parse(serializedValue))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
         }
