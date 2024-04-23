@@ -116,30 +116,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PointInTimeUTC), out propertyOverride);
-            if (Optional.IsDefined(PointInTimeUTC) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  pointInTimeUTC: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PointInTimeUTC))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  pointInTimeUTC: ");
                     var formattedDateTimeString = TypeFormatters.ToString(PointInTimeUTC.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceResourceId), out propertyOverride);
-            if (Optional.IsDefined(SourceResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sourceResourceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sourceResourceId: ");
                     if (SourceResourceId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
