@@ -31,7 +31,6 @@
 ##################
 # Repository root
 ##################
-dev
 # Catch all for loose files in the root, which are mostly global configuration and
 # should not be changed without team discussion.
 /*                                                                 @jsquire @pallavit @Azure/azure-sdk-write-net-core
