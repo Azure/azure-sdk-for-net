@@ -52,7 +52,7 @@ namespace System.ClientModel.Tests.Internal
         [SetUp]
         public void Setup()
         {
-           //_listener.EnableEvents(ClientModelEventSource.Singleton, EventLevel.Verbose);
+            _listener = new TestClientEventListener(1000, "System.ClientModel", EventLevel.Verbose);
         }
 
         [TearDown]
