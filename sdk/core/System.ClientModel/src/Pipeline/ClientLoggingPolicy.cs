@@ -36,26 +36,11 @@ public class ClientLoggingPolicy : PipelinePolicy
     /// <summary>
     /// TODO.
     /// </summary>
-    /// <param name="options"></param>
-    public ClientLoggingPolicy(DiagnosticsOptions? options = default) : this(null, Array.Empty<string>(), options)
-    {
-    }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
     /// <param name="eventSourceName"></param>
     /// <param name="eventSourceTraits"></param>
     /// <param name="options"></param>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public ClientLoggingPolicy(string? eventSourceName = default, string[]? eventSourceTraits = default, DiagnosticsOptions? options = default)
+    protected ClientLoggingPolicy(string? eventSourceName, string[]? eventSourceTraits = default, DiagnosticsOptions? options = default) : this(options)
     {
-        _logContent = options?.IsLoggingContentEnabled ?? false;
-        _maxLength = options?.LoggedContentSizeLimit ?? DefaultLoggedContentSizeLimit;
-        _assemblyName = options?.LoggedClientAssemblyName;
-        _clientRequestIdHeaderName = options?.RequestIdHeaderName;
-        _isLoggingEnabled = options?.IsLoggingEnabled ?? true;
-
         if (s_eventSource != null && !string.IsNullOrEmpty(eventSourceName) && eventSourceName != s_eventSource.Name)
         {
             throw new ArgumentException("Cannot use multiple event source names in the same application.");
@@ -65,6 +50,19 @@ public class ClientLoggingPolicy : PipelinePolicy
         {
             s_eventSource = ClientModelEventSource.Create(eventSourceName ?? DefaultEventSourceName, eventSourceTraits);
         }
+    }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="options"></param>
+    public ClientLoggingPolicy(DiagnosticsOptions? options = default)
+    {
+        _logContent = options?.IsLoggingContentEnabled ?? false;
+        _maxLength = options?.LoggedContentSizeLimit ?? DefaultLoggedContentSizeLimit;
+        _assemblyName = options?.LoggedClientAssemblyName;
+        _clientRequestIdHeaderName = options?.RequestIdHeaderName;
+        _isLoggingEnabled = options?.IsLoggingEnabled ?? true;
     }
 
     /// <summary>
@@ -101,7 +99,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         string? requestId = GetRequestIdFromHeaders(request.Headers);
 
         LogRequest(request, requestId);
-        LogRequestContent(request, requestId, async, message.CancellationToken);
+        await LogRequestContent(request, requestId, async, message.CancellationToken).ConfigureAwait(false);
 
         var before = Stopwatch.GetTimestamp();
 
@@ -134,7 +132,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         responseId = string.IsNullOrEmpty(responseId) ? requestId : responseId; // Use the request ID if there was no response id
 
         LogResponse(response, responseId, elapsed);
-        LogResponseContent(response, responseId, message.BufferResponse, message.CancellationToken);
+        await LogResponseContent(response, responseId, message.BufferResponse, async, message.CancellationToken).ConfigureAwait(false);
 
         if (elapsed > RequestTooLongTime)
         {
@@ -212,16 +210,28 @@ public class ClientLoggingPolicy : PipelinePolicy
             && response.ContentStream != null // Content stream is available
             && response.ContentStream?.CanSeek == false; // Content stream is not seekable - if it's seekable we can just log directly
 
+        // Try to extract a text encoding from the headers
+        Encoding? responseTextEncoding = null;
+
+        if (response.Headers.TryGetValue("Content-Type", out var contentType) && contentType != null)
+        {
+            ContentTypeUtilities.TryGetTextEncoding(contentType, out responseTextEncoding);
+        }
+
         if (wrapContent)
         {
-            response.ContentStream = new LoggingStream(responseId ?? string.Empty, _maxLength, response.ContentStream!, response.IsError, null);
+            response.ContentStream = new LoggingStream(responseId ?? string.Empty, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding);
         }
         else
         {
             byte[]? bytes = null;
             if (bufferResponse)
             {
-                bytes = response.Content.ToArray();
+                // TODO - is this the best way to do this
+                var allBytes = response.Content.ToArray();
+                var length = Math.Min(allBytes.Length, _maxLength);
+                bytes = new byte[length];
+                Buffer.BlockCopy(allBytes, 0, bytes, 0, length);
             }
             else
             {
@@ -241,13 +251,14 @@ public class ClientLoggingPolicy : PipelinePolicy
                     bytes = memoryStream.ToArray();
                 }
             }
+
             if (response.IsError)
             {
-                Singleton.ErrorResponseContent(responseId ?? string.Empty, bytes ?? Array.Empty<byte>(), null); // TODO - add text encoding
+                Singleton.ErrorResponseContent(responseId ?? string.Empty, bytes ?? Array.Empty<byte>(), responseTextEncoding);
             }
             else
             {
-                Singleton.ResponseContent(responseId ?? string.Empty, bytes ?? Array.Empty<byte>(), null); // TODO - add text encoding
+                Singleton.ResponseContent(responseId ?? string.Empty, bytes ?? Array.Empty<byte>(), responseTextEncoding);
             }
         }
     }
@@ -268,7 +279,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         {
             return null;
         }
-        keyValuePairs.TryGetValue(_clientRequestIdHeaderName, out var clientRequestId);
+        keyValuePairs.TryGetValue(_clientRequestIdHeaderName!, out var clientRequestId);
         return clientRequestId;
     }
 
@@ -312,6 +323,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         private readonly string _requestId;
 
         private int _maxLoggedBytes;
+        private int _originalMaxLength;
 
         private readonly Stream _originalStream;
 
@@ -327,6 +339,7 @@ public class ClientLoggingPolicy : PipelinePolicy
             Debug.Assert(!originalStream.CanSeek);
             _requestId = requestId;
             _maxLoggedBytes = maxLoggedBytes;
+            _originalMaxLength = maxLoggedBytes;
             _originalStream = originalStream;
             _error = error;
             _textEncoding = textEncoding;
@@ -356,7 +369,7 @@ public class ClientLoggingPolicy : PipelinePolicy
             }
 
             //_eventSourceWrapper.Log(_requestId, _error, buffer, offset, count, _textEncoding, _blockNumber);
-            var logLength = Math.Min(length, _maxLoggedBytes); // TODO - should be a dif value?
+            var logLength = Math.Min(length, _originalMaxLength);
 
             byte[] bytes;
             if (length == logLength && offset == 0)
