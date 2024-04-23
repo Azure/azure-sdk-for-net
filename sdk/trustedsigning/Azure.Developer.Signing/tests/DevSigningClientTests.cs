@@ -62,6 +62,7 @@ namespace Azure.Developer.Signing.Tests
         {
             const string signature = "signature";
             const string signingCert = "signingCertificate";
+            const string result = "result";
             const string signatureAlgorithm = "RS256";
 
             byte[] digest = new byte[32];
@@ -77,16 +78,17 @@ namespace Azure.Developer.Signing.Tests
             Operation<BinaryData> operation = await _certificateProfileClient.SignAsync(WaitUntil.Completed, TestEnvironment.AccountName, TestEnvironment.ProfileName, content);
             BinaryData responseData = operation.Value;
 
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            JsonElement operationElement = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            JsonElement resultElement = operationElement.GetProperty(result);
 
-            if (!result.TryGetProperty(signingCert, out JsonElement signingCertElement))
-            {
-                FailDueToMissingProperty(signingCert);
-            }
-
-            if (!result.TryGetProperty(signature, out JsonElement signatureElement))
+            if (!resultElement.TryGetProperty(signature, out JsonElement signatureElement))
             {
                 FailDueToMissingProperty(signature);
+            }
+
+            if (!resultElement.TryGetProperty(signingCert, out JsonElement signingCertElement))
+            {
+                FailDueToMissingProperty(signingCert);
             }
 
             string signingCertValue = signingCertElement.ToString();
