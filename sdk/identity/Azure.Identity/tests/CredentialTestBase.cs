@@ -255,34 +255,11 @@ namespace Azure.Identity.Tests
         {
             // Configure the transport
             var token = Guid.NewGuid().ToString();
-            var idToken = CredentialTestHelpers.CreateMsalIdToken(Guid.NewGuid().ToString(), "userName", TenantId);
-            bool calledDiscoveryEndpoint = false;
-            bool isPubClient = false;
             const string Claims = "myClaims";
-
-            var mockTransport = new MockTransport(req =>
+            TransportParams transportParams = new()
             {
-                calledDiscoveryEndpoint |= req.Uri.Path.Contains("discovery/instance");
-
-                MockResponse response = new(200);
-                if (req.Uri.Path.EndsWith("/devicecode"))
+                RequestValidator = req =>
                 {
-                    response = CredentialTestHelpers.CreateMockMsalDeviceCodeResponse();
-                }
-                else if (req.Uri.Path.Contains("/userrealm/"))
-                {
-                    response.SetContent(UserrealmResponse);
-                }
-                else
-                {
-                    if (isPubClient || typeof(TCredOptions) == typeof(AuthorizationCodeCredentialOptions) || typeof(TCredOptions) == typeof(OnBehalfOfCredentialOptions))
-                    {
-                        response = CredentialTestHelpers.CreateMockMsalTokenResponse(200, token, TenantId, ExpectedUsername, ObjectId);
-                    }
-                    else
-                    {
-                        response.SetContent($"{{\"token_type\": \"Bearer\",\"expires_in\": 9999,\"ext_expires_in\": 9999,\"access_token\": \"{token}\" }}");
-                    }
                     if (req.Content != null)
                     {
                         var stream = new MemoryStream();
@@ -305,9 +282,9 @@ namespace Azure.Identity.Tests
                         }
                     }
                 }
-
-                return response;
-            });
+            };
+            var factory = MockTokenTransportFactory(token, transportParams);
+            var mockTransport = new MockTransport(factory);
 
             var config = new CommonCredentialTestConfig()
             {
@@ -320,7 +297,7 @@ namespace Azure.Identity.Tests
             {
                 Assert.Ignore("EnableCAE tests do not apply to the non-MSAL credentials.");
             }
-            isPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            transportParams.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
 
             using (HttpPipeline.CreateClientRequestIdScope("NoClaims"))
             {
