@@ -81,7 +81,7 @@ namespace Azure.AI.OpenAI
 
         internal static Completions DeserializeCompletions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

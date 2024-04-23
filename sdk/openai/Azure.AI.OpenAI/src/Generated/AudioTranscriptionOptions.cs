@@ -56,6 +56,7 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNull(audioData, nameof(audioData));
 
             AudioData = audioData;
+            TimestampGranularities = new ChangeTrackingList<AudioTranscriptionTimestampGranularity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AudioTranscriptionOptions"/>. </summary>
@@ -144,6 +145,13 @@ namespace Azure.AI.OpenAI
         /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
         /// </summary>
         public float? Temperature { get; set; }
+        /// <summary>
+        /// The timestamp granularities to populate for this transcription.
+        /// `response_format` must be set `verbose_json` to use timestamp granularities.
+        /// Either or both of these options are supported: `word`, or `segment`.
+        /// Note: There is no additional latency for segment timestamps, but generating word timestamps incurs additional latency.
+        /// </summary>
+        public IList<AudioTranscriptionTimestampGranularity> TimestampGranularities { get; }
         /// <summary> The model to use for this transcription request. </summary>
         public string DeploymentName { get; set; }
     }

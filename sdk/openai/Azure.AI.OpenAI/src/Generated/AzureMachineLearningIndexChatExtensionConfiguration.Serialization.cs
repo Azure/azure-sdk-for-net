@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
 
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue<AzureMachineLearningIndexChatExtensionParameters>(Parameters, options);
+            writer.WriteObjectValue(Parameters, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

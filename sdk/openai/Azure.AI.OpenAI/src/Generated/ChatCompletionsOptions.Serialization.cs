@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Messages)
             {
-                writer.WriteObjectValue<ChatRequestMessage>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Functions))
@@ -39,7 +39,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue<FunctionDefinition>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,14 +127,14 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in InternalAzureExtensionsDataSources)
                 {
-                    writer.WriteObjectValue<AzureChatExtensionConfiguration>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Enhancements))
             {
                 writer.WritePropertyName("enhancements"u8);
-                writer.WriteObjectValue<AzureChatEnhancementConfiguration>(Enhancements, options);
+                writer.WriteObjectValue(Enhancements, options);
             }
             if (Optional.IsDefined(Seed))
             {
@@ -168,7 +168,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
-                writer.WriteObjectValue<ChatCompletionsResponseFormat>(ResponseFormat, options);
+                writer.WriteObjectValue(ResponseFormat, options);
             }
             if (Optional.IsCollectionDefined(Tools))
             {
@@ -176,7 +176,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in Tools)
                 {
-                    writer.WriteObjectValue<ChatCompletionsToolDefinition>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }

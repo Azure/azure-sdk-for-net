@@ -58,9 +58,9 @@ namespace Azure.AI.OpenAI
             writer.WritePropertyName("index_name"u8);
             writer.WriteStringValue(IndexName);
             writer.WritePropertyName("fields_mapping"u8);
-            writer.WriteObjectValue<AzureCosmosDBFieldMappingOptions>(FieldMappingOptions, options);
+            writer.WriteObjectValue(FieldMappingOptions, options);
             writer.WritePropertyName("embedding_dependency"u8);
-            writer.WriteObjectValue<OnYourDataVectorizationSource>(EmbeddingDependency, options);
+            writer.WriteObjectValue(EmbeddingDependency, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

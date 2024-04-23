@@ -114,8 +114,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = audioTranscriptionOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetAudioTranscriptionAsPlainTextAsync(deploymentId, content, context).ConfigureAwait(false);
             return Response.FromValue(response.Content.ToString(), response);
         }
@@ -134,8 +134,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = audioTranscriptionOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAudioTranscriptionAsPlainText(deploymentId, content, context);
             return Response.FromValue(response.Content.ToString(), response);
         }
@@ -228,8 +228,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = audioTranscriptionOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetAudioTranscriptionAsResponseObjectAsync(deploymentId, content, context).ConfigureAwait(false);
             return Response.FromValue(AudioTranscription.FromResponse(response), response);
         }
@@ -248,8 +248,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(audioTranscriptionOptions, nameof(audioTranscriptionOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = audioTranscriptionOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAudioTranscriptionAsResponseObject(deploymentId, content, context);
             return Response.FromValue(AudioTranscription.FromResponse(response), response);
         }
@@ -339,8 +339,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = audioTranslationOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetAudioTranslationAsPlainTextAsync(deploymentId, content, context).ConfigureAwait(false);
             return Response.FromValue(response.Content.ToString(), response);
         }
@@ -356,8 +356,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = audioTranslationOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAudioTranslationAsPlainText(deploymentId, content, context);
             return Response.FromValue(response.Content.ToString(), response);
         }
@@ -445,8 +445,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = audioTranslationOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetAudioTranslationAsResponseObjectAsync(deploymentId, content, context).ConfigureAwait(false);
             return Response.FromValue(AudioTranslation.FromResponse(response), response);
         }
@@ -462,8 +462,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(audioTranslationOptions, nameof(audioTranslationOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = audioTranslationOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAudioTranslationAsResponseObject(deploymentId, content, context);
             return Response.FromValue(AudioTranslation.FromResponse(response), response);
         }
@@ -559,8 +559,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = completionsOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetCompletionsAsync(deploymentId, content, context).ConfigureAwait(false);
             return Response.FromValue(Completions.FromResponse(response), response);
         }
@@ -584,8 +584,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(completionsOptions, nameof(completionsOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = completionsOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetCompletions(deploymentId, content, context);
             return Response.FromValue(Completions.FromResponse(response), response);
         }
@@ -685,8 +685,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = chatCompletionsOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetChatCompletionsAsync(deploymentId, content, context).ConfigureAwait(false);
             return Response.FromValue(ChatCompletions.FromResponse(response), response);
         }
@@ -710,8 +710,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(chatCompletionsOptions, nameof(chatCompletionsOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = chatCompletionsOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetChatCompletions(deploymentId, content, context);
             return Response.FromValue(ChatCompletions.FromResponse(response), response);
         }
@@ -803,8 +803,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageGenerationOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetImageGenerationsAsync(deploymentId, content, context).ConfigureAwait(false);
             return Response.FromValue(ImageGenerations.FromResponse(response), response);
         }
@@ -820,8 +820,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(imageGenerationOptions, nameof(imageGenerationOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = imageGenerationOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetImageGenerations(deploymentId, content, context);
             return Response.FromValue(ImageGenerations.FromResponse(response), response);
         }
@@ -909,8 +909,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(speechGenerationOptions, nameof(speechGenerationOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = speechGenerationOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GenerateSpeechFromTextAsync(deploymentId, content, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
         }
@@ -926,8 +926,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(speechGenerationOptions, nameof(speechGenerationOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = speechGenerationOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GenerateSpeechFromText(deploymentId, content, context);
             return Response.FromValue(response.Content, response);
         }
@@ -1019,8 +1019,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = embeddingsOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetEmbeddingsAsync(deploymentId, content, context).ConfigureAwait(false);
             return Response.FromValue(Embeddings.FromResponse(response), response);
         }
@@ -1040,8 +1040,8 @@ namespace Azure.AI.OpenAI
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
             Argument.AssertNotNull(embeddingsOptions, nameof(embeddingsOptions));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = embeddingsOptions.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetEmbeddings(deploymentId, content, context);
             return Response.FromValue(Embeddings.FromResponse(response), response);
         }

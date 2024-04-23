@@ -91,7 +91,7 @@ namespace Azure.AI.OpenAI
 
         internal static ChatCompletions DeserializeChatCompletions(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,6 +100,7 @@ namespace Azure.AI.OpenAI
             string id = default;
             DateTimeOffset created = default;
             IReadOnlyList<ChatChoice> choices = default;
+            string model = default;
             IReadOnlyList<ContentFilterResultsForPrompt> promptFilterResults = default;
             string systemFingerprint = default;
             CompletionsUsage usage = default;
@@ -125,6 +126,11 @@ namespace Azure.AI.OpenAI
                         array.Add(ChatChoice.DeserializeChatChoice(item, options));
                     }
                     choices = array;
+                    continue;
+                }
+                if (property.NameEquals("model"u8))
+                {
+                    model = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("prompt_filter_results"u8))
@@ -161,6 +167,7 @@ namespace Azure.AI.OpenAI
                 id,
                 created,
                 choices,
+                model,
                 promptFilterResults ?? new ChangeTrackingList<ContentFilterResultsForPrompt>(),
                 systemFingerprint,
                 usage,

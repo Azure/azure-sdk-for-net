@@ -59,7 +59,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(InternalStreamingDeltaMessage))
             {
                 writer.WritePropertyName("delta"u8);
-                writer.WriteObjectValue<ChatResponseMessage>(InternalStreamingDeltaMessage, options);
+                writer.WriteObjectValue(InternalStreamingDeltaMessage, options);
             }
             if (Optional.IsDefined(ContentFilterResults))
             {
