@@ -87,7 +87,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _privateStoreRestClient.CreateOrUpdateAsync(privateStoreId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateCreateOrUpdateRequestUri(privateStoreId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -134,7 +136,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _privateStoreRestClient.CreateOrUpdate(privateStoreId, data, cancellationToken);
-                var operation = new MarketplaceArmOperation(response);
+                var uri = _privateStoreRestClient.CreateCreateOrUpdateRequestUri(privateStoreId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
