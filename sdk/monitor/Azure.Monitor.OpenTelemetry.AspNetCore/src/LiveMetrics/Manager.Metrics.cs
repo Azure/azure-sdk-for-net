@@ -153,7 +153,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
 
         private Models.Trace CreateUpdatedTrace(Models.Trace trace, IList<string> documentStreamIds)
         {
-            return new Models.Trace(trace.DocumentType, documentStreamIds, trace.Properties, trace.Message + ":test7");
+            return new Models.Trace(trace.DocumentType, documentStreamIds, trace.Properties, trace.Message);
         }
 
         /// <remarks>
