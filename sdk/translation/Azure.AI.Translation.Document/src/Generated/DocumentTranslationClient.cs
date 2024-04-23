@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -44,7 +43,6 @@ namespace Azure.AI.Translation.Document
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(options, nameof(options));
             options ??= new DocumentTranslationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -616,7 +614,7 @@ namespace Azure.AI.Translation.Document
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTranslationsStatusRequest(maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTranslationsStatusNextPageRequest(nextLink, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TranslationStatusResult.DeserializeTranslationStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetTranslationStatuses", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TranslationStatusResult.DeserializeTranslationStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetTranslationsStatus", "value", "nextLink", context);
         }
 
         /// <summary> Returns a list of batch requests submitted and the status for each request. </summary>
@@ -725,7 +723,7 @@ namespace Azure.AI.Translation.Document
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTranslationsStatusRequest(maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTranslationsStatusNextPageRequest(nextLink, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TranslationStatusResult.DeserializeTranslationStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetTranslationStatuses", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TranslationStatusResult.DeserializeTranslationStatusResult(e), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetTranslationsStatus", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -795,7 +793,7 @@ namespace Azure.AI.Translation.Document
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTranslationsStatusRequest(maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTranslationsStatusNextPageRequest(nextLink, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetTranslationStatuses", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetTranslationsStatus", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -865,7 +863,7 @@ namespace Azure.AI.Translation.Document
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTranslationsStatusRequest(maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTranslationsStatusNextPageRequest(nextLink, maxCount, skip, maxpagesize, ids, statuses, createdDateTimeUtcStart, createdDateTimeUtcEnd, orderBy, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetTranslationStatuses", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentTranslationClient.GetTranslationsStatus", "value", "nextLink", context);
         }
 
         /// <summary> Returns the status for all documents in a batch document translation request. </summary>
@@ -1249,8 +1247,8 @@ namespace Azure.AI.Translation.Document
         {
             Argument.AssertNotNull(startTranslationDetails, nameof(startTranslationDetails));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = startTranslationDetails.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             return await StartTranslationAsync(waitUntil, content, context).ConfigureAwait(false);
         }
 
@@ -1285,8 +1283,8 @@ namespace Azure.AI.Translation.Document
         {
             Argument.AssertNotNull(startTranslationDetails, nameof(startTranslationDetails));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = startTranslationDetails.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             return StartTranslation(waitUntil, content, context);
         }
 
