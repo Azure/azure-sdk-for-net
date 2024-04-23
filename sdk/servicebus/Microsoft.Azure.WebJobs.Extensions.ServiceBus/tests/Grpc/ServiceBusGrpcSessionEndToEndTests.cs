@@ -168,15 +168,16 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task BindToSessionMessageAndSetAndGetBinaryData()
         {
-            var host = BuildHost<ServiceBusBindToSessionMessageAndSetAndGet>();
+            var host = BuildHost<ServiceBusBindToSessionMessageAndSetAndGetBinaryData>();
             var settlementImpl = host.Services.GetRequiredService<SettlementService>();
             var provider = host.Services.GetRequiredService<MessagingProvider>();
-            ServiceBusBindToSessionMessageAndSetAndGet.SettlementService = settlementImpl;
+            ServiceBusBindToSessionMessageAndSetAndGetBinaryData.SettlementService = settlementImpl;
             await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
 
             using (host)
             {
-                var message = new ServiceBusMessage(new BinaryData("foobar")) { SessionId = "sessionId" };
+                byte[] predefinedData = { 0x48, 0x65 };
+                var message = new ServiceBusMessage(BinaryData.FromBytes(predefinedData)) { SessionId = "sessionId" };
                 var sender = client.CreateSender(FirstQueueScope.QueueName);
                 await sender.SendMessageAsync(message);
 
@@ -340,6 +341,34 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new MockServerCallContext());
                 Assert.IsNotEmpty(test.SessionState);
                 Assert.AreEqual("foobar", message.Body.ToString());
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusBindToSessionMessageAndSetAndGetBinaryData
+        {
+            internal static SettlementService SettlementService { get; set; }
+            public static async Task BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
+            {
+                byte[] predefinedData = { 0x48, 0x65 };
+                Assert.AreEqual(predefinedData, message.Body.ToArray());
+                await SettlementService.SetSessionState(
+                    new SetSessionStateRequest
+                    {
+                        SessionId = message.SessionId,
+                        SessionState = ByteString.CopyFromUtf8(message.Body.ToString())
+                    },
+                    new MockServerCallContext()
+                 );
+                var test = await SettlementService.GetSessionState(
+                    new GetSessionStateRequest
+                    {
+                        SessionId = message.SessionId,
+                    },
+                    new MockServerCallContext());
+                Assert.IsNotEmpty(test.SessionState);
+                Assert.AreEqual(predefinedData, message.Body.ToArray());
                 _waitHandle1.Set();
             }
         }
