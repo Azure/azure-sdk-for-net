@@ -1,0 +1,36 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://scus.codesigning.azure.net/codesigningaccounts/jaxel-test/certificateprofiles/jaxel-test-01/sign/rootcert?api-version=2023-06-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/x-x509-ca-cert",
+        "Authorization": "Sanitized",
+        "Connection": "keep-alive",
+        "traceparent": "00-4c79560c38a76bb039b68c0db18c5f2a-c023889f55de75e0-00",
+        "User-Agent": "azsdk-net-Developer.Signing/1.0.0-alpha.20240423.1 (.NET Framework 4.8.9232.0; Microsoft Windows 10.0.22631 )",
+        "x-ms-client-request-id": "e9409390afd720d5810cbc4c8ed56e76",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Accept-Ranges": "bytes",
+        "api-supported-versions": "2021-08-01-privatepreview, 2022-06-15-preview, 2023-06-15-preview",
+        "Connection": "keep-alive",
+        "Content-Disposition": "attachment; filename=Root.cer; filename*=UTF-8''Root.cer",
+        "Content-Length": "960",
+        "Content-Type": "application/x-x509-ca-cert",
+        "Date": "Tue, 23 Apr 2024 14:47:10 GMT",
+        "mise-correlation-id": "0a1400f2-5abe-4a1d-9787-4609bf6d7303",
+        "Strict-Transport-Security": "max-age=2592000",
+        "x-azure-ref": "20240423T144710Z-1865489d5f47spgmg1tk1770cg00000006wg00000000x3e7",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": "MIIDvDCCAqSgAwIBAgIQeoIUIGNw+a9Ejywqv3ERPzANBgkqhkiG9w0BAQsFADBQMRMwEQYKCZImiZPyLGQBGRYDSU5GMRkwFwYKCZImiZPyLGQBGRYJUEtJSU5UMVIwMR4wHAYDVQQDExVPbmxpbmVDZXJ0QXV0aG9yaXR5MDEwHhcNMjEwMjA5MTAzNDM4WhcNMzEwMjA5MTA0NDM3WjBQMRMwEQYKCZImiZPyLGQBGRYDSU5GMRkwFwYKCZImiZPyLGQBGRYJUEtJSU5UMVIwMR4wHAYDVQQDExVPbmxpbmVDZXJ0QXV0aG9yaXR5MDEwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCS64WMzOI9olFhMdzQoKngNwQkyp50jaIcWQY1ybtt0/CHTUwH9pgr65P3s2Rk78qqiPxgXxvpjCrE88uF+UbLhkxDVOtiiIrUQLqGuhF6/+8nvGIx2oDffQ/dRewOmK81m77Qb+qjBFjkZC1WjA8rPlhjMbVbrQHhNV9yKwAyM3DA9ABa7g7vl5IK3O4ZZLF0YXN11Fe2Qc72qOa2L3QH2l7MhYREmQhBklkiFE2uegNBxPd3gj3yzM4lm6Q5eX1WbrC+KZMpF8AKZCpE52DkA0BIhgooG0roVVMqoJXl0Picz4NUYC8lZM+hQciR/Gr3/93vAnqvqb3Z1izeVkq/AgMBAAGjgZEwgY4wEwYJKwYBBAGCNxQCBAYeBABDAEEwDgYDVR0PAQH/BAQDAgGGMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFPljGWfSyACxjL+vlUyBpDpO2mCAMBIGCSsGAQQBgjcVAQQFAgMBAAEwIwYJKwYBBAGCNxUCBBYEFAtXnzi/OSHg3fr53+D71mD3/Ma0MA0GCSqGSIb3DQEBCwUAA4IBAQAIw52fpXK4j245r4aSehx+pepg61ZjWBKGYuD3kKaOwrqvinl6yUplFpZ7vcvDl9kJu9LL/pPDsZKL7SMgCuCZ12EXdRNZmmnWrJt7fD6Me8DqC8mJ3K0J2SlBiwXEreMfrFhjUjYR7E2q/SGDOBfRM45sUZF3q/lIhIKI5rsoeh4afZGeH+LTTFlXejYJRW1dgHzHgXybUx3YcKHJnm37H9a0LaRioVDA/kiBMlf4C/vy6bqgsZ5brCSEuhH21ggTivyPayUOw6U8gmvN4xYr71Ab4cnSzOeNUKV6IbT+NktBAdWyvzsS+MgDQ6CtcidN+sj0AprbBkXK8cGHpc2e"
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "130789114"
+  }
+}
