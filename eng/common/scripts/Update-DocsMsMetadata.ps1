@@ -214,7 +214,7 @@ foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
   }
 
   Write-Host "Updating metadata for package: $packageInfoLocation"
-  $packageMetadataName = Split-Path $packageInfoJsonLocation -Leaf
+  $packageMetadataName = Split-Path $packageInfoLocation -Leaf
   # Convert package metadata json file to metadata json property.
   UpdateDocsMsMetadataForPackage $packageInfo $packageMetadataName
 }
