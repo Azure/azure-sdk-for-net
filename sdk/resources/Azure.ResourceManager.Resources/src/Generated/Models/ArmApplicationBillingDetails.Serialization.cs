@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceUsageId), out propertyOverride);
-            if (Optional.IsDefined(ResourceUsageId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resourceUsageId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceUsageId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resourceUsageId: ");
                     if (ResourceUsageId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

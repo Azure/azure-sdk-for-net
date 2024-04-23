@@ -131,15 +131,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SqlExpression), out propertyOverride);
-            if (Optional.IsDefined(SqlExpression) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sqlExpression: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SqlExpression))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sqlExpression: ");
                     if (SqlExpression.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -153,29 +154,31 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompatibilityLevel), out propertyOverride);
-            if (Optional.IsDefined(CompatibilityLevel) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  compatibilityLevel: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CompatibilityLevel))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  compatibilityLevel: ");
                     builder.AppendLine($"{CompatibilityLevel.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiresPreprocessing), out propertyOverride);
-            if (Optional.IsDefined(RequiresPreprocessing) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  requiresPreprocessing: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequiresPreprocessing))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  requiresPreprocessing: ");
                     var boolValue = RequiresPreprocessing.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

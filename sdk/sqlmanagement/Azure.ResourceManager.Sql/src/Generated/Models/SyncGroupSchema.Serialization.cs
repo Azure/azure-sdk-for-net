@@ -127,17 +127,18 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tables), out propertyOverride);
-            if (Optional.IsCollectionDefined(Tables) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Tables.Any() || hasPropertyOverride)
+                builder.Append("  tables: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tables))
                 {
-                    builder.Append("  tables: ");
-                    if (hasPropertyOverride)
+                    if (Tables.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  tables: ");
                         builder.AppendLine("[");
                         foreach (var item in Tables)
                         {
@@ -149,15 +150,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MasterSyncMemberName), out propertyOverride);
-            if (Optional.IsDefined(MasterSyncMemberName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  masterSyncMemberName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MasterSyncMemberName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  masterSyncMemberName: ");
                     if (MasterSyncMemberName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
