@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages
 
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WriteStringValue(Kind);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -66,14 +66,14 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            MessageTemplateBindingsKind kind = "Unknown";
+            string kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = new MessageTemplateBindingsKind(property.Value.GetString());
+                    kind = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
