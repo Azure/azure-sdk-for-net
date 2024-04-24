@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IgnoreMissingVnetServiceEndpoint), out propertyOverride);
-            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ignoreMissingVNetServiceEndpoint: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ignoreMissingVNetServiceEndpoint: ");
                     var boolValue = IgnoreMissingVnetServiceEndpoint.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

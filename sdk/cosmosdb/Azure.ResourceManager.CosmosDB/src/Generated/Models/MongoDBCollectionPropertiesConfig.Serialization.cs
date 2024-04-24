@@ -120,29 +120,34 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Throughput), out propertyOverride);
-            if (Optional.IsDefined(Throughput) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  throughput: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Throughput))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  throughput: ");
                     builder.AppendLine($"{Throughput.Value}");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoscaleSettings), out propertyOverride);
-            if (Optional.IsDefined(AutoscaleSettings) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AutoscaleMaxThroughput", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  autoscaleSettings: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    maxThroughput: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoscaleSettings))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  autoscaleSettings: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AutoscaleSettings, options, 2, false, "  autoscaleSettings: ");
                 }
             }
