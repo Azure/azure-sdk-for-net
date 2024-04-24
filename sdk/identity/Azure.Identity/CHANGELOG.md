@@ -1,14 +1,9 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.12.0-beta.1 (2024-04-23)
 
 ### Bugs Fixed
-
-### Other Changes
+- An experimental overload `Authenticate` method on `InteractiveBrowserCredential` now supports the experimental `PopTokenRequestContext` parameter.
 
 ## 1.11.2 (2024-04-19)
 

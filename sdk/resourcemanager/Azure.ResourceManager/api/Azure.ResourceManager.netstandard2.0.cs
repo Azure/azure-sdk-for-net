@@ -89,6 +89,10 @@ namespace Azure.ResourceManager
     public abstract partial class ArmOperation : Azure.Operation
     {
         protected ArmOperation() { }
+        public static Azure.ResourceManager.ArmOperation Rehydrate(Azure.ResourceManager.ArmClient client, Azure.Core.RehydrationToken rehydrationToken, Azure.ResourceManager.ArmClientOptions options = null) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RehydrateAsync(Azure.ResourceManager.ArmClient client, Azure.Core.RehydrationToken rehydrationToken, Azure.ResourceManager.ArmClientOptions options = null) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<T>> RehydrateAsync<T>(Azure.ResourceManager.ArmClient client, Azure.Core.RehydrationToken rehydrationToken, Azure.ResourceManager.ArmClientOptions options = null) where T : notnull { throw null; }
+        public static Azure.ResourceManager.ArmOperation<T> Rehydrate<T>(Azure.ResourceManager.ArmClient client, Azure.Core.RehydrationToken rehydrationToken, Azure.ResourceManager.ArmClientOptions options = null) where T : notnull { throw null; }
     }
     public abstract partial class ArmOperation<T> : Azure.Operation<T>
     {
