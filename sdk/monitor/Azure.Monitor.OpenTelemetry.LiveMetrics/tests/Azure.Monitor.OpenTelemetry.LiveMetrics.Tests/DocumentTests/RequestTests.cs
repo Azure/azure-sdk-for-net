@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             requestActivity.SetTag("url.query", "?q=OpenTelemetry");
             requestActivity.Stop();
 
-            var requestDocument = DocumentHelper.ConvertToRequest(requestActivity);
+            var requestDocument = DocumentHelper.ConvertToRequestDocument(requestActivity);
 
             // ASSERT
             Assert.Equal(DocumentType.Request, requestDocument.DocumentType);
@@ -97,7 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             // Assert
             var requestActivity = exportedActivities.First(x => x.Kind == ActivityKind.Server)!;
             PrintActivity(requestActivity);
-            var requestDocument = DocumentHelper.ConvertToRequest(requestActivity);
+            var requestDocument = DocumentHelper.ConvertToRequestDocument(requestActivity);
 
             Assert.Equal(DocumentType.Request, requestDocument.DocumentType);
             Assert.Equal(requestActivity.Duration.ToString("c"), requestDocument.Duration);

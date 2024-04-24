@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed issue where the `SupportOrdering` property was not being respected when set on `CreateTopicOptions`.
+
 ### Other Changes
 
 ## 7.17.5 (2024-04-09)
