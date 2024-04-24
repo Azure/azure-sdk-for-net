@@ -3507,7 +3507,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
         CreatedBy = "<createdBy>",
-        DateFormatter = new AtlasDateFormat
+        DateFormatter = new DateFormat
         {
             AvailableLocales = {"<availableLocales>"},
             Calendar = 123.45F,
@@ -3515,7 +3515,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             DateTimeInstance = default,
             Instance = default,
             Lenient = true,
-            NumberFormat = new AtlasNumberFormat
+            NumberFormat = new NumberFormat
             {
                 AvailableLocales = {"<availableLocales>"},
                 Currency = "<currency>",
@@ -3533,7 +3533,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
                 RoundingMode = RoundingMode.Up,
             },
             TimeInstance = default,
-            TimeZone = new AtlasTimeZone
+            TimeZone = new TimeZone
             {
                 DstSavings = 1234,
                 Id = "<id>",
@@ -3781,7 +3781,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
         CreatedBy = "<createdBy>",
-        DateFormatter = new AtlasDateFormat
+        DateFormatter = new DateFormat
         {
             AvailableLocales = {"<availableLocales>"},
             Calendar = 123.45F,
@@ -3789,7 +3789,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             DateTimeInstance = default,
             Instance = default,
             Lenient = true,
-            NumberFormat = new AtlasNumberFormat
+            NumberFormat = new NumberFormat
             {
                 AvailableLocales = {"<availableLocales>"},
                 Currency = "<currency>",
@@ -3807,7 +3807,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
                 RoundingMode = RoundingMode.Up,
             },
             TimeInstance = default,
-            TimeZone = new AtlasTimeZone
+            TimeZone = new TimeZone
             {
                 DstSavings = 1234,
                 Id = "<id>",
@@ -5397,7 +5397,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
         CreatedBy = "<createdBy>",
-        DateFormatter = new AtlasDateFormat
+        DateFormatter = new DateFormat
         {
             AvailableLocales = {"<availableLocales>"},
             Calendar = 123.45F,
@@ -5405,7 +5405,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             DateTimeInstance = default,
             Instance = default,
             Lenient = true,
-            NumberFormat = new AtlasNumberFormat
+            NumberFormat = new NumberFormat
             {
                 AvailableLocales = {"<availableLocales>"},
                 Currency = "<currency>",
@@ -5423,7 +5423,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
                 RoundingMode = RoundingMode.Up,
             },
             TimeInstance = default,
-            TimeZone = new AtlasTimeZone
+            TimeZone = new TimeZone
             {
                 DstSavings = 1234,
                 Id = "<id>",
@@ -5671,7 +5671,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
         CreatedBy = "<createdBy>",
-        DateFormatter = new AtlasDateFormat
+        DateFormatter = new DateFormat
         {
             AvailableLocales = {"<availableLocales>"},
             Calendar = 123.45F,
@@ -5679,7 +5679,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             DateTimeInstance = default,
             Instance = default,
             Lenient = true,
-            NumberFormat = new AtlasNumberFormat
+            NumberFormat = new NumberFormat
             {
                 AvailableLocales = {"<availableLocales>"},
                 Currency = "<currency>",
@@ -5697,7 +5697,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
                 RoundingMode = RoundingMode.Up,
             },
             TimeInstance = default,
-            TimeZone = new AtlasTimeZone
+            TimeZone = new TimeZone
             {
                 DstSavings = 1234,
                 Id = "<id>",
@@ -7287,7 +7287,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
         CreatedBy = "<createdBy>",
-        DateFormatter = new AtlasDateFormat
+        DateFormatter = new DateFormat
         {
             AvailableLocales = {"<availableLocales>"},
             Calendar = 123.45F,
@@ -7295,7 +7295,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             DateTimeInstance = default,
             Instance = default,
             Lenient = true,
-            NumberFormat = new AtlasNumberFormat
+            NumberFormat = new NumberFormat
             {
                 AvailableLocales = {"<availableLocales>"},
                 Currency = "<currency>",
@@ -7313,7 +7313,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
                 RoundingMode = RoundingMode.Up,
             },
             TimeInstance = default,
-            TimeZone = new AtlasTimeZone
+            TimeZone = new TimeZone
             {
                 DstSavings = 1234,
                 Id = "<id>",
@@ -7561,7 +7561,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
         Category = TypeCategory.Primitive,
         CreateTime = 1234L,
         CreatedBy = "<createdBy>",
-        DateFormatter = new AtlasDateFormat
+        DateFormatter = new DateFormat
         {
             AvailableLocales = {"<availableLocales>"},
             Calendar = 123.45F,
@@ -7569,7 +7569,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
             DateTimeInstance = default,
             Instance = default,
             Lenient = true,
-            NumberFormat = new AtlasNumberFormat
+            NumberFormat = new NumberFormat
             {
                 AvailableLocales = {"<availableLocales>"},
                 Currency = "<currency>",
@@ -7587,7 +7587,7 @@ AtlasTypesDef atlasTypesDef = new AtlasTypesDef
                 RoundingMode = RoundingMode.Up,
             },
             TimeInstance = default,
-            TimeZone = new AtlasTimeZone
+            TimeZone = new TimeZone
             {
                 DstSavings = 1234,
                 Id = "<id>",

@@ -50,30 +50,30 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get data using search. </summary>
-        /// <param name="queryConfig"> The search query of advanced search request. </param>
+        /// <param name="queryOptions"> The search query of advanced search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryConfig"/> is null. </exception>
-        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='QueryAsync(QueryConfig,CancellationToken)']/*" />
-        public virtual async Task<Response<QueryResult>> QueryAsync(QueryConfig queryConfig, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queryOptions"/> is null. </exception>
+        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='QueryAsync(QueryOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<QueryResult>> QueryAsync(QueryOptions queryOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(queryConfig, nameof(queryConfig));
+            Argument.AssertNotNull(queryOptions, nameof(queryOptions));
 
-            using RequestContent content = queryConfig.ToRequestContent();
+            using RequestContent content = queryOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await QueryAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(QueryResult.FromResponse(response), response);
         }
 
         /// <summary> Get data using search. </summary>
-        /// <param name="queryConfig"> The search query of advanced search request. </param>
+        /// <param name="queryOptions"> The search query of advanced search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryConfig"/> is null. </exception>
-        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Query(QueryConfig,CancellationToken)']/*" />
-        public virtual Response<QueryResult> Query(QueryConfig queryConfig, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queryOptions"/> is null. </exception>
+        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Query(QueryOptions,CancellationToken)']/*" />
+        public virtual Response<QueryResult> Query(QueryOptions queryOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(queryConfig, nameof(queryConfig));
+            Argument.AssertNotNull(queryOptions, nameof(queryOptions));
 
-            using RequestContent content = queryConfig.ToRequestContent();
+            using RequestContent content = queryOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Query(content, context);
             return Response.FromValue(QueryResult.FromResponse(response), response);
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="QueryAsync(QueryConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="QueryAsync(QueryOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -128,7 +128,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Query(QueryConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Query(QueryOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -158,30 +158,30 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get search suggestions by query criteria. </summary>
-        /// <param name="suggestConfig"> The payload of suggest request. </param>
+        /// <param name="suggestOptions"> The payload of suggest request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="suggestConfig"/> is null. </exception>
-        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='SuggestAsync(SuggestConfig,CancellationToken)']/*" />
-        public virtual async Task<Response<SuggestResult>> SuggestAsync(SuggestConfig suggestConfig, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="suggestOptions"/> is null. </exception>
+        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='SuggestAsync(SuggestOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<SuggestResult>> SuggestAsync(SuggestOptions suggestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(suggestConfig, nameof(suggestConfig));
+            Argument.AssertNotNull(suggestOptions, nameof(suggestOptions));
 
-            using RequestContent content = suggestConfig.ToRequestContent();
+            using RequestContent content = suggestOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await SuggestAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(SuggestResult.FromResponse(response), response);
         }
 
         /// <summary> Get search suggestions by query criteria. </summary>
-        /// <param name="suggestConfig"> The payload of suggest request. </param>
+        /// <param name="suggestOptions"> The payload of suggest request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="suggestConfig"/> is null. </exception>
-        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Suggest(SuggestConfig,CancellationToken)']/*" />
-        public virtual Response<SuggestResult> Suggest(SuggestConfig suggestConfig, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="suggestOptions"/> is null. </exception>
+        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Suggest(SuggestOptions,CancellationToken)']/*" />
+        public virtual Response<SuggestResult> Suggest(SuggestOptions suggestOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(suggestConfig, nameof(suggestConfig));
+            Argument.AssertNotNull(suggestOptions, nameof(suggestOptions));
 
-            using RequestContent content = suggestConfig.ToRequestContent();
+            using RequestContent content = suggestOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Suggest(content, context);
             return Response.FromValue(SuggestResult.FromResponse(response), response);
@@ -197,7 +197,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SuggestAsync(SuggestConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SuggestAsync(SuggestOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -236,7 +236,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Suggest(SuggestConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Suggest(SuggestOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -266,30 +266,30 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Get auto complete options. </summary>
-        /// <param name="autoCompleteConfig"> The payload of autocomplete request. </param>
+        /// <param name="autoCompleteOptions"> The payload of autocomplete request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoCompleteConfig"/> is null. </exception>
-        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoCompleteAsync(AutoCompleteConfig,CancellationToken)']/*" />
-        public virtual async Task<Response<AutoCompleteResult>> AutoCompleteAsync(AutoCompleteConfig autoCompleteConfig, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="autoCompleteOptions"/> is null. </exception>
+        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoCompleteAsync(AutoCompleteOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<AutoCompleteResult>> AutoCompleteAsync(AutoCompleteOptions autoCompleteOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(autoCompleteConfig, nameof(autoCompleteConfig));
+            Argument.AssertNotNull(autoCompleteOptions, nameof(autoCompleteOptions));
 
-            using RequestContent content = autoCompleteConfig.ToRequestContent();
+            using RequestContent content = autoCompleteOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AutoCompleteAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AutoCompleteResult.FromResponse(response), response);
         }
 
         /// <summary> Get auto complete options. </summary>
-        /// <param name="autoCompleteConfig"> The payload of autocomplete request. </param>
+        /// <param name="autoCompleteOptions"> The payload of autocomplete request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="autoCompleteConfig"/> is null. </exception>
-        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoComplete(AutoCompleteConfig,CancellationToken)']/*" />
-        public virtual Response<AutoCompleteResult> AutoComplete(AutoCompleteConfig autoCompleteConfig, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="autoCompleteOptions"/> is null. </exception>
+        /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoComplete(AutoCompleteOptions,CancellationToken)']/*" />
+        public virtual Response<AutoCompleteResult> AutoComplete(AutoCompleteOptions autoCompleteOptions, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(autoCompleteConfig, nameof(autoCompleteConfig));
+            Argument.AssertNotNull(autoCompleteOptions, nameof(autoCompleteOptions));
 
-            using RequestContent content = autoCompleteConfig.ToRequestContent();
+            using RequestContent content = autoCompleteOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AutoComplete(content, context);
             return Response.FromValue(AutoCompleteResult.FromResponse(response), response);
@@ -305,7 +305,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AutoCompleteAsync(AutoCompleteConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AutoCompleteAsync(AutoCompleteOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -344,7 +344,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AutoComplete(AutoCompleteConfig,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AutoComplete(AutoCompleteOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

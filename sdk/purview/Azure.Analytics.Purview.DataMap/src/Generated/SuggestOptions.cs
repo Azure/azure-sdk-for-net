@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The payload of suggest request. </summary>
-    public partial class SuggestConfig
+    public partial class SuggestOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SuggestConfig"/>. </summary>
-        public SuggestConfig()
+        /// <summary> Initializes a new instance of <see cref="SuggestOptions"/>. </summary>
+        public SuggestOptions()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SuggestConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuggestOptions"/>. </summary>
         /// <param name="keywords">
         /// The keywords applied to all fields that support suggest operation. It must be
         /// at least 1 character, and no more than 100 characters. In the index schema we
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="filter"> The filter for the search. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SuggestConfig(string keywords, int? limit, BinaryData filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SuggestOptions(string keywords, int? limit, BinaryData filter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Keywords = keywords;
             Limit = limit;

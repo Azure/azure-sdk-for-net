@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    /// <summary> The request payload for classification association. </summary>
-    public partial class ClassificationAssociateConfig
+    /// <summary> MoveEntitiesOptions. </summary>
+    public partial class MoveEntitiesOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +45,22 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClassificationAssociateConfig"/>. </summary>
-        public ClassificationAssociateConfig()
+        /// <summary> Initializes a new instance of <see cref="MoveEntitiesOptions"/>. </summary>
+        public MoveEntitiesOptions()
         {
             EntityGuids = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClassificationAssociateConfig"/>. </summary>
-        /// <param name="classification">
-        /// An instance of a classification; it doesn't have an identity, this object
-        /// exists only when associated with an entity.
-        /// </param>
-        /// <param name="entityGuids"> The GUID of the entity. </param>
+        /// <summary> Initializes a new instance of <see cref="MoveEntitiesOptions"/>. </summary>
+        /// <param name="entityGuids"> An array of entity guids to be moved to target collection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClassificationAssociateConfig(AtlasClassification classification, IList<string> entityGuids, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MoveEntitiesOptions(IList<string> entityGuids, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Classification = classification;
             EntityGuids = entityGuids;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// An instance of a classification; it doesn't have an identity, this object
-        /// exists only when associated with an entity.
-        /// </summary>
-        public AtlasClassification Classification { get; set; }
-        /// <summary> The GUID of the entity. </summary>
+        /// <summary> An array of entity guids to be moved to target collection. </summary>
         public IList<string> EntityGuids { get; }
     }
 }

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    public partial class AtlasNumberFormat : IUtf8JsonSerializable, IJsonModel<AtlasNumberFormat>
+    public partial class NumberFormat : IUtf8JsonSerializable, IJsonModel<NumberFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtlasNumberFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NumberFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AtlasNumberFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NumberFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NumberFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasNumberFormat)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NumberFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -119,19 +119,19 @@ namespace Azure.Analytics.Purview.DataMap
             writer.WriteEndObject();
         }
 
-        AtlasNumberFormat IJsonModel<AtlasNumberFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NumberFormat IJsonModel<NumberFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NumberFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasNumberFormat)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NumberFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAtlasNumberFormat(document.RootElement, options);
+            return DeserializeNumberFormat(document.RootElement, options);
         }
 
-        internal static AtlasNumberFormat DeserializeAtlasNumberFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NumberFormat DeserializeNumberFormat(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -141,17 +141,17 @@ namespace Azure.Analytics.Purview.DataMap
             }
             IList<string> availableLocales = default;
             string currency = default;
-            AtlasNumberFormat currencyInstance = default;
+            NumberFormat currencyInstance = default;
             bool? groupingUsed = default;
-            AtlasNumberFormat instance = default;
-            AtlasNumberFormat integerInstance = default;
+            NumberFormat instance = default;
+            NumberFormat integerInstance = default;
             int? maximumFractionDigits = default;
             int? maximumIntegerDigits = default;
             int? minimumFractionDigits = default;
             int? minimumIntegerDigits = default;
-            AtlasNumberFormat numberInstance = default;
+            NumberFormat numberInstance = default;
             bool? parseIntegerOnly = default;
-            AtlasNumberFormat percentInstance = default;
+            NumberFormat percentInstance = default;
             RoundingMode? roundingMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -182,7 +182,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    currencyInstance = DeserializeAtlasNumberFormat(property.Value, options);
+                    currencyInstance = DeserializeNumberFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("groupingUsed"u8))
@@ -200,7 +200,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    instance = DeserializeAtlasNumberFormat(property.Value, options);
+                    instance = DeserializeNumberFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("integerInstance"u8))
@@ -209,7 +209,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    integerInstance = DeserializeAtlasNumberFormat(property.Value, options);
+                    integerInstance = DeserializeNumberFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("maximumFractionDigits"u8))
@@ -254,7 +254,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    numberInstance = DeserializeAtlasNumberFormat(property.Value, options);
+                    numberInstance = DeserializeNumberFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("parseIntegerOnly"u8))
@@ -272,7 +272,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    percentInstance = DeserializeAtlasNumberFormat(property.Value, options);
+                    percentInstance = DeserializeNumberFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("roundingMode"u8))
@@ -290,7 +290,7 @@ namespace Azure.Analytics.Purview.DataMap
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AtlasNumberFormat(
+            return new NumberFormat(
                 availableLocales ?? new ChangeTrackingList<string>(),
                 currency,
                 currencyInstance,
@@ -308,43 +308,43 @@ namespace Azure.Analytics.Purview.DataMap
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AtlasNumberFormat>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NumberFormat>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NumberFormat>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasNumberFormat)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NumberFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AtlasNumberFormat IPersistableModel<AtlasNumberFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NumberFormat IPersistableModel<NumberFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AtlasNumberFormat>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NumberFormat>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAtlasNumberFormat(document.RootElement, options);
+                        return DeserializeNumberFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasNumberFormat)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NumberFormat)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AtlasNumberFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NumberFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AtlasNumberFormat FromResponse(Response response)
+        internal static NumberFormat FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAtlasNumberFormat(document.RootElement);
+            return DeserializeNumberFormat(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

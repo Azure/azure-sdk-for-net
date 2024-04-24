@@ -5072,7 +5072,7 @@ null
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
 CreatedBy = "<createdBy>",
-DateFormatter = new AtlasDateFormat
+DateFormatter = new DateFormat
 {
 AvailableLocales = {"<availableLocales>"},
 Calendar = 123.45F,
@@ -5080,7 +5080,7 @@ DateInstance = default,
 DateTimeInstance = default,
 Instance = default,
 Lenient = true,
-NumberFormat = new AtlasNumberFormat
+NumberFormat = new NumberFormat
 {
 AvailableLocales = {"<availableLocales>"},
 Currency = "<currency>",
@@ -5098,7 +5098,7 @@ PercentInstance = default,
 RoundingMode = RoundingMode.Up,
 },
 TimeInstance = default,
-TimeZone = new AtlasTimeZone
+TimeZone = new TimeZone
 {
 DstSavings = 1234,
 Id = "<id>",
@@ -5337,7 +5337,7 @@ AttributeDefs = {default},
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
 CreatedBy = "<createdBy>",
-DateFormatter = new AtlasDateFormat
+DateFormatter = new DateFormat
 {
 AvailableLocales = {"<availableLocales>"},
 Calendar = 123.45F,
@@ -5345,7 +5345,7 @@ DateInstance = default,
 DateTimeInstance = default,
 Instance = default,
 Lenient = true,
-NumberFormat = new AtlasNumberFormat
+NumberFormat = new NumberFormat
 {
 AvailableLocales = {"<availableLocales>"},
 Currency = "<currency>",
@@ -5363,7 +5363,7 @@ PercentInstance = default,
 RoundingMode = RoundingMode.Up,
 },
 TimeInstance = default,
-TimeZone = new AtlasTimeZone
+TimeZone = new TimeZone
 {
 DstSavings = 1234,
 Id = "<id>",
@@ -6974,7 +6974,7 @@ null
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
 CreatedBy = "<createdBy>",
-DateFormatter = new AtlasDateFormat
+DateFormatter = new DateFormat
 {
 AvailableLocales = {"<availableLocales>"},
 Calendar = 123.45F,
@@ -6982,7 +6982,7 @@ DateInstance = default,
 DateTimeInstance = default,
 Instance = default,
 Lenient = true,
-NumberFormat = new AtlasNumberFormat
+NumberFormat = new NumberFormat
 {
 AvailableLocales = {"<availableLocales>"},
 Currency = "<currency>",
@@ -7000,7 +7000,7 @@ PercentInstance = default,
 RoundingMode = RoundingMode.Up,
 },
 TimeInstance = default,
-TimeZone = new AtlasTimeZone
+TimeZone = new TimeZone
 {
 DstSavings = 1234,
 Id = "<id>",
@@ -7239,7 +7239,7 @@ AttributeDefs = {default},
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
 CreatedBy = "<createdBy>",
-DateFormatter = new AtlasDateFormat
+DateFormatter = new DateFormat
 {
 AvailableLocales = {"<availableLocales>"},
 Calendar = 123.45F,
@@ -7247,7 +7247,7 @@ DateInstance = default,
 DateTimeInstance = default,
 Instance = default,
 Lenient = true,
-NumberFormat = new AtlasNumberFormat
+NumberFormat = new NumberFormat
 {
 AvailableLocales = {"<availableLocales>"},
 Currency = "<currency>",
@@ -7265,7 +7265,7 @@ PercentInstance = default,
 RoundingMode = RoundingMode.Up,
 },
 TimeInstance = default,
-TimeZone = new AtlasTimeZone
+TimeZone = new TimeZone
 {
 DstSavings = 1234,
 Id = "<id>",
@@ -8208,7 +8208,7 @@ null
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
 CreatedBy = "<createdBy>",
-DateFormatter = new AtlasDateFormat
+DateFormatter = new DateFormat
 {
 AvailableLocales = {"<availableLocales>"},
 Calendar = 123.45F,
@@ -8216,7 +8216,7 @@ DateInstance = default,
 DateTimeInstance = default,
 Instance = default,
 Lenient = true,
-NumberFormat = new AtlasNumberFormat
+NumberFormat = new NumberFormat
 {
 AvailableLocales = {"<availableLocales>"},
 Currency = "<currency>",
@@ -8234,7 +8234,7 @@ PercentInstance = default,
 RoundingMode = RoundingMode.Up,
 },
 TimeInstance = default,
-TimeZone = new AtlasTimeZone
+TimeZone = new TimeZone
 {
 DstSavings = 1234,
 Id = "<id>",
@@ -8473,7 +8473,7 @@ AttributeDefs = {default},
 Category = TypeCategory.Primitive,
 CreateTime = 1234L,
 CreatedBy = "<createdBy>",
-DateFormatter = new AtlasDateFormat
+DateFormatter = new DateFormat
 {
 AvailableLocales = {"<availableLocales>"},
 Calendar = 123.45F,
@@ -8481,7 +8481,7 @@ DateInstance = default,
 DateTimeInstance = default,
 Instance = default,
 Lenient = true,
-NumberFormat = new AtlasNumberFormat
+NumberFormat = new NumberFormat
 {
 AvailableLocales = {"<availableLocales>"},
 Currency = "<currency>",
@@ -8499,7 +8499,7 @@ PercentInstance = default,
 RoundingMode = RoundingMode.Up,
 },
 TimeInstance = default,
-TimeZone = new AtlasTimeZone
+TimeZone = new TimeZone
 {
 DstSavings = 1234,
 Id = "<id>",

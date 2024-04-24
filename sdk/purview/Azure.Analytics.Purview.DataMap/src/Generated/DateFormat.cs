@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> The date format. </summary>
-    public partial class AtlasDateFormat
+    public partial class DateFormat
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AtlasDateFormat"/>. </summary>
-        public AtlasDateFormat()
+        /// <summary> Initializes a new instance of <see cref="DateFormat"/>. </summary>
+        public DateFormat()
         {
             AvailableLocales = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AtlasDateFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DateFormat"/>. </summary>
         /// <param name="availableLocales"> An array of available locales. </param>
         /// <param name="calendar"> Calendar. </param>
         /// <param name="dateInstance"> The date format. </param>
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="timeInstance"> The date format. </param>
         /// <param name="timeZone"> The timezone information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasDateFormat(IList<string> availableLocales, float? calendar, AtlasDateFormat dateInstance, AtlasDateFormat dateTimeInstance, AtlasDateFormat instance, bool? lenient, AtlasNumberFormat numberFormat, AtlasDateFormat timeInstance, AtlasTimeZone timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DateFormat(IList<string> availableLocales, float? calendar, DateFormat dateInstance, DateFormat dateTimeInstance, DateFormat instance, bool? lenient, NumberFormat numberFormat, DateFormat timeInstance, TimeZone timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AvailableLocales = availableLocales;
             Calendar = calendar;
@@ -81,18 +81,18 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Calendar. </summary>
         public float? Calendar { get; set; }
         /// <summary> The date format. </summary>
-        public AtlasDateFormat DateInstance { get; set; }
+        public DateFormat DateInstance { get; set; }
         /// <summary> The date format. </summary>
-        public AtlasDateFormat DateTimeInstance { get; set; }
+        public DateFormat DateTimeInstance { get; set; }
         /// <summary> The date format. </summary>
-        public AtlasDateFormat Instance { get; set; }
+        public DateFormat Instance { get; set; }
         /// <summary> Determines the leniency of the date format. </summary>
         public bool? Lenient { get; set; }
         /// <summary> The number format. </summary>
-        public AtlasNumberFormat NumberFormat { get; set; }
+        public NumberFormat NumberFormat { get; set; }
         /// <summary> The date format. </summary>
-        public AtlasDateFormat TimeInstance { get; set; }
+        public DateFormat TimeInstance { get; set; }
         /// <summary> The timezone information. </summary>
-        public AtlasTimeZone TimeZone { get; set; }
+        public TimeZone TimeZone { get; set; }
     }
 }
