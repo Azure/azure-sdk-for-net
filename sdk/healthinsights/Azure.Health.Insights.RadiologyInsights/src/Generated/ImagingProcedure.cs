@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="modality"> Modality : SNOMED CT code. </param>
         /// <param name="anatomy"> Anatomy : SNOMED CT code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modality"/> or <paramref name="anatomy"/> is null. </exception>
-        internal ImagingProcedure(FhirR4CodeableConcept modality, FhirR4CodeableConcept anatomy)
+        internal ImagingProcedure(CodeableConcept modality, CodeableConcept anatomy)
         {
             Argument.AssertNotNull(modality, nameof(modality));
             Argument.AssertNotNull(anatomy, nameof(anatomy));
@@ -65,7 +65,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="contrast"> Contrast : see RadiologyCodeWithTypes (below). </param>
         /// <param name="view"> View : see RadiologyCodeWithTypes (below). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImagingProcedure(FhirR4CodeableConcept modality, FhirR4CodeableConcept anatomy, FhirR4CodeableConcept laterality, RadiologyCodeWithTypes contrast, RadiologyCodeWithTypes view, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImagingProcedure(CodeableConcept modality, CodeableConcept anatomy, CodeableConcept laterality, RadiologyCodeWithTypes contrast, RadiologyCodeWithTypes view, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Modality = modality;
             Anatomy = anatomy;
@@ -81,11 +81,11 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Modality : SNOMED CT code. </summary>
-        public FhirR4CodeableConcept Modality { get; }
+        public CodeableConcept Modality { get; }
         /// <summary> Anatomy : SNOMED CT code. </summary>
-        public FhirR4CodeableConcept Anatomy { get; }
+        public CodeableConcept Anatomy { get; }
         /// <summary> Laterality : SNOMED CT code. </summary>
-        public FhirR4CodeableConcept Laterality { get; }
+        public CodeableConcept Laterality { get; }
         /// <summary> Contrast : see RadiologyCodeWithTypes (below). </summary>
         public RadiologyCodeWithTypes Contrast { get; }
         /// <summary> View : see RadiologyCodeWithTypes (below). </summary>

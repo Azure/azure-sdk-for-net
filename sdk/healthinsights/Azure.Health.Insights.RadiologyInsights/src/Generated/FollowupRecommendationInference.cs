@@ -53,7 +53,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// Please note <see cref="ProcedureRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GenericProcedureRecommendation"/> and <see cref="ImagingProcedureRecommendation"/>.
         /// </param>
-        internal FollowupRecommendationInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string effectiveDateTime, FhirR4Period effectivePeriod, IReadOnlyList<RecommendationFinding> findings, bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure) : base(kind, extension, serializedAdditionalRawData)
+        internal FollowupRecommendationInference(string kind, IReadOnlyList<Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string effectiveDateTime, Period effectivePeriod, IReadOnlyList<RecommendationFinding> findings, bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure) : base(kind, extension, serializedAdditionalRawData)
         {
             EffectiveDateTime = effectiveDateTime;
             EffectivePeriod = effectivePeriod;
@@ -73,7 +73,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Date and time are displayed when the procedure is recommended to be done at a specific point in time. </summary>
         public string EffectiveDateTime { get; }
         /// <summary> The period is shown if a specific period is mentioned, with a start and end date-time. </summary>
-        public FhirR4Period EffectivePeriod { get; }
+        public Period EffectivePeriod { get; }
         /// <summary> Findings related to the recommendation. </summary>
         public IReadOnlyList<RecommendationFinding> Findings { get; }
         /// <summary> The conditional value indicates whether or not the sentence containing the recommendation includes a conditional statement. Keywords for conditional statements include 'if', 'when', 'unless', and so on. </summary>

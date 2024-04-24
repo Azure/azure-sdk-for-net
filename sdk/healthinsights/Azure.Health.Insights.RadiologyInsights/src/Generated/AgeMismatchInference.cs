@@ -23,7 +23,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="kind"> Discriminator. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgeMismatchInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, extension, serializedAdditionalRawData)
+        internal AgeMismatchInference(string kind, IReadOnlyList<Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, extension, serializedAdditionalRawData)
         {
         }
     }

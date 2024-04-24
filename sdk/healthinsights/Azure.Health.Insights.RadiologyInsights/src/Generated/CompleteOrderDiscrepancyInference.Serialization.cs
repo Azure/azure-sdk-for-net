@@ -98,18 +98,18 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            FhirR4CodeableConcept orderType = default;
-            IReadOnlyList<FhirR4CodeableConcept> missingBodyParts = default;
-            IReadOnlyList<FhirR4CodeableConcept> missingBodyPartMeasurements = default;
+            CodeableConcept orderType = default;
+            IReadOnlyList<CodeableConcept> missingBodyParts = default;
+            IReadOnlyList<CodeableConcept> missingBodyPartMeasurements = default;
             string kind = default;
-            IReadOnlyList<FhirR4Extension> extension = default;
+            IReadOnlyList<Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("orderType"u8))
                 {
-                    orderType = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    orderType = CodeableConcept.DeserializeCodeableConcept(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("missingBodyParts"u8))
@@ -118,10 +118,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<FhirR4CodeableConcept> array = new List<FhirR4CodeableConcept>();
+                    List<CodeableConcept> array = new List<CodeableConcept>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(item, options));
+                        array.Add(CodeableConcept.DeserializeCodeableConcept(item, options));
                     }
                     missingBodyParts = array;
                     continue;
@@ -132,10 +132,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<FhirR4CodeableConcept> array = new List<FhirR4CodeableConcept>();
+                    List<CodeableConcept> array = new List<CodeableConcept>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(item, options));
+                        array.Add(CodeableConcept.DeserializeCodeableConcept(item, options));
                     }
                     missingBodyPartMeasurements = array;
                     continue;
@@ -151,10 +151,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<FhirR4Extension> array = new List<FhirR4Extension>();
+                    List<Extension> array = new List<Extension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4Extension.DeserializeFhirR4Extension(item, options));
+                        array.Add(RadiologyInsights.Extension.DeserializeExtension(item, options));
                     }
                     extension = array;
                     continue;
@@ -167,11 +167,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             serializedAdditionalRawData = rawDataDictionary;
             return new CompleteOrderDiscrepancyInference(
                 kind,
-                extension ?? new ChangeTrackingList<FhirR4Extension>(),
+                extension ?? new ChangeTrackingList<Extension>(),
                 serializedAdditionalRawData,
                 orderType,
-                missingBodyParts ?? new ChangeTrackingList<FhirR4CodeableConcept>(),
-                missingBodyPartMeasurements ?? new ChangeTrackingList<FhirR4CodeableConcept>());
+                missingBodyParts ?? new ChangeTrackingList<CodeableConcept>(),
+                missingBodyPartMeasurements ?? new ChangeTrackingList<CodeableConcept>());
         }
 
         BinaryData IPersistableModel<CompleteOrderDiscrepancyInference>.Write(ModelReaderWriterOptions options)

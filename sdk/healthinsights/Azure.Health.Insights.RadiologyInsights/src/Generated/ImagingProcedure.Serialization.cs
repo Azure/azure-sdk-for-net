@@ -83,9 +83,9 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            FhirR4CodeableConcept modality = default;
-            FhirR4CodeableConcept anatomy = default;
-            FhirR4CodeableConcept laterality = default;
+            CodeableConcept modality = default;
+            CodeableConcept anatomy = default;
+            CodeableConcept laterality = default;
             RadiologyCodeWithTypes contrast = default;
             RadiologyCodeWithTypes view = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -94,12 +94,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 if (property.NameEquals("modality"u8))
                 {
-                    modality = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    modality = CodeableConcept.DeserializeCodeableConcept(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("anatomy"u8))
                 {
-                    anatomy = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    anatomy = CodeableConcept.DeserializeCodeableConcept(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("laterality"u8))
@@ -108,7 +108,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    laterality = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    laterality = CodeableConcept.DeserializeCodeableConcept(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("contrast"u8))

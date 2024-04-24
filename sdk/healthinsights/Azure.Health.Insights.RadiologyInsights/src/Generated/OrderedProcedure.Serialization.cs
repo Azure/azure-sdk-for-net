@@ -84,8 +84,8 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            IList<FhirR4Extension> extension = default;
-            FhirR4CodeableConcept code = default;
+            IList<Extension> extension = default;
+            CodeableConcept code = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -97,10 +97,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<FhirR4Extension> array = new List<FhirR4Extension>();
+                    List<Extension> array = new List<Extension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4Extension.DeserializeFhirR4Extension(item, options));
+                        array.Add(RadiologyInsights.Extension.DeserializeExtension(item, options));
                     }
                     extension = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    code = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    code = CodeableConcept.DeserializeCodeableConcept(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -125,7 +125,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OrderedProcedure(extension ?? new ChangeTrackingList<FhirR4Extension>(), code, description, serializedAdditionalRawData);
+            return new OrderedProcedure(extension ?? new ChangeTrackingList<Extension>(), code, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrderedProcedure>.Write(ModelReaderWriterOptions options)

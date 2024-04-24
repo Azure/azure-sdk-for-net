@@ -92,7 +92,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 return null;
             }
             string id = default;
-            PatientDetails info = default;
+            PatientInfo info = default;
             IList<Encounter> encounters = default;
             IList<PatientDocument> patientDocuments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -110,7 +110,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    info = PatientDetails.DeserializePatientDetails(property.Value, options);
+                    info = PatientInfo.DeserializePatientInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encounters"u8))

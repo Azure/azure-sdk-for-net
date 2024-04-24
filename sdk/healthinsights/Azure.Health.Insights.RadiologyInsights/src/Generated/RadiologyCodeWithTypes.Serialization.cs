@@ -73,23 +73,23 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            FhirR4CodeableConcept code = default;
-            IReadOnlyList<FhirR4CodeableConcept> types = default;
+            CodeableConcept code = default;
+            IReadOnlyList<CodeableConcept> types = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
                 {
-                    code = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    code = CodeableConcept.DeserializeCodeableConcept(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("types"u8))
                 {
-                    List<FhirR4CodeableConcept> array = new List<FhirR4CodeableConcept>();
+                    List<CodeableConcept> array = new List<CodeableConcept>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(item, options));
+                        array.Add(CodeableConcept.DeserializeCodeableConcept(item, options));
                     }
                     types = array;
                     continue;

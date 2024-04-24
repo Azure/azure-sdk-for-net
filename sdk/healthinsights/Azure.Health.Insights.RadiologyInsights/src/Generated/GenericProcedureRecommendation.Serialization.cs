@@ -73,7 +73,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            FhirR4CodeableConcept code = default;
+            CodeableConcept code = default;
             string description = default;
             string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -82,7 +82,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 if (property.NameEquals("code"u8))
                 {
-                    code = FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(property.Value, options);
+                    code = CodeableConcept.DeserializeCodeableConcept(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))

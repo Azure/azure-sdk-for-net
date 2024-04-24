@@ -16,14 +16,14 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="CompleteOrderDiscrepancyInference"/>. </summary>
         /// <param name="orderType"> Order type : CPT ultrasound complete code for abdomen, retroperitoneal, pelvis or breast. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="orderType"/> is null. </exception>
-        internal CompleteOrderDiscrepancyInference(FhirR4CodeableConcept orderType)
+        internal CompleteOrderDiscrepancyInference(CodeableConcept orderType)
         {
             Argument.AssertNotNull(orderType, nameof(orderType));
 
             Kind = "completeOrderDiscrepancy";
             OrderType = orderType;
-            MissingBodyParts = new ChangeTrackingList<FhirR4CodeableConcept>();
-            MissingBodyPartMeasurements = new ChangeTrackingList<FhirR4CodeableConcept>();
+            MissingBodyParts = new ChangeTrackingList<CodeableConcept>();
+            MissingBodyPartMeasurements = new ChangeTrackingList<CodeableConcept>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CompleteOrderDiscrepancyInference"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="orderType"> Order type : CPT ultrasound complete code for abdomen, retroperitoneal, pelvis or breast. </param>
         /// <param name="missingBodyParts"> List of missing body parts required by a complete order : SNOMED CT codes. </param>
         /// <param name="missingBodyPartMeasurements"> List of missing body parts that require measurement by a complete order : SNOMED CT codes. </param>
-        internal CompleteOrderDiscrepancyInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4CodeableConcept orderType, IReadOnlyList<FhirR4CodeableConcept> missingBodyParts, IReadOnlyList<FhirR4CodeableConcept> missingBodyPartMeasurements) : base(kind, extension, serializedAdditionalRawData)
+        internal CompleteOrderDiscrepancyInference(string kind, IReadOnlyList<Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, CodeableConcept orderType, IReadOnlyList<CodeableConcept> missingBodyParts, IReadOnlyList<CodeableConcept> missingBodyPartMeasurements) : base(kind, extension, serializedAdditionalRawData)
         {
             OrderType = orderType;
             MissingBodyParts = missingBodyParts;
@@ -46,10 +46,10 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Order type : CPT ultrasound complete code for abdomen, retroperitoneal, pelvis or breast. </summary>
-        public FhirR4CodeableConcept OrderType { get; }
+        public CodeableConcept OrderType { get; }
         /// <summary> List of missing body parts required by a complete order : SNOMED CT codes. </summary>
-        public IReadOnlyList<FhirR4CodeableConcept> MissingBodyParts { get; }
+        public IReadOnlyList<CodeableConcept> MissingBodyParts { get; }
         /// <summary> List of missing body parts that require measurement by a complete order : SNOMED CT codes. </summary>
-        public IReadOnlyList<FhirR4CodeableConcept> MissingBodyPartMeasurements { get; }
+        public IReadOnlyList<CodeableConcept> MissingBodyPartMeasurements { get; }
     }
 }

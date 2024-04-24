@@ -83,7 +83,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            IReadOnlyList<FhirR4CodeableConcept> procedureCodes = default;
+            IReadOnlyList<CodeableConcept> procedureCodes = default;
             IReadOnlyList<ImagingProcedure> imagingProcedures = default;
             string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -96,10 +96,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<FhirR4CodeableConcept> array = new List<FhirR4CodeableConcept>();
+                    List<CodeableConcept> array = new List<CodeableConcept>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4CodeableConcept.DeserializeFhirR4CodeableConcept(item, options));
+                        array.Add(CodeableConcept.DeserializeCodeableConcept(item, options));
                     }
                     procedureCodes = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ImagingProcedureRecommendation(kind, serializedAdditionalRawData, procedureCodes ?? new ChangeTrackingList<FhirR4CodeableConcept>(), imagingProcedures);
+            return new ImagingProcedureRecommendation(kind, serializedAdditionalRawData, procedureCodes ?? new ChangeTrackingList<CodeableConcept>(), imagingProcedures);
         }
 
         BinaryData IPersistableModel<ImagingProcedureRecommendation>.Write(ModelReaderWriterOptions options)

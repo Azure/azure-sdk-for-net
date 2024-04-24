@@ -59,7 +59,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="description"> Description : medical problem. </param>
         /// <param name="finding"> Finding linked to the critical result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CriticalResult(string description, FhirR4Observation finding, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CriticalResult(string description, Observation finding, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             Finding = finding;
@@ -74,6 +74,6 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Description : medical problem. </summary>
         public string Description { get; }
         /// <summary> Finding linked to the critical result. </summary>
-        public FhirR4Observation Finding { get; }
+        public Observation Finding { get; }
     }
 }

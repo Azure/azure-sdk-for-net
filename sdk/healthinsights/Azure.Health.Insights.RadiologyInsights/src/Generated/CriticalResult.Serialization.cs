@@ -72,7 +72,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 return null;
             }
             string description = default;
-            FhirR4Observation finding = default;
+            Observation finding = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    finding = FhirR4Observation.DeserializeFhirR4Observation(property.Value, options);
+                    finding = Observation.DeserializeObservation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

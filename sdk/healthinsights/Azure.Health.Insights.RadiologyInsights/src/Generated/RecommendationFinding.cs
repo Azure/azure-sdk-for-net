@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="recommendationFindingStatus"> Recommendation finding status. </param>
         internal RecommendationFinding(RecommendationFindingStatusType recommendationFindingStatus)
         {
-            Extension = new ChangeTrackingList<FhirR4Extension>();
+            Extension = new ChangeTrackingList<Extension>();
             RecommendationFindingStatus = recommendationFindingStatus;
         }
 
@@ -59,7 +59,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="criticalFinding"> Critical result linked to a recommendation. </param>
         /// <param name="recommendationFindingStatus"> Recommendation finding status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationFinding(IReadOnlyList<FhirR4Extension> extension, FhirR4Observation finding, CriticalResult criticalFinding, RecommendationFindingStatusType recommendationFindingStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecommendationFinding(IReadOnlyList<Extension> extension, Observation finding, CriticalResult criticalFinding, RecommendationFindingStatusType recommendationFindingStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Extension = extension;
             Finding = finding;
@@ -74,9 +74,9 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Additional Content defined by implementations. </summary>
-        public IReadOnlyList<FhirR4Extension> Extension { get; }
+        public IReadOnlyList<Extension> Extension { get; }
         /// <summary> Finding linked to a recommendation. </summary>
-        public FhirR4Observation Finding { get; }
+        public Observation Finding { get; }
         /// <summary> Critical result linked to a recommendation. </summary>
         public CriticalResult CriticalFinding { get; }
         /// <summary> Recommendation finding status. </summary>

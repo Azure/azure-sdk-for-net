@@ -16,7 +16,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="FindingInference"/>. </summary>
         /// <param name="finding"> Finding data : contains extensions, fields and components linked with the finding. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="finding"/> is null. </exception>
-        internal FindingInference(FhirR4Observation finding)
+        internal FindingInference(Observation finding)
         {
             Argument.AssertNotNull(finding, nameof(finding));
 
@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="finding"> Finding data : contains extensions, fields and components linked with the finding. </param>
-        internal FindingInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4Observation finding) : base(kind, extension, serializedAdditionalRawData)
+        internal FindingInference(string kind, IReadOnlyList<Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, Observation finding) : base(kind, extension, serializedAdditionalRawData)
         {
             Finding = finding;
         }
@@ -40,6 +40,6 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Finding data : contains extensions, fields and components linked with the finding. </summary>
-        public FhirR4Observation Finding { get; }
+        public Observation Finding { get; }
     }
 }

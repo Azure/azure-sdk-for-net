@@ -27,7 +27,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lateralityIndication"> Laterality indication : SNOMED CT code for laterality qualifier value. </param>
         /// <param name="discrepancyType"> Mismatch type : orderLateralityMismatch, textLateralityContradiction, textLateralityMissing. </param>
-        internal LateralityDiscrepancyInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4CodeableConcept lateralityIndication, LateralityDiscrepancyType discrepancyType) : base(kind, extension, serializedAdditionalRawData)
+        internal LateralityDiscrepancyInference(string kind, IReadOnlyList<Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, CodeableConcept lateralityIndication, LateralityDiscrepancyType discrepancyType) : base(kind, extension, serializedAdditionalRawData)
         {
             LateralityIndication = lateralityIndication;
             DiscrepancyType = discrepancyType;
@@ -39,7 +39,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Laterality indication : SNOMED CT code for laterality qualifier value. </summary>
-        public FhirR4CodeableConcept LateralityIndication { get; }
+        public CodeableConcept LateralityIndication { get; }
         /// <summary> Mismatch type : orderLateralityMismatch, textLateralityContradiction, textLateralityMissing. </summary>
         public LateralityDiscrepancyType DiscrepancyType { get; }
     }

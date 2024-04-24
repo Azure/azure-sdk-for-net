@@ -86,8 +86,8 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            IReadOnlyList<FhirR4Extension> extension = default;
-            FhirR4Observation finding = default;
+            IReadOnlyList<Extension> extension = default;
+            Observation finding = default;
             CriticalResult criticalFinding = default;
             RecommendationFindingStatusType recommendationFindingStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,10 +100,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<FhirR4Extension> array = new List<FhirR4Extension>();
+                    List<Extension> array = new List<Extension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4Extension.DeserializeFhirR4Extension(item, options));
+                        array.Add(RadiologyInsights.Extension.DeserializeExtension(item, options));
                     }
                     extension = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    finding = FhirR4Observation.DeserializeFhirR4Observation(property.Value, options);
+                    finding = Observation.DeserializeObservation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("criticalFinding"u8))
@@ -137,7 +137,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RecommendationFinding(extension ?? new ChangeTrackingList<FhirR4Extension>(), finding, criticalFinding, recommendationFindingStatus, serializedAdditionalRawData);
+            return new RecommendationFinding(extension ?? new ChangeTrackingList<Extension>(), finding, criticalFinding, recommendationFindingStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendationFinding>.Write(ModelReaderWriterOptions options)

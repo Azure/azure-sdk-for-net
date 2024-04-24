@@ -62,14 +62,14 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="RadiologyInsightsInference"/>. </summary>
         protected RadiologyInsightsInference()
         {
-            Extension = new ChangeTrackingList<FhirR4Extension>();
+            Extension = new ChangeTrackingList<Extension>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RadiologyInsightsInference"/>. </summary>
         /// <param name="kind"> Discriminator. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RadiologyInsightsInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RadiologyInsightsInference(string kind, IReadOnlyList<Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             Extension = extension;
@@ -79,6 +79,6 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Discriminator. </summary>
         internal string Kind { get; set; }
         /// <summary> Additional Content defined by implementations. </summary>
-        public IReadOnlyList<FhirR4Extension> Extension { get; }
+        public IReadOnlyList<Extension> Extension { get; }
     }
 }

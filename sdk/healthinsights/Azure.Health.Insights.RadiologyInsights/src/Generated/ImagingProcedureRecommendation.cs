@@ -22,7 +22,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             Argument.AssertNotNull(imagingProcedures, nameof(imagingProcedures));
 
             Kind = "imagingProcedureRecommendation";
-            ProcedureCodes = new ChangeTrackingList<FhirR4CodeableConcept>();
+            ProcedureCodes = new ChangeTrackingList<CodeableConcept>();
             ImagingProcedures = imagingProcedures.ToList();
         }
 
@@ -31,7 +31,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="procedureCodes"> LOINC codes for the procedure. </param>
         /// <param name="imagingProcedures"> Imaging procedures. </param>
-        internal ImagingProcedureRecommendation(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<FhirR4CodeableConcept> procedureCodes, IReadOnlyList<ImagingProcedure> imagingProcedures) : base(kind, serializedAdditionalRawData)
+        internal ImagingProcedureRecommendation(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<CodeableConcept> procedureCodes, IReadOnlyList<ImagingProcedure> imagingProcedures) : base(kind, serializedAdditionalRawData)
         {
             ProcedureCodes = procedureCodes;
             ImagingProcedures = imagingProcedures;
@@ -43,7 +43,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> LOINC codes for the procedure. </summary>
-        public IReadOnlyList<FhirR4CodeableConcept> ProcedureCodes { get; }
+        public IReadOnlyList<CodeableConcept> ProcedureCodes { get; }
         /// <summary> Imaging procedures. </summary>
         public IReadOnlyList<ImagingProcedure> ImagingProcedures { get; }
     }

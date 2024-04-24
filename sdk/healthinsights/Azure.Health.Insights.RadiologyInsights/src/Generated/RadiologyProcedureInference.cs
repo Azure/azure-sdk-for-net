@@ -24,7 +24,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             Argument.AssertNotNull(orderedProcedure, nameof(orderedProcedure));
 
             Kind = "radiologyProcedure";
-            ProcedureCodes = new ChangeTrackingList<FhirR4CodeableConcept>();
+            ProcedureCodes = new ChangeTrackingList<CodeableConcept>();
             ImagingProcedures = imagingProcedures.ToList();
             OrderedProcedure = orderedProcedure;
         }
@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="procedureCodes"> LOINC codes for the procedure. </param>
         /// <param name="imagingProcedures"> Imaging procedures. </param>
         /// <param name="orderedProcedure"> Ordered procedure information from the document information or text. </param>
-        internal RadiologyProcedureInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<FhirR4CodeableConcept> procedureCodes, IReadOnlyList<ImagingProcedure> imagingProcedures, OrderedProcedure orderedProcedure) : base(kind, extension, serializedAdditionalRawData)
+        internal RadiologyProcedureInference(string kind, IReadOnlyList<Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<CodeableConcept> procedureCodes, IReadOnlyList<ImagingProcedure> imagingProcedures, OrderedProcedure orderedProcedure) : base(kind, extension, serializedAdditionalRawData)
         {
             ProcedureCodes = procedureCodes;
             ImagingProcedures = imagingProcedures;
@@ -49,7 +49,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> LOINC codes for the procedure. </summary>
-        public IReadOnlyList<FhirR4CodeableConcept> ProcedureCodes { get; }
+        public IReadOnlyList<CodeableConcept> ProcedureCodes { get; }
         /// <summary> Imaging procedures. </summary>
         public IReadOnlyList<ImagingProcedure> ImagingProcedures { get; }
         /// <summary> Ordered procedure information from the document information or text. </summary>

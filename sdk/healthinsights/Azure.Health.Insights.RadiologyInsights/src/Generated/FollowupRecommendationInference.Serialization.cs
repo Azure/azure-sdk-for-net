@@ -107,7 +107,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 return null;
             }
             string effectiveDateTime = default;
-            FhirR4Period effectivePeriod = default;
+            Period effectivePeriod = default;
             IReadOnlyList<RecommendationFinding> findings = default;
             bool isConditional = default;
             bool isOption = default;
@@ -115,7 +115,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             bool isHedging = default;
             ProcedureRecommendation recommendedProcedure = default;
             string kind = default;
-            IReadOnlyList<FhirR4Extension> extension = default;
+            IReadOnlyList<Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    effectivePeriod = FhirR4Period.DeserializeFhirR4Period(property.Value, options);
+                    effectivePeriod = Period.DeserializePeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("findings"u8))
@@ -184,10 +184,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<FhirR4Extension> array = new List<FhirR4Extension>();
+                    List<Extension> array = new List<Extension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4Extension.DeserializeFhirR4Extension(item, options));
+                        array.Add(RadiologyInsights.Extension.DeserializeExtension(item, options));
                     }
                     extension = array;
                     continue;
@@ -200,7 +200,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             serializedAdditionalRawData = rawDataDictionary;
             return new FollowupRecommendationInference(
                 kind,
-                extension ?? new ChangeTrackingList<FhirR4Extension>(),
+                extension ?? new ChangeTrackingList<Extension>(),
                 serializedAdditionalRawData,
                 effectiveDateTime,
                 effectivePeriod,

@@ -771,20 +771,20 @@ value = "<value>",
             {
 new PatientRecord("<id>")
 {
-Info = new PatientDetails
+Info = new PatientInfo
 {
 Sex = PatientSex.Female,
 BirthDate = DateTimeOffset.Parse("2022-05-10"),
-ClinicalInfo = {new FhirR4Resource("<resourceType>")
+ClinicalInfo = {new Resource("<resourceType>")
 {
 Id = "<id>",
-Meta = new FhirR4Meta
+Meta = new Meta
 {
 VersionId = "<versionId>",
 LastUpdated = "<lastUpdated>",
 Source = "<source>",
 Profile = {"<profile>"},
-Security = {new FhirR4Coding
+Security = {new Coding
 {
 System = "<system>",
 Version = "<version>",
@@ -868,20 +868,20 @@ EncounterId = "<encounterId>",
             {
 new PatientRecord("<id>")
 {
-Info = new PatientDetails
+Info = new PatientInfo
 {
 Sex = PatientSex.Female,
 BirthDate = DateTimeOffset.Parse("2022-05-10"),
-ClinicalInfo = {new FhirR4Resource("<resourceType>")
+ClinicalInfo = {new Resource("<resourceType>")
 {
 Id = "<id>",
-Meta = new FhirR4Meta
+Meta = new Meta
 {
 VersionId = "<versionId>",
 LastUpdated = "<lastUpdated>",
 Source = "<source>",
 Profile = {"<profile>"},
-Security = {new FhirR4Coding
+Security = {new Coding
 {
 System = "<system>",
 Version = "<version>",

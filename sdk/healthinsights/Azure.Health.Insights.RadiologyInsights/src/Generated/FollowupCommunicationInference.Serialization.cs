@@ -102,7 +102,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             IReadOnlyList<MedicalProfessionalType> recipient = default;
             bool wasAcknowledged = default;
             string kind = default;
-            IReadOnlyList<FhirR4Extension> extension = default;
+            IReadOnlyList<Extension> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,10 +151,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<FhirR4Extension> array = new List<FhirR4Extension>();
+                    List<Extension> array = new List<Extension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4Extension.DeserializeFhirR4Extension(item, options));
+                        array.Add(RadiologyInsights.Extension.DeserializeExtension(item, options));
                     }
                     extension = array;
                     continue;
@@ -167,7 +167,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             serializedAdditionalRawData = rawDataDictionary;
             return new FollowupCommunicationInference(
                 kind,
-                extension ?? new ChangeTrackingList<FhirR4Extension>(),
+                extension ?? new ChangeTrackingList<Extension>(),
                 serializedAdditionalRawData,
                 dateTime ?? new ChangeTrackingList<DateTimeOffset>(),
                 recipient ?? new ChangeTrackingList<MedicalProfessionalType>(),

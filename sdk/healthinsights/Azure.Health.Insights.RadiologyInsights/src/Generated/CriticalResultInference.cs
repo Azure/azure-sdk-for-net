@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="result"> The complete Critical Result, as outlined below, will be reused for the recommendation. </param>
-        internal CriticalResultInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, CriticalResult result) : base(kind, extension, serializedAdditionalRawData)
+        internal CriticalResultInference(string kind, IReadOnlyList<Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, CriticalResult result) : base(kind, extension, serializedAdditionalRawData)
         {
             Result = result;
         }

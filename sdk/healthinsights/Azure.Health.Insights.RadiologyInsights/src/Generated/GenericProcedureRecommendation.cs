@@ -16,7 +16,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <summary> Initializes a new instance of <see cref="GenericProcedureRecommendation"/>. </summary>
         /// <param name="code"> Procedure modality : SNOMED CT code. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
-        internal GenericProcedureRecommendation(FhirR4CodeableConcept code)
+        internal GenericProcedureRecommendation(CodeableConcept code)
         {
             Argument.AssertNotNull(code, nameof(code));
 
@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="code"> Procedure modality : SNOMED CT code. </param>
         /// <param name="description"> Procedure description : MANAGEMENT PROCEDURE (PROCEDURE) or CONSULTATION (PROCEDURE) based on SNOMED CT. </param>
-        internal GenericProcedureRecommendation(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4CodeableConcept code, string description) : base(kind, serializedAdditionalRawData)
+        internal GenericProcedureRecommendation(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, CodeableConcept code, string description) : base(kind, serializedAdditionalRawData)
         {
             Code = code;
             Description = description;
@@ -41,7 +41,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Procedure modality : SNOMED CT code. </summary>
-        public FhirR4CodeableConcept Code { get; }
+        public CodeableConcept Code { get; }
         /// <summary> Procedure description : MANAGEMENT PROCEDURE (PROCEDURE) or CONSULTATION (PROCEDURE) based on SNOMED CT. </summary>
         public string Description { get; }
     }
