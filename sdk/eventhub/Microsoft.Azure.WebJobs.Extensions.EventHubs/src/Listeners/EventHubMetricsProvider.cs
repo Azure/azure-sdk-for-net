@@ -162,9 +162,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
             }
 
             // Legacy checkpoint support
-            if (checkpoint != null && checkpoint.Offset == null && partitionInfo.LastEnqueuedSequenceNumber >= 0)
+            if (checkpoint != null && checkpoint.Offset == null && partitionInfo.LastEnqueuedSequenceNumber == 0)
             {
-                return partitionInfo.LastEnqueuedSequenceNumber + 1;
+                return 1;
             }
 
             var startingSequenceNumber = checkpoint?.SequenceNumber switch
