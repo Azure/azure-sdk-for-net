@@ -1,0 +1,12 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Health.Insights.RadiologyInsights",
+  "library-name": "Azure.Health.Insights.RadiologyInsights",
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/HealthInsights.RadiologyInsights/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/HealthInsights.RadiologyInsights/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "model-namespace": false,
+  "flavor": "azure",
+  "use-model-reader-writer": true
+}
