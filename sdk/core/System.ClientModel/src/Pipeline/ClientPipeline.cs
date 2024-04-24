@@ -104,6 +104,8 @@ public sealed partial class ClientPipeline
         Argument.AssertNotNull(options, nameof(options));
 
         options.Freeze();
+        var diagnosticsOptions = options.Diagnostics;
+        var isLoggingEnabled = diagnosticsOptions?.IsLoggingEnabled ?? true;
 
         // Add length of client-specific policies.
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
@@ -114,8 +116,12 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
-        pipelineLength++; // for logging policy
         pipelineLength++; // for transport
+
+        if (isLoggingEnabled)
+        {
+            pipelineLength++; // for logging policy
+        }
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
 
@@ -148,15 +154,17 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        var diagnosticsOptions = options.Diagnostics ?? new DiagnosticsOptions();
-        var loggingPolicy = options.LoggingPolicy ?? new ClientLoggingPolicy(options: diagnosticsOptions);
-        if (loggingPolicy is ClientLoggingPolicy clientLoggingPolicy)
+        if (isLoggingEnabled)
         {
-            var loggedHeaders = diagnosticsOptions.LoggedHeaderNames?.ToArray() ?? Array.Empty<string>();
-            var loggedQueries = diagnosticsOptions.LoggedQueryParameters?.ToArray() ?? Array.Empty<string>();
-            clientLoggingPolicy.Sanitizer = new PipelineMessageSanitizer(loggedQueries, loggedHeaders);
+            var loggingPolicy = options.LoggingPolicy ?? new ClientLoggingPolicy(options: diagnosticsOptions);
+            if (loggingPolicy is ClientLoggingPolicy clientLoggingPolicy)
+            {
+                var loggedHeaders = diagnosticsOptions?.LoggedHeaderNames?.ToArray() ?? Array.Empty<string>();
+                var loggedQueries = diagnosticsOptions?.LoggedQueryParameters?.ToArray() ?? Array.Empty<string>();
+                clientLoggingPolicy.Sanitizer = new PipelineMessageSanitizer(loggedQueries, loggedHeaders);
+            }
+            policies[index++] = loggingPolicy;
         }
-        policies[index++] = loggingPolicy;
 
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
