@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         protected string accountName = "sample-test-wcus";
         protected string profileName = "testProfileB";
 
-        protected TrustedSigningAccountTests(bool isAsync) : base(isAsync)
+        public TrustedSigningAccountTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -34,36 +34,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
             TrustedSigningAccountNameAvailabilityContent body = new TrustedSigningAccountNameAvailabilityContent(accountName, new ResourceType("Microsoft.CodeSigning/codeSigningAccounts"));
             TrustedSigningAccountNameAvailabilityResult result = await DefaultSubscription.CheckTrustedSigningAccountNameAvailabilityAsync(body);
 
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            CheckNameAvailability body = new CheckNameAvailability("sample-account");
-            CheckNameAvailabilityResult result = await subscriptionResource.CheckNameAvailabilityCodeSigningAccountAsync(body);
-
-            Assert.IsTrue(result.NameAvailable);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task GetCodeSigningAccounts_ListsTrustedSigningAccountsWithinASubscription()
-        {
-            TokenCredential cred = TestEnvironment.Credential;
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CodeSigningAccountResource item in subscriptionResource.GetCodeSigningAccountsAsync())
-            {
-                CodeSigningAccountData resourceData = item.Data;
-                Assert.IsNotNull(resourceData.Id);
-            }
+            Assert.IsTrue(result.IsNameAvailable);
         }
 
         // Get a Trusted Signing Account
@@ -73,8 +44,9 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         {
             TrustedSigningAccountCollection collection = await GetTrustedSigningAccounts();
 
-            ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
+            string accountName = Recording.GenerateAssetName("account-");
+            TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
+            Assert.IsNotNull(account);
 
             TrustedSigningAccountResource accountResource = Client.GetTrustedSigningAccountResource(account.Id);
             TrustedSigningAccountResource result = await accountResource.GetAsync();
@@ -89,13 +61,14 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         {
             TrustedSigningAccountCollection collection = await GetTrustedSigningAccounts();
 
-            ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
+            string accountName = Recording.GenerateAssetName("account-");
+            TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
+            Assert.IsNotNull(account);
 
             // invoke the operation
             TrustedSigningAccountPatch patch = new TrustedSigningAccountPatch()
             {
-                Tags = { ["key1"] = "value1"}
+                Tags = { ["key1"] = "value1" }
             };
             ArmOperation<TrustedSigningAccountResource> lro = await account.UpdateAsync(WaitUntil.Completed, patch);
             TrustedSigningAccountResource result = lro.Value;
@@ -112,8 +85,9 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         {
             TrustedSigningAccountCollection collection = await GetTrustedSigningAccounts();
 
-            ResourceIdentifier codeSigningAccountResourceId = CodeSigningAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            CodeSigningAccountResource codeSigningAccount = client.GetCodeSigningAccountResource(codeSigningAccountResourceId);
+            string accountName = Recording.GenerateAssetName("account-");
+            TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
+            Assert.IsNotNull(account);
 
             ArmOperation op = await account.DeleteAsync(WaitUntil.Completed);
             Assert.IsTrue(op.HasCompleted);
@@ -123,15 +97,7 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         [RecordedTest]
         public async Task GetAll_ListsTrustedSigningAccountsWithinAResourceGroup()
         {
-            TokenCredential cred = TestEnvironment.Credential;
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            TrustedSigningAccountCollection collection = await GetTrustedSigningAccounts();
 
             string accountName = Recording.GenerateAssetName("account-");
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
@@ -156,15 +122,15 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         {
             TrustedSigningAccountCollection collection = await GetTrustedSigningAccounts();
 
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string accountName = Recording.GenerateAssetName("account-");
+            bool exist = await collection.ExistsAsync(accountName);
+            Assert.IsFalse(exist);
 
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
             Assert.IsNotNull(account);
 
-            // invoke the operation
-            bool result = await collection.ExistsAsync(accountName);
-            Assert.IsTrue(result);
+            exist = await collection.ExistsAsync(accountName);
+            Assert.IsTrue(exist);
         }
 
         [Test]
@@ -173,43 +139,25 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
         {
             TrustedSigningAccountCollection collection = await GetTrustedSigningAccounts();
 
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string accountName = Recording.GenerateAssetName("account-");
+            NullableResponse<TrustedSigningAccountResource> response = await collection.GetIfExistsAsync(accountName);
+            Assert.IsFalse(response.HasValue);
 
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
             Assert.IsNotNull(account);
 
-            // invoke the operation
-            NullableResponse<CodeSigningAccountResource> response = await collection.GetIfExistsAsync(accountName);
-            CodeSigningAccountResource result = response.HasValue ? response.Value : null;
-            CodeSigningAccountData resourceData = result.Data;
-            // for demo we just print out the id
-            Assert.IsNotNull(resourceData);
+            response = await collection.GetIfExistsAsync(accountName);
+            Assert.IsTrue(response.HasValue);
+            Assert.IsNotNull(response.Value);
         }
 
         [Test]
         [RecordedTest]
         public async Task CreateOrUpdate_CreateATrustedSigningAccount()
         {
-            TokenCredential cred = TestEnvironment.Credential;
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
+            TrustedSigningAccountCollection collection = await GetTrustedSigningAccounts();
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this CodeSigningAccountResource
-            CodeSigningAccountCollection collection = resourceGroupResource.GetCodeSigningAccounts();
-
-            // invoke the operation
-            CodeSigningAccountData data = new CodeSigningAccountData(new AzureLocation("westus"))
-            {
-                SkuName = TrustedSigningSkuName.Basic,
-            };
-            ArmOperation<CodeSigningAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);
-            CodeSigningAccountResource result = lro.Value;
+            string accountName = Recording.GenerateAssetName("account-");
 
             TrustedSigningAccountResource account = await CreateTrustedSigningAccount(collection, accountName);
             Assert.IsNotNull(account);
