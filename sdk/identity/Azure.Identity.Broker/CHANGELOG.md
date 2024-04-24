@@ -1,15 +1,9 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
+## 1.2.0-beta.1 (2024-04-24)
 
 ### Breaking Changes
 - The `IsProofOfPossessionRequired` property on `InteractiveBrowserCredentialBrokerOptions` and `SharedTokenCacheCredentialBrokerOptions` has been removed. This property has moved to the experimental `PopTokenRequestContext` struct.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0 (2024-04-09)
 
