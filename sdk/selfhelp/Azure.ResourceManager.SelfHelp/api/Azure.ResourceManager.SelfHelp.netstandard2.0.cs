@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.SelfHelp
 {
     public partial class SelfHelpDiagnosticCollection : Azure.ResourceManager.ArmCollection
@@ -47,7 +49,11 @@ namespace Azure.ResourceManager.SelfHelp
         public static Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SelfHelp.SelfHelpDiagnosticCollection GetSelfHelpDiagnostics(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Azure.Pageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata>Azure.ResourceManager.SelfHelp.SelfHelpExtensions.GetSelfHelpDiscoverySolutions(Azure.ResourceManager.ArmClient, Azure.Core.ResourceIdentifier, System.String, System.String, System.Threading.CancellationToken) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string filter = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Azure.AsyncPageable<Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata>Azure.ResourceManager.SelfHelp.SelfHelpExtensions.GetSelfHelpDiscoverySolutionsAsync(Azure.ResourceManager.ArmClient, Azure.Core.ResourceIdentifier, System.String, System.String, System.Threading.CancellationToken) { throw null; }
         public static Azure.ResourceManager.SelfHelp.SimplifiedSolutionsResource GetSimplifiedSolutionsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.SelfHelp.SimplifiedSolutionsResource> GetSimplifiedSolutionsResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SelfHelp.SimplifiedSolutionsResource>> GetSimplifiedSolutionsResourceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string simplifiedSolutionsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
