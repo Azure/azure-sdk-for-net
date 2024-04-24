@@ -109,17 +109,18 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationEndpoints), out propertyOverride);
-            if (Optional.IsCollectionDefined(NotificationEndpoints) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (NotificationEndpoints.Any() || hasPropertyOverride)
+                builder.Append("  notificationEndpoints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotificationEndpoints))
                 {
-                    builder.Append("  notificationEndpoints: ");
-                    if (hasPropertyOverride)
+                    if (NotificationEndpoints.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notificationEndpoints: ");
                         builder.AppendLine("[");
                         foreach (var item in NotificationEndpoints)
                         {
