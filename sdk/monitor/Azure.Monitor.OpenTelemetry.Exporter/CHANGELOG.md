@@ -13,7 +13,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-* The success or failure of an HTTP request is only determined by the statuscode when the Activity Status is Unset
+* The success or failure of an incoming HTTP request is now determined by the status code only when the Activity Status is `Unset`
   ([#43594](https://github.com/Azure/azure-sdk-for-net/pull/43594), based on [#41993](https://github.com/Azure/azure-sdk-for-net/issues/41993))
 
 ### Other Changes
