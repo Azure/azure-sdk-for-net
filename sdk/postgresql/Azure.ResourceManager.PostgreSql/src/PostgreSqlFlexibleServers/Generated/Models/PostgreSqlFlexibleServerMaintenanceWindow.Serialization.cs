@@ -146,15 +146,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomWindow), out propertyOverride);
-            if (Optional.IsDefined(CustomWindow) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  customWindow: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomWindow))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  customWindow: ");
                     if (CustomWindow.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -168,43 +169,46 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartHour), out propertyOverride);
-            if (Optional.IsDefined(StartHour) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  startHour: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartHour))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  startHour: ");
                     builder.AppendLine($"{StartHour.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartMinute), out propertyOverride);
-            if (Optional.IsDefined(StartMinute) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  startMinute: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartMinute))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  startMinute: ");
                     builder.AppendLine($"{StartMinute.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DayOfWeek), out propertyOverride);
-            if (Optional.IsDefined(DayOfWeek) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dayOfWeek: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DayOfWeek))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dayOfWeek: ");
                     builder.AppendLine($"{DayOfWeek.Value}");
                 }
             }
