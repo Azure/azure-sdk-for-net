@@ -295,7 +295,6 @@ public class ClientPipelineTests : SyncAsyncTestBase
     public async Task RequestOptionsCanCustomizePipeline()
     {
         ClientPipelineOptions pipelineOptions = new ClientPipelineOptions();
-        //pipelineOptions.Diagnostics = new ClientModel.Options.DiagnosticsOptions() { IsLoggingEnabled = false };
         pipelineOptions.RetryPolicy = new ObservablePolicy("RetryPolicy");
         pipelineOptions.Transport = new ObservableTransport("Transport");
 
