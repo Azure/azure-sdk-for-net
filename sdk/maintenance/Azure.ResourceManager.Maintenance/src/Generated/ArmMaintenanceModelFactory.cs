@@ -15,6 +15,14 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMaintenanceModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledEventApproveResponse"/>. </summary>
+        /// <param name="value"> Successfully Approved. </param>
+        /// <returns> A new <see cref="Models.ScheduledEventApproveResponse"/> instance for mocking. </returns>
+        public static ScheduledEventApproveResponse ScheduledEventApproveResponse(string value = null)
+        {
+            return new ScheduledEventApproveResponse(value, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Maintenance.MaintenanceConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
