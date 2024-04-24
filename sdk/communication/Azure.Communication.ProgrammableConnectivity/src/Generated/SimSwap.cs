@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -61,8 +60,8 @@ namespace Azure.Communication.ProgrammableConnectivity
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
             Argument.AssertNotNull(simSwapRetrievalContent, nameof(simSwapRetrievalContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = simSwapRetrievalContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RetrieveAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return Response.FromValue(SimSwapRetrievalResult.FromResponse(response), response);
         }
@@ -78,8 +77,8 @@ namespace Azure.Communication.ProgrammableConnectivity
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
             Argument.AssertNotNull(simSwapRetrievalContent, nameof(simSwapRetrievalContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = simSwapRetrievalContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Retrieve(apcGatewayId, content, context);
             return Response.FromValue(SimSwapRetrievalResult.FromResponse(response), response);
         }
@@ -177,8 +176,8 @@ namespace Azure.Communication.ProgrammableConnectivity
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
             Argument.AssertNotNull(simSwapVerificationContent, nameof(simSwapVerificationContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = simSwapVerificationContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await VerifyAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return Response.FromValue(SimSwapVerificationResult.FromResponse(response), response);
         }
@@ -194,8 +193,8 @@ namespace Azure.Communication.ProgrammableConnectivity
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
             Argument.AssertNotNull(simSwapVerificationContent, nameof(simSwapVerificationContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = simSwapVerificationContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Verify(apcGatewayId, content, context);
             return Response.FromValue(SimSwapVerificationResult.FromResponse(response), response);
         }

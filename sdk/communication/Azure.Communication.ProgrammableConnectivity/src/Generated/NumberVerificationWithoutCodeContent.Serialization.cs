@@ -9,26 +9,25 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.ProgrammableConnectivity
 {
     public partial class NumberVerificationWithoutCodeContent : IUtf8JsonSerializable, IJsonModel<NumberVerificationWithoutCodeContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NumberVerificationWithoutCodeContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NumberVerificationWithoutCodeContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NumberVerificationWithoutCodeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NumberVerificationWithoutCodeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("networkIdentifier"u8);
-            writer.WriteObjectValue(NetworkIdentifier);
+            writer.WriteObjectValue(NetworkIdentifier, options);
             if (Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
@@ -64,7 +63,7 @@ namespace Azure.Communication.ProgrammableConnectivity
             var format = options.Format == "W" ? ((IPersistableModel<NumberVerificationWithoutCodeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,7 +72,7 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         internal static NumberVerificationWithoutCodeContent DeserializeNumberVerificationWithoutCodeContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -84,7 +83,7 @@ namespace Azure.Communication.ProgrammableConnectivity
             string hashedPhoneNumber = default;
             Uri redirectUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkIdentifier"u8))
@@ -109,10 +108,10 @@ namespace Azure.Communication.ProgrammableConnectivity
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NumberVerificationWithoutCodeContent(networkIdentifier, phoneNumber, hashedPhoneNumber, redirectUri, serializedAdditionalRawData);
         }
 
@@ -125,7 +124,7 @@ namespace Azure.Communication.ProgrammableConnectivity
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +140,7 @@ namespace Azure.Communication.ProgrammableConnectivity
                         return DeserializeNumberVerificationWithoutCodeContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NumberVerificationWithoutCodeContent)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -155,11 +154,11 @@ namespace Azure.Communication.ProgrammableConnectivity
             return DeserializeNumberVerificationWithoutCodeContent(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

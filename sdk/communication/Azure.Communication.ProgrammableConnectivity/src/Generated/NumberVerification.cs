@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -72,8 +71,8 @@ namespace Azure.Communication.ProgrammableConnectivity
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
             Argument.AssertNotNull(numberVerificationWithoutCodeContent, nameof(numberVerificationWithoutCodeContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = numberVerificationWithoutCodeContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await VerifyWithoutCodeAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return response;
         }
@@ -89,8 +88,8 @@ namespace Azure.Communication.ProgrammableConnectivity
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
             Argument.AssertNotNull(numberVerificationWithoutCodeContent, nameof(numberVerificationWithoutCodeContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = numberVerificationWithoutCodeContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = VerifyWithoutCode(apcGatewayId, content, context);
             return response;
         }
@@ -190,8 +189,8 @@ namespace Azure.Communication.ProgrammableConnectivity
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
             Argument.AssertNotNull(numberVerificationWithCodeContent, nameof(numberVerificationWithCodeContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = numberVerificationWithCodeContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await VerifyWithCodeAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return Response.FromValue(NumberVerificationResult.FromResponse(response), response);
         }
@@ -207,8 +206,8 @@ namespace Azure.Communication.ProgrammableConnectivity
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
             Argument.AssertNotNull(numberVerificationWithCodeContent, nameof(numberVerificationWithCodeContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = numberVerificationWithCodeContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = VerifyWithCode(apcGatewayId, content, context);
             return Response.FromValue(NumberVerificationResult.FromResponse(response), response);
         }

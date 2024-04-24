@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -61,8 +60,8 @@ namespace Azure.Communication.ProgrammableConnectivity
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
             Argument.AssertNotNull(deviceLocationVerificationContent, nameof(deviceLocationVerificationContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = deviceLocationVerificationContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await VerifyAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return Response.FromValue(DeviceLocationVerificationResult.FromResponse(response), response);
         }
@@ -78,8 +77,8 @@ namespace Azure.Communication.ProgrammableConnectivity
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
             Argument.AssertNotNull(deviceLocationVerificationContent, nameof(deviceLocationVerificationContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = deviceLocationVerificationContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Verify(apcGatewayId, content, context);
             return Response.FromValue(DeviceLocationVerificationResult.FromResponse(response), response);
         }
