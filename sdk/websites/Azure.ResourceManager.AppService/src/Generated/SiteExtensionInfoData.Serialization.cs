@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteExtensionInfoData : IUtf8JsonSerializable, IJsonModel<SiteExtensionInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteExtensionInfoData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteExtensionInfoData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SiteExtensionInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static SiteExtensionInfoData DeserializeSiteExtensionInfoData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </summary>
+        [WirePath("type")]
         public string ResourceType { get; }
         /// <summary> The resource name to validate. e.g."my-resource-name". </summary>
+        [WirePath("name")]
         public string Name { get; }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Sphere.Models
 {
     internal partial class PagedDeviceInsight : IUtf8JsonSerializable, IJsonModel<PagedDeviceInsight>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PagedDeviceInsight>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PagedDeviceInsight>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PagedDeviceInsight>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         internal static PagedDeviceInsight DeserializePagedDeviceInsight(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -359,6 +359,30 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="FirewallPolicyDraftResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirewallPolicyDraftResource.CreateResourceIdentifier" /> to create a <see cref="FirewallPolicyDraftResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FirewallPolicyDraftResource"/> object. </returns>
+        public virtual FirewallPolicyDraftResource GetFirewallPolicyDraftResource(ResourceIdentifier id)
+        {
+            FirewallPolicyDraftResource.ValidateResourceId(id);
+            return new FirewallPolicyDraftResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="FirewallPolicyRuleCollectionGroupDraftResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirewallPolicyRuleCollectionGroupDraftResource.CreateResourceIdentifier" /> to create a <see cref="FirewallPolicyRuleCollectionGroupDraftResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FirewallPolicyRuleCollectionGroupDraftResource"/> object. </returns>
+        public virtual FirewallPolicyRuleCollectionGroupDraftResource GetFirewallPolicyRuleCollectionGroupDraftResource(ResourceIdentifier id)
+        {
+            FirewallPolicyRuleCollectionGroupDraftResource.ValidateResourceId(id);
+            return new FirewallPolicyRuleCollectionGroupDraftResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="IPAllocationResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="IPAllocationResource.CreateResourceIdentifier" /> to create an <see cref="IPAllocationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

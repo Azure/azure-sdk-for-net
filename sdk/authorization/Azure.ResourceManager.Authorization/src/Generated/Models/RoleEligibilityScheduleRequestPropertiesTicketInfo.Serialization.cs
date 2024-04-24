@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class RoleEligibilityScheduleRequestPropertiesTicketInfo : IUtf8JsonSerializable, IJsonModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleEligibilityScheduleRequestPropertiesTicketInfo DeserializeRoleEligibilityScheduleRequestPropertiesTicketInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

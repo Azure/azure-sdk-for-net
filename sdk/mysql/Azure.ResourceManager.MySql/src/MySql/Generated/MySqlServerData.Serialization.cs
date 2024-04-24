@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql
 {
     public partial class MySqlServerData : IUtf8JsonSerializable, IJsonModel<MySqlServerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {

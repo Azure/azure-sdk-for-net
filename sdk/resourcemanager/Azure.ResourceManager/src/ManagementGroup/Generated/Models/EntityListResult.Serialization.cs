@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 {
     internal partial class EntityListResult : IUtf8JsonSerializable, IJsonModel<EntityListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EntityListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 
         internal static EntityListResult DeserializeEntityListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

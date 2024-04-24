@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     public partial class ResourceHealthEventData : IUtf8JsonSerializable, IJsonModel<ResourceHealthEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ResourceHealthEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ResourceHealth
 
         internal static ResourceHealthEventData DeserializeResourceHealthEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

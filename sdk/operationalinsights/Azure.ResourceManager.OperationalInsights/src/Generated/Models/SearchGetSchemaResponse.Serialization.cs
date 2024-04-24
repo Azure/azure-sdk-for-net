@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 {
     internal partial class SearchGetSchemaResponse : IUtf8JsonSerializable, IJsonModel<SearchGetSchemaResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchGetSchemaResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchGetSchemaResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SearchGetSchemaResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static SearchGetSchemaResponse DeserializeSearchGetSchemaResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

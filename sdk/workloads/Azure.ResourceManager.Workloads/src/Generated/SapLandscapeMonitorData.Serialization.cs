@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Workloads
 {
     public partial class SapLandscapeMonitorData : IUtf8JsonSerializable, IJsonModel<SapLandscapeMonitorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapLandscapeMonitorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapLandscapeMonitorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SapLandscapeMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Workloads
 
         internal static SapLandscapeMonitorData DeserializeSapLandscapeMonitorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

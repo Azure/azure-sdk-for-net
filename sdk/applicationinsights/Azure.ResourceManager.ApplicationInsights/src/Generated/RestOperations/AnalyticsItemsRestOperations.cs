@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
@@ -36,6 +35,34 @@ namespace Azure.ResourceManager.ApplicationInsights
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2015-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, ItemScope? scope, ItemTypeParameter? type, bool? includeContent)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/microsoft.insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scopePath.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (scope != null)
+            {
+                uri.AppendQuery("scope", scope.Value.ToString(), true);
+            }
+            if (type != null)
+            {
+                uri.AppendQuery("type", type.Value.ToString(), true);
+            }
+            if (includeContent != null)
+            {
+                uri.AppendQuery("includeContent", includeContent.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, ItemScope? scope, ItemTypeParameter? type, bool? includeContent)
@@ -148,6 +175,31 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, string id, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/microsoft.insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scopePath.ToString(), true);
+            uri.AppendPath("/item", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (id != null)
+            {
+                uri.AppendQuery("id", id, true);
+            }
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, string id, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -243,6 +295,27 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
+        internal RequestUriBuilder CreatePutRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/microsoft.insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scopePath.ToString(), true);
+            uri.AppendPath("/item", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (overrideItem != null)
+            {
+                uri.AppendQuery("overrideItem", overrideItem.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, ApplicationInsightsComponentAnalyticsItem itemProperties, bool? overrideItem)
         {
             var message = _pipeline.CreateMessage();
@@ -268,7 +341,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(itemProperties, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(itemProperties, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -338,6 +411,31 @@ namespace Azure.ResourceManager.ApplicationInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, string id, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/microsoft.insights/components/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scopePath.ToString(), true);
+            uri.AppendPath("/item", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (id != null)
+            {
+                uri.AppendQuery("id", id, true);
+            }
+            if (name != null)
+            {
+                uri.AppendQuery("name", name, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, ItemScopePath scopePath, string id, string name)

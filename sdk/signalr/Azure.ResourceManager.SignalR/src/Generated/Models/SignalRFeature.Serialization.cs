@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
 {
     public partial class SignalRFeature : IUtf8JsonSerializable, IJsonModel<SignalRFeature>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRFeature>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRFeature>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignalRFeature>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRFeature DeserializeSignalRFeature(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

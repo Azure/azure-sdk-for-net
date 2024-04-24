@@ -1,14 +1,18 @@
 # Release History
 
-## 1.12.0-beta.2 (Unreleased)
+## 1.12.0-beta.2 (unreleased)
 
 ### Features Added
-
-### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.11.1 (2024-04-23)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ## 1.12.0-beta.1 (2024-03-22)
 

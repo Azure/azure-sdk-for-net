@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 {
     public partial class MultiContextAndPlansContent : IUtf8JsonSerializable, IJsonModel<MultiContextAndPlansContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiContextAndPlansContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MultiContextAndPlansContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MultiContextAndPlansContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         internal static MultiContextAndPlansContent DeserializeMultiContextAndPlansContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

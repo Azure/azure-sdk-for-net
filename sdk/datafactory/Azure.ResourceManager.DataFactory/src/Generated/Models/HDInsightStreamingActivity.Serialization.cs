@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class HDInsightStreamingActivity : IUtf8JsonSerializable, IJsonModel<HDInsightStreamingActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightStreamingActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightStreamingActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HDInsightStreamingActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static HDInsightStreamingActivity DeserializeHDInsightStreamingActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

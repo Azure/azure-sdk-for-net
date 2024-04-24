@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StandbyPool
 {
     public partial class StandbyVirtualMachinePoolData : IUtf8JsonSerializable, IJsonModel<StandbyVirtualMachinePoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachinePoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachinePoolData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StandbyVirtualMachinePoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StandbyPool
 
         internal static StandbyVirtualMachinePoolData DeserializeStandbyVirtualMachinePoolData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

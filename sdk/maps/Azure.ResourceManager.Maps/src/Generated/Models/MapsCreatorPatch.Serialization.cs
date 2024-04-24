@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Maps.Models
 {
     public partial class MapsCreatorPatch : IUtf8JsonSerializable, IJsonModel<MapsCreatorPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsCreatorPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsCreatorPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MapsCreatorPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Maps.Models
 
         internal static MapsCreatorPatch DeserializeMapsCreatorPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

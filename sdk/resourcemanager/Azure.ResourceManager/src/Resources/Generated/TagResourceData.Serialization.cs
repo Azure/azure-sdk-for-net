@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class TagResourceData : IUtf8JsonSerializable, IJsonModel<TagResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TagResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TagResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TagResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Resources
 
         internal static TagResourceData DeserializeTagResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

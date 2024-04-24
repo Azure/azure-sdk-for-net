@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class ProcessModuleInfoData : IUtf8JsonSerializable, IJsonModel<ProcessModuleInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProcessModuleInfoData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProcessModuleInfoData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ProcessModuleInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static ProcessModuleInfoData DeserializeProcessModuleInfoData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 {
     internal partial class DeletedConfigurationStoreListResult : IUtf8JsonSerializable, IJsonModel<DeletedConfigurationStoreListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedConfigurationStoreListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedConfigurationStoreListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeletedConfigurationStoreListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static DeletedConfigurationStoreListResult DeserializeDeletedConfigurationStoreListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

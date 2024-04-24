@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Peering.Models
 {
     public partial class PeeringServiceLocation : IUtf8JsonSerializable, IJsonModel<PeeringServiceLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringServiceLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringServiceLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PeeringServiceLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringServiceLocation DeserializePeeringServiceLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

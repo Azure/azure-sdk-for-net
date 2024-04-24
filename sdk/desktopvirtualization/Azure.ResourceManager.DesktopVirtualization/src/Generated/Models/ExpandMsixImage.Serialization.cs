@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     public partial class ExpandMsixImage : IUtf8JsonSerializable, IJsonModel<ExpandMsixImage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpandMsixImage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpandMsixImage>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ExpandMsixImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         internal static ExpandMsixImage DeserializeExpandMsixImage(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

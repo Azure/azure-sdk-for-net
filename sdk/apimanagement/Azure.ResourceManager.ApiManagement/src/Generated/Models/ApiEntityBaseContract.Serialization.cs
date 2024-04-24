@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiEntityBaseContract : IUtf8JsonSerializable, IJsonModel<ApiEntityBaseContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiEntityBaseContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiEntityBaseContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiEntityBaseContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
-            if (Optional.IsDefined(TermsOfServiceUri))
+            if (Optional.IsDefined(TermsOfServiceLink))
             {
                 writer.WritePropertyName("termsOfServiceUrl"u8);
-                writer.WriteStringValue(TermsOfServiceUri.AbsoluteUri);
+                writer.WriteStringValue(TermsOfServiceLink);
             }
             if (Optional.IsDefined(Contact))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiEntityBaseContract DeserializeApiEntityBaseContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string apiVersionDescription = default;
             ResourceIdentifier apiVersionSetId = default;
             bool? subscriptionRequired = default;
-            Uri termsOfServiceUri = default;
+            string termsOfServiceUri = default;
             ApiContactInformation contact = default;
             ApiLicenseInformation license = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -248,11 +248,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("termsOfServiceUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    termsOfServiceUri = new Uri(property.Value.GetString());
+                    termsOfServiceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("contact"u8))

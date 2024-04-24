@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal partial class WebSiteAnalysisDefinitionListResult : IUtf8JsonSerializable, IJsonModel<WebSiteAnalysisDefinitionListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebSiteAnalysisDefinitionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebSiteAnalysisDefinitionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebSiteAnalysisDefinitionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebSiteAnalysisDefinitionListResult DeserializeWebSiteAnalysisDefinitionListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
