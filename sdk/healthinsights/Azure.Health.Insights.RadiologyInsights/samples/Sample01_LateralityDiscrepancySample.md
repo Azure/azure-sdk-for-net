@@ -107,7 +107,7 @@ AzureKeyCredential credential = new AzureKeyCredential(apiKey);
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
 ```
 
-## Send a synchronous request to the RadiologyInsights client
+## Send a synchronous request to the RadiologyInsights client along with the job id and radiologyInsightsjob.
 
 ```C# Snippet:Laterality_Discrepancy_Sync_Tests_Samples_synccall
 RadiologyInsightsJob radiologyInsightsjob = GetRadiologyInsightsJob();

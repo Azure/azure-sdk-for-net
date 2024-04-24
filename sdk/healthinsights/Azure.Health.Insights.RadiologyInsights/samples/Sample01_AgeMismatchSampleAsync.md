@@ -79,7 +79,7 @@ OrderedProcedure orderedProcedure = new()
 
 documentAdministrativeMetadata.OrderedProcedures.Add(orderedProcedure);
 ```
-## Create a ModelConfiguration
+## Create a ModelConfiguration. Also specify the expected response inference type.
 
 ```C# Snippet:Age_Mismatch_Async_Tests_Samples_CreateModelConfiguration
 RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
@@ -103,7 +103,7 @@ radiologyInsightsInferenceOptions.FollowupRecommendationOptions = followupRecomm
 radiologyInsightsInferenceOptions.FindingOptions = findingOptions;
 ```
 
-## Add the PatientRecord and the ModelConfiguration inside RadiologyInsightsData
+## Add the PatientRecord and the ModelConfiguration inside RadiologyInsightsData.
 
 ```C# Snippet:Age_Mismatch_Async_Tests_Samples_AddRecordAndConfiguration
 List<PatientRecord> patientRecords = new() { patientRecord };
@@ -119,7 +119,7 @@ AzureKeyCredential credential = new AzureKeyCredential(apiKey);
 RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
 ```
 
-## Send a asynchronous request to the RadiologyInsights client
+## Send a asynchronous request to the RadiologyInsights client along with the job id and radiologyInsightsjob.
 
 ```C# Snippet:Age_Mismatch_Async_Tests_Samples_synccall
 RadiologyInsightsJob radiologyInsightsjob = GetRadiologyInsightsJob();
