@@ -54,6 +54,8 @@ namespace System.ClientModel.Options
         public System.Collections.Generic.IEnumerable<string>? LoggedHeaderNames { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<string>? LoggedQueryParameters { get { throw null; } set { } }
         public string? RequestIdHeaderName { get { throw null; } set { } }
+        protected void AssertNotFrozen() { }
+        public virtual void Freeze() { }
     }
 }
 namespace System.ClientModel.Primitives
@@ -75,7 +77,8 @@ namespace System.ClientModel.Primitives
     }
     public partial class ClientLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public ClientLoggingPolicy(string? assemblyName = null, System.ClientModel.Options.DiagnosticsOptions? options = null) { }
+        public ClientLoggingPolicy(System.ClientModel.Options.DiagnosticsOptions? options = null) { }
+        protected ClientLoggingPolicy(string? eventSourceName, string[]? eventSourceTraits = null, System.ClientModel.Options.DiagnosticsOptions? options = null) { }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
