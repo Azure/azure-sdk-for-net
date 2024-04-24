@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.TrustedSigning.Tests.Scenario
 {
     public class TrustedSigningCertificateProfileTests : TrustedSigningManagementTestBase
     {
-        protected string subscriptionId = "76a1b60e-e087-45e5-be6e-8cdeeaee8e77";
-        protected string resourceGroupName = "acsportal-bvt";
-        protected string accountName = "sample-test-wcus";
-        protected string profileName = "testProfileA";
-
         public TrustedSigningCertificateProfileTests(bool isAsync) : base(isAsync)
         {
         }
