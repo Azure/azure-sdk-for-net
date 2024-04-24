@@ -52,8 +52,8 @@ namespace Azure.Communication.Identity.Tests
         private CommunicationIdentityClient CreateClientWithTokenCredential(ServiceVersion? version)
             => InstrumentClient(
                 new CommunicationIdentityClient(
-                    TestEnvironment.LiveTestStaticEndpoint,
-                    (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
+                    TestEnvironment.LiveTestDynamicEndpoint,
+                    (Mode == RecordedTestMode.Playback) ? new MockCredential() : TestEnvironment.Credential,
                     CreateIdentityClientOptionsWithCorrelationVectorLogs(version)));
 
         private CommunicationIdentityClientOptions CreateIdentityClientOptionsWithCorrelationVectorLogs(ServiceVersion? version)
