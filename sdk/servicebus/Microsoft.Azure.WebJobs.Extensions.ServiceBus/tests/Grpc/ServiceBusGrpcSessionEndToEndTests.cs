@@ -357,7 +357,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new SetSessionStateRequest
                     {
                         SessionId = message.SessionId,
-                        SessionState = ByteString.CopyFromUtf8(message.Body.ToString())
+                        SessionState = ByteString.CopyFrom(predefinedData)
                     },
                     new MockServerCallContext()
                  );
