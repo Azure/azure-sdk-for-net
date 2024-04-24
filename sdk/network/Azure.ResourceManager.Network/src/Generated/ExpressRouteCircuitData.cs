@@ -51,7 +51,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="globalReachEnabled"> Flag denoting global reach status. </param>
         /// <param name="authorizationKey"> The authorizationKey. </param>
         /// <param name="authorizationStatus"> The authorization status of the Circuit. </param>
-        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExpressRouteCircuitSku sku, ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="enableDirectPortRateLimit"> Flag denoting rate-limiting status of the ExpressRoute direct-port circuit. </param>
+        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExpressRouteCircuitSku sku, ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus, bool? enableDirectPortRateLimit) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             Sku = sku;
             ETag = etag;
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.Network
             GlobalReachEnabled = globalReachEnabled;
             AuthorizationKey = authorizationKey;
             AuthorizationStatus = authorizationStatus;
+            EnableDirectPortRateLimit = enableDirectPortRateLimit;
         }
 
         /// <summary> The SKU. </summary>
@@ -121,5 +123,7 @@ namespace Azure.ResourceManager.Network
         public string AuthorizationKey { get; set; }
         /// <summary> The authorization status of the Circuit. </summary>
         public string AuthorizationStatus { get; }
+        /// <summary> Flag denoting rate-limiting status of the ExpressRoute direct-port circuit. </summary>
+        public bool? EnableDirectPortRateLimit { get; set; }
     }
 }
