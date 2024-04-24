@@ -1,0 +1,12 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Analytics.Purview.DataMap",
+  "library-name": "Azure.Analytics.Purview.DataMap",
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/Azure.Analytics.Purview.DataMap/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/Azure.Analytics.Purview.DataMap/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "model-namespace": false,
+  "flavor": "azure",
+  "use-model-reader-writer": true
+}
