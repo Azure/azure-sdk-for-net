@@ -131,15 +131,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentMatch), out propertyOverride);
-            if (Optional.IsDefined(ContentMatch) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ContentMatch: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContentMatch))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ContentMatch: ");
                     if (ContentMatch.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -153,30 +154,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IgnoreCase), out propertyOverride);
-            if (Optional.IsDefined(IgnoreCase) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  IgnoreCase: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IgnoreCase))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  IgnoreCase: ");
                     var boolValue = IgnoreCase.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PassIfTextFound), out propertyOverride);
-            if (Optional.IsDefined(PassIfTextFound) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  PassIfTextFound: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PassIfTextFound))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  PassIfTextFound: ");
                     var boolValue = PassIfTextFound.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
