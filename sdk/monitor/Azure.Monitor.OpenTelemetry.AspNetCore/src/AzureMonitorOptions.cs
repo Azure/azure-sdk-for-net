@@ -5,7 +5,6 @@
 
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
 {
@@ -82,19 +81,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
             exporterOptions.Diagnostics.IsDistributedTracingEnabled = Diagnostics.IsDistributedTracingEnabled;
             exporterOptions.Diagnostics.IsLoggingEnabled = Diagnostics.IsLoggingEnabled;
-        }
-
-        internal void SetValueToLiveMetricsExporterOptions(LiveMetricsExporterOptions liveMetricsExporterOptions)
-        {
-            liveMetricsExporterOptions.ConnectionString = ConnectionString;
-            liveMetricsExporterOptions.Credential = Credential;
-            liveMetricsExporterOptions.EnableLiveMetrics = EnableLiveMetrics;
-            if (Transport != null)
-            {
-                liveMetricsExporterOptions.Transport = Transport;
-            }
-            liveMetricsExporterOptions.Diagnostics.IsDistributedTracingEnabled = Diagnostics.IsDistributedTracingEnabled;
-            liveMetricsExporterOptions.Diagnostics.IsLoggingEnabled = Diagnostics.IsLoggingEnabled;
         }
     }
 }
