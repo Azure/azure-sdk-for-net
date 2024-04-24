@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    /// <summary> Project details. </summary>
-    public partial class DevCenterProject
+    /// <summary> Storage settings for the Dev Box's disks. </summary>
+    public partial class StorageProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,21 @@ namespace Azure.Developer.DevCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterProject"/>. </summary>
-        internal DevCenterProject()
+        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
+        internal StorageProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterProject"/>. </summary>
-        /// <param name="name"> Name of the project. </param>
-        /// <param name="description"> Description of the project. </param>
-        /// <param name="maxDevBoxesPerUser">
-        /// When specified, indicates the maximum number of Dev Boxes a single user can
-        /// create across all pools in the project.
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
+        /// <param name="osDisk"> Settings for the operating system disk. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterProject(string name, string description, int? maxDevBoxesPerUser, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageProfile(OsDisk osDisk, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Description = description;
-            MaxDevBoxesPerUser = maxDevBoxesPerUser;
+            OSDisk = osDisk;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the project. </summary>
-        public string Name { get; }
-        /// <summary> Description of the project. </summary>
-        public string Description { get; }
-        /// <summary>
-        /// When specified, indicates the maximum number of Dev Boxes a single user can
-        /// create across all pools in the project.
-        /// </summary>
-        public int? MaxDevBoxesPerUser { get; }
+        /// <summary> Settings for the operating system disk. </summary>
+        public OsDisk OSDisk { get; }
     }
 }

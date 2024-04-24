@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    /// <summary> Hardware specifications for the Dev Box. </summary>
-    public partial class DevBoxHardwareProfile
+    /// <summary> Project details. </summary>
+    public partial class Project
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,35 @@ namespace Azure.Developer.DevCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxHardwareProfile"/>. </summary>
-        internal DevBoxHardwareProfile()
+        /// <summary> Initializes a new instance of <see cref="Project"/>. </summary>
+        internal Project()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxHardwareProfile"/>. </summary>
-        /// <param name="skuName"> The name of the SKU. </param>
-        /// <param name="vcpUs"> The number of vCPUs available for the Dev Box. </param>
-        /// <param name="memoryGB"> The amount of memory available for the Dev Box. </param>
+        /// <summary> Initializes a new instance of <see cref="Project"/>. </summary>
+        /// <param name="name"> Name of the project. </param>
+        /// <param name="description"> Description of the project. </param>
+        /// <param name="maxDevBoxesPerUser">
+        /// When specified, indicates the maximum number of Dev Boxes a single user can
+        /// create across all pools in the project.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxHardwareProfile(SkuName? skuName, int? vcpUs, int? memoryGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Project(string name, string description, int? maxDevBoxesPerUser, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SkuName = skuName;
-            VCPUs = vcpUs;
-            MemoryGB = memoryGB;
+            Name = name;
+            Description = description;
+            MaxDevBoxesPerUser = maxDevBoxesPerUser;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the SKU. </summary>
-        public SkuName? SkuName { get; }
-        /// <summary> The number of vCPUs available for the Dev Box. </summary>
-        public int? VCPUs { get; }
-        /// <summary> The amount of memory available for the Dev Box. </summary>
-        public int? MemoryGB { get; }
+        /// <summary> Name of the project. </summary>
+        public string Name { get; }
+        /// <summary> Description of the project. </summary>
+        public string Description { get; }
+        /// <summary>
+        /// When specified, indicates the maximum number of Dev Boxes a single user can
+        /// create across all pools in the project.
+        /// </summary>
+        public int? MaxDevBoxesPerUser { get; }
     }
 }

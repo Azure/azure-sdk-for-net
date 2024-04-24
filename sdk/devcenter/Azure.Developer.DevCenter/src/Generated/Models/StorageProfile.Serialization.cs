@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class DevBoxStorageProfile : IUtf8JsonSerializable, IJsonModel<DevBoxStorageProfile>
+    public partial class StorageProfile : IUtf8JsonSerializable, IJsonModel<StorageProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxStorageProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DevBoxStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxStorageProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,19 +49,19 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteEndObject();
         }
 
-        DevBoxStorageProfile IJsonModel<DevBoxStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        StorageProfile IJsonModel<StorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxStorageProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDevBoxStorageProfile(document.RootElement, options);
+            return DeserializeStorageProfile(document.RootElement, options);
         }
 
-        internal static DevBoxStorageProfile DeserializeDevBoxStorageProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static StorageProfile DeserializeStorageProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -69,7 +69,7 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
-            OSDisk osDisk = default;
+            OsDisk osDisk = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    osDisk = OSDisk.DeserializeOSDisk(property.Value, options);
+                    osDisk = OsDisk.DeserializeOsDisk(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,46 +89,46 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevBoxStorageProfile(osDisk, serializedAdditionalRawData);
+            return new StorageProfile(osDisk, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DevBoxStorageProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<StorageProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxStorageProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DevBoxStorageProfile IPersistableModel<DevBoxStorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        StorageProfile IPersistableModel<StorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<StorageProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDevBoxStorageProfile(document.RootElement, options);
+                        return DeserializeStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxStorageProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DevBoxStorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DevBoxStorageProfile FromResponse(Response response)
+        internal static StorageProfile FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDevBoxStorageProfile(document.RootElement);
+            return DeserializeStorageProfile(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

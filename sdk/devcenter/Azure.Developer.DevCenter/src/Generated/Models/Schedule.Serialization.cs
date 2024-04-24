@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class DevBoxSchedule : IUtf8JsonSerializable, IJsonModel<DevBoxSchedule>
+    public partial class Schedule : IUtf8JsonSerializable, IJsonModel<Schedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Schedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DevBoxSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Schedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxSchedule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Schedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,19 +57,19 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteEndObject();
         }
 
-        DevBoxSchedule IJsonModel<DevBoxSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        Schedule IJsonModel<Schedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxSchedule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Schedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDevBoxSchedule(document.RootElement, options);
+            return DeserializeSchedule(document.RootElement, options);
         }
 
-        internal static DevBoxSchedule DeserializeDevBoxSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static Schedule DeserializeSchedule(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -117,7 +117,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevBoxSchedule(
+            return new Schedule(
                 name,
                 type,
                 frequency,
@@ -126,43 +126,43 @@ namespace Azure.Developer.DevCenter.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DevBoxSchedule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<Schedule>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxSchedule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Schedule)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DevBoxSchedule IPersistableModel<DevBoxSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        Schedule IPersistableModel<Schedule>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Schedule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDevBoxSchedule(document.RootElement, options);
+                        return DeserializeSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxSchedule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Schedule)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DevBoxSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Schedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DevBoxSchedule FromResponse(Response response)
+        internal static Schedule FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDevBoxSchedule(document.RootElement);
+            return DeserializeSchedule(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Request body to build a new custom document model. </summary>
-    public partial class BuildDocumentModelContent
+    public partial class BuildDocumentModelRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BuildDocumentModelContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentModelRequest"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="buildMode"> Custom document model build mode. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public BuildDocumentModelContent(string modelId, DocumentBuildMode buildMode)
+        public BuildDocumentModelRequest(string modelId, DocumentBuildMode buildMode)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
 
@@ -58,7 +58,7 @@ namespace Azure.AI.DocumentIntelligence
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BuildDocumentModelContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentModelRequest"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
         /// <param name="buildMode"> Custom document model build mode. </param>
@@ -72,7 +72,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BuildDocumentModelContent(string modelId, string description, DocumentBuildMode buildMode, AzureBlobContentSource azureBlobSource, AzureBlobFileListContentSource azureBlobFileListSource, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BuildDocumentModelRequest(string modelId, string description, DocumentBuildMode buildMode, AzureBlobContentSource azureBlobSource, AzureBlobFileListContentSource azureBlobFileListSource, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelId = modelId;
             Description = description;
@@ -83,8 +83,8 @@ namespace Azure.AI.DocumentIntelligence
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BuildDocumentModelContent"/> for deserialization. </summary>
-        internal BuildDocumentModelContent()
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentModelRequest"/> for deserialization. </summary>
+        internal BuildDocumentModelRequest()
         {
         }
 

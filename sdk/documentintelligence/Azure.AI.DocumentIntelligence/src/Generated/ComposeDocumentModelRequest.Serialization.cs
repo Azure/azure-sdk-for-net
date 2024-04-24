@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class BuildDocumentModelContent : IUtf8JsonSerializable, IJsonModel<BuildDocumentModelContent>
+    public partial class ComposeDocumentModelRequest : IUtf8JsonSerializable, IJsonModel<ComposeDocumentModelRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildDocumentModelContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComposeDocumentModelRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<BuildDocumentModelContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComposeDocumentModelRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentModelContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComposeDocumentModelRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuildDocumentModelContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComposeDocumentModelRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,18 +33,13 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("buildMode"u8);
-            writer.WriteStringValue(BuildMode.ToString());
-            if (Optional.IsDefined(AzureBlobSource))
+            writer.WritePropertyName("componentModels"u8);
+            writer.WriteStartArray();
+            foreach (var item in ComponentModels)
             {
-                writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue(AzureBlobSource, options);
+                writer.WriteObjectValue(item, options);
             }
-            if (Optional.IsDefined(AzureBlobFileListSource))
-            {
-                writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue(AzureBlobFileListSource, options);
-            }
+            writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -74,19 +69,19 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteEndObject();
         }
 
-        BuildDocumentModelContent IJsonModel<BuildDocumentModelContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComposeDocumentModelRequest IJsonModel<ComposeDocumentModelRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentModelContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComposeDocumentModelRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuildDocumentModelContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComposeDocumentModelRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBuildDocumentModelContent(document.RootElement, options);
+            return DeserializeComposeDocumentModelRequest(document.RootElement, options);
         }
 
-        internal static BuildDocumentModelContent DeserializeBuildDocumentModelContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComposeDocumentModelRequest DeserializeComposeDocumentModelRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,9 +91,7 @@ namespace Azure.AI.DocumentIntelligence
             }
             string modelId = default;
             string description = default;
-            DocumentBuildMode buildMode = default;
-            AzureBlobContentSource azureBlobSource = default;
-            AzureBlobFileListContentSource azureBlobFileListSource = default;
+            IList<ComponentDocumentModelDetails> componentModels = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -114,27 +107,14 @@ namespace Azure.AI.DocumentIntelligence
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("buildMode"u8))
+                if (property.NameEquals("componentModels"u8))
                 {
-                    buildMode = new DocumentBuildMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("azureBlobSource"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    List<ComponentDocumentModelDetails> array = new List<ComponentDocumentModelDetails>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        continue;
+                        array.Add(ComponentDocumentModelDetails.DeserializeComponentDocumentModelDetails(item, options));
                     }
-                    azureBlobSource = AzureBlobContentSource.DeserializeAzureBlobContentSource(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("azureBlobFileListSource"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    azureBlobFileListSource = AzureBlobFileListContentSource.DeserializeAzureBlobFileListContentSource(property.Value, options);
+                    componentModels = array;
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -157,53 +137,46 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BuildDocumentModelContent(
-                modelId,
-                description,
-                buildMode,
-                azureBlobSource,
-                azureBlobFileListSource,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData);
+            return new ComposeDocumentModelRequest(modelId, description, componentModels, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BuildDocumentModelContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComposeDocumentModelRequest>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentModelContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComposeDocumentModelRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BuildDocumentModelContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComposeDocumentModelRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
-        BuildDocumentModelContent IPersistableModel<BuildDocumentModelContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComposeDocumentModelRequest IPersistableModel<ComposeDocumentModelRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BuildDocumentModelContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComposeDocumentModelRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBuildDocumentModelContent(document.RootElement, options);
+                        return DeserializeComposeDocumentModelRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BuildDocumentModelContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComposeDocumentModelRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BuildDocumentModelContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComposeDocumentModelRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BuildDocumentModelContent FromResponse(Response response)
+        internal static ComposeDocumentModelRequest FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeBuildDocumentModelContent(document.RootElement);
+            return DeserializeComposeDocumentModelRequest(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class ClassifyDocumentContent : IUtf8JsonSerializable, IJsonModel<ClassifyDocumentContent>
+    public partial class AnalyzeDocumentRequest : IUtf8JsonSerializable, IJsonModel<AnalyzeDocumentRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClassifyDocumentContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeDocumentRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ClassifyDocumentContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AnalyzeDocumentRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClassifyDocumentContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeDocumentRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClassifyDocumentContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeDocumentRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteEndObject();
         }
 
-        ClassifyDocumentContent IJsonModel<ClassifyDocumentContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AnalyzeDocumentRequest IJsonModel<AnalyzeDocumentRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClassifyDocumentContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeDocumentRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClassifyDocumentContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeDocumentRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClassifyDocumentContent(document.RootElement, options);
+            return DeserializeAnalyzeDocumentRequest(document.RootElement, options);
         }
 
-        internal static ClassifyDocumentContent DeserializeClassifyDocumentContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AnalyzeDocumentRequest DeserializeAnalyzeDocumentRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,46 +104,46 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClassifyDocumentContent(urlSource, base64Source, serializedAdditionalRawData);
+            return new AnalyzeDocumentRequest(urlSource, base64Source, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ClassifyDocumentContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AnalyzeDocumentRequest>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClassifyDocumentContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeDocumentRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClassifyDocumentContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeDocumentRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ClassifyDocumentContent IPersistableModel<ClassifyDocumentContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AnalyzeDocumentRequest IPersistableModel<AnalyzeDocumentRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClassifyDocumentContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeDocumentRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeClassifyDocumentContent(document.RootElement, options);
+                        return DeserializeAnalyzeDocumentRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClassifyDocumentContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeDocumentRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ClassifyDocumentContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AnalyzeDocumentRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ClassifyDocumentContent FromResponse(Response response)
+        internal static AnalyzeDocumentRequest FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeClassifyDocumentContent(document.RootElement);
+            return DeserializeAnalyzeDocumentRequest(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

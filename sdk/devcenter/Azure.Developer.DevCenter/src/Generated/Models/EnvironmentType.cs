@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an environment type. </summary>
-    public partial class DevCenterEnvironmentType
+    public partial class EnvironmentType
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,7 +45,7 @@ namespace Azure.Developer.DevCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironmentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentType"/>. </summary>
         /// <param name="name"> Name of the environment type. </param>
         /// <param name="deploymentTargetId">
         /// Id of a subscription or management group that the environment type will be
@@ -55,7 +54,7 @@ namespace Azure.Developer.DevCenter.Models
         /// </param>
         /// <param name="status"> Indicates whether this environment type is enabled for use in this project. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="deploymentTargetId"/> is null. </exception>
-        internal DevCenterEnvironmentType(string name, ResourceIdentifier deploymentTargetId, EnvironmentTypeStatus status)
+        internal EnvironmentType(string name, string deploymentTargetId, EnvironmentTypeStatus status)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(deploymentTargetId, nameof(deploymentTargetId));
@@ -65,7 +64,7 @@ namespace Azure.Developer.DevCenter.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironmentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnvironmentType"/>. </summary>
         /// <param name="name"> Name of the environment type. </param>
         /// <param name="deploymentTargetId">
         /// Id of a subscription or management group that the environment type will be
@@ -74,7 +73,7 @@ namespace Azure.Developer.DevCenter.Models
         /// </param>
         /// <param name="status"> Indicates whether this environment type is enabled for use in this project. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterEnvironmentType(string name, ResourceIdentifier deploymentTargetId, EnvironmentTypeStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EnvironmentType(string name, string deploymentTargetId, EnvironmentTypeStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DeploymentTargetId = deploymentTargetId;
@@ -82,13 +81,19 @@ namespace Azure.Developer.DevCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironmentType"/> for deserialization. </summary>
-        internal DevCenterEnvironmentType()
+        /// <summary> Initializes a new instance of <see cref="EnvironmentType"/> for deserialization. </summary>
+        internal EnvironmentType()
         {
         }
 
         /// <summary> Name of the environment type. </summary>
         public string Name { get; }
+        /// <summary>
+        /// Id of a subscription or management group that the environment type will be
+        /// mapped to. The environment's resources will be deployed into this subscription
+        /// or management group.
+        /// </summary>
+        public string DeploymentTargetId { get; }
         /// <summary> Indicates whether this environment type is enabled for use in this project. </summary>
         public EnvironmentTypeStatus Status { get; }
     }

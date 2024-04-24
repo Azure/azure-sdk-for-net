@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> Properties of an environment. </summary>
-    public partial class DevCenterEnvironment
+    public partial class Environment
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,7 +45,24 @@ namespace Azure.Developer.DevCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Environment"/>. </summary>
+        /// <param name="environmentTypeName"> Environment type. </param>
+        /// <param name="catalogName"> Name of the catalog. </param>
+        /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/>, <paramref name="catalogName"/> or <paramref name="environmentDefinitionName"/> is null. </exception>
+        public Environment(string environmentTypeName, string catalogName, string environmentDefinitionName)
+        {
+            Argument.AssertNotNull(environmentTypeName, nameof(environmentTypeName));
+            Argument.AssertNotNull(catalogName, nameof(catalogName));
+            Argument.AssertNotNull(environmentDefinitionName, nameof(environmentDefinitionName));
+
+            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
+            EnvironmentTypeName = environmentTypeName;
+            CatalogName = catalogName;
+            EnvironmentDefinitionName = environmentDefinitionName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Environment"/>. </summary>
         /// <param name="parameters"> Parameters object for the environment. </param>
         /// <param name="name"> Environment name. </param>
         /// <param name="environmentTypeName"> Environment type. </param>
@@ -57,7 +73,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="environmentDefinitionName"> Name of the environment definition. </param>
         /// <param name="error"> Provisioning error details. Populated only for error states. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterEnvironment(IDictionary<string, BinaryData> parameters, string name, string environmentTypeName, Guid? userId, EnvironmentProvisioningState? provisioningState, ResourceIdentifier resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Environment(IDictionary<string, BinaryData> parameters, string name, string environmentTypeName, Guid? userId, EnvironmentProvisioningState? provisioningState, string resourceGroupId, string catalogName, string environmentDefinitionName, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Parameters = parameters;
             Name = name;
@@ -71,8 +87,8 @@ namespace Azure.Developer.DevCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/> for deserialization. </summary>
-        internal DevCenterEnvironment()
+        /// <summary> Initializes a new instance of <see cref="Environment"/> for deserialization. </summary>
+        internal Environment()
         {
         }
 
@@ -115,6 +131,8 @@ namespace Azure.Developer.DevCenter.Models
         public Guid? UserId { get; }
         /// <summary> The provisioning state of the environment. </summary>
         public EnvironmentProvisioningState? ProvisioningState { get; }
+        /// <summary> The identifier of the resource group containing the environment's resources. </summary>
+        public string ResourceGroupId { get; }
         /// <summary> Name of the catalog. </summary>
         public string CatalogName { get; set; }
         /// <summary> Name of the environment definition. </summary>

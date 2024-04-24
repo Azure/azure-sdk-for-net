@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    /// <summary> Storage settings for the Dev Box's disks. </summary>
-    public partial class DevBoxStorageProfile
+    /// <summary> Hardware specifications for the Dev Box. </summary>
+    public partial class HardwareProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,29 @@ namespace Azure.Developer.DevCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxStorageProfile"/>. </summary>
-        internal DevBoxStorageProfile()
+        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
+        internal HardwareProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxStorageProfile"/>. </summary>
-        /// <param name="osDisk"> Settings for the operating system disk. </param>
+        /// <summary> Initializes a new instance of <see cref="HardwareProfile"/>. </summary>
+        /// <param name="skuName"> The name of the SKU. </param>
+        /// <param name="vcpUs"> The number of vCPUs available for the Dev Box. </param>
+        /// <param name="memoryGB"> The amount of memory available for the Dev Box. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxStorageProfile(OSDisk osDisk, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HardwareProfile(SkuName? skuName, int? vcpUs, int? memoryGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            OSDisk = osDisk;
+            SkuName = skuName;
+            VCPUs = vcpUs;
+            MemoryGB = memoryGB;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Settings for the operating system disk. </summary>
-        public OSDisk OSDisk { get; }
+        /// <summary> The name of the SKU. </summary>
+        public SkuName? SkuName { get; }
+        /// <summary> The number of vCPUs available for the Dev Box. </summary>
+        public int? VCPUs { get; }
+        /// <summary> The amount of memory available for the Dev Box. </summary>
+        public int? MemoryGB { get; }
     }
 }

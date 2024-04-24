@@ -13,23 +13,23 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class OsDisk : IUtf8JsonSerializable, IJsonModel<OsDisk>
+    public partial class Catalog : IUtf8JsonSerializable, IJsonModel<Catalog>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OsDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Catalog>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OsDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Catalog>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OsDisk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Catalog>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OsDisk)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Catalog)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DiskSizeGB))
+            if (options.Format != "W")
             {
-                writer.WritePropertyName("diskSizeGB"u8);
-                writer.WriteNumberValue(DiskSizeGB.Value);
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -49,19 +49,19 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteEndObject();
         }
 
-        OsDisk IJsonModel<OsDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        Catalog IJsonModel<Catalog>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OsDisk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Catalog>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OsDisk)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Catalog)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOsDisk(document.RootElement, options);
+            return DeserializeCatalog(document.RootElement, options);
         }
 
-        internal static OsDisk DeserializeOsDisk(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static Catalog DeserializeCatalog(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -69,18 +69,14 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return null;
             }
-            int? diskSizeGB = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskSizeGB"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    diskSizeGB = property.Value.GetInt32();
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,46 +85,46 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OsDisk(diskSizeGB, serializedAdditionalRawData);
+            return new Catalog(name, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OsDisk>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<Catalog>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OsDisk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Catalog>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OsDisk)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Catalog)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OsDisk IPersistableModel<OsDisk>.Create(BinaryData data, ModelReaderWriterOptions options)
+        Catalog IPersistableModel<Catalog>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OsDisk>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Catalog>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeOsDisk(document.RootElement, options);
+                        return DeserializeCatalog(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OsDisk)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Catalog)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OsDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Catalog>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static OsDisk FromResponse(Response response)
+        internal static Catalog FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeOsDisk(document.RootElement);
+            return DeserializeCatalog(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Document analysis parameters. </summary>
-    public partial class AnalyzeDocumentContent
+    public partial class AnalyzeDocumentRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentContent"/>. </summary>
-        public AnalyzeDocumentContent()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentRequest"/>. </summary>
+        public AnalyzeDocumentRequest()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeDocumentRequest"/>. </summary>
         /// <param name="urlSource"> Document URL to analyze.  Either urlSource or base64Source must be specified. </param>
         /// <param name="base64Source">
         /// Base64 encoding of the document to analyze.  Either urlSource or base64Source
         /// must be specified.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeDocumentContent(Uri urlSource, BinaryData base64Source, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeDocumentRequest(Uri urlSource, BinaryData base64Source, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UrlSource = urlSource;
             Base64Source = base64Source;

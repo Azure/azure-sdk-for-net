@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    /// <summary> Request body to authorize document model copy. </summary>
-    public partial class AuthorizeCopyContent
+    /// <summary> Document classification parameters. </summary>
+    public partial class ClassifyDocumentRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,40 +45,44 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizeCopyContent"/>. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public AuthorizeCopyContent(string modelId)
+        /// <summary> Initializes a new instance of <see cref="ClassifyDocumentRequest"/>. </summary>
+        public ClassifyDocumentRequest()
         {
-            Argument.AssertNotNull(modelId, nameof(modelId));
-
-            ModelId = modelId;
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizeCopyContent"/>. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="description"> Document model description. </param>
-        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <summary> Initializes a new instance of <see cref="ClassifyDocumentRequest"/>. </summary>
+        /// <param name="urlSource"> Document URL to classify.  Either urlSource or base64Source must be specified. </param>
+        /// <param name="base64Source">
+        /// Base64 encoding of the document to classify.  Either urlSource or base64Source
+        /// must be specified.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizeCopyContent(string modelId, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClassifyDocumentRequest(Uri urlSource, BinaryData base64Source, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ModelId = modelId;
-            Description = description;
-            Tags = tags;
+            UrlSource = urlSource;
+            Base64Source = base64Source;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthorizeCopyContent"/> for deserialization. </summary>
-        internal AuthorizeCopyContent()
-        {
-        }
-
-        /// <summary> Unique document model name. </summary>
-        public string ModelId { get; }
-        /// <summary> Document model description. </summary>
-        public string Description { get; set; }
-        /// <summary> List of key-value tag attributes associated with the document model. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Document URL to classify.  Either urlSource or base64Source must be specified. </summary>
+        public Uri UrlSource { get; set; }
+        /// <summary>
+        /// Base64 encoding of the document to classify.  Either urlSource or base64Source
+        /// must be specified.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
+        /// <description>Creates a payload of "AQID".</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Base64Source { get; set; }
     }
 }

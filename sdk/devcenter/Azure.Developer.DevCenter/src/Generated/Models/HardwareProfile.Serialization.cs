@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class DevBoxHardwareProfile : IUtf8JsonSerializable, IJsonModel<DevBoxHardwareProfile>
+    public partial class HardwareProfile : IUtf8JsonSerializable, IJsonModel<HardwareProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxHardwareProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwareProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DevBoxHardwareProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HardwareProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxHardwareProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteEndObject();
         }
 
-        DevBoxHardwareProfile IJsonModel<DevBoxHardwareProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HardwareProfile IJsonModel<HardwareProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxHardwareProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDevBoxHardwareProfile(document.RootElement, options);
+            return DeserializeHardwareProfile(document.RootElement, options);
         }
 
-        internal static DevBoxHardwareProfile DeserializeDevBoxHardwareProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HardwareProfile DeserializeHardwareProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,46 +119,46 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevBoxHardwareProfile(skuName, vcpUs, memoryGB, serializedAdditionalRawData);
+            return new HardwareProfile(skuName, vcpUs, memoryGB, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DevBoxHardwareProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HardwareProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxHardwareProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DevBoxHardwareProfile IPersistableModel<DevBoxHardwareProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HardwareProfile IPersistableModel<HardwareProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDevBoxHardwareProfile(document.RootElement, options);
+                        return DeserializeHardwareProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxHardwareProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DevBoxHardwareProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HardwareProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DevBoxHardwareProfile FromResponse(Response response)
+        internal static HardwareProfile FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDevBoxHardwareProfile(document.RootElement);
+            return DeserializeHardwareProfile(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

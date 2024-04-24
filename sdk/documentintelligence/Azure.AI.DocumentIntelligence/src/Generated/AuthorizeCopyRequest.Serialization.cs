@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class ComposeDocumentModelContent : IUtf8JsonSerializable, IJsonModel<ComposeDocumentModelContent>
+    public partial class AuthorizeCopyRequest : IUtf8JsonSerializable, IJsonModel<AuthorizeCopyRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComposeDocumentModelContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizeCopyRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ComposeDocumentModelContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AuthorizeCopyRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComposeDocumentModelContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizeCopyRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComposeDocumentModelContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizeCopyRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,13 +33,6 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            writer.WritePropertyName("componentModels"u8);
-            writer.WriteStartArray();
-            foreach (var item in ComponentModels)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -69,19 +62,19 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteEndObject();
         }
 
-        ComposeDocumentModelContent IJsonModel<ComposeDocumentModelContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AuthorizeCopyRequest IJsonModel<AuthorizeCopyRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComposeDocumentModelContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizeCopyRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComposeDocumentModelContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthorizeCopyRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeComposeDocumentModelContent(document.RootElement, options);
+            return DeserializeAuthorizeCopyRequest(document.RootElement, options);
         }
 
-        internal static ComposeDocumentModelContent DeserializeComposeDocumentModelContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AuthorizeCopyRequest DeserializeAuthorizeCopyRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,7 +84,6 @@ namespace Azure.AI.DocumentIntelligence
             }
             string modelId = default;
             string description = default;
-            IList<ComponentDocumentModelDetails> componentModels = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -105,16 +97,6 @@ namespace Azure.AI.DocumentIntelligence
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("componentModels"u8))
-                {
-                    List<ComponentDocumentModelDetails> array = new List<ComponentDocumentModelDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ComponentDocumentModelDetails.DeserializeComponentDocumentModelDetails(item, options));
-                    }
-                    componentModels = array;
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -137,46 +119,46 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ComposeDocumentModelContent(modelId, description, componentModels, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new AuthorizeCopyRequest(modelId, description, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ComposeDocumentModelContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AuthorizeCopyRequest>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComposeDocumentModelContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizeCopyRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComposeDocumentModelContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizeCopyRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ComposeDocumentModelContent IPersistableModel<ComposeDocumentModelContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AuthorizeCopyRequest IPersistableModel<AuthorizeCopyRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ComposeDocumentModelContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizeCopyRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeComposeDocumentModelContent(document.RootElement, options);
+                        return DeserializeAuthorizeCopyRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComposeDocumentModelContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthorizeCopyRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ComposeDocumentModelContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AuthorizeCopyRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ComposeDocumentModelContent FromResponse(Response response)
+        internal static AuthorizeCopyRequest FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeComposeDocumentModelContent(document.RootElement);
+            return DeserializeAuthorizeCopyRequest(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

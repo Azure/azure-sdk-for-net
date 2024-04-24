@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.DocumentIntelligence
+namespace Azure.Developer.DevCenter.Models
 {
-    /// <summary> Document classification parameters. </summary>
-    public partial class ClassifyDocumentContent
+    /// <summary> A catalog. </summary>
+    public partial class Catalog
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,44 +45,21 @@ namespace Azure.AI.DocumentIntelligence
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClassifyDocumentContent"/>. </summary>
-        public ClassifyDocumentContent()
+        /// <summary> Initializes a new instance of <see cref="Catalog"/>. </summary>
+        internal Catalog()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClassifyDocumentContent"/>. </summary>
-        /// <param name="urlSource"> Document URL to classify.  Either urlSource or base64Source must be specified. </param>
-        /// <param name="base64Source">
-        /// Base64 encoding of the document to classify.  Either urlSource or base64Source
-        /// must be specified.
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="Catalog"/>. </summary>
+        /// <param name="name"> Name of the catalog. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClassifyDocumentContent(Uri urlSource, BinaryData base64Source, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Catalog(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            UrlSource = urlSource;
-            Base64Source = base64Source;
+            Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Document URL to classify.  Either urlSource or base64Source must be specified. </summary>
-        public Uri UrlSource { get; set; }
-        /// <summary>
-        /// Base64 encoding of the document to classify.  Either urlSource or base64Source
-        /// must be specified.
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
-        /// <description>Creates a payload of "AQID".</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Base64Source { get; set; }
+        /// <summary> Name of the catalog. </summary>
+        public string Name { get; }
     }
 }

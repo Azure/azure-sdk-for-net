@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class DevCenterEnvironment : IUtf8JsonSerializable, IJsonModel<DevCenterEnvironment>
+    public partial class Environment : IUtf8JsonSerializable, IJsonModel<Environment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterEnvironment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Environment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DevCenterEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Environment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Environment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterEnvironment)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Environment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -98,19 +98,19 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteEndObject();
         }
 
-        DevCenterEnvironment IJsonModel<DevCenterEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        Environment IJsonModel<Environment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Environment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterEnvironment)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Environment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDevCenterEnvironment(document.RootElement, options);
+            return DeserializeEnvironment(document.RootElement, options);
         }
 
-        internal static DevCenterEnvironment DeserializeDevCenterEnvironment(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static Environment DeserializeEnvironment(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -123,7 +123,7 @@ namespace Azure.Developer.DevCenter.Models
             string environmentType = default;
             Guid? user = default;
             EnvironmentProvisioningState? provisioningState = default;
-            ResourceIdentifier resourceGroupId = default;
+            string resourceGroupId = default;
             string catalogName = default;
             string environmentDefinitionName = default;
             ResponseError error = default;
@@ -182,11 +182,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("resourceGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    resourceGroupId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("catalogName"u8))
@@ -214,7 +210,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevCenterEnvironment(
+            return new Environment(
                 parameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 name,
                 environmentType,
@@ -227,43 +223,43 @@ namespace Azure.Developer.DevCenter.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DevCenterEnvironment>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<Environment>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Environment>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterEnvironment)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Environment)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DevCenterEnvironment IPersistableModel<DevCenterEnvironment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        Environment IPersistableModel<Environment>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevCenterEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Environment>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDevCenterEnvironment(document.RootElement, options);
+                        return DeserializeEnvironment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterEnvironment)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Environment)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DevCenterEnvironment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Environment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DevCenterEnvironment FromResponse(Response response)
+        internal static Environment FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDevCenterEnvironment(document.RootElement);
+            return DeserializeEnvironment(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

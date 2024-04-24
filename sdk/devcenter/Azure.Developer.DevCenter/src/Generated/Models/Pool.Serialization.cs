@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class DevBoxPool : IUtf8JsonSerializable, IJsonModel<DevBoxPool>
+    public partial class Pool : IUtf8JsonSerializable, IJsonModel<Pool>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxPool>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Pool>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DevBoxPool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Pool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxPool>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Pool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxPool)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Pool)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -88,19 +88,19 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteEndObject();
         }
 
-        DevBoxPool IJsonModel<DevBoxPool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        Pool IJsonModel<Pool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxPool>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Pool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxPool)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Pool)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDevBoxPool(document.RootElement, options);
+            return DeserializePool(document.RootElement, options);
         }
 
-        internal static DevBoxPool DeserializeDevBoxPool(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static Pool DeserializePool(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,10 +111,10 @@ namespace Azure.Developer.DevCenter.Models
             string name = default;
             AzureLocation location = default;
             DevBoxOSType? osType = default;
-            DevBoxHardwareProfile hardwareProfile = default;
+            HardwareProfile hardwareProfile = default;
             HibernateSupport? hibernateSupport = default;
-            DevBoxStorageProfile storageProfile = default;
-            DevBoxImageReference imageReference = default;
+            StorageProfile storageProfile = default;
+            ImageReference imageReference = default;
             LocalAdministratorStatus? localAdministrator = default;
             StopOnDisconnectConfiguration stopOnDisconnect = default;
             PoolHealthStatus healthStatus = default;
@@ -147,7 +147,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    hardwareProfile = DevBoxHardwareProfile.DeserializeDevBoxHardwareProfile(property.Value, options);
+                    hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hibernateSupport"u8))
@@ -165,7 +165,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    storageProfile = DevBoxStorageProfile.DeserializeDevBoxStorageProfile(property.Value, options);
+                    storageProfile = StorageProfile.DeserializeStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("imageReference"u8))
@@ -174,7 +174,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    imageReference = DevBoxImageReference.DeserializeDevBoxImageReference(property.Value, options);
+                    imageReference = ImageReference.DeserializeImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("localAdministrator"u8))
@@ -206,7 +206,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevBoxPool(
+            return new Pool(
                 name,
                 location,
                 osType,
@@ -220,43 +220,43 @@ namespace Azure.Developer.DevCenter.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DevBoxPool>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<Pool>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxPool>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Pool>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxPool)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Pool)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DevBoxPool IPersistableModel<DevBoxPool>.Create(BinaryData data, ModelReaderWriterOptions options)
+        Pool IPersistableModel<Pool>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevBoxPool>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Pool>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDevBoxPool(document.RootElement, options);
+                        return DeserializePool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxPool)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Pool)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DevBoxPool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Pool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DevBoxPool FromResponse(Response response)
+        internal static Pool FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDevBoxPool(document.RootElement);
+            return DeserializePool(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

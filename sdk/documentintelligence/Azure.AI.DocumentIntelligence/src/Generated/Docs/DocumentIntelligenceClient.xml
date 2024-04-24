@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="AnalyzeDocumentAsync(WaitUntil,string,AnalyzeDocumentContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,CancellationToken)">
+    <member name="AnalyzeDocumentAsync(WaitUntil,string,AnalyzeDocumentRequest,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,CancellationToken)">
       <example>
 This sample shows how to call AnalyzeDocumentAsync.
 <code><![CDATA[
@@ -18,7 +18,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-AnalyzeDocumentContent analyzeRequest = new AnalyzeDocumentContent
+AnalyzeDocumentRequest analyzeRequest = new AnalyzeDocumentRequest
 {
     UrlSource = new Uri("http://localhost:3000"),
     Base64Source = BinaryData.FromObjectAsJson(new object()),
@@ -27,7 +27,7 @@ Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil
 AnalyzeResult responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="AnalyzeDocument(WaitUntil,string,AnalyzeDocumentContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,CancellationToken)">
+    <member name="AnalyzeDocument(WaitUntil,string,AnalyzeDocumentRequest,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,CancellationToken)">
       <example>
 This sample shows how to call AnalyzeDocument.
 <code><![CDATA[
@@ -44,7 +44,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-AnalyzeDocumentContent analyzeRequest = new AnalyzeDocumentContent
+AnalyzeDocumentRequest analyzeRequest = new AnalyzeDocumentRequest
 {
     UrlSource = new Uri("http://localhost:3000"),
     Base64Source = BinaryData.FromObjectAsJson(new object()),
@@ -533,7 +533,7 @@ Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetPr
 Console.WriteLine(result.GetProperty("documents")[0].GetProperty("confidence").ToString());
 ]]></code></example>
     </member>
-    <member name="ClassifyDocumentAsync(WaitUntil,string,ClassifyDocumentContent,StringIndexType?,SplitMode?,CancellationToken)">
+    <member name="ClassifyDocumentAsync(WaitUntil,string,ClassifyDocumentRequest,StringIndexType?,SplitMode?,CancellationToken)">
       <example>
 This sample shows how to call ClassifyDocumentAsync.
 <code><![CDATA[
@@ -541,7 +541,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent();
+ClassifyDocumentRequest classifyRequest = new ClassifyDocumentRequest();
 Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", classifyRequest);
 AnalyzeResult responseData = operation.Value;
 ]]></code>
@@ -551,7 +551,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
+ClassifyDocumentRequest classifyRequest = new ClassifyDocumentRequest
 {
     UrlSource = new Uri("http://localhost:3000"),
     Base64Source = BinaryData.FromObjectAsJson(new object()),
@@ -560,7 +560,7 @@ Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUnti
 AnalyzeResult responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="ClassifyDocument(WaitUntil,string,ClassifyDocumentContent,StringIndexType?,SplitMode?,CancellationToken)">
+    <member name="ClassifyDocument(WaitUntil,string,ClassifyDocumentRequest,StringIndexType?,SplitMode?,CancellationToken)">
       <example>
 This sample shows how to call ClassifyDocument.
 <code><![CDATA[
@@ -568,7 +568,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent();
+ClassifyDocumentRequest classifyRequest = new ClassifyDocumentRequest();
 Operation<AnalyzeResult> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", classifyRequest);
 AnalyzeResult responseData = operation.Value;
 ]]></code>
@@ -578,7 +578,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
+ClassifyDocumentRequest classifyRequest = new ClassifyDocumentRequest
 {
     UrlSource = new Uri("http://localhost:3000"),
     Base64Source = BinaryData.FromObjectAsJson(new object()),

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class DevCenterCatalog : IUtf8JsonSerializable, IJsonModel<DevCenterCatalog>
+    public partial class Project : IUtf8JsonSerializable, IJsonModel<Project>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterCatalog>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Project>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DevCenterCatalog>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Project>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevCenterCatalog>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Project>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterCatalog)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Project)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,6 +30,16 @@ namespace Azure.Developer.DevCenter.Models
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(MaxDevBoxesPerUser))
+            {
+                writer.WritePropertyName("maxDevBoxesPerUser"u8);
+                writer.WriteNumberValue(MaxDevBoxesPerUser.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -49,19 +59,19 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteEndObject();
         }
 
-        DevCenterCatalog IJsonModel<DevCenterCatalog>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        Project IJsonModel<Project>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevCenterCatalog>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Project>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterCatalog)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Project)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDevCenterCatalog(document.RootElement, options);
+            return DeserializeProject(document.RootElement, options);
         }
 
-        internal static DevCenterCatalog DeserializeDevCenterCatalog(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static Project DeserializeProject(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -70,6 +80,8 @@ namespace Azure.Developer.DevCenter.Models
                 return null;
             }
             string name = default;
+            string description = default;
+            int? maxDevBoxesPerUser = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -79,52 +91,66 @@ namespace Azure.Developer.DevCenter.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("description"u8))
+                {
+                    description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("maxDevBoxesPerUser"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxDevBoxesPerUser = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DevCenterCatalog(name, serializedAdditionalRawData);
+            return new Project(name, description, maxDevBoxesPerUser, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DevCenterCatalog>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<Project>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevCenterCatalog>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Project>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterCatalog)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Project)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DevCenterCatalog IPersistableModel<DevCenterCatalog>.Create(BinaryData data, ModelReaderWriterOptions options)
+        Project IPersistableModel<Project>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevCenterCatalog>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<Project>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDevCenterCatalog(document.RootElement, options);
+                        return DeserializeProject(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterCatalog)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Project)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DevCenterCatalog>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Project>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DevCenterCatalog FromResponse(Response response)
+        internal static Project FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDevCenterCatalog(document.RootElement);
+            return DeserializeProject(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

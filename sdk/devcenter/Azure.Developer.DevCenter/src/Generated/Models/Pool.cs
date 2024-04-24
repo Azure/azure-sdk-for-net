@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Developer.DevCenter.Models
 {
     /// <summary> A pool of Dev Boxes. </summary>
-    public partial class DevBoxPool
+    public partial class Pool
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,19 +46,19 @@ namespace Azure.Developer.DevCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxPool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Pool"/>. </summary>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="healthStatus">
         /// Overall health status of the Pool. Indicates whether or not the Pool is
         /// available to create Dev Boxes.
         /// </param>
-        internal DevBoxPool(AzureLocation location, PoolHealthStatus healthStatus)
+        internal Pool(AzureLocation location, PoolHealthStatus healthStatus)
         {
             Location = location;
             HealthStatus = healthStatus;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxPool"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Pool"/>. </summary>
         /// <param name="name"> Pool name. </param>
         /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
         /// <param name="osType"> The operating system type of Dev Boxes in this pool. </param>
@@ -76,7 +76,7 @@ namespace Azure.Developer.DevCenter.Models
         /// available to create Dev Boxes.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevBoxPool(string name, AzureLocation location, DevBoxOSType? osType, DevBoxHardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, LocalAdministratorStatus? localAdministratorStatus, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Pool(string name, AzureLocation location, DevBoxOSType? osType, HardwareProfile hardwareProfile, HibernateSupport? hibernateSupport, StorageProfile storageProfile, ImageReference imageReference, LocalAdministratorStatus? localAdministratorStatus, StopOnDisconnectConfiguration stopOnDisconnect, PoolHealthStatus healthStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Location = location;
@@ -91,8 +91,8 @@ namespace Azure.Developer.DevCenter.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevBoxPool"/> for deserialization. </summary>
-        internal DevBoxPool()
+        /// <summary> Initializes a new instance of <see cref="Pool"/> for deserialization. </summary>
+        internal Pool()
         {
         }
 
@@ -103,13 +103,13 @@ namespace Azure.Developer.DevCenter.Models
         /// <summary> The operating system type of Dev Boxes in this pool. </summary>
         public DevBoxOSType? OSType { get; }
         /// <summary> Hardware settings for the Dev Boxes created in this pool. </summary>
-        public DevBoxHardwareProfile HardwareProfile { get; }
+        public HardwareProfile HardwareProfile { get; }
         /// <summary> Indicates whether hibernate is enabled/disabled or unknown. </summary>
         public HibernateSupport? HibernateSupport { get; }
         /// <summary> Storage settings for Dev Box created in this pool. </summary>
-        public DevBoxStorageProfile StorageProfile { get; }
+        public StorageProfile StorageProfile { get; }
         /// <summary> Image settings for Dev Boxes create in this pool. </summary>
-        public DevBoxImageReference ImageReference { get; }
+        public ImageReference ImageReference { get; }
         /// <summary>
         /// Indicates whether owners of Dev Boxes in this pool are local administrators on
         /// the Dev Boxes.

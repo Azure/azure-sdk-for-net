@@ -534,7 +534,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            AnalyzeDocumentContent analyzeRequest = new AnalyzeDocumentContent
+            AnalyzeDocumentRequest analyzeRequest = new AnalyzeDocumentRequest
             {
                 UrlSource = new Uri("http://localhost:3000"),
                 Base64Source = BinaryData.FromObjectAsJson(new object()),
@@ -551,7 +551,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            AnalyzeDocumentContent analyzeRequest = new AnalyzeDocumentContent
+            AnalyzeDocumentRequest analyzeRequest = new AnalyzeDocumentRequest
             {
                 UrlSource = new Uri("http://localhost:3000"),
                 Base64Source = BinaryData.FromObjectAsJson(new object()),
@@ -612,7 +612,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent();
+            ClassifyDocumentRequest classifyRequest = new ClassifyDocumentRequest();
             Operation<AnalyzeResult> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", classifyRequest);
             AnalyzeResult responseData = operation.Value;
         }
@@ -625,7 +625,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent();
+            ClassifyDocumentRequest classifyRequest = new ClassifyDocumentRequest();
             Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", classifyRequest);
             AnalyzeResult responseData = operation.Value;
         }
@@ -1080,7 +1080,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
+            ClassifyDocumentRequest classifyRequest = new ClassifyDocumentRequest
             {
                 UrlSource = new Uri("http://localhost:3000"),
                 Base64Source = BinaryData.FromObjectAsJson(new object()),
@@ -1097,7 +1097,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
+            ClassifyDocumentRequest classifyRequest = new ClassifyDocumentRequest
             {
                 UrlSource = new Uri("http://localhost:3000"),
                 Base64Source = BinaryData.FromObjectAsJson(new object()),
