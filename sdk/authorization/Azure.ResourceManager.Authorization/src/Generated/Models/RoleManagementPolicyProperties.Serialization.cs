@@ -148,29 +148,31 @@ namespace Azure.ResourceManager.Authorization.Models
             builder.Append("  scope:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScopeId), out propertyOverride);
-            if (Optional.IsDefined(ScopeId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScopeId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    id: ");
                     builder.AppendLine($"'{ScopeId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScopeDisplayName), out propertyOverride);
-            if (Optional.IsDefined(ScopeDisplayName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    displayName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScopeDisplayName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    displayName: ");
                     if (ScopeDisplayName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -184,15 +186,16 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScopeType), out propertyOverride);
-            if (Optional.IsDefined(ScopeType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScopeType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    type: ");
                     builder.AppendLine($"'{ScopeType.Value.ToString()}'");
                 }
             }
