@@ -197,7 +197,11 @@ public class ClientPipelineOptions
     /// instance or call methods that would change its state will throw
     /// <see cref="InvalidOperationException"/>.
     /// </summary>
-    public virtual void Freeze() => _frozen = true;
+    public virtual void Freeze()
+    {
+        _frozen = true;
+        Diagnostics?.Freeze();
+    }
 
     /// <summary>
     /// Assert that <see cref="Freeze"/> has not been called on this
