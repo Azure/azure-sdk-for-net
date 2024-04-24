@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
+            if (Optional.IsDefined(Protocol))
+            {
+                writer.WritePropertyName("protocol"u8);
+                writer.WriteStringValue(Protocol.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -101,6 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
             string accessKey = default;
             string mountPath = default;
             AppServiceStorageAccountState? state = default;
+            AzureStorageProtocol? protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,6 +149,15 @@ namespace Azure.ResourceManager.AppService.Models
                     state = property.Value.GetString().ToAppServiceStorageAccountState();
                     continue;
                 }
+                if (property.NameEquals("protocol"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protocol = new AzureStorageProtocol(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -156,6 +171,7 @@ namespace Azure.ResourceManager.AppService.Models
                 accessKey,
                 mountPath,
                 state,
+                protocol,
                 serializedAdditionalRawData);
         }
 
@@ -283,6 +299,20 @@ namespace Azure.ResourceManager.AppService.Models
                 else
                 {
                     builder.AppendLine($"'{State.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
+            if (Optional.IsDefined(Protocol) || hasPropertyOverride)
+            {
+                builder.Append("  protocol: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Protocol.Value.ToString()}'");
                 }
             }
 

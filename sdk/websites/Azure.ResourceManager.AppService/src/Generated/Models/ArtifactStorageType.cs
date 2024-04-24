@@ -5,14 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The ArtifactStorageType. </summary>
-    public enum ArtifactStorageType
+    /// <summary> Property to select Azure Storage type. Available options: blobContainer. </summary>
+    public readonly partial struct ArtifactStorageType : IEquatable<ArtifactStorageType>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactStorageType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ArtifactStorageType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string BlobContainerValue = "blobContainer";
+        private const string LocalNodeValue = "LocalNode";
+        private const string NetworkFileSystemValue = "NetworkFileSystem";
+
+        /// <summary> blobContainer. </summary>
+        public static ArtifactStorageType BlobContainer { get; } = new ArtifactStorageType(BlobContainerValue);
         /// <summary> LocalNode. </summary>
-        LocalNode,
+        public static ArtifactStorageType LocalNode { get; } = new ArtifactStorageType(LocalNodeValue);
         /// <summary> NetworkFileSystem. </summary>
-        NetworkFileSystem
+        public static ArtifactStorageType NetworkFileSystem { get; } = new ArtifactStorageType(NetworkFileSystemValue);
+        /// <summary> Determines if two <see cref="ArtifactStorageType"/> values are the same. </summary>
+        public static bool operator ==(ArtifactStorageType left, ArtifactStorageType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ArtifactStorageType"/> values are not the same. </summary>
+        public static bool operator !=(ArtifactStorageType left, ArtifactStorageType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ArtifactStorageType"/>. </summary>
+        public static implicit operator ArtifactStorageType(string value) => new ArtifactStorageType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is ArtifactStorageType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(ArtifactStorageType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

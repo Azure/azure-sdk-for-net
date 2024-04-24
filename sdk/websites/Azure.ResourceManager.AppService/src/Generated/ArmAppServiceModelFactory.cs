@@ -305,47 +305,21 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CertificateOrderAction"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
         /// <param name="actionType"> Action type. </param>
         /// <param name="createdOn"> Time at which the certificate action was performed. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.CertificateOrderAction"/> instance for mocking. </returns>
-        public static CertificateOrderAction CertificateOrderAction(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CertificateOrderActionType? actionType = null, DateTimeOffset? createdOn = null, string kind = null)
+        public static CertificateOrderAction CertificateOrderAction(CertificateOrderActionType? actionType = null, DateTimeOffset? createdOn = null)
         {
-            return new CertificateOrderAction(
-                id,
-                name,
-                resourceType,
-                systemData,
-                actionType,
-                createdOn,
-                kind,
-                serializedAdditionalRawData: null);
+            return new CertificateOrderAction(actionType, createdOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateEmail"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
         /// <param name="emailId"> Email id. </param>
         /// <param name="timeStamp"> Time stamp. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceCertificateEmail"/> instance for mocking. </returns>
-        public static AppServiceCertificateEmail AppServiceCertificateEmail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string emailId = null, DateTimeOffset? timeStamp = null, string kind = null)
+        public static AppServiceCertificateEmail AppServiceCertificateEmail(string emailId = null, DateTimeOffset? timeStamp = null)
         {
-            return new AppServiceCertificateEmail(
-                id,
-                name,
-                resourceType,
-                systemData,
-                emailId,
-                timeStamp,
-                kind,
-                serializedAdditionalRawData: null);
+            return new AppServiceCertificateEmail(emailId, timeStamp, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceDetectorData"/>. </summary>
@@ -808,11 +782,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="clusterSettings"> Custom settings for changing the behavior of the App Service Environment. </param>
         /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
+        /// <param name="upgradePreference"> Upgrade Preference. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="isZoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
+        /// <param name="customDnsSuffixConfiguration"> Full view of the custom domain suffix configuration for ASEv3. </param>
+        /// <param name="networkingConfiguration"> Full view of networking configuration for an ASE. </param>
+        /// <param name="upgradeAvailability"> Whether an upgrade is available for this App Service Environment. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.AppServiceEnvironmentData"/> instance for mocking. </returns>
-        public static AppServiceEnvironmentData AppServiceEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null, HostingEnvironmentStatus? status = null, AppServiceVirtualNetworkProfile virtualNetwork = null, LoadBalancingMode? internalLoadBalancingMode = null, string multiSize = null, int? multiRoleCount = null, int? ipSslAddressCount = null, string dnsSuffix = null, int? maximumNumberOfMachines = null, int? frontEndScaleFactor = null, bool? isSuspended = null, IEnumerable<AppServiceNameValuePair> clusterSettings = null, IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = null, int? dedicatedHostCount = null, bool? isZoneRedundant = null, string kind = null)
+        public static AppServiceEnvironmentData AppServiceEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null, HostingEnvironmentStatus? status = null, AppServiceVirtualNetworkProfile virtualNetwork = null, LoadBalancingMode? internalLoadBalancingMode = null, string multiSize = null, int? multiRoleCount = null, int? ipSslAddressCount = null, string dnsSuffix = null, int? maximumNumberOfMachines = null, int? frontEndScaleFactor = null, bool? isSuspended = null, IEnumerable<AppServiceNameValuePair> clusterSettings = null, IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = null, UpgradePreference? upgradePreference = null, int? dedicatedHostCount = null, bool? isZoneRedundant = null, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration = null, AseV3NetworkingConfigurationData networkingConfiguration = null, UpgradeAvailability? upgradeAvailability = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
             clusterSettings ??= new List<AppServiceNameValuePair>();
@@ -839,8 +817,12 @@ namespace Azure.ResourceManager.AppService.Models
                 clusterSettings?.ToList(),
                 userWhitelistedIPRanges?.ToList(),
                 hasLinuxWorkers,
+                upgradePreference,
                 dedicatedHostCount,
                 isZoneRedundant,
+                customDnsSuffixConfiguration,
+                networkingConfiguration,
+                upgradeAvailability,
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -863,10 +845,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="clusterSettings"> Custom settings for changing the behavior of the App Service Environment. </param>
         /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
+        /// <param name="upgradePreference"> Upgrade Preference. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="isZoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
+        /// <param name="customDnsSuffixConfiguration"> Full view of the custom domain suffix configuration for ASEv3. </param>
+        /// <param name="networkingConfiguration"> Full view of networking configuration for an ASE. </param>
+        /// <param name="upgradeAvailability"> Whether an upgrade is available for this App Service Environment. </param>
         /// <returns> A new <see cref="Models.AppServiceEnvironmentProperties"/> instance for mocking. </returns>
-        public static AppServiceEnvironmentProperties AppServiceEnvironmentProperties(ProvisioningState? provisioningState = null, HostingEnvironmentStatus? status = null, AppServiceVirtualNetworkProfile virtualNetwork = null, LoadBalancingMode? internalLoadBalancingMode = null, string multiSize = null, int? multiRoleCount = null, int? ipSslAddressCount = null, string dnsSuffix = null, int? maximumNumberOfMachines = null, int? frontEndScaleFactor = null, bool? isSuspended = null, IEnumerable<AppServiceNameValuePair> clusterSettings = null, IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = null, int? dedicatedHostCount = null, bool? isZoneRedundant = null)
+        public static AppServiceEnvironmentProperties AppServiceEnvironmentProperties(ProvisioningState? provisioningState = null, HostingEnvironmentStatus? status = null, AppServiceVirtualNetworkProfile virtualNetwork = null, LoadBalancingMode? internalLoadBalancingMode = null, string multiSize = null, int? multiRoleCount = null, int? ipSslAddressCount = null, string dnsSuffix = null, int? maximumNumberOfMachines = null, int? frontEndScaleFactor = null, bool? isSuspended = null, IEnumerable<AppServiceNameValuePair> clusterSettings = null, IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = null, UpgradePreference? upgradePreference = null, int? dedicatedHostCount = null, bool? isZoneRedundant = null, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration = null, AseV3NetworkingConfigurationData networkingConfiguration = null, UpgradeAvailability? upgradeAvailability = null)
         {
             clusterSettings ??= new List<AppServiceNameValuePair>();
             userWhitelistedIPRanges ??= new List<string>();
@@ -886,8 +872,12 @@ namespace Azure.ResourceManager.AppService.Models
                 clusterSettings?.ToList(),
                 userWhitelistedIPRanges?.ToList(),
                 hasLinuxWorkers,
+                upgradePreference,
                 dedicatedHostCount,
                 isZoneRedundant,
+                customDnsSuffixConfiguration,
+                networkingConfiguration,
+                upgradeAvailability,
                 serializedAdditionalRawData: null);
         }
 
@@ -900,6 +890,73 @@ namespace Azure.ResourceManager.AppService.Models
         public static AppServiceVirtualNetworkProfile AppServiceVirtualNetworkProfile(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string subnet = null)
         {
             return new AppServiceVirtualNetworkProfile(id, name, resourceType, subnet, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.CustomDnsSuffixConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"></param>
+        /// <param name="provisioningDetails"></param>
+        /// <param name="dnsSuffix"> The default custom domain suffix to use for all sites deployed on the ASE. </param>
+        /// <param name="certificateUri"> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </param>
+        /// <param name="keyVaultReferenceIdentity"> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="AppService.CustomDnsSuffixConfigurationData"/> instance for mocking. </returns>
+        public static CustomDnsSuffixConfigurationData CustomDnsSuffixConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CustomDnsSuffixProvisioningState? provisioningState = null, string provisioningDetails = null, string dnsSuffix = null, Uri certificateUri = null, string keyVaultReferenceIdentity = null, string kind = null)
+        {
+            return new CustomDnsSuffixConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                provisioningDetails,
+                dnsSuffix,
+                certificateUri,
+                keyVaultReferenceIdentity,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.AseV3NetworkingConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="windowsOutboundIPAddresses"></param>
+        /// <param name="linuxOutboundIPAddresses"></param>
+        /// <param name="externalInboundIPAddresses"></param>
+        /// <param name="internalInboundIPAddresses"></param>
+        /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
+        /// <param name="ftpEnabled"> Property to enable and disable FTP on ASEV3. </param>
+        /// <param name="remoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
+        /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="AppService.AseV3NetworkingConfigurationData"/> instance for mocking. </returns>
+        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<System.Net.IPAddress> windowsOutboundIPAddresses = null, IEnumerable<System.Net.IPAddress> linuxOutboundIPAddresses = null, IEnumerable<System.Net.IPAddress> externalInboundIPAddresses = null, IEnumerable<System.Net.IPAddress> internalInboundIPAddresses = null, bool? allowNewPrivateEndpointConnections = null, bool? ftpEnabled = null, bool? remoteDebugEnabled = null, string inboundIPAddressOverride = null, string kind = null)
+        {
+            windowsOutboundIPAddresses ??= new List<System.Net.IPAddress>();
+            linuxOutboundIPAddresses ??= new List<System.Net.IPAddress>();
+            externalInboundIPAddresses ??= new List<System.Net.IPAddress>();
+            internalInboundIPAddresses ??= new List<System.Net.IPAddress>();
+
+            return new AseV3NetworkingConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                windowsOutboundIPAddresses?.ToList(),
+                linuxOutboundIPAddresses?.ToList(),
+                externalInboundIPAddresses?.ToList(),
+                internalInboundIPAddresses?.ToList(),
+                allowNewPrivateEndpointConnections,
+                ftpEnabled,
+                remoteDebugEnabled,
+                inboundIPAddressOverride,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceEnvironmentPatch"/>. </summary>
@@ -924,11 +981,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="clusterSettings"> Custom settings for changing the behavior of the App Service Environment. </param>
         /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
         /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
+        /// <param name="upgradePreference"> Upgrade Preference. </param>
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="isZoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
+        /// <param name="customDnsSuffixConfiguration"> Full view of the custom domain suffix configuration for ASEv3. </param>
+        /// <param name="networkingConfiguration"> Full view of networking configuration for an ASE. </param>
+        /// <param name="upgradeAvailability"> Whether an upgrade is available for this App Service Environment. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceEnvironmentPatch"/> instance for mocking. </returns>
-        public static AppServiceEnvironmentPatch AppServiceEnvironmentPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, HostingEnvironmentStatus? status = null, AppServiceVirtualNetworkProfile virtualNetwork = null, LoadBalancingMode? internalLoadBalancingMode = null, string multiSize = null, int? multiRoleCount = null, int? ipSslAddressCount = null, string dnsSuffix = null, int? maximumNumberOfMachines = null, int? frontEndScaleFactor = null, bool? isSuspended = null, IEnumerable<AppServiceNameValuePair> clusterSettings = null, IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = null, int? dedicatedHostCount = null, bool? isZoneRedundant = null, string kind = null)
+        public static AppServiceEnvironmentPatch AppServiceEnvironmentPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, HostingEnvironmentStatus? status = null, AppServiceVirtualNetworkProfile virtualNetwork = null, LoadBalancingMode? internalLoadBalancingMode = null, string multiSize = null, int? multiRoleCount = null, int? ipSslAddressCount = null, string dnsSuffix = null, int? maximumNumberOfMachines = null, int? frontEndScaleFactor = null, bool? isSuspended = null, IEnumerable<AppServiceNameValuePair> clusterSettings = null, IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = null, UpgradePreference? upgradePreference = null, int? dedicatedHostCount = null, bool? isZoneRedundant = null, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration = null, AseV3NetworkingConfigurationData networkingConfiguration = null, UpgradeAvailability? upgradeAvailability = null, string kind = null)
         {
             clusterSettings ??= new List<AppServiceNameValuePair>();
             userWhitelistedIPRanges ??= new List<string>();
@@ -952,8 +1013,12 @@ namespace Azure.ResourceManager.AppService.Models
                 clusterSettings?.ToList(),
                 userWhitelistedIPRanges?.ToList(),
                 hasLinuxWorkers,
+                upgradePreference,
                 dedicatedHostCount,
                 isZoneRedundant,
+                customDnsSuffixConfiguration,
+                networkingConfiguration,
+                upgradeAvailability,
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -1007,9 +1072,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServiceEnvironmentAddressResult"/> instance for mocking. </returns>
-        public static AppServiceEnvironmentAddressResult AppServiceEnvironmentAddressResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress serviceIPAddress = null, IPAddress internalIPAddress = null, IEnumerable<IPAddress> outboundIPAddresses = null, IEnumerable<VirtualIPMapping> virtualIPMappings = null, string kind = null)
+        public static AppServiceEnvironmentAddressResult AppServiceEnvironmentAddressResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, System.Net.IPAddress serviceIPAddress = null, System.Net.IPAddress internalIPAddress = null, IEnumerable<System.Net.IPAddress> outboundIPAddresses = null, IEnumerable<VirtualIPMapping> virtualIPMappings = null, string kind = null)
         {
-            outboundIPAddresses ??= new List<IPAddress>();
+            outboundIPAddresses ??= new List<System.Net.IPAddress>();
             virtualIPMappings ??= new List<VirtualIPMapping>();
 
             return new AppServiceEnvironmentAddressResult(
@@ -1021,39 +1086,6 @@ namespace Azure.ResourceManager.AppService.Models
                 internalIPAddress,
                 outboundIPAddresses?.ToList(),
                 virtualIPMappings?.ToList(),
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppService.AseV3NetworkingConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="windowsOutboundIPAddresses"></param>
-        /// <param name="linuxOutboundIPAddresses"></param>
-        /// <param name="externalInboundIPAddresses"></param>
-        /// <param name="internalInboundIPAddresses"></param>
-        /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.AseV3NetworkingConfigurationData"/> instance for mocking. </returns>
-        public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<IPAddress> windowsOutboundIPAddresses = null, IEnumerable<IPAddress> linuxOutboundIPAddresses = null, IEnumerable<IPAddress> externalInboundIPAddresses = null, IEnumerable<IPAddress> internalInboundIPAddresses = null, bool? allowNewPrivateEndpointConnections = null, string kind = null)
-        {
-            windowsOutboundIPAddresses ??= new List<IPAddress>();
-            linuxOutboundIPAddresses ??= new List<IPAddress>();
-            externalInboundIPAddresses ??= new List<IPAddress>();
-            internalInboundIPAddresses ??= new List<IPAddress>();
-
-            return new AseV3NetworkingConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                windowsOutboundIPAddresses?.ToList(),
-                linuxOutboundIPAddresses?.ToList(),
-                externalInboundIPAddresses?.ToList(),
-                internalInboundIPAddresses?.ToList(),
-                allowNewPrivateEndpointConnections,
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -1206,9 +1238,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="expireOn"> Time when operation will expire. </param>
         /// <param name="geoMasterOperationId"> Applicable only for stamp operation ids. </param>
         /// <returns> A new <see cref="Models.AppServiceOperation"/> instance for mocking. </returns>
-        public static AppServiceOperation AppServiceOperation(string id = null, string name = null, AppServiceOperationStatus? status = null, IEnumerable<ResponseError> errors = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, DateTimeOffset? expireOn = null, Guid? geoMasterOperationId = null)
+        public static AppServiceOperation AppServiceOperation(string id = null, string name = null, AppServiceOperationStatus? status = null, IEnumerable<ErrorEntity> errors = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, DateTimeOffset? expireOn = null, Guid? geoMasterOperationId = null)
         {
-            errors ??= new List<ResponseError>();
+            errors ??= new List<ErrorEntity>();
 
             return new AppServiceOperation(
                 id,
@@ -1250,7 +1282,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="latency"> The time in milliseconds it takes for a TCP connection to be created from the App Service Environment to this IpAddress at this Port. </param>
         /// <param name="isAccessible"> Whether it is possible to create a TCP connection from the App Service Environment to this IpAddress at this Port. </param>
         /// <returns> A new <see cref="Models.AppServiceEndpointDetail"/> instance for mocking. </returns>
-        public static AppServiceEndpointDetail AppServiceEndpointDetail(IPAddress ipAddress = null, int? port = null, double? latency = null, bool? isAccessible = null)
+        public static AppServiceEndpointDetail AppServiceEndpointDetail(System.Net.IPAddress ipAddress = null, int? port = null, double? latency = null, bool? isAccessible = null)
         {
             return new AppServiceEndpointDetail(ipAddress, port, latency, isAccessible, serializedAdditionalRawData: null);
         }
@@ -1266,9 +1298,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.RemotePrivateEndpointConnectionARMResourceData"/> instance for mocking. </returns>
-        public static RemotePrivateEndpointConnectionARMResourceData RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, ResourceIdentifier privateEndpointId = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, IEnumerable<IPAddress> ipAddresses = null, string kind = null)
+        public static RemotePrivateEndpointConnectionARMResourceData RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, ResourceIdentifier privateEndpointId = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, IEnumerable<System.Net.IPAddress> ipAddresses = null, string kind = null)
         {
-            ipAddresses ??= new List<IPAddress>();
+            ipAddresses ??= new List<System.Net.IPAddress>();
 
             return new RemotePrivateEndpointConnectionARMResourceData(
                 id,
@@ -1279,26 +1311,6 @@ namespace Azure.ResourceManager.AppService.Models
                 privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
                 privateLinkServiceConnectionState,
                 ipAddresses?.ToList(),
-                kind,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateLinkConnectionApprovalRequestInfo"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkConnectionApprovalRequestInfo"/> instance for mocking. </returns>
-        public static PrivateLinkConnectionApprovalRequestInfo PrivateLinkConnectionApprovalRequestInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, string kind = null)
-        {
-            return new PrivateLinkConnectionApprovalRequestInfo(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateLinkServiceConnectionState,
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -1348,6 +1360,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="subscription"> App Service plan subscription. </param>
         /// <param name="hostingEnvironmentProfile"> Specification for the App Service Environment to use for the App Service plan. </param>
         /// <param name="maximumNumberOfWorkers"> Maximum number of instances that can be assigned to this App Service plan. </param>
+        /// <param name="numberOfWorkers"> The number of instances that are assigned to this App Service plan. </param>
         /// <param name="geoRegion"> Geographical location for the App Service plan. </param>
         /// <param name="isPerSiteScaling">
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
@@ -1373,7 +1386,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.AppServicePlanData"/> instance for mocking. </returns>
-        public static AppServicePlanData AppServicePlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AppServiceSkuDescription sku = null, ExtendedLocation extendedLocation = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpireOn = null, DateTimeOffset? freeOfferExpireOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, string kind = null)
+        public static AppServicePlanData AppServicePlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AppServiceSkuDescription sku = null, ExtendedLocation extendedLocation = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, int? numberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpireOn = null, DateTimeOffset? freeOfferExpireOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -1391,6 +1404,7 @@ namespace Azure.ResourceManager.AppService.Models
                 subscription,
                 hostingEnvironmentProfile,
                 maximumNumberOfWorkers,
+                numberOfWorkers,
                 geoRegion,
                 isPerSiteScaling,
                 isElasticScaleEnabled,
@@ -1457,7 +1471,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
         /// <param name="isHyperV"> Hyper-V sandbox. </param>
         /// <param name="lastModifiedTimeUtc"> Last time the app was modified, in UTC. Read-only. </param>
+        /// <param name="dnsConfiguration"> Property to configure various DNS related settings for a site. </param>
+        /// <param name="vnetRouteAllEnabled"> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </param>
+        /// <param name="vnetImagePullEnabled"> To enable pulling image over Virtual Network. </param>
+        /// <param name="vnetContentShareEnabled"> To enable accessing content over virtual network. </param>
+        /// <param name="vnetBackupRestoreEnabled"> To enable Backup and Restore operations over virtual network. </param>
         /// <param name="siteConfig"> Configuration of the app. </param>
+        /// <param name="functionAppConfig"> Configuration specific of the Azure Function app. </param>
+        /// <param name="daprConfig"> Dapr configuration of the app. </param>
+        /// <param name="workloadProfileName"> Workload profile name for function app to execute on. </param>
+        /// <param name="resourceConfig"> Function app resource requirements. </param>
         /// <param name="trafficManagerHostNames"> Azure Traffic Manager hostnames associated with the app. Read-only. </param>
         /// <param name="isScmSiteAlsoStopped"> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="targetSwapSlot"> Specifies which deployment slot this app will swap into. Read-only. </param>
@@ -1496,15 +1519,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="redundancyMode"> Site redundancy mode. </param>
         /// <param name="inProgressOperationId"> Specifies an operation id if this site has a pending operation. </param>
+        /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
         /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="virtualNetworkSubnetId">
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
+        /// <param name="managedEnvironmentId"> Azure Resource Manager ID of the customer's selected Managed Environment on which to host this app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.WebSiteData"/> instance for mocking. </returns>
-        public static WebSiteData WebSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ExtendedLocation extendedLocation = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier appServicePlanId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedTimeUtc = null, SiteConfigProperties siteConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, ResourceIdentifier virtualNetworkSubnetId = null, string kind = null)
+        public static WebSiteData WebSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ExtendedLocation extendedLocation = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier appServicePlanId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedTimeUtc = null, SiteDnsConfig dnsConfiguration = null, bool? vnetRouteAllEnabled = null, bool? vnetImagePullEnabled = null, bool? vnetContentShareEnabled = null, bool? vnetBackupRestoreEnabled = null, SiteConfigProperties siteConfig = null, FunctionAppConfig functionAppConfig = null, DaprConfig daprConfig = null, string workloadProfileName = null, ResourceConfig resourceConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, string publicNetworkAccess = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, ResourceIdentifier virtualNetworkSubnetId = null, string managedEnvironmentId = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
             hostNames ??= new List<string>();
@@ -1534,7 +1559,16 @@ namespace Azure.ResourceManager.AppService.Models
                 isXenon,
                 isHyperV,
                 lastModifiedTimeUtc,
+                dnsConfiguration,
+                vnetRouteAllEnabled,
+                vnetImagePullEnabled,
+                vnetContentShareEnabled,
+                vnetBackupRestoreEnabled,
                 siteConfig,
+                functionAppConfig,
+                daprConfig,
+                workloadProfileName,
+                resourceConfig,
                 trafficManagerHostNames?.ToList(),
                 isScmSiteAlsoStopped,
                 targetSwapSlot,
@@ -1559,10 +1593,34 @@ namespace Azure.ResourceManager.AppService.Models
                 isHttpsOnly,
                 redundancyMode,
                 inProgressOperationId,
+                publicNetworkAccess,
                 isStorageAccountRequired,
                 keyVaultReferenceIdentity,
                 virtualNetworkSubnetId,
+                managedEnvironmentId,
                 kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SiteDnsConfig"/>. </summary>
+        /// <param name="dnsServers"> List of custom DNS servers to be used by an app for lookups. Maximum 5 dns servers can be set. </param>
+        /// <param name="dnsAltServer"> Alternate DNS server to be used by apps. This property replicates the WEBSITE_DNS_ALT_SERVER app setting. </param>
+        /// <param name="dnsRetryAttemptTimeout"> Timeout for a single dns lookup in seconds. Allowed range: 1-30. Default is 3. </param>
+        /// <param name="dnsRetryAttemptCount"> Total number of retries for dns lookup. Allowed range: 1-5. Default is 3. </param>
+        /// <param name="dnsMaxCacheTimeout"> Custom time for DNS to be cached in seconds. Allowed range: 0-60. Default is 30 seconds. 0 means caching disabled. </param>
+        /// <param name="dnsLegacySortOrder"> Indicates that sites using Virtual network custom DNS servers are still sorting the list of DNS servers. Read-Only. </param>
+        /// <returns> A new <see cref="Models.SiteDnsConfig"/> instance for mocking. </returns>
+        public static SiteDnsConfig SiteDnsConfig(IEnumerable<string> dnsServers = null, string dnsAltServer = null, int? dnsRetryAttemptTimeout = null, int? dnsRetryAttemptCount = null, int? dnsMaxCacheTimeout = null, bool? dnsLegacySortOrder = null)
+        {
+            dnsServers ??= new List<string>();
+
+            return new SiteDnsConfig(
+                dnsServers?.ToList(),
+                dnsAltServer,
+                dnsRetryAttemptTimeout,
+                dnsRetryAttemptCount,
+                dnsMaxCacheTimeout,
+                dnsLegacySortOrder,
                 serializedAdditionalRawData: null);
         }
 
@@ -1587,6 +1645,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isDetailedErrorLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="publishingUsername"> Publishing user name. </param>
         /// <param name="appSettings"> Application settings. </param>
+        /// <param name="metadata"> Application metadata. This property cannot be retrieved, since it may contain secrets. </param>
         /// <param name="connectionStrings"> Connection strings. </param>
         /// <param name="machineKey"> Site MachineKey. </param>
         /// <param name="handlerMappings"> Handler mappings. </param>
@@ -1620,10 +1679,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="xManagedServiceIdentityId"> Explicit Managed Service Identity Id. </param>
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="ipSecurityRestrictions"> IP security restrictions for main. </param>
+        /// <param name="ipSecurityRestrictionsDefaultAction"> Default action for main access restriction if no rules are matched. </param>
         /// <param name="scmIPSecurityRestrictions"> IP security restrictions for scm. </param>
+        /// <param name="scmIPSecurityRestrictionsDefaultAction"> Default action for scm access restriction if no rules are matched. </param>
         /// <param name="allowIPSecurityRestrictionsForScmToUseMain"> IP security restrictions for scm to use main. </param>
         /// <param name="isHttp20Enabled"> Http20Enabled: configures a web site to allow clients to connect over http2.0. </param>
         /// <param name="minTlsVersion"> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </param>
+        /// <param name="minTlsCipherSuite"> The minimum strength TLS cipher suite allowed for an application. </param>
         /// <param name="scmMinTlsVersion"> ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site. </param>
         /// <param name="ftpsState"> State of FTP / FTPS service. </param>
         /// <param name="preWarmedInstanceCount">
@@ -1633,6 +1695,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="functionAppScaleLimit">
         /// Maximum number of workers that a site can scale out to.
         /// This setting only applies to the Consumption and Elastic Premium Plans
+        /// </param>
+        /// <param name="elasticWebAppScaleLimit">
+        /// Maximum number of workers that a site can scale out to.
+        /// This setting only applies to apps in plans where ElasticScaleEnabled is &lt;code&gt;true&lt;/code&gt;
         /// </param>
         /// <param name="healthCheckPath"> Health check path. </param>
         /// <param name="isFunctionsRuntimeScaleMonitoringEnabled">
@@ -1648,10 +1714,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
         /// <returns> A new <see cref="Models.SiteConfigProperties"/> instance for mocking. </returns>
-        public static SiteConfigProperties SiteConfigProperties(int? numberOfWorkers = null, IEnumerable<string> defaultDocuments = null, string netFrameworkVersion = null, string phpVersion = null, string pythonVersion = null, string nodeVersion = null, string powerShellVersion = null, string linuxFxVersion = null, string windowsFxVersion = null, bool? isRequestTracingEnabled = null, DateTimeOffset? requestTracingExpirationOn = null, bool? isRemoteDebuggingEnabled = null, string remoteDebuggingVersion = null, bool? isHttpLoggingEnabled = null, bool? useManagedIdentityCreds = null, string acrUserManagedIdentityId = null, int? logsDirectorySizeLimit = null, bool? isDetailedErrorLoggingEnabled = null, string publishingUsername = null, IEnumerable<AppServiceNameValuePair> appSettings = null, IEnumerable<ConnStringInfo> connectionStrings = null, SiteMachineKey machineKey = null, IEnumerable<HttpRequestHandlerMapping> handlerMappings = null, string documentRoot = null, ScmType? scmType = null, bool? use32BitWorkerProcess = null, bool? isWebSocketsEnabled = null, bool? isAlwaysOn = null, string javaVersion = null, string javaContainer = null, string javaContainerVersion = null, string appCommandLine = null, ManagedPipelineMode? managedPipelineMode = null, IEnumerable<VirtualApplication> virtualApplications = null, SiteLoadBalancing? loadBalancing = null, IEnumerable<RampUpRule> experimentsRampUpRules = null, SiteLimits limits = null, bool? isAutoHealEnabled = null, AutoHealRules autoHealRules = null, string tracingOptions = null, string vnetName = null, bool? isVnetRouteAllEnabled = null, int? vnetPrivatePortsCount = null, AppServiceCorsSettings cors = null, WebAppPushSettings push = null, Uri apiDefinitionUri = null, string apiManagementConfigId = null, string autoSwapSlotName = null, bool? isLocalMySqlEnabled = null, int? managedServiceIdentityId = null, int? xManagedServiceIdentityId = null, string keyVaultReferenceIdentity = null, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = null, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = null, bool? allowIPSecurityRestrictionsForScmToUseMain = null, bool? isHttp20Enabled = null, AppServiceSupportedTlsVersion? minTlsVersion = null, AppServiceSupportedTlsVersion? scmMinTlsVersion = null, AppServiceFtpsState? ftpsState = null, int? preWarmedInstanceCount = null, int? functionAppScaleLimit = null, string healthCheckPath = null, bool? isFunctionsRuntimeScaleMonitoringEnabled = null, string websiteTimeZone = null, int? minimumElasticInstanceCount = null, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = null, string publicNetworkAccess = null)
+        public static SiteConfigProperties SiteConfigProperties(int? numberOfWorkers = null, IEnumerable<string> defaultDocuments = null, string netFrameworkVersion = null, string phpVersion = null, string pythonVersion = null, string nodeVersion = null, string powerShellVersion = null, string linuxFxVersion = null, string windowsFxVersion = null, bool? isRequestTracingEnabled = null, DateTimeOffset? requestTracingExpirationOn = null, bool? isRemoteDebuggingEnabled = null, string remoteDebuggingVersion = null, bool? isHttpLoggingEnabled = null, bool? useManagedIdentityCreds = null, string acrUserManagedIdentityId = null, int? logsDirectorySizeLimit = null, bool? isDetailedErrorLoggingEnabled = null, string publishingUsername = null, IEnumerable<AppServiceNameValuePair> appSettings = null, IEnumerable<AppServiceNameValuePair> metadata = null, IEnumerable<ConnStringInfo> connectionStrings = null, SiteMachineKey machineKey = null, IEnumerable<HttpRequestHandlerMapping> handlerMappings = null, string documentRoot = null, ScmType? scmType = null, bool? use32BitWorkerProcess = null, bool? isWebSocketsEnabled = null, bool? isAlwaysOn = null, string javaVersion = null, string javaContainer = null, string javaContainerVersion = null, string appCommandLine = null, ManagedPipelineMode? managedPipelineMode = null, IEnumerable<VirtualApplication> virtualApplications = null, SiteLoadBalancing? loadBalancing = null, IEnumerable<RampUpRule> experimentsRampUpRules = null, SiteLimits limits = null, bool? isAutoHealEnabled = null, AutoHealRules autoHealRules = null, string tracingOptions = null, string vnetName = null, bool? isVnetRouteAllEnabled = null, int? vnetPrivatePortsCount = null, AppServiceCorsSettings cors = null, WebAppPushSettings push = null, Uri apiDefinitionUri = null, string apiManagementConfigId = null, string autoSwapSlotName = null, bool? isLocalMySqlEnabled = null, int? managedServiceIdentityId = null, int? xManagedServiceIdentityId = null, string keyVaultReferenceIdentity = null, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = null, DefaultAction? ipSecurityRestrictionsDefaultAction = null, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = null, DefaultAction? scmIPSecurityRestrictionsDefaultAction = null, bool? allowIPSecurityRestrictionsForScmToUseMain = null, bool? isHttp20Enabled = null, AppServiceSupportedTlsVersion? minTlsVersion = null, TlsCipherSuite? minTlsCipherSuite = null, AppServiceSupportedTlsVersion? scmMinTlsVersion = null, AppServiceFtpsState? ftpsState = null, int? preWarmedInstanceCount = null, int? functionAppScaleLimit = null, int? elasticWebAppScaleLimit = null, string healthCheckPath = null, bool? isFunctionsRuntimeScaleMonitoringEnabled = null, string websiteTimeZone = null, int? minimumElasticInstanceCount = null, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = null, string publicNetworkAccess = null)
         {
             defaultDocuments ??= new List<string>();
             appSettings ??= new List<AppServiceNameValuePair>();
+            metadata ??= new List<AppServiceNameValuePair>();
             connectionStrings ??= new List<ConnStringInfo>();
             handlerMappings ??= new List<HttpRequestHandlerMapping>();
             virtualApplications ??= new List<VirtualApplication>();
@@ -1681,6 +1748,7 @@ namespace Azure.ResourceManager.AppService.Models
                 isDetailedErrorLoggingEnabled,
                 publishingUsername,
                 appSettings?.ToList(),
+                metadata?.ToList(),
                 connectionStrings?.ToList(),
                 machineKey,
                 handlerMappings?.ToList(),
@@ -1714,14 +1782,18 @@ namespace Azure.ResourceManager.AppService.Models
                 xManagedServiceIdentityId,
                 keyVaultReferenceIdentity,
                 ipSecurityRestrictions?.ToList(),
+                ipSecurityRestrictionsDefaultAction,
                 scmIPSecurityRestrictions?.ToList(),
+                scmIPSecurityRestrictionsDefaultAction,
                 allowIPSecurityRestrictionsForScmToUseMain,
                 isHttp20Enabled,
                 minTlsVersion,
+                minTlsCipherSuite,
                 scmMinTlsVersion,
                 ftpsState,
                 preWarmedInstanceCount,
                 functionAppScaleLimit,
+                elasticWebAppScaleLimit,
                 healthCheckPath,
                 isFunctionsRuntimeScaleMonitoringEnabled,
                 websiteTimeZone,
@@ -1780,8 +1852,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="accessKey"> Access key for the storage account. </param>
         /// <param name="mountPath"> Path to mount the storage within the site's runtime environment. </param>
         /// <param name="state"> State of the storage account. </param>
+        /// <param name="protocol"> Mounting protocol to use for the storage account. </param>
         /// <returns> A new <see cref="Models.AppServiceStorageAccessInfo"/> instance for mocking. </returns>
-        public static AppServiceStorageAccessInfo AppServiceStorageAccessInfo(AppServiceStorageType? storageType = null, string accountName = null, string shareName = null, string accessKey = null, string mountPath = null, AppServiceStorageAccountState? state = null)
+        public static AppServiceStorageAccessInfo AppServiceStorageAccessInfo(AppServiceStorageType? storageType = null, string accountName = null, string shareName = null, string accessKey = null, string mountPath = null, AppServiceStorageAccountState? state = null, AzureStorageProtocol? protocol = null)
         {
             return new AppServiceStorageAccessInfo(
                 storageType,
@@ -1790,6 +1863,7 @@ namespace Azure.ResourceManager.AppService.Models
                 accessKey,
                 mountPath,
                 state,
+                protocol,
                 serializedAdditionalRawData: null);
         }
 
@@ -1840,6 +1914,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="subscription"> App Service plan subscription. </param>
         /// <param name="hostingEnvironmentProfile"> Specification for the App Service Environment to use for the App Service plan. </param>
         /// <param name="maximumNumberOfWorkers"> Maximum number of instances that can be assigned to this App Service plan. </param>
+        /// <param name="numberOfWorkers"> The number of instances that are assigned to this App Service plan. </param>
         /// <param name="geoRegion"> Geographical location for the App Service plan. </param>
         /// <param name="isPerSiteScaling">
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
@@ -1865,7 +1940,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServicePlanPatch"/> instance for mocking. </returns>
-        public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpirationOn = null, DateTimeOffset? freeOfferExpirationOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, string kind = null)
+        public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, int? numberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpirationOn = null, DateTimeOffset? freeOfferExpirationOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, string kind = null)
         {
             return new AppServicePlanPatch(
                 id,
@@ -1877,6 +1952,7 @@ namespace Azure.ResourceManager.AppService.Models
                 subscription,
                 hostingEnvironmentProfile,
                 maximumNumberOfWorkers,
+                numberOfWorkers,
                 geoRegion,
                 isPerSiteScaling,
                 isElasticScaleEnabled,
@@ -2225,6 +2301,122 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="AppService.ContainerAppData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> Provisioning state of the Container App. </param>
+        /// <param name="kubeEnvironmentId"> Resource ID of the Container App's KubeEnvironment. </param>
+        /// <param name="latestRevisionName"> Name of the latest revision of the Container App. </param>
+        /// <param name="latestRevisionFqdn"> Fully Qualified Domain Name of the latest revision of the Container App. </param>
+        /// <param name="configuration"> Non versioned Container App configuration properties. </param>
+        /// <param name="template"> Container App versioned application definition. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="AppService.ContainerAppData"/> instance for mocking. </returns>
+        public static ContainerAppData ContainerAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ContainerAppProvisioningState? provisioningState = null, string kubeEnvironmentId = null, string latestRevisionName = null, string latestRevisionFqdn = null, Configuration configuration = null, Template template = null, string kind = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ContainerAppData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                kubeEnvironmentId,
+                latestRevisionName,
+                latestRevisionFqdn,
+                configuration,
+                template,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Ingress"/>. </summary>
+        /// <param name="fqdn"> Hostname. </param>
+        /// <param name="external"> Bool indicating if app exposes an external http endpoint. </param>
+        /// <param name="targetPort"> Target Port in containers for traffic from ingress. </param>
+        /// <param name="transport"> Ingress transport protocol. </param>
+        /// <param name="traffic"></param>
+        /// <param name="allowInsecure"> Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections. </param>
+        /// <returns> A new <see cref="Models.Ingress"/> instance for mocking. </returns>
+        public static Ingress Ingress(string fqdn = null, bool? external = null, int? targetPort = null, IngressTransportMethod? transport = null, IEnumerable<TrafficWeight> traffic = null, bool? allowInsecure = null)
+        {
+            traffic ??= new List<TrafficWeight>();
+
+            return new Ingress(
+                fqdn,
+                external,
+                targetPort,
+                transport,
+                traffic?.ToList(),
+                allowInsecure,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerAppSecret"/>. </summary>
+        /// <param name="name"> Secret Name. </param>
+        /// <param name="value"> Secret Value. </param>
+        /// <returns> A new <see cref="Models.ContainerAppSecret"/> instance for mocking. </returns>
+        public static ContainerAppSecret ContainerAppSecret(string name = null, string value = null)
+        {
+            return new ContainerAppSecret(name, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.RevisionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="createdOn">
+        /// Timestamp describing when the revision was created
+        /// by controller
+        /// </param>
+        /// <param name="fqdn"> Fully qualified domain name of the revision. </param>
+        /// <param name="template">
+        /// Container App Revision Template with all possible settings and the
+        /// defaults if user did not provide them. The defaults are populated
+        /// as they were at the creation time
+        /// </param>
+        /// <param name="active"> Boolean describing if the Revision is Active. </param>
+        /// <param name="replicas"> Number of pods currently running for this revision. </param>
+        /// <param name="trafficWeight"> Traffic weight assigned to this revision. </param>
+        /// <param name="provisioningError"> Optional Field - Platform Error Message. </param>
+        /// <param name="healthState"> Current health State of the revision. </param>
+        /// <param name="provisioningState"> Current provisioning State of the revision. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="AppService.RevisionData"/> instance for mocking. </returns>
+        public static RevisionData RevisionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DateTimeOffset? createdOn = null, string fqdn = null, Template template = null, bool? active = null, int? replicas = null, int? trafficWeight = null, string provisioningError = null, RevisionHealthState? healthState = null, RevisionProvisioningState? provisioningState = null, string kind = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new RevisionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                createdOn,
+                fqdn,
+                template,
+                active,
+                replicas,
+                trafficWeight,
+                provisioningError,
+                healthState,
+                provisioningState,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="AppService.DeletedSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2439,6 +2631,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isInternalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
         /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
         /// <param name="staticIP"> Static IP of the KubeEnvironment. </param>
+        /// <param name="environmentType"> Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed. </param>
         /// <param name="arcConfiguration">
         /// Cluster configuration which determines the ARC cluster
         /// components types. Eg: Choosing between BuildService kind,
@@ -2449,10 +2642,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </param>
+        /// <param name="containerAppsConfiguration"> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </param>
         /// <param name="aksResourceId"></param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.KubeEnvironmentData"/> instance for mocking. </returns>
-        public static KubeEnvironmentData KubeEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, KubeEnvironmentProvisioningState? provisioningState = null, string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = null, string defaultDomain = null, string staticIP = null, ArcConfiguration arcConfiguration = null, AppLogsConfiguration appLogsConfiguration = null, ResourceIdentifier aksResourceId = null, string kind = null)
+        public static KubeEnvironmentData KubeEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, KubeEnvironmentProvisioningState? provisioningState = null, string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = null, string defaultDomain = null, string staticIP = null, string environmentType = null, ArcConfiguration arcConfiguration = null, AppLogsConfiguration appLogsConfiguration = null, ContainerAppsConfiguration containerAppsConfiguration = null, ResourceIdentifier aksResourceId = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -2469,8 +2663,10 @@ namespace Azure.ResourceManager.AppService.Models
                 isInternalLoadBalancerEnabled,
                 defaultDomain,
                 staticIP,
+                environmentType,
                 arcConfiguration,
                 appLogsConfiguration,
+                containerAppsConfiguration,
                 aksResourceId,
                 kind,
                 serializedAdditionalRawData: null);
@@ -2496,10 +2692,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </param>
+        /// <param name="containerAppsConfiguration"> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </param>
         /// <param name="aksResourceId"></param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.KubeEnvironmentPatch"/> instance for mocking. </returns>
-        public static KubeEnvironmentPatch KubeEnvironmentPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, KubeEnvironmentProvisioningState? provisioningState = null, string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = null, string defaultDomain = null, string staticIP = null, ArcConfiguration arcConfiguration = null, AppLogsConfiguration appLogsConfiguration = null, ResourceIdentifier aksResourceId = null, string kind = null)
+        public static KubeEnvironmentPatch KubeEnvironmentPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, KubeEnvironmentProvisioningState? provisioningState = null, string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = null, string defaultDomain = null, string staticIP = null, ArcConfiguration arcConfiguration = null, AppLogsConfiguration appLogsConfiguration = null, ContainerAppsConfiguration containerAppsConfiguration = null, ResourceIdentifier aksResourceId = null, string kind = null)
         {
             return new KubeEnvironmentPatch(
                 id,
@@ -2513,6 +2710,7 @@ namespace Azure.ResourceManager.AppService.Models
                 staticIP,
                 arcConfiguration,
                 appLogsConfiguration,
+                containerAppsConfiguration,
                 aksResourceId,
                 kind,
                 serializedAdditionalRawData: null);
@@ -3046,10 +3244,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="resourceType"> Resource type used for verification. </param>
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
+        /// <param name="environmentId"> Azure Resource Manager ID of the customer's selected Container Apps Environment on which to host the Function app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </param>
         /// <returns> A new <see cref="Models.ResourceNameAvailabilityContent"/> instance for mocking. </returns>
-        public static ResourceNameAvailabilityContent ResourceNameAvailabilityContent(string name = null, CheckNameResourceType resourceType = default, bool? isFqdn = null)
+        public static ResourceNameAvailabilityContent ResourceNameAvailabilityContent(string name = null, CheckNameResourceType resourceType = default, bool? isFqdn = null, string environmentId = null)
         {
-            return new ResourceNameAvailabilityContent(name, resourceType, isFqdn, serializedAdditionalRawData: null);
+            return new ResourceNameAvailabilityContent(name, resourceType, isFqdn, environmentId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceNameAvailability"/>. </summary>
@@ -3060,6 +3259,52 @@ namespace Azure.ResourceManager.AppService.Models
         public static ResourceNameAvailability ResourceNameAvailability(bool? isNameAvailable = null, InAvailabilityReasonType? reason = null, string message = null)
         {
             return new ResourceNameAvailability(isNameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CustomHostnameSites"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="customHostname"></param>
+        /// <param name="region"></param>
+        /// <param name="siteResourceIds"></param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="Models.CustomHostnameSites"/> instance for mocking. </returns>
+        public static CustomHostnameSites CustomHostnameSites(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string customHostname = null, string region = null, IEnumerable<AppServiceIdentifierData> siteResourceIds = null, string kind = null)
+        {
+            siteResourceIds ??= new List<AppServiceIdentifierData>();
+
+            return new CustomHostnameSites(
+                id,
+                name,
+                resourceType,
+                systemData,
+                customHostname,
+                region,
+                siteResourceIds?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceIdentifierData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="value"> String representation of the identity. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="AppService.AppServiceIdentifierData"/> instance for mocking. </returns>
+        public static AppServiceIdentifierData AppServiceIdentifierData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string kind = null)
+        {
+            return new AppServiceIdentifierData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                value,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceDeploymentLocations"/>. </summary>
@@ -3109,22 +3354,35 @@ namespace Azure.ResourceManager.AppService.Models
             return new HostingEnvironmentDeploymentInfo(name, location, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceIdentifierData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AseRegion"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="value"> String representation of the identity. </param>
+        /// <param name="displayName"> Display name for region. </param>
+        /// <param name="standard"> Is region standard. </param>
+        /// <param name="dedicatedHost"> Dedicated host enabled. </param>
+        /// <param name="zoneRedundant"> Zone redundant deployment enabled. </param>
+        /// <param name="availableSku"> Available Skus in region. </param>
+        /// <param name="availableOS"> Available OSs in region. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.AppServiceIdentifierData"/> instance for mocking. </returns>
-        public static AppServiceIdentifierData AppServiceIdentifierData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string kind = null)
+        /// <returns> A new <see cref="Models.AseRegion"/> instance for mocking. </returns>
+        public static AseRegion AseRegion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, bool? standard = null, bool? dedicatedHost = null, bool? zoneRedundant = null, IEnumerable<string> availableSku = null, IEnumerable<string> availableOS = null, string kind = null)
         {
-            return new AppServiceIdentifierData(
+            availableSku ??= new List<string>();
+            availableOS ??= new List<string>();
+
+            return new AseRegion(
                 id,
                 name,
                 resourceType,
                 systemData,
-                value,
+                displayName,
+                standard,
+                dedicatedHost,
+                zoneRedundant,
+                availableSku?.ToList(),
+                availableOS?.ToList(),
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -3408,15 +3666,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="contentDistributionEndpoint"> The content distribution endpoint for the static site. </param>
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site. </param>
+        /// <param name="linkedBackends"> Backends linked to the static side. </param>
         /// <param name="provider"> The provider that submitted the last deployment to the primary environment of the static site. </param>
+        /// <param name="enterpriseGradeCdnStatus"> State indicating the status of the enterprise grade CDN serving traffic to the static web app. </param>
+        /// <param name="publicNetworkAccess"> State indicating whether public traffic are allowed or not for a static web app. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
+        /// <param name="databaseConnections"> Database connections for the static site. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.StaticSiteData"/> instance for mocking. </returns>
-        public static StaticSiteData StaticSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AppServiceSkuDescription sku = null, ManagedServiceIdentity identity = null, string defaultHostname = null, Uri repositoryUri = null, string branch = null, IEnumerable<string> customDomains = null, string repositoryToken = null, StaticSiteBuildProperties buildProperties = null, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = null, StagingEnvironmentPolicy? stagingEnvironmentPolicy = null, bool? allowConfigFileUpdates = null, StaticSiteTemplate templateProperties = null, string contentDistributionEndpoint = null, string keyVaultReferenceIdentity = null, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, string provider = null, string kind = null)
+        public static StaticSiteData StaticSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AppServiceSkuDescription sku = null, ManagedServiceIdentity identity = null, string defaultHostname = null, Uri repositoryUri = null, string branch = null, IEnumerable<string> customDomains = null, string repositoryToken = null, StaticSiteBuildProperties buildProperties = null, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = null, StagingEnvironmentPolicy? stagingEnvironmentPolicy = null, bool? allowConfigFileUpdates = null, StaticSiteTemplate templateProperties = null, string contentDistributionEndpoint = null, string keyVaultReferenceIdentity = null, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, IEnumerable<StaticSiteLinkedBackend> linkedBackends = null, string provider = null, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = null, string publicNetworkAccess = null, IEnumerable<DatabaseConnectionOverview> databaseConnections = null, string kind = null)
         {
             tags ??= new Dictionary<string, string>();
             customDomains ??= new List<string>();
             privateEndpointConnections ??= new List<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
             userProvidedFunctionApps ??= new List<StaticSiteUserProvidedFunctionAppData>();
+            linkedBackends ??= new List<StaticSiteLinkedBackend>();
+            databaseConnections ??= new List<DatabaseConnectionOverview>();
 
             return new StaticSiteData(
                 id,
@@ -3440,7 +3704,11 @@ namespace Azure.ResourceManager.AppService.Models
                 contentDistributionEndpoint,
                 keyVaultReferenceIdentity,
                 userProvidedFunctionApps?.ToList(),
+                linkedBackends?.ToList(),
                 provider,
+                enterpriseGradeCdnStatus,
+                publicNetworkAccess,
+                databaseConnections?.ToList(),
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -3460,7 +3728,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
         /// <returns> A new <see cref="Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection"/> instance for mocking. </returns>
-        public static ResponseMessageEnvelopeRemotePrivateEndpointConnection ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, AppServiceArmPlan plan = null, RemotePrivateEndpointConnection properties = null, AppServiceSkuDescription sku = null, string status = null, ResponseError error = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null)
+        public static ResponseMessageEnvelopeRemotePrivateEndpointConnection ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IReadOnlyDictionary<string, string> tags = null, AppServiceArmPlan plan = null, RemotePrivateEndpointConnection properties = null, AppServiceSkuDescription sku = null, string status = null, ErrorEntity error = null, ManagedServiceIdentity identity = null, IEnumerable<string> zones = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -3511,9 +3779,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.RemotePrivateEndpointConnection"/> instance for mocking. </returns>
-        public static RemotePrivateEndpointConnection RemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, ResourceIdentifier privateEndpointId = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, IEnumerable<IPAddress> ipAddresses = null, string kind = null)
+        public static RemotePrivateEndpointConnection RemotePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provisioningState = null, ResourceIdentifier privateEndpointId = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, IEnumerable<System.Net.IPAddress> ipAddresses = null, string kind = null)
         {
-            ipAddresses ??= new List<IPAddress>();
+            ipAddresses ??= new List<System.Net.IPAddress>();
 
             return new RemotePrivateEndpointConnection(
                 id,
@@ -3552,6 +3820,47 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.StaticSiteLinkedBackend"/>. </summary>
+        /// <param name="backendResourceId"> The resource id of the backend linked to the static site. </param>
+        /// <param name="region"> The region of the backend linked to the static site. </param>
+        /// <param name="createdOn"> The date and time on which the backend was linked to the static site. </param>
+        /// <param name="provisioningState"> The provisioning state of the linking process. </param>
+        /// <returns> A new <see cref="Models.StaticSiteLinkedBackend"/> instance for mocking. </returns>
+        public static StaticSiteLinkedBackend StaticSiteLinkedBackend(string backendResourceId = null, string region = null, DateTimeOffset? createdOn = null, string provisioningState = null)
+        {
+            return new StaticSiteLinkedBackend(backendResourceId, region, createdOn, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DatabaseConnectionOverview"/>. </summary>
+        /// <param name="resourceId"> The resource id of the database. </param>
+        /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
+        /// <param name="region"> The region of the database resource. </param>
+        /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
+        /// <param name="name"> If present, the name of this database connection resource. </param>
+        /// <returns> A new <see cref="Models.DatabaseConnectionOverview"/> instance for mocking. </returns>
+        public static DatabaseConnectionOverview DatabaseConnectionOverview(string resourceId = null, string connectionIdentity = null, string region = null, IEnumerable<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = null, string name = null)
+        {
+            configurationFiles ??= new List<StaticSiteDatabaseConnectionConfigurationFileOverview>();
+
+            return new DatabaseConnectionOverview(
+                resourceId,
+                connectionIdentity,
+                region,
+                configurationFiles?.ToList(),
+                name,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StaticSiteDatabaseConnectionConfigurationFileOverview"/>. </summary>
+        /// <param name="fileName"> The name of the configuration file. </param>
+        /// <param name="contents"> The Base64 encoding of the file contents. </param>
+        /// <param name="staticSiteDatabaseConnectionConfigurationFileOverviewType"> The type of configuration file. </param>
+        /// <returns> A new <see cref="Models.StaticSiteDatabaseConnectionConfigurationFileOverview"/> instance for mocking. </returns>
+        public static StaticSiteDatabaseConnectionConfigurationFileOverview StaticSiteDatabaseConnectionConfigurationFileOverview(string fileName = null, string contents = null, string staticSiteDatabaseConnectionConfigurationFileOverviewType = null)
+        {
+            return new StaticSiteDatabaseConnectionConfigurationFileOverview(fileName, contents, staticSiteDatabaseConnectionConfigurationFileOverviewType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.StaticSitePatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3570,14 +3879,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="contentDistributionEndpoint"> The content distribution endpoint for the static site. </param>
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site. </param>
+        /// <param name="linkedBackends"> Backends linked to the static side. </param>
         /// <param name="provider"> The provider that submitted the last deployment to the primary environment of the static site. </param>
+        /// <param name="enterpriseGradeCdnStatus"> State indicating the status of the enterprise grade CDN serving traffic to the static web app. </param>
+        /// <param name="publicNetworkAccess"> State indicating whether public traffic are allowed or not for a static web app. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
+        /// <param name="databaseConnections"> Database connections for the static site. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.StaticSitePatch"/> instance for mocking. </returns>
-        public static StaticSitePatch StaticSitePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string defaultHostname = null, Uri repositoryUri = null, string branch = null, IEnumerable<string> customDomains = null, string repositoryToken = null, StaticSiteBuildProperties buildProperties = null, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = null, StagingEnvironmentPolicy? stagingEnvironmentPolicy = null, bool? allowConfigFileUpdates = null, StaticSiteTemplate templateProperties = null, string contentDistributionEndpoint = null, string keyVaultReferenceIdentity = null, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, string provider = null, string kind = null)
+        public static StaticSitePatch StaticSitePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string defaultHostname = null, Uri repositoryUri = null, string branch = null, IEnumerable<string> customDomains = null, string repositoryToken = null, StaticSiteBuildProperties buildProperties = null, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = null, StagingEnvironmentPolicy? stagingEnvironmentPolicy = null, bool? allowConfigFileUpdates = null, StaticSiteTemplate templateProperties = null, string contentDistributionEndpoint = null, string keyVaultReferenceIdentity = null, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, IEnumerable<StaticSiteLinkedBackend> linkedBackends = null, string provider = null, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = null, string publicNetworkAccess = null, IEnumerable<DatabaseConnectionOverview> databaseConnections = null, string kind = null)
         {
             customDomains ??= new List<string>();
             privateEndpointConnections ??= new List<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
             userProvidedFunctionApps ??= new List<StaticSiteUserProvidedFunctionAppData>();
+            linkedBackends ??= new List<StaticSiteLinkedBackend>();
+            databaseConnections ??= new List<DatabaseConnectionOverview>();
 
             return new StaticSitePatch(
                 id,
@@ -3597,7 +3912,11 @@ namespace Azure.ResourceManager.AppService.Models
                 contentDistributionEndpoint,
                 keyVaultReferenceIdentity,
                 userProvidedFunctionApps?.ToList(),
+                linkedBackends?.ToList(),
                 provider,
+                enterpriseGradeCdnStatus,
+                publicNetworkAccess,
+                databaseConnections?.ToList(),
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -3641,11 +3960,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="lastUpdatedOn"> When this build was updated. </param>
         /// <param name="status"> The status of the static site build. </param>
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site build. </param>
+        /// <param name="linkedBackends"> Backends linked to the static side build. </param>
+        /// <param name="databaseConnections"> Database connections for the static site build. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.StaticSiteBuildData"/> instance for mocking. </returns>
-        public static StaticSiteBuildData StaticSiteBuildData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string buildId = null, string sourceBranch = null, string pullRequestTitle = null, string hostname = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, StaticSiteBuildStatus? status = null, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, string kind = null)
+        public static StaticSiteBuildData StaticSiteBuildData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string buildId = null, string sourceBranch = null, string pullRequestTitle = null, string hostname = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastUpdatedOn = null, StaticSiteBuildStatus? status = null, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, IEnumerable<StaticSiteLinkedBackend> linkedBackends = null, IEnumerable<DatabaseConnectionOverview> databaseConnections = null, string kind = null)
         {
             userProvidedFunctionApps ??= new List<StaticSiteUserProvidedFunctionAppData>();
+            linkedBackends ??= new List<StaticSiteLinkedBackend>();
+            databaseConnections ??= new List<DatabaseConnectionOverview>();
 
             return new StaticSiteBuildData(
                 id,
@@ -3660,6 +3983,8 @@ namespace Azure.ResourceManager.AppService.Models
                 lastUpdatedOn,
                 status,
                 userProvidedFunctionApps?.ToList(),
+                linkedBackends?.ToList(),
+                databaseConnections?.ToList(),
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -3682,6 +4007,36 @@ namespace Azure.ResourceManager.AppService.Models
                 resourceType,
                 systemData,
                 properties,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.DatabaseConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="resourceId"> The resource id of the database. </param>
+        /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
+        /// <param name="connectionString"> The connection string to use to connect to the database. </param>
+        /// <param name="region"> The region of the database resource. </param>
+        /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="AppService.DatabaseConnectionData"/> instance for mocking. </returns>
+        public static DatabaseConnectionData DatabaseConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string resourceId = null, string connectionIdentity = null, string connectionString = null, string region = null, IEnumerable<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = null, string kind = null)
+        {
+            configurationFiles ??= new List<StaticSiteDatabaseConnectionConfigurationFileOverview>();
+
+            return new DatabaseConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceId,
+                connectionIdentity,
+                connectionString,
+                region,
+                configurationFiles?.ToList(),
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -3732,6 +4087,36 @@ namespace Azure.ResourceManager.AppService.Models
                 deploymentTitle,
                 provider,
                 functionLanguage,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteBasicAuthPropertiesARMResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="password"> The password for basic auth. </param>
+        /// <param name="secretUri"> Url to the secret in Key Vault. </param>
+        /// <param name="applicableEnvironmentsMode"> State indicating if basic auth is enabled and for what environments it is active. </param>
+        /// <param name="environments"> The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments. </param>
+        /// <param name="secretState"> State indicating if basic auth has a secret and what type it is. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="AppService.StaticSiteBasicAuthPropertiesARMResourceData"/> instance for mocking. </returns>
+        public static StaticSiteBasicAuthPropertiesARMResourceData StaticSiteBasicAuthPropertiesARMResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string password = null, Uri secretUri = null, string applicableEnvironmentsMode = null, IEnumerable<string> environments = null, string secretState = null, string kind = null)
+        {
+            environments ??= new List<string>();
+
+            return new StaticSiteBasicAuthPropertiesARMResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                password,
+                secretUri,
+                applicableEnvironmentsMode,
+                environments?.ToList(),
+                secretState,
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -3878,6 +4263,32 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteLinkedBackendARMResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="backendResourceId"> The resource id of the backend linked to the static site. </param>
+        /// <param name="region"> The region of the backend linked to the static site. </param>
+        /// <param name="createdOn"> The date and time on which the backend was linked to the static site. </param>
+        /// <param name="provisioningState"> The provisioning state of the linking process. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="AppService.StaticSiteLinkedBackendARMResourceData"/> instance for mocking. </returns>
+        public static StaticSiteLinkedBackendARMResourceData StaticSiteLinkedBackendARMResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backendResourceId = null, string region = null, DateTimeOffset? createdOn = null, string provisioningState = null, string kind = null)
+        {
+            return new StaticSiteLinkedBackendARMResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                backendResourceId,
+                region,
+                createdOn,
+                provisioningState,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SitePatchInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3900,6 +4311,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
         /// <param name="isHyperV"> Hyper-V sandbox. </param>
         /// <param name="lastModifiedOn"> Last time the app was modified, in UTC. Read-only. </param>
+        /// <param name="dnsConfiguration"> Property to configure various DNS related settings for a site. </param>
         /// <param name="siteConfig"> Configuration of the app. </param>
         /// <param name="trafficManagerHostNames"> Azure Traffic Manager hostnames associated with the app. Read-only. </param>
         /// <param name="isScmSiteAlsoStopped"> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </param>
@@ -3947,7 +4359,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.SitePatchInfo"/> instance for mocking. </returns>
-        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier serverFarmId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedOn = null, SiteConfigProperties siteConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, ResourceIdentifier virtualNetworkSubnetId = null, string kind = null)
+        public static SitePatchInfo SitePatchInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ManagedServiceIdentity identity = null, string state = null, IEnumerable<string> hostNames = null, string repositorySiteName = null, AppServiceUsageState? usageState = null, bool? isEnabled = null, IEnumerable<string> enabledHostNames = null, WebSiteAvailabilityState? availabilityState = null, IEnumerable<HostNameSslState> hostNameSslStates = null, ResourceIdentifier serverFarmId = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, DateTimeOffset? lastModifiedOn = null, SiteDnsConfig dnsConfiguration = null, SiteConfigProperties siteConfig = null, IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = null, string targetSwapSlot = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = null, bool? isClientCertEnabled = null, ClientCertMode? clientCertMode = null, string clientCertExclusionPaths = null, bool? isHostNameDisabled = null, string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = null, int? dailyMemoryTimeQuota = null, DateTimeOffset? suspendOn = null, int? maxNumberOfWorkers = null, CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = null, string defaultHostName = null, SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = null, RedundancyMode? redundancyMode = null, Guid? inProgressOperationId = null, bool? isStorageAccountRequired = null, string keyVaultReferenceIdentity = null, ResourceIdentifier virtualNetworkSubnetId = null, string kind = null)
         {
             hostNames ??= new List<string>();
             enabledHostNames ??= new List<string>();
@@ -3973,6 +4385,7 @@ namespace Azure.ResourceManager.AppService.Models
                 isXenon,
                 isHyperV,
                 lastModifiedOn,
+                dnsConfiguration,
                 siteConfig,
                 trafficManagerHostNames?.ToList(),
                 isScmSiteAlsoStopped,
@@ -4023,7 +4436,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="alternateTxtRecords"> Alternate TXT records controller can see for this hostname. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.CustomHostnameAnalysisResult"/> instance for mocking. </returns>
-        public static CustomHostnameAnalysisResult CustomHostnameAnalysisResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isHostnameAlreadyVerified = null, DnsVerificationTestResult? customDomainVerificationTest = null, ResponseError customDomainVerificationFailureInfo = null, bool? hasConflictOnScaleUnit = null, bool? hasConflictAcrossSubscription = null, string conflictingAppResourceId = null, IEnumerable<string> cNameRecords = null, IEnumerable<string> txtRecords = null, IEnumerable<string> aRecords = null, IEnumerable<string> alternateCNameRecords = null, IEnumerable<string> alternateTxtRecords = null, string kind = null)
+        public static CustomHostnameAnalysisResult CustomHostnameAnalysisResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isHostnameAlreadyVerified = null, DnsVerificationTestResult? customDomainVerificationTest = null, ErrorEntity customDomainVerificationFailureInfo = null, bool? hasConflictOnScaleUnit = null, bool? hasConflictAcrossSubscription = null, string conflictingAppResourceId = null, IEnumerable<string> cNameRecords = null, IEnumerable<string> txtRecords = null, IEnumerable<string> aRecords = null, IEnumerable<string> alternateCNameRecords = null, IEnumerable<string> alternateTxtRecords = null, string kind = null)
         {
             cNameRecords ??= new List<string>();
             txtRecords ??= new List<string>();
@@ -4239,6 +4652,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isDetailedErrorLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="publishingUsername"> Publishing user name. </param>
         /// <param name="appSettings"> Application settings. </param>
+        /// <param name="metadata"> Application metadata. This property cannot be retrieved, since it may contain secrets. </param>
         /// <param name="connectionStrings"> Connection strings. </param>
         /// <param name="machineKey"> Site MachineKey. </param>
         /// <param name="handlerMappings"> Handler mappings. </param>
@@ -4272,10 +4686,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="xManagedServiceIdentityId"> Explicit Managed Service Identity Id. </param>
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="ipSecurityRestrictions"> IP security restrictions for main. </param>
+        /// <param name="ipSecurityRestrictionsDefaultAction"> Default action for main access restriction if no rules are matched. </param>
         /// <param name="scmIPSecurityRestrictions"> IP security restrictions for scm. </param>
+        /// <param name="scmIPSecurityRestrictionsDefaultAction"> Default action for scm access restriction if no rules are matched. </param>
         /// <param name="allowIPSecurityRestrictionsForScmToUseMain"> IP security restrictions for scm to use main. </param>
         /// <param name="isHttp20Enabled"> Http20Enabled: configures a web site to allow clients to connect over http2.0. </param>
         /// <param name="minTlsVersion"> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </param>
+        /// <param name="minTlsCipherSuite"> The minimum strength TLS cipher suite allowed for an application. </param>
         /// <param name="scmMinTlsVersion"> ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site. </param>
         /// <param name="ftpsState"> State of FTP / FTPS service. </param>
         /// <param name="preWarmedInstanceCount">
@@ -4285,6 +4702,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="functionAppScaleLimit">
         /// Maximum number of workers that a site can scale out to.
         /// This setting only applies to the Consumption and Elastic Premium Plans
+        /// </param>
+        /// <param name="elasticWebAppScaleLimit">
+        /// Maximum number of workers that a site can scale out to.
+        /// This setting only applies to apps in plans where ElasticScaleEnabled is &lt;code&gt;true&lt;/code&gt;
         /// </param>
         /// <param name="healthCheckPath"> Health check path. </param>
         /// <param name="isFunctionsRuntimeScaleMonitoringEnabled">
@@ -4301,10 +4722,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.SiteConfigData"/> instance for mocking. </returns>
-        public static SiteConfigData SiteConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? numberOfWorkers = null, IEnumerable<string> defaultDocuments = null, string netFrameworkVersion = null, string phpVersion = null, string pythonVersion = null, string nodeVersion = null, string powerShellVersion = null, string linuxFxVersion = null, string windowsFxVersion = null, bool? isRequestTracingEnabled = null, DateTimeOffset? requestTracingExpirationOn = null, bool? isRemoteDebuggingEnabled = null, string remoteDebuggingVersion = null, bool? isHttpLoggingEnabled = null, bool? useManagedIdentityCreds = null, string acrUserManagedIdentityId = null, int? logsDirectorySizeLimit = null, bool? isDetailedErrorLoggingEnabled = null, string publishingUsername = null, IEnumerable<AppServiceNameValuePair> appSettings = null, IEnumerable<ConnStringInfo> connectionStrings = null, SiteMachineKey machineKey = null, IEnumerable<HttpRequestHandlerMapping> handlerMappings = null, string documentRoot = null, ScmType? scmType = null, bool? use32BitWorkerProcess = null, bool? isWebSocketsEnabled = null, bool? isAlwaysOn = null, string javaVersion = null, string javaContainer = null, string javaContainerVersion = null, string appCommandLine = null, ManagedPipelineMode? managedPipelineMode = null, IEnumerable<VirtualApplication> virtualApplications = null, SiteLoadBalancing? loadBalancing = null, IEnumerable<RampUpRule> experimentsRampUpRules = null, SiteLimits limits = null, bool? isAutoHealEnabled = null, AutoHealRules autoHealRules = null, string tracingOptions = null, string vnetName = null, bool? isVnetRouteAllEnabled = null, int? vnetPrivatePortsCount = null, AppServiceCorsSettings cors = null, WebAppPushSettings push = null, Uri apiDefinitionUri = null, string apiManagementConfigId = null, string autoSwapSlotName = null, bool? isLocalMySqlEnabled = null, int? managedServiceIdentityId = null, int? xManagedServiceIdentityId = null, string keyVaultReferenceIdentity = null, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = null, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = null, bool? allowIPSecurityRestrictionsForScmToUseMain = null, bool? isHttp20Enabled = null, AppServiceSupportedTlsVersion? minTlsVersion = null, AppServiceSupportedTlsVersion? scmMinTlsVersion = null, AppServiceFtpsState? ftpsState = null, int? preWarmedInstanceCount = null, int? functionAppScaleLimit = null, string healthCheckPath = null, bool? isFunctionsRuntimeScaleMonitoringEnabled = null, string websiteTimeZone = null, int? minimumElasticInstanceCount = null, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = null, string publicNetworkAccess = null, string kind = null)
+        public static SiteConfigData SiteConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? numberOfWorkers = null, IEnumerable<string> defaultDocuments = null, string netFrameworkVersion = null, string phpVersion = null, string pythonVersion = null, string nodeVersion = null, string powerShellVersion = null, string linuxFxVersion = null, string windowsFxVersion = null, bool? isRequestTracingEnabled = null, DateTimeOffset? requestTracingExpirationOn = null, bool? isRemoteDebuggingEnabled = null, string remoteDebuggingVersion = null, bool? isHttpLoggingEnabled = null, bool? useManagedIdentityCreds = null, string acrUserManagedIdentityId = null, int? logsDirectorySizeLimit = null, bool? isDetailedErrorLoggingEnabled = null, string publishingUsername = null, IEnumerable<AppServiceNameValuePair> appSettings = null, IEnumerable<AppServiceNameValuePair> metadata = null, IEnumerable<ConnStringInfo> connectionStrings = null, SiteMachineKey machineKey = null, IEnumerable<HttpRequestHandlerMapping> handlerMappings = null, string documentRoot = null, ScmType? scmType = null, bool? use32BitWorkerProcess = null, bool? isWebSocketsEnabled = null, bool? isAlwaysOn = null, string javaVersion = null, string javaContainer = null, string javaContainerVersion = null, string appCommandLine = null, ManagedPipelineMode? managedPipelineMode = null, IEnumerable<VirtualApplication> virtualApplications = null, SiteLoadBalancing? loadBalancing = null, IEnumerable<RampUpRule> experimentsRampUpRules = null, SiteLimits limits = null, bool? isAutoHealEnabled = null, AutoHealRules autoHealRules = null, string tracingOptions = null, string vnetName = null, bool? isVnetRouteAllEnabled = null, int? vnetPrivatePortsCount = null, AppServiceCorsSettings cors = null, WebAppPushSettings push = null, Uri apiDefinitionUri = null, string apiManagementConfigId = null, string autoSwapSlotName = null, bool? isLocalMySqlEnabled = null, int? managedServiceIdentityId = null, int? xManagedServiceIdentityId = null, string keyVaultReferenceIdentity = null, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = null, DefaultAction? ipSecurityRestrictionsDefaultAction = null, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = null, DefaultAction? scmIPSecurityRestrictionsDefaultAction = null, bool? allowIPSecurityRestrictionsForScmToUseMain = null, bool? isHttp20Enabled = null, AppServiceSupportedTlsVersion? minTlsVersion = null, TlsCipherSuite? minTlsCipherSuite = null, AppServiceSupportedTlsVersion? scmMinTlsVersion = null, AppServiceFtpsState? ftpsState = null, int? preWarmedInstanceCount = null, int? functionAppScaleLimit = null, int? elasticWebAppScaleLimit = null, string healthCheckPath = null, bool? isFunctionsRuntimeScaleMonitoringEnabled = null, string websiteTimeZone = null, int? minimumElasticInstanceCount = null, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = null, string publicNetworkAccess = null, string kind = null)
         {
             defaultDocuments ??= new List<string>();
             appSettings ??= new List<AppServiceNameValuePair>();
+            metadata ??= new List<AppServiceNameValuePair>();
             connectionStrings ??= new List<ConnStringInfo>();
             handlerMappings ??= new List<HttpRequestHandlerMapping>();
             virtualApplications ??= new List<VirtualApplication>();
@@ -4338,6 +4760,7 @@ namespace Azure.ResourceManager.AppService.Models
                 isDetailedErrorLoggingEnabled,
                 publishingUsername,
                 appSettings?.ToList(),
+                metadata?.ToList(),
                 connectionStrings?.ToList(),
                 machineKey,
                 handlerMappings?.ToList(),
@@ -4371,14 +4794,18 @@ namespace Azure.ResourceManager.AppService.Models
                 xManagedServiceIdentityId,
                 keyVaultReferenceIdentity,
                 ipSecurityRestrictions?.ToList(),
+                ipSecurityRestrictionsDefaultAction,
                 scmIPSecurityRestrictions?.ToList(),
+                scmIPSecurityRestrictionsDefaultAction,
                 allowIPSecurityRestrictionsForScmToUseMain,
                 isHttp20Enabled,
                 minTlsVersion,
+                minTlsCipherSuite,
                 scmMinTlsVersion,
                 ftpsState,
                 preWarmedInstanceCount,
                 functionAppScaleLimit,
+                elasticWebAppScaleLimit,
                 healthCheckPath,
                 isFunctionsRuntimeScaleMonitoringEnabled,
                 websiteTimeZone,
@@ -4443,7 +4870,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="validateIssuer"> Gets a value indicating whether the issuer should be a valid HTTPS url and be validated as such. </param>
         /// <param name="allowedAudiences">
-        /// Allowed audience values to consider when validating JWTs issued by
+        /// Allowed audience values to consider when validating JSON Web Tokens issued by
         /// Azure Active Directory. Note that the &lt;code&gt;ClientID&lt;/code&gt; value is always considered an
         /// allowed audience, regardless of this setting.
         /// </param>
@@ -4607,7 +5034,7 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SiteAuthSettingsV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppService.SiteAuthSettingsV2Data"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -4618,10 +5045,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="login"> The configuration settings of the login flow of users using App Service Authentication/Authorization. </param>
         /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="Models.SiteAuthSettingsV2"/> instance for mocking. </returns>
-        public static SiteAuthSettingsV2 SiteAuthSettingsV2(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AuthPlatform platform = null, GlobalValidation globalValidation = null, AppServiceIdentityProviders identityProviders = null, WebAppLoginInfo login = null, AppServiceHttpSettings httpSettings = null, string kind = null)
+        /// <returns> A new <see cref="AppService.SiteAuthSettingsV2Data"/> instance for mocking. </returns>
+        public static SiteAuthSettingsV2Data SiteAuthSettingsV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AuthPlatform platform = null, GlobalValidation globalValidation = null, AppServiceIdentityProviders identityProviders = null, WebAppLoginInfo login = null, AppServiceHttpSettings httpSettings = null, string kind = null)
         {
-            return new SiteAuthSettingsV2(
+            return new SiteAuthSettingsV2Data(
                 id,
                 name,
                 resourceType,
@@ -4827,6 +5254,41 @@ namespace Azure.ResourceManager.AppService.Models
                 error,
                 isUsingSdk,
                 settings,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.CsmDeploymentStatusData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="deploymentId"> Deployment operation id. </param>
+        /// <param name="status"> Deployment build status. </param>
+        /// <param name="numberOfInstancesInProgress"> Number of site instances currently being provisioned. </param>
+        /// <param name="numberOfInstancesSuccessful"> Number of site instances provisioned successfully. </param>
+        /// <param name="numberOfInstancesFailed"> Number of site instances failed to provision. </param>
+        /// <param name="failedInstancesLogs"> List of URLs pointing to logs for instances which failed to provision. </param>
+        /// <param name="errors"> List of errors. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="AppService.CsmDeploymentStatusData"/> instance for mocking. </returns>
+        public static CsmDeploymentStatusData CsmDeploymentStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deploymentId = null, DeploymentBuildStatus? status = null, int? numberOfInstancesInProgress = null, int? numberOfInstancesSuccessful = null, int? numberOfInstancesFailed = null, IEnumerable<string> failedInstancesLogs = null, IEnumerable<ErrorEntity> errors = null, string kind = null)
+        {
+            failedInstancesLogs ??= new List<string>();
+            errors ??= new List<ErrorEntity>();
+
+            return new CsmDeploymentStatusData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                deploymentId,
+                status,
+                numberOfInstancesInProgress,
+                numberOfInstancesSuccessful,
+                numberOfInstancesFailed,
+                failedInstancesLogs?.ToList(),
+                errors?.ToList(),
                 kind,
                 serializedAdditionalRawData: null);
         }
@@ -5737,6 +6199,51 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="AppService.SiteContainerData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="image"> Image Name. </param>
+        /// <param name="targetPort"> Target Port. </param>
+        /// <param name="isMain"> &lt;code&gt;true&lt;/code&gt; if the container is the main site container; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="startUpCommand"> StartUp Command. </param>
+        /// <param name="authType"> Auth Type. </param>
+        /// <param name="userName"> User Name. </param>
+        /// <param name="passwordSecret"> Password Secret. </param>
+        /// <param name="userManagedIdentityClientId"> UserManagedIdentity ClientId. </param>
+        /// <param name="createdOn"> Created Time. </param>
+        /// <param name="lastModifiedOn"> Last Modified Time. </param>
+        /// <param name="volumeMounts"> List of volume mounts. </param>
+        /// <param name="environmentVariables"> List of environment variables. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="AppService.SiteContainerData"/> instance for mocking. </returns>
+        public static SiteContainerData SiteContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string image = null, string targetPort = null, bool? isMain = null, string startUpCommand = null, AuthType? authType = null, string userName = null, string passwordSecret = null, string userManagedIdentityClientId = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, IEnumerable<VolumeMount> volumeMounts = null, IEnumerable<EnvironmentVariable> environmentVariables = null, string kind = null)
+        {
+            volumeMounts ??= new List<VolumeMount>();
+            environmentVariables ??= new List<EnvironmentVariable>();
+
+            return new SiteContainerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                image,
+                targetPort,
+                isMain,
+                startUpCommand,
+                authType,
+                userName,
+                passwordSecret,
+                userManagedIdentityClientId,
+                createdOn,
+                lastModifiedOn,
+                volumeMounts?.ToList(),
+                environmentVariables?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="AppService.SiteExtensionInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -5875,10 +6382,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="webJobType"> Job type. </param>
         /// <param name="error"> Error information. </param>
         /// <param name="isUsingSdk"> Using SDK?. </param>
+        /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
+        /// <param name="storageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="settings"> Job settings. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.TriggeredWebJobData"/> instance for mocking. </returns>
-        public static TriggeredWebJobData TriggeredWebJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TriggeredJobRun latestRun = null, Uri historyUri = null, Uri schedulerLogsUri = null, string runCommand = null, Uri uri = null, Uri extraInfoUri = null, WebJobType? webJobType = null, string error = null, bool? isUsingSdk = null, IDictionary<string, BinaryData> settings = null, string kind = null)
+        public static TriggeredWebJobData TriggeredWebJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TriggeredJobRun latestRun = null, Uri historyUri = null, Uri schedulerLogsUri = null, string runCommand = null, Uri uri = null, Uri extraInfoUri = null, WebJobType? webJobType = null, string error = null, bool? isUsingSdk = null, string publicNetworkAccess = null, bool? storageAccountRequired = null, IDictionary<string, BinaryData> settings = null, string kind = null)
         {
             settings ??= new Dictionary<string, BinaryData>();
 
@@ -5896,6 +6405,8 @@ namespace Azure.ResourceManager.AppService.Models
                 webJobType,
                 error,
                 isUsingSdk,
+                publicNetworkAccess,
+                storageAccountRequired,
                 settings,
                 kind,
                 serializedAdditionalRawData: null);
@@ -5954,6 +6465,638 @@ namespace Azure.ResourceManager.AppService.Models
                 isUsingSdk,
                 settings,
                 kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.WorkflowEnvelopeData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> The resource kind. </param>
+        /// <param name="location"> The resource location. </param>
+        /// <param name="properties"> Additional workflow properties. </param>
+        /// <returns> A new <see cref="AppService.WorkflowEnvelopeData"/> instance for mocking. </returns>
+        public static WorkflowEnvelopeData WorkflowEnvelopeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, WorkflowEnvelopeProperties properties = null)
+        {
+            return new WorkflowEnvelopeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkflowEnvelopeProperties"/>. </summary>
+        /// <param name="files"> Gets or sets the files. </param>
+        /// <param name="flowState"> Gets or sets the state of the workflow. </param>
+        /// <param name="health"> Gets or sets workflow health. </param>
+        /// <returns> A new <see cref="Models.WorkflowEnvelopeProperties"/> instance for mocking. </returns>
+        public static WorkflowEnvelopeProperties WorkflowEnvelopeProperties(IReadOnlyDictionary<string, BinaryData> files = null, WorkflowState? flowState = null, WorkflowHealth health = null)
+        {
+            files ??= new Dictionary<string, BinaryData>();
+
+            return new WorkflowEnvelopeProperties(files, flowState, health, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkflowHealth"/>. </summary>
+        /// <param name="state"> Gets or sets the workflow health state. </param>
+        /// <param name="error"> Gets or sets the workflow error. </param>
+        /// <returns> A new <see cref="Models.WorkflowHealth"/> instance for mocking. </returns>
+        public static WorkflowHealth WorkflowHealth(WorkflowHealthState state = default, ErrorEntity error = null)
+        {
+            return new WorkflowHealth(state, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.WorkflowRunData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="waitEndOn"> Gets the wait end time. </param>
+        /// <param name="startOn"> Gets the start time. </param>
+        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="status"> Gets the status. </param>
+        /// <param name="code"> Gets the code. </param>
+        /// <param name="error"> Gets the error. </param>
+        /// <param name="correlationId"> Gets the correlation id. </param>
+        /// <param name="correlationClientTrackingId"> The run correlation. </param>
+        /// <param name="workflow"> Gets the reference to workflow version. </param>
+        /// <param name="trigger"> Gets the fired trigger. </param>
+        /// <param name="outputs"> Gets the outputs. </param>
+        /// <param name="response"> Gets the response of the flow run. </param>
+        /// <returns> A new <see cref="AppService.WorkflowRunData"/> instance for mocking. </returns>
+        public static WorkflowRunData WorkflowRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? waitEndOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string correlationId = null, string correlationClientTrackingId = null, ResourceReference workflow = null, WorkflowRunTrigger trigger = null, IReadOnlyDictionary<string, WorkflowOutputParameter> outputs = null, WorkflowRunTrigger response = null)
+        {
+            outputs ??= new Dictionary<string, WorkflowOutputParameter>();
+
+            return new WorkflowRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                waitEndOn,
+                startOn,
+                endOn,
+                status,
+                code,
+                error,
+                correlationId,
+                correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId, serializedAdditionalRawData: null) : null,
+                workflow,
+                trigger,
+                outputs,
+                response,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceReference"/>. </summary>
+        /// <param name="id"> The resource id. </param>
+        /// <param name="name"> Gets the resource name. </param>
+        /// <param name="resourceType"> Gets the resource type. </param>
+        /// <returns> A new <see cref="Models.ResourceReference"/> instance for mocking. </returns>
+        public static ResourceReference ResourceReference(string id = null, string name = null, string resourceType = null)
+        {
+            return new ResourceReference(id, name, resourceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkflowRunTrigger"/>. </summary>
+        /// <param name="name"> Gets the name. </param>
+        /// <param name="inputs"> Gets the inputs. </param>
+        /// <param name="inputsLink"> Gets the link to inputs. </param>
+        /// <param name="outputs"> Gets the outputs. </param>
+        /// <param name="outputsLink"> Gets the link to outputs. </param>
+        /// <param name="scheduledOn"> Gets the scheduled time. </param>
+        /// <param name="startOn"> Gets the start time. </param>
+        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="trackingId"> Gets the tracking id. </param>
+        /// <param name="correlationClientTrackingId"> The run correlation. </param>
+        /// <param name="code"> Gets the code. </param>
+        /// <param name="status"> Gets the status. </param>
+        /// <param name="error"> Gets the error. </param>
+        /// <param name="trackedProperties"> Gets the tracked properties. </param>
+        /// <returns> A new <see cref="Models.WorkflowRunTrigger"/> instance for mocking. </returns>
+        public static WorkflowRunTrigger WorkflowRunTrigger(string name = null, BinaryData inputs = null, ContentLink inputsLink = null, BinaryData outputs = null, ContentLink outputsLink = null, DateTimeOffset? scheduledOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string trackingId = null, string correlationClientTrackingId = null, string code = null, WorkflowStatus? status = null, BinaryData error = null, BinaryData trackedProperties = null)
+        {
+            return new WorkflowRunTrigger(
+                name,
+                inputs,
+                inputsLink,
+                outputs,
+                outputsLink,
+                scheduledOn,
+                startOn,
+                endOn,
+                trackingId,
+                correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId, serializedAdditionalRawData: null) : null,
+                code,
+                status,
+                error,
+                trackedProperties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContentLink"/>. </summary>
+        /// <param name="uri"> The content link URI. </param>
+        /// <param name="contentVersion"> The content version. </param>
+        /// <param name="contentSize"> The content size. </param>
+        /// <param name="contentHash"> The content hash. </param>
+        /// <param name="metadata"> The metadata. </param>
+        /// <returns> A new <see cref="Models.ContentLink"/> instance for mocking. </returns>
+        public static ContentLink ContentLink(Uri uri = null, string contentVersion = null, long? contentSize = null, ContentHash contentHash = null, BinaryData metadata = null)
+        {
+            return new ContentLink(
+                uri,
+                contentVersion,
+                contentSize,
+                contentHash,
+                metadata,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ContentHash"/>. </summary>
+        /// <param name="algorithm"> The algorithm of the content hash. </param>
+        /// <param name="value"> The value of the content hash. </param>
+        /// <returns> A new <see cref="Models.ContentHash"/> instance for mocking. </returns>
+        public static ContentHash ContentHash(string algorithm = null, string value = null)
+        {
+            return new ContentHash(algorithm, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkflowOutputParameter"/>. </summary>
+        /// <param name="parameterType"> The type. </param>
+        /// <param name="value"> The value. </param>
+        /// <param name="metadata"> The metadata. </param>
+        /// <param name="description"> The description. </param>
+        /// <param name="error"> Gets the error. </param>
+        /// <returns> A new <see cref="Models.WorkflowOutputParameter"/> instance for mocking. </returns>
+        public static WorkflowOutputParameter WorkflowOutputParameter(ParameterType? parameterType = null, BinaryData value = null, BinaryData metadata = null, string description = null, BinaryData error = null)
+        {
+            return new WorkflowOutputParameter(
+                parameterType,
+                value,
+                metadata,
+                description,
+                serializedAdditionalRawData: null,
+                error);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.WorkflowRunActionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="startOn"> Gets the start time. </param>
+        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="status"> Gets the status. </param>
+        /// <param name="code"> Gets the code. </param>
+        /// <param name="error"> Gets the error. </param>
+        /// <param name="trackingId"> Gets the tracking id. </param>
+        /// <param name="correlation"> The correlation properties. </param>
+        /// <param name="inputsLink"> Gets the link to inputs. </param>
+        /// <param name="outputsLink"> Gets the link to outputs. </param>
+        /// <param name="trackedProperties"> Gets the tracked properties. </param>
+        /// <param name="retryHistory"> Gets the retry histories. </param>
+        /// <returns> A new <see cref="AppService.WorkflowRunActionData"/> instance for mocking. </returns>
+        public static WorkflowRunActionData WorkflowRunActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string trackingId = null, RunActionCorrelation correlation = null, ContentLink inputsLink = null, ContentLink outputsLink = null, BinaryData trackedProperties = null, IEnumerable<RetryHistory> retryHistory = null)
+        {
+            retryHistory ??= new List<RetryHistory>();
+
+            return new WorkflowRunActionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startOn,
+                endOn,
+                status,
+                code,
+                error,
+                trackingId,
+                correlation,
+                inputsLink,
+                outputsLink,
+                trackedProperties,
+                retryHistory?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExpressionRoot"/>. </summary>
+        /// <param name="text"> The text. </param>
+        /// <param name="value"> Anything. </param>
+        /// <param name="subexpressions"> The sub expressions. </param>
+        /// <param name="error"> The azure resource error info. </param>
+        /// <param name="path"> The path. </param>
+        /// <returns> A new <see cref="Models.ExpressionRoot"/> instance for mocking. </returns>
+        public static ExpressionRoot ExpressionRoot(string text = null, BinaryData value = null, IEnumerable<Expression> subexpressions = null, AzureResourceErrorInfo error = null, string path = null)
+        {
+            subexpressions ??= new List<Expression>();
+
+            return new ExpressionRoot(
+                text,
+                value,
+                subexpressions?.ToList(),
+                error,
+                serializedAdditionalRawData: null,
+                path);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Expression"/>. </summary>
+        /// <param name="text"> The text. </param>
+        /// <param name="value"> Anything. </param>
+        /// <param name="subexpressions"> The sub expressions. </param>
+        /// <param name="error"> The azure resource error info. </param>
+        /// <returns> A new <see cref="Models.Expression"/> instance for mocking. </returns>
+        public static Expression Expression(string text = null, BinaryData value = null, IEnumerable<Expression> subexpressions = null, AzureResourceErrorInfo error = null)
+        {
+            subexpressions ??= new List<Expression>();
+
+            return new Expression(text, value, subexpressions?.ToList(), error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AzureResourceErrorInfo"/>. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="details"> The error details. </param>
+        /// <returns> A new <see cref="Models.AzureResourceErrorInfo"/> instance for mocking. </returns>
+        public static AzureResourceErrorInfo AzureResourceErrorInfo(string code = null, string message = null, IEnumerable<AzureResourceErrorInfo> details = null)
+        {
+            details ??= new List<AzureResourceErrorInfo>();
+
+            return new AzureResourceErrorInfo(code, serializedAdditionalRawData: null, message, details?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ErrorInfo"/>. </summary>
+        /// <param name="code"> The error code. </param>
+        /// <returns> A new <see cref="Models.ErrorInfo"/> instance for mocking. </returns>
+        public static ErrorInfo ErrorInfo(string code = null)
+        {
+            return new ErrorInfo(code, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.WorkflowRunActionRepetitionDefinitionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="startOn"> The start time of the workflow scope repetition. </param>
+        /// <param name="endOn"> The end time of the workflow scope repetition. </param>
+        /// <param name="correlation"> The correlation properties. </param>
+        /// <param name="status"> The status of the workflow scope repetition. </param>
+        /// <param name="code"> The workflow scope repetition code. </param>
+        /// <param name="error"> Anything. </param>
+        /// <param name="trackingId"> Gets the tracking id. </param>
+        /// <param name="inputs"> Gets the inputs. </param>
+        /// <param name="inputsLink"> Gets the link to inputs. </param>
+        /// <param name="outputs"> Gets the outputs. </param>
+        /// <param name="outputsLink"> Gets the link to outputs. </param>
+        /// <param name="trackedProperties"> Gets the tracked properties. </param>
+        /// <param name="retryHistory"> Gets the retry histories. </param>
+        /// <param name="iterationCount"></param>
+        /// <param name="repetitionIndexes"> The repetition indexes. </param>
+        /// <returns> A new <see cref="AppService.WorkflowRunActionRepetitionDefinitionData"/> instance for mocking. </returns>
+        public static WorkflowRunActionRepetitionDefinitionData WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, RunActionCorrelation correlation = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string trackingId = null, BinaryData inputs = null, ContentLink inputsLink = null, BinaryData outputs = null, ContentLink outputsLink = null, BinaryData trackedProperties = null, IEnumerable<RetryHistory> retryHistory = null, int? iterationCount = null, IEnumerable<RepetitionIndex> repetitionIndexes = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            retryHistory ??= new List<RetryHistory>();
+            repetitionIndexes ??= new List<RepetitionIndex>();
+
+            return new WorkflowRunActionRepetitionDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                startOn,
+                endOn,
+                correlation,
+                status,
+                code,
+                error,
+                trackingId,
+                inputs,
+                inputsLink,
+                outputs,
+                outputsLink,
+                trackedProperties,
+                retryHistory?.ToList(),
+                iterationCount,
+                repetitionIndexes?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.RequestHistoryData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The request history properties. </param>
+        /// <returns> A new <see cref="AppService.RequestHistoryData"/> instance for mocking. </returns>
+        public static RequestHistoryData RequestHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RequestHistoryProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new RequestHistoryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.WorkflowTriggerData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        /// <param name="createdOn"> Gets the created time. </param>
+        /// <param name="changedOn"> Gets the changed time. </param>
+        /// <param name="state"> Gets the state. </param>
+        /// <param name="status"> Gets the status. </param>
+        /// <param name="lastExecutionOn"> Gets the last execution time. </param>
+        /// <param name="nextExecutionOn"> Gets the next execution time. </param>
+        /// <param name="recurrence"> Gets the workflow trigger recurrence. </param>
+        /// <param name="workflow"> Gets the reference to workflow. </param>
+        /// <returns> A new <see cref="AppService.WorkflowTriggerData"/> instance for mocking. </returns>
+        public static WorkflowTriggerData WorkflowTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkflowTriggerProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, WorkflowStatus? status = null, DateTimeOffset? lastExecutionOn = null, DateTimeOffset? nextExecutionOn = null, WorkflowTriggerRecurrence recurrence = null, ResourceReference workflow = null)
+        {
+            return new WorkflowTriggerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                createdOn,
+                changedOn,
+                state,
+                status,
+                lastExecutionOn,
+                nextExecutionOn,
+                recurrence,
+                workflow,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkflowTriggerRecurrence"/>. </summary>
+        /// <param name="frequency"> The frequency. </param>
+        /// <param name="interval"> The interval. </param>
+        /// <param name="startTime"> The start time. </param>
+        /// <param name="endTime"> The end time. </param>
+        /// <param name="timeZone"> The time zone. </param>
+        /// <param name="schedule"> The recurrence schedule. </param>
+        /// <returns> A new <see cref="Models.WorkflowTriggerRecurrence"/> instance for mocking. </returns>
+        public static WorkflowTriggerRecurrence WorkflowTriggerRecurrence(RecurrenceFrequency? frequency = null, int? interval = null, string startTime = null, string endTime = null, string timeZone = null, RecurrenceSchedule schedule = null)
+        {
+            return new WorkflowTriggerRecurrence(
+                frequency,
+                interval,
+                startTime,
+                endTime,
+                timeZone,
+                schedule,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecurrenceSchedule"/>. </summary>
+        /// <param name="minutes"> The minutes. </param>
+        /// <param name="hours"> The hours. </param>
+        /// <param name="weekDays"> The days of the week. </param>
+        /// <param name="monthDays"> The month days. </param>
+        /// <param name="monthlyOccurrences"> The monthly occurrences. </param>
+        /// <returns> A new <see cref="Models.RecurrenceSchedule"/> instance for mocking. </returns>
+        public static RecurrenceSchedule RecurrenceSchedule(IEnumerable<int> minutes = null, IEnumerable<int> hours = null, IEnumerable<DaysOfWeek> weekDays = null, IEnumerable<int> monthDays = null, IEnumerable<RecurrenceScheduleOccurrence> monthlyOccurrences = null)
+        {
+            minutes ??= new List<int>();
+            hours ??= new List<int>();
+            weekDays ??= new List<DaysOfWeek>();
+            monthDays ??= new List<int>();
+            monthlyOccurrences ??= new List<RecurrenceScheduleOccurrence>();
+
+            return new RecurrenceSchedule(
+                minutes?.ToList(),
+                hours?.ToList(),
+                weekDays?.ToList(),
+                monthDays?.ToList(),
+                monthlyOccurrences?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecurrenceScheduleOccurrence"/>. </summary>
+        /// <param name="day"> The day of the week. </param>
+        /// <param name="occurrence"> The occurrence. </param>
+        /// <returns> A new <see cref="Models.RecurrenceScheduleOccurrence"/> instance for mocking. </returns>
+        public static RecurrenceScheduleOccurrence RecurrenceScheduleOccurrence(DayOfWeek? day = null, int? occurrence = null)
+        {
+            return new RecurrenceScheduleOccurrence(day, occurrence, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.WorkflowTriggerHistoryData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="startOn"> Gets the start time. </param>
+        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="scheduledOn"> The scheduled time. </param>
+        /// <param name="status"> Gets the status. </param>
+        /// <param name="code"> Gets the code. </param>
+        /// <param name="error"> Gets the error. </param>
+        /// <param name="trackingId"> Gets the tracking id. </param>
+        /// <param name="correlationClientTrackingId"> The run correlation. </param>
+        /// <param name="inputsLink"> Gets the link to input parameters. </param>
+        /// <param name="outputsLink"> Gets the link to output parameters. </param>
+        /// <param name="fired"> The value indicating whether trigger was fired. </param>
+        /// <param name="run"> Gets the reference to workflow run. </param>
+        /// <returns> A new <see cref="AppService.WorkflowTriggerHistoryData"/> instance for mocking. </returns>
+        public static WorkflowTriggerHistoryData WorkflowTriggerHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? scheduledOn = null, WorkflowStatus? status = null, string code = null, BinaryData error = null, string trackingId = null, string correlationClientTrackingId = null, ContentLink inputsLink = null, ContentLink outputsLink = null, bool? fired = null, ResourceReference run = null)
+        {
+            return new WorkflowTriggerHistoryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startOn,
+                endOn,
+                scheduledOn,
+                status,
+                code,
+                error,
+                trackingId,
+                correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId, serializedAdditionalRawData: null) : null,
+                inputsLink,
+                outputsLink,
+                fired,
+                run,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkflowTriggerCallbackUri"/>. </summary>
+        /// <param name="value"> Gets the workflow trigger callback URL. </param>
+        /// <param name="method"> Gets the workflow trigger callback URL HTTP method. </param>
+        /// <param name="basePath"> Gets the workflow trigger callback URL base path. </param>
+        /// <param name="relativePath"> Gets the workflow trigger callback URL relative path. </param>
+        /// <param name="relativePathParameters"> Gets the workflow trigger callback URL relative path parameters. </param>
+        /// <param name="queries"> Gets the workflow trigger callback URL query parameters. </param>
+        /// <returns> A new <see cref="Models.WorkflowTriggerCallbackUri"/> instance for mocking. </returns>
+        public static WorkflowTriggerCallbackUri WorkflowTriggerCallbackUri(string value = null, string method = null, string basePath = null, string relativePath = null, IEnumerable<string> relativePathParameters = null, WorkflowTriggerListCallbackUrlQueries queries = null)
+        {
+            relativePathParameters ??= new List<string>();
+
+            return new WorkflowTriggerCallbackUri(
+                value,
+                method,
+                basePath,
+                relativePath,
+                relativePathParameters?.ToList(),
+                queries,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkflowTriggerListCallbackUrlQueries"/>. </summary>
+        /// <param name="apiVersion"> The api version. </param>
+        /// <param name="sp"> The SAS permissions. </param>
+        /// <param name="sv"> The SAS version. </param>
+        /// <param name="sig"> The SAS signature. </param>
+        /// <param name="se"> The SAS timestamp. </param>
+        /// <returns> A new <see cref="Models.WorkflowTriggerListCallbackUrlQueries"/> instance for mocking. </returns>
+        public static WorkflowTriggerListCallbackUrlQueries WorkflowTriggerListCallbackUrlQueries(string apiVersion = null, string sp = null, string sv = null, string sig = null, string se = null)
+        {
+            return new WorkflowTriggerListCallbackUrlQueries(
+                apiVersion,
+                sp,
+                sv,
+                sig,
+                se,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.JsonSchema"/>. </summary>
+        /// <param name="title"> The JSON title. </param>
+        /// <param name="content"> The JSON content. </param>
+        /// <returns> A new <see cref="Models.JsonSchema"/> instance for mocking. </returns>
+        public static JsonSchema JsonSchema(string title = null, string content = null)
+        {
+            return new JsonSchema(title, content, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Workflow"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> Managed service identity. </param>
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        /// <param name="createdOn"> Gets the created time. </param>
+        /// <param name="changedOn"> Gets the changed time. </param>
+        /// <param name="state"> The state. </param>
+        /// <param name="version"> Gets the version. </param>
+        /// <param name="accessEndpoint"> Gets the access endpoint. </param>
+        /// <param name="endpointsConfiguration"> The endpoints configuration. </param>
+        /// <param name="accessControl"> The access control configuration. </param>
+        /// <param name="sku"> The sku. </param>
+        /// <param name="integrationAccount"> The integration account. </param>
+        /// <param name="integrationServiceEnvironment"> The integration service environment. </param>
+        /// <param name="definition"> The definition. </param>
+        /// <param name="parameters"> The parameters. </param>
+        /// <param name="kind"> The workflow kind. </param>
+        /// <returns> A new <see cref="Models.Workflow"/> instance for mocking. </returns>
+        public static Workflow Workflow(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, ResourceReference integrationAccount = null, ResourceReference integrationServiceEnvironment = null, BinaryData definition = null, IDictionary<string, WorkflowParameter> parameters = null, AppServiceKind? kind = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            parameters ??= new Dictionary<string, WorkflowParameter>();
+
+            return new Workflow(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                createdOn,
+                changedOn,
+                state,
+                version,
+                accessEndpoint,
+                endpointsConfiguration,
+                accessControl,
+                sku,
+                integrationAccount,
+                integrationServiceEnvironment,
+                definition,
+                parameters,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkflowSku"/>. </summary>
+        /// <param name="name"> The name. </param>
+        /// <param name="plan"> The reference to plan. </param>
+        /// <returns> A new <see cref="Models.WorkflowSku"/> instance for mocking. </returns>
+        public static WorkflowSku WorkflowSku(WorkflowSkuName name = default, ResourceReference plan = null)
+        {
+            return new WorkflowSku(name, plan, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppService.WorkflowVersionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="createdOn"> Gets the created time. </param>
+        /// <param name="changedOn"> Gets the changed time. </param>
+        /// <param name="state"> The state. </param>
+        /// <param name="version"> Gets the version. </param>
+        /// <param name="accessEndpoint"> Gets the access endpoint. </param>
+        /// <param name="endpointsConfiguration"> The endpoints configuration. </param>
+        /// <param name="accessControl"> The access control configuration. </param>
+        /// <param name="sku"> The sku. </param>
+        /// <param name="integrationAccount"> The integration account. </param>
+        /// <param name="definition"> The definition. </param>
+        /// <param name="parameters"> The parameters. </param>
+        /// <returns> A new <see cref="AppService.WorkflowVersionData"/> instance for mocking. </returns>
+        public static WorkflowVersionData WorkflowVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, WorkflowProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, WorkflowState? state = null, string version = null, string accessEndpoint = null, FlowEndpointsConfiguration endpointsConfiguration = null, FlowAccessControlConfiguration accessControl = null, WorkflowSku sku = null, ResourceReference integrationAccount = null, BinaryData definition = null, IDictionary<string, WorkflowParameter> parameters = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            parameters ??= new Dictionary<string, WorkflowParameter>();
+
+            return new WorkflowVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                createdOn,
+                changedOn,
+                state,
+                version,
+                accessEndpoint,
+                endpointsConfiguration,
+                accessControl,
+                sku,
+                integrationAccount,
+                definition,
+                parameters,
                 serializedAdditionalRawData: null);
         }
     }

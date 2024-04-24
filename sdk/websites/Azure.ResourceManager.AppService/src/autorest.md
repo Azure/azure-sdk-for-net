@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
-require: https://github.com/Azure/azure-rest-api-specs/blob/35f8a4df47aedc1ce185c854595cba6b83fa6c71/specification/web/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a50b142e71f76ab557c5006f769c2ac3ab72cafc/specification/web/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -81,6 +81,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}: AppServicePlanHybridConnectionNamespaceRelay
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}: AppServicePlanVirtualNetworkConnection
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}: AppServicePlanVirtualNetworkConnectionGateway
+  # /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deploymentStatus/{deploymentStatusId}: SiteDeploymentStatus
 
 override-operation-name:
   Diagnostics_ExecuteSiteAnalysis: Execute
@@ -142,6 +143,9 @@ format-by-name-rules:
 
 keep-plural-enums:
 - StackPreferredOS
+
+irregular-plural-words:
+  status: status
 
 acronym-mapping:
   CPU: Cpu
@@ -370,6 +374,9 @@ rename-mapping:
   CloningInfo.sourceWebAppLocation: -|azure-location
   AzureTableStorageApplicationLogsConfig.sasUrl: SasUriString
   WebSiteInstanceStatus.properties.healthCheckUrl: healthCheckUrlString
+  # Ambiguity property name due to the faltten
+  OpenAuthenticationAccessPolicies.policies: OpenAuthenticationPolicyList
+  ErrorResponse.error: ErrorInfo
 
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties

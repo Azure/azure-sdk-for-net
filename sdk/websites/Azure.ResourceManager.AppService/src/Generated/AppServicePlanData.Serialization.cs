@@ -113,6 +113,11 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("maximumNumberOfWorkers"u8);
                 writer.WriteNumberValue(MaximumNumberOfWorkers.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(NumberOfWorkers))
+            {
+                writer.WritePropertyName("numberOfWorkers"u8);
+                writer.WriteNumberValue(NumberOfWorkers.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(GeoRegion))
             {
                 writer.WritePropertyName("geoRegion"u8);
@@ -272,6 +277,7 @@ namespace Azure.ResourceManager.AppService
             string subscription = default;
             HostingEnvironmentProfile hostingEnvironmentProfile = default;
             int? maximumNumberOfWorkers = default;
+            int? numberOfWorkers = default;
             string geoRegion = default;
             bool? perSiteScaling = default;
             bool? elasticScaleEnabled = default;
@@ -404,6 +410,15 @@ namespace Azure.ResourceManager.AppService
                                 continue;
                             }
                             maximumNumberOfWorkers = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("numberOfWorkers"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            numberOfWorkers = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("geoRegion"u8))
@@ -577,6 +592,7 @@ namespace Azure.ResourceManager.AppService
                 subscription,
                 hostingEnvironmentProfile,
                 maximumNumberOfWorkers,
+                numberOfWorkers,
                 geoRegion,
                 perSiteScaling,
                 elasticScaleEnabled,
@@ -841,6 +857,20 @@ namespace Azure.ResourceManager.AppService
                 else
                 {
                     builder.AppendLine($"{MaximumNumberOfWorkers.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfWorkers), out propertyOverride);
+            if (Optional.IsDefined(NumberOfWorkers) || hasPropertyOverride)
+            {
+                builder.Append("    numberOfWorkers: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{NumberOfWorkers.Value}");
                 }
             }
 

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcConfiguration"/>. </summary>
-        /// <param name="artifactsStorageType"></param>
+        /// <param name="artifactsStorageType"> Property to select Azure Storage type. Available options: blobContainer. </param>
         /// <param name="artifactStorageClassName"></param>
         /// <param name="artifactStorageMountPath"></param>
         /// <param name="artifactStorageNodeName"></param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the artifacts storage type. </summary>
+        /// <summary> Property to select Azure Storage type. Available options: blobContainer. </summary>
         [WirePath("artifactsStorageType")]
         public ArtifactStorageType? ArtifactsStorageType { get; set; }
         /// <summary> Gets or sets the artifact storage class name. </summary>

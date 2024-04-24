@@ -160,10 +160,40 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Provider))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LinkedBackends))
+            {
+                writer.WritePropertyName("linkedBackends"u8);
+                writer.WriteStartArray();
+                foreach (var item in LinkedBackends)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Provider))
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
+            }
+            if (Optional.IsDefined(EnterpriseGradeCdnStatus))
+            {
+                writer.WritePropertyName("enterpriseGradeCdnStatus"u8);
+                writer.WriteStringValue(EnterpriseGradeCdnStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DatabaseConnections))
+            {
+                writer.WritePropertyName("databaseConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in DatabaseConnections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -226,7 +256,11 @@ namespace Azure.ResourceManager.AppService
             string contentDistributionEndpoint = default;
             string keyVaultReferenceIdentity = default;
             IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
+            IReadOnlyList<StaticSiteLinkedBackend> linkedBackends = default;
             string provider = default;
+            EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = default;
+            string publicNetworkAccess = default;
+            IReadOnlyList<DatabaseConnectionOverview> databaseConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -418,9 +452,51 @@ namespace Azure.ResourceManager.AppService
                             userProvidedFunctionApps = array;
                             continue;
                         }
+                        if (property0.NameEquals("linkedBackends"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<StaticSiteLinkedBackend> array = new List<StaticSiteLinkedBackend>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(StaticSiteLinkedBackend.DeserializeStaticSiteLinkedBackend(item, options));
+                            }
+                            linkedBackends = array;
+                            continue;
+                        }
                         if (property0.NameEquals("provider"u8))
                         {
                             provider = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("enterpriseGradeCdnStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enterpriseGradeCdnStatus = new EnterpriseGradeCdnStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            publicNetworkAccess = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("databaseConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DatabaseConnectionOverview> array = new List<DatabaseConnectionOverview>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DatabaseConnectionOverview.DeserializeDatabaseConnectionOverview(item, options));
+                            }
+                            databaseConnections = array;
                             continue;
                         }
                     }
@@ -454,7 +530,11 @@ namespace Azure.ResourceManager.AppService
                 contentDistributionEndpoint,
                 keyVaultReferenceIdentity,
                 userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
+                linkedBackends ?? new ChangeTrackingList<StaticSiteLinkedBackend>(),
                 provider,
+                enterpriseGradeCdnStatus,
+                publicNetworkAccess,
+                databaseConnections ?? new ChangeTrackingList<DatabaseConnectionOverview>(),
                 kind,
                 serializedAdditionalRawData);
         }
@@ -879,6 +959,28 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedBackends), out propertyOverride);
+            if (Optional.IsCollectionDefined(LinkedBackends) || hasPropertyOverride)
+            {
+                if (LinkedBackends.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    linkedBackends: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in LinkedBackends)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    linkedBackends: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Provider), out propertyOverride);
             if (Optional.IsDefined(Provider) || hasPropertyOverride)
             {
@@ -897,6 +999,64 @@ namespace Azure.ResourceManager.AppService
                     else
                     {
                         builder.AppendLine($"'{Provider}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnterpriseGradeCdnStatus), out propertyOverride);
+            if (Optional.IsDefined(EnterpriseGradeCdnStatus) || hasPropertyOverride)
+            {
+                builder.Append("    enterpriseGradeCdnStatus: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{EnterpriseGradeCdnStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
+            if (Optional.IsDefined(PublicNetworkAccess) || hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccess: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PublicNetworkAccess.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PublicNetworkAccess}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PublicNetworkAccess}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseConnections), out propertyOverride);
+            if (Optional.IsCollectionDefined(DatabaseConnections) || hasPropertyOverride)
+            {
+                if (DatabaseConnections.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    databaseConnections: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in DatabaseConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    databaseConnections: ");
+                        }
+                        builder.AppendLine("    ]");
                     }
                 }
             }

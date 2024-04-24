@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Certificate order action. </summary>
-    public partial class CertificateOrderAction : ResourceData
+    public partial class CertificateOrderAction
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,35 +46,26 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CertificateOrderAction"/>. </summary>
-        public CertificateOrderAction()
+        internal CertificateOrderAction()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="CertificateOrderAction"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
         /// <param name="actionType"> Action type. </param>
         /// <param name="createdOn"> Time at which the certificate action was performed. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateOrderAction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificateOrderActionType? actionType, DateTimeOffset? createdOn, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CertificateOrderAction(CertificateOrderActionType? actionType, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
             CreatedOn = createdOn;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Action type. </summary>
-        [WirePath("properties.actionType")]
+        [WirePath("actionType")]
         public CertificateOrderActionType? ActionType { get; }
         /// <summary> Time at which the certificate action was performed. </summary>
-        [WirePath("properties.createdAt")]
+        [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Kind of resource. </summary>
-        [WirePath("kind")]
-        public string Kind { get; set; }
     }
 }
