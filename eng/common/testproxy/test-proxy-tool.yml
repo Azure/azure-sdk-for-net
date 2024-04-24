@@ -54,7 +54,7 @@ steps:
 
     - pwsh: |
         $Process = Start-Process $(Build.BinariesDirectory)/test-proxy/test-proxy.exe `
-          -ArgumentList "start --storage-location ${{ parameters.rootFolder }} -U" `
+          -ArgumentList "start -u --storage-location ${{ parameters.rootFolder }}" `
           -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log
 
         Write-Host "##vso[task.setvariable variable=PROXY_PID]$($Process.Id)"
