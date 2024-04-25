@@ -16,7 +16,8 @@
 * `OpenTelemetry.Instrumentation.AspNetCore` and `OpenTelemetry.Instrumentation.Http` include a hotfix for [GHSA-vh2m-22xx-q94f](https://github.com/open-telemetry/opentelemetry-dotnet/security/advisories/GHSA-vh2m-22xx-q94f).
   By default any values detected in the query string component of requests are replaced with the text `Redacted` when building the `url.query` tag.
   For example, `?key1=value1&key2=value2` becomes `?key1=Redacted&key2=Redacted`.
-  This is to prevent sensitive information from leaking through query strings
+  This is to prevent sensitive information from leaking through query strings.
+  ([#43432](https://github.com/Azure/azure-sdk-for-net/pull/43432))
   You can disable this redaction by setting an environment variable:
   * For `OpenTelemetry.Instrumentation.AspNetCore` set `OTEL_DOTNET_EXPERIMENTAL_ASPNETCORE_DISABLE_URL_QUERY_REDACTION` to `true`. ([link](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.AspNetCore/CHANGELOG.md#181))
   * For `OpenTelemetry.Instrumentation.Http` set `OTEL_DOTNET_EXPERIMENTAL_HTTPCLIENT_DISABLE_URL_QUERY_REDACTION ` to `true`. ([link](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/CHANGELOG.md#181))
