@@ -18,7 +18,7 @@ internal class PipelineMessageSanitizer
     private readonly bool _logFullQueries;
     private readonly string _redactedPlaceholder;
     private readonly HashSet<string> _loggedHeaderNames;
-    private readonly string[] _loggedQueryParameters;
+    private readonly IEnumerable<string> _loggedQueryParameters;
 
     /// <summary>
     /// TODO.
@@ -26,7 +26,7 @@ internal class PipelineMessageSanitizer
     /// <param name="allowedQueryParameters"></param>
     /// <param name="allowedHeaders"></param>
     /// <param name="redactedPlaceholder"></param>
-    public PipelineMessageSanitizer(string[] allowedQueryParameters, string[] allowedHeaders, string redactedPlaceholder = "REDACTED")
+    public PipelineMessageSanitizer(IEnumerable<string> allowedQueryParameters, IEnumerable<string> allowedHeaders, string redactedPlaceholder = "REDACTED")
     {
         _logAllHeaders = allowedHeaders.Contains(LogAllValue);
         _logFullQueries = allowedQueryParameters.Contains(LogAllValue);

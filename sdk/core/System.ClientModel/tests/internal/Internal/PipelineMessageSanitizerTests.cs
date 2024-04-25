@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
-namespace System.ClientModel.Tests
+namespace System.ClientModel.Tests.Internal
 {
     public class PipelineMessageSanitizerTests
     {

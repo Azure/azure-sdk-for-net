@@ -150,7 +150,7 @@ public class MockPipelineTransport : PipelineTransport
         {
             _headers = new MockRequestHeaders();
             _uri = new Uri("https://www.example.com");
-            _method = string.Empty;
+            _method = "GET";
         }
 
         public override void Dispose() { }

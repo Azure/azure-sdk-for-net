@@ -3,11 +3,9 @@
 
 using System.ClientModel.Internal;
 using System.ClientModel.Options;
-using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -104,8 +102,8 @@ public sealed partial class ClientPipeline
         Argument.AssertNotNull(options, nameof(options));
 
         options.Freeze();
-        var diagnosticsOptions = options.Diagnostics;
-        var isLoggingEnabled = diagnosticsOptions?.IsLoggingEnabled ?? true;
+        LoggingOptions loggingOptions = options.LoggingOptions ?? new LoggingOptions();
+        bool isLoggingEnabled = loggingOptions.IsLoggingEnabled || options.LoggingPolicy != null;
 
         // Add length of client-specific policies.
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
@@ -156,13 +154,7 @@ public sealed partial class ClientPipeline
 
         if (isLoggingEnabled)
         {
-            var loggingPolicy = options.LoggingPolicy ?? new ClientLoggingPolicy(options: diagnosticsOptions);
-            if (loggingPolicy is ClientLoggingPolicy clientLoggingPolicy)
-            {
-                var loggedHeaders = diagnosticsOptions?.LoggedHeaderNames?.ToArray() ?? Array.Empty<string>();
-                var loggedQueries = diagnosticsOptions?.LoggedQueryParameters?.ToArray() ?? Array.Empty<string>();
-                clientLoggingPolicy.Sanitizer = new PipelineMessageSanitizer(loggedQueries, loggedHeaders);
-            }
+            PipelinePolicy loggingPolicy = options.LoggingPolicy ?? new ClientLoggingPolicy(options: loggingOptions);
             policies[index++] = loggingPolicy;
         }
 

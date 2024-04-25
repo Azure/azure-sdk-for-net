@@ -10,15 +10,21 @@ namespace System.ClientModel.Options;
 /// <summary>
 /// TODO
 /// </summary>
-public class DiagnosticsOptions
+public class LoggingOptions
 {
     private bool _frozen;
 
-    private bool _isLoggingEnabled = true;
-    private int _loggedContentSizeLimit = 4 * 1024;
-    private bool _isLoggingContentEnabled;
-    private IEnumerable<string>? _loggedHeaderNames;
-    private IEnumerable<string>? _loggedQueryParameters;
+    private const int DefaultLoggedContentSizeLimit = 4 * 1024;
+    private const bool DefaultIsLoggingEnabled = true;
+    private const bool DefaultIsLoggingContentEnabled = false;
+    private static readonly IEnumerable<string> DefaultLoggedHeaderNames = new[] { "TODO" };
+    private static readonly IEnumerable<string> DefaultLoggedQueryParameters = new[] { "api-version" };
+
+    private bool _isLoggingEnabled = DefaultIsLoggingEnabled;
+    private int _loggedContentSizeLimit = DefaultLoggedContentSizeLimit;
+    private bool _isLoggingContentEnabled = DefaultIsLoggingContentEnabled;
+    private IEnumerable<string> _loggedHeaderNames = DefaultLoggedHeaderNames;
+    private IEnumerable<string> _loggedQueryParameters = DefaultLoggedQueryParameters;
     private string? _clientAssembly;
     private string? _requestIdHeaderName;
 
@@ -67,7 +73,7 @@ public class DiagnosticsOptions
     /// <summary>
     /// Gets or sets a list of header names that are not redacted during logging.
     /// </summary>
-    public IEnumerable<string>? LoggedHeaderNames
+    public IEnumerable<string> LoggedHeaderNames
     {
         get => _loggedHeaderNames;
         set
@@ -81,7 +87,7 @@ public class DiagnosticsOptions
     /// <summary>
     /// Gets or sets a list of query parameter names that are not redacted during logging.
     /// </summary>
-    public IEnumerable<string>? LoggedQueryParameters
+    public IEnumerable<string> LoggedQueryParameters
     {
         get => _loggedQueryParameters;
         set
@@ -121,7 +127,7 @@ public class DiagnosticsOptions
     }
 
     /// <summary>
-    /// Freeze this instance of <see cref="DiagnosticsOptions"/>.  After this method
+    /// Freeze this instance of <see cref="LoggingOptions"/>.  After this method
     /// has been called, any attempt to set properties on the instance or call
     /// methods that would change its state will throw <see cref="InvalidOperationException"/>.
     /// </summary>
@@ -129,10 +135,10 @@ public class DiagnosticsOptions
 
     /// <summary>
     /// Assert that <see cref="Freeze"/> has not been called on this
-    /// <see cref="DiagnosticsOptions"/> instance.
+    /// <see cref="LoggingOptions"/> instance.
     /// </summary>
     /// <exception cref="InvalidOperationException">Thrown when an attempt is
-    /// made to change the state of this <see cref="DiagnosticsOptions"/> instance
+    /// made to change the state of this <see cref="LoggingOptions"/> instance
     /// after <see cref="Freeze"/> has been called.</exception>
     protected void AssertNotFrozen()
     {
