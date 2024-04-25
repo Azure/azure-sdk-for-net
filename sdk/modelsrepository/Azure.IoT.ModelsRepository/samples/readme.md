@@ -171,7 +171,7 @@ called `DtmiConventions` which exposes utility functions supporting these conven
 DtmiConventions.IsValidDtmi("dtmi:com:example:Thermostat;1");
 
 // Returns false
-DtmiConventions.IsValidDtmi("dtmi:com:example:Thermostat");
+DtmiConventions.IsValidDtmi("dtmi:com:example;Thermostat");
 ```
 
 ```C# Snippet:ModelsRepositorySamplesDtmiConventionsGetModelUri
