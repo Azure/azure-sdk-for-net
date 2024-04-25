@@ -5,6 +5,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\core\Azure.Core.TestFramework\src\ServiceVersionAttribute.cs" Link="ServiceVersionAttribute.cs" />
     <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
   </ItemGroup>
 </Project>
