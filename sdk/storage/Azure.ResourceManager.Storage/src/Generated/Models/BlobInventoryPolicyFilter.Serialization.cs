@@ -218,17 +218,18 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludePrefix), out propertyOverride);
-            if (Optional.IsCollectionDefined(IncludePrefix) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (IncludePrefix.Any() || hasPropertyOverride)
+                builder.Append("  prefixMatch: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IncludePrefix))
                 {
-                    builder.Append("  prefixMatch: ");
-                    if (hasPropertyOverride)
+                    if (IncludePrefix.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  prefixMatch: ");
                         builder.AppendLine("[");
                         foreach (var item in IncludePrefix)
                         {
@@ -253,17 +254,18 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludePrefix), out propertyOverride);
-            if (Optional.IsCollectionDefined(ExcludePrefix) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ExcludePrefix.Any() || hasPropertyOverride)
+                builder.Append("  excludePrefix: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExcludePrefix))
                 {
-                    builder.Append("  excludePrefix: ");
-                    if (hasPropertyOverride)
+                    if (ExcludePrefix.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  excludePrefix: ");
                         builder.AppendLine("[");
                         foreach (var item in ExcludePrefix)
                         {
@@ -288,17 +290,18 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobTypes), out propertyOverride);
-            if (Optional.IsCollectionDefined(BlobTypes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (BlobTypes.Any() || hasPropertyOverride)
+                builder.Append("  blobTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BlobTypes))
                 {
-                    builder.Append("  blobTypes: ");
-                    if (hasPropertyOverride)
+                    if (BlobTypes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  blobTypes: ");
                         builder.AppendLine("[");
                         foreach (var item in BlobTypes)
                         {
@@ -323,45 +326,48 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludeBlobVersions), out propertyOverride);
-            if (Optional.IsDefined(IncludeBlobVersions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  includeBlobVersions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IncludeBlobVersions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  includeBlobVersions: ");
                     var boolValue = IncludeBlobVersions.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludeSnapshots), out propertyOverride);
-            if (Optional.IsDefined(IncludeSnapshots) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  includeSnapshots: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IncludeSnapshots))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  includeSnapshots: ");
                     var boolValue = IncludeSnapshots.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludeDeleted), out propertyOverride);
-            if (Optional.IsDefined(IncludeDeleted) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  includeDeleted: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IncludeDeleted))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  includeDeleted: ");
                     var boolValue = IncludeDeleted.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
