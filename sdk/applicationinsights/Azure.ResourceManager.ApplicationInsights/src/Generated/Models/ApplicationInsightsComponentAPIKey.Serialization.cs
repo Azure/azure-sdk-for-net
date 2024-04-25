@@ -192,15 +192,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     if (Id.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -214,15 +215,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiKey), out propertyOverride);
-            if (Optional.IsDefined(ApiKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  apiKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  apiKey: ");
                     if (ApiKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -236,15 +238,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedDate), out propertyOverride);
-            if (Optional.IsDefined(CreatedDate) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  createdDate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedDate))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  createdDate: ");
                     if (CreatedDate.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -258,15 +261,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -280,17 +284,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedReadProperties), out propertyOverride);
-            if (Optional.IsCollectionDefined(LinkedReadProperties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (LinkedReadProperties.Any() || hasPropertyOverride)
+                builder.Append("  linkedReadProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LinkedReadProperties))
                 {
-                    builder.Append("  linkedReadProperties: ");
-                    if (hasPropertyOverride)
+                    if (LinkedReadProperties.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  linkedReadProperties: ");
                         builder.AppendLine("[");
                         foreach (var item in LinkedReadProperties)
                         {
@@ -315,17 +320,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedWriteProperties), out propertyOverride);
-            if (Optional.IsCollectionDefined(LinkedWriteProperties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (LinkedWriteProperties.Any() || hasPropertyOverride)
+                builder.Append("  linkedWriteProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LinkedWriteProperties))
                 {
-                    builder.Append("  linkedWriteProperties: ");
-                    if (hasPropertyOverride)
+                    if (LinkedWriteProperties.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  linkedWriteProperties: ");
                         builder.AppendLine("[");
                         foreach (var item in LinkedWriteProperties)
                         {
