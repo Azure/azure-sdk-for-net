@@ -17,8 +17,9 @@ namespace Azure.AI.Translation.Document.Tests
     {
         protected TimeSpan PollingInterval => TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0 : 30);
 
-        public DocumentTranslationLiveTestBase(bool isAsync, RecordedTestMode? mode = null): base(isAsync, RecordedTestMode.Record)
-            //: base(isAsync, mode)
+        public DocumentTranslationLiveTestBase(bool isAsync, RecordedTestMode? mode = null)
+            : base(isAsync)
+            //: base(isAsync, RecordedTestMode.Record)
         {
             JsonPathSanitizers.Add("$..sourceUrl");
             JsonPathSanitizers.Add("$..targetUrl");

@@ -19,7 +19,8 @@ namespace Azure.AI.Translation.Document.Tests
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public TranslationOperationLiveTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)
+            //: base(isAsync, RecordedTestMode.Record)
         {
         }
 

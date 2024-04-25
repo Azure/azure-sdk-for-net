@@ -16,8 +16,9 @@ namespace Azure.AI.Translation.Document.Tests
         /// Initializes a new instance of the <see cref="DocumentTranslationClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public DocumentTranslationClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
-            //: base(isAsync)
+        public DocumentTranslationClientLiveTests(bool isAsync)
+            : base(isAsync)
+            //: base(isAsync, RecordedTestMode.Record)
         {
         }
 
