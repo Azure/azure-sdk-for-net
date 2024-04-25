@@ -3576,21 +3576,6 @@ namespace Azure.AI.OpenAI.Assistants
             }
         }
 
-        internal HttpMessage CreateUploadFileRequest(RequestContent content, string contentType, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/files", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("content-type", contentType);
-            request.Content = content;
-            return message;
-        }
-
         private static RequestContext DefaultRequestContext = new RequestContext();
         internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
         {
