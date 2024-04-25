@@ -220,7 +220,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 {
                     requestDocument.ResponseCode = tag.Value.ToString()!;
                 }
-                else if (!ActivityTagsProcessor.s_semanticsSet.Contains(tag.Key) && propertiesCount < MaxPropertiesCount)
+                else if (propertiesCount < MaxPropertiesCount)
                 {
                     requestDocument.Properties.Add(new KeyValuePairString(tag.Key, tag.Value.ToString()));
                     propertiesCount++;
