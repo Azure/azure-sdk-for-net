@@ -34,11 +34,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             }
         }
 
-        public static void AddExceptionDocument(this DoubleBuffer buffer, LogRecord logRecord, System.Exception exception)
+        public static void AddExceptionDocument(this DoubleBuffer buffer, LogRecord logRecord)
         {
+            Debug.Assert(logRecord.Exception != null);
+
             try
             {
-                var exceptionDocument = ConvertToExceptionDocument(logRecord, exception);
+                var exceptionDocument = ConvertToExceptionDocument(logRecord);
                 buffer.WriteDocument(exceptionDocument);
             }
             catch (System.Exception ex)
@@ -283,13 +285,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             return exceptionDocument;
         }
 
-        internal static ExceptionDocument ConvertToExceptionDocument(LogRecord logRecord, System.Exception exception)
+        internal static ExceptionDocument ConvertToExceptionDocument(LogRecord logRecord)
         {
+            Debug.Assert(logRecord.Exception != null);
+
             ExceptionDocument exceptionDocument = new()
             {
                 DocumentType = DocumentType.Exception,
-                ExceptionType = exception.GetType().FullName,
-                ExceptionMessage = exception.Message,
+                ExceptionType = logRecord.Exception!.GetType().FullName,
+                ExceptionMessage = logRecord.Exception!.Message,
             };
 
             int propertiesCount = 0;

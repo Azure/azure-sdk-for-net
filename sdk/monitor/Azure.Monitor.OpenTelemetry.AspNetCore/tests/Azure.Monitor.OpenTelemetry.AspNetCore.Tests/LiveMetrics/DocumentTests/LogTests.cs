@@ -116,7 +116,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             var logRecord = telemetryItems.First();
             Assert.NotNull(logRecord.Exception);
 
-            var exceptionDocument = DocumentHelper.ConvertToExceptionDocument(logRecord, logRecord.Exception);
+            var exceptionDocument = DocumentHelper.ConvertToExceptionDocument(logRecord);
 
             // ASSERT
             Assert.Equal(DocumentType.Exception, exceptionDocument.DocumentType);
