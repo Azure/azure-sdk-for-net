@@ -98,15 +98,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Html), out propertyOverride);
-            if (Optional.IsDefined(Html) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  html: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Html))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  html: ");
                     if (Html.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
