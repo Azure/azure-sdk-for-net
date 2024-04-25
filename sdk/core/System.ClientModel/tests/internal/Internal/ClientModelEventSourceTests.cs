@@ -20,7 +20,7 @@ namespace System.ClientModel.Tests.Internal
 {
     // Avoid running these tests in parallel with anything else that's sharing the event source
     [NonParallelizable]
-    public class EventSourceTests : SyncAsyncPolicyTestBase
+    public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
     {
         private const int BackgroundRefreshFailedEvent = 19;
         private const int RequestEvent = 1;
@@ -44,7 +44,7 @@ namespace System.ClientModel.Tests.Internal
         private static string[] s_allowedQueryParameters = new[] { "api-version" };
         private static PipelineMessageSanitizer _sanitizer = new PipelineMessageSanitizer(s_allowedQueryParameters, s_allowedHeaders);
 
-        public EventSourceTests(bool isAsync) : base(isAsync)
+        public ClientModelEventSourceTests(bool isAsync) : base(isAsync)
         {
             _listener = new TestClientEventListener(1000, "System.ClientModel", EventLevel.Verbose);
         }
@@ -62,18 +62,6 @@ namespace System.ClientModel.Tests.Internal
         }
 
         [Test]
-        public void MatchesNameAndGuid()
-        {
-            // TODO - we can't run this test because it creates a duplicate event source name error somehow
-            //Type eventSourceType = typeof(ClientModelEventSource);
-
-            //Assert.NotNull(eventSourceType);
-            //Assert.AreEqual("System.ClientModel", EventSource.GetName(eventSourceType));
-            //Assert.AreEqual(Guid.Parse("6bae9388-4dba-5782-d2eb-c55b96c4b1db"), EventSource.GetGuid(eventSourceType));
-            //Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
-        }
-
-        [Test]
         public async Task SendingRequestProducesEvents()
         {
             var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Value" } });
@@ -83,7 +71,7 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineTransport("Transport", i => response),
-                Diagnostics = new DiagnosticsOptions
+                LoggingOptions = new LoggingOptions
                 {
                     IsLoggingEnabled = true,
                     IsLoggingContentEnabled = true,
@@ -143,7 +131,7 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineTransport("Transport", (PipelineMessage i) => throw exception),
-                Diagnostics = new DiagnosticsOptions
+                LoggingOptions = new LoggingOptions
                 {
                     IsLoggingEnabled = true,
                     IsLoggingContentEnabled = true,
@@ -229,7 +217,7 @@ namespace System.ClientModel.Tests.Internal
             {
                 Transport = new MockPipelineTransport("Transport", i => response),
                 RetryPolicy = new ObservablePolicy("RetryPolicy"),
-                Diagnostics = new DiagnosticsOptions
+                LoggingOptions = new LoggingOptions
                 {
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = int.MaxValue,
@@ -275,7 +263,7 @@ namespace System.ClientModel.Tests.Internal
             {
                 Transport = new MockPipelineTransport("Transport", i => response),
                 RetryPolicy = new ObservablePolicy("RetryPolicy"),
-                Diagnostics = new DiagnosticsOptions
+                LoggingOptions = new LoggingOptions
                 {
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = int.MaxValue,
@@ -317,7 +305,7 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineTransport("Transport", i => response),
-                Diagnostics = new DiagnosticsOptions
+                LoggingOptions = new LoggingOptions
                 {
                     IsLoggingContentEnabled = false,
                     LoggedContentSizeLimit = int.MaxValue,
@@ -353,7 +341,7 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineTransport("Transport", i => response),
-                Diagnostics = new DiagnosticsOptions
+                LoggingOptions = new LoggingOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
                     RequestIdHeaderName = "Client-Identifier",
@@ -383,7 +371,7 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineTransport("Transport", i => response),
-                Diagnostics = new DiagnosticsOptions
+                LoggingOptions = new LoggingOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
                     RequestIdHeaderName = "Client-Identifier",
@@ -583,7 +571,7 @@ namespace System.ClientModel.Tests.Internal
             {
                 Transport = new MockPipelineTransport("Transport", i => response),
                 RetryPolicy = new ObservablePolicy("RetryPolicy"),
-                Diagnostics = new DiagnosticsOptions
+                LoggingOptions = new LoggingOptions
                 {
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = 5,
@@ -646,7 +634,7 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineTransport("Transport", i => response),
-                Diagnostics = new DiagnosticsOptions
+                LoggingOptions = new LoggingOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
                     RequestIdHeaderName = "Client-Identifier",
@@ -699,7 +687,7 @@ namespace System.ClientModel.Tests.Internal
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineTransport("Transport", i => response),
-                Diagnostics = new DiagnosticsOptions
+                LoggingOptions = new LoggingOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
                     RequestIdHeaderName = "Client-Identifier",
@@ -758,7 +746,7 @@ namespace System.ClientModel.Tests.Internal
             {
                 Transport = new MockPipelineTransport("Transport", i => response),
                 RetryPolicy = new ObservablePolicy("RetryPolicy"),
-                Diagnostics = new DiagnosticsOptions
+                LoggingOptions = new LoggingOptions
                 {
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = maxLength,

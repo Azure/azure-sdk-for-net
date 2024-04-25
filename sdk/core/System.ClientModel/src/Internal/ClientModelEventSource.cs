@@ -36,7 +36,7 @@ internal sealed class ClientModelEventSource : EventSource
 
     private ClientModelEventSource(string eventSourceName, string[]? traits) : base(eventSourceName, EventSourceSettings.Default, traits) { }
 
-    public static ClientModelEventSource Create(string eventSourceName, string[]? traits) => new ClientModelEventSource(eventSourceName, traits);
+    public static ClientModelEventSource Create(string eventSourceName, string[]? traits) => new(eventSourceName, traits);
 
     [Event(BackgroundRefreshFailedEvent, Level = EventLevel.Informational, Message = "Background token refresh [{0}] failed with exception {1}")]
     public void BackgroundRefreshFailed(string requestId, string exception)

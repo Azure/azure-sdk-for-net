@@ -3,8 +3,8 @@
 
 using System.ClientModel.Internal;
 using System.ClientModel.Options;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.IO;
@@ -21,54 +21,49 @@ namespace System.ClientModel.Primitives;
 public class ClientLoggingPolicy : PipelinePolicy
 {
     private const double RequestTooLongTime = 3.0; // sec
-    private const int DefaultLoggedContentSizeLimit = 4 * 1024;
-    private static ClientModelEventSource? s_eventSource;
     private const string DefaultEventSourceName = "System.ClientModel";
+
+    private static readonly ConcurrentDictionary<string, ClientModelEventSource> s_singletonEventSources = new();
+    private readonly ClientModelEventSource _eventSource;
 
     private readonly bool _logContent;
     private readonly int _maxLength;
     private readonly string? _assemblyName;
     private readonly string? _clientRequestIdHeaderName;
     private readonly bool _isLoggingEnabled;
-
-    internal static ClientModelEventSource Singleton { get => s_eventSource ??= ClientModelEventSource.Create(DefaultEventSourceName, Array.Empty<string>()); } //TODO add traits
+    private readonly PipelineMessageSanitizer _sanitizer;
 
     /// <summary>
     /// TODO.
     /// </summary>
-    /// <param name="eventSourceName"></param>
-    /// <param name="eventSourceTraits"></param>
+    /// <param name="logName"></param>
+    /// <param name="logTraits"></param>
     /// <param name="options"></param>
-    protected ClientLoggingPolicy(string? eventSourceName, string[]? eventSourceTraits = default, DiagnosticsOptions? options = default) : this(options)
+    protected ClientLoggingPolicy(string logName, string[]? logTraits = default, LoggingOptions? options = default)
     {
-        if (s_eventSource != null && !string.IsNullOrEmpty(eventSourceName) && eventSourceName != s_eventSource.Name)
-        {
-            throw new ArgumentException("Cannot use multiple event source names in the same application.");
-        }
+        LoggingOptions loggingOptions = options ?? new LoggingOptions();
+        _logContent = loggingOptions.IsLoggingContentEnabled;
+        _maxLength = loggingOptions.LoggedContentSizeLimit;
+        _assemblyName = loggingOptions.LoggedClientAssemblyName;
+        _clientRequestIdHeaderName = loggingOptions.RequestIdHeaderName;
+        _isLoggingEnabled = loggingOptions.IsLoggingEnabled;
+        _sanitizer = new PipelineMessageSanitizer(loggingOptions.LoggedQueryParameters, loggingOptions.LoggedHeaderNames);
 
-        if (s_eventSource == null)
+        if (!s_singletonEventSources.TryGetValue(logName, out ClientModelEventSource? eventSource))
         {
-            s_eventSource = ClientModelEventSource.Create(eventSourceName ?? DefaultEventSourceName, eventSourceTraits);
+            eventSource = ClientModelEventSource.Create(logName ?? DefaultEventSourceName, logTraits);
+            s_singletonEventSources[logName ?? DefaultEventSourceName] = eventSource;
         }
+        _eventSource = eventSource;
     }
 
     /// <summary>
     /// TODO.
     /// </summary>
     /// <param name="options"></param>
-    public ClientLoggingPolicy(DiagnosticsOptions? options = default)
+    public ClientLoggingPolicy(LoggingOptions? options = default) : this(DefaultEventSourceName, null, options)
     {
-        _logContent = options?.IsLoggingContentEnabled ?? false;
-        _maxLength = options?.LoggedContentSizeLimit ?? DefaultLoggedContentSizeLimit;
-        _assemblyName = options?.LoggedClientAssemblyName;
-        _clientRequestIdHeaderName = options?.RequestIdHeaderName;
-        _isLoggingEnabled = options?.IsLoggingEnabled ?? true;
     }
-
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    internal PipelineMessageSanitizer? Sanitizer { get; set; }
 
     /// <inheritdoc/>
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex) =>
@@ -80,7 +75,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        if (!_isLoggingEnabled || !Singleton.IsEnabled())
+        if (!_isLoggingEnabled || !_eventSource.IsEnabled())
         {
             if (async)
             {
@@ -116,7 +111,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
         catch (Exception ex)
         {
-            Singleton.ExceptionResponse(requestId ?? string.Empty, ex.ToString());
+            _eventSource.ExceptionResponse(requestId ?? string.Empty, ex.ToString());
             throw;
         }
 
@@ -136,20 +131,18 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         if (elapsed > RequestTooLongTime)
         {
-            Singleton.ResponseDelay(responseId ?? string.Empty, elapsed);
+            _eventSource.ResponseDelay(responseId ?? string.Empty, elapsed);
         }
     }
 
     private void LogRequest(PipelineRequest request, string? requestId)
     {
-        Singleton.Request(request, requestId ?? string.Empty, _assemblyName, Sanitizer!);
+        _eventSource.Request(request, requestId ?? string.Empty, _assemblyName, _sanitizer);
     }
 
     private async Task LogRequestContent(PipelineRequest request, string? requestId, bool async, CancellationToken cancellationToken)
     {
-        // If logging content is disabled, or the request content is null, or informational logs are not enabled, return
-        // Checking the log level prevents expensive operations from being executed
-        if (!_logContent || request.Content == null || !Singleton.IsEnabled(EventLevel.Informational, EventKeywords.All))
+        if (!_logContent || request.Content == null || !_eventSource.IsEnabled(EventLevel.Informational, EventKeywords.All))
         {
             return; // nothing to log
         }
@@ -175,7 +168,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
 
         // Log to event source
-        Singleton.RequestContent(requestId ?? string.Empty, bytes, requestTextEncoding);
+        _eventSource.RequestContent(requestId ?? string.Empty, bytes, requestTextEncoding);
     }
 
     private void LogResponse(PipelineResponse response, string? responseId, double elapsed)
@@ -183,32 +176,23 @@ public class ClientLoggingPolicy : PipelinePolicy
         bool isError = response.IsError;
         if (isError)
         {
-            Singleton.ErrorResponse(response, responseId ?? string.Empty, Sanitizer!, elapsed);
+            _eventSource.ErrorResponse(response, responseId ?? string.Empty, _sanitizer, elapsed);
         }
         else
         {
-            Singleton.Response(response, responseId ?? string.Empty, Sanitizer!, elapsed);
+            _eventSource.Response(response, responseId ?? string.Empty, _sanitizer, elapsed);
         }
     }
 
-    private async Task LogResponseContent(PipelineResponse response, string? responseId, bool bufferResponse, bool async, CancellationToken cancellationToken)
+    private async Task LogResponseContent(PipelineResponse response, string? responseId, bool contentBuffered, bool async, CancellationToken cancellationToken)
     {
-        // If logging content is disabled, or the request content is null, or informational logs are not enabled, return.
-        // Checking the log level prevents expensive operations from being executed
-        // TODO - consider moving this down to LoggingStream
-        var logErrorResponseContent = response.IsError && Singleton.IsEnabled(EventLevel.Warning, EventKeywords.All);
-        var logResponseContent = Singleton.IsEnabled(EventLevel.Informational, EventKeywords.All) || logErrorResponseContent;
+        var logErrorResponseContent = response.IsError && _eventSource.IsEnabled(EventLevel.Warning, EventKeywords.All);
+        var logResponseContent = _eventSource.IsEnabled(EventLevel.Informational, EventKeywords.All) || logErrorResponseContent;
 
-        if (!_logContent || !logResponseContent)
+        if (!_logContent || !logResponseContent || response.ContentStream == null)
         {
-            return; // nothing to log
+            return;
         }
-
-        // Determine if the content stream should be wrapped in a logging stream, which logs the stream in blocks as it is being read
-        var wrapContent =
-            !bufferResponse // Content is not buffered - content should be in the content stream
-            && response.ContentStream != null // Content stream is available
-            && response.ContentStream?.CanSeek == false; // Content stream is not seekable - if it's seekable we can just log directly
 
         // Try to extract a text encoding from the headers
         Encoding? responseTextEncoding = null;
@@ -218,48 +202,51 @@ public class ClientLoggingPolicy : PipelinePolicy
             ContentTypeUtilities.TryGetTextEncoding(contentType, out responseTextEncoding);
         }
 
-        if (wrapContent)
+        if (contentBuffered)
         {
-            response.ContentStream = new LoggingStream(responseId ?? string.Empty, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding);
+            // Content is buffered, so log the first _maxLength bytes
+            ReadOnlyMemory<byte> contentAsMemory = response.Content.ToMemory();
+            var length = Math.Min(contentAsMemory.Length, _maxLength);
+            byte[] bytes = contentAsMemory.Span.Slice(0, length).ToArray();
+
+            LogFormattedResponseContent(response.IsError, responseId ?? string.Empty, bytes ?? Array.Empty<byte>(), responseTextEncoding);
+
+            return;
+        }
+
+        // We check content stream is not null above
+        if (response.ContentStream!.CanSeek)
+        {
+            using var memoryStream = new MaxLengthStream(_maxLength);
+            if (async)
+            {
+                await response.ContentStream!.CopyToAsync(memoryStream, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                response.ContentStream!.CopyTo(memoryStream);
+            }
+            response.ContentStream.Seek(0, SeekOrigin.Begin);
+
+            byte[] bytes = memoryStream.ToArray();
+
+            LogFormattedResponseContent(response.IsError, responseId ?? string.Empty, bytes ?? Array.Empty<byte>(), responseTextEncoding);
+
+            return;
+        }
+
+        response.ContentStream = new LoggingStream(_eventSource, responseId ?? string.Empty, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding);
+    }
+
+    private void LogFormattedResponseContent(bool isError, string clientId, byte[] bytes, Encoding? encoding)
+    {
+        if (isError)
+        {
+            _eventSource.ErrorResponseContent(clientId, bytes, encoding);
         }
         else
         {
-            byte[]? bytes = null;
-            if (bufferResponse)
-            {
-                // TODO - is this the best way to do this
-                var allBytes = response.Content.ToArray();
-                var length = Math.Min(allBytes.Length, _maxLength);
-                bytes = new byte[length];
-                Buffer.BlockCopy(allBytes, 0, bytes, 0, length);
-            }
-            else
-            {
-                if (response.ContentStream != null)
-                {
-                    using var memoryStream = new MaxLengthStream(_maxLength);
-                    if (async)
-                    {
-                        await response.ContentStream.CopyToAsync(memoryStream, cancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        response.ContentStream.CopyTo(memoryStream);
-                    }
-                    response.ContentStream.Seek(0, SeekOrigin.Begin);
-
-                    bytes = memoryStream.ToArray();
-                }
-            }
-
-            if (response.IsError)
-            {
-                Singleton.ErrorResponseContent(responseId ?? string.Empty, bytes ?? Array.Empty<byte>(), responseTextEncoding);
-            }
-            else
-            {
-                Singleton.ResponseContent(responseId ?? string.Empty, bytes ?? Array.Empty<byte>(), responseTextEncoding);
-            }
+            _eventSource.ResponseContent(clientId, bytes, encoding);
         }
     }
 
@@ -327,8 +314,9 @@ public class ClientLoggingPolicy : PipelinePolicy
         private readonly bool _error;
         private readonly Encoding? _textEncoding;
         private int _blockNumber;
+        private readonly ClientModelEventSource _eventSource;
 
-        public LoggingStream(string requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding)
+        public LoggingStream(ClientModelEventSource eventSource, string requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding)
         {
             // Should only wrap non-seekable streams
             Debug.Assert(!originalStream.CanSeek);
@@ -338,6 +326,7 @@ public class ClientLoggingPolicy : PipelinePolicy
             _originalStream = originalStream;
             _error = error;
             _textEncoding = textEncoding;
+            _eventSource = eventSource;
         }
 
         public override long Seek(long offset, SeekOrigin origin)
@@ -358,7 +347,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         private void LogBuffer(byte[] buffer, int offset, int length)
         {
-            if (length == 0 || buffer == null) // TODO - more checks needed
+            if (length == 0 || buffer == null)
             {
                 return;
             }
@@ -380,12 +369,11 @@ public class ClientLoggingPolicy : PipelinePolicy
 
             if (_error)
             {
-                // TODO - store event source in LoggingStream? might need if I move above checks back
-                Singleton.ErrorResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
+                _eventSource.ErrorResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
             }
             else
             {
-                Singleton.ResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
+                _eventSource.ResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
             }
 
             _blockNumber++;

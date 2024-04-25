@@ -24,7 +24,7 @@ public class ClientPipelineOptions
     private PipelinePolicy? _loggingPolicy;
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
-    private DiagnosticsOptions? _diagnostics;
+    private LoggingOptions? _loggingOptions;
 
     #region Pipeline creation: Overrides of default pipeline policies
 
@@ -92,14 +92,14 @@ public class ClientPipelineOptions
     /// <summary>
     /// TODO
     /// </summary>
-    public DiagnosticsOptions? Diagnostics
+    public LoggingOptions? LoggingOptions
     {
-        get => _diagnostics;
+        get => _loggingOptions;
         set
         {
             AssertNotFrozen();
 
-            _diagnostics = value;
+            _loggingOptions = value;
         }
     }
 
@@ -200,7 +200,7 @@ public class ClientPipelineOptions
     public virtual void Freeze()
     {
         _frozen = true;
-        Diagnostics?.Freeze();
+        LoggingOptions?.Freeze();
     }
 
     /// <summary>
