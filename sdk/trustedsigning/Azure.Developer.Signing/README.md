@@ -151,3 +151,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 ## Next steps
 
 For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftrustedsigning%2FAzure.Developer.Signing%2FREADME.png)
