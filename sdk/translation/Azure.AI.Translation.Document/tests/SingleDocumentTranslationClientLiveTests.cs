@@ -14,9 +14,8 @@ namespace Azure.AI.Translation.Document.Tests
 {
     public class SingleDocumentTranslationClientLiveTests : RecordedTestBase<DocumentTranslationTestEnvironment>
     {
-        public SingleDocumentTranslationClientLiveTests(bool isAsync)
-            : base(isAsync)
-            //: base(isAsync, RecordedTestMode.Record)
+        public SingleDocumentTranslationClientLiveTests(bool isAsync): base(isAsync, RecordedTestMode.Live)
+        //: base(isAsync)
         {
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
