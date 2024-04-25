@@ -27,11 +27,13 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 
         public BatchLiveTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
+            SanitizedHeaders.Add("client-request-id");
             UseDefaultGuidFormatForClientRequestId = true;
         }
 
         public BatchLiveTestBase(bool isAsync) : base(isAsync)
         {
+            SanitizedHeaders.Add("client-request-id");
             UseDefaultGuidFormatForClientRequestId = true;
         }
 
