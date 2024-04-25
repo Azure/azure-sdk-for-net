@@ -103,8 +103,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
         internal static RemoteDependency ConvertToDependencyDocument(Activity activity)
         {
             // TODO: Investigate if we can have a minimal/optimized version of ActivityTagsProcessor for LiveMetric.
-            var atp = new ActivityTagsProcessor();
-            atp.CategorizeTags(activity);
+            var activityTagsProcessor = new ActivityTagsProcessor();
+            activityTagsProcessor.CategorizeTags(activity);
 
             RemoteDependency remoteDependencyDocumentIngress = new()
             {
@@ -114,20 +114,20 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 Extension_Duration = activity.Duration.TotalMilliseconds,
             };
 
-            SetProperties(remoteDependencyDocumentIngress, atp);
+            SetProperties(remoteDependencyDocumentIngress, activityTagsProcessor);
 
             // HACK: Remove the V2 for now. This Enum should be removed in the future.
-            if (atp.activityType.HasFlag(OperationType.V2))
+            if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
             {
-                atp.activityType &= ~OperationType.V2;
+                activityTagsProcessor.activityType &= ~OperationType.V2;
             }
 
-            switch (atp.activityType)
+            switch (activityTagsProcessor.activityType)
             {
                 case OperationType.Http:
                     remoteDependencyDocumentIngress.Name = activity.DisplayName;
-                    remoteDependencyDocumentIngress.CommandName = AzMonList.GetTagValue(ref atp.MappedTags, SemanticConventions.AttributeUrlFull)?.ToString();
-                    var httpResponseStatusCode = AzMonList.GetTagValue(ref atp.MappedTags, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
+                    remoteDependencyDocumentIngress.CommandName = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeUrlFull)?.ToString();
+                    var httpResponseStatusCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
                     remoteDependencyDocumentIngress.ResultCode = httpResponseStatusCode;
                     remoteDependencyDocumentIngress.Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                                                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
@@ -139,10 +139,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 case OperationType.Db:
                     // Note: The Exception details are recorded in Activity.Events only if the configuration has opt-ed into this (SqlClientInstrumentationOptions.RecordException).
 
-                    var (_, dbTarget) = atp.MappedTags.GetDbDependencyTargetAndName();
+                    var (_, dbTarget) = activityTagsProcessor.MappedTags.GetDbDependencyTargetAndName();
 
                     remoteDependencyDocumentIngress.Name = dbTarget;
-                    remoteDependencyDocumentIngress.CommandName = AzMonList.GetTagValue(ref atp.MappedTags, SemanticConventions.AttributeDbStatement)?.ToString();
+                    remoteDependencyDocumentIngress.CommandName = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeDbStatement)?.ToString();
                     remoteDependencyDocumentIngress.Duration = activity.Duration.ToString("c", CultureInfo.InvariantCulture);
 
                     // TODO: remoteDependencyDocumentIngress.ResultCode = "";
@@ -160,7 +160,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                     break;
                 default:
                     // Unknown or Unexpected Dependency Type
-                    remoteDependencyDocumentIngress.Name = atp.activityType.ToString();
+                    remoteDependencyDocumentIngress.Name = activityTagsProcessor.activityType.ToString();
                     break;
             }
 
