@@ -13,7 +13,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 {
     internal class IaasLinuxPoolFixture : PoolFixture
     {
-        public IaasLinuxPoolFixture(BatchClient batchClient) : base(TestUtilities.GetMyName() + "-" + GetTestMethodName(), batchClient) { }
+        public IaasLinuxPoolFixture(BatchClient batchClient, string poolID, bool isPlayback) : base(TestUtilities.GetMyName() + "-" + poolID, batchClient, isPlayback) { }
 
         public async Task<BatchPool> CreatePoolAsync(int targetDedicatedNodes = 1)
         {
@@ -21,23 +21,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 
             if (currentPool == null)
             {
-                // create a new pool
-                ImageReference imageReference = new ImageReference()
-                {
-                    Publisher = "MicrosoftWindowsServer",
-                    Offer = "WindowsServer",
-                    Sku = "2019-datacenter-smalldisk",
-                    Version = "latest"
-                };
-                VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64");
-
-                BatchPoolCreateContent batchPoolCreateOptions = new BatchPoolCreateContent(
-                    PoolId,
-                    VMSize)
-                {
-                    VirtualMachineConfiguration = virtualMachineConfiguration,
-                    TargetDedicatedNodes = targetDedicatedNodes,
-                };
+                BatchPoolCreateContent batchPoolCreateOptions = CreatePoolOptions(targetDedicatedNodes);
                 Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
                 if (response == null)
                 { }
@@ -46,14 +30,40 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             return await WaitForPoolAllocation(client, PoolId);
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        public static string GetTestMethodName()
+        public BatchPoolCreateContent CreatePoolOptions(int? targetDedicatedNodes = null)
         {
-            int frame = 4;
-            var st = new StackTrace();
-            var sf = st.GetFrame(frame);
+            // create a new pool
+            ImageReference imageReference = new ImageReference()
+            {
+                Publisher = "MicrosoftWindowsServer",
+                Offer = "WindowsServer",
+                Sku = "2019-datacenter-smalldisk",
+                Version = "latest"
+            };
+            VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64");
 
-            return sf.GetMethod().Name;
+            BatchPoolCreateContent batchPoolCreateOptions = new BatchPoolCreateContent(
+                PoolId,
+                VMSize)
+            {
+                VirtualMachineConfiguration = virtualMachineConfiguration,
+                TargetDedicatedNodes = targetDedicatedNodes,
+            };
+            return batchPoolCreateOptions;
+        }
+
+        internal async void DeletePool()
+        {
+            try
+            {
+                await client.DeletePoolAsync(PoolId);
+                WaitForPoolDeletion(client, PoolId);
+            } catch (Exception ex)
+            {
+                int x = 0;
+                x++;
+                var xx = ex.Message;
+            }
         }
     }
 }

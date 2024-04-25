@@ -35,6 +35,10 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             UseDefaultGuidFormatForClientRequestId = true;
         }
 
+        public bool isPlayBack()
+        {
+            return this.Mode == RecordedTestMode.Playback;
+        }
         /// <summary>
         /// Creates a <see cref="BatchClient" /> with the endpoint and API key provided via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.

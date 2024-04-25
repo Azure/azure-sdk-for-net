@@ -12,7 +12,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 {
     public class PaasWindowsPoolFixture : PoolFixture
     {
-        public PaasWindowsPoolFixture(BatchClient batchClient) : base(TestUtilities.GetMyName() + "-pooltest", batchClient) { }
+        public PaasWindowsPoolFixture(BatchClient batchClient, bool IsPlayBack) : base(TestUtilities.GetMyName() + "-pooltest", batchClient, IsPlayBack) { }
 
         public async Task<BatchPool> CreatePoolAsync()
         {

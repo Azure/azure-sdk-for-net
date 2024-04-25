@@ -36,7 +36,8 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task AddTask()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client);
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "AddTask", isPlayBack());
+            string poolID = iaasWindowsPoolFixture.PoolId;
             string jobID = "batchJob1";
             string taskID = "Task1";
             string commandLine = "cmd /c echo Hello World";
@@ -69,7 +70,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             finally
             {
                 await client.DeleteJobAsync(jobID);
-                iaasWindowsPoolFixture.Dispose();
+                await client.DeletePoolAsync(poolID);
             }
         }
     }

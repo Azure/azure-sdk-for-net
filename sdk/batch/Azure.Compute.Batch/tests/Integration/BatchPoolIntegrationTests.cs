@@ -35,7 +35,8 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task GetPoolNodeCounts()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client);
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "GetPoolNodeCounts", isPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
 
             try
             {
@@ -56,7 +57,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                iaasWindowsPoolFixture.Dispose();
+                await client.DeletePoolAsync(poolID);
             }
         }
 
@@ -64,13 +65,13 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task PoolExists()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client);
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "PoolExists", isPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
 
             try
             {
                 // create a pool to verify we have something to query for
                 BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(0);
-
                 var poolExist = await client.PoolExistsAsync(pool.Id);
                 var poolDoesntExist = await client.PoolExistsAsync("fakepool");
 
@@ -80,56 +81,95 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                iaasWindowsPoolFixture.Dispose();
+                await client.DeletePoolAsync(poolID);
             }
         }
 
-        [Ignore("Work in progress")]
         [RecordedTest]
         public async Task AutoScale()
         {
             var client = CreateBatchClient();
-            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client);
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "AutoScale", isPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
+            string poolASFormulaOrig = "$TargetDedicated = 0;";
+            string poolASFormulaNew = "$TargetDedicated = 1;";
+            TimeSpan evalInterval = TimeSpan.FromMinutes(6);
 
             try
             {
                 // create a pool to verify we have something to query for
-                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync();
+                BatchPoolCreateContent batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions();
+                batchPoolCreateOptions.EnableAutoScale = true;
+                batchPoolCreateOptions.AutoScaleEvaluationInterval = evalInterval;
+                batchPoolCreateOptions.AutoScaleFormula = poolASFormulaOrig;
+                Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
+                BatchPool autoScalePool = await iaasWindowsPoolFixture.WaitForPoolAllocation(client, iaasWindowsPoolFixture.PoolId);
 
-                int count = 0;
-                bool poolFound = false;
-                await foreach (BatchPoolNodeCounts item in client.GetPoolNodeCountsAsync())
+                // verify autoscale settings
+                Assert.IsTrue(autoScalePool.EnableAutoScale);
+                Assert.AreEqual(autoScalePool.AutoScaleFormula,poolASFormulaOrig);
+
+                // evaluate autoscale formula
+                BatchPoolEvaluateAutoScaleContent batchPoolEvaluateAutoScaleContent = new BatchPoolEvaluateAutoScaleContent(poolASFormulaNew);
+                AutoScaleRun eval = await client.EvaluatePoolAutoScaleAsync(autoScalePool.Id, batchPoolEvaluateAutoScaleContent);
+                Assert.Null(eval.Error);
+
+                // change eval interval
+                TimeSpan newEvalInterval = evalInterval + TimeSpan.FromMinutes(1);
+                BatchPoolEnableAutoScaleContent batchPoolEnableAutoScaleContent = new BatchPoolEnableAutoScaleContent()
                 {
-                    count++;
-                    poolFound |= pool.Id.Equals(item.PoolId, StringComparison.OrdinalIgnoreCase);
-                }
+                    AutoScaleEvaluationInterval = newEvalInterval,
+                    AutoScaleFormula = poolASFormulaNew,
+                };
 
-                // verify we found at least one poolnode
-                Assert.AreNotEqual(0, count);
-                Assert.IsTrue(poolFound);
+                // verify
+                response = await client.EnablePoolAutoScaleAsync(autoScalePool.Id, batchPoolEnableAutoScaleContent);
+                Assert.AreEqual(200, response.Status);
+                autoScalePool = await client.GetPoolAsync((autoScalePool.Id));
+                Assert.AreEqual(autoScalePool.AutoScaleEvaluationInterval, newEvalInterval);
+                Assert.AreEqual(autoScalePool.AutoScaleFormula, poolASFormulaNew);
+
+                response = await client.DisablePoolAutoScaleAsync(autoScalePool.Id);
+                Assert.AreEqual(200, response.Status);
             }
             finally
             {
-                iaasWindowsPoolFixture.Dispose();
+                await client.DeletePoolAsync(poolID);
             }
         }
 
-        [Ignore("Work in progress")]
         [RecordedTest]
-        public async Task DeletePool()
+        public async Task ResizePool()
         {
             var client = CreateBatchClient();
-            string poolId = TestUtilities.GenerateResourceId();
-            await client.GetJobAsync(jobId: "test");
-        }
+            IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client, "ResizePool", isPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
 
-        [Ignore("Work in progress")]
-        [RecordedTest]
-        public async Task CreatePool_WithBlobFuseMountConfiguration()
-        {
-            var client = CreateBatchClient();
-            string poolId = TestUtilities.GenerateResourceId();
-            await client.GetJobAsync(jobId:"test");
+            try
+            {
+                // create a pool to verify we have something to query for
+                BatchPool resizePool = await iaasWindowsPoolFixture.CreatePoolAsync(0);
+
+                // verify exists
+                BatchPoolResizeContent resizeContent = new BatchPoolResizeContent()
+                {
+                    TargetDedicatedNodes = 1,
+                    ResizeTimeout = TimeSpan.FromMinutes(10),
+                };
+
+                // resize pool
+                Response response = await client.ResizePoolAsync(poolID, resizeContent);
+                resizePool = await client.GetPoolAsync(poolID);
+                Assert.AreEqual(AllocationState.Resizing, resizePool.AllocationState);
+
+                // stop resizing
+                response = await client.StopPoolResizeAsync(poolID);
+                Assert.AreEqual(202, response.Status);
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
+            }
         }
     }
 }

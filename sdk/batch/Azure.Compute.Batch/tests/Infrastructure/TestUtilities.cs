@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Compute.Batch.Tests.Infrastructure
@@ -15,7 +16,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
     {
         #region Wait helpers
 
-        public static async Task WaitForPoolToReachStateAsync(BatchClient client, string poolId, AllocationState targetAllocationState, TimeSpan timeout)
+        public static async Task WaitForPoolToReachStateAsync(BatchClient client, string poolId, AllocationState targetAllocationState, TimeSpan timeout, bool isPlayback)
         {
             DateTime allocationWaitStartTime = DateTime.UtcNow;
             DateTime timeoutAfterThisTimeUtc = allocationWaitStartTime.Add(timeout);
@@ -24,7 +25,8 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 
             while (pool.AllocationState != targetAllocationState)
             {
-                await Task.Delay(TimeSpan.FromSeconds(10)).ConfigureAwait(continueOnCapturedContext: false);
+                if (!isPlayback)
+                { await Task.Delay(TimeSpan.FromSeconds(10)).ConfigureAwait(continueOnCapturedContext: false); }
 
                 pool = await client.GetPoolAsync(poolId);
 

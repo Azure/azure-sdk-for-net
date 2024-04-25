@@ -23,12 +23,15 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 
         public string PoolId { get; private set; }
 
+        public bool PlayBack { get; private set; }
+
         protected readonly BatchClient client;
 
-        protected PoolFixture(string poolId, BatchClient batchClient)
+        protected PoolFixture(string poolId, BatchClient batchClient, bool isPlayback)
         {
             PoolId = poolId;
             client = batchClient;
+            PlayBack = isPlayback;
         }
 
         public async void Dispose()
@@ -60,14 +63,14 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             return null;
         }
 
-        public static async Task<BatchPool> WaitForPoolAllocation(BatchClient client, string poolId)
+        public async Task<BatchPool> WaitForPoolAllocation(BatchClient client, string poolId)
         {
             BatchPool thePool = await client.GetPoolAsync(poolId);
 
             //Wait for pool to be in a usable state
             //TODO: Use a Utilities waiter
             TimeSpan computeNodeAllocationTimeout = TimeSpan.FromMinutes(10);
-            await TestUtilities.WaitForPoolToReachStateAsync(client, poolId, AllocationState.Steady, computeNodeAllocationTimeout);
+            await TestUtilities.WaitForPoolToReachStateAsync(client, poolId, AllocationState.Steady, computeNodeAllocationTimeout, PlayBack);
 
             //Wait for the compute nodes in the pool to be in a usable state
             //TODO: Use a Utilities waiter
@@ -79,7 +82,9 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 
             while (computeNodes.Any(computeNode => computeNode.State != BatchNodeState.Idle))
             {
-                Thread.Sleep(TimeSpan.FromSeconds(10));
+                if (!PlayBack)
+                { Thread.Sleep(TimeSpan.FromSeconds(10)); }
+
                 computeNodes = await client.GetNodesAsync(poolId).ToEnumerableAsync();
                 if (DateTime.UtcNow > timeoutAfterThisTimeUtc)
                 {
@@ -88,6 +93,27 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             }
 
             return thePool;
+        }
+
+        public async void WaitForPoolDeletion(BatchClient client, string poolId)
+        {
+            BatchPool thePool = await client.GetPoolAsync(poolId);
+
+            TimeSpan deletionOperationTimeout = TimeSpan.FromMinutes(10);
+            DateTime allocationWaitStartTime = DateTime.UtcNow;
+            DateTime timeoutAfterThisTimeUtc = allocationWaitStartTime.Add(deletionOperationTimeout);
+
+            while (thePool != null)
+            {
+                if (!PlayBack)
+                { Thread.Sleep(TimeSpan.FromSeconds(10)); }
+
+                thePool = await client.GetPoolAsync(poolId);
+                if (DateTime.UtcNow > timeoutAfterThisTimeUtc)
+                {
+                    throw new Exception("DeletePool: Timed out waiting for pool to delete");
+                }
+            }
         }
     }
 }
