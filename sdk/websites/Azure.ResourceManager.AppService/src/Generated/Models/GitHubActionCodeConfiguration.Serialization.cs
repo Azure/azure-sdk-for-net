@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeStack), out propertyOverride);
-            if (Optional.IsDefined(RuntimeStack) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  runtimeStack: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuntimeStack))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  runtimeStack: ");
                     if (RuntimeStack.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeVersion), out propertyOverride);
-            if (Optional.IsDefined(RuntimeVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  runtimeVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuntimeVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  runtimeVersion: ");
                     if (RuntimeVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
