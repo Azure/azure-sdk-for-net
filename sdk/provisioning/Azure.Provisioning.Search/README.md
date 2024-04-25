@@ -9,7 +9,7 @@ Azure.Provisioning.Search simplifies declarative resource provisioning in .NET f
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.ApplicationInsights --prerelease
+dotnet add package Azure.Provisioning.Search
 ```
 
 ### Prerequisites
