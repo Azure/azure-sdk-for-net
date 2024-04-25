@@ -13,7 +13,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 {
     internal class IaasLinuxPoolFixture : PoolFixture
     {
-        public IaasLinuxPoolFixture(BatchClient batchClient, string poolID, bool isPlayback) : base(TestUtilities.GetMyName() + "-" + poolID, batchClient, isPlayback) { }
+        public IaasLinuxPoolFixture(BatchClient batchClient, string poolID, bool isPlayback) : base(poolID, batchClient, isPlayback) { }
 
         public async Task<BatchPool> CreatePoolAsync(int targetDedicatedNodes = 1)
         {
