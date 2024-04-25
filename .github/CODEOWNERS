@@ -180,6 +180,9 @@
 # ServiceLabel: %Bot Service
 # ServiceOwners:                                                   @sgellock
 
+#PRLabel %Code Signing
+/sdk/trustedsigning/                                               @jaxelr
+
 # ServiceLabel: %Code Signing
 # ServiceOwners:                                                   @jaxelr
 
