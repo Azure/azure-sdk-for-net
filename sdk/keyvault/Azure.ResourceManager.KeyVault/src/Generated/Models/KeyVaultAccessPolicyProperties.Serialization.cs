@@ -109,17 +109,18 @@ namespace Azure.ResourceManager.KeyVault.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessPolicies), out propertyOverride);
-            if (Optional.IsCollectionDefined(AccessPolicies) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AccessPolicies.Any() || hasPropertyOverride)
+                builder.Append("  accessPolicies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AccessPolicies))
                 {
-                    builder.Append("  accessPolicies: ");
-                    if (hasPropertyOverride)
+                    if (AccessPolicies.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  accessPolicies: ");
                         builder.AppendLine("[");
                         foreach (var item in AccessPolicies)
                         {
