@@ -152,15 +152,16 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HubPattern), out propertyOverride);
-            if (Optional.IsDefined(HubPattern) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  hubPattern: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HubPattern))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  hubPattern: ");
                     if (HubPattern.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -174,15 +175,16 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventPattern), out propertyOverride);
-            if (Optional.IsDefined(EventPattern) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  eventPattern: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EventPattern))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  eventPattern: ");
                     if (EventPattern.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -196,15 +198,16 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CategoryPattern), out propertyOverride);
-            if (Optional.IsDefined(CategoryPattern) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  categoryPattern: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CategoryPattern))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  categoryPattern: ");
                     if (CategoryPattern.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -218,15 +221,16 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UrlTemplate), out propertyOverride);
-            if (Optional.IsDefined(UrlTemplate) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  urlTemplate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UrlTemplate))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  urlTemplate: ");
                     if (UrlTemplate.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -240,15 +244,16 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Auth), out propertyOverride);
-            if (Optional.IsDefined(Auth) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  auth: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Auth))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  auth: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Auth, options, 2, false, "  auth: ");
                 }
             }
