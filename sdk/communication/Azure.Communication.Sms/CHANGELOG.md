@@ -1,6 +1,8 @@
 # Release History
 
-## 1.1.0-beta.1 (2024-03-25)
+## 1.1.0-beta.1 (2024-05-07)
+
+### Features Added
 - Added optional DeliveryReportTimeoutInSeconds to smsSendOptions.
 
 ## 1.0.2 (2021-10-05)
