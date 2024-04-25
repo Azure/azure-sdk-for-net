@@ -150,57 +150,61 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageSizeInGB), out propertyOverride);
-            if (Optional.IsDefined(StorageSizeInGB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  storageSizeGB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageSizeInGB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  storageSizeGB: ");
                     builder.AppendLine($"{StorageSizeInGB.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoGrow), out propertyOverride);
-            if (Optional.IsDefined(AutoGrow) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  autoGrow: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoGrow))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  autoGrow: ");
                     builder.AppendLine($"'{AutoGrow.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
-            if (Optional.IsDefined(Tier) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tier: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Tier))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tier: ");
                     builder.AppendLine($"'{Tier.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Iops), out propertyOverride);
-            if (Optional.IsDefined(Iops) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  iops: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Iops))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  iops: ");
                     builder.AppendLine($"{Iops.Value}");
                 }
             }
