@@ -246,15 +246,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  Name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  Name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -268,15 +269,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Config), out propertyOverride);
-            if (Optional.IsDefined(Config) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  Config: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Config))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  Config: ");
                     if (Config.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -290,15 +292,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
-            if (Optional.IsDefined(Version) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  Version: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  Version: ");
                     if (Version.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -312,15 +315,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FavoriteId), out propertyOverride);
-            if (Optional.IsDefined(FavoriteId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  FavoriteId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FavoriteId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  FavoriteId: ");
                     if (FavoriteId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -334,29 +338,31 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FavoriteType), out propertyOverride);
-            if (Optional.IsDefined(FavoriteType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  FavoriteType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FavoriteType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  FavoriteType: ");
                     builder.AppendLine($"'{FavoriteType.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceType), out propertyOverride);
-            if (Optional.IsDefined(SourceType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  SourceType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  SourceType: ");
                     if (SourceType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -370,15 +376,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeModified), out propertyOverride);
-            if (Optional.IsDefined(TimeModified) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  TimeModified: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeModified))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  TimeModified: ");
                     if (TimeModified.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -392,17 +399,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (Optional.IsCollectionDefined(Tags) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Tags.Any() || hasPropertyOverride)
+                builder.Append("  Tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
                 {
-                    builder.Append("  Tags: ");
-                    if (hasPropertyOverride)
+                    if (Tags.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  Tags: ");
                         builder.AppendLine("[");
                         foreach (var item in Tags)
                         {
@@ -427,15 +435,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
-            if (Optional.IsDefined(Category) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  Category: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Category))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  Category: ");
                     if (Category.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -449,30 +458,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsGeneratedFromTemplate), out propertyOverride);
-            if (Optional.IsDefined(IsGeneratedFromTemplate) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  IsGeneratedFromTemplate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsGeneratedFromTemplate))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  IsGeneratedFromTemplate: ");
                     var boolValue = IsGeneratedFromTemplate.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserId), out propertyOverride);
-            if (Optional.IsDefined(UserId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  UserId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  UserId: ");
                     if (UserId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
