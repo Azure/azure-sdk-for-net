@@ -40,6 +40,7 @@ namespace Azure.Developer.Signing.Tests
         }
 
         [RecordedTest]
+        [AsyncOnly]
         public async Task GetCustomerCertificateEkuSuccess()
         {
             const string eku = "eku";
