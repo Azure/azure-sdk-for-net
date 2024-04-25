@@ -216,6 +216,9 @@ function DeployStressPackage(
         Write-Host "Creating namespace $($pkg.Namespace) if it does not exist..."
         kubectl create namespace $pkg.Namespace --dry-run=client -o yaml | kubectl apply -f -
         if ($LASTEXITCODE) {exit $LASTEXITCODE}
+        # Give a few seconds for stress watcher to initialize the federated identity credential
+        # and create the service account before we reference it
+        Start-Sleep 5
         Write-Host "Adding default resource requests to namespace/$($pkg.Namespace)"
         $limitRangeSpec | kubectl apply -n $pkg.Namespace -f -
         if ($LASTEXITCODE) {exit $LASTEXITCODE}
