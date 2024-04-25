@@ -25,8 +25,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
         {
         }
 
-        [Fact]
-        public void VerifyRequestAttributes()
+        [Theory]
+        [InlineData("http", "example.com", 8080, "/search", "?q=OpenTelemetry", "http://example.com:8080/search?q=OpenTelemetry")] // The Instrumentation.AspNetCore sets the port as an int.
+        [InlineData("http", "example.com", "8080", "/search", "?q=OpenTelemetry", "http://example.com:8080/search?q=OpenTelemetry")] // This is not expected, but the attribute is object so it could happen.
+        [InlineData("http", "example.com", 80, "/search", "?q=OpenTelemetry", "http://example.com/search?q=OpenTelemetry")] // as a sideeffect of setting as new Uri, the default port is removed from the Absolute Uri.
+        [InlineData("http", "example.com", "80", "/search", "?q=OpenTelemetry", "http://example.com/search?q=OpenTelemetry")] // as a sideeffect of setting as new Uri, the default port is removed from the Absolute Uri.
+        [InlineData("http", "example.com", 443, "/search", "?q=OpenTelemetry", "http://example.com/search?q=OpenTelemetry")] // The Instrumentation.AspNetCore sets the port as an int.
+        [InlineData("http", "example.com", "443", "/search", "?q=OpenTelemetry", "http://example.com:443/search?q=OpenTelemetry")] // If the port is set as a string, it will not be removed from the Absolute Uri.
+        public void VerifyRequestAttributes(string urlScheme, string serverAddress, object serverPort, string urlPath, string urlQuery, string expectedUrl)
         {
             // SETUP
             var uniqueTestId = Guid.NewGuid();
@@ -46,11 +52,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             using var requestActivity = activitySource.StartActivity(name: "HelloWorld", kind: ActivityKind.Server);
             Assert.NotNull(requestActivity);
             requestActivity.SetTag("http.response.status_code", 200);
-            requestActivity.SetTag("url.scheme", "http");
-            requestActivity.SetTag("server.address", "example.com");
-            requestActivity.SetTag("server.port", "8080");
-            requestActivity.SetTag("url.path", "/search");
-            requestActivity.SetTag("url.query", "?q=OpenTelemetry");
+            requestActivity.SetTag("url.scheme", urlScheme);
+            requestActivity.SetTag("server.address", serverAddress);
+            requestActivity.SetTag("server.port", serverPort);
+            requestActivity.SetTag("url.path", urlPath);
+            requestActivity.SetTag("url.query", urlQuery);
             requestActivity.Stop();
 
             var requestDocument = DocumentHelper.ConvertToRequestDocument(requestActivity);
@@ -59,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal(DocumentType.Request, requestDocument.DocumentType);
             Assert.Equal("HelloWorld", requestDocument.Name);
             Assert.Equal("200", requestDocument.ResponseCode);
-            Assert.Equal("http://example.com:8080/search?q=OpenTelemetry", requestDocument.Url.AbsoluteUri);
+            Assert.Equal(expectedUrl, requestDocument.Url.AbsoluteUri);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(requestActivity.Duration.TotalMilliseconds, requestDocument.Extension_Duration);
