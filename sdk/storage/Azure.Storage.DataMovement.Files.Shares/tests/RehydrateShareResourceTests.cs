@@ -65,7 +65,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareProviderId,
                 isContainer: false,
                 new ShareFileSourceCheckpointData(),
-                new ShareFileDestinationCheckpointData(null, null, null, null)).Object;
+                new ShareFileDestinationCheckpointData(null, null, null, null, null, null, null, null, null, null, null, null)).Object;
 
             StorageResource storageResource = isSource
                 ? await new ShareFilesStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
@@ -84,30 +84,24 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             Random r = new();
             ShareFileDestinationCheckpointData originalDestinationData = new(
-                new ShareFileHttpHeaders
-                {
-                    ContentType = "text/plain",
-                    ContentEncoding = new string[] { "gzip" },
-                    ContentLanguage = new string[] { "en-US" },
-                    ContentDisposition = "inline",
-                    CacheControl = "no-cache",
-                },
-                new Dictionary<string, string>
-                {
-                    {  r.NextString(8),  r.NextString(8) }
-                },
-                new Dictionary<string, string>
+                contentType: new("text/plain"),
+                contentEncoding: new(new string[] { "gzip" }),
+                contentLanguage: new(new string[] { "en-US" }),
+                contentDisposition: new("inline"),
+                cacheControl: new("no-cache"),
+                fileAttributes: new(NtfsFileAttributes.Archive),
+                filePermissionKey: new(r.NextString(8)),
+                fileLastWrittenOn: new(DateTimeOffset.Now),
+                fileChangedOn: new(DateTimeOffset.Now),
+                fileCreatedOn: new(DateTimeOffset.Now),
+                fileMetadata: new(new Dictionary<string, string>
                 {
                     {  r.NextString(8),  r.NextString(8) }
-                },
-                new FileSmbProperties
+                }),
+                directoryMetadata: new(new Dictionary<string, string>
                 {
-                    FileAttributes = NtfsFileAttributes.Archive,
-                    FilePermissionKey = r.NextString(8),
-                    FileLastWrittenOn = DateTimeOffset.Now,
-                    FileChangedOn = DateTimeOffset.Now,
-                    FileCreatedOn = DateTimeOffset.Now,
-                });
+                    {  r.NextString(8),  r.NextString(8) }
+                }));
             DataTransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
@@ -123,18 +117,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             Assert.That(destinationPath, Is.EqualTo(storageResource.Uri.AbsoluteUri));
             Assert.That(storageResource, Is.TypeOf<ShareFileStorageResource>());
-            Assert.That(storageResource._options.ContentType, Is.EqualTo(originalDestinationData.ContentHeaders.ContentType));
-            Assert.That(storageResource._options.ContentEncoding, Is.EqualTo(originalDestinationData.ContentHeaders.ContentEncoding));
-            Assert.That(storageResource._options.ContentLanguage, Is.EqualTo(originalDestinationData.ContentHeaders.ContentLanguage));
-            Assert.That(storageResource._options.ContentDisposition, Is.EqualTo(originalDestinationData.ContentHeaders.ContentDisposition));
-            Assert.That(storageResource._options.CacheControl, Is.EqualTo(originalDestinationData.ContentHeaders.CacheControl));
+            Assert.That(storageResource._options.ContentType, Is.EqualTo(originalDestinationData.ContentType));
+            Assert.That(storageResource._options.ContentEncoding, Is.EqualTo(originalDestinationData.ContentEncoding));
+            Assert.That(storageResource._options.ContentLanguage, Is.EqualTo(originalDestinationData.ContentLanguage));
+            Assert.That(storageResource._options.ContentDisposition, Is.EqualTo(originalDestinationData.ContentDisposition));
+            Assert.That(storageResource._options.CacheControl, Is.EqualTo(originalDestinationData.CacheControl));
             Assert.That(storageResource._options.FileMetadata, Is.EqualTo(originalDestinationData.FileMetadata));
             Assert.That(storageResource._options.DirectoryMetadata, Is.EqualTo(originalDestinationData.DirectoryMetadata));
-            Assert.That(storageResource._options.FileAttributes, Is.EqualTo(originalDestinationData.SmbProperties.FileAttributes));
-            Assert.That(storageResource._options.FilePermissionKey, Is.EqualTo(originalDestinationData.SmbProperties.FilePermissionKey));
-            Assert.That(storageResource._options.FileCreatedOn, Is.EqualTo(originalDestinationData.SmbProperties.FileCreatedOn));
-            Assert.That(storageResource._options.FileLastWrittenOn, Is.EqualTo(originalDestinationData.SmbProperties.FileLastWrittenOn));
-            Assert.That(storageResource._options.FileChangedOn, Is.EqualTo(originalDestinationData.SmbProperties.FileChangedOn));
+            Assert.That(storageResource._options.FileAttributes, Is.EqualTo(originalDestinationData.FileAttributes));
+            Assert.That(storageResource._options.FilePermissionKey, Is.EqualTo(originalDestinationData.FilePermissionKey));
+            Assert.That(storageResource._options.FileCreatedOn, Is.EqualTo(originalDestinationData.FileCreatedOn));
+            Assert.That(storageResource._options.FileLastWrittenOn, Is.EqualTo(originalDestinationData.FileLastWrittenOn));
+            Assert.That(storageResource._options.FileChangedOn, Is.EqualTo(originalDestinationData.FileChangedOn));
         }
 
         [Test]
@@ -163,7 +157,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 ShareProviderId,
                 isContainer: true,
                 new ShareFileSourceCheckpointData(),
-                new ShareFileDestinationCheckpointData(null, null, null, null)).Object;
+                new ShareFileDestinationCheckpointData(null, null, null, null, null, null, null, null, null, null, null, null)).Object;
 
             StorageResource storageResource = isSource
                 ? await new ShareFilesStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)

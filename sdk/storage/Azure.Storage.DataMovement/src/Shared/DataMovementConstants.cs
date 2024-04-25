@@ -148,6 +148,7 @@ namespace Azure.Storage.DataMovement
             internal const string AccessTier = "AccessTier";
             internal const string BlobType = "BlobType";
             internal const string CreationTime = "CreationTime";
+            internal const string ChangedOnTime = "ChangedOnTime";
             internal const string ContentType = "ContentType";
             internal const string ContentHash = "ContentHash";
             internal const string ContentEncoding = "ContentEncoding";

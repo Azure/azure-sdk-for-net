@@ -4155,7 +4155,10 @@ namespace Azure.Storage.Files.Shares.Tests
             }
 
             var destFile = directory.GetFileClient("destFile");
-            await destFile.CreateAsync(maxSize: 1024);
+            await destFile.CreateAsync(maxSize: 1024, smbProperties: new FileSmbProperties()
+            {
+                FileLastWrittenOn = DateTimeOffset.UtcNow.AddDays(-1)
+            });
             var destRange = new HttpRange(256, 256);
             var sourceRange = new HttpRange(512, 256);
 

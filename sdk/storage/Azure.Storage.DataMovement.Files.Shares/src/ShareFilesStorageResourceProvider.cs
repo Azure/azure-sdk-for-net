@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -243,8 +244,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             ShareFileStorageResourceOptions options = new()
             {
-                SmbProperties = checkpointData.SmbProperties,
-                HttpHeaders = checkpointData.ContentHeaders,
+                CacheControl = checkpointData.CacheControl,
+                ContentDisposition = checkpointData.ContentDisposition,
+                ContentEncoding = checkpointData.ContentEncoding,
+                ContentLanguage = checkpointData.ContentLanguage,
+                ContentType = checkpointData.ContentType,
                 DirectoryMetadata = checkpointData.DirectoryMetadata,
                 FileMetadata = checkpointData.FileMetadata,
             };
