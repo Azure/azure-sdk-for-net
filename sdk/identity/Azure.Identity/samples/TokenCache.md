@@ -1,6 +1,6 @@
 # Token caching in the Azure Identity client library
 
-*Token caching* is a feature provided by versions 1.8.0 and later of the Azure Identity library. The feature allows apps to:
+*Token caching* is a feature provided by the Azure Identity library. The feature allows apps to:
 
 - Improve their resilience and performance.
 - Reduce the number of requests made to Microsoft Entra ID to obtain access tokens.

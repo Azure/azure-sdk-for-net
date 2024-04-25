@@ -162,6 +162,8 @@ var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.wi
 * [Azure Virtual Machines](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/how-to-use-vm-token)
 * [Azure Virtual Machines Scale Sets](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/qs-configure-powershell-windows-vmss)
 
+As of version 1.8.0, `ManagedIdentityCredential` supports [token caching](#token-caching).
+
 ### Examples
 
 These examples demonstrate authenticating the `SecretClient` from the [Azure.Security.KeyVault.Secrets][secrets_client_library] client library using the `ManagedIdentityCredential`.
@@ -278,7 +280,7 @@ As of version 1.10.0, accessing resources protected by [Continuous Access Evalua
 
 ## Token caching
 
-*Token caching* is a feature provided by versions 1.8.0 and later of the Azure Identity library. The feature allows apps to:
+*Token caching* is a feature provided by the Azure Identity library. The feature allows apps to:
 
 * Cache tokens in memory (default) or on disk (opt-in).
 * Improve resilience and performance.
