@@ -271,7 +271,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 }
                 else if (tag.Key == SemanticConventions.AttributeExceptionStacktrace)
                 {
-                    // do nothing
+                    // Do nothing. Avoid adding this large string to the properties.
                 }
                 else if (propertiesCount < MaxPropertiesCount)
                 {
