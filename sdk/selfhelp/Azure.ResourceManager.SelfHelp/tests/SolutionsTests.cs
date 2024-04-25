@@ -13,12 +13,11 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
     public class SolutionsTests : SelfHelpManagementTestBase
     {
-        public SolutionsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public SolutionsTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
         [Test]
-        [RecordedTest]
         public async Task CreateAndGetSolutionsTest()
         {
             var subId = "6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba";
@@ -51,10 +50,8 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             };
 
             List<SelfHelpSection> sections = new List<SelfHelpSection>();
-            SolutionResourceProperties properties = new SolutionResourceProperties(triggerCriterionList, parameters, null, null, null, null, null, sections, null);
-            ;
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
-            var data = new SolutionResourceData(scope, null, resourceType, null, properties, null);
+            var data = new SolutionResourceData(scope, null, resourceType, null, triggerCriterionList, parameters, null, null, null, null, null, null, null);
 
             return data;
         }

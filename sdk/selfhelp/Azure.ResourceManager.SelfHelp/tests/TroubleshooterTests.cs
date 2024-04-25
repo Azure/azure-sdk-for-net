@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             //3.Push the recordings to the assets-sdk
             if (isAsync)
             {
-                troubleshooterResourceName = "0c16f71c-e791-4da2-80d7-f93ddfa2c239";
+                troubleshooterResourceName = "0c16f71c-e791-4da2-80d7-f93ddfa2c237";
             }
             else
             {
-                troubleshooterResourceName = "cc5feaab-3b50-40b9-aaa4-754b6b5e3898";
+                troubleshooterResourceName = "cc5feaab-3b50-40b9-aaa4-754b6b5e3897";
             }
 
             ResourceIdentifier scope = new ResourceIdentifier($"/subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{resourceName}");
