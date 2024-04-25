@@ -64,10 +64,7 @@ namespace Azure.Developer.Signing.Tests
             const string signingCert = "signingCertificate";
             const string result = "result";
             const string signatureAlgorithm = "RS256";
-
-            byte[] digest = new byte[32];
-            var random = new Random();
-            random.NextBytes(digest);
+            byte[] digest = Convert.FromBase64String("s+y8+MNE4zKv9b0/ZAf3hxt0yixaYoLiXAspe7EnZ5U=");
 
             using RequestContent content = RequestContent.Create(new
             {
