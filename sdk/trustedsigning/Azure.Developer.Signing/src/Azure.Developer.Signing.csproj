@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Azure.Developer.Signing client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>Azure SDK Code Generation Azure.Developer.Signing for Azure Data Plane</AssemblyTitle>
+    <Description>Azure Developer Signing client library for usage with the trusted signing service to sign artifacts.</Description>
+    <AssemblyTitle>Azure Developer Signing Data Plane Library</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.Developer.Signing</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
