@@ -177,6 +177,9 @@
 # ServiceLabel: %Cloud Shell
 # ServiceOwners:                                                   @maertendMSFT
 
+#PRLabel %Code Signing
+/sdk/trustedsigning/                                               @jaxelr
+
 # ServiceLabel: %Code Signing
 # ServiceOwners:                                                   @jaxelr
 
