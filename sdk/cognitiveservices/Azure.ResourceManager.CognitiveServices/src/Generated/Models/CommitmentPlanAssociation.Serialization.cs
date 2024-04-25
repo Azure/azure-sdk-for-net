@@ -116,29 +116,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommitmentPlanId), out propertyOverride);
-            if (Optional.IsDefined(CommitmentPlanId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  commitmentPlanId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommitmentPlanId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  commitmentPlanId: ");
                     builder.AppendLine($"'{CommitmentPlanId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommitmentPlanLocation), out propertyOverride);
-            if (Optional.IsDefined(CommitmentPlanLocation) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  commitmentPlanLocation: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommitmentPlanLocation))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  commitmentPlanLocation: ");
                     if (CommitmentPlanLocation.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
