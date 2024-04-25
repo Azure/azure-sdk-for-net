@@ -6,8 +6,8 @@
 
 * Update OpenTelemetry dependencies.
   ([#43197](https://github.com/Azure/azure-sdk-for-net/pull/43197))
-  - OpenTelemetry 1.8.0
-  - OpenTelemetry.Extensions.Hosting 1.8.0
+  - OpenTelemetry 1.8.1
+  - OpenTelemetry.Extensions.Hosting 1.8.1
   - OpenTelemetry.Instrumentation.AspNetCore 1.8.1
   - OpenTelemetry.Instrumentation.Http 1.8.1
   - This includes a hotfix for [GHSA-vh2m-22xx-q94f](https://github.com/open-telemetry/opentelemetry-dotnet/security/advisories/GHSA-vh2m-22xx-q94f) which redacts the query string values by default. 
