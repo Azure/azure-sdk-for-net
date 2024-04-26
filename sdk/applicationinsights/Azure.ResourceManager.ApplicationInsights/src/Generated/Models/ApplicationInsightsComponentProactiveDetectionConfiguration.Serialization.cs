@@ -190,15 +190,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  Name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  Name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -212,47 +213,50 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  Enabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  Enabled: ");
                     var boolValue = IsEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendEmailsToSubscriptionOwners), out propertyOverride);
-            if (Optional.IsDefined(SendEmailsToSubscriptionOwners) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  SendEmailsToSubscriptionOwners: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SendEmailsToSubscriptionOwners))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  SendEmailsToSubscriptionOwners: ");
                     var boolValue = SendEmailsToSubscriptionOwners.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomEmails), out propertyOverride);
-            if (Optional.IsCollectionDefined(CustomEmails) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (CustomEmails.Any() || hasPropertyOverride)
+                builder.Append("  CustomEmails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CustomEmails))
                 {
-                    builder.Append("  CustomEmails: ");
-                    if (hasPropertyOverride)
+                    if (CustomEmails.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  CustomEmails: ");
                         builder.AppendLine("[");
                         foreach (var item in CustomEmails)
                         {
@@ -277,15 +281,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedTime), out propertyOverride);
-            if (Optional.IsDefined(LastUpdatedTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  LastUpdatedTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastUpdatedTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  LastUpdatedTime: ");
                     if (LastUpdatedTime.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -299,15 +304,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleDefinitions), out propertyOverride);
-            if (Optional.IsDefined(RuleDefinitions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  RuleDefinitions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuleDefinitions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  RuleDefinitions: ");
                     BicepSerializationHelpers.AppendChildObject(builder, RuleDefinitions, options, 2, false, "  RuleDefinitions: ");
                 }
             }
