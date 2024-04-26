@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryReadonlyMasterKey), out propertyOverride);
-            if (Optional.IsDefined(PrimaryReadonlyMasterKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  primaryReadonlyMasterKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryReadonlyMasterKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  primaryReadonlyMasterKey: ");
                     if (PrimaryReadonlyMasterKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryReadonlyMasterKey), out propertyOverride);
-            if (Optional.IsDefined(SecondaryReadonlyMasterKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  secondaryReadonlyMasterKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryReadonlyMasterKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  secondaryReadonlyMasterKey: ");
                     if (SecondaryReadonlyMasterKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

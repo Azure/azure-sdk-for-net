@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SchemaType), out propertyOverride);
-            if (Optional.IsDefined(SchemaType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  schemaType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SchemaType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  schemaType: ");
                     builder.AppendLine($"'{SchemaType.Value.ToString()}'");
                 }
             }

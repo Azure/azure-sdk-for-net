@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Pem), out propertyOverride);
-            if (Optional.IsDefined(Pem) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  pem: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Pem))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  pem: ");
                     if (Pem.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
