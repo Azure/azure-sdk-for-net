@@ -4,7 +4,6 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Tests.Scenario
 
             ArmOperation<VirtualMachineScaleSetResource> originalLro = await collection.CreateOrUpdateAsync(WaitUntil.Started, vmssName, input);
             var token = originalLro.GetRehydrationToken();
-            var resourceRehydratedLro = await ArmOperation.RehydrateAsync<VirtualMachineScaleSetResource>(Client, (RehydrationToken)token!);
+            var resourceRehydratedLro = await ArmOperation.RehydrateAsync<VirtualMachineScaleSetResource>(Client, token.Value);
             await resourceRehydratedLro.WaitForCompletionAsync();
             Assert.True(resourceRehydratedLro.HasValue);
             VirtualMachineScaleSetResource rehydratedResult = resourceRehydratedLro.Value;
