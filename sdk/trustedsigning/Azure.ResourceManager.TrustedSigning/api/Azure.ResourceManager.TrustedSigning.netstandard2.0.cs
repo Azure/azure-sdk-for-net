@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.TrustedSigning
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrustedSigningAccountResource : Azure.ResourceManager.ArmResource
+    public partial class TrustedSigningAccountResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TrustedSigningAccountResource() { }
@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.TrustedSigning
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrustedSigning.TrustedSigningAccountResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -97,7 +102,7 @@ namespace Azure.ResourceManager.TrustedSigning
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TrustedSigningCertificateProfileResource : Azure.ResourceManager.ArmResource
+    public partial class TrustedSigningCertificateProfileResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TrustedSigningCertificateProfileResource() { }
@@ -110,6 +115,11 @@ namespace Azure.ResourceManager.TrustedSigning
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RevokeCertificate(Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RevokeCertificateAsync(Azure.ResourceManager.TrustedSigning.Models.RevokeCertificateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.TrustedSigning.TrustedSigningCertificateProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -235,8 +245,9 @@ namespace Azure.ResourceManager.TrustedSigning.Models
     }
     public partial class TrustedSigningAccountNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent>
     {
-        public TrustedSigningAccountNameAvailabilityContent(string name) { }
+        public TrustedSigningAccountNameAvailabilityContent(string name, Azure.Core.ResourceType resourceType) { }
         public string Name { get { throw null; } }
+        public Azure.Core.ResourceType ResourceType { get { throw null; } }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.TrustedSigning.Models.TrustedSigningAccountNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
