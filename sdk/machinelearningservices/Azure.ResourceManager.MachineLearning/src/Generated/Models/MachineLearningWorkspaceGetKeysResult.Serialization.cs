@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MachineLearningWorkspaceGetKeysResult : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceGetKeysResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceGetKeysResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceGetKeysResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineLearningWorkspaceGetKeysResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ContainerRegistryCredentials))
             {
                 writer.WritePropertyName("containerRegistryCredentials"u8);
-                writer.WriteObjectValue<MachineLearningContainerRegistryCredentials>(ContainerRegistryCredentials, options);
+                writer.WriteObjectValue(ContainerRegistryCredentials, options);
             }
             if (Optional.IsDefined(NotebookAccessKeys))
             {
                 writer.WritePropertyName("notebookAccessKeys"u8);
-                writer.WriteObjectValue<MachineLearningWorkspaceGetNotebookKeysResult>(NotebookAccessKeys, options);
+                writer.WriteObjectValue(NotebookAccessKeys, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UserStorageResourceId))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningWorkspaceGetKeysResult DeserializeMachineLearningWorkspaceGetKeysResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.LabServices
 {
     public partial class LabUserData : IUtf8JsonSerializable, IJsonModel<LabUserData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabUserData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabUserData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LabUserData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.LabServices
 
         internal static LabUserData DeserializeLabUserData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

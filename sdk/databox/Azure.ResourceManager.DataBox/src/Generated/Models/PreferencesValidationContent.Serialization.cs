@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class PreferencesValidationContent : IUtf8JsonSerializable, IJsonModel<PreferencesValidationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PreferencesValidationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PreferencesValidationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PreferencesValidationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Preference))
             {
                 writer.WritePropertyName("preference"u8);
-                writer.WriteObjectValue<DataBoxOrderPreferences>(Preference, options);
+                writer.WriteObjectValue(Preference, options);
             }
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static PreferencesValidationContent DeserializePreferencesValidationContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class OneLakeDatastore : IUtf8JsonSerializable, IJsonModel<OneLakeDatastore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OneLakeDatastore>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OneLakeDatastore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OneLakeDatastore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("artifact"u8);
-            writer.WriteObjectValue<OneLakeArtifact>(Artifact, options);
+            writer.WriteObjectValue(Artifact, options);
             if (Optional.IsDefined(Endpoint))
             {
                 if (Endpoint != null)
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
             }
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue<MachineLearningDatastoreCredentials>(Credentials, options);
+            writer.WriteObjectValue(Credentials, options);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
             if (Optional.IsDefined(IntellectualProperty))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue<IntellectualProperty>(IntellectualProperty, options);
+                    writer.WriteObjectValue(IntellectualProperty, options);
                 }
                 else
                 {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static OneLakeDatastore DeserializeOneLakeDatastore(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

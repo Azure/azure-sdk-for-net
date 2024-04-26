@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AnalysisDetectorEvidences : IUtf8JsonSerializable, IJsonModel<AnalysisDetectorEvidences>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisDetectorEvidences>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisDetectorEvidences>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AnalysisDetectorEvidences>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DetectorDefinition))
             {
                 writer.WritePropertyName("detectorDefinition"u8);
-                writer.WriteObjectValue<DetectorDefinition>(DetectorDefinition, options);
+                writer.WriteObjectValue(DetectorDefinition, options);
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue<DiagnosticMetricSet>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
-                        writer.WriteObjectValue<AppServiceNameValuePair>(item0, options);
+                        writer.WriteObjectValue(item0, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DetectorMetaData))
             {
                 writer.WritePropertyName("detectorMetaData"u8);
-                writer.WriteObjectValue<DetectorMetadata>(DetectorMetaData, options);
+                writer.WriteObjectValue(DetectorMetaData, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AnalysisDetectorEvidences DeserializeAnalysisDetectorEvidences(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

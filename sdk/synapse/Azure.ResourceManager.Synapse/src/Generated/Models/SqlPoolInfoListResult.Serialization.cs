@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Synapse.Models
 {
     internal partial class SqlPoolInfoListResult : IUtf8JsonSerializable, IJsonModel<SqlPoolInfoListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlPoolInfoListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlPoolInfoListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SqlPoolInfoListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<SynapseSqlPoolData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SqlPoolInfoListResult DeserializeSqlPoolInfoListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

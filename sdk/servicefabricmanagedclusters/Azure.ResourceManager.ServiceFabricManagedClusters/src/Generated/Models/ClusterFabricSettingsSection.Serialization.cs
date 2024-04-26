@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     public partial class ClusterFabricSettingsSection : IUtf8JsonSerializable, IJsonModel<ClusterFabricSettingsSection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterFabricSettingsSection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterFabricSettingsSection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterFabricSettingsSection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartArray();
             foreach (var item in Parameters)
             {
-                writer.WriteObjectValue<ClusterFabricSettingsParameterDescription>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ClusterFabricSettingsSection DeserializeClusterFabricSettingsSection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

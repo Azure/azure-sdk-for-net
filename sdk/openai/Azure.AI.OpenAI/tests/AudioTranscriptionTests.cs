@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -90,5 +91,39 @@ public class AudioTranscriptionTests : OpenAITestBase
             Assert.That(firstSegment.End, Is.GreaterThan(firstSegment.Start));
             Assert.That(firstSegment.Tokens, Is.Not.Null.Or.Empty);
         }
+    }
+
+    [RecordedTest]
+    [TestCase(Service.Azure, AudioTimestampGranularity.Default)]
+    [TestCase(Service.Azure, AudioTimestampGranularity.Word)]
+    [TestCase(Service.Azure, AudioTimestampGranularity.Segment)]
+    [TestCase(Service.Azure, AudioTimestampGranularity.Word | AudioTimestampGranularity.Segment)]
+    [TestCase(Service.NonAzure, AudioTimestampGranularity.Default)]
+    [TestCase(Service.NonAzure, AudioTimestampGranularity.Word)]
+    [TestCase(Service.NonAzure, AudioTimestampGranularity.Segment)]
+    [TestCase(Service.NonAzure, AudioTimestampGranularity.Word | AudioTimestampGranularity.Segment)]
+    public async Task TimestampGranularitiesWork(Service serviceTarget, AudioTimestampGranularity granularityFlags)
+    {
+        OpenAIClient client = GetTestClient(serviceTarget);
+        string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
+        using Stream audioFileStream = GetTestAudioInputStream();
+        AudioTranscriptionOptions options = new()
+        {
+            DeploymentName = deploymentOrModelName,
+            AudioData = BinaryData.FromStream(audioFileStream),
+            ResponseFormat = AudioTranscriptionFormat.Verbose,
+            Filename = "test.wav",
+            TimestampGranularityFlags = granularityFlags,
+        };
+        Response<AudioTranscription> response = await client.GetAudioTranscriptionAsync(options);
+        Assert.That(response.Value?.Text, Is.Not.Null.Or.Empty);
+        Assert.That(
+            response.Value.Words?.Count > 0,
+            Is.EqualTo(granularityFlags.HasFlag(AudioTimestampGranularity.Word)),
+            "Word-level information should appear (and only appear) when requested");
+        Assert.That(
+            response.Value.Segments?.Count > 0,
+            Is.EqualTo(granularityFlags.HasFlag(AudioTimestampGranularity.Segment) || granularityFlags == AudioTimestampGranularity.Default),
+            "Segment-level information should appear (and only appear) when requested or when no flags were provided");
     }
 }

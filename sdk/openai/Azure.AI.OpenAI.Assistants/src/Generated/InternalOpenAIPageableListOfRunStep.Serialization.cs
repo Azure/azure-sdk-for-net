@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI.Assistants
 {
     internal partial class InternalOpenAIPageableListOfRunStep : IUtf8JsonSerializable, IJsonModel<InternalOpenAIPageableListOfRunStep>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalOpenAIPageableListOfRunStep>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalOpenAIPageableListOfRunStep>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InternalOpenAIPageableListOfRunStep>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue<RunStep>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("first_id"u8);
@@ -73,7 +73,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         internal static InternalOpenAIPageableListOfRunStep DeserializeInternalOpenAIPageableListOfRunStep(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -172,11 +172,11 @@ namespace Azure.AI.OpenAI.Assistants
             return DeserializeInternalOpenAIPageableListOfRunStep(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<InternalOpenAIPageableListOfRunStep>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

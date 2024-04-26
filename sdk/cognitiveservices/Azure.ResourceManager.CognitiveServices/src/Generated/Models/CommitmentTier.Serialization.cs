@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     public partial class CommitmentTier : IUtf8JsonSerializable, IJsonModel<CommitmentTier>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentTier>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentTier>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CommitmentTier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
-                writer.WriteObjectValue<CommitmentQuota>(Quota, options);
+                writer.WriteObjectValue(Quota, options);
             }
             if (Optional.IsDefined(Cost))
             {
                 writer.WritePropertyName("cost"u8);
-                writer.WriteObjectValue<CommitmentCost>(Cost, options);
+                writer.WriteObjectValue(Cost, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CommitmentTier DeserializeCommitmentTier(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class StaticSiteCustomDomainOverviewData : IUtf8JsonSerializable, IJsonModel<StaticSiteCustomDomainOverviewData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSiteCustomDomainOverviewData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSiteCustomDomainOverviewData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StaticSiteCustomDomainOverviewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static StaticSiteCustomDomainOverviewData DeserializeStaticSiteCustomDomainOverviewData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

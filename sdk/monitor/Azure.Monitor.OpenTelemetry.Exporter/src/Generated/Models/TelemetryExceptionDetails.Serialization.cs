@@ -48,18 +48,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WriteStartArray();
                 foreach (var item in ParsedStack)
                 {
-                    writer.WriteObjectValue<StackFrame>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TelemetryExceptionDetails>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

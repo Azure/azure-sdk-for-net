@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.TrafficManager
 {
     public partial class TrafficManagerGeographicHierarchyData : IUtf8JsonSerializable, IJsonModel<TrafficManagerGeographicHierarchyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerGeographicHierarchyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerGeographicHierarchyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrafficManagerGeographicHierarchyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(GeographicHierarchy))
             {
                 writer.WritePropertyName("geographicHierarchy"u8);
-                writer.WriteObjectValue<TrafficManagerRegion>(GeographicHierarchy, options);
+                writer.WriteObjectValue(GeographicHierarchy, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.TrafficManager
 
         internal static TrafficManagerGeographicHierarchyData DeserializeTrafficManagerGeographicHierarchyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

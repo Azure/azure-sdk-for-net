@@ -658,8 +658,16 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             Assert.IsTrue(await DestinationExistsAsync(destinationClient));
             await testEventsRaised.AssertSingleFailedCheck(1);
-            Assert.NotNull(testEventsRaised.FailedEvents.First().Exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
-            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
+            var testException = testEventsRaised.FailedEvents.First().Exception;
+            Assert.NotNull(testException, "Excepted failure: Overwrite failure was supposed to be raised during the test");
+            if (testException is RequestFailedException rfe)
+            {
+                Assert.That(rfe.ErrorCode, Does.Contain(_expectedOverwriteExceptionMessage));
+            }
+            else
+            {
+                Assert.IsTrue(testException.Message.Contains(_expectedOverwriteExceptionMessage));
+            }
             // Verify Copy - That we skipped over and didn't reupload something new.
             using Stream destinationStream = await DestinationOpenReadAsync(destinationClient);
             Assert.AreEqual(originalStream, destinationStream);
@@ -772,7 +780,15 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
             Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             await testEventsRaised.AssertSingleFailedCheck(1);
-            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
+            var testException = testEventsRaised.FailedEvents.First().Exception;
+            if (testException is RequestFailedException rfe)
+            {
+                Assert.That(rfe.ErrorCode, Does.Contain(_expectedOverwriteExceptionMessage));
+            }
+            else
+            {
+                Assert.IsTrue(testException.Message.Contains(_expectedOverwriteExceptionMessage));
+            }
         }
 
         [RecordedTest]
@@ -877,7 +893,15 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
             Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
-            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
+            var testException = testEventsRaised.FailedEvents.First().Exception;
+            if (testException is RequestFailedException rfe)
+            {
+                Assert.That(rfe.ErrorCode, Does.Contain(_expectedOverwriteExceptionMessage));
+            }
+            else
+            {
+                Assert.IsTrue(testException.Message.Contains(_expectedOverwriteExceptionMessage));
+            }
         }
 
         [RecordedTest]

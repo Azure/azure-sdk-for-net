@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 {
     public partial class EmergingIssueActiveEventType : IUtf8JsonSerializable, IJsonModel<EmergingIssueActiveEventType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmergingIssueActiveEventType>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmergingIssueActiveEventType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EmergingIssueActiveEventType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in Impacts)
                 {
-                    writer.WriteObjectValue<EmergingIssueImpact>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         internal static EmergingIssueActiveEventType DeserializeEmergingIssueActiveEventType(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

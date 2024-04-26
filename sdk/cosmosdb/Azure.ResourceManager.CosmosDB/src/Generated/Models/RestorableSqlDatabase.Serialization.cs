@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class RestorableSqlDatabase : IUtf8JsonSerializable, IJsonModel<RestorableSqlDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorableSqlDatabase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorableSqlDatabase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RestorableSqlDatabase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue<ExtendedRestorableSqlDatabaseResourceInfo>(Resource, options);
+                writer.WriteObjectValue(Resource, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static RestorableSqlDatabase DeserializeRestorableSqlDatabase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

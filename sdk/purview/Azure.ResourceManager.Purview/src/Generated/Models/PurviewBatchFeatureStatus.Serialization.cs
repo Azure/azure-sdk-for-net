@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Purview.Models
 {
     public partial class PurviewBatchFeatureStatus : IUtf8JsonSerializable, IJsonModel<PurviewBatchFeatureStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewBatchFeatureStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewBatchFeatureStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PurviewBatchFeatureStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         internal static PurviewBatchFeatureStatus DeserializePurviewBatchFeatureStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

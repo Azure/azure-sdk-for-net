@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Automation.Models
 {
     public partial class SoftwareUpdateConfigurationSpecificProperties : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationSpecificProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationSpecificProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationSpecificProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SoftwareUpdateConfigurationSpecificProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Windows))
             {
                 writer.WritePropertyName("windows"u8);
-                writer.WriteObjectValue<WindowsUpdateConfigurationProperties>(Windows, options);
+                writer.WriteObjectValue(Windows, options);
             }
             if (Optional.IsDefined(Linux))
             {
                 writer.WritePropertyName("linux"u8);
-                writer.WriteObjectValue<LinuxUpdateConfigurationProperties>(Linux, options);
+                writer.WriteObjectValue(Linux, options);
             }
             if (Optional.IsDefined(Duration))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
-                writer.WriteObjectValue<SoftwareUpdateConfigurationTargetProperties>(Targets, options);
+                writer.WriteObjectValue(Targets, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static SoftwareUpdateConfigurationSpecificProperties DeserializeSoftwareUpdateConfigurationSpecificProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

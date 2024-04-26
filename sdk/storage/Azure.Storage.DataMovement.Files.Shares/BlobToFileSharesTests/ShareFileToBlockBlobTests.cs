@@ -99,7 +99,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 options = new BlockBlobStorageResourceOptions
                 {
-                    AccessTier = new(AccessTier.Cool),
+                    AccessTier = AccessTier.Cool,
                     ContentDisposition = new("attachment"),
                     ContentLanguage = new("en-US"),
                     CacheControl = new("no-cache")
@@ -109,7 +109,6 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 options = new BlockBlobStorageResourceOptions
                 {
-                    AccessTier = new(false),
                     ContentDisposition = new(false),
                     ContentLanguage = new(false),
                     CacheControl = new(false)
@@ -119,7 +118,6 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 options = new BlockBlobStorageResourceOptions
                 {
-                    AccessTier = new(true),
                     ContentDisposition = new(true),
                     ContentLanguage = new(true),
                     CacheControl = new(true)

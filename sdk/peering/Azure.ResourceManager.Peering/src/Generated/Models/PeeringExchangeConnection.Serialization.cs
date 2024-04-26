@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Peering.Models
 {
     public partial class PeeringExchangeConnection : IUtf8JsonSerializable, IJsonModel<PeeringExchangeConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringExchangeConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringExchangeConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PeeringExchangeConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(BgpSession))
             {
                 writer.WritePropertyName("bgpSession"u8);
-                writer.WriteObjectValue<PeeringBgpSession>(BgpSession, options);
+                writer.WriteObjectValue(BgpSession, options);
             }
             if (Optional.IsDefined(ConnectionIdentifier))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringExchangeConnection DeserializePeeringExchangeConnection(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     public partial class WebTestData : IUtf8JsonSerializable, IJsonModel<WebTestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebTestData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebTestData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebTestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue<WebTestGeolocation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("Configuration"u8);
-                writer.WriteObjectValue<WebTestPropertiesConfiguration>(Configuration, options);
+                writer.WriteObjectValue(Configuration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("Request"u8);
-                writer.WriteObjectValue<WebTestPropertiesRequest>(Request, options);
+                writer.WriteObjectValue(Request, options);
             }
             if (Optional.IsDefined(ValidationRules))
             {
                 writer.WritePropertyName("ValidationRules"u8);
-                writer.WriteObjectValue<WebTestPropertiesValidationRules>(ValidationRules, options);
+                writer.WriteObjectValue(ValidationRules, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         internal static WebTestData DeserializeWebTestData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

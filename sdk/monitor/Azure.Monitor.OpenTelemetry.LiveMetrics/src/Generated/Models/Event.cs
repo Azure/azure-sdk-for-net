@@ -9,13 +9,13 @@ using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> Event type document. </summary>
+    /// <summary> Event document type. </summary>
     internal partial class Event : DocumentIngress
     {
         /// <summary> Initializes a new instance of <see cref="Event"/>. </summary>
         public Event()
         {
-            DocumentType = DocumentIngressDocumentType.Event;
+            DocumentType = DocumentType.Event;
         }
 
         /// <summary> Initializes a new instance of <see cref="Event"/>. </summary>
@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="name"> Event name. </param>
-        internal Event(DocumentIngressDocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string name) : base(documentType, documentStreamIds, properties)
+        internal Event(DocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string name) : base(documentType, documentStreamIds, properties)
         {
             Name = name;
             DocumentType = documentType;

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 {
     internal partial class StandbyVirtualMachinePoolElasticityProfile : IUtf8JsonSerializable, IJsonModel<StandbyVirtualMachinePoolElasticityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachinePoolElasticityProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachinePoolElasticityProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StandbyVirtualMachinePoolElasticityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         internal static StandbyVirtualMachinePoolElasticityProfile DeserializeStandbyVirtualMachinePoolElasticityProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

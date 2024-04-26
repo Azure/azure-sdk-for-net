@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     public partial class ClusterSpecEntity : IUtf8JsonSerializable, IJsonModel<ClusterSpecEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterSpecEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterSpecEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ClusterSpecEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -69,22 +69,22 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Config))
             {
                 writer.WritePropertyName("config"u8);
-                writer.WriteObjectValue<ClusterConfigEntity>(Config, options);
+                writer.WriteObjectValue(Config, options);
             }
             if (Optional.IsDefined(Environment))
             {
                 writer.WritePropertyName("environment"u8);
-                writer.WriteObjectValue<ClusterEnvironmentEntity>(Environment, options);
+                writer.WriteObjectValue(Environment, options);
             }
             if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue<ClusterNetworkEntity>(Network, options);
+                writer.WriteObjectValue(Network, options);
             }
             if (Optional.IsDefined(Byok))
             {
                 writer.WritePropertyName("byok"u8);
-                writer.WriteObjectValue<ClusterByokEntity>(Byok, options);
+                writer.WriteObjectValue(Byok, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         internal static ClusterSpecEntity DeserializeClusterSpecEntity(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

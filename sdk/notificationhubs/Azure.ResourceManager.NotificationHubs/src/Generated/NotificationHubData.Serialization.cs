@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NotificationHubs
 {
     public partial class NotificationHubData : IUtf8JsonSerializable, IJsonModel<NotificationHubData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationHubData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NotificationHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NotificationHubs
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<NotificationHubSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -84,39 +84,39 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationRules)
                 {
-                    writer.WriteObjectValue<SharedAccessAuthorizationRuleProperties>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ApnsCredential))
             {
                 writer.WritePropertyName("apnsCredential"u8);
-                writer.WriteObjectValue<NotificationHubApnsCredential>(ApnsCredential, options);
+                writer.WriteObjectValue(ApnsCredential, options);
             }
             if (Optional.IsDefined(WnsCredential))
             {
                 writer.WritePropertyName("wnsCredential"u8);
-                writer.WriteObjectValue<NotificationHubWnsCredential>(WnsCredential, options);
+                writer.WriteObjectValue(WnsCredential, options);
             }
             if (Optional.IsDefined(GcmCredential))
             {
                 writer.WritePropertyName("gcmCredential"u8);
-                writer.WriteObjectValue<NotificationHubGcmCredential>(GcmCredential, options);
+                writer.WriteObjectValue(GcmCredential, options);
             }
             if (Optional.IsDefined(MpnsCredential))
             {
                 writer.WritePropertyName("mpnsCredential"u8);
-                writer.WriteObjectValue<NotificationHubMpnsCredential>(MpnsCredential, options);
+                writer.WriteObjectValue(MpnsCredential, options);
             }
             if (Optional.IsDefined(AdmCredential))
             {
                 writer.WritePropertyName("admCredential"u8);
-                writer.WriteObjectValue<NotificationHubAdmCredential>(AdmCredential, options);
+                writer.WriteObjectValue(AdmCredential, options);
             }
             if (Optional.IsDefined(BaiduCredential))
             {
                 writer.WritePropertyName("baiduCredential"u8);
-                writer.WriteObjectValue<NotificationHubBaiduCredential>(BaiduCredential, options);
+                writer.WriteObjectValue(BaiduCredential, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NotificationHubs
 
         internal static NotificationHubData DeserializeNotificationHubData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

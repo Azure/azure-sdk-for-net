@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ScVmm
 {
     public partial class ScVmmGuestAgentData : IUtf8JsonSerializable, IJsonModel<ScVmmGuestAgentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmGuestAgentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmGuestAgentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScVmmGuestAgentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.ScVmm
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue<ScVmmGuestCredential>(Credentials, options);
+                writer.WriteObjectValue(Credentials, options);
             }
             if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
-                writer.WriteObjectValue<ScVmmHttpProxyConfiguration>(HttpProxyConfig, options);
+                writer.WriteObjectValue(HttpProxyConfig, options);
             }
             if (Optional.IsDefined(ProvisioningAction))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ScVmm
 
         internal static ScVmmGuestAgentData DeserializeScVmmGuestAgentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 {
     public partial class FirewallRuleForDataLakeStoreAccountUpdateContent : IUtf8JsonSerializable, IJsonModel<FirewallRuleForDataLakeStoreAccountUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallRuleForDataLakeStoreAccountUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallRuleForDataLakeStoreAccountUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FirewallRuleForDataLakeStoreAccountUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         internal static FirewallRuleForDataLakeStoreAccountUpdateContent DeserializeFirewallRuleForDataLakeStoreAccountUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

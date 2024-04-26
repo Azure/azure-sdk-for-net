@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxOrderPreferences : IUtf8JsonSerializable, IJsonModel<DataBoxOrderPreferences>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxOrderPreferences>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxOrderPreferences>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxOrderPreferences>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue<TransportPreferences>(TransportPreferences, options);
+                writer.WriteObjectValue(TransportPreferences, options);
             }
             if (Optional.IsDefined(ReverseTransportPreferences))
             {
                 writer.WritePropertyName("reverseTransportPreferences"u8);
-                writer.WriteObjectValue<TransportPreferences>(ReverseTransportPreferences, options);
+                writer.WriteObjectValue(ReverseTransportPreferences, options);
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
-                writer.WriteObjectValue<DataBoxEncryptionPreferences>(EncryptionPreferences, options);
+                writer.WriteObjectValue(EncryptionPreferences, options);
             }
             if (Optional.IsCollectionDefined(StorageAccountAccessTierPreferences))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxOrderPreferences DeserializeDataBoxOrderPreferences(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

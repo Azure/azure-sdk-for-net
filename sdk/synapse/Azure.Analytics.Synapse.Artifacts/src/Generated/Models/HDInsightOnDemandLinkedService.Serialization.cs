@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
+                writer.WriteObjectValue(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
+                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("version"u8);
             writer.WriteObjectValue<object>(Version);
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
+            writer.WriteObjectValue(LinkedServiceName);
             writer.WritePropertyName("hostSubscriptionId"u8);
             writer.WriteObjectValue<object>(HostSubscriptionId);
             if (Optional.IsDefined(ServicePrincipalId))
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue<SecretBase>(ServicePrincipalKey);
+                writer.WriteObjectValue(ServicePrincipalKey);
             }
             writer.WritePropertyName("tenant"u8);
             writer.WriteObjectValue<object>(Tenant);
@@ -96,7 +96,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ClusterPassword))
             {
                 writer.WritePropertyName("clusterPassword"u8);
-                writer.WriteObjectValue<SecretBase>(ClusterPassword);
+                writer.WriteObjectValue(ClusterPassword);
             }
             if (Optional.IsDefined(ClusterSshUserName))
             {
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ClusterSshPassword))
             {
                 writer.WritePropertyName("clusterSshPassword"u8);
-                writer.WriteObjectValue<SecretBase>(ClusterSshPassword);
+                writer.WriteObjectValue(ClusterSshPassword);
             }
             if (Optional.IsCollectionDefined(AdditionalLinkedServiceNames))
             {
@@ -114,14 +114,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalLinkedServiceNames)
                 {
-                    writer.WriteObjectValue<LinkedServiceReference>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(HcatalogLinkedServiceName))
             {
                 writer.WritePropertyName("hcatalogLinkedServiceName"u8);
-                writer.WriteObjectValue<LinkedServiceReference>(HcatalogLinkedServiceName);
+                writer.WriteObjectValue(HcatalogLinkedServiceName);
             }
             if (Optional.IsDefined(ClusterType))
             {
@@ -199,7 +199,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActions)
                 {
-                    writer.WriteObjectValue<ScriptAction>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -216,7 +216,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue<CredentialReference>(Credential);
+                writer.WriteObjectValue(Credential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -684,11 +684,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return DeserializeHDInsightOnDemandLinkedService(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<HDInsightOnDemandLinkedService>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -696,7 +696,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, HDInsightOnDemandLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<HDInsightOnDemandLinkedService>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override HDInsightOnDemandLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

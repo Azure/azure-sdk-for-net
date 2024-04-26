@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Logic.Models
 {
     internal partial class Correlation : IUtf8JsonSerializable, IJsonModel<Correlation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Correlation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Correlation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<Correlation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static Correlation DeserializeCorrelation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

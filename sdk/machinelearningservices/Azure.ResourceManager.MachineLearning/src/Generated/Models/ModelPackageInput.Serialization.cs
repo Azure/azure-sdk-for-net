@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class ModelPackageInput : IUtf8JsonSerializable, IJsonModel<ModelPackageInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelPackageInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelPackageInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ModelPackageInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("path"u8);
-            writer.WriteObjectValue<PackageInputPathBase>(Path, options);
+            writer.WriteObjectValue(Path, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ModelPackageInput DeserializeModelPackageInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

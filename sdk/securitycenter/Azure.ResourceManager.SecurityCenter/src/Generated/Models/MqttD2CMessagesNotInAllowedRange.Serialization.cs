@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     public partial class MqttD2CMessagesNotInAllowedRange : IUtf8JsonSerializable, IJsonModel<MqttD2CMessagesNotInAllowedRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MqttD2CMessagesNotInAllowedRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MqttD2CMessagesNotInAllowedRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MqttD2CMessagesNotInAllowedRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static MqttD2CMessagesNotInAllowedRange DeserializeMqttD2CMessagesNotInAllowedRange(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

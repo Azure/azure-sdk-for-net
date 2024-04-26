@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     internal partial class AdhocBasedBackupTaggingCriteria : IUtf8JsonSerializable, IJsonModel<AdhocBasedBackupTaggingCriteria>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdhocBasedBackupTaggingCriteria>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdhocBasedBackupTaggingCriteria>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AdhocBasedBackupTaggingCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(TagInfo))
             {
                 writer.WritePropertyName("tagInfo"u8);
-                writer.WriteObjectValue<DataProtectionBackupRetentionTag>(TagInfo, options);
+                writer.WriteObjectValue(TagInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static AdhocBasedBackupTaggingCriteria DeserializeAdhocBasedBackupTaggingCriteria(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Validator to ensure that a type value is enumerable and contains at least one item.</summary>
     [AttributeUsage(AttributeTargets.Property)]

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class MergeParameters : IUtf8JsonSerializable, IJsonModel<MergeParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MergeParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MergeParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MergeParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static MergeParameters DeserializeMergeParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

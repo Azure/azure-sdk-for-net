@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Kusto.Models
 {
     public partial class KustoResourceSkuCapabilities : IUtf8JsonSerializable, IJsonModel<KustoResourceSkuCapabilities>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoResourceSkuCapabilities>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoResourceSkuCapabilities>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoResourceSkuCapabilities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoResourceSkuCapabilities DeserializeKustoResourceSkuCapabilities(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

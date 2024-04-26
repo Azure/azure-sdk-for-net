@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkInterfaceIPConfigurationData : IUtf8JsonSerializable, IJsonModel<NetworkInterfaceIPConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfaceIPConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfaceIPConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkInterfaceIPConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkTaps)
                 {
-                    writer.WriteObjectValue<VirtualNetworkTapData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationGatewayBackendAddressPools)
                 {
-                    writer.WriteObjectValue<ApplicationGatewayBackendAddressPool>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerBackendAddressPools)
                 {
-                    writer.WriteObjectValue<BackendAddressPoolData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerInboundNatRules)
                 {
-                    writer.WriteObjectValue<InboundNatRuleData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,6 +99,18 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
+            }
+            if (Optional.IsDefined(PrivateIPAddressPrefixLength))
+            {
+                if (PrivateIPAddressPrefixLength != null)
+                {
+                    writer.WritePropertyName("privateIPAddressPrefixLength"u8);
+                    writer.WriteNumberValue(PrivateIPAddressPrefixLength.Value);
+                }
+                else
+                {
+                    writer.WriteNull("privateIPAddressPrefixLength");
+                }
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
@@ -113,7 +125,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue<SubnetData>(Subnet, options);
+                writer.WriteObjectValue(Subnet, options);
             }
             if (Optional.IsDefined(Primary))
             {
@@ -123,7 +135,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
-                writer.WriteObjectValue<PublicIPAddressData>(PublicIPAddress, options);
+                writer.WriteObjectValue(PublicIPAddress, options);
             }
             if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
             {
@@ -131,7 +143,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ApplicationSecurityGroups)
                 {
-                    writer.WriteObjectValue<ApplicationSecurityGroupData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -143,7 +155,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(PrivateLinkConnectionProperties))
             {
                 writer.WritePropertyName("privateLinkConnectionProperties"u8);
-                writer.WriteObjectValue<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>(PrivateLinkConnectionProperties, options);
+                writer.WriteObjectValue(PrivateLinkConnectionProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -178,7 +190,7 @@ namespace Azure.ResourceManager.Network
 
         internal static NetworkInterfaceIPConfigurationData DeserializeNetworkInterfaceIPConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -194,6 +206,7 @@ namespace Azure.ResourceManager.Network
             IList<BackendAddressPoolData> loadBalancerBackendAddressPools = default;
             IList<InboundNatRuleData> loadBalancerInboundNatRules = default;
             string privateIPAddress = default;
+            int? privateIPAddressPrefixLength = default;
             NetworkIPAllocationMethod? privateIPAllocationMethod = default;
             NetworkIPVersion? privateIPAddressVersion = default;
             SubnetData subnet = default;
@@ -317,6 +330,16 @@ namespace Azure.ResourceManager.Network
                             privateIPAddress = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("privateIPAddressPrefixLength"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                privateIPAddressPrefixLength = null;
+                                continue;
+                            }
+                            privateIPAddressPrefixLength = property0.Value.GetInt32();
+                            continue;
+                        }
                         if (property0.NameEquals("privateIPAllocationMethod"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -415,6 +438,7 @@ namespace Azure.ResourceManager.Network
                 loadBalancerBackendAddressPools ?? new ChangeTrackingList<BackendAddressPoolData>(),
                 loadBalancerInboundNatRules ?? new ChangeTrackingList<InboundNatRuleData>(),
                 privateIPAddress,
+                privateIPAddressPrefixLength,
                 privateIPAllocationMethod,
                 privateIPAddressVersion,
                 subnet,

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationConnectionData : IUtf8JsonSerializable, IJsonModel<AutomationConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutomationConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("connectionType"u8);
-                writer.WriteObjectValue<ConnectionTypeAssociationProperty>(ConnectionType, options);
+                writer.WriteObjectValue(ConnectionType, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(FieldDefinitionValues))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Automation
 
         internal static AutomationConnectionData DeserializeAutomationConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

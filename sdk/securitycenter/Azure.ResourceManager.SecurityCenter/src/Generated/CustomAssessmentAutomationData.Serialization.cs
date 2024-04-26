@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class CustomAssessmentAutomationData : IUtf8JsonSerializable, IJsonModel<CustomAssessmentAutomationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomAssessmentAutomationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomAssessmentAutomationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CustomAssessmentAutomationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static CustomAssessmentAutomationData DeserializeCustomAssessmentAutomationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

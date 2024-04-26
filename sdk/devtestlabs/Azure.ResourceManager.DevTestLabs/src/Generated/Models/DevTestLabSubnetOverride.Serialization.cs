@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public partial class DevTestLabSubnetOverride : IUtf8JsonSerializable, IJsonModel<DevTestLabSubnetOverride>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabSubnetOverride>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabSubnetOverride>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevTestLabSubnetOverride>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
-                writer.WriteObjectValue<SubnetSharedPublicIPAddressConfiguration>(SharedPublicIPAddressConfiguration, options);
+                writer.WriteObjectValue(SharedPublicIPAddressConfiguration, options);
             }
             if (Optional.IsDefined(VirtualNetworkPoolName))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabSubnetOverride DeserializeDevTestLabSubnetOverride(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

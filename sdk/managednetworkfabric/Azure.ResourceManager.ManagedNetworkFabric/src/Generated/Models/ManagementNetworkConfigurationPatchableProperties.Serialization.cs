@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class ManagementNetworkConfigurationPatchableProperties : IUtf8JsonSerializable, IJsonModel<ManagementNetworkConfigurationPatchableProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementNetworkConfigurationPatchableProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementNetworkConfigurationPatchableProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagementNetworkConfigurationPatchableProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(InfrastructureVpnConfiguration))
             {
                 writer.WritePropertyName("infrastructureVpnConfiguration"u8);
-                writer.WriteObjectValue<VpnConfigurationPatchableProperties>(InfrastructureVpnConfiguration, options);
+                writer.WriteObjectValue(InfrastructureVpnConfiguration, options);
             }
             if (Optional.IsDefined(WorkloadVpnConfiguration))
             {
                 writer.WritePropertyName("workloadVpnConfiguration"u8);
-                writer.WriteObjectValue<VpnConfigurationPatchableProperties>(WorkloadVpnConfiguration, options);
+                writer.WriteObjectValue(WorkloadVpnConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static ManagementNetworkConfigurationPatchableProperties DeserializeManagementNetworkConfigurationPatchableProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

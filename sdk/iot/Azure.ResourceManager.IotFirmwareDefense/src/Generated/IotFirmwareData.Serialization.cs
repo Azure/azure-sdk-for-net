@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 {
     public partial class IotFirmwareData : IUtf8JsonSerializable, IJsonModel<IotFirmwareData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotFirmwareData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotFirmwareData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<IotFirmwareData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 writer.WriteStartArray();
                 foreach (var item in StatusMessages)
                 {
-                    writer.WriteObjectValue<FirmwareAnalysisStatusMessage>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         internal static IotFirmwareData DeserializeIotFirmwareData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

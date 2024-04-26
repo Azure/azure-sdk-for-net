@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     public partial class BackupProtectionContainerData : IUtf8JsonSerializable, IJsonModel<BackupProtectionContainerData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupProtectionContainerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupProtectionContainerData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupProtectionContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<BackupGenericProtectionContainer>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(ETag))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         internal static BackupProtectionContainerData DeserializeBackupProtectionContainerData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

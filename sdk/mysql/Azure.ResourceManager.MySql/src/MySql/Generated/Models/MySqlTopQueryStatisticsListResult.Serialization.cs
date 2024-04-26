@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MySql.Models
 {
     internal partial class MySqlTopQueryStatisticsListResult : IUtf8JsonSerializable, IJsonModel<MySqlTopQueryStatisticsListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlTopQueryStatisticsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlTopQueryStatisticsListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlTopQueryStatisticsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<MySqlQueryStatisticData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlTopQueryStatisticsListResult DeserializeMySqlTopQueryStatisticsListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

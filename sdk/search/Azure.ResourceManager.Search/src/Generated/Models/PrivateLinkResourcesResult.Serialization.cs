@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Search.Models
 {
     internal partial class PrivateLinkResourcesResult : IUtf8JsonSerializable, IJsonModel<PrivateLinkResourcesResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkResourcesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkResourcesResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PrivateLinkResourcesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<SearchPrivateLinkResource>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static PrivateLinkResourcesResult DeserializePrivateLinkResourcesResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

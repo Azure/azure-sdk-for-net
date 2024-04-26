@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 {
     public partial class ManagedDiskIscsiLun : IUtf8JsonSerializable, IJsonModel<ManagedDiskIscsiLun>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskIscsiLun>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskIscsiLun>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedDiskIscsiLun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static ManagedDiskIscsiLun DeserializeManagedDiskIscsiLun(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

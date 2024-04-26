@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DataBoxEdgeStorageAccountCredentialData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeStorageAccountCredentialData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeStorageAccountCredentialData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeStorageAccountCredentialData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxEdgeStorageAccountCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
-                writer.WriteObjectValue<AsymmetricEncryptedSecret>(AccountKey, options);
+                writer.WriteObjectValue(AccountKey, options);
             }
             if (Optional.IsDefined(ConnectionString))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DataBoxEdgeStorageAccountCredentialData DeserializeDataBoxEdgeStorageAccountCredentialData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class ArcConfiguration : IUtf8JsonSerializable, IJsonModel<ArcConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArcConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(FrontEndServiceConfiguration))
             {
                 writer.WritePropertyName("frontEndServiceConfiguration"u8);
-                writer.WriteObjectValue<FrontEndConfiguration>(FrontEndServiceConfiguration, options);
+                writer.WriteObjectValue(FrontEndServiceConfiguration, options);
             }
             if (Optional.IsDefined(KubeConfig))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ArcConfiguration DeserializeArcConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

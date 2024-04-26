@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Grafana.Models
 {
     public partial class ManagedGrafanaPatchProperties : IUtf8JsonSerializable, IJsonModel<ManagedGrafanaPatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedGrafanaPatchProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedGrafanaPatchProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedGrafanaPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(GrafanaIntegrations))
             {
                 writer.WritePropertyName("grafanaIntegrations"u8);
-                writer.WriteObjectValue<GrafanaIntegrations>(GrafanaIntegrations, options);
+                writer.WriteObjectValue(GrafanaIntegrations, options);
             }
             if (Optional.IsDefined(EnterpriseConfigurations))
             {
                 writer.WritePropertyName("enterpriseConfigurations"u8);
-                writer.WriteObjectValue<EnterpriseConfigurations>(EnterpriseConfigurations, options);
+                writer.WriteObjectValue(EnterpriseConfigurations, options);
             }
             if (Optional.IsDefined(GrafanaConfigurations))
             {
                 writer.WritePropertyName("grafanaConfigurations"u8);
-                writer.WriteObjectValue<GrafanaConfigurations>(GrafanaConfigurations, options);
+                writer.WriteObjectValue(GrafanaConfigurations, options);
             }
             if (Optional.IsCollectionDefined(GrafanaPlugins))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 foreach (var item in GrafanaPlugins)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<GrafanaPlugin>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         internal static ManagedGrafanaPatchProperties DeserializeManagedGrafanaPatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

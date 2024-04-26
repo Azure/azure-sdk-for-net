@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class ManagedDiskData : IUtf8JsonSerializable, IJsonModel<ManagedDiskData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedDiskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<DiskSku>(Sku, options);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -122,17 +122,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue<DiskPurchasePlan>(PurchasePlan, options);
+                writer.WriteObjectValue(PurchasePlan, options);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue<SupportedCapabilities>(SupportedCapabilities, options);
+                writer.WriteObjectValue(SupportedCapabilities, options);
             }
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue<DiskCreationData>(CreationData, options);
+                writer.WriteObjectValue(CreationData, options);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue<EncryptionSettingsGroup>(EncryptionSettingsGroup, options);
+                writer.WriteObjectValue(EncryptionSettingsGroup, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<DiskEncryption>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (Optional.IsDefined(MaxShares))
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in ShareInfo)
                 {
-                    writer.WriteObjectValue<ShareInfoElement>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(PropertyUpdatesInProgress))
             {
                 writer.WritePropertyName("propertyUpdatesInProgress"u8);
-                writer.WriteObjectValue<PropertyUpdatesInProgress>(PropertyUpdatesInProgress, options);
+                writer.WriteObjectValue(PropertyUpdatesInProgress, options);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue<DiskSecurityProfile>(SecurityProfile, options);
+                writer.WriteObjectValue(SecurityProfile, options);
             }
             if (Optional.IsDefined(CompletionPercent))
             {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Compute
 
         internal static ManagedDiskData DeserializeManagedDiskData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

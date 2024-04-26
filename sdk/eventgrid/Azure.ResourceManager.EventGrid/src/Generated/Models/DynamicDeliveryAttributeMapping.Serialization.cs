@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     public partial class DynamicDeliveryAttributeMapping : IUtf8JsonSerializable, IJsonModel<DynamicDeliveryAttributeMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicDeliveryAttributeMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicDeliveryAttributeMapping>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DynamicDeliveryAttributeMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static DynamicDeliveryAttributeMapping DeserializeDynamicDeliveryAttributeMapping(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

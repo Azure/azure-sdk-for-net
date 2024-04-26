@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class MessageCountDetails : IUtf8JsonSerializable, IJsonModel<MessageCountDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageCountDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageCountDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MessageCountDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static MessageCountDetails DeserializeMessageCountDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

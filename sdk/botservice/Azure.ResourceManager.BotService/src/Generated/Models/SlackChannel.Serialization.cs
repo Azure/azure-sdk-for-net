@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.BotService.Models
 {
     public partial class SlackChannel : IUtf8JsonSerializable, IJsonModel<SlackChannel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SlackChannel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SlackChannel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SlackChannel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<SlackChannelProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static SlackChannel DeserializeSlackChannel(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

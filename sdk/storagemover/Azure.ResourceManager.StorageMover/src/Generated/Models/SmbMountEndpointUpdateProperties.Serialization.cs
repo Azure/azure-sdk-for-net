@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 {
     public partial class SmbMountEndpointUpdateProperties : IUtf8JsonSerializable, IJsonModel<SmbMountEndpointUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmbMountEndpointUpdateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmbMountEndpointUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SmbMountEndpointUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue<AzureKeyVaultSmbCredentials>(Credentials, options);
+                writer.WriteObjectValue(Credentials, options);
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         internal static SmbMountEndpointUpdateProperties DeserializeSmbMountEndpointUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

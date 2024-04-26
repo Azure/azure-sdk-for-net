@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeApiError : IUtf8JsonSerializable, IJsonModel<ComputeApiError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeApiError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeApiError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ComputeApiError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue<ComputeApiErrorBase>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue<InnerError>(Innererror, options);
+                writer.WriteObjectValue(Innererror, options);
             }
             if (Optional.IsDefined(Code))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ComputeApiError DeserializeComputeApiError(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

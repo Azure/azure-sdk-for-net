@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class AutoPauseDelayTimeRange : IUtf8JsonSerializable, IJsonModel<AutoPauseDelayTimeRange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoPauseDelayTimeRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoPauseDelayTimeRange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoPauseDelayTimeRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static AutoPauseDelayTimeRange DeserializeAutoPauseDelayTimeRange(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

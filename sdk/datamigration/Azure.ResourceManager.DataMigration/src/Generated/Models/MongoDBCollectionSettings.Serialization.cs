@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MongoDBCollectionSettings : IUtf8JsonSerializable, IJsonModel<MongoDBCollectionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCollectionSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCollectionSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MongoDBCollectionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
-                writer.WriteObjectValue<MongoDBShardKeySetting>(ShardKey, options);
+                writer.WriteObjectValue(ShardKey, options);
             }
             if (Optional.IsDefined(TargetRUs))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBCollectionSettings DeserializeMongoDBCollectionSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

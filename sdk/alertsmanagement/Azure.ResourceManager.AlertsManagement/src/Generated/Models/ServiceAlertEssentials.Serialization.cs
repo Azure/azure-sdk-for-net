@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 {
     public partial class ServiceAlertEssentials : IUtf8JsonSerializable, IJsonModel<ServiceAlertEssentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertEssentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertEssentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceAlertEssentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (Optional.IsDefined(ActionStatus))
             {
                 writer.WritePropertyName("actionStatus"u8);
-                writer.WriteObjectValue<ServiceAlertActionStatus>(ActionStatus, options);
+                writer.WriteObjectValue(ActionStatus, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertEssentials DeserializeServiceAlertEssentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

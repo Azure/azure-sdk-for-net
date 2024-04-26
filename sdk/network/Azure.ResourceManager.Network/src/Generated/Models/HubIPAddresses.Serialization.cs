@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class HubIPAddresses : IUtf8JsonSerializable, IJsonModel<HubIPAddresses>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HubIPAddresses>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HubIPAddresses>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HubIPAddresses>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PublicIPs))
             {
                 writer.WritePropertyName("publicIPs"u8);
-                writer.WriteObjectValue<HubPublicIPAddresses>(PublicIPs, options);
+                writer.WriteObjectValue(PublicIPs, options);
             }
             if (Optional.IsDefined(PrivateIPAddress))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static HubIPAddresses DeserializeHubIPAddresses(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

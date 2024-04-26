@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventHubs
 {
     public partial class EventHubData : IUtf8JsonSerializable, IJsonModel<EventHubData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(CaptureDescription))
             {
                 writer.WritePropertyName("captureDescription"u8);
-                writer.WriteObjectValue<CaptureDescription>(CaptureDescription, options);
+                writer.WriteObjectValue(CaptureDescription, options);
             }
             if (Optional.IsDefined(RetentionDescription))
             {
                 writer.WritePropertyName("retentionDescription"u8);
-                writer.WriteObjectValue<RetentionDescription>(RetentionDescription, options);
+                writer.WriteObjectValue(RetentionDescription, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static EventHubData DeserializeEventHubData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

@@ -78,6 +78,7 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
     try
     {
         $Response = Invoke-WebRequest -Method 'POST' -Uri $uri -Body $multipartContent -Headers $headers
+        Write-Host "API review: $($Response.Content)"
         $StatusCode = $Response.StatusCode
     }
     catch
@@ -114,6 +115,7 @@ function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $review
     try
     {
         $Response = Invoke-WebRequest -Method 'GET' -Uri $uri -Headers $headers
+        Write-Host "API review: $($Response.Content)"
         $StatusCode = $Response.StatusCode
     }
     catch

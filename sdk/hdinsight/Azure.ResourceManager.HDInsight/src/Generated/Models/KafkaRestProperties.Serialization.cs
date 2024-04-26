@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 {
     public partial class KafkaRestProperties : IUtf8JsonSerializable, IJsonModel<KafkaRestProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KafkaRestProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KafkaRestProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KafkaRestProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(ClientGroupInfo))
             {
                 writer.WritePropertyName("clientGroupInfo"u8);
-                writer.WriteObjectValue<ClientGroupInfo>(ClientGroupInfo, options);
+                writer.WriteObjectValue(ClientGroupInfo, options);
             }
             if (Optional.IsCollectionDefined(ConfigurationOverride))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static KafkaRestProperties DeserializeKafkaRestProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

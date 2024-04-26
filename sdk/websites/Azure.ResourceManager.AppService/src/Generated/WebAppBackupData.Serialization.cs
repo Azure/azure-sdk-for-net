@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WebAppBackupData : IUtf8JsonSerializable, IJsonModel<WebAppBackupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppBackupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppBackupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebAppBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Databases)
                 {
-                    writer.WriteObjectValue<AppServiceDatabaseBackupSetting>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static WebAppBackupData DeserializeWebAppBackupData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

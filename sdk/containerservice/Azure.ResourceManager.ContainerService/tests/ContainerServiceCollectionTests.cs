@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerService.Tests
 {
+    [LiveOnly(Reason = "Tests rely on ClientId which cannot be stored in recordings.")]
     public class ContainerServiceCollectionTests : ContainerServiceManagementTestBase
     {
         public ContainerServiceCollectionTests(bool isAsync)

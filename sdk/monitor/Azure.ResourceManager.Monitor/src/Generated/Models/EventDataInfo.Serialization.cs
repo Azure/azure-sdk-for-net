@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     public partial class EventDataInfo : IUtf8JsonSerializable, IJsonModel<EventDataInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventDataInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventDataInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventDataInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (options.Format != "W" && Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
-                writer.WriteObjectValue<SenderAuthorization>(Authorization, options);
+                writer.WriteObjectValue(Authorization, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Claims))
             {
@@ -70,17 +70,17 @@ namespace Azure.ResourceManager.Monitor.Models
             if (options.Format != "W" && Optional.IsDefined(EventName))
             {
                 writer.WritePropertyName("eventName"u8);
-                writer.WriteObjectValue<MonitorLocalizableString>(EventName, options);
+                writer.WriteObjectValue(EventName, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteObjectValue<MonitorLocalizableString>(Category, options);
+                writer.WriteObjectValue(Category, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HttpRequest))
             {
                 writer.WritePropertyName("httpRequest"u8);
-                writer.WriteObjectValue<EventDataHttpRequestInfo>(HttpRequest, options);
+                writer.WriteObjectValue(HttpRequest, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Level))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceProviderName))
             {
                 writer.WritePropertyName("resourceProviderName"u8);
-                writer.WriteObjectValue<MonitorLocalizableString>(ResourceProviderName, options);
+                writer.WriteObjectValue(ResourceProviderName, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteObjectValue<MonitorLocalizableString>(ResourceType, options);
+                writer.WriteObjectValue(ResourceType, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OperationId))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (options.Format != "W" && Optional.IsDefined(OperationName))
             {
                 writer.WritePropertyName("operationName"u8);
-                writer.WriteObjectValue<MonitorLocalizableString>(OperationName, options);
+                writer.WriteObjectValue(OperationName, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Properties))
             {
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.Monitor.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<MonitorLocalizableString>(Status, options);
+                writer.WriteObjectValue(Status, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SubStatus))
             {
                 writer.WritePropertyName("subStatus"u8);
-                writer.WriteObjectValue<MonitorLocalizableString>(SubStatus, options);
+                writer.WriteObjectValue(SubStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static EventDataInfo DeserializeEventDataInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -411,11 +411,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("tenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tenantId = property.Value.GetGuid();
+                    DeserializeTenantIdValue(property, ref tenantId);
                     continue;
                 }
                 if (options.Format != "W")

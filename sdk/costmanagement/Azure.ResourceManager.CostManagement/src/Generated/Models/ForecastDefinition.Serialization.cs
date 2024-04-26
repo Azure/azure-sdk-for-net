@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     public partial class ForecastDefinition : IUtf8JsonSerializable, IJsonModel<ForecastDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForecastDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ForecastDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue<ForecastTimePeriod>(TimePeriod, options);
+                writer.WriteObjectValue(TimePeriod, options);
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue<ForecastDataset>(Dataset, options);
+            writer.WriteObjectValue(Dataset, options);
             if (Optional.IsDefined(IncludeActualCost))
             {
                 writer.WritePropertyName("includeActualCost"u8);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         internal static ForecastDefinition DeserializeForecastDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

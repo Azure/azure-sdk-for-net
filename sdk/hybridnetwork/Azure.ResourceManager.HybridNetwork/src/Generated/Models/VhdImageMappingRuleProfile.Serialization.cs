@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     internal partial class VhdImageMappingRuleProfile : IUtf8JsonSerializable, IJsonModel<VhdImageMappingRuleProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VhdImageMappingRuleProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VhdImageMappingRuleProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VhdImageMappingRuleProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         internal static VhdImageMappingRuleProfile DeserializeVhdImageMappingRuleProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
