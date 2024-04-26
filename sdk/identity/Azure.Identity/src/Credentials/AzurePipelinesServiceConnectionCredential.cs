@@ -12,7 +12,7 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Credential which authenticates using an Azure DevOps service connection.
+    /// Credential which authenticates using an Azure Pipelines service connection.
     /// </summary>
     public class AzurePipelinesServiceConnectionCredential : TokenCredential
     {
