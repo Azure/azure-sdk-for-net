@@ -1,6 +1,10 @@
 # Microsoft Azure Astronomer.Astro management client library for .NET
 
-**[Describe the service briefly first.]**
+Azure Native ISV Services enable you to easily provision, manage, and tightly integrate independent software vendor (ISV) software and services on Azure. This service is developed and managed together by Microsoft and Astronomer.
+
+You can find Apache Airflow on Astro – An Azure Native ISV Service in the Azure portal or get it on Azure Marketplace.
+
+This offering allows you to manage your Astro resource as an integrated native service. You can easily run and manage as many Airflow deployments as you need and get started seamlessly through Azure portal.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
