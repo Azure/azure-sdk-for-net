@@ -72,7 +72,8 @@ namespace Azure.Compute.Batch.Tests.Integration
             {
                 // create a pool to verify we have something to query for
                 BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(0);
-                var poolExist = await client.PoolExistsAsync(pool.Id);
+                bool poolExist = await client.PoolExistsAsync(poolID);
+
                 var poolDoesntExist = await client.PoolExistsAsync("fakepool");
 
                 // verify exists

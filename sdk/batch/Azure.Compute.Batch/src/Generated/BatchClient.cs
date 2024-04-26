@@ -3308,8 +3308,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='JobScheduleExistsAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual async Task<Response> JobScheduleExistsAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual async Task<Response> JobScheduleExistsAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
@@ -3351,8 +3350,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='JobScheduleExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
-        public virtual Response JobScheduleExists(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
+        internal virtual Response JobScheduleExists(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 

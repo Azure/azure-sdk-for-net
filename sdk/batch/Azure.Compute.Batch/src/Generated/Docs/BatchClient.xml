@@ -1341,52 +1341,6 @@ Response response = client.DeletePool("<poolId>", timeOutInSeconds: 1234, ocpdat
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="PoolExistsAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call PoolExistsAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.PoolExistsAsync("<poolId>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call PoolExistsAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.PoolExistsAsync("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: (RequestConditions)null);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="PoolExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call PoolExists.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.PoolExists("<poolId>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call PoolExists with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.PoolExists("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: (RequestConditions)null);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
     <member name="GetPoolAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetPoolAsync.
@@ -7781,52 +7735,6 @@ Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("running").To
 Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("completed").ToString());
 Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("succeeded").ToString());
 Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("failed").ToString());
-]]></code></example>
-    </member>
-    <member name="JobScheduleExistsAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call JobScheduleExistsAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.JobScheduleExistsAsync("<jobScheduleId>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call JobScheduleExistsAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = await client.JobScheduleExistsAsync("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="JobScheduleExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
-      <example>
-This sample shows how to call JobScheduleExists.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.JobScheduleExists("<jobScheduleId>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call JobScheduleExists with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-BatchClient client = new BatchClient(endpoint, credential);
-
-Response response = client.JobScheduleExists("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
-Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
     <member name="DeleteJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">

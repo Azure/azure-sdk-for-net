@@ -1390,58 +1390,6 @@ MountOptions = "<mountOptions>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Batch_PoolExists_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response<bool> response = client.PoolExists("<poolId>");
-
-            Console.WriteLine(response);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Batch_PoolExists_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response<bool> response = await client.PoolExistsAsync("<poolId>");
-
-            Console.WriteLine(response);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Batch_PoolExists_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response<bool> response = client.PoolExists("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: (RequestConditions)null);
-
-            Console.WriteLine(response);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Batch_PoolExists_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response<bool> response = await client.PoolExistsAsync("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: (RequestConditions)null);
-
-            Console.WriteLine(response);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_Batch_GetPool_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -8014,58 +7962,6 @@ Version = "<version>",
             BatchClient client = new BatchClient(endpoint, credential);
 
             Response<BatchTaskCountsResult> response = await client.GetJobTaskCountsAsync("<jobId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Batch_JobScheduleExists_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.JobScheduleExists("<jobScheduleId>");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Batch_JobScheduleExists_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.JobScheduleExistsAsync("<jobScheduleId>");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Batch_JobScheduleExists_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = client.JobScheduleExists("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Batch_JobScheduleExists_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            BatchClient client = new BatchClient(endpoint, credential);
-
-            Response response = await client.JobScheduleExistsAsync("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
-
-            Console.WriteLine(response.Status);
         }
 
         [Test]
