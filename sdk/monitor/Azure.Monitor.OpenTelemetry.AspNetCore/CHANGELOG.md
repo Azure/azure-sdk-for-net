@@ -1,5 +1,17 @@
 # Release History
 
+## 1.1.1 (2024-04-26)
+
+### Other Changes
+
+* Update OpenTelemetry dependencies.
+  ([#43432](https://github.com/Azure/azure-sdk-for-net/pull/43432))
+  - OpenTelemetry 1.8.1
+  - OpenTelemetry.Extensions.Hosting 1.8.1
+  - OpenTelemetry.Instrumentation.AspNetCore 1.8.1
+  - OpenTelemetry.Instrumentation.Http 1.8.1
+  - This update is a response to [CVE-2024-32028](https://nvd.nist.gov/vuln/detail/CVE-2024-32028)
+
 ## 1.1.0 (2024-01-25)
 
 ### Other Changes
