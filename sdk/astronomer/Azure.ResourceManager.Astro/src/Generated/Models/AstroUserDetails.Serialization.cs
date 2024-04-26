@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Astro.Models
 {
     public partial class AstroUserDetails : IUtf8JsonSerializable, IJsonModel<AstroUserDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AstroUserDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AstroUserDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AstroUserDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Astro.Models
 
         internal static AstroUserDetails DeserializeAstroUserDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

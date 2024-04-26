@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Astro
 {
     public partial class AstroOrganizationData : IUtf8JsonSerializable, IJsonModel<AstroOrganizationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AstroOrganizationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AstroOrganizationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AstroOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Astro
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue<AstroOrganizationProperties>(Properties, options);
+                writer.WriteObjectValue(Properties, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Astro
 
         internal static AstroOrganizationData DeserializeAstroOrganizationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

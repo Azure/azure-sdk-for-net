@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Astro.Models
 {
     public partial class AstroOrganizationUpdateProperties : IUtf8JsonSerializable, IJsonModel<AstroOrganizationUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AstroOrganizationUpdateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AstroOrganizationUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AstroOrganizationUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Astro.Models
             if (Optional.IsDefined(User))
             {
                 writer.WritePropertyName("user"u8);
-                writer.WriteObjectValue<AstroUserUpdateDetails>(User, options);
+                writer.WriteObjectValue(User, options);
             }
             if (Optional.IsDefined(PartnerOrganizationProperties))
             {
                 writer.WritePropertyName("partnerOrganizationProperties"u8);
-                writer.WriteObjectValue<AstroPartnerOrganizationUpdateProperties>(PartnerOrganizationProperties, options);
+                writer.WriteObjectValue(PartnerOrganizationProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Astro.Models
 
         internal static AstroOrganizationUpdateProperties DeserializeAstroOrganizationUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

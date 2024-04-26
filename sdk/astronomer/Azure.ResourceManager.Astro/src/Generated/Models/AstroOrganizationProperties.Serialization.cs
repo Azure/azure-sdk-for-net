@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Astro.Models
 {
     public partial class AstroOrganizationProperties : IUtf8JsonSerializable, IJsonModel<AstroOrganizationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AstroOrganizationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AstroOrganizationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AstroOrganizationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Astro.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("marketplace"u8);
-            writer.WriteObjectValue<AstroMarketplaceDetails>(Marketplace, options);
+            writer.WriteObjectValue(Marketplace, options);
             writer.WritePropertyName("user"u8);
-            writer.WriteObjectValue<AstroUserDetails>(User, options);
+            writer.WriteObjectValue(User, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Astro.Models
             if (Optional.IsDefined(PartnerOrganizationProperties))
             {
                 writer.WritePropertyName("partnerOrganizationProperties"u8);
-                writer.WriteObjectValue<AstroPartnerOrganizationProperties>(PartnerOrganizationProperties, options);
+                writer.WriteObjectValue(PartnerOrganizationProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Astro.Models
 
         internal static AstroOrganizationProperties DeserializeAstroOrganizationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

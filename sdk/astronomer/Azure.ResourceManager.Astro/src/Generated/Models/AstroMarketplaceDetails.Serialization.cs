@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Astro.Models
 {
     public partial class AstroMarketplaceDetails : IUtf8JsonSerializable, IJsonModel<AstroMarketplaceDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AstroMarketplaceDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AstroMarketplaceDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AstroMarketplaceDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Astro.Models
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
             writer.WritePropertyName("offerDetails"u8);
-            writer.WriteObjectValue<AstroOfferDetails>(OfferDetails, options);
+            writer.WriteObjectValue(OfferDetails, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Astro.Models
 
         internal static AstroMarketplaceDetails DeserializeAstroMarketplaceDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
