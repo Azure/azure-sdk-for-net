@@ -117,17 +117,18 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Settings), out propertyOverride);
-            if (Optional.IsCollectionDefined(Settings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Settings.Any() || hasPropertyOverride)
+                builder.Append("  settings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Settings))
                 {
-                    builder.Append("  settings: ");
-                    if (hasPropertyOverride)
+                    if (Settings.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  settings: ");
                         builder.AppendLine("{");
                         foreach (var item in Settings)
                         {
