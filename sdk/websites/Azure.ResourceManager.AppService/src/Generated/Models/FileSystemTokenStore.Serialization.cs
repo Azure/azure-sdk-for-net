@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Directory), out propertyOverride);
-            if (Optional.IsDefined(Directory) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  directory: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Directory))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  directory: ");
                     if (Directory.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

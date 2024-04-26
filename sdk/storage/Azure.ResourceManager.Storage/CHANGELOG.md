@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Add serialization for ArmResource types to support long-running operation rehydration.
+
 ### Breaking Changes
 
 ### Bugs Fixed

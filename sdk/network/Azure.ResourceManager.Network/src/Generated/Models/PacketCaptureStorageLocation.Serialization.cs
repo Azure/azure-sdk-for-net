@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
+            if (Optional.IsDefined(LocalPath))
+            {
+                writer.WritePropertyName("localPath"u8);
+                writer.WriteStringValue(LocalPath);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,6 +87,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier storageId = default;
             string storagePath = default;
             string filePath = default;
+            string localPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,13 +111,18 @@ namespace Azure.ResourceManager.Network.Models
                     filePath = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("localPath"u8))
+                {
+                    localPath = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PacketCaptureStorageLocation(storageId, storagePath, filePath, serializedAdditionalRawData);
+            return new PacketCaptureStorageLocation(storageId, storagePath, filePath, localPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureStorageLocation>.Write(ModelReaderWriterOptions options)

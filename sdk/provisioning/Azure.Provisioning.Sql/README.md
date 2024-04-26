@@ -9,7 +9,7 @@ Azure.Provisioning.Sql simplifies declarative resource provisioning in .NET for 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.ApplicationInsights --prerelease
+dotnet add package Azure.Provisioning.Sql
 ```
 
 ### Prerequisites

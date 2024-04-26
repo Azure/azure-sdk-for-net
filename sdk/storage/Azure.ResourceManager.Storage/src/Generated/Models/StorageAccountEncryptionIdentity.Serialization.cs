@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionUserAssignedIdentity), out propertyOverride);
-            if (Optional.IsDefined(EncryptionUserAssignedIdentity) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  userAssignedIdentity: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionUserAssignedIdentity))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  userAssignedIdentity: ");
                     if (EncryptionUserAssignedIdentity.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EncryptionFederatedIdentityClientId), out propertyOverride);
-            if (Optional.IsDefined(EncryptionFederatedIdentityClientId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  federatedIdentityClientId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EncryptionFederatedIdentityClientId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  federatedIdentityClientId: ");
                     if (EncryptionFederatedIdentityClientId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
