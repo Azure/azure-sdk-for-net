@@ -211,6 +211,7 @@ Not all credentials require this configuration. Credentials which authenticate t
 |[`ClientAssertionCredential`][ref_ClientAssertionCredential]|Authenticates a service principal using a signed client assertion. |
 |[`ClientCertificateCredential`][ref_ClientCertificateCredential]|Authenticates a service principal using a certificate. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)
 |[`ClientSecretCredential`][ref_ClientSecretCredential]|Authenticates a service principal using a secret. | [Service principal authentication](https://learn.microsoft.com/entra/identity-platform/app-objects-and-service-principals)
+|`AzurePipelinesServiceConnectionCredential`|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/devops/pipelines/release/configure-workload-identity?view=azure-devops) on Azure Pipelines.| [example](https://github.com/Azure/azure-sdk-for-js/blob/main/sdk/identity/identity/samples/AzureIdentityExamples.md#authenticating-in-azure-pipelines-with-service-connections)
 
 ### Authenticate users
 

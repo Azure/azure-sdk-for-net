@@ -78,6 +78,26 @@ namespace Azure.Identity
         public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
+    public partial class AzurePipelinesServiceConnectionCredential : Azure.Core.TokenCredential
+    {
+        protected AzurePipelinesServiceConnectionCredential() { }
+        public AzurePipelinesServiceConnectionCredential(string tenantId, string clientId, string serviceConnectionId, Azure.Identity.AzurePipelinesServiceConnectionCredentialOptions options = null) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
+    public partial class AzurePipelinesServiceConnectionCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public AzurePipelinesServiceConnectionCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public string CollectionUri { get { throw null; } set { } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        public string HubName { get { throw null; } set { } }
+        public string JobId { get { throw null; } set { } }
+        public string PlanId { get { throw null; } set { } }
+        public string SystemAccessToken { get { throw null; } set { } }
+        public string TeamProjectId { get { throw null; } set { } }
+        public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
+    }
     public partial class AzurePowerShellCredential : Azure.Core.TokenCredential
     {
         public AzurePowerShellCredential() { }
