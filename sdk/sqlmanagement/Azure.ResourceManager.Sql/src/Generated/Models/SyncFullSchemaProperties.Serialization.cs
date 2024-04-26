@@ -131,17 +131,18 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tables), out propertyOverride);
-            if (Optional.IsCollectionDefined(Tables) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Tables.Any() || hasPropertyOverride)
+                builder.Append("  tables: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tables))
                 {
-                    builder.Append("  tables: ");
-                    if (hasPropertyOverride)
+                    if (Tables.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  tables: ");
                         builder.AppendLine("[");
                         foreach (var item in Tables)
                         {
@@ -153,15 +154,16 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdateOn), out propertyOverride);
-            if (Optional.IsDefined(LastUpdateOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  lastUpdateTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastUpdateOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  lastUpdateTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastUpdateOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

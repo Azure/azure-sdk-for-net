@@ -154,15 +154,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MasterKey), out propertyOverride);
-            if (Optional.IsDefined(MasterKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  masterKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MasterKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  masterKey: ");
                     if (MasterKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -176,17 +177,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(FunctionKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (FunctionKeys.Any() || hasPropertyOverride)
+                builder.Append("  functionKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FunctionKeys))
                 {
-                    builder.Append("  functionKeys: ");
-                    if (hasPropertyOverride)
+                    if (FunctionKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  functionKeys: ");
                         builder.AppendLine("{");
                         foreach (var item in FunctionKeys)
                         {
@@ -212,17 +214,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(SystemKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SystemKeys.Any() || hasPropertyOverride)
+                builder.Append("  systemKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SystemKeys))
                 {
-                    builder.Append("  systemKeys: ");
-                    if (hasPropertyOverride)
+                    if (SystemKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  systemKeys: ");
                         builder.AppendLine("{");
                         foreach (var item in SystemKeys)
                         {

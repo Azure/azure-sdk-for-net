@@ -131,29 +131,31 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DailyQuotaInGB), out propertyOverride);
-            if (Optional.IsDefined(DailyQuotaInGB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dailyQuotaGb: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DailyQuotaInGB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dailyQuotaGb: ");
                     builder.AppendLine($"'{DailyQuotaInGB.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotaNextResetTime), out propertyOverride);
-            if (Optional.IsDefined(QuotaNextResetTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  quotaNextResetTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QuotaNextResetTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  quotaNextResetTime: ");
                     if (QuotaNextResetTime.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -167,15 +169,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataIngestionStatus), out propertyOverride);
-            if (Optional.IsDefined(DataIngestionStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dataIngestionStatus: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataIngestionStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dataIngestionStatus: ");
                     builder.AppendLine($"'{DataIngestionStatus.Value.ToString()}'");
                 }
             }

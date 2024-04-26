@@ -113,26 +113,28 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterCreationGreaterThan), out propertyOverride);
-            builder.Append("  daysAfterCreationGreaterThan: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  daysAfterCreationGreaterThan: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  daysAfterCreationGreaterThan: ");
                 builder.AppendLine($"'{DaysAfterCreationGreaterThan.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterLastTierChangeGreaterThan), out propertyOverride);
-            if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  daysAfterLastTierChangeGreaterThan: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  daysAfterLastTierChangeGreaterThan: ");
                     builder.AppendLine($"'{DaysAfterLastTierChangeGreaterThan.Value.ToString()}'");
                 }
             }

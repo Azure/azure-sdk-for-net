@@ -158,32 +158,34 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHealthy), out propertyOverride);
-            if (Optional.IsDefined(IsHealthy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  healthy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsHealthy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  healthy: ");
                     var boolValue = IsHealthy.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RepairRunIds), out propertyOverride);
-            if (Optional.IsCollectionDefined(RepairRunIds) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (RepairRunIds.Any() || hasPropertyOverride)
+                builder.Append("  repairRunIds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RepairRunIds))
                 {
-                    builder.Append("  repairRunIds: ");
-                    if (hasPropertyOverride)
+                    if (RepairRunIds.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  repairRunIds: ");
                         builder.AppendLine("{");
                         foreach (var item in RepairRunIds)
                         {
@@ -209,17 +211,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RepairSchedules), out propertyOverride);
-            if (Optional.IsCollectionDefined(RepairSchedules) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (RepairSchedules.Any() || hasPropertyOverride)
+                builder.Append("  repairSchedules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RepairSchedules))
                 {
-                    builder.Append("  repairSchedules: ");
-                    if (hasPropertyOverride)
+                    if (RepairSchedules.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  repairSchedules: ");
                         builder.AppendLine("{");
                         foreach (var item in RepairSchedules)
                         {

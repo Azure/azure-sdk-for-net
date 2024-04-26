@@ -120,30 +120,32 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSupported), out propertyOverride);
-            if (Optional.IsDefined(IsSupported) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isSupported: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsSupported))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isSupported: ");
                     var boolValue = IsSupported.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefaultOff), out propertyOverride);
-            if (Optional.IsDefined(IsDefaultOff) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isDefaultOff: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDefaultOff))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isDefaultOff: ");
                     var boolValue = IsDefaultOff.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

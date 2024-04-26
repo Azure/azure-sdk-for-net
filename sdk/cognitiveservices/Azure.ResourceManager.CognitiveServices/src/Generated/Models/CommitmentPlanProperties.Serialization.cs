@@ -242,57 +242,61 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  provisioningState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  provisioningState: ");
                     builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommitmentPlanGuid), out propertyOverride);
-            if (Optional.IsDefined(CommitmentPlanGuid) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  commitmentPlanGuid: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommitmentPlanGuid))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  commitmentPlanGuid: ");
                     builder.AppendLine($"'{CommitmentPlanGuid.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingModel), out propertyOverride);
-            if (Optional.IsDefined(HostingModel) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  hostingModel: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HostingModel))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  hostingModel: ");
                     builder.AppendLine($"'{HostingModel.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PlanType), out propertyOverride);
-            if (Optional.IsDefined(PlanType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  planType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PlanType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  planType: ");
                     if (PlanType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -306,74 +310,79 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Current), out propertyOverride);
-            if (Optional.IsDefined(Current) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  current: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Current))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  current: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Current, options, 2, false, "  current: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoRenew), out propertyOverride);
-            if (Optional.IsDefined(AutoRenew) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  autoRenew: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoRenew))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  autoRenew: ");
                     var boolValue = AutoRenew.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Next), out propertyOverride);
-            if (Optional.IsDefined(Next) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  next: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Next))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  next: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Next, options, 2, false, "  next: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Last), out propertyOverride);
-            if (Optional.IsDefined(Last) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  last: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Last))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  last: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Last, options, 2, false, "  last: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningIssues), out propertyOverride);
-            if (Optional.IsCollectionDefined(ProvisioningIssues) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ProvisioningIssues.Any() || hasPropertyOverride)
+                builder.Append("  provisioningIssues: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ProvisioningIssues))
                 {
-                    builder.Append("  provisioningIssues: ");
-                    if (hasPropertyOverride)
+                    if (ProvisioningIssues.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  provisioningIssues: ");
                         builder.AppendLine("[");
                         foreach (var item in ProvisioningIssues)
                         {

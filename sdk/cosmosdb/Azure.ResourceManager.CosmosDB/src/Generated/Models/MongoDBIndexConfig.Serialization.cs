@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireAfterSeconds), out propertyOverride);
-            if (Optional.IsDefined(ExpireAfterSeconds) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  expireAfterSeconds: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpireAfterSeconds))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  expireAfterSeconds: ");
                     builder.AppendLine($"{ExpireAfterSeconds.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsUnique), out propertyOverride);
-            if (Optional.IsDefined(IsUnique) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  unique: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsUnique))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  unique: ");
                     var boolValue = IsUnique.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

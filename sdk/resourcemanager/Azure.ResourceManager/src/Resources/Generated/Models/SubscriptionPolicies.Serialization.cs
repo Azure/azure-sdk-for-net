@@ -127,15 +127,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocationPlacementId), out propertyOverride);
-            if (Optional.IsDefined(LocationPlacementId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  locationPlacementId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LocationPlacementId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  locationPlacementId: ");
                     if (LocationPlacementId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,15 +150,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotaId), out propertyOverride);
-            if (Optional.IsDefined(QuotaId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  quotaId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(QuotaId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  quotaId: ");
                     if (QuotaId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -171,15 +173,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SpendingLimit), out propertyOverride);
-            if (Optional.IsDefined(SpendingLimit) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  spendingLimit: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SpendingLimit))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  spendingLimit: ");
                     builder.AppendLine($"'{SpendingLimit.Value.ToSerialString()}'");
                 }
             }

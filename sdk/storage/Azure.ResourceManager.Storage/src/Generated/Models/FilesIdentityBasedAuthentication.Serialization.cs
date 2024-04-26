@@ -128,40 +128,43 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DirectoryServiceOptions), out propertyOverride);
-            builder.Append("  directoryServiceOptions: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  directoryServiceOptions: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  directoryServiceOptions: ");
                 builder.AppendLine($"'{DirectoryServiceOptions.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveDirectoryProperties), out propertyOverride);
-            if (Optional.IsDefined(ActiveDirectoryProperties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  activeDirectoryProperties: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActiveDirectoryProperties))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  activeDirectoryProperties: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ActiveDirectoryProperties, options, 2, false, "  activeDirectoryProperties: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultSharePermission), out propertyOverride);
-            if (Optional.IsDefined(DefaultSharePermission) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  defaultSharePermission: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultSharePermission))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  defaultSharePermission: ");
                     builder.AppendLine($"'{DefaultSharePermission.Value.ToString()}'");
                 }
             }

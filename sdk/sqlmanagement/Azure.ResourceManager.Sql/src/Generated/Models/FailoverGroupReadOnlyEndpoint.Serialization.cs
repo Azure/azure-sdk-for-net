@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverPolicy), out propertyOverride);
-            if (Optional.IsDefined(FailoverPolicy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  failoverPolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailoverPolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  failoverPolicy: ");
                     builder.AppendLine($"'{FailoverPolicy.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetServer), out propertyOverride);
-            if (Optional.IsDefined(TargetServer) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  targetServer: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetServer))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  targetServer: ");
                     builder.AppendLine($"'{TargetServer.ToString()}'");
                 }
             }

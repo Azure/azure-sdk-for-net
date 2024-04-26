@@ -141,17 +141,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedGroups), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedGroups) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedGroups.Any() || hasPropertyOverride)
+                builder.Append("  allowedGroups: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedGroups))
                 {
-                    builder.Append("  allowedGroups: ");
-                    if (hasPropertyOverride)
+                    if (AllowedGroups.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedGroups: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedGroups)
                         {
@@ -176,17 +177,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedClientApplications), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedClientApplications) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedClientApplications.Any() || hasPropertyOverride)
+                builder.Append("  allowedClientApplications: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedClientApplications))
                 {
-                    builder.Append("  allowedClientApplications: ");
-                    if (hasPropertyOverride)
+                    if (AllowedClientApplications.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  allowedClientApplications: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedClientApplications)
                         {

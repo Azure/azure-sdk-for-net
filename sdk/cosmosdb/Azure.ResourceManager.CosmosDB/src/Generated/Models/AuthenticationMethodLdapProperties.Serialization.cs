@@ -210,15 +210,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerHostname), out propertyOverride);
-            if (Optional.IsDefined(ServerHostname) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serverHostname: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerHostname))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serverHostname: ");
                     if (ServerHostname.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -232,29 +233,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerPort), out propertyOverride);
-            if (Optional.IsDefined(ServerPort) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serverPort: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerPort))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serverPort: ");
                     builder.AppendLine($"{ServerPort.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUserDistinguishedName), out propertyOverride);
-            if (Optional.IsDefined(ServiceUserDistinguishedName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serviceUserDistinguishedName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceUserDistinguishedName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serviceUserDistinguishedName: ");
                     if (ServiceUserDistinguishedName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -268,15 +271,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUserPassword), out propertyOverride);
-            if (Optional.IsDefined(ServiceUserPassword) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serviceUserPassword: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceUserPassword))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serviceUserPassword: ");
                     if (ServiceUserPassword.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -290,15 +294,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchBaseDistinguishedName), out propertyOverride);
-            if (Optional.IsDefined(SearchBaseDistinguishedName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  searchBaseDistinguishedName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SearchBaseDistinguishedName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  searchBaseDistinguishedName: ");
                     if (SearchBaseDistinguishedName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -312,15 +317,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchFilterTemplate), out propertyOverride);
-            if (Optional.IsDefined(SearchFilterTemplate) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  searchFilterTemplate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SearchFilterTemplate))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  searchFilterTemplate: ");
                     if (SearchFilterTemplate.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -334,17 +340,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerCertificates), out propertyOverride);
-            if (Optional.IsCollectionDefined(ServerCertificates) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ServerCertificates.Any() || hasPropertyOverride)
+                builder.Append("  serverCertificates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ServerCertificates))
                 {
-                    builder.Append("  serverCertificates: ");
-                    if (hasPropertyOverride)
+                    if (ServerCertificates.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  serverCertificates: ");
                         builder.AppendLine("[");
                         foreach (var item in ServerCertificates)
                         {
@@ -356,15 +363,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionTimeoutInMs), out propertyOverride);
-            if (Optional.IsDefined(ConnectionTimeoutInMs) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  connectionTimeoutInMs: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectionTimeoutInMs))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  connectionTimeoutInMs: ");
                     builder.AppendLine($"{ConnectionTimeoutInMs.Value}");
                 }
             }

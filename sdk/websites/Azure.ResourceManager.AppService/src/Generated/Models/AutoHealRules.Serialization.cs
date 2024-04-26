@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Triggers), out propertyOverride);
-            if (Optional.IsDefined(Triggers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  triggers: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Triggers))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  triggers: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Triggers, options, 2, false, "  triggers: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Actions), out propertyOverride);
-            if (Optional.IsDefined(Actions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  actions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Actions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  actions: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Actions, options, 2, false, "  actions: ");
                 }
             }

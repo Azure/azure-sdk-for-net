@@ -156,31 +156,33 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  kind: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  kind: ");
                     builder.AppendLine($"'{Kind.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(In), out propertyOverride);
-            if (Optional.IsCollectionDefined(In) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (In.Any() || hasPropertyOverride)
+                builder.Append("  in: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(In))
                 {
-                    builder.Append("  in: ");
-                    if (hasPropertyOverride)
+                    if (In.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  in: ");
                         builder.AppendLine("[");
                         foreach (var item in In)
                         {
@@ -205,17 +207,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotIn), out propertyOverride);
-            if (Optional.IsCollectionDefined(NotIn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (NotIn.Any() || hasPropertyOverride)
+                builder.Append("  notIn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotIn))
                 {
-                    builder.Append("  notIn: ");
-                    if (hasPropertyOverride)
+                    if (NotIn.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notIn: ");
                         builder.AppendLine("[");
                         foreach (var item in NotIn)
                         {

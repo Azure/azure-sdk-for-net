@@ -116,15 +116,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPMask), out propertyOverride);
-            if (Optional.IsDefined(IPMask) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ipMask: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPMask))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ipMask: ");
                     if (IPMask.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -138,15 +139,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Action), out propertyOverride);
-            if (Optional.IsDefined(Action) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  action: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Action))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  action: ");
                     builder.AppendLine($"'{Action.Value.ToString()}'");
                 }
             }

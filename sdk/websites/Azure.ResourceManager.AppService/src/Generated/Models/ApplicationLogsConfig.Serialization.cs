@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -133,74 +132,58 @@ namespace Azure.ResourceManager.AppService.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileSystem), out propertyOverride);
-            if (Optional.IsDefined(FileSystem) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("FileSystemLevel", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  fileSystem: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    level: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(FileSystem))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  fileSystem: ");
                     BicepSerializationHelpers.AppendChildObject(builder, FileSystem, options, 2, false, "  fileSystem: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureTableStorage), out propertyOverride);
-            if (Optional.IsDefined(AzureTableStorage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  azureTableStorage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureTableStorage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  azureTableStorage: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AzureTableStorage, options, 2, false, "  azureTableStorage: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureBlobStorage), out propertyOverride);
-            if (Optional.IsDefined(AzureBlobStorage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  azureBlobStorage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureBlobStorage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  azureBlobStorage: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AzureBlobStorage, options, 2, false, "  azureBlobStorage: ");
                 }
             }
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "FileSystemLevel":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("Level", item.Value);
-                        bicepOptions.PropertyOverrides.Add(FileSystem, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<ApplicationLogsConfig>.Write(ModelReaderWriterOptions options)

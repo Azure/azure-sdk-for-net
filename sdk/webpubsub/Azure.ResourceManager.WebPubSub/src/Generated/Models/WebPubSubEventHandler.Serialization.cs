@@ -150,15 +150,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UrlTemplate), out propertyOverride);
-            if (Optional.IsDefined(UrlTemplate) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  urlTemplate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UrlTemplate))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  urlTemplate: ");
                     if (UrlTemplate.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -172,15 +173,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserEventPattern), out propertyOverride);
-            if (Optional.IsDefined(UserEventPattern) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  userEventPattern: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserEventPattern))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  userEventPattern: ");
                     if (UserEventPattern.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -194,17 +196,18 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemEvents), out propertyOverride);
-            if (Optional.IsCollectionDefined(SystemEvents) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SystemEvents.Any() || hasPropertyOverride)
+                builder.Append("  systemEvents: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SystemEvents))
                 {
-                    builder.Append("  systemEvents: ");
-                    if (hasPropertyOverride)
+                    if (SystemEvents.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  systemEvents: ");
                         builder.AppendLine("[");
                         foreach (var item in SystemEvents)
                         {
@@ -229,15 +232,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Auth), out propertyOverride);
-            if (Optional.IsDefined(Auth) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  auth: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Auth))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  auth: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Auth, options, 2, false, "  auth: ");
                 }
             }

@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalPartitionStorageInfoCollectionValue), out propertyOverride);
-            if (Optional.IsCollectionDefined(PhysicalPartitionStorageInfoCollectionValue) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PhysicalPartitionStorageInfoCollectionValue.Any() || hasPropertyOverride)
+                builder.Append("  physicalPartitionStorageInfoCollection: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PhysicalPartitionStorageInfoCollectionValue))
                 {
-                    builder.Append("  physicalPartitionStorageInfoCollection: ");
-                    if (hasPropertyOverride)
+                    if (PhysicalPartitionStorageInfoCollectionValue.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  physicalPartitionStorageInfoCollection: ");
                         builder.AppendLine("[");
                         foreach (var item in PhysicalPartitionStorageInfoCollectionValue)
                         {

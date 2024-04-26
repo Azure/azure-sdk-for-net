@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Templates), out propertyOverride);
-            if (Optional.IsCollectionDefined(Templates) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Templates.Any() || hasPropertyOverride)
+                builder.Append("  templates: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Templates))
                 {
-                    builder.Append("  templates: ");
-                    if (hasPropertyOverride)
+                    if (Templates.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  templates: ");
                         builder.AppendLine("[");
                         foreach (var item in Templates)
                         {

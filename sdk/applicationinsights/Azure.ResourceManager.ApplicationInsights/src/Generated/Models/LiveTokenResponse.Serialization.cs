@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LiveToken), out propertyOverride);
-            if (Optional.IsDefined(LiveToken) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  liveToken: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LiveToken))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  liveToken: ");
                     if (LiveToken.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

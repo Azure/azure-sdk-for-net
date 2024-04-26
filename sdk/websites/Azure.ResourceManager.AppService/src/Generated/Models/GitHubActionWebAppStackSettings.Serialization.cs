@@ -116,30 +116,32 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSupported), out propertyOverride);
-            if (Optional.IsDefined(IsSupported) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isSupported: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsSupported))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isSupported: ");
                     var boolValue = IsSupported.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedVersion), out propertyOverride);
-            if (Optional.IsDefined(SupportedVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  supportedVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  supportedVersion: ");
                     if (SupportedVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -135,43 +135,46 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CleanupPolicy), out propertyOverride);
-            if (Optional.IsDefined(CleanupPolicy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  cleanupPolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CleanupPolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  cleanupPolicy: ");
                     builder.AppendLine($"'{CleanupPolicy.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionTimeInHours), out propertyOverride);
-            if (Optional.IsDefined(RetentionTimeInHours) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  retentionTimeInHours: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionTimeInHours))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  retentionTimeInHours: ");
                     builder.AppendLine($"'{RetentionTimeInHours.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TombstoneRetentionTimeInHours), out propertyOverride);
-            if (Optional.IsDefined(TombstoneRetentionTimeInHours) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  tombstoneRetentionTimeInHours: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TombstoneRetentionTimeInHours))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  tombstoneRetentionTimeInHours: ");
                     builder.AppendLine($"{TombstoneRetentionTimeInHours.Value}");
                 }
             }

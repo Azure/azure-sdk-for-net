@@ -285,15 +285,16 @@ namespace Azure.ResourceManager.Storage
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -307,29 +308,31 @@ namespace Azure.ResourceManager.Storage
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -337,17 +340,18 @@ namespace Azure.ResourceManager.Storage
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PermissionScopes), out propertyOverride);
-            if (Optional.IsCollectionDefined(PermissionScopes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PermissionScopes.Any() || hasPropertyOverride)
+                builder.Append("    permissionScopes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PermissionScopes))
                 {
-                    builder.Append("    permissionScopes: ");
-                    if (hasPropertyOverride)
+                    if (PermissionScopes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    permissionScopes: ");
                         builder.AppendLine("[");
                         foreach (var item in PermissionScopes)
                         {
@@ -359,15 +363,16 @@ namespace Azure.ResourceManager.Storage
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HomeDirectory), out propertyOverride);
-            if (Optional.IsDefined(HomeDirectory) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    homeDirectory: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HomeDirectory))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    homeDirectory: ");
                     if (HomeDirectory.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -381,17 +386,18 @@ namespace Azure.ResourceManager.Storage
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SshAuthorizedKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(SshAuthorizedKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SshAuthorizedKeys.Any() || hasPropertyOverride)
+                builder.Append("    sshAuthorizedKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SshAuthorizedKeys))
                 {
-                    builder.Append("    sshAuthorizedKeys: ");
-                    if (hasPropertyOverride)
+                    if (SshAuthorizedKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    sshAuthorizedKeys: ");
                         builder.AppendLine("[");
                         foreach (var item in SshAuthorizedKeys)
                         {
@@ -403,15 +409,16 @@ namespace Azure.ResourceManager.Storage
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sid), out propertyOverride);
-            if (Optional.IsDefined(Sid) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    sid: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Sid))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    sid: ");
                     if (Sid.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -425,45 +432,48 @@ namespace Azure.ResourceManager.Storage
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasSharedKey), out propertyOverride);
-            if (Optional.IsDefined(HasSharedKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    hasSharedKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HasSharedKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    hasSharedKey: ");
                     var boolValue = HasSharedKey.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasSshKey), out propertyOverride);
-            if (Optional.IsDefined(HasSshKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    hasSshKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HasSshKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    hasSshKey: ");
                     var boolValue = HasSshKey.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasSshPassword), out propertyOverride);
-            if (Optional.IsDefined(HasSshPassword) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    hasSshPassword: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HasSshPassword))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    hasSshPassword: ");
                     var boolValue = HasSshPassword.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UniqueKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(UniqueKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (UniqueKeys.Any() || hasPropertyOverride)
+                builder.Append("  uniqueKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(UniqueKeys))
                 {
-                    builder.Append("  uniqueKeys: ");
-                    if (hasPropertyOverride)
+                    if (UniqueKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  uniqueKeys: ");
                         builder.AppendLine("[");
                         foreach (var item in UniqueKeys)
                         {

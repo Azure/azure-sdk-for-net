@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataSource), out propertyOverride);
-            if (Optional.IsDefined(DataSource) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  dataSource: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataSource))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  dataSource: ");
                     BicepSerializationHelpers.AppendChildObject(builder, DataSource, options, 2, false, "  dataSource: ");
                 }
             }

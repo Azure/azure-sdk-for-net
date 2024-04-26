@@ -127,17 +127,18 @@ namespace Azure.ResourceManager.WebPubSub.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventHandlers), out propertyOverride);
-            if (Optional.IsCollectionDefined(EventHandlers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (EventHandlers.Any() || hasPropertyOverride)
+                builder.Append("  eventHandlers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EventHandlers))
                 {
-                    builder.Append("  eventHandlers: ");
-                    if (hasPropertyOverride)
+                    if (EventHandlers.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  eventHandlers: ");
                         builder.AppendLine("[");
                         foreach (var item in EventHandlers)
                         {
@@ -149,15 +150,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AnonymousConnectPolicy), out propertyOverride);
-            if (Optional.IsDefined(AnonymousConnectPolicy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  anonymousConnectPolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AnonymousConnectPolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  anonymousConnectPolicy: ");
                     if (AnonymousConnectPolicy.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

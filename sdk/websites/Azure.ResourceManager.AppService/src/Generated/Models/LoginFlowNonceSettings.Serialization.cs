@@ -116,30 +116,32 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidateNonce), out propertyOverride);
-            if (Optional.IsDefined(ValidateNonce) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  validateNonce: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ValidateNonce))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  validateNonce: ");
                     var boolValue = ValidateNonce.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NonceExpirationInterval), out propertyOverride);
-            if (Optional.IsDefined(NonceExpirationInterval) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nonceExpirationInterval: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NonceExpirationInterval))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nonceExpirationInterval: ");
                     if (NonceExpirationInterval.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

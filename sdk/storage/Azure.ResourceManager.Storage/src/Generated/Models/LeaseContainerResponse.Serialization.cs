@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseId), out propertyOverride);
-            if (Optional.IsDefined(LeaseId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  leaseId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LeaseId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  leaseId: ");
                     if (LeaseId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseTimeSeconds), out propertyOverride);
-            if (Optional.IsDefined(LeaseTimeSeconds) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  leaseTimeSeconds: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LeaseTimeSeconds))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  leaseTimeSeconds: ");
                     if (LeaseTimeSeconds.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

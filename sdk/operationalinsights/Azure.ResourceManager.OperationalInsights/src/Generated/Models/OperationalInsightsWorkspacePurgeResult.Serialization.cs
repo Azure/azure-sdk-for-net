@@ -98,15 +98,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationStringId), out propertyOverride);
-            if (Optional.IsDefined(OperationStringId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  operationId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationStringId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  operationId: ");
                     if (OperationStringId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

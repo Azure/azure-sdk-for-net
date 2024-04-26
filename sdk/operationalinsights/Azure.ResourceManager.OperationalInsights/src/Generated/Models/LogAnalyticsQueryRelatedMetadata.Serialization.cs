@@ -166,17 +166,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Categories), out propertyOverride);
-            if (Optional.IsCollectionDefined(Categories) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Categories.Any() || hasPropertyOverride)
+                builder.Append("  categories: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Categories))
                 {
-                    builder.Append("  categories: ");
-                    if (hasPropertyOverride)
+                    if (Categories.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  categories: ");
                         builder.AppendLine("[");
                         foreach (var item in Categories)
                         {
@@ -201,17 +202,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceTypes), out propertyOverride);
-            if (Optional.IsCollectionDefined(ResourceTypes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ResourceTypes.Any() || hasPropertyOverride)
+                builder.Append("  resourceTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ResourceTypes))
                 {
-                    builder.Append("  resourceTypes: ");
-                    if (hasPropertyOverride)
+                    if (ResourceTypes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  resourceTypes: ");
                         builder.AppendLine("[");
                         foreach (var item in ResourceTypes)
                         {
@@ -236,17 +238,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Solutions), out propertyOverride);
-            if (Optional.IsCollectionDefined(Solutions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Solutions.Any() || hasPropertyOverride)
+                builder.Append("  solutions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Solutions))
                 {
-                    builder.Append("  solutions: ");
-                    if (hasPropertyOverride)
+                    if (Solutions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  solutions: ");
                         builder.AppendLine("[");
                         foreach (var item in Solutions)
                         {

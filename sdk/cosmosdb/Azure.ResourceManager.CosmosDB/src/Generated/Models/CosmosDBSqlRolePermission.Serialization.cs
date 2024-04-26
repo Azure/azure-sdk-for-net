@@ -141,17 +141,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(DataActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (DataActions.Any() || hasPropertyOverride)
+                builder.Append("  dataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DataActions))
                 {
-                    builder.Append("  dataActions: ");
-                    if (hasPropertyOverride)
+                    if (DataActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  dataActions: ");
                         builder.AppendLine("[");
                         foreach (var item in DataActions)
                         {
@@ -176,17 +177,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotDataActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(NotDataActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (NotDataActions.Any() || hasPropertyOverride)
+                builder.Append("  notDataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotDataActions))
                 {
-                    builder.Append("  notDataActions: ");
-                    if (hasPropertyOverride)
+                    if (NotDataActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notDataActions: ");
                         builder.AppendLine("[");
                         foreach (var item in NotDataActions)
                         {

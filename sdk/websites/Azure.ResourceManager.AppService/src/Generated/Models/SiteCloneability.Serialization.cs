@@ -181,31 +181,33 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Result), out propertyOverride);
-            if (Optional.IsDefined(Result) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  result: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Result))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  result: ");
                     builder.AppendLine($"'{Result.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockingFeatures), out propertyOverride);
-            if (Optional.IsCollectionDefined(BlockingFeatures) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (BlockingFeatures.Any() || hasPropertyOverride)
+                builder.Append("  blockingFeatures: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BlockingFeatures))
                 {
-                    builder.Append("  blockingFeatures: ");
-                    if (hasPropertyOverride)
+                    if (BlockingFeatures.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  blockingFeatures: ");
                         builder.AppendLine("[");
                         foreach (var item in BlockingFeatures)
                         {
@@ -217,17 +219,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnsupportedFeatures), out propertyOverride);
-            if (Optional.IsCollectionDefined(UnsupportedFeatures) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (UnsupportedFeatures.Any() || hasPropertyOverride)
+                builder.Append("  unsupportedFeatures: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(UnsupportedFeatures))
                 {
-                    builder.Append("  unsupportedFeatures: ");
-                    if (hasPropertyOverride)
+                    if (UnsupportedFeatures.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  unsupportedFeatures: ");
                         builder.AppendLine("[");
                         foreach (var item in UnsupportedFeatures)
                         {
@@ -239,17 +242,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockingCharacteristics), out propertyOverride);
-            if (Optional.IsCollectionDefined(BlockingCharacteristics) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (BlockingCharacteristics.Any() || hasPropertyOverride)
+                builder.Append("  blockingCharacteristics: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BlockingCharacteristics))
                 {
-                    builder.Append("  blockingCharacteristics: ");
-                    if (hasPropertyOverride)
+                    if (BlockingCharacteristics.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  blockingCharacteristics: ");
                         builder.AppendLine("[");
                         foreach (var item in BlockingCharacteristics)
                         {

@@ -311,15 +311,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
-            if (Optional.IsDefined(ResourceType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resourceType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resourceType: ");
                     if (ResourceType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -333,17 +334,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
-            if (Optional.IsCollectionDefined(Locations) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Locations.Any() || hasPropertyOverride)
+                builder.Append("  locations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Locations))
                 {
-                    builder.Append("  locations: ");
-                    if (hasPropertyOverride)
+                    if (Locations.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  locations: ");
                         builder.AppendLine("[");
                         foreach (var item in Locations)
                         {
@@ -368,17 +370,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocationMappings), out propertyOverride);
-            if (Optional.IsCollectionDefined(LocationMappings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (LocationMappings.Any() || hasPropertyOverride)
+                builder.Append("  locationMappings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LocationMappings))
                 {
-                    builder.Append("  locationMappings: ");
-                    if (hasPropertyOverride)
+                    if (LocationMappings.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  locationMappings: ");
                         builder.AppendLine("[");
                         foreach (var item in LocationMappings)
                         {
@@ -390,17 +393,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Aliases), out propertyOverride);
-            if (Optional.IsCollectionDefined(Aliases) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Aliases.Any() || hasPropertyOverride)
+                builder.Append("  aliases: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Aliases))
                 {
-                    builder.Append("  aliases: ");
-                    if (hasPropertyOverride)
+                    if (Aliases.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  aliases: ");
                         builder.AppendLine("[");
                         foreach (var item in Aliases)
                         {
@@ -412,17 +416,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersions), out propertyOverride);
-            if (Optional.IsCollectionDefined(ApiVersions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ApiVersions.Any() || hasPropertyOverride)
+                builder.Append("  apiVersions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ApiVersions))
                 {
-                    builder.Append("  apiVersions: ");
-                    if (hasPropertyOverride)
+                    if (ApiVersions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  apiVersions: ");
                         builder.AppendLine("[");
                         foreach (var item in ApiVersions)
                         {
@@ -447,15 +452,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultApiVersion), out propertyOverride);
-            if (Optional.IsDefined(DefaultApiVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  defaultApiVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultApiVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  defaultApiVersion: ");
                     if (DefaultApiVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -469,17 +475,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ZoneMappings), out propertyOverride);
-            if (Optional.IsCollectionDefined(ZoneMappings) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ZoneMappings.Any() || hasPropertyOverride)
+                builder.Append("  zoneMappings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ZoneMappings))
                 {
-                    builder.Append("  zoneMappings: ");
-                    if (hasPropertyOverride)
+                    if (ZoneMappings.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  zoneMappings: ");
                         builder.AppendLine("[");
                         foreach (var item in ZoneMappings)
                         {
@@ -491,17 +498,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiProfiles), out propertyOverride);
-            if (Optional.IsCollectionDefined(ApiProfiles) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ApiProfiles.Any() || hasPropertyOverride)
+                builder.Append("  apiProfiles: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ApiProfiles))
                 {
-                    builder.Append("  apiProfiles: ");
-                    if (hasPropertyOverride)
+                    if (ApiProfiles.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  apiProfiles: ");
                         builder.AppendLine("[");
                         foreach (var item in ApiProfiles)
                         {
@@ -513,15 +521,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Capabilities), out propertyOverride);
-            if (Optional.IsDefined(Capabilities) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  capabilities: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Capabilities))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  capabilities: ");
                     if (Capabilities.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -535,17 +544,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
-            if (Optional.IsCollectionDefined(Properties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Properties.Any() || hasPropertyOverride)
+                builder.Append("  properties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Properties))
                 {
-                    builder.Append("  properties: ");
-                    if (hasPropertyOverride)
+                    if (Properties.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  properties: ");
                         builder.AppendLine("{");
                         foreach (var item in Properties)
                         {

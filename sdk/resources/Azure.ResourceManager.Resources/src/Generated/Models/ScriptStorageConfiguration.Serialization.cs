@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountName), out propertyOverride);
-            if (Optional.IsDefined(StorageAccountName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  storageAccountName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageAccountName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  storageAccountName: ");
                     if (StorageAccountName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountKey), out propertyOverride);
-            if (Optional.IsDefined(StorageAccountKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  storageAccountKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageAccountKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  storageAccountKey: ");
                     if (StorageAccountKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

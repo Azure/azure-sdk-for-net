@@ -116,15 +116,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Destination), out propertyOverride);
-            if (Optional.IsDefined(Destination) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  destination: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Destination))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  destination: ");
                     if (Destination.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -138,15 +139,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogAnalyticsConfiguration), out propertyOverride);
-            if (Optional.IsDefined(LogAnalyticsConfiguration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  logAnalyticsConfiguration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LogAnalyticsConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  logAnalyticsConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, LogAnalyticsConfiguration, options, 2, false, "  logAnalyticsConfiguration: ");
                 }
             }

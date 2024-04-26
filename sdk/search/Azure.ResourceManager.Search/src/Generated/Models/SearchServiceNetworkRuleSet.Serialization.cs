@@ -131,17 +131,18 @@ namespace Azure.ResourceManager.Search.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPRules), out propertyOverride);
-            if (Optional.IsCollectionDefined(IPRules) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (IPRules.Any() || hasPropertyOverride)
+                builder.Append("  ipRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IPRules))
                 {
-                    builder.Append("  ipRules: ");
-                    if (hasPropertyOverride)
+                    if (IPRules.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  ipRules: ");
                         builder.AppendLine("[");
                         foreach (var item in IPRules)
                         {
@@ -153,15 +154,16 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Bypass), out propertyOverride);
-            if (Optional.IsDefined(Bypass) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  bypass: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Bypass))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  bypass: ");
                     builder.AppendLine($"'{Bypass.Value.ToString()}'");
                 }
             }

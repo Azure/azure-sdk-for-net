@@ -127,17 +127,18 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SshAuthorizedKeys), out propertyOverride);
-            if (Optional.IsCollectionDefined(SshAuthorizedKeys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SshAuthorizedKeys.Any() || hasPropertyOverride)
+                builder.Append("  sshAuthorizedKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SshAuthorizedKeys))
                 {
-                    builder.Append("  sshAuthorizedKeys: ");
-                    if (hasPropertyOverride)
+                    if (SshAuthorizedKeys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  sshAuthorizedKeys: ");
                         builder.AppendLine("[");
                         foreach (var item in SshAuthorizedKeys)
                         {
@@ -149,15 +150,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedKey), out propertyOverride);
-            if (Optional.IsDefined(SharedKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  sharedKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SharedKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  sharedKey: ");
                     if (SharedKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

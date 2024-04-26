@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebTest), out propertyOverride);
-            if (Optional.IsDefined(WebTest) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  WebTest: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WebTest))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  WebTest: ");
                     if (WebTest.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

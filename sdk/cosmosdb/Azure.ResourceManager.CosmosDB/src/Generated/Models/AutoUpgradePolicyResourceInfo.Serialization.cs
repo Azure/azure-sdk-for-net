@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThroughputPolicy), out propertyOverride);
-            if (Optional.IsDefined(ThroughputPolicy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  throughputPolicy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ThroughputPolicy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  throughputPolicy: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ThroughputPolicy, options, 2, false, "  throughputPolicy: ");
                 }
             }

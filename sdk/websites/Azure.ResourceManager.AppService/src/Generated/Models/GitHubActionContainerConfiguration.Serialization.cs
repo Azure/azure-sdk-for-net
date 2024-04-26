@@ -138,29 +138,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerUri), out propertyOverride);
-            if (Optional.IsDefined(ServerUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serverUrl: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServerUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serverUrl: ");
                     builder.AppendLine($"'{ServerUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImageName), out propertyOverride);
-            if (Optional.IsDefined(ImageName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  imageName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImageName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  imageName: ");
                     if (ImageName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -174,15 +176,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Username), out propertyOverride);
-            if (Optional.IsDefined(Username) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  username: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Username))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  username: ");
                     if (Username.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -196,15 +199,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Password), out propertyOverride);
-            if (Optional.IsDefined(Password) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  password: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Password))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  password: ");
                     if (Password.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

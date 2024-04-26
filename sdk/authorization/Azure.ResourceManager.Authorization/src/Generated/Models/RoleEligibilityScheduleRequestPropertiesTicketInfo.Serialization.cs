@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.Authorization.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TicketNumber), out propertyOverride);
-            if (Optional.IsDefined(TicketNumber) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ticketNumber: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TicketNumber))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ticketNumber: ");
                     if (TicketNumber.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TicketSystem), out propertyOverride);
-            if (Optional.IsDefined(TicketSystem) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ticketSystem: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TicketSystem))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ticketSystem: ");
                     if (TicketSystem.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceSasToken), out propertyOverride);
-            if (Optional.IsDefined(ServiceSasToken) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  serviceSasToken: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceSasToken))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  serviceSasToken: ");
                     if (ServiceSasToken.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

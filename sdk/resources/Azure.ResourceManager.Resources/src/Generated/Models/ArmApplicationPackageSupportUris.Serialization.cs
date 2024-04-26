@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzurePublicCloudUri), out propertyOverride);
-            if (Optional.IsDefined(AzurePublicCloudUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  publicAzure: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzurePublicCloudUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  publicAzure: ");
                     builder.AppendLine($"'{AzurePublicCloudUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureGovernmentUri), out propertyOverride);
-            if (Optional.IsDefined(AzureGovernmentUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  governmentCloud: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureGovernmentUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  governmentCloud: ");
                     builder.AppendLine($"'{AzureGovernmentUri.AbsoluteUri}'");
                 }
             }

@@ -146,17 +146,18 @@ namespace Azure.ResourceManager.ServiceBus.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultProperties), out propertyOverride);
-            if (Optional.IsCollectionDefined(KeyVaultProperties) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (KeyVaultProperties.Any() || hasPropertyOverride)
+                builder.Append("  keyVaultProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(KeyVaultProperties))
                 {
-                    builder.Append("  keyVaultProperties: ");
-                    if (hasPropertyOverride)
+                    if (KeyVaultProperties.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  keyVaultProperties: ");
                         builder.AppendLine("[");
                         foreach (var item in KeyVaultProperties)
                         {
@@ -168,29 +169,31 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeySource), out propertyOverride);
-            if (Optional.IsDefined(KeySource) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  keySource: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeySource))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  keySource: ");
                     builder.AppendLine($"'{KeySource.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequireInfrastructureEncryption), out propertyOverride);
-            if (Optional.IsDefined(RequireInfrastructureEncryption) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  requireInfrastructureEncryption: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequireInfrastructureEncryption))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  requireInfrastructureEncryption: ");
                     var boolValue = RequireInfrastructureEncryption.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

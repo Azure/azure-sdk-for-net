@@ -161,31 +161,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestrictionsType), out propertyOverride);
-            if (Optional.IsDefined(RestrictionsType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestrictionsType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  type: ");
                     builder.AppendLine($"'{RestrictionsType.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Values), out propertyOverride);
-            if (Optional.IsCollectionDefined(Values) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Values.Any() || hasPropertyOverride)
+                builder.Append("  values: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Values))
                 {
-                    builder.Append("  values: ");
-                    if (hasPropertyOverride)
+                    if (Values.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  values: ");
                         builder.AppendLine("[");
                         foreach (var item in Values)
                         {
@@ -210,29 +212,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestrictionInfo), out propertyOverride);
-            if (Optional.IsDefined(RestrictionInfo) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  restrictionInfo: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestrictionInfo))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  restrictionInfo: ");
                     BicepSerializationHelpers.AppendChildObject(builder, RestrictionInfo, options, 2, false, "  restrictionInfo: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonCode), out propertyOverride);
-            if (Optional.IsDefined(ReasonCode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  reasonCode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReasonCode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  reasonCode: ");
                     builder.AppendLine($"'{ReasonCode.Value.ToString()}'");
                 }
             }

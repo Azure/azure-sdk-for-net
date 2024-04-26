@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Result), out propertyOverride);
-            if (Optional.IsCollectionDefined(Result) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Result.Any() || hasPropertyOverride)
+                builder.Append("  Result: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Result))
                 {
-                    builder.Append("  Result: ");
-                    if (hasPropertyOverride)
+                    if (Result.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  Result: ");
                         builder.AppendLine("[");
                         foreach (var item in Result)
                         {

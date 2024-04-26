@@ -135,43 +135,46 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Progress), out propertyOverride);
-            if (Optional.IsDefined(Progress) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  progress: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Progress))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  progress: ");
                     builder.AppendLine($"'{Progress.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngestedRecords), out propertyOverride);
-            if (Optional.IsDefined(IngestedRecords) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ingestedRecords: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IngestedRecords))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ingestedRecords: ");
                     builder.AppendLine($"{IngestedRecords.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScannedGB), out propertyOverride);
-            if (Optional.IsDefined(ScannedGB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scannedGb: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScannedGB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scannedGb: ");
                     builder.AppendLine($"'{ScannedGB.Value.ToString()}'");
                 }
             }

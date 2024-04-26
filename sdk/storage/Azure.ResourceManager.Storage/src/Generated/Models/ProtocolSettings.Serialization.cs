@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SmbSetting), out propertyOverride);
-            if (Optional.IsDefined(SmbSetting) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  smb: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SmbSetting))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  smb: ");
                     BicepSerializationHelpers.AppendChildObject(builder, SmbSetting, options, 2, false, "  smb: ");
                 }
             }

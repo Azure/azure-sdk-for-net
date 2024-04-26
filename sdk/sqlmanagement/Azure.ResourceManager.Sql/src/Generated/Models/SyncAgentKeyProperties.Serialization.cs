@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SyncAgentKey), out propertyOverride);
-            if (Optional.IsDefined(SyncAgentKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  syncAgentKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SyncAgentKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  syncAgentKey: ");
                     if (SyncAgentKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

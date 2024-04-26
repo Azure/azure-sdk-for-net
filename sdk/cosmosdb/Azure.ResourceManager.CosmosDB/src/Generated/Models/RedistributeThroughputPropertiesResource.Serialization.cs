@@ -135,28 +135,30 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThroughputPolicy), out propertyOverride);
-            builder.Append("  throughputPolicy: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  throughputPolicy: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  throughputPolicy: ");
                 builder.AppendLine($"'{ThroughputPolicy.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetPhysicalPartitionThroughputInfo), out propertyOverride);
-            if (Optional.IsCollectionDefined(TargetPhysicalPartitionThroughputInfo) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (TargetPhysicalPartitionThroughputInfo.Any() || hasPropertyOverride)
+                builder.Append("  targetPhysicalPartitionThroughputInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TargetPhysicalPartitionThroughputInfo))
                 {
-                    builder.Append("  targetPhysicalPartitionThroughputInfo: ");
-                    if (hasPropertyOverride)
+                    if (TargetPhysicalPartitionThroughputInfo.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  targetPhysicalPartitionThroughputInfo: ");
                         builder.AppendLine("[");
                         foreach (var item in TargetPhysicalPartitionThroughputInfo)
                         {
@@ -168,17 +170,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourcePhysicalPartitionThroughputInfo), out propertyOverride);
-            if (Optional.IsCollectionDefined(SourcePhysicalPartitionThroughputInfo) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SourcePhysicalPartitionThroughputInfo.Any() || hasPropertyOverride)
+                builder.Append("  sourcePhysicalPartitionThroughputInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SourcePhysicalPartitionThroughputInfo))
                 {
-                    builder.Append("  sourcePhysicalPartitionThroughputInfo: ");
-                    if (hasPropertyOverride)
+                    if (SourcePhysicalPartitionThroughputInfo.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  sourcePhysicalPartitionThroughputInfo: ");
                         builder.AppendLine("[");
                         foreach (var item in SourcePhysicalPartitionThroughputInfo)
                         {

@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.SignalR.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Categories), out propertyOverride);
-            if (Optional.IsCollectionDefined(Categories) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Categories.Any() || hasPropertyOverride)
+                builder.Append("  categories: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Categories))
                 {
-                    builder.Append("  categories: ");
-                    if (hasPropertyOverride)
+                    if (Categories.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  categories: ");
                         builder.AppendLine("[");
                         foreach (var item in Categories)
                         {

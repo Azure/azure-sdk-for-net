@@ -117,17 +117,18 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TagValues), out propertyOverride);
-            if (Optional.IsCollectionDefined(TagValues) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (TagValues.Any() || hasPropertyOverride)
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TagValues))
                 {
-                    builder.Append("  tags: ");
-                    if (hasPropertyOverride)
+                    if (TagValues.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  tags: ");
                         builder.AppendLine("{");
                         foreach (var item in TagValues)
                         {

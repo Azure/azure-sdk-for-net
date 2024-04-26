@@ -131,31 +131,33 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingMethod), out propertyOverride);
-            if (Optional.IsDefined(RoutingMethod) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  routingMethod: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingMethod))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  routingMethod: ");
                     builder.AppendLine($"'{RoutingMethod.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Regions), out propertyOverride);
-            if (Optional.IsCollectionDefined(Regions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Regions.Any() || hasPropertyOverride)
+                builder.Append("  regions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Regions))
                 {
-                    builder.Append("  regions: ");
-                    if (hasPropertyOverride)
+                    if (Regions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  regions: ");
                         builder.AppendLine("[");
                         foreach (var item in Regions)
                         {

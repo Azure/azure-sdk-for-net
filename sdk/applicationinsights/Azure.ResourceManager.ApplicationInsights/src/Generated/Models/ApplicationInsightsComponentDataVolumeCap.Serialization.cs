@@ -187,87 +187,93 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cap), out propertyOverride);
-            if (Optional.IsDefined(Cap) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  Cap: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Cap))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  Cap: ");
                     builder.AppendLine($"'{Cap.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResetTime), out propertyOverride);
-            if (Optional.IsDefined(ResetTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ResetTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResetTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ResetTime: ");
                     builder.AppendLine($"{ResetTime.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WarningThreshold), out propertyOverride);
-            if (Optional.IsDefined(WarningThreshold) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  WarningThreshold: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WarningThreshold))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  WarningThreshold: ");
                     builder.AppendLine($"{WarningThreshold.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStopSendNotificationWhenHitThreshold), out propertyOverride);
-            if (Optional.IsDefined(IsStopSendNotificationWhenHitThreshold) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  StopSendNotificationWhenHitThreshold: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsStopSendNotificationWhenHitThreshold))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  StopSendNotificationWhenHitThreshold: ");
                     var boolValue = IsStopSendNotificationWhenHitThreshold.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStopSendNotificationWhenHitCap), out propertyOverride);
-            if (Optional.IsDefined(IsStopSendNotificationWhenHitCap) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  StopSendNotificationWhenHitCap: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsStopSendNotificationWhenHitCap))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  StopSendNotificationWhenHitCap: ");
                     var boolValue = IsStopSendNotificationWhenHitCap.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxHistoryCap), out propertyOverride);
-            if (Optional.IsDefined(MaxHistoryCap) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  MaxHistoryCap: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxHistoryCap))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  MaxHistoryCap: ");
                     builder.AppendLine($"'{MaxHistoryCap.Value.ToString()}'");
                 }
             }

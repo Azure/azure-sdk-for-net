@@ -112,15 +112,16 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyIdentifier), out propertyOverride);
-            if (Optional.IsDefined(KeyIdentifier) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  keyIdentifier: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(KeyIdentifier))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  keyIdentifier: ");
                     if (KeyIdentifier.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -134,15 +135,16 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityClientId), out propertyOverride);
-            if (Optional.IsDefined(IdentityClientId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  identityClientId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdentityClientId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  identityClientId: ");
                     if (IdentityClientId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

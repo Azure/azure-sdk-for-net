@@ -254,44 +254,47 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
-            if (Optional.IsDefined(Version) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  version: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  version: ");
                     builder.AppendLine($"{Version.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdatedOn), out propertyOverride);
-            if (Optional.IsDefined(UpdatedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  updatedTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpdatedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  updatedTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(UpdatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdatedBy), out propertyOverride);
-            if (Optional.IsDefined(UpdatedBy) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  updatedBy: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpdatedBy))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  updatedBy: ");
                     if (UpdatedBy.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -305,31 +308,33 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parent), out propertyOverride);
-            if (Optional.IsDefined(Parent) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  parent: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Parent))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  parent: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Parent, options, 2, false, "  parent: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
-            if (Optional.IsCollectionDefined(Path) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Path.Any() || hasPropertyOverride)
+                builder.Append("  path: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Path))
                 {
-                    builder.Append("  path: ");
-                    if (hasPropertyOverride)
+                    if (Path.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  path: ");
                         builder.AppendLine("[");
                         foreach (var item in Path)
                         {
@@ -341,17 +346,18 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagementGroupAncestors), out propertyOverride);
-            if (Optional.IsCollectionDefined(ManagementGroupAncestors) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ManagementGroupAncestors.Any() || hasPropertyOverride)
+                builder.Append("  managementGroupAncestors: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ManagementGroupAncestors))
                 {
-                    builder.Append("  managementGroupAncestors: ");
-                    if (hasPropertyOverride)
+                    if (ManagementGroupAncestors.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  managementGroupAncestors: ");
                         builder.AppendLine("[");
                         foreach (var item in ManagementGroupAncestors)
                         {
@@ -376,17 +382,18 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagementGroupAncestorChain), out propertyOverride);
-            if (Optional.IsCollectionDefined(ManagementGroupAncestorChain) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ManagementGroupAncestorChain.Any() || hasPropertyOverride)
+                builder.Append("  managementGroupAncestorsChain: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ManagementGroupAncestorChain))
                 {
-                    builder.Append("  managementGroupAncestorsChain: ");
-                    if (hasPropertyOverride)
+                    if (ManagementGroupAncestorChain.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  managementGroupAncestorsChain: ");
                         builder.AppendLine("[");
                         foreach (var item in ManagementGroupAncestorChain)
                         {

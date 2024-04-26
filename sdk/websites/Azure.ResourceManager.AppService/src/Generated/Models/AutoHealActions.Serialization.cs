@@ -131,43 +131,46 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionType), out propertyOverride);
-            if (Optional.IsDefined(ActionType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  actionType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActionType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  actionType: ");
                     builder.AppendLine($"'{ActionType.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomAction), out propertyOverride);
-            if (Optional.IsDefined(CustomAction) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  customAction: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomAction))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  customAction: ");
                     BicepSerializationHelpers.AppendChildObject(builder, CustomAction, options, 2, false, "  customAction: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinProcessExecutionTime), out propertyOverride);
-            if (Optional.IsDefined(MinProcessExecutionTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minProcessExecutionTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinProcessExecutionTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minProcessExecutionTime: ");
                     if (MinProcessExecutionTime.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

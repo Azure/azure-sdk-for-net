@@ -131,15 +131,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
-            if (Optional.IsDefined(ClientId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  clientId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  clientId: ");
                     if (ClientId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -153,29 +154,31 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientCredential), out propertyOverride);
-            if (Optional.IsDefined(ClientCredential) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  clientCredential: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientCredential))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  clientCredential: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ClientCredential, options, 2, false, "  clientCredential: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OpenIdConnectConfiguration), out propertyOverride);
-            if (Optional.IsDefined(OpenIdConnectConfiguration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  openIdConnectConfiguration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OpenIdConnectConfiguration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  openIdConnectConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, OpenIdConnectConfiguration, options, 2, false, "  openIdConnectConfiguration: ");
                 }
             }

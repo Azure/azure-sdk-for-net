@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Paths), out propertyOverride);
-            if (Optional.IsCollectionDefined(Paths) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Paths.Any() || hasPropertyOverride)
+                builder.Append("  paths: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Paths))
                 {
-                    builder.Append("  paths: ");
-                    if (hasPropertyOverride)
+                    if (Paths.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  paths: ");
                         builder.AppendLine("[");
                         foreach (var item in Paths)
                         {

@@ -171,72 +171,77 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentValidation), out propertyOverride);
-            if (Optional.IsDefined(ContentValidation) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ContentValidation: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContentValidation))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ContentValidation: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ContentValidation, options, 2, false, "  ContentValidation: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CheckSsl), out propertyOverride);
-            if (Optional.IsDefined(CheckSsl) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  SSLCheck: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CheckSsl))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  SSLCheck: ");
                     var boolValue = CheckSsl.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SSLCertRemainingLifetimeCheck), out propertyOverride);
-            if (Optional.IsDefined(SSLCertRemainingLifetimeCheck) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  SSLCertRemainingLifetimeCheck: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SSLCertRemainingLifetimeCheck))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  SSLCertRemainingLifetimeCheck: ");
                     builder.AppendLine($"{SSLCertRemainingLifetimeCheck.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpectedHttpStatusCode), out propertyOverride);
-            if (Optional.IsDefined(ExpectedHttpStatusCode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ExpectedHttpStatusCode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpectedHttpStatusCode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ExpectedHttpStatusCode: ");
                     builder.AppendLine($"{ExpectedHttpStatusCode.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IgnoreHttpStatusCode), out propertyOverride);
-            if (Optional.IsDefined(IgnoreHttpStatusCode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  IgnoreHttpStatusCode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IgnoreHttpStatusCode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  IgnoreHttpStatusCode: ");
                     var boolValue = IgnoreHttpStatusCode.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

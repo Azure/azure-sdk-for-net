@@ -127,15 +127,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderName), out propertyOverride);
-            if (Optional.IsDefined(ProviderName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  providerName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProviderName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  providerName: ");
                     if (ProviderName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,17 +150,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PropertyBag), out propertyOverride);
-            if (Optional.IsCollectionDefined(PropertyBag) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PropertyBag.Any() || hasPropertyOverride)
+                builder.Append("  propertyBag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PropertyBag))
                 {
-                    builder.Append("  propertyBag: ");
-                    if (hasPropertyOverride)
+                    if (PropertyBag.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  propertyBag: ");
                         builder.AppendLine("[");
                         foreach (var item in PropertyBag)
                         {

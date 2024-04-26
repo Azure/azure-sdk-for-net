@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Keys), out propertyOverride);
-            if (Optional.IsCollectionDefined(Keys) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Keys.Any() || hasPropertyOverride)
+                builder.Append("  keys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Keys))
                 {
-                    builder.Append("  keys: ");
-                    if (hasPropertyOverride)
+                    if (Keys.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  keys: ");
                         builder.AppendLine("[");
                         foreach (var item in Keys)
                         {

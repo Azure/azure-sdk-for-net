@@ -191,17 +191,18 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedActions.Any() || hasPropertyOverride)
+                builder.Append("  actions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedActions))
                 {
-                    builder.Append("  actions: ");
-                    if (hasPropertyOverride)
+                    if (AllowedActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  actions: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedActions)
                         {
@@ -226,17 +227,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeniedActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(DeniedActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (DeniedActions.Any() || hasPropertyOverride)
+                builder.Append("  notActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DeniedActions))
                 {
-                    builder.Append("  notActions: ");
-                    if (hasPropertyOverride)
+                    if (DeniedActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notActions: ");
                         builder.AppendLine("[");
                         foreach (var item in DeniedActions)
                         {
@@ -261,17 +263,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedDataActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(AllowedDataActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AllowedDataActions.Any() || hasPropertyOverride)
+                builder.Append("  dataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedDataActions))
                 {
-                    builder.Append("  dataActions: ");
-                    if (hasPropertyOverride)
+                    if (AllowedDataActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  dataActions: ");
                         builder.AppendLine("[");
                         foreach (var item in AllowedDataActions)
                         {
@@ -296,17 +299,18 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeniedDataActions), out propertyOverride);
-            if (Optional.IsCollectionDefined(DeniedDataActions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (DeniedDataActions.Any() || hasPropertyOverride)
+                builder.Append("  notDataActions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DeniedDataActions))
                 {
-                    builder.Append("  notDataActions: ");
-                    if (hasPropertyOverride)
+                    if (DeniedDataActions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notDataActions: ");
                         builder.AppendLine("[");
                         foreach (var item in DeniedDataActions)
                         {

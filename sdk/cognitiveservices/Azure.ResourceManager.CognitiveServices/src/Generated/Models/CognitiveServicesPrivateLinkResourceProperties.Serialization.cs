@@ -163,15 +163,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupId), out propertyOverride);
-            if (Optional.IsDefined(GroupId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  groupId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(GroupId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  groupId: ");
                     if (GroupId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -185,17 +186,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredMembers), out propertyOverride);
-            if (Optional.IsCollectionDefined(RequiredMembers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (RequiredMembers.Any() || hasPropertyOverride)
+                builder.Append("  requiredMembers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RequiredMembers))
                 {
-                    builder.Append("  requiredMembers: ");
-                    if (hasPropertyOverride)
+                    if (RequiredMembers.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  requiredMembers: ");
                         builder.AppendLine("[");
                         foreach (var item in RequiredMembers)
                         {
@@ -220,17 +222,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequiredZoneNames), out propertyOverride);
-            if (Optional.IsCollectionDefined(RequiredZoneNames) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (RequiredZoneNames.Any() || hasPropertyOverride)
+                builder.Append("  requiredZoneNames: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RequiredZoneNames))
                 {
-                    builder.Append("  requiredZoneNames: ");
-                    if (hasPropertyOverride)
+                    if (RequiredZoneNames.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  requiredZoneNames: ");
                         builder.AppendLine("[");
                         foreach (var item in RequiredZoneNames)
                         {
@@ -255,15 +258,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
-            if (Optional.IsDefined(DisplayName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  displayName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  displayName: ");
                     if (DisplayName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

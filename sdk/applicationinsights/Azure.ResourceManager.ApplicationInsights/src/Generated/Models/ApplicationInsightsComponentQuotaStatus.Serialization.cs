@@ -127,15 +127,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppId), out propertyOverride);
-            if (Optional.IsDefined(AppId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  AppId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  AppId: ");
                     if (AppId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,30 +150,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShouldBeThrottled), out propertyOverride);
-            if (Optional.IsDefined(ShouldBeThrottled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ShouldBeThrottled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShouldBeThrottled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ShouldBeThrottled: ");
                     var boolValue = ShouldBeThrottled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpirationTime), out propertyOverride);
-            if (Optional.IsDefined(ExpirationTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ExpirationTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpirationTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ExpirationTime: ");
                     if (ExpirationTime.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.Search.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadAuthFailureMode), out propertyOverride);
-            if (Optional.IsDefined(AadAuthFailureMode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  aadAuthFailureMode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AadAuthFailureMode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  aadAuthFailureMode: ");
                     builder.AppendLine($"'{AadAuthFailureMode.Value.ToSerialString()}'");
                 }
             }

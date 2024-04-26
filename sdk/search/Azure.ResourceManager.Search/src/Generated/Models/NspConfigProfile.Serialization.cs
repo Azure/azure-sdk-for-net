@@ -138,15 +138,16 @@ namespace Azure.ResourceManager.Search.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -160,15 +161,16 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessRulesVersion), out propertyOverride);
-            if (Optional.IsDefined(AccessRulesVersion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  accessRulesVersion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccessRulesVersion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  accessRulesVersion: ");
                     if (AccessRulesVersion.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -182,17 +184,18 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessRules), out propertyOverride);
-            if (Optional.IsCollectionDefined(AccessRules) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AccessRules.Any() || hasPropertyOverride)
+                builder.Append("  accessRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AccessRules))
                 {
-                    builder.Append("  accessRules: ");
-                    if (hasPropertyOverride)
+                    if (AccessRules.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  accessRules: ");
                         builder.AppendLine("[");
                         foreach (var item in AccessRules)
                         {

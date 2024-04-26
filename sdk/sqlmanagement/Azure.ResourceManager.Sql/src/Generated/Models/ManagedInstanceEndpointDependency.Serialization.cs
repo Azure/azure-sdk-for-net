@@ -127,15 +127,16 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainName), out propertyOverride);
-            if (Optional.IsDefined(DomainName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  domainName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DomainName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  domainName: ");
                     if (DomainName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,17 +150,18 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointDetails), out propertyOverride);
-            if (Optional.IsCollectionDefined(EndpointDetails) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (EndpointDetails.Any() || hasPropertyOverride)
+                builder.Append("  endpointDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EndpointDetails))
                 {
-                    builder.Append("  endpointDetails: ");
-                    if (hasPropertyOverride)
+                    if (EndpointDetails.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  endpointDetails: ");
                         builder.AppendLine("[");
                         foreach (var item in EndpointDetails)
                         {

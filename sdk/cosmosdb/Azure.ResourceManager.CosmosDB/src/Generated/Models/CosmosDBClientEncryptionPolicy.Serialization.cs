@@ -117,17 +117,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedPaths), out propertyOverride);
-            if (Optional.IsCollectionDefined(IncludedPaths) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (IncludedPaths.Any() || hasPropertyOverride)
+                builder.Append("  includedPaths: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(IncludedPaths))
                 {
-                    builder.Append("  includedPaths: ");
-                    if (hasPropertyOverride)
+                    if (IncludedPaths.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  includedPaths: ");
                         builder.AppendLine("[");
                         foreach (var item in IncludedPaths)
                         {
@@ -139,13 +140,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyFormatVersion), out propertyOverride);
-            builder.Append("  policyFormatVersion: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  policyFormatVersion: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  policyFormatVersion: ");
                 builder.AppendLine($"{PolicyFormatVersion}");
             }
 

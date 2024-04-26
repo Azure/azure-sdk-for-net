@@ -142,15 +142,16 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalSteps), out propertyOverride);
-            if (Optional.IsDefined(TotalSteps) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  totalSteps: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TotalSteps))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  totalSteps: ");
                     if (TotalSteps.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -164,31 +165,33 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentStep), out propertyOverride);
-            if (Optional.IsDefined(CurrentStep) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  currentStep: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurrentStep))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  currentStep: ");
                     builder.AppendLine($"{CurrentStep.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepsList), out propertyOverride);
-            if (Optional.IsCollectionDefined(StepsList) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (StepsList.Any() || hasPropertyOverride)
+                builder.Append("  stepsList: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(StepsList))
                 {
-                    builder.Append("  stepsList: ");
-                    if (hasPropertyOverride)
+                    if (StepsList.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  stepsList: ");
                         builder.AppendLine("[");
                         foreach (var item in StepsList)
                         {

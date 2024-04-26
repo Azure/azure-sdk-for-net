@@ -152,15 +152,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -174,17 +175,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SeedNodes), out propertyOverride);
-            if (Optional.IsCollectionDefined(SeedNodes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SeedNodes.Any() || hasPropertyOverride)
+                builder.Append("  seedNodes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SeedNodes))
                 {
-                    builder.Append("  seedNodes: ");
-                    if (hasPropertyOverride)
+                    if (SeedNodes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  seedNodes: ");
                         builder.AppendLine("[");
                         foreach (var item in SeedNodes)
                         {
@@ -209,17 +211,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Nodes), out propertyOverride);
-            if (Optional.IsCollectionDefined(Nodes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Nodes.Any() || hasPropertyOverride)
+                builder.Append("  nodes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Nodes))
                 {
-                    builder.Append("  nodes: ");
-                    if (hasPropertyOverride)
+                    if (Nodes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  nodes: ");
                         builder.AppendLine("[");
                         foreach (var item in Nodes)
                         {

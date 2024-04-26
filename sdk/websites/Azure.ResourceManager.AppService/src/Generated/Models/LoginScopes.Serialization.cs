@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scopes), out propertyOverride);
-            if (Optional.IsCollectionDefined(Scopes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Scopes.Any() || hasPropertyOverride)
+                builder.Append("  scopes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Scopes))
                 {
-                    builder.Append("  scopes: ");
-                    if (hasPropertyOverride)
+                    if (Scopes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  scopes: ");
                         builder.AppendLine("[");
                         foreach (var item in Scopes)
                         {

@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -103,46 +102,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContinuousBackupInformation), out propertyOverride);
-            if (Optional.IsDefined(ContinuousBackupInformation) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ContinuousBackupInformationLatestRestorableTimestamp", out propertyOverride);
+            if (hasPropertyOverride)
             {
                 builder.Append("  continuousBackupInformation: ");
-                if (hasPropertyOverride)
+                builder.AppendLine("{");
+                builder.Append("    latestRestorableTimestamp: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ContinuousBackupInformation))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  continuousBackupInformation: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ContinuousBackupInformation, options, 2, false, "  continuousBackupInformation: ");
                 }
             }
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "ContinuousBackupInformationLatestRestorableTimestamp":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("LatestRestorableTimestamp", item.Value);
-                        bicepOptions.PropertyOverrides.Add(ContinuousBackupInformation, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<CosmosDBBackupInformation>.Write(ModelReaderWriterOptions options)

@@ -127,15 +127,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NameClaimType), out propertyOverride);
-            if (Optional.IsDefined(NameClaimType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  nameClaimType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NameClaimType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  nameClaimType: ");
                     if (NameClaimType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -149,17 +150,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scopes), out propertyOverride);
-            if (Optional.IsCollectionDefined(Scopes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Scopes.Any() || hasPropertyOverride)
+                builder.Append("  scopes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Scopes))
                 {
-                    builder.Append("  scopes: ");
-                    if (hasPropertyOverride)
+                    if (Scopes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  scopes: ");
                         builder.AppendLine("[");
                         foreach (var item in Scopes)
                         {

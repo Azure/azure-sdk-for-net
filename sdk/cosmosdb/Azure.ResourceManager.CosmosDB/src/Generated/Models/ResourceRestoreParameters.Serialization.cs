@@ -131,15 +131,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreSource), out propertyOverride);
-            if (Optional.IsDefined(RestoreSource) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  restoreSource: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestoreSource))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  restoreSource: ");
                     if (RestoreSource.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -153,30 +154,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreTimestampInUtc), out propertyOverride);
-            if (Optional.IsDefined(RestoreTimestampInUtc) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  restoreTimestampInUtc: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RestoreTimestampInUtc))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  restoreTimestampInUtc: ");
                     var formattedDateTimeString = TypeFormatters.ToString(RestoreTimestampInUtc.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRestoreWithTtlDisabled), out propertyOverride);
-            if (Optional.IsDefined(IsRestoreWithTtlDisabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  restoreWithTtlDisabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRestoreWithTtlDisabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  restoreWithTtlDisabled: ");
                     var boolValue = IsRestoreWithTtlDisabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

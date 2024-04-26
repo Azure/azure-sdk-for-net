@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentParameters), out propertyOverride);
-            if (Optional.IsDefined(CurrentParameters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  currentParameters: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CurrentParameters))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  currentParameters: ");
                     BicepSerializationHelpers.AppendChildObject(builder, CurrentParameters, options, 2, false, "  currentParameters: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedParameters), out propertyOverride);
-            if (Optional.IsDefined(RequestedParameters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  requestedParameters: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedParameters))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  requestedParameters: ");
                     BicepSerializationHelpers.AppendChildObject(builder, RequestedParameters, options, 2, false, "  requestedParameters: ");
                 }
             }

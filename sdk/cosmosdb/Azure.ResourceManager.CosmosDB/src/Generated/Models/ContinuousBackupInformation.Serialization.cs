@@ -105,15 +105,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LatestRestorableTimestamp), out propertyOverride);
-            if (Optional.IsDefined(LatestRestorableTimestamp) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  latestRestorableTimestamp: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LatestRestorableTimestamp))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  latestRestorableTimestamp: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LatestRestorableTimestamp.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }

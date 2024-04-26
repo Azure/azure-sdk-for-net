@@ -114,15 +114,16 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permissions), out propertyOverride);
-            if (Optional.IsDefined(Permissions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  permissions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Permissions))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  permissions: ");
                     if (Permissions.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -136,15 +137,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Service), out propertyOverride);
-            if (Optional.IsDefined(Service) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  service: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Service))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  service: ");
                     if (Service.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -158,15 +160,16 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceName), out propertyOverride);
-            if (Optional.IsDefined(ResourceName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  resourceName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  resourceName: ");
                     if (ResourceName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryManagedInstanceId), out propertyOverride);
-            if (Optional.IsDefined(PrimaryManagedInstanceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  primaryManagedInstanceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryManagedInstanceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  primaryManagedInstanceId: ");
                     builder.AppendLine($"'{PrimaryManagedInstanceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerManagedInstanceId), out propertyOverride);
-            if (Optional.IsDefined(PartnerManagedInstanceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  partnerManagedInstanceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PartnerManagedInstanceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  partnerManagedInstanceId: ");
                     builder.AppendLine($"'{PartnerManagedInstanceId.ToString()}'");
                 }
             }

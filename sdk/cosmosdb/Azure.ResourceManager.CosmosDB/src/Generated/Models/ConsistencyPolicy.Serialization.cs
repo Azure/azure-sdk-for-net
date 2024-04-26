@@ -128,40 +128,43 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultConsistencyLevel), out propertyOverride);
-            builder.Append("  defaultConsistencyLevel: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  defaultConsistencyLevel: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  defaultConsistencyLevel: ");
                 builder.AppendLine($"'{DefaultConsistencyLevel.ToSerialString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxStalenessPrefix), out propertyOverride);
-            if (Optional.IsDefined(MaxStalenessPrefix) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxStalenessPrefix: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxStalenessPrefix))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxStalenessPrefix: ");
                     builder.AppendLine($"'{MaxStalenessPrefix.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxIntervalInSeconds), out propertyOverride);
-            if (Optional.IsDefined(MaxIntervalInSeconds) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxIntervalInSeconds: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxIntervalInSeconds))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxIntervalInSeconds: ");
                     builder.AppendLine($"{MaxIntervalInSeconds.Value}");
                 }
             }

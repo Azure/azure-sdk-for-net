@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileSystem), out propertyOverride);
-            if (Optional.IsDefined(FileSystem) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  fileSystem: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FileSystem))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  fileSystem: ");
                     BicepSerializationHelpers.AppendChildObject(builder, FileSystem, options, 2, false, "  fileSystem: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureBlobStorage), out propertyOverride);
-            if (Optional.IsDefined(AzureBlobStorage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  azureBlobStorage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureBlobStorage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  azureBlobStorage: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AzureBlobStorage, options, 2, false, "  azureBlobStorage: ");
                 }
             }

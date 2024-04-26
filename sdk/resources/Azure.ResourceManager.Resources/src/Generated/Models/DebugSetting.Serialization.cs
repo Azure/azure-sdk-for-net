@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DetailLevel), out propertyOverride);
-            if (Optional.IsDefined(DetailLevel) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  detailLevel: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DetailLevel))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  detailLevel: ");
                     if (DetailLevel.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

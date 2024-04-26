@@ -171,71 +171,76 @@ namespace Azure.ResourceManager.ServiceBus.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveMessageCount), out propertyOverride);
-            if (Optional.IsDefined(ActiveMessageCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  activeMessageCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActiveMessageCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  activeMessageCount: ");
                     builder.AppendLine($"'{ActiveMessageCount.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeadLetterMessageCount), out propertyOverride);
-            if (Optional.IsDefined(DeadLetterMessageCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  deadLetterMessageCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeadLetterMessageCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  deadLetterMessageCount: ");
                     builder.AppendLine($"'{DeadLetterMessageCount.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduledMessageCount), out propertyOverride);
-            if (Optional.IsDefined(ScheduledMessageCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scheduledMessageCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScheduledMessageCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scheduledMessageCount: ");
                     builder.AppendLine($"'{ScheduledMessageCount.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransferMessageCount), out propertyOverride);
-            if (Optional.IsDefined(TransferMessageCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  transferMessageCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TransferMessageCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  transferMessageCount: ");
                     builder.AppendLine($"'{TransferMessageCount.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransferDeadLetterMessageCount), out propertyOverride);
-            if (Optional.IsDefined(TransferDeadLetterMessageCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  transferDeadLetterMessageCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TransferDeadLetterMessageCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  transferDeadLetterMessageCount: ");
                     builder.AppendLine($"'{TransferDeadLetterMessageCount.Value.ToString()}'");
                 }
             }

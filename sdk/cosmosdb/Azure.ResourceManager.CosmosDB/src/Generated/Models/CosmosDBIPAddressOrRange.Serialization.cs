@@ -101,15 +101,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddressOrRange), out propertyOverride);
-            if (Optional.IsDefined(IPAddressOrRange) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ipAddressOrRange: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPAddressOrRange))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ipAddressOrRange: ");
                     if (IPAddressOrRange.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
