@@ -32,6 +32,7 @@
   <!-- Shared source from Exporter -->
   <ItemGroup>
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\Platform\EnvironmentVariableConstants.cs" LinkBase="Shared" />
   </ItemGroup>
   
 </Project>

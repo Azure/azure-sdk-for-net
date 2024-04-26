@@ -19,6 +19,8 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.ResourceDetectors.Azure;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
 {
@@ -158,6 +160,25 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     {
                         azureMonitorOptions.Get(Options.DefaultName).SetValueToExporterOptions(exporterOptions);
                     });
+
+            builder.Services.AddOptions<AzureMonitorOptions>()
+                .Configure<IConfiguration>((options, config) =>
+                {
+                    // This is a temporary workaround for hotfix GHSA-vh2m-22xx-q94f.
+                    // https://github.com/open-telemetry/opentelemetry-dotnet/security/advisories/GHSA-vh2m-22xx-q94f
+                    // We are disabling the workaround set by OpenTelemetry.Instrumentation.AspNetCore v1.8.1 and OpenTelemetry.Instrumentation.Http v1.8.1.
+                    // The OpenTelemetry Community is deciding on an official stance on this issue and we will align with that final decision.
+                    // TODO: FOLLOW UP ON: https://github.com/open-telemetry/semantic-conventions/pull/961 (2024-04-26)
+                    if (config[EnvironmentVariableConstants.ASPNETCORE_DISABLE_URL_QUERY_REDACTION] == null)
+                    {
+                        config[EnvironmentVariableConstants.ASPNETCORE_DISABLE_URL_QUERY_REDACTION] = Boolean.TrueString;
+                    }
+
+                    if (config[EnvironmentVariableConstants.HTTPCLIENT_DISABLE_URL_QUERY_REDACTION] == null)
+                    {
+                        config[EnvironmentVariableConstants.HTTPCLIENT_DISABLE_URL_QUERY_REDACTION] = Boolean.TrueString;
+                    }
+                });
 
             return builder;
         }
