@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace System.ClientModel.Options;
 
@@ -15,14 +16,14 @@ public class LoggingOptions
     private const int DefaultLoggedContentSizeLimit = 4 * 1024;
     private const bool DefaultIsLoggingEnabled = true;
     private const bool DefaultIsLoggingContentEnabled = false;
-    private static readonly IEnumerable<string> DefaultLoggedHeaderNames = new[] { "TODO" };
-    private static readonly IEnumerable<string> DefaultLoggedQueryParameters = new[] { "api-version" };
+    private static readonly IList<string> DefaultLoggedHeaderNames = new[] { "TODO" };
+    private static readonly IList<string> DefaultLoggedQueryParameters = new[] { "api-version" };
 
     private bool _isLoggingEnabled = DefaultIsLoggingEnabled;
     private int _loggedContentSizeLimit = DefaultLoggedContentSizeLimit;
     private bool _isLoggingContentEnabled = DefaultIsLoggingContentEnabled;
-    private IEnumerable<string> _loggedHeaderNames = DefaultLoggedHeaderNames;
-    private IEnumerable<string> _loggedQueryParameters = DefaultLoggedQueryParameters;
+    private IList<string> _loggedHeaderNames = DefaultLoggedHeaderNames;
+    private IList<string> _loggedQueryParameters = DefaultLoggedQueryParameters;
     private string? _clientAssembly;
     private string? _requestIdHeaderName;
 
@@ -71,7 +72,7 @@ public class LoggingOptions
     /// <summary>
     /// Gets or sets a list of header names that are not redacted during logging.
     /// </summary>
-    public IEnumerable<string> LoggedHeaderNames
+    public IList<string> LoggedHeaderNames
     {
         get => _loggedHeaderNames;
         set
@@ -85,7 +86,7 @@ public class LoggingOptions
     /// <summary>
     /// Gets or sets a list of query parameter names that are not redacted during logging.
     /// </summary>
-    public IEnumerable<string> LoggedQueryParameters
+    public IList<string> LoggedQueryParameters
     {
         get => _loggedQueryParameters;
         set
@@ -132,6 +133,8 @@ public class LoggingOptions
     public virtual void Freeze()
     {
         _frozen = true;
+        _loggedHeaderNames = new ReadOnlyCollection<string>(_loggedHeaderNames);
+        _loggedQueryParameters = new ReadOnlyCollection<string>(_loggedQueryParameters);
     }
 
     /// <summary>
@@ -145,7 +148,7 @@ public class LoggingOptions
     {
         if (_frozen)
         {
-            throw new InvalidOperationException("Cannot change a DiagnosticsOptions instance after the ClientPipeline is created.");
+            throw new InvalidOperationException("Cannot change a LoggingOptions instance after the ClientPipeline is created.");
         }
     }
 }
