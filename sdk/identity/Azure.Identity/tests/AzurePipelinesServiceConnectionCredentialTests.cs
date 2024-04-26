@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -59,6 +61,28 @@ namespace Azure.Identity.Tests
             var pipeline = CredentialPipeline.GetInstance(options);
             options.Pipeline = pipeline;
             return InstrumentClient(new AzurePipelinesServiceConnectionCredential(config.TenantId, ClientId, "serviceConnectionId", options));
+        }
+
+        [Test]
+        public void AzurePipelinesServiceConnectionCredentialOptions_Loads_From_Env()
+        {
+            using (new TestEnvVar(new Dictionary<string, string>
+            {
+                { "SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "mockCollectionUri" },
+                { "SYSTEM_HOSTTYPE", "mockHubName" },
+                { "SYSTEM_JOBID", "mockJobId" },
+                { "SYSTEM_PLANID", "mockPlanId" },
+                { "SYSTEM_ACCESSTOKEN", "mockSystemAccessToken" },
+                { "SYSTEM_TEAMPROJECTID", "mockTeamProjectId" }}))
+            {
+                var options = new AzurePipelinesServiceConnectionCredentialOptions();
+                Assert.AreEqual("mockCollectionUri", options.CollectionUri);
+                Assert.AreEqual("mockHubName", options.HubName);
+                Assert.AreEqual("mockJobId", options.JobId);
+                Assert.AreEqual("mockPlanId", options.PlanId);
+                Assert.AreEqual("mockSystemAccessToken", options.SystemAccessToken);
+                Assert.AreEqual("mockTeamProjectId", options.TeamProjectId);
+            }
         }
     }
 }
