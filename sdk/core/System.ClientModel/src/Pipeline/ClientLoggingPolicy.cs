@@ -49,12 +49,8 @@ public class ClientLoggingPolicy : PipelinePolicy
         _isLoggingEnabled = loggingOptions.IsLoggingEnabled;
         _sanitizer = new PipelineMessageSanitizer(loggingOptions.LoggedQueryParameters, loggingOptions.LoggedHeaderNames);
 
-        if (!s_singletonEventSources.TryGetValue(logName, out ClientModelEventSource? eventSource))
-        {
-            eventSource = ClientModelEventSource.Create(logName ?? DefaultEventSourceName, logTraits);
-            s_singletonEventSources[logName ?? DefaultEventSourceName] = eventSource;
-        }
-        _eventSource = eventSource;
+        string logNameToUse = logName ?? DefaultEventSourceName;
+        _eventSource = s_singletonEventSources.GetOrAdd(logNameToUse, _ => ClientModelEventSource.Create(logNameToUse, logTraits));
     }
 
     /// <summary>
@@ -91,7 +87,10 @@ public class ClientLoggingPolicy : PipelinePolicy
         // Log the request
 
         PipelineRequest request = message.Request;
-        string? requestId = GetRequestIdFromHeaders(request.Headers);
+
+        // If a request Id wasn't set, generate one so at least all the logs for this request and its corresponding response
+        // can be correlated with each other.
+        string requestId = GetRequestIdFromHeaders(request.Headers) ?? Guid.NewGuid().ToString();
 
         LogRequest(request, requestId);
         await LogRequestContent(request, requestId, async, message.CancellationToken).ConfigureAwait(false);
@@ -111,7 +110,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
         catch (Exception ex)
         {
-            _eventSource.ExceptionResponse(requestId ?? string.Empty, ex.ToString());
+            _eventSource.ExceptionResponse(requestId, ex.ToString());
             throw;
         }
 
@@ -123,21 +122,20 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         double elapsed = (after - before) / (double)Stopwatch.Frequency;
 
-        string? responseId = GetResponseIdFromHeaders(response.Headers);
-        responseId = string.IsNullOrEmpty(responseId) ? requestId : responseId; // Use the request ID if there was no response id
+        string responseId = GetResponseIdFromHeaders(response.Headers) ?? requestId; // Use the request ID if there was no response id
 
         LogResponse(response, responseId, elapsed);
         await LogResponseContent(response, responseId, message.BufferResponse, async, message.CancellationToken).ConfigureAwait(false);
 
         if (elapsed > RequestTooLongTime)
         {
-            _eventSource.ResponseDelay(responseId ?? string.Empty, elapsed);
+            _eventSource.ResponseDelay(responseId, elapsed);
         }
     }
 
     private void LogRequest(PipelineRequest request, string? requestId)
     {
-        _eventSource.Request(request, requestId ?? string.Empty, _assemblyName, _sanitizer);
+        _eventSource.Request(request, requestId, _assemblyName, _sanitizer);
     }
 
     private async Task LogRequestContent(PipelineRequest request, string? requestId, bool async, CancellationToken cancellationToken)
@@ -168,7 +166,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
 
         // Log to event source
-        _eventSource.RequestContent(requestId ?? string.Empty, bytes, requestTextEncoding);
+        _eventSource.RequestContent(requestId, bytes, requestTextEncoding);
     }
 
     private void LogResponse(PipelineResponse response, string? responseId, double elapsed)
@@ -176,11 +174,11 @@ public class ClientLoggingPolicy : PipelinePolicy
         bool isError = response.IsError;
         if (isError)
         {
-            _eventSource.ErrorResponse(response, responseId ?? string.Empty, _sanitizer, elapsed);
+            _eventSource.ErrorResponse(response, responseId, _sanitizer, elapsed);
         }
         else
         {
-            _eventSource.Response(response, responseId ?? string.Empty, _sanitizer, elapsed);
+            _eventSource.Response(response, responseId, _sanitizer, elapsed);
         }
     }
 
@@ -209,7 +207,7 @@ public class ClientLoggingPolicy : PipelinePolicy
             var length = Math.Min(contentAsMemory.Length, _maxLength);
             byte[] bytes = contentAsMemory.Span.Slice(0, length).ToArray();
 
-            LogFormattedResponseContent(response.IsError, responseId ?? string.Empty, bytes ?? Array.Empty<byte>(), responseTextEncoding);
+            LogFormattedResponseContent(response.IsError, responseId, bytes, responseTextEncoding);
 
             return;
         }
@@ -230,15 +228,15 @@ public class ClientLoggingPolicy : PipelinePolicy
 
             byte[] bytes = memoryStream.ToArray();
 
-            LogFormattedResponseContent(response.IsError, responseId ?? string.Empty, bytes ?? Array.Empty<byte>(), responseTextEncoding);
+            LogFormattedResponseContent(response.IsError, responseId, bytes, responseTextEncoding);
 
             return;
         }
 
-        response.ContentStream = new LoggingStream(_eventSource, responseId ?? string.Empty, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding);
+        response.ContentStream = new LoggingStream(_eventSource, responseId, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding);
     }
 
-    private void LogFormattedResponseContent(bool isError, string clientId, byte[] bytes, Encoding? encoding)
+    private void LogFormattedResponseContent(bool isError, string? clientId, byte[] bytes, Encoding? encoding)
     {
         if (isError)
         {
@@ -307,7 +305,7 @@ public class ClientLoggingPolicy : PipelinePolicy
     #region LoggingStream
     private class LoggingStream : Stream
     {
-        private readonly string _requestId;
+        private readonly string? _requestId;
         private int _maxLoggedBytes;
         private int _originalMaxLength;
         private readonly Stream _originalStream;
@@ -316,7 +314,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         private int _blockNumber;
         private readonly ClientModelEventSource _eventSource;
 
-        public LoggingStream(ClientModelEventSource eventSource, string requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding)
+        public LoggingStream(ClientModelEventSource eventSource, string? requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding)
         {
             // Should only wrap non-seekable streams
             Debug.Assert(!originalStream.CanSeek);

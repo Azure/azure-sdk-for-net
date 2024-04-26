@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace System.ClientModel.Options;
 
@@ -131,7 +129,10 @@ public class LoggingOptions
     /// has been called, any attempt to set properties on the instance or call
     /// methods that would change its state will throw <see cref="InvalidOperationException"/>.
     /// </summary>
-    public virtual void Freeze() => _frozen = true;
+    public virtual void Freeze()
+    {
+        _frozen = true;
+    }
 
     /// <summary>
     /// Assert that <see cref="Freeze"/> has not been called on this
