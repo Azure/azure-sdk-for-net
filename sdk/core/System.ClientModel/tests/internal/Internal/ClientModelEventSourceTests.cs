@@ -40,10 +40,11 @@ namespace System.ClientModel.Tests.Internal
 
         private TestClientEventListener _listener;
 
-        private static string[] s_allowedHeaders = new[] { "Date", "Custom-Header", "Custom-Response-Header" };
-        private static string[] s_allowedQueryParameters = new[] { "api-version" };
-        private const string _systemClientModelEventSourceName = "System.ClientModel";
-        private const string _azureCoreEventSourceName = "Azure-Core";
+        private static readonly string[] s_allowedHeaders = new[] { "Date", "Custom-Header", "Custom-Response-Header" };
+        private static readonly string[] s_allowedQueryParameters = new[] { "api-version" };
+        private const string SystemClientModelEventSourceName = "System.ClientModel";
+        private const string AzureCoreEventSourceName = "Azure-Core";
+        private const string ClientRequestIdHeaderName = "Client-Id";
 
         public ClientModelEventSourceTests(bool isAsync) : base(isAsync)
         {
@@ -63,16 +64,46 @@ namespace System.ClientModel.Tests.Internal
         }
 
         [Test]
+        public async Task LogsAreNotWrittenWhenTheSourceDoesNotHaveAnyListeners()
+        {
+            var response = new MockPipelineResponse(200);
+            response.SetContent("Hello");
+
+            var loggingOptions = new LoggingOptions
+            {
+                IsLoggingEnabled = true,
+                IsLoggingContentEnabled = true,
+                LoggedHeaderNames = s_allowedHeaders
+            };
+
+            ClientPipelineOptions options = new()
+            {
+                Transport = new MockPipelineTransport("Transport", i => response),
+                LoggingPolicy = new NotEnabledLoggingPolicy(loggingOptions)
+            };
+
+            ClientPipeline pipeline = ClientPipeline.Create(options);
+
+            PipelineMessage message = pipeline.CreateMessage();
+            message.Request.Uri = new Uri("http://example.com");
+            message.Request.Content = BinaryContent.Create(new BinaryData("Hello"));
+
+            await pipeline.SendSyncOrAsync(message, IsAsync);
+
+            IEnumerable<EventWrittenEventArgs> args = _listener.EventData;
+            Assert.AreEqual(0, args.Count());
+        }
+
+        [Test]
         public async Task SourceCanWriteToCustomName()
         {
             string requestContent = "This is a request.";
             string responseContent = "This is a response.";
             string clientIdHeaderName = "x-ms-request-client-id";
-            string clientResponseId = "client-123456789";
-            string clientRequestId = "client-12345678"; // Different to test that logging policy checks headers first
+            string clientId = "client-123456789";
             string clientAssemblyName = "Test-Azure-SDK";
 
-            var headers = new MockResponseHeaders(new Dictionary<string, string> { { clientIdHeaderName, clientResponseId } });
+            var headers = new MockResponseHeaders(new Dictionary<string, string> { { clientIdHeaderName, clientId } });
             var response = new MockPipelineResponse(200, mockHeaders: headers);
             response.SetContent(responseContent);
             var loggingOptions = new LoggingOptions
@@ -94,48 +125,52 @@ namespace System.ClientModel.Tests.Internal
 
             PipelineMessage message = pipeline.CreateMessage();
             message.Request.Uri = new Uri("http://example.com");
-            message.Request.Headers.Add(clientIdHeaderName, clientRequestId);
+            message.Request.Headers.Add(clientIdHeaderName, clientId);
             message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs args = _listener.SingleEventById(RequestEvent);
             Assert.AreEqual(EventLevel.Informational, args.Level);
-            Assert.AreEqual(_azureCoreEventSourceName, args.EventSource.Name);
+            Assert.AreEqual(AzureCoreEventSourceName, args.EventSource.Name);
             Assert.AreEqual("Request", args.EventName);
-            Assert.AreEqual(clientRequestId, args.GetProperty<string>("requestId"));
+            Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
             Assert.AreEqual("http://example.com/", args.GetProperty<string>("uri"));
             Assert.AreEqual("GET", args.GetProperty<string>("method"));
             Assert.AreEqual(clientAssemblyName, args.GetProperty<string>("clientAssembly"));
 
             args = _listener.SingleEventById(RequestContentEvent);
-            Assert.AreEqual("Azure-Core", args.EventSource.Name);
+            Assert.AreEqual(AzureCoreEventSourceName, args.EventSource.Name);
             Assert.AreEqual(EventLevel.Verbose, args.Level);
             Assert.AreEqual("RequestContent", args.EventName);
-            Assert.AreEqual("client-123456789", args.GetProperty<string>("requestId"));
+            Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
             CollectionAssert.AreEqual("This is a request.", args.GetProperty<byte[]>("content"));
 
             args = _listener.SingleEventById(ResponseEvent);
-            Assert.AreEqual("Azure-Core", args.EventSource.Name);
+            Assert.AreEqual(AzureCoreEventSourceName, args.EventSource.Name);
             Assert.AreEqual(EventLevel.Informational, args.Level);
             Assert.AreEqual("Response", args.EventName);
-            Assert.AreEqual(clientResponseId, args.GetProperty<string>("requestId"));
+            Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
             Assert.AreEqual(args.GetProperty<int>("status"), 200);
 
             args = _listener.SingleEventById(ResponseContentEvent);
-            Assert.AreEqual("Azure-Core", args.EventSource.Name);
+            Assert.AreEqual(AzureCoreEventSourceName, args.EventSource.Name);
             Assert.AreEqual(EventLevel.Verbose, args.Level);
             Assert.AreEqual("ResponseContent", args.EventName);
-            Assert.AreEqual(clientResponseId, args.GetProperty<string>("requestId"));
+            Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
             CollectionAssert.AreEqual(responseContent, args.GetProperty<byte[]>("content"));
         }
 
         [Test]
         public async Task SendingRequestProducesEvents()
         {
+            string requestContent = "Hello";
+            string responseContent = "World";
+            string clientId = "client1";
+
             var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Value" } });
             var response = new MockPipelineResponse(200, mockHeaders: headers);
-            response.SetContent("World");
+            response.SetContent(responseContent);
 
             ClientPipelineOptions options = new()
             {
@@ -144,9 +179,9 @@ namespace System.ClientModel.Tests.Internal
                 {
                     IsLoggingEnabled = true,
                     IsLoggingContentEnabled = true,
-                    LoggedHeaderNames = new List<string> { "Custom-Response-Header", "Custom-Header" },
+                    LoggedHeaderNames = s_allowedHeaders,
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = "Client-Identifier"
+                    RequestIdHeaderName = ClientRequestIdHeaderName
                 }
             };
 
@@ -156,50 +191,51 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Method = "GET";
             message.Request.Uri = new Uri("http://example.com");
             message.Request.Headers.Add("Custom-Header", "Value");
-            message.Request.Headers.Add("Client-Identifier", "client1");
+            message.Request.Headers.Add(ClientRequestIdHeaderName, clientId);
             message.Request.Headers.Add("Date", "3/28/2024");
-            message.Request.Content= BinaryContent.Create(new BinaryData("Hello"));
-            message.Request.Headers.Add("x-client-id", "client-id");
+            message.Request.Content= BinaryContent.Create(new BinaryData(requestContent));
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs args = _listener.SingleEventById(RequestEvent);
             Assert.AreEqual(EventLevel.Informational, args.Level);
-            Assert.AreEqual("System.ClientModel", args.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, args.EventSource.Name);
             Assert.AreEqual("Request", args.EventName);
-            Assert.AreEqual("client1", args.GetProperty<string>("requestId"));
+            Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
             Assert.AreEqual("http://example.com/", args.GetProperty<string>("uri"));
             Assert.AreEqual("GET", args.GetProperty<string>("method"));
-            StringAssert.Contains($"Date:REDACTED{Environment.NewLine}", args.GetProperty<string>("headers"));
+            StringAssert.Contains($"Date:3/28/2024{Environment.NewLine}", args.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", args.GetProperty<string>("headers"));
             Assert.AreEqual("Test-SDK", args.GetProperty<string>("clientAssembly"));
 
             args = _listener.SingleEventById(RequestContentEvent);
             Assert.AreEqual(EventLevel.Verbose, args.Level);
-            Assert.AreEqual("System.ClientModel", args.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, args.EventSource.Name);
             Assert.AreEqual("RequestContent", args.EventName);
-            Assert.AreEqual("client1", args.GetProperty<string>("requestId"));
-            CollectionAssert.AreEqual("Hello", args.GetProperty<byte[]>("content"));
+            Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
+            CollectionAssert.AreEqual(requestContent, args.GetProperty<byte[]>("content"));
 
             args = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, args.Level);
-            Assert.AreEqual("System.ClientModel", args.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, args.EventSource.Name);
             Assert.AreEqual("Response", args.EventName);
-            Assert.AreEqual("client1", args.GetProperty<string>("requestId"));
+            Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
             Assert.AreEqual(args.GetProperty<int>("status"), 200);
             StringAssert.Contains($"Custom-Response-Header:Value{Environment.NewLine}", args.GetProperty<string>("headers"));
 
             args = _listener.SingleEventById(ResponseContentEvent);
             Assert.AreEqual(EventLevel.Verbose, args.Level);
-            Assert.AreEqual("System.ClientModel", args.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, args.EventSource.Name);
             Assert.AreEqual("ResponseContent", args.EventName);
-            Assert.AreEqual("client1", args.GetProperty<string>("requestId"));
-            CollectionAssert.AreEqual("World", args.GetProperty<byte[]>("content"));
+            Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
+            CollectionAssert.AreEqual(responseContent, args.GetProperty<byte[]>("content"));
         }
 
         [Test]
         public void GettingExceptionResponseProducesEvents()
         {
+            string clientId = "client1";
+
             var exception = new InvalidOperationException();
             ClientPipelineOptions options = new()
             {
@@ -208,8 +244,10 @@ namespace System.ClientModel.Tests.Internal
                 {
                     IsLoggingEnabled = true,
                     IsLoggingContentEnabled = true,
-                    LoggedHeaderNames = new List<string> { "Custom-Response-Header", "Custom-Header" },
-                    LoggedClientAssemblyName = "Test-SDK", RequestIdHeaderName = "Client-Identifier" }
+                    LoggedHeaderNames = s_allowedHeaders,
+                    LoggedClientAssemblyName = "Test-SDK",
+                    RequestIdHeaderName = ClientRequestIdHeaderName
+                }
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -218,14 +256,14 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Method = "GET";
             message.Request.Uri = new Uri("http://example.com");
             message.Request.Headers.Add("User-Agent", "agent");
-            message.Request.Headers.Add("Client-Identifier", "client1");
+            message.Request.Headers.Add(ClientRequestIdHeaderName, clientId);
 
             Assert.ThrowsAsync<InvalidOperationException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
 
             EventWrittenEventArgs e = _listener.SingleEventById(ExceptionResponseEvent);
-            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
             Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
+            Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
             Assert.AreEqual(exception.ToString().Split(Environment.NewLine.ToCharArray())[0],
                 e.GetProperty<string>("exception").Split(Environment.NewLine.ToCharArray())[0]);
         }
@@ -283,9 +321,13 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task GettingErrorResponseProducesEvents()
         {
+            byte[] requestContent = new byte[] { 1, 2, 3, 4, 5 };
+            byte[] responseContent = new byte[] { 6, 7, 8, 9, 0 };
+            string clientId = "client1";
+
             var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Value - 2" } });
             var response = new MockPipelineResponse(500, mockHeaders: headers);
-            response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
+            response.SetContent(responseContent);
 
             ClientPipelineOptions options = new()
             {
@@ -296,8 +338,8 @@ namespace System.ClientModel.Tests.Internal
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = int.MaxValue,
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = "Client-Identifier",
-                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                    RequestIdHeaderName = ClientRequestIdHeaderName,
+                    LoggedHeaderNames = s_allowedHeaders
                 }
             };
 
@@ -307,32 +349,35 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Method = "GET";
             message.Request.Uri = new Uri("http://example.com");
             message.Request.Headers.Add("Custom-Header", "Value");
-            message.Request.Headers.Add("Client-Identifier", "client1");
+            message.Request.Headers.Add(clientId, clientId);
             message.Request.Headers.Add("Date", "3/28/2024");
             message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
-            message.Request.Headers.Add("x-client-id", "client-id");
+            message.Request.Headers.Add(ClientRequestIdHeaderName, clientId);
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs e = _listener.SingleEventById(ErrorResponseEvent);
-            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
             Assert.AreEqual(EventLevel.Warning, e.Level);
             Assert.AreEqual("ErrorResponse", e.EventName);
-            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
+            Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
             Assert.AreEqual(e.GetProperty<int>("status"), 500);
             StringAssert.Contains($"Custom-Response-Header:Value - 2{Environment.NewLine}", e.GetProperty<string>("headers"));
 
             e = _listener.SingleEventById(ErrorResponseContentEvent);
-            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("ErrorResponseContent", e.EventName);
-            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
-            CollectionAssert.AreEqual(new byte[] { 6, 7, 8, 9, 0 }, e.GetProperty<byte[]>("content"));
+            Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
+            CollectionAssert.AreEqual(responseContent, e.GetProperty<byte[]>("content"));
         }
 
         [Test]
         public async Task RequestContentIsLoggedAsText()
         {
+            string clientId = "client1";
+            string requestContent = "Hello world";
+
             var response = new MockPipelineResponse(500);
 
             ClientPipelineOptions options = new()
@@ -344,8 +389,8 @@ namespace System.ClientModel.Tests.Internal
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = int.MaxValue,
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = "x-client-id",
-                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                    RequestIdHeaderName = ClientRequestIdHeaderName,
+                    LoggedHeaderNames = s_allowedHeaders
                 }
             };
 
@@ -355,19 +400,19 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Method = "GET";
             message.Request.Uri = new Uri("http://example.com");
             message.Request.Headers.Add("Custom-Header", "Value");
-            message.Request.Headers.Add("x-client-id", "client1");
+            message.Request.Headers.Add(ClientRequestIdHeaderName, clientId);
             message.Request.Headers.Add("Date", "3/28/2024");
             message.Request.Headers.Add("Content-Type", "text/json");
-            message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
+            message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes(requestContent)));
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestContentTextEvent);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
-            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
             Assert.AreEqual("RequestContentText", e.EventName);
-            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
-            Assert.AreEqual("Hello world", e.GetProperty<string>("content"));
+            Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
+            Assert.AreEqual(requestContent, e.GetProperty<string>("content"));
 
             CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
         }
@@ -387,8 +432,8 @@ namespace System.ClientModel.Tests.Internal
                     IsLoggingContentEnabled = false,
                     LoggedContentSizeLimit = int.MaxValue,
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = "x-client-id",
-                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                    RequestIdHeaderName = ClientRequestIdHeaderName,
+                    LoggedHeaderNames = s_allowedHeaders
                 }
             };
 
@@ -398,11 +443,10 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Method = "GET";
             message.Request.Uri = new Uri("http://example.com");
             message.Request.Headers.Add("Custom-Header", "Value");
-            message.Request.Headers.Add("Client-Identifier", "client1");
             message.Request.Headers.Add("Date", "3/28/2024");
             message.Request.Headers.Add("Content-Type", "text/json");
             message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
-            message.Request.Headers.Add("x-client-id", "client-id");
+            message.Request.Headers.Add(ClientRequestIdHeaderName, "client1");
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -421,8 +465,8 @@ namespace System.ClientModel.Tests.Internal
                 LoggingOptions = new LoggingOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = "Client-Identifier",
-                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                    RequestIdHeaderName = ClientRequestIdHeaderName,
+                    LoggedHeaderNames = s_allowedHeaders
                 }
             };
 
@@ -432,7 +476,7 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Method = "GET";
             message.Request.Uri = new Uri("http://example.com");
             message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
-            message.Request.Headers.Add("x-client-id", "client-id");
+            message.Request.Headers.Add(ClientRequestIdHeaderName, "client-id");
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -451,8 +495,8 @@ namespace System.ClientModel.Tests.Internal
                 LoggingOptions = new LoggingOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = "Client-Identifier",
-                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                    RequestIdHeaderName = ClientRequestIdHeaderName,
+                    LoggedHeaderNames = s_allowedHeaders
                 }
             };
 
@@ -485,21 +529,21 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task NonSeekableResponsesAreLoggedInBlocks()
         {
-            MockPipelineResponse response = await SendRequest(isSeekable: false, isError: false);
+            await SendRequest(isSeekable: false, isError: false);
 
             EventWrittenEventArgs[] contentEvents = _listener.EventsById(ResponseContentBlockEvent).ToArray();
 
             Assert.AreEqual(2, contentEvents.Length);
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
-            Assert.AreEqual("System.ClientModel", contentEvents[0].EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, contentEvents[0].EventSource.Name);
             Assert.AreEqual("ResponseContentBlock", contentEvents[0].EventName);
             Assert.AreEqual("client-id", contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, contentEvents[0].GetProperty<byte[]>("content"));
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
-            Assert.AreEqual("System.ClientModel", contentEvents[1].EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, contentEvents[1].EventSource.Name);
             Assert.AreEqual("ResponseContentBlock", contentEvents[1].EventName);
             Assert.AreEqual("client-id", contentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
@@ -511,21 +555,21 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task NonSeekableResponsesErrorsAreLoggedInBlocks()
         {
-            MockPipelineResponse response = await SendRequest(isSeekable: false, isError: true);
+            await SendRequest(isSeekable: false, isError: true);
 
             EventWrittenEventArgs[] errorContentEvents = _listener.EventsById(ErrorResponseContentBlockEvent).ToArray();
 
             Assert.AreEqual(2, errorContentEvents.Length);
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
-            Assert.AreEqual("System.ClientModel", errorContentEvents[0].EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, errorContentEvents[0].EventSource.Name);
             Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[0].EventName);
             Assert.AreEqual("client-id", errorContentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, errorContentEvents[0].GetProperty<byte[]>("content"));
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
-            Assert.AreEqual("System.ClientModel", errorContentEvents[1].EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, errorContentEvents[1].EventSource.Name);
             Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[1].EventName);
             Assert.AreEqual("client-id", errorContentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
@@ -537,7 +581,7 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task NonSeekableResponsesAreLoggedInTextBlocks()
         {
-            MockPipelineResponse response = await SendRequest(
+            await SendRequest(
                 isSeekable: false,
                 isError: false,
                 mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } })
@@ -548,14 +592,14 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual(2, contentEvents.Length);
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
-            Assert.AreEqual("System.ClientModel", contentEvents[0].EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, contentEvents[0].EventSource.Name);
             Assert.AreEqual("ResponseContentTextBlock", contentEvents[0].EventName);
             Assert.AreEqual("client-id", contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
             Assert.AreEqual("Hello ", contentEvents[0].GetProperty<string>("content"));
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
-            Assert.AreEqual("System.ClientModel", contentEvents[1].EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, contentEvents[1].EventSource.Name);
             Assert.AreEqual("ResponseContentTextBlock", contentEvents[1].EventName);
             Assert.AreEqual("client-id", contentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
@@ -567,7 +611,7 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task NonSeekableResponsesErrorsAreLoggedInTextBlocks()
         {
-            MockPipelineResponse response = await SendRequest(
+            await SendRequest(
                 isSeekable: false,
                 isError: true,
                 mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } })
@@ -578,14 +622,14 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual(2, errorContentEvents.Length);
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
-            Assert.AreEqual("System.ClientModel", errorContentEvents[0].EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, errorContentEvents[0].EventSource.Name);
             Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[0].EventName);
             Assert.AreEqual("client-id", errorContentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
             Assert.AreEqual("Hello ", errorContentEvents[0].GetProperty<string>("content"));
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
-            Assert.AreEqual("System.ClientModel", errorContentEvents[1].EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, errorContentEvents[1].EventSource.Name);
             Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[1].EventName);
             Assert.AreEqual("client-id", errorContentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
@@ -597,7 +641,7 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task SeekableTextResponsesAreLoggedInText()
         {
-            MockPipelineResponse response = await SendRequest(
+            await SendRequest(
                 isSeekable: true,
                 isError: false,
                 mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } })
@@ -606,7 +650,7 @@ namespace System.ClientModel.Tests.Internal
             EventWrittenEventArgs contentEvent = _listener.SingleEventById(ResponseContentTextEvent);
 
             Assert.AreEqual(EventLevel.Verbose, contentEvent.Level);
-            Assert.AreEqual("System.ClientModel", contentEvent.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, contentEvent.EventSource.Name);
             Assert.AreEqual("ResponseContentText", contentEvent.EventName);
             Assert.AreEqual("client-id", contentEvent.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello world", contentEvent.GetProperty<string>("content"));
@@ -615,7 +659,7 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task SeekableTextResponsesErrorsAreLoggedInText()
         {
-            MockPipelineResponse response = await SendRequest(
+            await SendRequest(
                 isSeekable: true,
                 isError: true,
                 mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } }),
@@ -625,7 +669,7 @@ namespace System.ClientModel.Tests.Internal
             EventWrittenEventArgs errorContentEvent = _listener.SingleEventById(ErrorResponseContentTextEvent);
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvent.Level);
-            Assert.AreEqual("System.ClientModel", errorContentEvent.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, errorContentEvent.EventSource.Name);
             Assert.AreEqual("ErrorResponseContentText", errorContentEvent.EventName);
             Assert.AreEqual("client-id", errorContentEvent.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello", errorContentEvent.GetProperty<string>("content"));
@@ -634,7 +678,7 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task SeekableTextResponsesAreLimitedInLength()
         {
-            MockPipelineResponse response = await SendRequest(
+            await SendRequest(
                 isSeekable: true,
                 isError: false,
                 mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } }),
@@ -644,7 +688,7 @@ namespace System.ClientModel.Tests.Internal
             EventWrittenEventArgs contentEvent = _listener.SingleEventById(ResponseContentTextEvent);
 
             Assert.AreEqual(EventLevel.Verbose, contentEvent.Level);
-            Assert.AreEqual("System.ClientModel", contentEvent.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, contentEvent.EventSource.Name);
             Assert.AreEqual("ResponseContentText", contentEvent.EventName);
             Assert.AreEqual("client-id", contentEvent.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello", contentEvent.GetProperty<string>("content"));
@@ -664,8 +708,8 @@ namespace System.ClientModel.Tests.Internal
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = 5,
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = "Client-Identifier",
-                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                    RequestIdHeaderName = ClientRequestIdHeaderName,
+                    LoggedHeaderNames = s_allowedHeaders
                 }
             };
 
@@ -676,12 +720,12 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Uri = new Uri("http://example.com");
             message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
             message.Request.Headers.Add("Content-Type", "text/json");
-            message.Request.Headers.Add("Client-Identifier", "client1");
+            message.Request.Headers.Add(ClientRequestIdHeaderName, "client1");
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestContentTextEvent);
-            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
             Assert.AreEqual("RequestContentText", e.EventName);
             Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
@@ -693,7 +737,7 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task NonSeekableResponsesAreLimitedInLength()
         {
-            MockPipelineResponse response = await SendRequest(
+            await SendRequest(
                 isSeekable: false,
                 isError: false,
                 mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } }),
@@ -705,7 +749,7 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual(1, contentEvents.Length);
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
-            Assert.AreEqual("System.ClientModel", contentEvents[0].EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, contentEvents[0].EventSource.Name);
             Assert.AreEqual("ResponseContentTextBlock", contentEvents[0].EventName);
             Assert.AreEqual("client-id", contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
@@ -717,6 +761,8 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task HeadersAndQueryParametersAreSanitized()
         {
+            string clientId = "client1";
+
             var mockHeaders = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Improved value" }, { "Secret-Response-Header", "Very secret" } });
             var response = new MockPipelineResponse(200, mockHeaders: mockHeaders);
             response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
@@ -727,9 +773,9 @@ namespace System.ClientModel.Tests.Internal
                 LoggingOptions = new LoggingOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = "Client-Identifier",
-                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header", "Date" },
-                    LoggedQueryParameters = new List<string>() { "api-version" }
+                    RequestIdHeaderName = ClientRequestIdHeaderName,
+                    LoggedHeaderNames = s_allowedHeaders,
+                    LoggedQueryParameters = s_allowedQueryParameters
                 }
             };
 
@@ -740,7 +786,7 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Uri = new Uri("https://contoso.a.io?api-version=5&secret=123");
             message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
             message.Request.Headers.Add("Content-Type", "text/json");
-            message.Request.Headers.Add("Client-Identifier", "client1");
+            message.Request.Headers.Add(ClientRequestIdHeaderName, clientId);
             message.Request.Headers.Add("Date", "4/18/2024");
             message.Request.Headers.Add("Custom-Header", "Value");
             message.Request.Headers.Add("Secret-Custom-Header", "Value");
@@ -748,10 +794,10 @@ namespace System.ClientModel.Tests.Internal
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
-            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Request", e.EventName);
-            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
+            Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
             Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=REDACTED", e.GetProperty<string>("uri"));
             Assert.AreEqual("GET", e.GetProperty<string>("method"));
             StringAssert.Contains($"Date:4/18/2024{Environment.NewLine}", e.GetProperty<string>("headers"));
@@ -760,10 +806,10 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual("Test-SDK", e.GetProperty<string>("clientAssembly"));
 
             e = _listener.SingleEventById(ResponseEvent);
-            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Response", e.EventName);
-            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
+            Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
             Assert.AreEqual(e.GetProperty<int>("status"), 200);
             StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Secret-Response-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
@@ -772,6 +818,7 @@ namespace System.ClientModel.Tests.Internal
         [Test]
         public async Task HeadersAndQueryParametersAreNotSanitizedWhenStars()
         {
+            string clientId = "client1";
             var mockHeaders = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Improved value" }, { "Secret-Response-Header", "Very secret" } });
             var response = new MockPipelineResponse(200, mockHeaders: mockHeaders);
             response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
@@ -782,7 +829,7 @@ namespace System.ClientModel.Tests.Internal
                 LoggingOptions = new LoggingOptions
                 {
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = "Client-Identifier",
+                    RequestIdHeaderName = ClientRequestIdHeaderName,
                     LoggedHeaderNames = new List<string>() { "*" },
                     LoggedQueryParameters = new List<string>() { "*" }
                 }
@@ -795,17 +842,17 @@ namespace System.ClientModel.Tests.Internal
             message.Request.Uri = new Uri("https://contoso.a.io?api-version=5&secret=123");
             message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
             message.Request.Headers.Add("Content-Type", "text/json");
-            message.Request.Headers.Add("Client-Identifier", "client1");
+            message.Request.Headers.Add(ClientRequestIdHeaderName, clientId);
             message.Request.Headers.Add("Date", "4/18/2024");
             message.Request.Headers.Add("Secret-Custom-Header", "Value");
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
-            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Request", e.EventName);
-            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
+            Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
             Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=123", e.GetProperty<string>("uri"));
             Assert.AreEqual("GET", e.GetProperty<string>("method"));
             StringAssert.Contains($"Date:4/18/2024{Environment.NewLine}", e.GetProperty<string>("headers"));
@@ -815,9 +862,9 @@ namespace System.ClientModel.Tests.Internal
 
             e = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
-            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
+            Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
             Assert.AreEqual("Response", e.EventName);
-            Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
+            Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
             Assert.AreEqual(e.GetProperty<int>("status"), 200);
             StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Secret-Response-Header:Very secret{Environment.NewLine}", e.GetProperty<string>("headers"));
@@ -845,8 +892,8 @@ namespace System.ClientModel.Tests.Internal
                     IsLoggingContentEnabled = true,
                     LoggedContentSizeLimit = maxLength,
                     LoggedClientAssemblyName = "Test-SDK",
-                    RequestIdHeaderName = "x-client-id",
-                    LoggedHeaderNames = new List<string>() { "Custom-Response-Header", "Custom-Header" }
+                    RequestIdHeaderName = ClientRequestIdHeaderName,
+                    LoggedHeaderNames = s_allowedHeaders
                 }
             };
 
@@ -855,7 +902,7 @@ namespace System.ClientModel.Tests.Internal
             PipelineMessage message = pipeline.CreateMessage();
             message.Request.Method = "GET";
             message.Request.Uri = new Uri("http://example.com");
-            message.Request.Headers.Add("x-client-id", "client-id");
+            message.Request.Headers.Add(ClientRequestIdHeaderName, "client-id");
 
             // These tests are essentially testing whether the logging policy works
             // correctly when responses are buffered (memory stream) and unbuffered
@@ -886,6 +933,13 @@ namespace System.ClientModel.Tests.Internal
         private class AzureCoreLoggingPolicy : ClientLoggingPolicy
         {
             public AzureCoreLoggingPolicy(LoggingOptions options) : base("Azure-Core", new string[] { "Trait", "True" }, options)
+            {
+            }
+        }
+
+        private class NotEnabledLoggingPolicy : ClientLoggingPolicy
+        {
+            public NotEnabledLoggingPolicy(LoggingOptions options) : base("Do-Not-Enable", new string[] { "Trait", "True" }, options)
             {
             }
         }
