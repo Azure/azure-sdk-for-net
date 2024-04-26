@@ -8,16 +8,8 @@
   ([#43432](https://github.com/Azure/azure-sdk-for-net/pull/43432))
   - OpenTelemetry 1.8.1
   - OpenTelemetry.Extensions.Hosting 1.8.1
-  - OpenTelemetry.Instrumentation.AspNetCore 1.8.1
-  - OpenTelemetry.Instrumentation.Http 1.8.1
-* `OpenTelemetry.Instrumentation.AspNetCore` and `OpenTelemetry.Instrumentation.Http` include a [hotfix](https://github.com/open-telemetry/opentelemetry-dotnet/pull/5532) for [GHSA-vh2m-22xx-q94f](https://github.com/open-telemetry/opentelemetry-dotnet/security/advisories/GHSA-vh2m-22xx-q94f).
-  By default any values detected in the query string component of requests are replaced with the text `Redacted` when building the `url.query` or the `url.full` tag.
-  For example, `?key1=value1&key2=value2` becomes `?key1=Redacted&key2=Redacted`.
-  `Azure.Monitor.OpenTelemetry.AspNetCore` has chosen to disable this redaction until the OpenTelemetry Community has made a decision on the default behavior.
-  ([#43432](https://github.com/Azure/azure-sdk-for-net/pull/43432))
-  You can re-enable this redaction by setting an environment variable:
-    - For `OpenTelemetry.Instrumentation.AspNetCore` set `OTEL_DOTNET_EXPERIMENTAL_ASPNETCORE_DISABLE_URL_QUERY_REDACTION` to `false` before calling `UseAzureMonitor()`.
-    - For `OpenTelemetry.Instrumentation.Http` set `OTEL_DOTNET_EXPERIMENTAL_HTTPCLIENT_DISABLE_URL_QUERY_REDACTION` to `false` before calling `UseAzureMonitor()`.
+  - OpenTelemetry.Instrumentation.AspNetCore 1.8.1 to address [GHSA-vh2m-22xx-q94f](https://github.com/open-telemetry/opentelemetry-dotnet/security/advisories/GHSA-vh2m-22xx-q94f)
+  - OpenTelemetry.Instrumentation.Http 1.8.1 to address [GHSA-vh2m-22xx-q94f](https://github.com/open-telemetry/opentelemetry-dotnet/security/advisories/GHSA-vh2m-22xx-q94f)
 
 ## 1.1.0 (2024-01-25)
 
