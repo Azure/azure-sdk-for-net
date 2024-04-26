@@ -42,23 +42,92 @@ namespace System.ClientModel.Tests.Internal
 
         private static string[] s_allowedHeaders = new[] { "Date", "Custom-Header", "Custom-Response-Header" };
         private static string[] s_allowedQueryParameters = new[] { "api-version" };
-        private static PipelineMessageSanitizer _sanitizer = new PipelineMessageSanitizer(s_allowedQueryParameters, s_allowedHeaders);
+        private const string _systemClientModelEventSourceName = "System.ClientModel";
+        private const string _azureCoreEventSourceName = "Azure-Core";
 
         public ClientModelEventSourceTests(bool isAsync) : base(isAsync)
         {
-            _listener = new TestClientEventListener(1000, "System.ClientModel", EventLevel.Verbose);
+            _listener = new TestClientEventListener();
         }
 
         [SetUp]
         public void Setup()
         {
-            _listener = new TestClientEventListener(1000, "System.ClientModel", EventLevel.Verbose);
+            _listener = new TestClientEventListener();
         }
 
         [TearDown]
         public void TearDown()
         {
             _listener?.Dispose();
+        }
+
+        [Test]
+        public async Task SourceCanWriteToCustomName()
+        {
+            string requestContent = "This is a request.";
+            string responseContent = "This is a response.";
+            string clientIdHeaderName = "x-ms-request-client-id";
+            string clientResponseId = "client-123456789";
+            string clientRequestId = "client-12345678"; // Different to test that logging policy checks headers first
+            string clientAssemblyName = "Test-Azure-SDK";
+
+            var headers = new MockResponseHeaders(new Dictionary<string, string> { { clientIdHeaderName, clientResponseId } });
+            var response = new MockPipelineResponse(200, mockHeaders: headers);
+            response.SetContent(responseContent);
+            var loggingOptions = new LoggingOptions
+            {
+                IsLoggingEnabled = true,
+                IsLoggingContentEnabled = true,
+                LoggedHeaderNames = new List<string> { clientIdHeaderName },
+                LoggedClientAssemblyName = clientAssemblyName,
+                RequestIdHeaderName = clientIdHeaderName
+            };
+
+            ClientPipelineOptions options = new()
+            {
+                Transport = new MockPipelineTransport("Transport", i => response),
+                LoggingPolicy = new AzureCoreLoggingPolicy(loggingOptions)
+            };
+
+            ClientPipeline pipeline = ClientPipeline.Create(options);
+
+            PipelineMessage message = pipeline.CreateMessage();
+            message.Request.Uri = new Uri("http://example.com");
+            message.Request.Headers.Add(clientIdHeaderName, clientRequestId);
+            message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
+
+            await pipeline.SendSyncOrAsync(message, IsAsync);
+
+            EventWrittenEventArgs args = _listener.SingleEventById(RequestEvent);
+            Assert.AreEqual(EventLevel.Informational, args.Level);
+            Assert.AreEqual(_azureCoreEventSourceName, args.EventSource.Name);
+            Assert.AreEqual("Request", args.EventName);
+            Assert.AreEqual(clientRequestId, args.GetProperty<string>("requestId"));
+            Assert.AreEqual("http://example.com/", args.GetProperty<string>("uri"));
+            Assert.AreEqual("GET", args.GetProperty<string>("method"));
+            Assert.AreEqual(clientAssemblyName, args.GetProperty<string>("clientAssembly"));
+
+            args = _listener.SingleEventById(RequestContentEvent);
+            Assert.AreEqual("Azure-Core", args.EventSource.Name);
+            Assert.AreEqual(EventLevel.Verbose, args.Level);
+            Assert.AreEqual("RequestContent", args.EventName);
+            Assert.AreEqual("client-123456789", args.GetProperty<string>("requestId"));
+            CollectionAssert.AreEqual("This is a request.", args.GetProperty<byte[]>("content"));
+
+            args = _listener.SingleEventById(ResponseEvent);
+            Assert.AreEqual("Azure-Core", args.EventSource.Name);
+            Assert.AreEqual(EventLevel.Informational, args.Level);
+            Assert.AreEqual("Response", args.EventName);
+            Assert.AreEqual(clientResponseId, args.GetProperty<string>("requestId"));
+            Assert.AreEqual(args.GetProperty<int>("status"), 200);
+
+            args = _listener.SingleEventById(ResponseContentEvent);
+            Assert.AreEqual("Azure-Core", args.EventSource.Name);
+            Assert.AreEqual(EventLevel.Verbose, args.Level);
+            Assert.AreEqual("ResponseContent", args.EventName);
+            Assert.AreEqual(clientResponseId, args.GetProperty<string>("requestId"));
+            CollectionAssert.AreEqual(responseContent, args.GetProperty<byte[]>("content"));
         }
 
         [Test]
@@ -96,6 +165,7 @@ namespace System.ClientModel.Tests.Internal
 
             EventWrittenEventArgs args = _listener.SingleEventById(RequestEvent);
             Assert.AreEqual(EventLevel.Informational, args.Level);
+            Assert.AreEqual("System.ClientModel", args.EventSource.Name);
             Assert.AreEqual("Request", args.EventName);
             Assert.AreEqual("client1", args.GetProperty<string>("requestId"));
             Assert.AreEqual("http://example.com/", args.GetProperty<string>("uri"));
@@ -106,12 +176,14 @@ namespace System.ClientModel.Tests.Internal
 
             args = _listener.SingleEventById(RequestContentEvent);
             Assert.AreEqual(EventLevel.Verbose, args.Level);
+            Assert.AreEqual("System.ClientModel", args.EventSource.Name);
             Assert.AreEqual("RequestContent", args.EventName);
             Assert.AreEqual("client1", args.GetProperty<string>("requestId"));
             CollectionAssert.AreEqual("Hello", args.GetProperty<byte[]>("content"));
 
             args = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, args.Level);
+            Assert.AreEqual("System.ClientModel", args.EventSource.Name);
             Assert.AreEqual("Response", args.EventName);
             Assert.AreEqual("client1", args.GetProperty<string>("requestId"));
             Assert.AreEqual(args.GetProperty<int>("status"), 200);
@@ -119,6 +191,7 @@ namespace System.ClientModel.Tests.Internal
 
             args = _listener.SingleEventById(ResponseContentEvent);
             Assert.AreEqual(EventLevel.Verbose, args.Level);
+            Assert.AreEqual("System.ClientModel", args.EventSource.Name);
             Assert.AreEqual("ResponseContent", args.EventName);
             Assert.AreEqual("client1", args.GetProperty<string>("requestId"));
             CollectionAssert.AreEqual("World", args.GetProperty<byte[]>("content"));
@@ -150,6 +223,7 @@ namespace System.ClientModel.Tests.Internal
             Assert.ThrowsAsync<InvalidOperationException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
 
             EventWrittenEventArgs e = _listener.SingleEventById(ExceptionResponseEvent);
+            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
             Assert.AreEqual(exception.ToString().Split(Environment.NewLine.ToCharArray())[0],
@@ -241,6 +315,7 @@ namespace System.ClientModel.Tests.Internal
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs e = _listener.SingleEventById(ErrorResponseEvent);
+            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
             Assert.AreEqual(EventLevel.Warning, e.Level);
             Assert.AreEqual("ErrorResponse", e.EventName);
             Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
@@ -248,6 +323,7 @@ namespace System.ClientModel.Tests.Internal
             StringAssert.Contains($"Custom-Response-Header:Value - 2{Environment.NewLine}", e.GetProperty<string>("headers"));
 
             e = _listener.SingleEventById(ErrorResponseContentEvent);
+            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("ErrorResponseContent", e.EventName);
             Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
@@ -288,6 +364,7 @@ namespace System.ClientModel.Tests.Internal
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestContentTextEvent);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
+            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
             Assert.AreEqual("RequestContentText", e.EventName);
             Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello world", e.GetProperty<string>("content"));
@@ -415,12 +492,14 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual(2, contentEvents.Length);
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
+            Assert.AreEqual("System.ClientModel", contentEvents[0].EventSource.Name);
             Assert.AreEqual("ResponseContentBlock", contentEvents[0].EventName);
             Assert.AreEqual("client-id", contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, contentEvents[0].GetProperty<byte[]>("content"));
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
+            Assert.AreEqual("System.ClientModel", contentEvents[1].EventSource.Name);
             Assert.AreEqual("ResponseContentBlock", contentEvents[1].EventName);
             Assert.AreEqual("client-id", contentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
@@ -439,12 +518,14 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual(2, errorContentEvents.Length);
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
+            Assert.AreEqual("System.ClientModel", errorContentEvents[0].EventSource.Name);
             Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[0].EventName);
             Assert.AreEqual("client-id", errorContentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, errorContentEvents[0].GetProperty<byte[]>("content"));
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
+            Assert.AreEqual("System.ClientModel", errorContentEvents[1].EventSource.Name);
             Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[1].EventName);
             Assert.AreEqual("client-id", errorContentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
@@ -467,12 +548,14 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual(2, contentEvents.Length);
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
+            Assert.AreEqual("System.ClientModel", contentEvents[0].EventSource.Name);
             Assert.AreEqual("ResponseContentTextBlock", contentEvents[0].EventName);
             Assert.AreEqual("client-id", contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
             Assert.AreEqual("Hello ", contentEvents[0].GetProperty<string>("content"));
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
+            Assert.AreEqual("System.ClientModel", contentEvents[1].EventSource.Name);
             Assert.AreEqual("ResponseContentTextBlock", contentEvents[1].EventName);
             Assert.AreEqual("client-id", contentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
@@ -495,12 +578,14 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual(2, errorContentEvents.Length);
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
+            Assert.AreEqual("System.ClientModel", errorContentEvents[0].EventSource.Name);
             Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[0].EventName);
             Assert.AreEqual("client-id", errorContentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
             Assert.AreEqual("Hello ", errorContentEvents[0].GetProperty<string>("content"));
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
+            Assert.AreEqual("System.ClientModel", errorContentEvents[1].EventSource.Name);
             Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[1].EventName);
             Assert.AreEqual("client-id", errorContentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
@@ -521,6 +606,7 @@ namespace System.ClientModel.Tests.Internal
             EventWrittenEventArgs contentEvent = _listener.SingleEventById(ResponseContentTextEvent);
 
             Assert.AreEqual(EventLevel.Verbose, contentEvent.Level);
+            Assert.AreEqual("System.ClientModel", contentEvent.EventSource.Name);
             Assert.AreEqual("ResponseContentText", contentEvent.EventName);
             Assert.AreEqual("client-id", contentEvent.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello world", contentEvent.GetProperty<string>("content"));
@@ -539,6 +625,7 @@ namespace System.ClientModel.Tests.Internal
             EventWrittenEventArgs errorContentEvent = _listener.SingleEventById(ErrorResponseContentTextEvent);
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvent.Level);
+            Assert.AreEqual("System.ClientModel", errorContentEvent.EventSource.Name);
             Assert.AreEqual("ErrorResponseContentText", errorContentEvent.EventName);
             Assert.AreEqual("client-id", errorContentEvent.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello", errorContentEvent.GetProperty<string>("content"));
@@ -557,6 +644,7 @@ namespace System.ClientModel.Tests.Internal
             EventWrittenEventArgs contentEvent = _listener.SingleEventById(ResponseContentTextEvent);
 
             Assert.AreEqual(EventLevel.Verbose, contentEvent.Level);
+            Assert.AreEqual("System.ClientModel", contentEvent.EventSource.Name);
             Assert.AreEqual("ResponseContentText", contentEvent.EventName);
             Assert.AreEqual("client-id", contentEvent.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello", contentEvent.GetProperty<string>("content"));
@@ -593,6 +681,7 @@ namespace System.ClientModel.Tests.Internal
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestContentTextEvent);
+            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
             Assert.AreEqual("RequestContentText", e.EventName);
             Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
@@ -616,6 +705,7 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual(1, contentEvents.Length);
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
+            Assert.AreEqual("System.ClientModel", contentEvents[0].EventSource.Name);
             Assert.AreEqual("ResponseContentTextBlock", contentEvents[0].EventName);
             Assert.AreEqual("client-id", contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
@@ -658,6 +748,7 @@ namespace System.ClientModel.Tests.Internal
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
+            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Request", e.EventName);
             Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
@@ -669,6 +760,7 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual("Test-SDK", e.GetProperty<string>("clientAssembly"));
 
             e = _listener.SingleEventById(ResponseEvent);
+            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Response", e.EventName);
             Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
@@ -710,6 +802,7 @@ namespace System.ClientModel.Tests.Internal
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
             EventWrittenEventArgs e = _listener.SingleEventById(RequestEvent);
+            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Request", e.EventName);
             Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
@@ -722,6 +815,7 @@ namespace System.ClientModel.Tests.Internal
 
             e = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
+            Assert.AreEqual("System.ClientModel", e.EventSource.Name);
             Assert.AreEqual("Response", e.EventName);
             Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
             Assert.AreEqual(e.GetProperty<int>("status"), 200);
@@ -787,6 +881,13 @@ namespace System.ClientModel.Tests.Internal
             }
 
             return response;
+        }
+
+        private class AzureCoreLoggingPolicy : ClientLoggingPolicy
+        {
+            public AzureCoreLoggingPolicy(LoggingOptions options) : base("Azure-Core", new string[] { "Trait", "True" }, options)
+            {
+            }
         }
     }
 }

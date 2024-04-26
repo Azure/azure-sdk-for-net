@@ -16,28 +16,26 @@ namespace ClientModel.Tests
     {
         private volatile bool _disposed;
         private readonly ConcurrentQueue<EventWrittenEventArgs> _events = new ConcurrentQueue<EventWrittenEventArgs>();
-        private uint _maxEventCount;
-        private const uint DefaultMaxEventCount = 1000;
-        private string _eventSourceName = "System.ClientModel";
-        private EventLevel _eventLevel;
+        private EventLevel _eventLevel = EventLevel.Verbose;
+        private const string _systemClientModelEventSourceName = "System.ClientModel";
+        private const string _azureEventSourceName = "Azure-Core";
 
         public IEnumerable<EventWrittenEventArgs> EventData => _events;
 
         /// <summary>
         /// Creates an instance of <see cref="TestEventListener"/>.
         /// </summary>
-        /// <param name="maxEventCount">Maximum number of events that the listener can store in <see cref="EventData"/>.
-        /// <para>If the number of events exceeds the value, an <see cref="Exception"/> is thrown.</para></param>
-        public TestClientEventListener(uint maxEventCount, string eventSourceName, EventLevel eventLevel)
+        public TestClientEventListener()
         {
-            _maxEventCount = maxEventCount;
-            _eventSourceName = eventSourceName;
-            _eventLevel = eventLevel;
         }
 
         protected override void OnEventSourceCreated(EventSource eventSource)
         {
-            if (eventSource.Name == _eventSourceName)
+            // The event source names have to be hardcoded and cannot be configured at runtime by the constructor. This
+            // is because when an EventListener is instantiated, the OnEventWritten and OnEventSourceCreated callback methods can
+            // be called before the constructor has completed
+            // see: https://learn.microsoft.com/dotnet/api/system.diagnostics.tracing.eventlistener#remarks
+            if (eventSource.Name == _systemClientModelEventSourceName || eventSource.Name == _azureEventSourceName)
             {
                 EnableEvents(eventSource, _eventLevel);
             }
@@ -53,11 +51,6 @@ namespace ClientModel.Tests
 
             if (!_disposed)
             {
-                if (_events.Count >= _maxEventCount)
-                {
-                    throw new Exception($"Number of events has exceeded {_maxEventCount}.");
-                }
-
                 // Make sure we can format the event
                 Format(eventData);
                 _events.Enqueue(eventData);

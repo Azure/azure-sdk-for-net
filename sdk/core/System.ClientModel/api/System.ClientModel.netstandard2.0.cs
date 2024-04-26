@@ -44,15 +44,15 @@ namespace System.ClientModel
 }
 namespace System.ClientModel.Options
 {
-    public partial class DiagnosticsOptions
+    public partial class LoggingOptions
     {
-        public DiagnosticsOptions() { }
+        public LoggingOptions() { }
         public bool IsLoggingContentEnabled { get { throw null; } set { } }
         public bool IsLoggingEnabled { get { throw null; } set { } }
         public string? LoggedClientAssemblyName { get { throw null; } set { } }
         public int LoggedContentSizeLimit { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<string>? LoggedHeaderNames { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<string>? LoggedQueryParameters { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<string> LoggedHeaderNames { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<string> LoggedQueryParameters { get { throw null; } set { } }
         public string? RequestIdHeaderName { get { throw null; } set { } }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
@@ -77,8 +77,8 @@ namespace System.ClientModel.Primitives
     }
     public partial class ClientLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
-        public ClientLoggingPolicy(System.ClientModel.Options.DiagnosticsOptions? options = null) { }
-        protected ClientLoggingPolicy(string? eventSourceName, string[]? eventSourceTraits = null, System.ClientModel.Options.DiagnosticsOptions? options = null) { }
+        public ClientLoggingPolicy(System.ClientModel.Options.LoggingOptions? options = null) { }
+        protected ClientLoggingPolicy(string logName, string[]? logTraits = null, System.ClientModel.Options.LoggingOptions? options = null) { }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
     }
@@ -94,7 +94,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
-        public System.ClientModel.Options.DiagnosticsOptions? Diagnostics { get { throw null; } set { } }
+        public System.ClientModel.Options.LoggingOptions? LoggingOptions { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
