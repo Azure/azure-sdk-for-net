@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class MediaStreamingStateResponse
+    public partial class MediaStreamingStateResult
     {
-        internal static MediaStreamingStateResponse DeserializeMediaStreamingStateResponse(JsonElement element)
+        internal static MediaStreamingStateResult DeserializeMediaStreamingStateResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -40,7 +40,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new MediaStreamingStateResponse(mediaStreamingState, mediaStreamingType);
+            return new MediaStreamingStateResult(mediaStreamingState, mediaStreamingType);
         }
     }
 }

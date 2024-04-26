@@ -10,6 +10,7 @@ using Azure.Core.Pipeline;
 using Azure.Communication.Pipeline;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Mime;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -213,6 +214,7 @@ namespace Azure.Communication.CallAutomation
 
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
+            request.MediaStreamingConfiguration = new MediaStreamingConfiguration(options.MediaStreamingConfiguration.TransportUrl, options.MediaStreamingConfiguration.TransportType, options.MediaStreamingConfiguration.ContentType, options.MediaStreamingConfiguration.AudioChannelType, options.MediaStreamingConfiguration.StartMediaStreaming);
 
             return request;
         }
@@ -582,6 +584,7 @@ namespace Azure.Communication.CallAutomation
             }
 
             request.OperationContext = options.OperationContext;
+            request.MediaStreamingConfiguration = new MediaStreamingConfiguration(options.MediaStreamingConfiguration.TransportUrl, options.MediaStreamingConfiguration.TransportType, options.MediaStreamingConfiguration.ContentType, options.MediaStreamingConfiguration.AudioChannelType, options.MediaStreamingConfiguration.StartMediaStreaming);
             return request;
         }
 
@@ -609,6 +612,7 @@ namespace Azure.Communication.CallAutomation
             }
 
             request.OperationContext = options.OperationContext;
+            request.MediaStreamingConfiguration = new MediaStreamingConfiguration(options.MediaStreamingConfiguration.TransportUrl, options.MediaStreamingConfiguration.TransportType, options.MediaStreamingConfiguration.ContentType, options.MediaStreamingConfiguration.AudioChannelType, options.MediaStreamingConfiguration.StartMediaStreaming);
             return request;
         }
 

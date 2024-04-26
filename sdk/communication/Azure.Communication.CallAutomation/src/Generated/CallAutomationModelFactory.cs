@@ -30,13 +30,13 @@ namespace Azure.Communication.CallAutomation
             return new SendDtmfTonesResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingStateResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.MediaStreamingStateResult"/>. </summary>
         /// <param name="mediaStreamingState"></param>
         /// <param name="mediaStreamingType"></param>
-        /// <returns> A new <see cref="CallAutomation.MediaStreamingStateResponse"/> instance for mocking. </returns>
-        public static MediaStreamingStateResponse MediaStreamingStateResponse(MediaStreamingState? mediaStreamingState = null, MediaStreamingType? mediaStreamingType = null)
+        /// <returns> A new <see cref="CallAutomation.MediaStreamingStateResult"/> instance for mocking. </returns>
+        public static MediaStreamingStateResult MediaStreamingStateResult(MediaStreamingState? mediaStreamingState = null, MediaStreamingType? mediaStreamingType = null)
         {
-            return new MediaStreamingStateResponse(mediaStreamingState, mediaStreamingType);
+            return new MediaStreamingStateResult(mediaStreamingState, mediaStreamingType);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.MuteParticipantResult"/>. </summary>

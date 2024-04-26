@@ -882,5 +882,147 @@ namespace Azure.Communication.CallAutomation
                 throw;
             }
         }
+
+        /// <summary>
+        /// Starts media streaming in the call.
+        /// </summary>
+        /// <param name="options"> The <see cref="StartMediaStreamingOptions"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> StartMediaStreamingAsync(StartMediaStreamingOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartMediaStreaming)}");
+            scope.Start();
+            try
+            {
+                StartMediaStreamingRequestInternal request = new()
+                {
+                    OperationContext = options.OperationContext,
+                    OperationCallbackUri = options.OperationCallbackUri
+                };
+
+                return await CallMediaRestClient.StartMediaStreamingAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts media streaming in the call.
+        /// </summary>
+        /// <param name="options"> The <see cref="StartMediaStreamingOptions"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response StartMediaStreaming(StartMediaStreamingOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartMediaStreaming)}");
+            scope.Start();
+            try
+            {
+                StartMediaStreamingRequestInternal request = new()
+                {
+                    OperationContext = options.OperationContext,
+                    OperationCallbackUri = options.OperationCallbackUri
+                };
+
+                return CallMediaRestClient.StartMediaStreaming(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stop media streaming in the call.
+        /// </summary>
+        /// <param name="options"> The <see cref="StopMediaStreamingOptions"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> StopMediaStreamingAsync(StopMediaStreamingOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopMediaStreaming)}");
+            scope.Start();
+            try
+            {
+                StopMediaStreamingRequestInternal request = new()
+                {
+                    OperationCallbackUri = options.OperationCallbackUri
+                };
+
+                return await CallMediaRestClient.StopMediaStreamingAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stop media streaming in the call.
+        /// </summary>
+        /// <param name="options"> The <see cref="StopMediaStreamingOptions"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response StopMediaStreaming(StopMediaStreamingOptions options, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopMediaStreaming)}");
+            scope.Start();
+            try
+            {
+                StopMediaStreamingRequestInternal request = new()
+                {
+                    OperationCallbackUri = options.OperationCallbackUri
+                };
+
+                return CallMediaRestClient.StopMediaStreaming(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get media streaming state in the call.
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> Gets media streaming state in the call. </returns>
+        public virtual async Task<Response<MediaStreamingStateResult>> MediaStreamingStateAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(MediaStreamingState)}");
+            scope.Start();
+            try
+            {
+                return await CallMediaRestClient.MediaStreamingStateAsync(CallConnectionId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get media streaming state in the call.
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> Gets media streaming state in the call. </returns>
+        public virtual Response<MediaStreamingStateResult> MediaStreamingState(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(MediaStreamingState)}");
+            scope.Start();
+            try
+            {
+                return CallMediaRestClient.MediaStreamingState(CallConnectionId, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }

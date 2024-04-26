@@ -480,7 +480,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStartMediaStreamingRequest(string callConnectionId, StartMediaStreamingRequest startMediaStreamingRequest)
+        internal HttpMessage CreateStartMediaStreamingRequest(string callConnectionId, StartMediaStreamingRequestInternal startMediaStreamingRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -502,11 +502,11 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Starts media streaming in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="startMediaStreamingRequest"> The <see cref="StartMediaStreamingRequest"/> to use. </param>
+        /// <param name="startMediaStreamingRequest"> The <see cref="StartMediaStreamingRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startMediaStreamingRequest"/> is null. </exception>
         /// <remarks> Starts media streaming in the call. </remarks>
-        public async Task<Response> StartMediaStreamingAsync(string callConnectionId, StartMediaStreamingRequest startMediaStreamingRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> StartMediaStreamingAsync(string callConnectionId, StartMediaStreamingRequestInternal startMediaStreamingRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -530,11 +530,11 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Starts media streaming in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="startMediaStreamingRequest"> The <see cref="StartMediaStreamingRequest"/> to use. </param>
+        /// <param name="startMediaStreamingRequest"> The <see cref="StartMediaStreamingRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startMediaStreamingRequest"/> is null. </exception>
         /// <remarks> Starts media streaming in the call. </remarks>
-        public Response StartMediaStreaming(string callConnectionId, StartMediaStreamingRequest startMediaStreamingRequest, CancellationToken cancellationToken = default)
+        public Response StartMediaStreaming(string callConnectionId, StartMediaStreamingRequestInternal startMediaStreamingRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -556,7 +556,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateStopMediaStreamingRequest(string callConnectionId, StopMediaStreamingRequest stopMediaStreamingRequest)
+        internal HttpMessage CreateStopMediaStreamingRequest(string callConnectionId, StopMediaStreamingRequestInternal stopMediaStreamingRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -582,7 +582,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopMediaStreamingRequest"/> is null. </exception>
         /// <remarks> Stops media streaming in the call. </remarks>
-        public async Task<Response> StopMediaStreamingAsync(string callConnectionId, StopMediaStreamingRequest stopMediaStreamingRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> StopMediaStreamingAsync(string callConnectionId, StopMediaStreamingRequestInternal stopMediaStreamingRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -610,7 +610,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopMediaStreamingRequest"/> is null. </exception>
         /// <remarks> Stops media streaming in the call. </remarks>
-        public Response StopMediaStreaming(string callConnectionId, StopMediaStreamingRequest stopMediaStreamingRequest, CancellationToken cancellationToken = default)
+        public Response StopMediaStreaming(string callConnectionId, StopMediaStreamingRequestInternal stopMediaStreamingRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -653,7 +653,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         /// <remarks> Gets media streaming state in the call. </remarks>
-        public async Task<Response<MediaStreamingStateResponse>> MediaStreamingStateAsync(string callConnectionId, CancellationToken cancellationToken = default)
+        public async Task<Response<MediaStreamingStateResult>> MediaStreamingStateAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -666,9 +666,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 200:
                     {
-                        MediaStreamingStateResponse value = default;
+                        MediaStreamingStateResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MediaStreamingStateResponse.DeserializeMediaStreamingStateResponse(document.RootElement);
+                        value = MediaStreamingStateResult.DeserializeMediaStreamingStateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -681,7 +681,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
         /// <remarks> Gets media streaming state in the call. </remarks>
-        public Response<MediaStreamingStateResponse> MediaStreamingState(string callConnectionId, CancellationToken cancellationToken = default)
+        public Response<MediaStreamingStateResult> MediaStreamingState(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -694,9 +694,9 @@ namespace Azure.Communication.CallAutomation
             {
                 case 200:
                     {
-                        MediaStreamingStateResponse value = default;
+                        MediaStreamingStateResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MediaStreamingStateResponse.DeserializeMediaStreamingStateResponse(document.RootElement);
+                        value = MediaStreamingStateResult.DeserializeMediaStreamingStateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

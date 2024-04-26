@@ -141,6 +141,26 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
 
+        private static readonly StartMediaStreamingOptions _startMediaStreamingOptions = new StartMediaStreamingOptions()
+        {
+            OperationCallbackUri = "https://localhost",
+            OperationContext = "operationContext"
+        };
+
+        private static readonly StartMediaStreamingOptions _emptyStartMediaStreamingOptions = new StartMediaStreamingOptions();
+
+        private static readonly StopMediaStreamingOptions _stopMediaStreamingOptions = new StopMediaStreamingOptions()
+        {
+            OperationCallbackUri = "https://localhost"
+        };
+
+        private static readonly StopMediaStreamingOptions _emptyStopMediaStreamingOptions = new StopMediaStreamingOptions();
+
+        private const string DummyMediaStreamingStateResponse = "{" +
+                                                    "\"mediaStreamingState\": \"active\"," +
+                                                    "\"mediaStreamingType\": \"audio\"" +
+                                                    "}";
+
         private static CallMedia? _callMedia;
 
         [SetUp]
@@ -393,6 +413,124 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.AreEqual(ex?.Status, 404);
         }
 
+        [TestCaseSource(nameof(TestData_MediaStreamingStateOperationsAsync))]
+        public async Task MediaStreamingStateOperationsAsync_Return200OK(Func<CallMedia, Task<Response<MediaStreamingStateResult>>> operation)
+        {
+            _callMedia = GetCallMedia(200, responseContent: DummyMediaStreamingStateResponse);
+            var result = await operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(MediaStreamingState.Active, result.Value.MediaStreamingState);
+            Assert.AreEqual(MediaStreamingType.Audio, result.Value.MediaStreamingType);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.GetRawResponse().Status);
+        }
+
+        [TestCaseSource(nameof(TestData_StartMediaStreamingOperationsAsync))]
+        public async Task StartMediaStreamingOperations_Return202Accepted(Func<CallMedia, Task<Response>> operation)
+        {
+            _callMedia = GetCallMedia(202);
+            var result = await operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_StopMediaStreamingOperationsAsync))]
+        public async Task StopMediaStreamingOperations_Return204NoContent(Func<CallMedia, Task<Response>> operation)
+        {
+            _callMedia = GetCallMedia(204);
+            var result = await operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.NoContent, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_MediaStreamingStateOperations))]
+        public void MediaStreamingStateOperations_Return200OK(Func<CallMedia, Response<MediaStreamingStateResult>> operation)
+        {
+            _callMedia = GetCallMedia(200, responseContent: DummyMediaStreamingStateResponse);
+            var result =  operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(MediaStreamingState.Active, result.Value.MediaStreamingState);
+            Assert.AreEqual(MediaStreamingType.Audio, result.Value.MediaStreamingType);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.GetRawResponse().Status);
+        }
+
+        [TestCaseSource(nameof(TestData_StartMediaStreamingOperations))]
+        public void StartMediaStreamingOperations_Return202Accepted(Func<CallMedia, Response> operation)
+        {
+            _callMedia = GetCallMedia(202);
+            var result = operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_StopMediaStreamingOperations))]
+        public void StopMediaStreamingOperations_Return204NoContent(Func<CallMedia, Response> operation)
+        {
+            _callMedia = GetCallMedia(204);
+            var result = operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.NoContent, result.Status);
+        }
+
+        [TestCaseSource(nameof(TestData_MediaStreamingStateOperationsAsync))]
+        public void MediaStreamingStateOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<MediaStreamingStateResult>>> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_StartMediaStreamingOperationsAsync))]
+        public void StartMediaStreamingOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_StopMediaStreamingOperationsAsync))]
+        public void StopMediaStreamingOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_MediaStreamingStateOperations))]
+        public void MediaStreamingStateOperations_Return404NotFound(Func<CallMedia, Response<MediaStreamingStateResult>> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+                 () => operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_StartMediaStreamingOperations))]
+        public void StartMediaStreamingOperations_Return404NotFound(Func<CallMedia, Response> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+                () => operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_StopMediaStreamingOperations))]
+        public void StopMediaStreamingOperations_Return404NotFound(Func<CallMedia, Response> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+                () => operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
         private static IEnumerable<object?[]> TestData_PlayOperationsAsync()
         {
             return new[]
@@ -599,6 +737,87 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Task<Response>>?[]
                 {
                    callMedia => callMedia.StopContinuousDtmfRecognitionAsync(new CommunicationUserIdentifier("targetUserId"))
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_StartMediaStreamingOperationsAsync()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.StartMediaStreamingAsync(_startMediaStreamingOptions)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.StartMediaStreamingAsync(_emptyStartMediaStreamingOptions)
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_StopMediaStreamingOperationsAsync()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.StopMediaStreamingAsync(_stopMediaStreamingOptions)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.StopMediaStreamingAsync(_emptyStopMediaStreamingOptions)
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_StartMediaStreamingOperations()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.StartMediaStreaming(_startMediaStreamingOptions)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.StartMediaStreaming(_emptyStartMediaStreamingOptions)
+                }
+            };
+        }
+        private static IEnumerable<object?[]> TestData_StopMediaStreamingOperations()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.StopMediaStreaming(_stopMediaStreamingOptions)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.StopMediaStreaming(_emptyStopMediaStreamingOptions)
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_MediaStreamingStateOperationsAsync()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Task<Response<MediaStreamingStateResult>>>?[]
+                {
+                   callMedia => callMedia.MediaStreamingStateAsync()
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_MediaStreamingStateOperations()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Response<MediaStreamingStateResult>>?[]
+                {
+                   callMedia => callMedia.MediaStreamingState()
                 }
             };
         }
