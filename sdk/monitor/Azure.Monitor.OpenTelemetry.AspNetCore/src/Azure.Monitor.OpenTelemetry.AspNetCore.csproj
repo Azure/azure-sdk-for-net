@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>An OpenTelemetry .NET distro that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry ASP.NET Core Distro</AssemblyTitle>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure Monitor OpenTelemetry Exporter Distro ApplicationInsights</PackageTags>
@@ -32,6 +32,7 @@
   <!-- Shared source from Exporter -->
   <ItemGroup>
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\Platform\EnvironmentVariableConstants.cs" LinkBase="Shared" />
   </ItemGroup>
   
 </Project>
