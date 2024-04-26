@@ -109,7 +109,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = null;
-            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content);
+            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -124,7 +124,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = null;
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content);
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -139,7 +139,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content);
+            Response response = client.CreateOrUpdate("<partyId>", "<attachmentId>", content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resourceId").ToString());
@@ -167,7 +167,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Attachments client = new FarmBeatsClient(endpoint, credential).GetAttachmentsClient(apiVersion: "2022-11-01-preview");
 
             using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content);
+            Response response = await client.CreateOrUpdateAsync("<partyId>", "<attachmentId>", content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("resourceId").ToString());
