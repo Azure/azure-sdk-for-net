@@ -8,8 +8,10 @@
   ([#43432](https://github.com/Azure/azure-sdk-for-net/pull/43432))
   - OpenTelemetry 1.8.1
   - OpenTelemetry.Extensions.Hosting 1.8.1
-  - OpenTelemetry.Instrumentation.AspNetCore 1.8.1 to address [GHSA-vh2m-22xx-q94f](https://github.com/open-telemetry/opentelemetry-dotnet/security/advisories/GHSA-vh2m-22xx-q94f)
-  - OpenTelemetry.Instrumentation.Http 1.8.1 to address [GHSA-vh2m-22xx-q94f](https://github.com/open-telemetry/opentelemetry-dotnet/security/advisories/GHSA-vh2m-22xx-q94f)
+  - OpenTelemetry.Instrumentation.AspNetCore 1.8.1
+	- This update is a respone to [CVE-2024-32028](https://nvd.nist.gov/vuln/detail/CVE-2024-32028).
+  - OpenTelemetry.Instrumentation.Http 1.8.1
+    - This update is a respons to [CVE-2024-32028](https://nvd.nist.gov/vuln/detail/CVE-2024-32028).
 
 ## 1.1.0 (2024-01-25)
 
