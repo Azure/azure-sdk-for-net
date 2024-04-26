@@ -45,5 +45,10 @@ namespace Azure.Communication.CallAutomation
         /// The operation context.
         /// </summary>
         public string OperationContext { get; set; }
+
+        /// <summary>
+        /// Media Streaming Configuration.
+        /// </summary>
+        public MediaStreamingConfiguration MediaStreamingConfiguration { get; set; }
     }
 }

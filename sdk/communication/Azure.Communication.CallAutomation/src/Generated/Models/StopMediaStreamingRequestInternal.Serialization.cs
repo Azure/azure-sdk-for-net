@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class StartMediaStreamingRequest : IUtf8JsonSerializable
+    internal partial class StopMediaStreamingRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,11 +19,6 @@ namespace Azure.Communication.CallAutomation
             {
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);
-            }
-            if (OperationContext != null)
-            {
-                writer.WritePropertyName("operationContext"u8);
-                writer.WriteStringValue(OperationContext);
             }
             writer.WriteEndObject();
         }

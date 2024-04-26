@@ -8,17 +8,17 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The MediaStreamingStateResponse. </summary>
-    public partial class MediaStreamingStateResponse
+    public partial class MediaStreamingStateResult
     {
-        /// <summary> Initializes a new instance of <see cref="MediaStreamingStateResponse"/>. </summary>
-        internal MediaStreamingStateResponse()
+        /// <summary> Initializes a new instance of <see cref="MediaStreamingStateResult"/>. </summary>
+        internal MediaStreamingStateResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MediaStreamingStateResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaStreamingStateResult"/>. </summary>
         /// <param name="mediaStreamingState"></param>
         /// <param name="mediaStreamingType"></param>
-        internal MediaStreamingStateResponse(MediaStreamingState? mediaStreamingState, MediaStreamingType? mediaStreamingType)
+        internal MediaStreamingStateResult(MediaStreamingState? mediaStreamingState, MediaStreamingType? mediaStreamingType)
         {
             MediaStreamingState = mediaStreamingState;
             MediaStreamingType = mediaStreamingType;

@@ -7,24 +7,22 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> The StartMediaStreamingRequest. </summary>
-    public partial class StartMediaStreamingRequest
+    /// <summary> The StopMediaStreamingRequest. </summary>
+    internal partial class StopMediaStreamingRequestInternal
     {
-        /// <summary> Initializes a new instance of <see cref="StartMediaStreamingRequest"/>. </summary>
-        public StartMediaStreamingRequest()
+        /// <summary> Initializes a new instance of <see cref="StopMediaStreamingRequestInternal"/>. </summary>
+        public StopMediaStreamingRequestInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartMediaStreamingRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopMediaStreamingRequestInternal"/>. </summary>
         /// <param name="operationCallbackUri">
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
-        /// <param name="operationContext"> The value to identify context of the operation. </param>
-        internal StartMediaStreamingRequest(string operationCallbackUri, string operationContext)
+        internal StopMediaStreamingRequestInternal(string operationCallbackUri)
         {
             OperationCallbackUri = operationCallbackUri;
-            OperationContext = operationContext;
         }
 
         /// <summary>
@@ -32,7 +30,5 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public string OperationCallbackUri { get; set; }
-        /// <summary> The value to identify context of the operation. </summary>
-        public string OperationContext { get; set; }
     }
 }
