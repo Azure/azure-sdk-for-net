@@ -623,6 +623,7 @@ try {
         $TestApplicationOid = $userAccount.Id
         $TestApplicationId = $testApplicationOid
         $userAccountName = $userAccount.UserPrincipalName
+		$TestApplicationSecret = (ConvertFrom-SecureString $userAccount.Secret -AsPlainText)
         Log "User authentication with user '$userAccountName' ('$TestApplicationId') will be used."
     }
     # If no test application ID was specified during an interactive session, create a new service principal.
