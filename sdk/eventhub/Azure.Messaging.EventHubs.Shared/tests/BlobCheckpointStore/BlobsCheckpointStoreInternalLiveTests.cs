@@ -813,13 +813,15 @@ namespace Azure.Messaging.EventHubs.Tests
                 await checkpointStore.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientIdentifier, new CheckpointPosition(mockEvent.SequenceNumber), default);
 
                 var blobCount = 0;
-                var checkpointBlob = default(BlobItem);
+                var checkpointBlobName = default(string);
+                var checkpointBlob = default(BlobProperties);
                 var storedCheckpoint = await checkpointStore.GetCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, default);
 
                 await foreach (var blob in containerClient.GetBlobsAsync())
                 {
                     ++blobCount;
-                    checkpointBlob = blob;
+                    checkpointBlobName = blob.Name;
+                    checkpointBlob = await containerClient.GetBlobClient(blob.Name).GetPropertiesAsync();
 
                     if (blobCount > 1)
                     {
@@ -828,7 +830,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 Assert.That(blobCount, Is.EqualTo(1));
-                Assert.That(checkpointBlob.Name, Is.EqualTo(checkpointStore.GetCheckpointBlobName(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId)));
+                Assert.That(checkpointBlobName, Is.EqualTo(checkpointStore.GetCheckpointBlobName(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId)));
                 Assert.That(checkpointBlob.Metadata.TryGetValue("offset", out var offset), Is.True);
                 Assert.That(offset, Is.Not.Null);
                 Assert.That(long.TryParse(offset, out _), Is.False);
