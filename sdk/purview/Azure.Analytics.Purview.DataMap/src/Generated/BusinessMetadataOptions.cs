@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Azure.Analytics.Purview.DataMap
 {
@@ -48,7 +49,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
         /// <param name="file"> InputStream of file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
-        public BusinessMetadataOptions(BinaryData file)
+        public BusinessMetadataOptions(Stream file)
         {
             Argument.AssertNotNull(file, nameof(file));
 
@@ -58,7 +59,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
         /// <param name="file"> InputStream of file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BusinessMetadataOptions(BinaryData file, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BusinessMetadataOptions(Stream file, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             File = file;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -69,22 +70,7 @@ namespace Azure.Analytics.Purview.DataMap
         {
         }
 
-        /// <summary>
-        /// InputStream of file
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
-        /// <description>Creates a payload of "AQID".</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData File { get; }
+        /// <summary> InputStream of file. </summary>
+        public Stream File { get; }
     }
 }

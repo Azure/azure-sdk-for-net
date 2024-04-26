@@ -3642,9 +3642,9 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(businessMetadataOptions, nameof(businessMetadataOptions));
 
-            using RequestContent content = businessMetadataOptions.ToRequestContent();
+            using MultipartFormDataRequestContent content = businessMetadataOptions.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ImportBusinessMetadataAsync(content, context).ConfigureAwait(false);
+            Response response = await ImportBusinessMetadataAsync(content, content.ContentType, context).ConfigureAwait(false);
             return Response.FromValue(BulkImportResult.FromResponse(response), response);
         }
 
@@ -3657,9 +3657,9 @@ namespace Azure.Analytics.Purview.DataMap
         {
             Argument.AssertNotNull(businessMetadataOptions, nameof(businessMetadataOptions));
 
-            using RequestContent content = businessMetadataOptions.ToRequestContent();
+            using MultipartFormDataRequestContent content = businessMetadataOptions.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ImportBusinessMetadata(content, context);
+            Response response = ImportBusinessMetadata(content, content.ContentType, context);
             return Response.FromValue(BulkImportResult.FromResponse(response), response);
         }
 
@@ -3679,12 +3679,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The content type for the operation. Always multipart/form-data for this operation. Allowed values: "multipart/form-data". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> ImportBusinessMetadataAsync(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(RequestContent,string,RequestContext)']/*" />
+        public virtual async Task<Response> ImportBusinessMetadataAsync(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3692,7 +3693,7 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportBusinessMetadataRequest(content, context);
+                using HttpMessage message = CreateImportBusinessMetadataRequest(content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3718,12 +3719,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The content type for the operation. Always multipart/form-data for this operation. Allowed values: "multipart/form-data". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(RequestContent,RequestContext)']/*" />
-        public virtual Response ImportBusinessMetadata(RequestContent content, RequestContext context = null)
+        /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(RequestContent,string,RequestContext)']/*" />
+        public virtual Response ImportBusinessMetadata(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3731,7 +3733,7 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportBusinessMetadataRequest(content, context);
+                using HttpMessage message = CreateImportBusinessMetadataRequest(content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -5312,6 +5314,22 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/entity/businessmetadata/import/template", false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/octet-stream");
+            return message;
+        }
+
+        internal HttpMessage CreateImportBusinessMetadataRequest(RequestContent content, string contentType, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/datamap/api", false);
+            uri.AppendPath("/atlas/v2/entity/businessmetadata/import", false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("content-type", contentType);
+            request.Content = content;
             return message;
         }
 
