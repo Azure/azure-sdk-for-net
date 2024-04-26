@@ -1,7 +1,6 @@
 # AzurePipelinesServiceConnectionCredential Example
 
-This example demonstrates authenticating the `SecretClient` using the `AzurePipelinesServiceConnectionCredential`
- in an Azure Pipelines environment with service connections.
+This example demonstrates authenticating the `SecretClient` using the `AzurePipelinesServiceConnectionCredential` in an Azure Pipelines environment with [service connections](https://learn.microsoft.com/azure/devops/pipelines/library/service-endpoints).
 
 ```C# Snippet:AzurePipelinesServiceConnectionCredential_Example
 // Replace the following values with the actual values for the service connection.
