@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

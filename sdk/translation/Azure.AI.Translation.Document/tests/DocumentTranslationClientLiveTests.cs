@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.AI.Translation.Document.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -39,7 +38,7 @@ namespace Azure.AI.Translation.Document.Tests
         {
             DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
-            var documentFormats = await client.GetSupportedFormatsAsync(FormatType.Document);
+            var documentFormats = await client.GetSupportedFormatsAsync(FileFormatType.Document);
 
             Assert.GreaterOrEqual(documentFormats.Value.Value.Count, 0);
             foreach (DocumentTranslationFileFormat fileFormat in documentFormats.Value.Value)
@@ -57,7 +56,7 @@ namespace Azure.AI.Translation.Document.Tests
         {
             DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
-            var glossaryFormats = await client.GetSupportedFormatsAsync(FormatType.Glossary);
+            var glossaryFormats = await client.GetSupportedFormatsAsync(FileFormatType.Glossary);
 
             Assert.GreaterOrEqual(glossaryFormats.Value.Value.Count, 0);
             foreach (DocumentTranslationFileFormat glossaryFormat in glossaryFormats.Value.Value)

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -470,7 +469,7 @@ namespace Azure.AI.Translation.Document.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response response = client.GetSupportedFormats("document");
+            Response response = client.GetSupportedFormats(null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -486,7 +485,7 @@ namespace Azure.AI.Translation.Document.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response response = await client.GetSupportedFormatsAsync("document");
+            Response response = await client.GetSupportedFormatsAsync(null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -502,7 +501,7 @@ namespace Azure.AI.Translation.Document.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = client.GetSupportedFormats(FormatType.Document);
+            Response<SupportedFileFormats> response = client.GetSupportedFormats();
         }
 
         [Test]
@@ -513,7 +512,7 @@ namespace Azure.AI.Translation.Document.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = await client.GetSupportedFormatsAsync(FormatType.Document);
+            Response<SupportedFileFormats> response = await client.GetSupportedFormatsAsync();
         }
 
         [Test]
@@ -524,7 +523,7 @@ namespace Azure.AI.Translation.Document.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response response = client.GetSupportedFormats("document");
+            Response response = client.GetSupportedFormats("document", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -532,6 +531,7 @@ namespace Azure.AI.Translation.Document.Samples
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("defaultVersion").ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("type").ToString());
         }
 
         [Test]
@@ -542,7 +542,7 @@ namespace Azure.AI.Translation.Document.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response response = await client.GetSupportedFormatsAsync("document");
+            Response response = await client.GetSupportedFormatsAsync("document", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -550,6 +550,7 @@ namespace Azure.AI.Translation.Document.Samples
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("defaultVersion").ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("type").ToString());
         }
 
         [Test]
@@ -560,7 +561,7 @@ namespace Azure.AI.Translation.Document.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = client.GetSupportedFormats(FormatType.Document);
+            Response<SupportedFileFormats> response = client.GetSupportedFormats(type: FileFormatType.Document);
         }
 
         [Test]
@@ -571,7 +572,7 @@ namespace Azure.AI.Translation.Document.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = await client.GetSupportedFormatsAsync(FormatType.Document);
+            Response<SupportedFileFormats> response = await client.GetSupportedFormatsAsync(type: FileFormatType.Document);
         }
 
         [Test]

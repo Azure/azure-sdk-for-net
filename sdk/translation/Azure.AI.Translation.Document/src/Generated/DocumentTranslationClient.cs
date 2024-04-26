@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -387,11 +386,11 @@ namespace Azure.AI.Translation.Document
         /// The list includes the common file extension, as well as the
         /// content-type if using the upload API.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetSupportedFormatsAsync(FormatType,CancellationToken)']/*" />
-        public virtual async Task<Response<SupportedFileFormats>> GetSupportedFormatsAsync(FormatType type, CancellationToken cancellationToken = default)
+        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetSupportedFormatsAsync(FileFormatType?,CancellationToken)']/*" />
+        public virtual async Task<Response<SupportedFileFormats>> GetSupportedFormatsAsync(FileFormatType? type = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSupportedFormatsAsync(type.ToString(), context).ConfigureAwait(false);
+            Response response = await GetSupportedFormatsAsync(type?.ToString(), context).ConfigureAwait(false);
             return Response.FromValue(SupportedFileFormats.FromResponse(response), response);
         }
 
@@ -404,11 +403,11 @@ namespace Azure.AI.Translation.Document
         /// The list includes the common file extension, as well as the
         /// content-type if using the upload API.
         /// </remarks>
-        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetSupportedFormats(FormatType,CancellationToken)']/*" />
-        public virtual Response<SupportedFileFormats> GetSupportedFormats(FormatType type, CancellationToken cancellationToken = default)
+        /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetSupportedFormats(FileFormatType?,CancellationToken)']/*" />
+        public virtual Response<SupportedFileFormats> GetSupportedFormats(FileFormatType? type = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSupportedFormats(type.ToString(), context);
+            Response response = GetSupportedFormats(type?.ToString(), context);
             return Response.FromValue(SupportedFileFormats.FromResponse(response), response);
         }
 
@@ -422,21 +421,18 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSupportedFormatsAsync(FormatType,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSupportedFormatsAsync(FileFormatType?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="type"> the type of format like document or glossary . Allowed values: "document" | "glossary". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetSupportedFormatsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSupportedFormatsAsync(string type, RequestContext context = null)
+        public virtual async Task<Response> GetSupportedFormatsAsync(string type, RequestContext context)
         {
-            Argument.AssertNotNull(type, nameof(type));
-
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetSupportedFormats");
             scope.Start();
             try
@@ -461,21 +457,18 @@ namespace Azure.AI.Translation.Document
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSupportedFormats(FormatType,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSupportedFormats(FileFormatType?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="type"> the type of format like document or glossary . Allowed values: "document" | "glossary". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/DocumentTranslationClient.xml" path="doc/members/member[@name='GetSupportedFormats(string,RequestContext)']/*" />
-        public virtual Response GetSupportedFormats(string type, RequestContext context = null)
+        public virtual Response GetSupportedFormats(string type, RequestContext context)
         {
-            Argument.AssertNotNull(type, nameof(type));
-
             using var scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.GetSupportedFormats");
             scope.Start();
             try
@@ -493,42 +486,42 @@ namespace Azure.AI.Translation.Document
         /// <summary> Returns the status for all documents in a batch document translation request. </summary>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="maxCount">
-        /// $top indicates the total number of records the user wants to be returned across
+        /// top indicates the total number of records the user wants to be returned across
         /// all pages.
         ///
-        /// Clients MAY use $top and $skip query parameters to
+        /// Clients MAY use top and skip query parameters to
         /// specify a number of results to return and an offset into the collection.
         /// When
-        /// both $top and $skip are given by a client, the server SHOULD first apply $skip
-        /// and then $top on the collection.
+        /// both top and skip are given by a client, the server SHOULD first apply skip
+        /// and then top on the collection.
         ///
         /// Note: If the server can't honor
-        /// $top and/or $skip, the server MUST return an error to the client informing
+        /// top and/or skip, the server MUST return an error to the client informing
         /// about it instead of just ignoring the query options.
         /// </param>
         /// <param name="skip">
-        /// $skip indicates the number of records to skip from the list of records held by
+        /// skip indicates the number of records to skip from the list of records held by
         /// the server based on the sorting method specified.  By default, we sort by
         /// descending start time.
         ///
-        /// Clients MAY use $top and $skip query
+        /// Clients MAY use top and skip query
         /// parameters to specify a number of results to return and an offset into the
         /// collection.
-        /// When both $top and $skip are given by a client, the server SHOULD
-        /// first apply $skip and then $top on the collection.
+        /// When both top and skip are given by a client, the server SHOULD
+        /// first apply skip and then top on the collection.
         ///
         /// Note: If the
-        /// server can't honor $top and/or $skip, the server MUST return an error to the
+        /// server can't honor top and/or skip, the server MUST return an error to the
         /// client informing about it instead of just ignoring the query options.
         /// </param>
         /// <param name="maxpagesize">
-        /// $maxpagesize is the maximum items returned in a page.  If more items are
-        /// requested via $top (or $top is not specified and there are more items to be
+        /// maxpagesize is the maximum items returned in a page.  If more items are
+        /// requested via top (or top is not specified and there are more items to be
         /// returned), @nextLink will contain the link to the next page.
         ///
         ///
         /// Clients MAY request server-driven paging with a specific page size by
-        /// specifying a $maxpagesize preference. The server SHOULD honor this preference
+        /// specifying a maxpagesize preference. The server SHOULD honor this preference
         /// if the specified page size is smaller than the server's default page size.
         /// </param>
         /// <param name="ids"> Ids to use in filtering. </param>
@@ -547,23 +540,23 @@ namespace Azure.AI.Translation.Document
         /// include a continuation token in the response. The absence of a continuation
         /// token means that no additional pages are available.
         ///
-        /// $top, $skip
-        /// and $maxpagesize query parameters can be used to specify a number of results to
+        /// top, skip
+        /// and maxpagesize query parameters can be used to specify a number of results to
         /// return and an offset for the collection.
         ///
-        /// $top indicates the total
+        /// top indicates the total
         /// number of records the user wants to be returned across all pages.
-        /// $skip
+        /// skip
         /// indicates the number of records to skip from the list of document status held
         /// by the server based on the sorting method specified.  By default, we sort by
         /// descending start time.
-        /// $maxpagesize is the maximum items returned in a page.
-        /// If more items are requested via $top (or $top is not specified and there are
+        /// maxpagesize is the maximum items returned in a page.
+        /// If more items are requested via top (or top is not specified and there are
         /// more items to be returned), @nextLink will contain the link to the next page.
         ///
         ///
-        /// $orderBy query parameter can be used to sort the returned list (ex
-        /// "$orderBy=createdDateTimeUtc asc" or "$orderBy=createdDateTimeUtc
+        /// orderBy query parameter can be used to sort the returned list (ex
+        /// "orderBy=createdDateTimeUtc asc" or "orderBy=createdDateTimeUtc
         /// desc").
         /// The default sorting is descending by createdDateTimeUtc.
         /// Some query
@@ -576,10 +569,10 @@ namespace Azure.AI.Translation.Document
         /// The supported filtering query parameters are (status, ids,
         /// createdDateTimeUtcStart, createdDateTimeUtcEnd).
         ///
-        /// When both $top
-        /// and $skip are included, the server should first apply $skip and then $top on
+        /// When both top
+        /// and skip are included, the server should first apply skip and then top on
         /// the collection.
-        /// Note: If the server can't honor $top and/or $skip, the server
+        /// Note: If the server can't honor top and/or skip, the server
         /// must return an error to the client informing about it instead of just ignoring
         /// the query options.
         /// This reduces the risk of the client making assumptions about
@@ -597,42 +590,42 @@ namespace Azure.AI.Translation.Document
         /// <summary> Returns the status for all documents in a batch document translation request. </summary>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="maxCount">
-        /// $top indicates the total number of records the user wants to be returned across
+        /// top indicates the total number of records the user wants to be returned across
         /// all pages.
         ///
-        /// Clients MAY use $top and $skip query parameters to
+        /// Clients MAY use top and skip query parameters to
         /// specify a number of results to return and an offset into the collection.
         /// When
-        /// both $top and $skip are given by a client, the server SHOULD first apply $skip
-        /// and then $top on the collection.
+        /// both top and skip are given by a client, the server SHOULD first apply skip
+        /// and then top on the collection.
         ///
         /// Note: If the server can't honor
-        /// $top and/or $skip, the server MUST return an error to the client informing
+        /// top and/or skip, the server MUST return an error to the client informing
         /// about it instead of just ignoring the query options.
         /// </param>
         /// <param name="skip">
-        /// $skip indicates the number of records to skip from the list of records held by
+        /// skip indicates the number of records to skip from the list of records held by
         /// the server based on the sorting method specified.  By default, we sort by
         /// descending start time.
         ///
-        /// Clients MAY use $top and $skip query
+        /// Clients MAY use top and skip query
         /// parameters to specify a number of results to return and an offset into the
         /// collection.
-        /// When both $top and $skip are given by a client, the server SHOULD
-        /// first apply $skip and then $top on the collection.
+        /// When both top and skip are given by a client, the server SHOULD
+        /// first apply skip and then top on the collection.
         ///
         /// Note: If the
-        /// server can't honor $top and/or $skip, the server MUST return an error to the
+        /// server can't honor top and/or skip, the server MUST return an error to the
         /// client informing about it instead of just ignoring the query options.
         /// </param>
         /// <param name="maxpagesize">
-        /// $maxpagesize is the maximum items returned in a page.  If more items are
-        /// requested via $top (or $top is not specified and there are more items to be
+        /// maxpagesize is the maximum items returned in a page.  If more items are
+        /// requested via top (or top is not specified and there are more items to be
         /// returned), @nextLink will contain the link to the next page.
         ///
         ///
         /// Clients MAY request server-driven paging with a specific page size by
-        /// specifying a $maxpagesize preference. The server SHOULD honor this preference
+        /// specifying a maxpagesize preference. The server SHOULD honor this preference
         /// if the specified page size is smaller than the server's default page size.
         /// </param>
         /// <param name="ids"> Ids to use in filtering. </param>
@@ -651,23 +644,23 @@ namespace Azure.AI.Translation.Document
         /// include a continuation token in the response. The absence of a continuation
         /// token means that no additional pages are available.
         ///
-        /// $top, $skip
-        /// and $maxpagesize query parameters can be used to specify a number of results to
+        /// top, skip
+        /// and maxpagesize query parameters can be used to specify a number of results to
         /// return and an offset for the collection.
         ///
-        /// $top indicates the total
+        /// top indicates the total
         /// number of records the user wants to be returned across all pages.
-        /// $skip
+        /// skip
         /// indicates the number of records to skip from the list of document status held
         /// by the server based on the sorting method specified.  By default, we sort by
         /// descending start time.
-        /// $maxpagesize is the maximum items returned in a page.
-        /// If more items are requested via $top (or $top is not specified and there are
+        /// maxpagesize is the maximum items returned in a page.
+        /// If more items are requested via top (or top is not specified and there are
         /// more items to be returned), @nextLink will contain the link to the next page.
         ///
         ///
-        /// $orderBy query parameter can be used to sort the returned list (ex
-        /// "$orderBy=createdDateTimeUtc asc" or "$orderBy=createdDateTimeUtc
+        /// orderBy query parameter can be used to sort the returned list (ex
+        /// "orderBy=createdDateTimeUtc asc" or "orderBy=createdDateTimeUtc
         /// desc").
         /// The default sorting is descending by createdDateTimeUtc.
         /// Some query
@@ -680,10 +673,10 @@ namespace Azure.AI.Translation.Document
         /// The supported filtering query parameters are (status, ids,
         /// createdDateTimeUtcStart, createdDateTimeUtcEnd).
         ///
-        /// When both $top
-        /// and $skip are included, the server should first apply $skip and then $top on
+        /// When both top
+        /// and skip are included, the server should first apply skip and then top on
         /// the collection.
-        /// Note: If the server can't honor $top and/or $skip, the server
+        /// Note: If the server can't honor top and/or skip, the server
         /// must return an error to the client informing about it instead of just ignoring
         /// the query options.
         /// This reduces the risk of the client making assumptions about
@@ -715,42 +708,42 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="maxCount">
-        /// $top indicates the total number of records the user wants to be returned across
+        /// top indicates the total number of records the user wants to be returned across
         /// all pages.
         ///
-        /// Clients MAY use $top and $skip query parameters to
+        /// Clients MAY use top and skip query parameters to
         /// specify a number of results to return and an offset into the collection.
         /// When
-        /// both $top and $skip are given by a client, the server SHOULD first apply $skip
-        /// and then $top on the collection.
+        /// both top and skip are given by a client, the server SHOULD first apply skip
+        /// and then top on the collection.
         ///
         /// Note: If the server can't honor
-        /// $top and/or $skip, the server MUST return an error to the client informing
+        /// top and/or skip, the server MUST return an error to the client informing
         /// about it instead of just ignoring the query options.
         /// </param>
         /// <param name="skip">
-        /// $skip indicates the number of records to skip from the list of records held by
+        /// skip indicates the number of records to skip from the list of records held by
         /// the server based on the sorting method specified.  By default, we sort by
         /// descending start time.
         ///
-        /// Clients MAY use $top and $skip query
+        /// Clients MAY use top and skip query
         /// parameters to specify a number of results to return and an offset into the
         /// collection.
-        /// When both $top and $skip are given by a client, the server SHOULD
-        /// first apply $skip and then $top on the collection.
+        /// When both top and skip are given by a client, the server SHOULD
+        /// first apply skip and then top on the collection.
         ///
         /// Note: If the
-        /// server can't honor $top and/or $skip, the server MUST return an error to the
+        /// server can't honor top and/or skip, the server MUST return an error to the
         /// client informing about it instead of just ignoring the query options.
         /// </param>
         /// <param name="maxpagesize">
-        /// $maxpagesize is the maximum items returned in a page.  If more items are
-        /// requested via $top (or $top is not specified and there are more items to be
+        /// maxpagesize is the maximum items returned in a page.  If more items are
+        /// requested via top (or top is not specified and there are more items to be
         /// returned), @nextLink will contain the link to the next page.
         ///
         ///
         /// Clients MAY request server-driven paging with a specific page size by
-        /// specifying a $maxpagesize preference. The server SHOULD honor this preference
+        /// specifying a maxpagesize preference. The server SHOULD honor this preference
         /// if the specified page size is smaller than the server's default page size.
         /// </param>
         /// <param name="ids"> Ids to use in filtering. </param>
@@ -786,42 +779,42 @@ namespace Azure.AI.Translation.Document
         /// </summary>
         /// <param name="id"> Format - uuid.  The operation id. </param>
         /// <param name="maxCount">
-        /// $top indicates the total number of records the user wants to be returned across
+        /// top indicates the total number of records the user wants to be returned across
         /// all pages.
         ///
-        /// Clients MAY use $top and $skip query parameters to
+        /// Clients MAY use top and skip query parameters to
         /// specify a number of results to return and an offset into the collection.
         /// When
-        /// both $top and $skip are given by a client, the server SHOULD first apply $skip
-        /// and then $top on the collection.
+        /// both top and skip are given by a client, the server SHOULD first apply skip
+        /// and then top on the collection.
         ///
         /// Note: If the server can't honor
-        /// $top and/or $skip, the server MUST return an error to the client informing
+        /// top and/or skip, the server MUST return an error to the client informing
         /// about it instead of just ignoring the query options.
         /// </param>
         /// <param name="skip">
-        /// $skip indicates the number of records to skip from the list of records held by
+        /// skip indicates the number of records to skip from the list of records held by
         /// the server based on the sorting method specified.  By default, we sort by
         /// descending start time.
         ///
-        /// Clients MAY use $top and $skip query
+        /// Clients MAY use top and skip query
         /// parameters to specify a number of results to return and an offset into the
         /// collection.
-        /// When both $top and $skip are given by a client, the server SHOULD
-        /// first apply $skip and then $top on the collection.
+        /// When both top and skip are given by a client, the server SHOULD
+        /// first apply skip and then top on the collection.
         ///
         /// Note: If the
-        /// server can't honor $top and/or $skip, the server MUST return an error to the
+        /// server can't honor top and/or skip, the server MUST return an error to the
         /// client informing about it instead of just ignoring the query options.
         /// </param>
         /// <param name="maxpagesize">
-        /// $maxpagesize is the maximum items returned in a page.  If more items are
-        /// requested via $top (or $top is not specified and there are more items to be
+        /// maxpagesize is the maximum items returned in a page.  If more items are
+        /// requested via top (or top is not specified and there are more items to be
         /// returned), @nextLink will contain the link to the next page.
         ///
         ///
         /// Clients MAY request server-driven paging with a specific page size by
-        /// specifying a $maxpagesize preference. The server SHOULD honor this preference
+        /// specifying a maxpagesize preference. The server SHOULD honor this preference
         /// if the specified page size is smaller than the server's default page size.
         /// </param>
         /// <param name="ids"> Ids to use in filtering. </param>
@@ -1021,15 +1014,15 @@ namespace Azure.AI.Translation.Document
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxCount != null)
             {
-                uri.AppendQuery("$top", maxCount.Value, true);
+                uri.AppendQuery("top", maxCount.Value, true);
             }
             if (skip != null)
             {
-                uri.AppendQuery("$skip", skip.Value, true);
+                uri.AppendQuery("skip", skip.Value, true);
             }
             if (maxpagesize != null)
             {
-                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
             if (ids != null && !(ids is ChangeTrackingList<Guid> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -1049,7 +1042,7 @@ namespace Azure.AI.Translation.Document
             }
             if (orderBy != null && !(orderBy is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                uri.AppendQueryDelimited("$orderBy", orderBy, ",", true);
+                uri.AppendQueryDelimited("orderBy", orderBy, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1120,15 +1113,15 @@ namespace Azure.AI.Translation.Document
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxCount != null)
             {
-                uri.AppendQuery("$top", maxCount.Value, true);
+                uri.AppendQuery("top", maxCount.Value, true);
             }
             if (skip != null)
             {
-                uri.AppendQuery("$skip", skip.Value, true);
+                uri.AppendQuery("skip", skip.Value, true);
             }
             if (maxpagesize != null)
             {
-                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
             if (ids != null && !(ids is ChangeTrackingList<Guid> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -1148,7 +1141,7 @@ namespace Azure.AI.Translation.Document
             }
             if (orderBy != null && !(orderBy is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                uri.AppendQueryDelimited("$orderBy", orderBy, ",", true);
+                uri.AppendQueryDelimited("orderBy", orderBy, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1164,8 +1157,11 @@ namespace Azure.AI.Translation.Document
             uri.Reset(_endpoint);
             uri.AppendRaw("/translator", false);
             uri.AppendPath("/document/formats", false);
-            uri.AppendQuery("type", type, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (type != null)
+            {
+                uri.AppendQuery("type", type, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Azure.AI.Translation.Document.Models
+namespace Azure.AI.Translation.Document
 {
-    /// <summary> List of supported file formats. </summary>
-    public partial class SupportedFileFormats
+    /// <summary> Source of the input documents. </summary>
+    public partial class TranslationSource
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +45,37 @@ namespace Azure.AI.Translation.Document.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/>. </summary>
-        /// <param name="value"> list of objects. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SupportedFileFormats(IEnumerable<DocumentTranslationFileFormat> value)
+        /// <summary> Initializes a new instance of <see cref="TranslationSource"/>. </summary>
+        /// <param name="sourceUri"> Location of the folder / container or single file with your documents. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceUri"/> is null. </exception>
+        public TranslationSource(Uri sourceUri)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(sourceUri, nameof(sourceUri));
 
-            Value = value.ToList();
+            SourceUri = sourceUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/>. </summary>
-        /// <param name="value"> list of objects. </param>
+        /// <summary> Initializes a new instance of <see cref="TranslationSource"/>. </summary>
+        /// <param name="sourceUri"> Location of the folder / container or single file with your documents. </param>
+        /// <param name="filter"> Document filter. </param>
+        /// <param name="languageCode">
+        /// Language code
+        /// If none is specified, we will perform auto detect on the document
+        /// </param>
+        /// <param name="storageSource"> Storage Source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportedFileFormats(IReadOnlyList<DocumentTranslationFileFormat> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TranslationSource(Uri sourceUri, DocumentFilter filter, string languageCode, string storageSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
+            SourceUri = sourceUri;
+            Filter = filter;
+            LanguageCode = languageCode;
+            StorageSource = storageSource;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/> for deserialization. </summary>
-        internal SupportedFileFormats()
+        /// <summary> Initializes a new instance of <see cref="TranslationSource"/> for deserialization. </summary>
+        internal TranslationSource()
         {
         }
-
-        /// <summary> list of objects. </summary>
-        public IReadOnlyList<DocumentTranslationFileFormat> Value { get; }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Translation.Document.Models
+namespace Azure.AI.Translation.Document
 {
     public partial class StartTranslationDetails : IUtf8JsonSerializable, IJsonModel<StartTranslationDetails>
     {

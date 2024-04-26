@@ -9,10 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.Translation.Document.Models
+namespace Azure.AI.Translation.Document
 {
-    /// <summary> Translation job submission batch request. </summary>
-    public partial class StartTranslationDetails
+    /// <summary> List of supported file formats. </summary>
+    public partial class SupportedFileFormats
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +46,31 @@ namespace Azure.AI.Translation.Document.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StartTranslationDetails"/>. </summary>
-        /// <param name="inputs"> The input list of documents or folders containing documents. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
-        public StartTranslationDetails(IEnumerable<DocumentTranslationInput> inputs)
+        /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/>. </summary>
+        /// <param name="value"> list of objects. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SupportedFileFormats(IEnumerable<DocumentTranslationFileFormat> value)
         {
-            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(value, nameof(value));
 
-            Inputs = inputs.ToList();
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartTranslationDetails"/>. </summary>
-        /// <param name="inputs"> The input list of documents or folders containing documents. </param>
+        /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/>. </summary>
+        /// <param name="value"> list of objects. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StartTranslationDetails(IList<DocumentTranslationInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SupportedFileFormats(IReadOnlyList<DocumentTranslationFileFormat> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Inputs = inputs;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartTranslationDetails"/> for deserialization. </summary>
-        internal StartTranslationDetails()
+        /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/> for deserialization. </summary>
+        internal SupportedFileFormats()
         {
         }
 
-        /// <summary> The input list of documents or folders containing documents. </summary>
-        public IList<DocumentTranslationInput> Inputs { get; }
+        /// <summary> list of objects. </summary>
+        public IReadOnlyList<DocumentTranslationFileFormat> Value { get; }
     }
 }

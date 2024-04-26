@@ -12,8 +12,8 @@ namespace Azure.AI.Translation.Document
 {
     [CodeGenClient("SingleDocumentTranslationClient")]
     [CodeGenSuppress("CreateDocumentTranslateRequest", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
-    [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(Models.DocumentTranslateContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
-    [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(Models.DocumentTranslateContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(DocumentTranslateContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(DocumentTranslateContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
     [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
     [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
     [CodeGenSuppress("FromCancellationToken", typeof(CancellationToken))]

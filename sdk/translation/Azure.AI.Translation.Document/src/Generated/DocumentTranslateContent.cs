@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Translation.Document.Models
+namespace Azure.AI.Translation.Document
 {
     /// <summary> Document Translate Request Content. </summary>
     public partial class DocumentTranslateContent

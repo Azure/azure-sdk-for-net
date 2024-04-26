@@ -409,7 +409,7 @@ Console.WriteLine(result.GetProperty("summary").GetProperty("cancelled").ToStrin
 Console.WriteLine(result.GetProperty("summary").GetProperty("totalCharacterCharged").ToString());
 ]]></code></example>
     </member>
-    <member name="GetSupportedFormatsAsync(FormatType,CancellationToken)">
+    <member name="GetSupportedFormatsAsync(FileFormatType?,CancellationToken)">
       <example>
 This sample shows how to call GetSupportedFormatsAsync.
 <code><![CDATA[
@@ -417,7 +417,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response<SupportedFileFormats> response = await client.GetSupportedFormatsAsync(FormatType.Document);
+Response<SupportedFileFormats> response = await client.GetSupportedFormatsAsync();
 ]]></code>
 This sample shows how to call GetSupportedFormatsAsync with all parameters.
 <code><![CDATA[
@@ -425,10 +425,10 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response<SupportedFileFormats> response = await client.GetSupportedFormatsAsync(FormatType.Document);
+Response<SupportedFileFormats> response = await client.GetSupportedFormatsAsync(type: FileFormatType.Document);
 ]]></code></example>
     </member>
-    <member name="GetSupportedFormats(FormatType,CancellationToken)">
+    <member name="GetSupportedFormats(FileFormatType?,CancellationToken)">
       <example>
 This sample shows how to call GetSupportedFormats.
 <code><![CDATA[
@@ -436,7 +436,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response<SupportedFileFormats> response = client.GetSupportedFormats(FormatType.Document);
+Response<SupportedFileFormats> response = client.GetSupportedFormats();
 ]]></code>
 This sample shows how to call GetSupportedFormats with all parameters.
 <code><![CDATA[
@@ -444,7 +444,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response<SupportedFileFormats> response = client.GetSupportedFormats(FormatType.Document);
+Response<SupportedFileFormats> response = client.GetSupportedFormats(type: FileFormatType.Document);
 ]]></code></example>
     </member>
     <member name="GetSupportedFormatsAsync(string,RequestContext)">
@@ -455,7 +455,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response response = await client.GetSupportedFormatsAsync("document");
+Response response = await client.GetSupportedFormatsAsync(null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -468,7 +468,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response response = await client.GetSupportedFormatsAsync("document");
+Response response = await client.GetSupportedFormatsAsync("document", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -476,6 +476,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileExtensions")[0
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("defaultVersion").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("type").ToString());
 ]]></code></example>
     </member>
     <member name="GetSupportedFormats(string,RequestContext)">
@@ -486,7 +487,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response response = client.GetSupportedFormats("document");
+Response response = client.GetSupportedFormats(null, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -499,7 +500,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response response = client.GetSupportedFormats("document");
+Response response = client.GetSupportedFormats("document", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -507,6 +508,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileExtensions")[0
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("defaultVersion").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("type").ToString());
 ]]></code></example>
     </member>
     <member name="GetDocumentsStatusAsync(Guid,int?,int?,int?,IEnumerable{Guid},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,IEnumerable{string},CancellationToken)">

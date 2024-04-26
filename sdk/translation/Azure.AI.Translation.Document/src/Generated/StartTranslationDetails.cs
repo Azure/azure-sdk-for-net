@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Azure.AI.Translation.Document.Models
+namespace Azure.AI.Translation.Document
 {
-    /// <summary> Document filter. </summary>
-    internal partial class DocumentFilter
+    /// <summary> Translation job submission batch request. </summary>
+    public partial class StartTranslationDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,43 +46,31 @@ namespace Azure.AI.Translation.Document.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFilter"/>. </summary>
-        public DocumentFilter()
+        /// <summary> Initializes a new instance of <see cref="StartTranslationDetails"/>. </summary>
+        /// <param name="inputs"> The input list of documents or folders containing documents. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
+        public StartTranslationDetails(IEnumerable<DocumentTranslationInput> inputs)
         {
+            Argument.AssertNotNull(inputs, nameof(inputs));
+
+            Inputs = inputs.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentFilter"/>. </summary>
-        /// <param name="prefix">
-        /// A case-sensitive prefix string to filter documents in the source path for
-        /// translation.
-        /// For example, when using a Azure storage blob Uri, use the prefix
-        /// to restrict sub folders for translation.
-        /// </param>
-        /// <param name="suffix">
-        /// A case-sensitive suffix string to filter documents in the source path for
-        /// translation.
-        /// This is most often use for file extensions
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="StartTranslationDetails"/>. </summary>
+        /// <param name="inputs"> The input list of documents or folders containing documents. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentFilter(string prefix, string suffix, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StartTranslationDetails(IList<DocumentTranslationInput> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Prefix = prefix;
-            Suffix = suffix;
+            Inputs = inputs;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A case-sensitive prefix string to filter documents in the source path for
-        /// translation.
-        /// For example, when using a Azure storage blob Uri, use the prefix
-        /// to restrict sub folders for translation.
-        /// </summary>
-        public string Prefix { get; set; }
-        /// <summary>
-        /// A case-sensitive suffix string to filter documents in the source path for
-        /// translation.
-        /// This is most often use for file extensions
-        /// </summary>
-        public string Suffix { get; set; }
+        /// <summary> Initializes a new instance of <see cref="StartTranslationDetails"/> for deserialization. </summary>
+        internal StartTranslationDetails()
+        {
+        }
+
+        /// <summary> The input list of documents or folders containing documents. </summary>
+        public IList<DocumentTranslationInput> Inputs { get; }
     }
 }
