@@ -5,7 +5,6 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using Azure.Core;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -48,21 +47,20 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <summary>
         /// The file system attributes for this file.
         /// </summary>
-        public DataTransferProperty<NtfsFileAttributes> FileAttributes;
+        public DataTransferProperty<NtfsFileAttributes?> FileAttributes;
         public bool PreserveFileAttributes;
 
         /// <summary>
         /// The key of the file permission.
         /// </summary>
-        public DataTransferProperty<string> FilePermissionKey;
-        public bool PreserveFilePermissionKey;
+        public string FilePermissionKey;
         private byte[] _filePermissionKeyBytes;
 
         /// <summary>
         /// The creation time of the file. This is stored as a string with a
         /// roundtrip format because storing as (long)ticks only supports rounding to the minute.
         /// </summary>
-        public DataTransferProperty<DateTimeOffset> FileCreatedOn;
+        public DataTransferProperty<DateTimeOffset?> FileCreatedOn;
         public bool PreserveFileCreatedOn;
         private byte[] _fileCreatedOnBytes;
 
@@ -70,7 +68,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// The last write time of the file. This is stored as a string with a
         /// roundtrip format because storing as (long)ticks only supports rounding to the minute.
         /// </summary>
-        public DataTransferProperty<DateTimeOffset> FileLastWrittenOn;
+        public DataTransferProperty<DateTimeOffset?> FileLastWrittenOn;
         public bool PreserveFileLastWrittenOn;
         private byte[] _fileLastWrittenOnBytes;
 
@@ -78,7 +76,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// The change time of the file. This is stored as a string with a
         /// roundtrip format because storing as (long)ticks only supports rounding to the minute.
         /// </summary>
-        public DataTransferProperty<DateTimeOffset> FileChangedOn;
+        public DataTransferProperty<DateTimeOffset?> FileChangedOn;
         public bool PreserveFileChangedOn;
         private byte[] _fileChangedOnBytes;
 
@@ -104,11 +102,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
             DataTransferProperty<string[]> contentLanguage,
             DataTransferProperty<string> contentDisposition,
             DataTransferProperty<string> cacheControl,
-            DataTransferProperty<NtfsFileAttributes> fileAttributes,
-            DataTransferProperty<string> filePermissionKey,
-            DataTransferProperty<DateTimeOffset> fileCreatedOn,
-            DataTransferProperty<DateTimeOffset> fileLastWrittenOn,
-            DataTransferProperty<DateTimeOffset> fileChangedOn,
+            DataTransferProperty<NtfsFileAttributes?> fileAttributes,
+            string filePermissionKey,
+            DataTransferProperty<DateTimeOffset?> fileCreatedOn,
+            DataTransferProperty<DateTimeOffset?> fileLastWrittenOn,
+            DataTransferProperty<DateTimeOffset?> fileChangedOn,
             DataTransferProperty<Metadata> fileMetadata,
             DataTransferProperty<Metadata> directoryMetadata)
         {
@@ -137,20 +135,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
             PreserveFileAttributes = fileAttributes?.Preserve ?? true;
 
             FilePermissionKey = filePermissionKey;
-            PreserveFilePermissionKey = filePermissionKey?.Preserve ?? true;
-            _filePermissionKeyBytes = FilePermissionKey?.Value != default ? Encoding.UTF8.GetBytes(filePermissionKey.Value) : Array.Empty<byte>();
+            _filePermissionKeyBytes = !string.IsNullOrEmpty(FilePermissionKey) ? Encoding.UTF8.GetBytes(filePermissionKey) : Array.Empty<byte>();
 
             FileCreatedOn = fileCreatedOn;
             PreserveFileCreatedOn = fileCreatedOn?.Preserve ?? true;
-            _fileCreatedOnBytes = fileCreatedOn?.Value != default ? Encoding.UTF8.GetBytes(fileCreatedOn.Value.ToString(RoundtripDateTimeFormat)) : Array.Empty<byte>();
+            _fileCreatedOnBytes = fileCreatedOn?.Value != default ? Encoding.UTF8.GetBytes(fileCreatedOn.Value.Value.ToString(RoundtripDateTimeFormat)) : Array.Empty<byte>();
 
             FileLastWrittenOn = fileLastWrittenOn;
             PreserveFileLastWrittenOn = fileLastWrittenOn?.Preserve ?? true;
-            _fileLastWrittenOnBytes = fileLastWrittenOn?.Value.Offset != default ? Encoding.UTF8.GetBytes(fileLastWrittenOn.Value.ToString(RoundtripDateTimeFormat)) : Array.Empty<byte>();
+            _fileLastWrittenOnBytes = fileLastWrittenOn?.Value != default ? Encoding.UTF8.GetBytes(fileLastWrittenOn.Value.Value.ToString(RoundtripDateTimeFormat)) : Array.Empty<byte>();
 
             FileChangedOn = fileChangedOn;
             PreserveFileChangedOn = fileChangedOn?.Preserve ?? true;
-            _fileChangedOnBytes = fileChangedOn?.Value.Offset != default ? Encoding.UTF8.GetBytes(fileChangedOn.Value.ToString(RoundtripDateTimeFormat)) : Array.Empty<byte>();
+            _fileChangedOnBytes = fileChangedOn?.Value != default ? Encoding.UTF8.GetBytes(fileChangedOn.Value.Value.ToString(RoundtripDateTimeFormat)) : Array.Empty<byte>();
 
             FileMetadata = fileMetadata;
             PreserveFileMetadata = fileMetadata?.Preserve ?? true;
@@ -173,7 +170,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             // SMB properties
             writer.WritePreservablePropertyOffset(PreserveFileAttributes, DataMovementConstants.IntSizeInBytes, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(PreserveFilePermissionKey, _filePermissionKeyBytes.Length, ref currentVariableLengthIndex);
+            writer.WriteVariableLengthFieldInfo(_filePermissionKeyBytes.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(PreserveFileCreatedOn, _fileCreatedOnBytes.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(PreserveFileLastWrittenOn, _fileLastWrittenOnBytes.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(PreserveFileChangedOn, _fileChangedOnBytes.Length, ref currentVariableLengthIndex);
@@ -194,10 +191,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 writer.Write((int)FileAttributes.Value);
             }
-            if (!PreserveFilePermissionKey)
-            {
-                writer.Write(_filePermissionKeyBytes);
-            }
+            writer.Write(_filePermissionKeyBytes);
             if (!PreserveFileCreatedOn)
             {
                 writer.Write(_fileCreatedOnBytes);
@@ -255,7 +249,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             // SMB properties
             (bool preserveFileAttributes, int fileAttributesOffset, int fileAttributesLength) = reader.ReadVariableLengthFieldInfo();
-            (bool preserveFilePermissionKey, int filePermissionKeyOffset, int filePermissionKeyLength) = reader.ReadVariableLengthFieldInfo();
+            int filePermissionKeyOffset = reader.ReadInt32();
+            int filePermissionKeyLength = reader.ReadInt32();
             (bool preserveFileCreatedOn, int fileCreatedOnOffset, int fileCreatedOnLength) = reader.ReadVariableLengthFieldInfo();
             (bool preserveFileLastWrittenOn, int fileLastWrittenOnOffset, int fileLastWrittenOnLength) = reader.ReadVariableLengthFieldInfo();
             (bool preserveFileChangedOn, int fileChangedOnOffset, int fileChangedOnLength) = reader.ReadVariableLengthFieldInfo();
@@ -374,13 +369,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 contentLanguage: preserveContentLanguage ? new(preserveContentLanguage) : new(contentLanguage?.Split(HeaderDelimiter)),
                 contentDisposition: preserveContentDisposition ? new(preserveContentDisposition) : new(contentDisposition),
                 cacheControl: preserveCacheControl ? new(preserveCacheControl) : new(cacheControl),
-                fileAttributes: preserveFileAttributes && (ntfsFileAttributes != default) ? new(preserveFileAttributes) : new(ntfsFileAttributes.Value),
-                filePermissionKey: preserveFilePermissionKey ? new(preserveFilePermissionKey) : new(filePermissionKey),
-                fileCreatedOn: preserveFileCreatedOn && (fileCreatedOn != default) ? new(preserveFileCreatedOn) : new(fileCreatedOn.Value),
-                fileLastWrittenOn: preserveFileLastWrittenOn && (fileLastWrittenOn != default) ? new(preserveFileLastWrittenOn) : new(fileLastWrittenOn.Value),
-                fileChangedOn: preserveFileChangedOn && (fileChangedOn != default) ? new(preserveFileChangedOn) : new(fileChangedOn.Value),
-                fileMetadata: preserveFileMetadata ? new(preserveFileMetadata) : new(fileMetadataString.ToDictionary(nameof(fileMetadataString))),
-                directoryMetadata: preserveDirectoryMetadata ? new(preserveDirectoryMetadata) : new(directoryMetadataString.ToDictionary(nameof(directoryMetadataString))));
+                fileAttributes: preserveFileAttributes ? new(preserveFileAttributes) : new(ntfsFileAttributes),
+                filePermissionKey: filePermissionKey,
+                fileCreatedOn: preserveFileCreatedOn ? new(preserveFileCreatedOn) : new(fileCreatedOn),
+                fileLastWrittenOn: preserveFileLastWrittenOn ? new(preserveFileLastWrittenOn) : new(fileLastWrittenOn),
+                fileChangedOn: preserveFileChangedOn ? new(preserveFileChangedOn) : new(fileChangedOn),
+                fileMetadata: preserveFileMetadata ? new(preserveFileMetadata) : new(fileMetadataString?.ToDictionary(nameof(fileMetadataString))),
+                directoryMetadata: preserveDirectoryMetadata ? new(preserveDirectoryMetadata) : new(directoryMetadataString?.ToDictionary(nameof(directoryMetadataString))));
         }
 
         private int CalculateLength()
@@ -391,10 +386,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 length += DataMovementConstants.IntSizeInBytes;
             }
-            if (PreserveFilePermissionKey)
-            {
-                length += _filePermissionKeyBytes.Length;
-            }
+            length += _filePermissionKeyBytes.Length;
             if (PreserveFileCreatedOn)
             {
                 length += _fileCreatedOnBytes.Length;

@@ -244,11 +244,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             ShareFileStorageResourceOptions options = new()
             {
+                FileAttributes = checkpointData.FileAttributes,
+                FilePermissionKey = checkpointData.FilePermissionKey,
                 CacheControl = checkpointData.CacheControl,
                 ContentDisposition = checkpointData.ContentDisposition,
                 ContentEncoding = checkpointData.ContentEncoding,
                 ContentLanguage = checkpointData.ContentLanguage,
                 ContentType = checkpointData.ContentType,
+                FileCreatedOn = checkpointData.FileCreatedOn,
+                FileLastWrittenOn = checkpointData.FileLastWrittenOn,
+                FileChangedOn = checkpointData.FileChangedOn,
                 DirectoryMetadata = checkpointData.DirectoryMetadata,
                 FileMetadata = checkpointData.FileMetadata,
             };

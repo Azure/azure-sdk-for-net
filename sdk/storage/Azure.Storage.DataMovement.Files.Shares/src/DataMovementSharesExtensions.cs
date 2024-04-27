@@ -68,14 +68,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 FileAttributes = (options?.FileAttributes?.Preserve ?? true)
                     ? properties?.RawProperties?.TryGetValue(DataMovementShareConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
-                        ? (NtfsFileAttributes) fileAttributes
+                        ? (NtfsFileAttributes?) fileAttributes
                         : default
                     : options?.FileAttributes?.Value,
-                FilePermissionKey = (options?.FilePermissionKey?.Preserve ?? true)
-                    ? properties?.RawProperties?.TryGetValue(DataMovementShareConstants.ResourceProperties.FilePermissionKey, out object filePermissionKey) == true
-                        ? (string) filePermissionKey
-                        : default
-                    : options?.FilePermissionKey?.Value,
+                FilePermissionKey = options?.FilePermissionKey,
                 FileCreatedOn = (options?.FileCreatedOn?.Preserve ?? true)
                     ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object fileCreatedOn) == true
                         ? (DateTimeOffset?) fileCreatedOn

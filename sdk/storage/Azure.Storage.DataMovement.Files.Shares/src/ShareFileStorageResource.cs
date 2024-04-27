@@ -71,6 +71,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     throw Errors.ShareFileAlreadyExists(ShareFileClient.Path);
                 }
             }
+            ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(properties?.RawProperties);
+            IDictionary<string, string> metadata = _options?.GetFileMetadata(properties?.RawProperties);
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties);
             await ShareFileClient.CreateAsync(
                     maxSize: maxSize,
                     httpHeaders: _options?.GetShareFileHttpHeaders(properties?.RawProperties),

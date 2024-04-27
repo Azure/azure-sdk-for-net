@@ -95,27 +95,27 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <summary>
         /// The file system attributes for this file.
         /// </summary>
-        public DataTransferProperty<NtfsFileAttributes> FileAttributes { get; set; }
+        public DataTransferProperty<NtfsFileAttributes?> FileAttributes { get; set; }
 
         /// <summary>
         /// The key of the file permission.
         /// </summary>
-        public DataTransferProperty<string> FilePermissionKey { get; set; }
+        public string FilePermissionKey { get; set; }
 
         /// <summary>
         /// The creation time of the file.
         /// </summary>
-        public DataTransferProperty<DateTimeOffset> FileCreatedOn { get; set; }
+        public DataTransferProperty<DateTimeOffset?> FileCreatedOn { get; set; }
 
         /// <summary>
         /// The last write time of the file.
         /// </summary>
-        public DataTransferProperty<DateTimeOffset> FileLastWrittenOn { get; set; }
+        public DataTransferProperty<DateTimeOffset?> FileLastWrittenOn { get; set; }
 
         /// <summary>
         /// The change time of the file.
         /// </summary>
-        public DataTransferProperty<DateTimeOffset> FileChangedOn { get; set; }
+        public DataTransferProperty<DateTimeOffset?> FileChangedOn { get; set; }
 
         /// <summary>
         /// Optional. Defines custom metadata to set on the destination resource.

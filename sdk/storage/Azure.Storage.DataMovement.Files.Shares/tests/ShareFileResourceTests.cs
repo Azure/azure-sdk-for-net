@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
@@ -473,7 +474,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     ContentLanguage = new(true),
                     CacheControl = new(true),
                     FileAttributes = new(true),
-                    FilePermissionKey = new(true),
+                    FilePermissionKey = default,
                     FileCreatedOn = new(true),
                     FileLastWrittenOn = new(true),
                     FileChangedOn = new(true),
@@ -545,7 +546,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     ContentLanguage = new(false),
                     CacheControl = new(false),
                     FileAttributes = new(false),
-                    FilePermissionKey = new(false),
+                    FilePermissionKey = default,
                     FileCreatedOn = new(false),
                     FileLastWrittenOn = new(false),
                     FileChangedOn = new(false),
@@ -602,7 +603,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     ContentLanguage = new(DefaultContentLanguage),
                     CacheControl = new(DefaultCacheControl),
                     FileAttributes = new(DefaultFileAttributes),
-                    FilePermissionKey = new(DefaultFilePermissionKey),
+                    FilePermissionKey = default,
                     FileCreatedOn = new(DefaultFileCreatedOn),
                     FileLastWrittenOn = new(DefaultFileLastWrittenOn),
                     FileChangedOn = new(DefaultFileChangedOn),
@@ -886,7 +887,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         ContentLanguage = new(true),
                         CacheControl = new(true),
                         FileAttributes = new(true),
-                        FilePermissionKey = new(true),
+                        FilePermissionKey = default,
                         FileCreatedOn = new(true),
                         FileLastWrittenOn = new(true),
                         FileChangedOn = new(true),
@@ -961,7 +962,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         ContentLanguage = new(false),
                         CacheControl = new(false),
                         FileAttributes = new(false),
-                        FilePermissionKey = new(false),
+                        FilePermissionKey = default,
                         FileCreatedOn = new(false),
                         FileLastWrittenOn = new(false),
                         FileChangedOn = new(false),
@@ -1022,7 +1023,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         ContentLanguage = new(DefaultContentLanguage),
                         CacheControl = new(DefaultCacheControl),
                         FileAttributes = new(DefaultFileAttributes),
-                        FilePermissionKey = new(DefaultFilePermissionKey),
+                        FilePermissionKey = default,
                         FileCreatedOn = new(DefaultFileCreatedOn),
                         FileLastWrittenOn = new(DefaultFileLastWrittenOn),
                         FileChangedOn = new(DefaultFileChangedOn),
@@ -1318,7 +1319,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         ContentLanguage = new(true),
                         CacheControl = new(true),
                         FileAttributes = new(true),
-                        FilePermissionKey = new(true),
+                        FilePermissionKey = default,
                         FileCreatedOn = new(true),
                         FileLastWrittenOn = new(true),
                         FileChangedOn = new(true),
@@ -1393,7 +1394,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         ContentLanguage = new(false),
                         CacheControl = new(false),
                         FileAttributes = new(false),
-                        FilePermissionKey = new(false),
+                        FilePermissionKey = default,
                         FileCreatedOn = new(false),
                         FileLastWrittenOn = new(false),
                         FileChangedOn = new(false),
@@ -1411,6 +1412,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 It.Is<ShareFileHttpHeaders>(headers =>
                     headers.CacheControl == default &&
                     headers.ContentDisposition == default &&
+                    headers.ContentLanguage == default &&
                     headers.ContentEncoding == default &&
                     headers.ContentType == default),
                 default,
@@ -1454,7 +1456,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         ContentLanguage = new(DefaultContentLanguage),
                         CacheControl = new(DefaultCacheControl),
                         FileAttributes = new(DefaultFileAttributes),
-                        FilePermissionKey = new(DefaultFilePermissionKey),
+                        FilePermissionKey = default,
                         FileCreatedOn = new(DefaultFileCreatedOn),
                         FileLastWrittenOn = new(DefaultFileLastWrittenOn),
                         FileChangedOn = new(DefaultFileChangedOn),

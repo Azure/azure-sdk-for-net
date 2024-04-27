@@ -90,7 +90,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 contentDisposition: new("inline"),
                 cacheControl: new("no-cache"),
                 fileAttributes: new(NtfsFileAttributes.Archive),
-                filePermissionKey: new(r.NextString(8)),
+                filePermissionKey: default,
                 fileLastWrittenOn: new(DateTimeOffset.Now),
                 fileChangedOn: new(DateTimeOffset.Now),
                 fileCreatedOn: new(DateTimeOffset.Now),
@@ -117,18 +117,29 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             Assert.That(destinationPath, Is.EqualTo(storageResource.Uri.AbsoluteUri));
             Assert.That(storageResource, Is.TypeOf<ShareFileStorageResource>());
-            Assert.That(storageResource._options.ContentType, Is.EqualTo(originalDestinationData.ContentType));
-            Assert.That(storageResource._options.ContentEncoding, Is.EqualTo(originalDestinationData.ContentEncoding));
-            Assert.That(storageResource._options.ContentLanguage, Is.EqualTo(originalDestinationData.ContentLanguage));
-            Assert.That(storageResource._options.ContentDisposition, Is.EqualTo(originalDestinationData.ContentDisposition));
-            Assert.That(storageResource._options.CacheControl, Is.EqualTo(originalDestinationData.CacheControl));
-            Assert.That(storageResource._options.FileMetadata, Is.EqualTo(originalDestinationData.FileMetadata));
-            Assert.That(storageResource._options.DirectoryMetadata, Is.EqualTo(originalDestinationData.DirectoryMetadata));
-            Assert.That(storageResource._options.FileAttributes, Is.EqualTo(originalDestinationData.FileAttributes));
+            Assert.That(storageResource._options.ContentType.Preserve, Is.EqualTo(originalDestinationData.ContentType.Preserve));
+            Assert.That(storageResource._options.ContentType.Value, Is.EqualTo(originalDestinationData.ContentType.Value));
+            Assert.That(storageResource._options.ContentEncoding.Preserve, Is.EqualTo(originalDestinationData.ContentEncoding.Preserve));
+            Assert.That(storageResource._options.ContentEncoding.Value, Is.EqualTo(originalDestinationData.ContentEncoding.Value));
+            Assert.That(storageResource._options.ContentLanguage.Preserve, Is.EqualTo(originalDestinationData.ContentLanguage.Preserve));
+            Assert.That(storageResource._options.ContentLanguage.Value, Is.EqualTo(originalDestinationData.ContentLanguage.Value));
+            Assert.That(storageResource._options.ContentDisposition.Preserve, Is.EqualTo(originalDestinationData.ContentDisposition.Preserve));
+            Assert.That(storageResource._options.ContentDisposition.Value, Is.EqualTo(originalDestinationData.ContentDisposition.Value));
+            Assert.That(storageResource._options.CacheControl.Preserve, Is.EqualTo(originalDestinationData.CacheControl.Preserve));
+            Assert.That(storageResource._options.CacheControl.Value, Is.EqualTo(originalDestinationData.CacheControl.Value));
+            Assert.That(storageResource._options.FileMetadata.Preserve, Is.EqualTo(originalDestinationData.FileMetadata.Preserve));
+            Assert.That(storageResource._options.FileMetadata.Value, Is.EqualTo(originalDestinationData.FileMetadata.Value));
+            Assert.That(storageResource._options.DirectoryMetadata.Preserve, Is.EqualTo(originalDestinationData.DirectoryMetadata.Preserve));
+            Assert.That(storageResource._options.DirectoryMetadata.Value, Is.EqualTo(originalDestinationData.DirectoryMetadata.Value));
+            Assert.That(storageResource._options.FileAttributes.Preserve, Is.EqualTo(originalDestinationData.FileAttributes.Preserve));
+            Assert.That(storageResource._options.FileAttributes.Value, Is.EqualTo(originalDestinationData.FileAttributes.Value));
             Assert.That(storageResource._options.FilePermissionKey, Is.EqualTo(originalDestinationData.FilePermissionKey));
-            Assert.That(storageResource._options.FileCreatedOn, Is.EqualTo(originalDestinationData.FileCreatedOn));
-            Assert.That(storageResource._options.FileLastWrittenOn, Is.EqualTo(originalDestinationData.FileLastWrittenOn));
-            Assert.That(storageResource._options.FileChangedOn, Is.EqualTo(originalDestinationData.FileChangedOn));
+            Assert.That(storageResource._options.FileCreatedOn.Preserve, Is.EqualTo(originalDestinationData.FileCreatedOn.Preserve));
+            Assert.That(storageResource._options.FileCreatedOn.Value, Is.EqualTo(originalDestinationData.FileCreatedOn.Value));
+            Assert.That(storageResource._options.FileLastWrittenOn.Preserve, Is.EqualTo(originalDestinationData.FileLastWrittenOn.Preserve));
+            Assert.That(storageResource._options.FileLastWrittenOn.Value, Is.EqualTo(originalDestinationData.FileLastWrittenOn.Value));
+            Assert.That(storageResource._options.FileChangedOn.Preserve, Is.EqualTo(originalDestinationData.FileChangedOn.Preserve));
+            Assert.That(storageResource._options.FileChangedOn.Value, Is.EqualTo(originalDestinationData.FileChangedOn.Value));
         }
 
         [Test]
