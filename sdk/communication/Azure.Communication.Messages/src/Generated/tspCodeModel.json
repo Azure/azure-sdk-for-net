@@ -10,7 +10,7 @@
    "$id": "2",
    "Kind": "Enum",
    "Name": "CommunicationMessageKind",
-   "EnumValueType": "string",
+   "EnumValueType": "String",
    "AllowedValues": [
     {
      "$id": "3",
@@ -41,7 +41,7 @@
    "$id": "6",
    "Kind": "Enum",
    "Name": "MessageTemplateStatus",
-   "EnumValueType": "string",
+   "EnumValueType": "String",
    "AllowedValues": [
     {
      "$id": "7",
@@ -78,7 +78,7 @@
    "$id": "11",
    "Kind": "Enum",
    "Name": "CommunicationMessagesChannel",
-   "EnumValueType": "string",
+   "EnumValueType": "String",
    "AllowedValues": [
     {
      "$id": "12",
@@ -97,7 +97,7 @@
    "$id": "13",
    "Kind": "Enum",
    "Name": "MessageTemplateValueKind",
-   "EnumValueType": "string",
+   "EnumValueType": "String",
    "AllowedValues": [
     {
      "$id": "14",
@@ -146,7 +146,7 @@
    "$id": "20",
    "Kind": "Enum",
    "Name": "MessageTemplateBindingsKind",
-   "EnumValueType": "string",
+   "EnumValueType": "String",
    "AllowedValues": [
     {
      "$id": "21",
@@ -165,7 +165,7 @@
    "$id": "22",
    "Kind": "Enum",
    "Name": "WhatsAppMessageButtonSubType",
-   "EnumValueType": "string",
+   "EnumValueType": "String",
    "AllowedValues": [
     {
      "$id": "23",
@@ -464,7 +464,7 @@
     {
      "$id": "57",
      "Name": "body",
-     "SerializedName": "body",
+     "SerializedName": "",
      "Description": "The stream body.",
      "Type": {
       "$id": "58",
