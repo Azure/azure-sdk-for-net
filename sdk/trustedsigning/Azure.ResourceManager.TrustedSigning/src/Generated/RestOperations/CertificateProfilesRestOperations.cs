@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.TrustedSigning
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2024-02-05-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByCodeSigningAccountRequestUri(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CodeSigning/codeSigningAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/certificateProfiles", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByCodeSigningAccountRequest(string subscriptionId, string resourceGroupName, string accountName)
@@ -114,6 +128,22 @@ namespace Azure.ResourceManager.TrustedSigning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string profileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CodeSigning/codeSigningAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/certificateProfiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string profileName)
@@ -204,6 +234,22 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string profileName, TrustedSigningCertificateProfileData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CodeSigning/codeSigningAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/certificateProfiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string profileName, TrustedSigningCertificateProfileData data)
         {
             var message = _pipeline.CreateMessage();
@@ -224,7 +270,7 @@ namespace Azure.ResourceManager.TrustedSigning
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -286,6 +332,22 @@ namespace Azure.ResourceManager.TrustedSigning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string profileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CodeSigning/codeSigningAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/certificateProfiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string profileName)
@@ -364,6 +426,23 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
+        internal RequestUriBuilder CreateRevokeCertificateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string profileName, RevokeCertificateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.CodeSigning/codeSigningAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/certificateProfiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/revokeCertificate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRevokeCertificateRequest(string subscriptionId, string resourceGroupName, string accountName, string profileName, RevokeCertificateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -385,7 +464,7 @@ namespace Azure.ResourceManager.TrustedSigning
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, new ModelReaderWriterOptions("W"));
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -445,6 +524,14 @@ namespace Azure.ResourceManager.TrustedSigning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByCodeSigningAccountNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByCodeSigningAccountNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName)

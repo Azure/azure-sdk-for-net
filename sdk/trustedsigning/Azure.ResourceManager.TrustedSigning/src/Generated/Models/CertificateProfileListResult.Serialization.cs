@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
 {
     internal partial class CertificateProfileListResult : IUtf8JsonSerializable, IJsonModel<CertificateProfileListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateProfileListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateProfileListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CertificateProfileListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
 
         internal static CertificateProfileListResult DeserializeCertificateProfileListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

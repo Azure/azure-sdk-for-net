@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
 {
     public partial class TrustedSigningAccountNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<TrustedSigningAccountNameAvailabilityResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrustedSigningAccountNameAvailabilityResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrustedSigningAccountNameAvailabilityResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrustedSigningAccountNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
 
         internal static TrustedSigningAccountNameAvailabilityResult DeserializeTrustedSigningAccountNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

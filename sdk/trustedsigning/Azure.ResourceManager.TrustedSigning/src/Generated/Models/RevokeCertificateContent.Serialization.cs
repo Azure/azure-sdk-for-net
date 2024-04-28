@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
 {
     public partial class RevokeCertificateContent : IUtf8JsonSerializable, IJsonModel<RevokeCertificateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RevokeCertificateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RevokeCertificateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RevokeCertificateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.TrustedSigning.Models
 
         internal static RevokeCertificateContent DeserializeRevokeCertificateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
