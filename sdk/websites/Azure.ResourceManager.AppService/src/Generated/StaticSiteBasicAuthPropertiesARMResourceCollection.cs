@@ -87,7 +87,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSiteBasicAuthPropertiesARMResourceStaticSitesRestClient.CreateOrUpdateBasicAuthAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<StaticSiteBasicAuthPropertiesARMResource>(Response.FromValue(new StaticSiteBasicAuthPropertiesARMResource(Client, response), response.GetRawResponse()));
+                var uri = _staticSiteBasicAuthPropertiesARMResourceStaticSitesRestClient.CreateCreateOrUpdateBasicAuthRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<StaticSiteBasicAuthPropertiesARMResource>(Response.FromValue(new StaticSiteBasicAuthPropertiesARMResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -134,7 +136,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSiteBasicAuthPropertiesARMResourceStaticSitesRestClient.CreateOrUpdateBasicAuth(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<StaticSiteBasicAuthPropertiesARMResource>(Response.FromValue(new StaticSiteBasicAuthPropertiesARMResource(Client, response), response.GetRawResponse()));
+                var uri = _staticSiteBasicAuthPropertiesARMResourceStaticSitesRestClient.CreateCreateOrUpdateBasicAuthRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, basicAuthName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<StaticSiteBasicAuthPropertiesARMResource>(Response.FromValue(new StaticSiteBasicAuthPropertiesARMResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

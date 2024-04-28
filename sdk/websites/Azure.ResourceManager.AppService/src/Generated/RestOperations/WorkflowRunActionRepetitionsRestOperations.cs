@@ -36,6 +36,27 @@ namespace Azure.ResourceManager.AppService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/hostruntime/runtime/webhooks/workflow/api/management/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/runs/", false);
+            uri.AppendPath(runName, true);
+            uri.AppendPath("/actions/", false);
+            uri.AppendPath(actionName, true);
+            uri.AppendPath("/repetitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName)
         {
             var message = _pipeline.CreateMessage();
@@ -131,6 +152,28 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName, string repetitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/hostruntime/runtime/webhooks/workflow/api/management/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/runs/", false);
+            uri.AppendPath(runName, true);
+            uri.AppendPath("/actions/", false);
+            uri.AppendPath(actionName, true);
+            uri.AppendPath("/repetitions/", false);
+            uri.AppendPath(repetitionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName, string repetitionName)
@@ -239,6 +282,29 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListExpressionTracesRequestUri(string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName, string repetitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/hostruntime/runtime/webhooks/workflow/api/management/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/runs/", false);
+            uri.AppendPath(runName, true);
+            uri.AppendPath("/actions/", false);
+            uri.AppendPath(actionName, true);
+            uri.AppendPath("/repetitions/", false);
+            uri.AppendPath(repetitionName, true);
+            uri.AppendPath("/listExpressionTraces", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListExpressionTracesRequest(string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName, string repetitionName)
         {
             var message = _pipeline.CreateMessage();
@@ -342,6 +408,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName)
         {
             var message = _pipeline.CreateMessage();
@@ -428,6 +502,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListExpressionTracesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName, string repetitionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListExpressionTracesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName, string repetitionName)

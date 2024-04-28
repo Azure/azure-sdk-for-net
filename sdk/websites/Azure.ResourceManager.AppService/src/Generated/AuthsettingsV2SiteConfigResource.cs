@@ -201,7 +201,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _authsettingsV2SiteConfigWebAppsRestClient.UpdateAuthSettingsV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<AuthsettingsV2SiteConfigResource>(Response.FromValue(new AuthsettingsV2SiteConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _authsettingsV2SiteConfigWebAppsRestClient.CreateUpdateAuthSettingsV2RequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<AuthsettingsV2SiteConfigResource>(Response.FromValue(new AuthsettingsV2SiteConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -247,7 +249,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _authsettingsV2SiteConfigWebAppsRestClient.UpdateAuthSettingsV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<AuthsettingsV2SiteConfigResource>(Response.FromValue(new AuthsettingsV2SiteConfigResource(Client, response), response.GetRawResponse()));
+                var uri = _authsettingsV2SiteConfigWebAppsRestClient.CreateUpdateAuthSettingsV2RequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<AuthsettingsV2SiteConfigResource>(Response.FromValue(new AuthsettingsV2SiteConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

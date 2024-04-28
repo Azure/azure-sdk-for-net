@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _staticSiteDatabaseConnectionStaticSitesRestClient.CreateOrUpdateDatabaseConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<StaticSiteDatabaseConnectionResource>(Response.FromValue(new StaticSiteDatabaseConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _staticSiteDatabaseConnectionStaticSitesRestClient.CreateCreateOrUpdateDatabaseConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<StaticSiteDatabaseConnectionResource>(Response.FromValue(new StaticSiteDatabaseConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _staticSiteDatabaseConnectionStaticSitesRestClient.CreateOrUpdateDatabaseConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseConnectionName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<StaticSiteDatabaseConnectionResource>(Response.FromValue(new StaticSiteDatabaseConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _staticSiteDatabaseConnectionStaticSitesRestClient.CreateCreateOrUpdateDatabaseConnectionRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<StaticSiteDatabaseConnectionResource>(Response.FromValue(new StaticSiteDatabaseConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -197,7 +197,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _customDnsSuffixConfigurationAppServiceEnvironmentsRestClient.DeleteAseCustomDnsSuffixConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<BinaryData>(response);
+                var uri = _customDnsSuffixConfigurationAppServiceEnvironmentsRestClient.CreateDeleteAseCustomDnsSuffixConfigurationRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<BinaryData>(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -239,7 +241,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _customDnsSuffixConfigurationAppServiceEnvironmentsRestClient.DeleteAseCustomDnsSuffixConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
-                var operation = new AppServiceArmOperation<BinaryData>(response);
+                var uri = _customDnsSuffixConfigurationAppServiceEnvironmentsRestClient.CreateDeleteAseCustomDnsSuffixConfigurationRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<BinaryData>(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -285,7 +289,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _customDnsSuffixConfigurationAppServiceEnvironmentsRestClient.UpdateAseCustomDnsSuffixConfigurationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<CustomDnsSuffixConfigurationResource>(Response.FromValue(new CustomDnsSuffixConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _customDnsSuffixConfigurationAppServiceEnvironmentsRestClient.CreateUpdateAseCustomDnsSuffixConfigurationRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<CustomDnsSuffixConfigurationResource>(Response.FromValue(new CustomDnsSuffixConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -331,7 +337,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _customDnsSuffixConfigurationAppServiceEnvironmentsRestClient.UpdateAseCustomDnsSuffixConfiguration(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<CustomDnsSuffixConfigurationResource>(Response.FromValue(new CustomDnsSuffixConfigurationResource(Client, response), response.GetRawResponse()));
+                var uri = _customDnsSuffixConfigurationAppServiceEnvironmentsRestClient.CreateUpdateAseCustomDnsSuffixConfigurationRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<CustomDnsSuffixConfigurationResource>(Response.FromValue(new CustomDnsSuffixConfigurationResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

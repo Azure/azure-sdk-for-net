@@ -35,6 +35,23 @@ namespace Azure.ResourceManager.AppService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateRegenerateAccessKeyRequestUri(string subscriptionId, string resourceGroupName, string name, string workflowName, RegenerateActionParameter keyType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/hostruntime/runtime/webhooks/workflow/api/management/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/regenerateAccessKey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRegenerateAccessKeyRequest(string subscriptionId, string resourceGroupName, string name, string workflowName, RegenerateActionParameter keyType)
         {
             var message = _pipeline.CreateMessage();
@@ -116,6 +133,23 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateValidateRequestUri(string subscriptionId, string resourceGroupName, string name, string workflowName, Workflow validate)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/hostruntime/runtime/webhooks/workflow/api/management/workflows/", false);
+            uri.AppendPath(workflowName, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, string name, string workflowName, Workflow validate)
