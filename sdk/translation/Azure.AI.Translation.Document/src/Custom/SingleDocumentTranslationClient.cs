@@ -11,10 +11,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> The SingleDocumentTranslation service client. </summary>
-    /// [CodeGenClient("SingleDocumentTranslationClient")]
-    /// [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(DocumentTranslateContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
-    ///[CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(DocumentTranslateContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
-    ///[CodeGenSuppress("FromCancellationToken", typeof(CancellationToken))]
+    [CodeGenClient("SingleDocumentTranslationClient")]
     [CodeGenSuppress("CreateDocumentTranslateRequest", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
 
     public partial class SingleDocumentTranslationClient
