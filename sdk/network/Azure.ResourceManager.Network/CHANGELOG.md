@@ -1,5 +1,11 @@
 # Release History
 
+## 1.8.1 (2024-04-29)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
 ## 1.8.0 (2024-04-26)
 
 ### Features Added
