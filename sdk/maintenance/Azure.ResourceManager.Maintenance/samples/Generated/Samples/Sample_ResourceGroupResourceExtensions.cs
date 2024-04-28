@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
             string resourceType = "virtualMachines";
             string resourceName = "configuration1";
             string scheduledEventId = "ad6d85cf-2c9e-4eec-9a1e-af3213cc0486";
-            ScheduledEventApproveResponse result = await resourceGroupResource.AcknowledgeScheduledEventAsync(resourceType, resourceName, scheduledEventId);
+            ScheduledEventApproveResult result = await resourceGroupResource.AcknowledgeScheduledEventAsync(resourceType, resourceName, scheduledEventId);
 
             Console.WriteLine($"Succeeded: {result}");
         }

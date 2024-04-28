@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Maintenance.Models
 {
     /// <summary> Response of scheduled event acknowledge. </summary>
-    public partial class ScheduledEventApproveResponse
+    public partial class ScheduledEventApproveResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledEventApproveResponse"/>. </summary>
-        internal ScheduledEventApproveResponse()
+        /// <summary> Initializes a new instance of <see cref="ScheduledEventApproveResult"/>. </summary>
+        internal ScheduledEventApproveResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledEventApproveResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledEventApproveResult"/>. </summary>
         /// <param name="value"> Successfully Approved. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledEventApproveResponse(string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledEventApproveResult(string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;

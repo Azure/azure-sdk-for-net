@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
-        public static async Task<Response<ScheduledEventApproveResponse>> AcknowledgeScheduledEventAsync(this ResourceGroupResource resourceGroupResource, string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
+        public static async Task<Response<ScheduledEventApproveResult>> AcknowledgeScheduledEventAsync(this ResourceGroupResource resourceGroupResource, string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
-        public static Response<ScheduledEventApproveResponse> AcknowledgeScheduledEvent(this ResourceGroupResource resourceGroupResource, string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
+        public static Response<ScheduledEventApproveResult> AcknowledgeScheduledEvent(this ResourceGroupResource resourceGroupResource, string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 

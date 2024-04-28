@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScheduledEventApproveResponse>> AcknowledgeAsync(string subscriptionId, string resourceGroupName, string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
+        public async Task<Response<ScheduledEventApproveResult>> AcknowledgeAsync(string subscriptionId, string resourceGroupName, string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.Maintenance
             {
                 case 200:
                     {
-                        ScheduledEventApproveResponse value = default;
+                        ScheduledEventApproveResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScheduledEventApproveResponse.DeserializeScheduledEventApproveResponse(document.RootElement);
+                        value = ScheduledEventApproveResult.DeserializeScheduledEventApproveResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScheduledEventApproveResponse> Acknowledge(string subscriptionId, string resourceGroupName, string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
+        public Response<ScheduledEventApproveResult> Acknowledge(string subscriptionId, string resourceGroupName, string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.Maintenance
             {
                 case 200:
                     {
-                        ScheduledEventApproveResponse value = default;
+                        ScheduledEventApproveResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScheduledEventApproveResponse.DeserializeScheduledEventApproveResponse(document.RootElement);
+                        value = ScheduledEventApproveResult.DeserializeScheduledEventApproveResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

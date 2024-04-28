@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
-        public virtual async Task<Response<ScheduledEventApproveResponse>> AcknowledgeScheduledEventAsync(string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScheduledEventApproveResult>> AcknowledgeScheduledEventAsync(string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="scheduledEventId"/> is null. </exception>
-        public virtual Response<ScheduledEventApproveResponse> AcknowledgeScheduledEvent(string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
+        public virtual Response<ScheduledEventApproveResult> AcknowledgeScheduledEvent(string resourceType, string resourceName, string scheduledEventId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class ScheduledEventApproveResponse : IUtf8JsonSerializable, IJsonModel<ScheduledEventApproveResponse>
+    public partial class ScheduledEventApproveResult : IUtf8JsonSerializable, IJsonModel<ScheduledEventApproveResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledEventApproveResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledEventApproveResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ScheduledEventApproveResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduledEventApproveResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledEventApproveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledEventApproveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledEventApproveResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledEventApproveResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.Maintenance.Models
             writer.WriteEndObject();
         }
 
-        ScheduledEventApproveResponse IJsonModel<ScheduledEventApproveResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ScheduledEventApproveResult IJsonModel<ScheduledEventApproveResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledEventApproveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledEventApproveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledEventApproveResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledEventApproveResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScheduledEventApproveResponse(document.RootElement, options);
+            return DeserializeScheduledEventApproveResult(document.RootElement, options);
         }
 
-        internal static ScheduledEventApproveResponse DeserializeScheduledEventApproveResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ScheduledEventApproveResult DeserializeScheduledEventApproveResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -85,38 +85,38 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ScheduledEventApproveResponse(value, serializedAdditionalRawData);
+            return new ScheduledEventApproveResult(value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ScheduledEventApproveResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ScheduledEventApproveResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledEventApproveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledEventApproveResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledEventApproveResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledEventApproveResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ScheduledEventApproveResponse IPersistableModel<ScheduledEventApproveResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ScheduledEventApproveResult IPersistableModel<ScheduledEventApproveResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledEventApproveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledEventApproveResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeScheduledEventApproveResponse(document.RootElement, options);
+                        return DeserializeScheduledEventApproveResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledEventApproveResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledEventApproveResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ScheduledEventApproveResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduledEventApproveResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
