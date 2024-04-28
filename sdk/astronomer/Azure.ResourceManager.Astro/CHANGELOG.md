@@ -2,6 +2,10 @@
 
 ## 1.0.0-beta.1 (2024-05-01)
 
+### Features Added
+
+- First beta release for api-version 'package-2023-08-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ceb1849d35534ccb6c2dfc3772bb2426dd37df6a/specification/liftrastronomer/resource-manager/readme.md.
+
 ### General New Features
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:

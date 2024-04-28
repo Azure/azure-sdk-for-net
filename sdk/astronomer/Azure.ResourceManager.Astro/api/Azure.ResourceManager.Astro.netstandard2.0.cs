@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Astro
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.AstroOrganizationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.AstroOrganizationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AstroOrganizationResource : Azure.ResourceManager.ArmResource
+    public partial class AstroOrganizationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.AstroOrganizationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.AstroOrganizationData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected AstroOrganizationResource() { }
@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.Astro
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Astro.AstroOrganizationResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Astro.AstroOrganizationResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Astro.AstroOrganizationResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Astro.AstroOrganizationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.AstroOrganizationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Astro.AstroOrganizationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Astro.AstroOrganizationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.AstroOrganizationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.AstroOrganizationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Astro.AstroOrganizationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Astro.AstroOrganizationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Astro.Models.AstroOrganizationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Astro.AstroOrganizationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Astro.Models.AstroOrganizationPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
