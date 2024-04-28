@@ -445,10 +445,10 @@
 # ServiceOwners:                                                   @raedJarrar @jifems
 
 # PRLabel: %DevCenter
-/sdk/devcenter/                                                    @sebrenna @chrissmiller @shivangireja
+/sdk/devcenter/                                                    @sebrenna @shivangireja
 
 # ServiceLabel: %DevCenter
-# ServiceOwners:                                                   @sebrenna @chrissmiller
+# ServiceOwners:                                                   @sebrenna
 
 # ServiceLabel: %Dev Spaces
 # ServiceOwners:                                                   @yuzorMa @johnsta @greenie-msft
