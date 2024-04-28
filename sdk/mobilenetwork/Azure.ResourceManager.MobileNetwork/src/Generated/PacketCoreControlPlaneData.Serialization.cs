@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class PacketCoreControlPlaneData : IUtf8JsonSerializable, IJsonModel<PacketCoreControlPlaneData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCoreControlPlaneData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCoreControlPlaneData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PacketCoreControlPlaneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue<MobileNetworkManagedServiceIdentity>(UserAssignedIdentity, options);
+                writer.WriteObjectValue(UserAssignedIdentity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(Installation))
             {
                 writer.WritePropertyName("installation"u8);
-                writer.WriteObjectValue<MobileNetworkInstallation>(Installation, options);
+                writer.WriteObjectValue(Installation, options);
             }
             writer.WritePropertyName("sites"u8);
             writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             writer.WriteEndArray();
             writer.WritePropertyName("platform"u8);
-            writer.WriteObjectValue<MobileNetworkPlatformConfiguration>(Platform, options);
+            writer.WriteObjectValue(Platform, options);
             if (Optional.IsDefined(CoreNetworkTechnology))
             {
                 writer.WritePropertyName("coreNetworkTechnology"u8);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(RollbackVersion);
             }
             writer.WritePropertyName("controlPlaneAccessInterface"u8);
-            writer.WriteObjectValue<MobileNetworkInterfaceProperties>(ControlPlaneAccessInterface, options);
+            writer.WriteObjectValue(ControlPlaneAccessInterface, options);
             if (Optional.IsCollectionDefined(ControlPlaneAccessVirtualIPv4Addresses))
             {
                 writer.WritePropertyName("controlPlaneAccessVirtualIpv4Addresses"u8);
@@ -128,21 +128,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteNumberValue(UEMtu.Value);
             }
             writer.WritePropertyName("localDiagnosticsAccess"u8);
-            writer.WriteObjectValue<MobileNetworkLocalDiagnosticsAccessConfiguration>(LocalDiagnosticsAccess, options);
+            writer.WriteObjectValue(LocalDiagnosticsAccess, options);
             if (Optional.IsDefined(DiagnosticsUpload))
             {
                 writer.WritePropertyName("diagnosticsUpload"u8);
-                writer.WriteObjectValue<DiagnosticsUploadConfiguration>(DiagnosticsUpload, options);
+                writer.WriteObjectValue(DiagnosticsUpload, options);
             }
             if (Optional.IsDefined(EventHub))
             {
                 writer.WritePropertyName("eventHub"u8);
-                writer.WriteObjectValue<MobileNetworkEventHubConfiguration>(EventHub, options);
+                writer.WriteObjectValue(EventHub, options);
             }
             if (Optional.IsDefined(Signaling))
             {
                 writer.WritePropertyName("signaling"u8);
-                writer.WriteObjectValue<SignalingConfiguration>(Signaling, options);
+                writer.WriteObjectValue(Signaling, options);
             }
             if (Optional.IsDefined(InteropSettings))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (options.Format != "W" && Optional.IsDefined(HomeNetworkPrivateKeysProvisioning))
             {
                 writer.WritePropertyName("homeNetworkPrivateKeysProvisioning"u8);
-                writer.WriteObjectValue<HomeNetworkPrivateKeysProvisioning>(HomeNetworkPrivateKeysProvisioning, options);
+                writer.WriteObjectValue(HomeNetworkPrivateKeysProvisioning, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal static PacketCoreControlPlaneData DeserializePacketCoreControlPlaneData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.MobileNetwork
             BinaryData interopSettings = default;
             HomeNetworkPrivateKeysProvisioning homeNetworkPrivateKeysProvisioning = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -435,10 +435,10 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PacketCoreControlPlaneData(
                 id,
                 name,

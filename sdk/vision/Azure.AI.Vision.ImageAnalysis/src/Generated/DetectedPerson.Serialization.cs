@@ -15,7 +15,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 {
     public partial class DetectedPerson : IUtf8JsonSerializable, IJsonModel<DetectedPerson>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetectedPerson>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetectedPerson>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DetectedPerson>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             if (options.Format != "W")
             {
                 writer.WritePropertyName("boundingBox"u8);
-                writer.WriteObjectValue<ImageBoundingBox>(BoundingBox, options);
+                writer.WriteObjectValue(BoundingBox, options);
             }
             if (options.Format != "W")
             {
@@ -68,7 +68,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         internal static DetectedPerson DeserializeDetectedPerson(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             ImageBoundingBox boundingBox = default;
             float confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("boundingBox"u8))
@@ -92,10 +92,10 @@ namespace Azure.AI.Vision.ImageAnalysis
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DetectedPerson(boundingBox, confidence, serializedAdditionalRawData);
         }
 
@@ -138,11 +138,11 @@ namespace Azure.AI.Vision.ImageAnalysis
             return DeserializeDetectedPerson(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DetectedPerson>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

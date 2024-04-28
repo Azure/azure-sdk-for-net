@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     [PersistableModelProxy(typeof(UnknownDataTransferDataSourceSink))]
     public partial class DataTransferDataSourceSink : IUtf8JsonSerializable, IJsonModel<DataTransferDataSourceSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataTransferDataSourceSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataTransferDataSourceSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataTransferDataSourceSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static DataTransferDataSourceSink DeserializeDataTransferDataSourceSink(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -94,13 +94,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Component), out propertyOverride);
-            builder.Append("  component: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  component: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  component: ");
                 builder.AppendLine($"'{Component.ToString()}'");
             }
 

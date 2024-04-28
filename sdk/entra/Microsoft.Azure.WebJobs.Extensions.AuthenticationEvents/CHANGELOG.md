@@ -1,5 +1,49 @@
 # Release History
 
+## 1.0.0-beta.8 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.7 (2024-04-15)
+
+
+### Other Changes
+- Consildated namespaces. Removing:
+	- Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+	- Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions
+	- Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data
+
+- Added Prefix WebJobs and WebJobsAuthenticationEvents to objects
+	- ActionableCloudEventResponse -> WebJobsActionableCloudEventResponse
+	- ActionableResponse -> WebJobsActionableResponse
+	- AuthenticationEventAction -> WebJobsAuthenticationEventAction
+	- AuthenticationEventAction -> WebJobsAuthenticationEventAction
+	- AuthenticationEventContext -> WebJobsAuthenticationEventsContext
+	- AuthenticationEventContextClient -> WebJobsAuthenticationEventsContextClient
+	- AuthenticationEventContextServicePrincipal -> WebJobsAuthenticationEventsContextServicePrincipal
+	- AuthenticationEventContextServicePrincipal -> WebJobsAuthenticationEventsContextServicePrincipal
+	- AuthenticationEventContextUser -> WebJobsAuthenticationEventsContextUser
+	- AuthenticationEventData -> WebJobsAuthenticationEventData
+	- AuthenticationEventMetadataAttribute -> WebJobsAuthenticationEventMetadataAttribute
+	- AuthenticationEventRequest -> WebJobsAuthenticationEventRequest
+	- AuthenticationEventResponse -> WebJobsAuthenticationEventResponse
+	- AuthenticationEventWebJobsStartup  -> WebJobsAuthenticationEventWebJobsStartup
+	- CloudEventData -> WebJobsAuthenticationEventsCloudEventRequest
+	- CloudEventData -> WebJobsAuthenticationEventsTypedData
+	- ProvideClaimsForToken -> WebJobsProvideClaimsForToken
+	- RequestStatusType -> WebJobsAuthenticationEventsRequestStatusType
+	- TokenClaim -> WebjobsAuthenticationEventsTokenClaim
+	- TokenIssuanceAction -> WebJobsTokenIssuanceAction
+	- TokenIssuanceStartData -> WebJobsTokenIssuanceStartData
+	- TokenIssuanceStartRequest -> WebJobsTokenIssuanceStartRequest
+	- TokenIssuanceStartResponse -> WebJobsTokenIssuanceStartResponse
+
 ## 1.0.0-beta.6 (2024-03-13)
 
 ### Features Added

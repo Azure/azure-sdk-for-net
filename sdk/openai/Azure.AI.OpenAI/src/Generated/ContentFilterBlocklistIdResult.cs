@@ -46,25 +46,25 @@ namespace Azure.AI.OpenAI
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContentFilterBlocklistIdResult"/>. </summary>
-        /// <param name="id"> The ID of the custom blocklist evaluated. </param>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
+        /// <param name="id"> The ID of the custom blocklist evaluated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal ContentFilterBlocklistIdResult(string id, bool filtered)
+        internal ContentFilterBlocklistIdResult(bool filtered, string id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
-            Id = id;
             Filtered = filtered;
+            Id = id;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentFilterBlocklistIdResult"/>. </summary>
-        /// <param name="id"> The ID of the custom blocklist evaluated. </param>
         /// <param name="filtered"> A value indicating whether or not the content has been filtered. </param>
+        /// <param name="id"> The ID of the custom blocklist evaluated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContentFilterBlocklistIdResult(string id, bool filtered, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContentFilterBlocklistIdResult(bool filtered, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
             Filtered = filtered;
+            Id = id;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,9 +73,9 @@ namespace Azure.AI.OpenAI
         {
         }
 
-        /// <summary> The ID of the custom blocklist evaluated. </summary>
-        public string Id { get; }
         /// <summary> A value indicating whether or not the content has been filtered. </summary>
         public bool Filtered { get; }
+        /// <summary> The ID of the custom blocklist evaluated. </summary>
+        public string Id { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class WebTestPropertiesRequest : IUtf8JsonSerializable, IJsonModel<WebTestPropertiesRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebTestPropertiesRequest>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebTestPropertiesRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebTestPropertiesRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue<HeaderField>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static WebTestPropertiesRequest DeserializeWebTestPropertiesRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             bool? parseDependentRequests = default;
             bool? followRedirects = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("RequestUrl"u8))
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebTestPropertiesRequest(
                 requestUrl,
                 headers ?? new ChangeTrackingList<HeaderField>(),
@@ -190,31 +190,33 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestUri), out propertyOverride);
-            if (Optional.IsDefined(RequestUri) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  RequestUrl: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestUri))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  RequestUrl: ");
                     builder.AppendLine($"'{RequestUri.AbsoluteUri}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Headers), out propertyOverride);
-            if (Optional.IsCollectionDefined(Headers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Headers.Any() || hasPropertyOverride)
+                builder.Append("  Headers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Headers))
                 {
-                    builder.Append("  Headers: ");
-                    if (hasPropertyOverride)
+                    if (Headers.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  Headers: ");
                         builder.AppendLine("[");
                         foreach (var item in Headers)
                         {
@@ -226,15 +228,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpVerb), out propertyOverride);
-            if (Optional.IsDefined(HttpVerb) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  HttpVerb: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HttpVerb))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  HttpVerb: ");
                     if (HttpVerb.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -248,15 +251,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestBody), out propertyOverride);
-            if (Optional.IsDefined(RequestBody) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  RequestBody: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestBody))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  RequestBody: ");
                     if (RequestBody.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -270,30 +274,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParseDependentRequests), out propertyOverride);
-            if (Optional.IsDefined(ParseDependentRequests) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ParseDependentRequests: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ParseDependentRequests))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ParseDependentRequests: ");
                     var boolValue = ParseDependentRequests.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FollowRedirects), out propertyOverride);
-            if (Optional.IsDefined(FollowRedirects) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  FollowRedirects: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FollowRedirects))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  FollowRedirects: ");
                     var boolValue = FollowRedirects.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

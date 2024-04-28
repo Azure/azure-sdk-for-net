@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class WebTestPropertiesValidationRules : IUtf8JsonSerializable, IJsonModel<WebTestPropertiesValidationRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebTestPropertiesValidationRules>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebTestPropertiesValidationRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebTestPropertiesValidationRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(ContentValidation))
             {
                 writer.WritePropertyName("ContentValidation"u8);
-                writer.WriteObjectValue<WebTestPropertiesValidationRulesContentValidation>(ContentValidation, options);
+                writer.WriteObjectValue(ContentValidation, options);
             }
             if (Optional.IsDefined(CheckSsl))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static WebTestPropertiesValidationRules DeserializeWebTestPropertiesValidationRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             int? expectedHttpStatusCode = default;
             bool? ignoreHttpStatusCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ContentValidation"u8))
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new WebTestPropertiesValidationRules(
                 contentValidation,
                 sslCheck,
@@ -171,72 +171,77 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentValidation), out propertyOverride);
-            if (Optional.IsDefined(ContentValidation) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ContentValidation: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContentValidation))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ContentValidation: ");
                     BicepSerializationHelpers.AppendChildObject(builder, ContentValidation, options, 2, false, "  ContentValidation: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CheckSsl), out propertyOverride);
-            if (Optional.IsDefined(CheckSsl) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  SSLCheck: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CheckSsl))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  SSLCheck: ");
                     var boolValue = CheckSsl.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SSLCertRemainingLifetimeCheck), out propertyOverride);
-            if (Optional.IsDefined(SSLCertRemainingLifetimeCheck) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  SSLCertRemainingLifetimeCheck: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SSLCertRemainingLifetimeCheck))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  SSLCertRemainingLifetimeCheck: ");
                     builder.AppendLine($"{SSLCertRemainingLifetimeCheck.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpectedHttpStatusCode), out propertyOverride);
-            if (Optional.IsDefined(ExpectedHttpStatusCode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ExpectedHttpStatusCode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpectedHttpStatusCode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ExpectedHttpStatusCode: ");
                     builder.AppendLine($"{ExpectedHttpStatusCode.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IgnoreHttpStatusCode), out propertyOverride);
-            if (Optional.IsDefined(IgnoreHttpStatusCode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  IgnoreHttpStatusCode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IgnoreHttpStatusCode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  IgnoreHttpStatusCode: ");
                     var boolValue = IgnoreHttpStatusCode.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }

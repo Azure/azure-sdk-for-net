@@ -41,7 +41,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
-                writer.WriteObjectValue<ConfigurationContent>(Content);
+                writer.WriteObjectValue(Content);
             }
             if (Optional.IsDefined(TargetCondition))
             {
@@ -66,12 +66,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(SystemMetrics))
             {
                 writer.WritePropertyName("systemMetrics"u8);
-                writer.WriteObjectValue<ConfigurationMetrics>(SystemMetrics);
+                writer.WriteObjectValue(SystemMetrics);
             }
             if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue<ConfigurationMetrics>(Metrics);
+                writer.WriteObjectValue(Metrics);
             }
             if (Optional.IsDefined(Etag))
             {
@@ -201,6 +201,22 @@ namespace Azure.IoT.Hub.Service.Models
                 systemMetrics,
                 metrics,
                 etag);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TwinConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTwinConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

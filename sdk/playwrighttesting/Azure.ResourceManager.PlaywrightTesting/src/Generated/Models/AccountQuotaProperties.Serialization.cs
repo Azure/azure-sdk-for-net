@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
     public partial class AccountQuotaProperties : IUtf8JsonSerializable, IJsonModel<AccountQuotaProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountQuotaProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountQuotaProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AccountQuotaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             if (Optional.IsDefined(FreeTrial))
             {
                 writer.WritePropertyName("freeTrial"u8);
-                writer.WriteObjectValue<AccountFreeTrialProperties>(FreeTrial, options);
+                writer.WriteObjectValue(FreeTrial, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
 
         internal static AccountQuotaProperties DeserializeAccountQuotaProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             AccountFreeTrialProperties freeTrial = default;
             PlaywrightTestingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("freeTrial"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AccountQuotaProperties(freeTrial, provisioningState, serializedAdditionalRawData);
         }
 

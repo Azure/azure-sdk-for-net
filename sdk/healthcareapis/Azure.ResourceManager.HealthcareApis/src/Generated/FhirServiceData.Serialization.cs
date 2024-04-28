@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     public partial class FhirServiceData : IUtf8JsonSerializable, IJsonModel<FhirServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirServiceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FhirServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -87,22 +87,22 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(AcrConfiguration))
             {
                 writer.WritePropertyName("acrConfiguration"u8);
-                writer.WriteObjectValue<FhirServiceAcrConfiguration>(AcrConfiguration, options);
+                writer.WriteObjectValue(AcrConfiguration, options);
             }
             if (Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
-                writer.WriteObjectValue<FhirServiceAuthenticationConfiguration>(AuthenticationConfiguration, options);
+                writer.WriteObjectValue(AuthenticationConfiguration, options);
             }
             if (Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
-                writer.WriteObjectValue<FhirServiceCorsConfiguration>(CorsConfiguration, options);
+                writer.WriteObjectValue(CorsConfiguration, options);
             }
             if (Optional.IsDefined(ExportConfiguration))
             {
                 writer.WritePropertyName("exportConfiguration"u8);
-                writer.WriteObjectValue<FhirServiceExportConfiguration>(ExportConfiguration, options);
+                writer.WriteObjectValue(ExportConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue<HealthcareApisPrivateEndpointConnectionData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,22 +127,22 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(ResourceVersionPolicyConfiguration))
             {
                 writer.WritePropertyName("resourceVersionPolicyConfiguration"u8);
-                writer.WriteObjectValue<FhirServiceResourceVersionPolicyConfiguration>(ResourceVersionPolicyConfiguration, options);
+                writer.WriteObjectValue(ResourceVersionPolicyConfiguration, options);
             }
             if (Optional.IsDefined(ImportConfiguration))
             {
                 writer.WritePropertyName("importConfiguration"u8);
-                writer.WriteObjectValue<FhirServiceImportConfiguration>(ImportConfiguration, options);
+                writer.WriteObjectValue(ImportConfiguration, options);
             }
             if (Optional.IsDefined(ImplementationGuidesConfiguration))
             {
                 writer.WritePropertyName("implementationGuidesConfiguration"u8);
-                writer.WriteObjectValue<ImplementationGuidesConfiguration>(ImplementationGuidesConfiguration, options);
+                writer.WriteObjectValue(ImplementationGuidesConfiguration, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue<Encryption>(Encryption, options);
+                writer.WriteObjectValue(Encryption, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HealthcareApis
 
         internal static FhirServiceData DeserializeFhirServiceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.HealthcareApis
             ImplementationGuidesConfiguration implementationGuidesConfiguration = default;
             Encryption encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -406,10 +406,10 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FhirServiceData(
                 id,
                 name,

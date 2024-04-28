@@ -657,3 +657,10 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
     Pop-Location
   }
 }
+
+function Get-dotnet-ApiviewStatusCheckRequirement($packageInfo) {
+  if ($packageInfo.IsNewSdk -and ($packageInfo.SdkType -eq "client" -or $packageInfo.SdkType -eq "mgmt")) {
+    return $true
+  }
+  return $false
+}

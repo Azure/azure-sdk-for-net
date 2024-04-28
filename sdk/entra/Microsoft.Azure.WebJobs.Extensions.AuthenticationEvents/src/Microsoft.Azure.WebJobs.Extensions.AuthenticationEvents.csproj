@@ -1,16 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 		<IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-		<Version>1.0.0-beta.6</Version>
+		<Version>1.0.0-beta.8</Version>
 		<Description>Triggers for Azure AD Authentication event custom extensions. Lets you focus on your business logic.</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Azure.WebJobs" />
 		<PackageReference Include="Microsoft.AspNetCore.Http" />
-		<PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect"/>
-		<PackageReference Include="Microsoft.IdentityModel.Tokens"/>
+		<PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" />
+		<PackageReference Include="Microsoft.IdentityModel.Tokens" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
 	</ItemGroup>
 

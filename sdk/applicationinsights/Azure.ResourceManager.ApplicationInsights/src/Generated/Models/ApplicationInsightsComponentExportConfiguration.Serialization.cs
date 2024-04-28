@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     public partial class ApplicationInsightsComponentExportConfiguration : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentExportConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentExportConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentExportConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationInsightsComponentExportConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         internal static ApplicationInsightsComponentExportConfiguration DeserializeApplicationInsightsComponentExportConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             string storageName = default;
             string containerName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ExportId"u8))
@@ -280,10 +280,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationInsightsComponentExportConfiguration(
                 exportId,
                 instrumentationKey,
@@ -319,15 +319,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExportId), out propertyOverride);
-            if (Optional.IsDefined(ExportId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ExportId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExportId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ExportId: ");
                     if (ExportId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -341,15 +342,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstrumentationKey), out propertyOverride);
-            if (Optional.IsDefined(InstrumentationKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  InstrumentationKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstrumentationKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  InstrumentationKey: ");
                     if (InstrumentationKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -363,15 +365,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecordTypes), out propertyOverride);
-            if (Optional.IsDefined(RecordTypes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  RecordTypes: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RecordTypes))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  RecordTypes: ");
                     if (RecordTypes.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -385,15 +388,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationName), out propertyOverride);
-            if (Optional.IsDefined(ApplicationName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ApplicationName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ApplicationName: ");
                     if (ApplicationName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -407,15 +411,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionId), out propertyOverride);
-            if (Optional.IsDefined(SubscriptionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  SubscriptionId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubscriptionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  SubscriptionId: ");
                     if (SubscriptionId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -429,15 +434,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGroup), out propertyOverride);
-            if (Optional.IsDefined(ResourceGroup) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ResourceGroup: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceGroup))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ResourceGroup: ");
                     if (ResourceGroup.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -451,15 +457,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationStorageSubscriptionId), out propertyOverride);
-            if (Optional.IsDefined(DestinationStorageSubscriptionId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  DestinationStorageSubscriptionId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DestinationStorageSubscriptionId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  DestinationStorageSubscriptionId: ");
                     if (DestinationStorageSubscriptionId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -473,15 +480,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationStorageLocationId), out propertyOverride);
-            if (Optional.IsDefined(DestinationStorageLocationId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  DestinationStorageLocationId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DestinationStorageLocationId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  DestinationStorageLocationId: ");
                     if (DestinationStorageLocationId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -495,15 +503,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationAccountId), out propertyOverride);
-            if (Optional.IsDefined(DestinationAccountId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  DestinationAccountId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DestinationAccountId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  DestinationAccountId: ");
                     if (DestinationAccountId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -517,15 +526,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationType), out propertyOverride);
-            if (Optional.IsDefined(DestinationType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  DestinationType: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DestinationType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  DestinationType: ");
                     if (DestinationType.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -539,15 +549,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsUserEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsUserEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  IsUserEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsUserEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  IsUserEnabled: ");
                     if (IsUserEnabled.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -561,15 +572,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUserUpdate), out propertyOverride);
-            if (Optional.IsDefined(LastUserUpdate) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  LastUserUpdate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastUserUpdate))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  LastUserUpdate: ");
                     if (LastUserUpdate.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -583,15 +595,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationQueueEnabled), out propertyOverride);
-            if (Optional.IsDefined(NotificationQueueEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  NotificationQueueEnabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NotificationQueueEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  NotificationQueueEnabled: ");
                     if (NotificationQueueEnabled.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -605,15 +618,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExportStatus), out propertyOverride);
-            if (Optional.IsDefined(ExportStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ExportStatus: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExportStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ExportStatus: ");
                     if (ExportStatus.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -627,15 +641,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastSuccessTime), out propertyOverride);
-            if (Optional.IsDefined(LastSuccessTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  LastSuccessTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastSuccessTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  LastSuccessTime: ");
                     if (LastSuccessTime.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -649,15 +664,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastGapTime), out propertyOverride);
-            if (Optional.IsDefined(LastGapTime) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  LastGapTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastGapTime))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  LastGapTime: ");
                     if (LastGapTime.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -671,15 +687,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PermanentErrorReason), out propertyOverride);
-            if (Optional.IsDefined(PermanentErrorReason) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  PermanentErrorReason: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PermanentErrorReason))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  PermanentErrorReason: ");
                     if (PermanentErrorReason.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -693,15 +710,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageName), out propertyOverride);
-            if (Optional.IsDefined(StorageName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  StorageName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  StorageName: ");
                     if (StorageName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -715,15 +733,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerName), out propertyOverride);
-            if (Optional.IsDefined(ContainerName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  ContainerName: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ContainerName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  ContainerName: ");
                     if (ContainerName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

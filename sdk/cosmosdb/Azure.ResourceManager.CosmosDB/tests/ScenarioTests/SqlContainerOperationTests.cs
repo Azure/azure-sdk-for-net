@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 RestoreSource = restoreSource,
                 RestoreTimestampInUtc = timestampInUtc.AddSeconds(60),
-                RestoreWithTtlDisabled = true
+                IsRestoreWithTtlDisabled = true
             };
 
             await container.DeleteAsync(WaitUntil.Completed);

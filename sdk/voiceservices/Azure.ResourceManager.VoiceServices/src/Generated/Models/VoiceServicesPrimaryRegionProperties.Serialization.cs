@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
 {
     public partial class VoiceServicesPrimaryRegionProperties : IUtf8JsonSerializable, IJsonModel<VoiceServicesPrimaryRegionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VoiceServicesPrimaryRegionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VoiceServicesPrimaryRegionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VoiceServicesPrimaryRegionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
 
         internal static VoiceServicesPrimaryRegionProperties DeserializeVoiceServicesPrimaryRegionProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.VoiceServices.Models
             IList<string> allowedSignalingSourceAddressPrefixes = default;
             IList<string> allowedMediaSourceAddressPrefixes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operatorAddresses"u8))
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.VoiceServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VoiceServicesPrimaryRegionProperties(operatorAddresses, esrpAddresses ?? new ChangeTrackingList<string>(), allowedSignalingSourceAddressPrefixes ?? new ChangeTrackingList<string>(), allowedMediaSourceAddressPrefixes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 

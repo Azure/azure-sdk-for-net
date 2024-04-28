@@ -270,7 +270,7 @@ Keys =
                 {
                     RestoreSource = "/subscriptions/subid/providers/Microsoft.DocumentDB/locations/WestUS/restorableDatabaseAccounts/restorableDatabaseAccountId",
                     RestoreTimestampInUtc = DateTimeOffset.Parse("2022-07-20T18:28:00Z"),
-                    RestoreWithTtlDisabled = false,
+                    IsRestoreWithTtlDisabled = false,
                 },
                 CreateMode = CosmosDBAccountCreateMode.Restore,
             })

@@ -15,7 +15,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class ImagingProcedure : IUtf8JsonSerializable, IJsonModel<ImagingProcedure>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImagingProcedure>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImagingProcedure>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ImagingProcedure>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -27,23 +27,23 @@ namespace Azure.Health.Insights.RadiologyInsights
 
             writer.WriteStartObject();
             writer.WritePropertyName("modality"u8);
-            writer.WriteObjectValue<FhirR4CodeableConcept>(Modality, options);
+            writer.WriteObjectValue(Modality, options);
             writer.WritePropertyName("anatomy"u8);
-            writer.WriteObjectValue<FhirR4CodeableConcept>(Anatomy, options);
+            writer.WriteObjectValue(Anatomy, options);
             if (Optional.IsDefined(Laterality))
             {
                 writer.WritePropertyName("laterality"u8);
-                writer.WriteObjectValue<FhirR4CodeableConcept>(Laterality, options);
+                writer.WriteObjectValue(Laterality, options);
             }
             if (Optional.IsDefined(Contrast))
             {
                 writer.WritePropertyName("contrast"u8);
-                writer.WriteObjectValue<RadiologyCodeWithTypes>(Contrast, options);
+                writer.WriteObjectValue(Contrast, options);
             }
             if (Optional.IsDefined(View))
             {
                 writer.WritePropertyName("view"u8);
-                writer.WriteObjectValue<RadiologyCodeWithTypes>(View, options);
+                writer.WriteObjectValue(View, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,7 +77,7 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static ImagingProcedure DeserializeImagingProcedure(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -89,7 +89,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             RadiologyCodeWithTypes contrast = default;
             RadiologyCodeWithTypes view = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modality"u8))
@@ -131,10 +131,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ImagingProcedure(
                 modality,
                 anatomy,
@@ -183,11 +183,11 @@ namespace Azure.Health.Insights.RadiologyInsights
             return DeserializeImagingProcedure(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ImagingProcedure>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

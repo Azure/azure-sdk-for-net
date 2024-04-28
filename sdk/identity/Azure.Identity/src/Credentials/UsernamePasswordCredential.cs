@@ -93,6 +93,10 @@ namespace Azure.Identity
             _username = username;
             _password = password;
             _clientId = clientId;
+            if (options is UsernamePasswordCredentialOptions usernamePasswordOptions && usernamePasswordOptions.AuthenticationRecord != null)
+            {
+                _record = usernamePasswordOptions.AuthenticationRecord;
+            }
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             DefaultScope = AzureAuthorityHosts.GetDefaultScope(options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault());
             Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options);
