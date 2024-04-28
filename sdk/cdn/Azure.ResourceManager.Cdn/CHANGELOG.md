@@ -5,7 +5,7 @@
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Update Apiversion from 2021-06-01 to 2024-02-01
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 - Add canMigrate API
 - Add Migrate API
 - Add log-scrubbing support for profile
