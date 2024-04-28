@@ -212,9 +212,14 @@ namespace Azure.ResourceManager.Tests.Samples
             SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
             ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
             var orgData = new ResourceGroupData(AzureLocation.WestUS2);
+            // We initialize a long-running operation
             var rgOp = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Started, "orgName", orgData);
+            // We get the rehydration token from the operation
             var rgOpRehydrationToken = rgOp.GetRehydrationToken();
+            // We rehydrate the long-running operation with the rehydration token, we can also do this asynchronously
             var rehydratedOrgOperation = ArmOperation.Rehydrate<ResourceGroupResource>(client, rgOpRehydrationToken!.Value);
+            var rehydratedOrgOperationAsync = await ArmOperation.RehydrateAsync<ResourceGroupResource>(client, rgOpRehydrationToken!.Value);
+            // Now we can operate with the rehydrated operation
             var rawResponse = rehydratedOrgOperation.GetRawResponse();
             await rehydratedOrgOperation.WaitForCompletionAsync();
             #endregion Snippet:Readme_LRORehydration
