@@ -1,14 +1,10 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2024-04-28)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-2023-10-01-preview' to 'package-2024-02-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/92c409d93f895a30d51603b2fda78a49b3a2cd60/specification/playwrighttesting/resource-manager/readme.md.
 
 ## 1.0.0-beta.1 (2024-01-19)
 
