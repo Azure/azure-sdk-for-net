@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
     /// <summary> The updatable properties of the Account. </summary>
-    public partial class AccountUpdateProperties
+    public partial class PlaywrightTestingAccountUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccountUpdateProperties"/>. </summary>
-        public AccountUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountUpdateProperties"/>. </summary>
+        public PlaywrightTestingAccountUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountUpdateProperties"/>. </summary>
         /// <param name="regionalAffinity"> This property sets the connection region for Playwright client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </param>
         /// <param name="scalableExecution"> When enabled, Playwright client workers can connect to cloud-hosted browsers. This can increase the number of parallel workers for a test run, significantly minimizing test completion durations. </param>
         /// <param name="reporting"> When enabled, this feature allows the workspace to upload and display test results, including artifacts like traces and screenshots, in the Playwright portal. This enables faster and more efficient troubleshooting. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccountUpdateProperties(EnablementStatus? regionalAffinity, EnablementStatus? scalableExecution, EnablementStatus? reporting, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightTestingAccountUpdateProperties(PlaywrightTestingEnablementStatus? regionalAffinity, PlaywrightTestingEnablementStatus? scalableExecution, PlaywrightTestingEnablementStatus? reporting, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegionalAffinity = regionalAffinity;
             ScalableExecution = scalableExecution;
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         }
 
         /// <summary> This property sets the connection region for Playwright client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </summary>
-        public EnablementStatus? RegionalAffinity { get; set; }
+        public PlaywrightTestingEnablementStatus? RegionalAffinity { get; set; }
         /// <summary> When enabled, Playwright client workers can connect to cloud-hosted browsers. This can increase the number of parallel workers for a test run, significantly minimizing test completion durations. </summary>
-        public EnablementStatus? ScalableExecution { get; set; }
+        public PlaywrightTestingEnablementStatus? ScalableExecution { get; set; }
         /// <summary> When enabled, this feature allows the workspace to upload and display test results, including artifacts like traces and screenshots, in the Playwright portal. This enables faster and more efficient troubleshooting. </summary>
-        public EnablementStatus? Reporting { get; set; }
+        public PlaywrightTestingEnablementStatus? Reporting { get; set; }
     }
 }

@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AccountQuotumData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        public async Task<Response<PlaywrightTestingAccountQuotaData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -188,13 +188,13 @@ namespace Azure.ResourceManager.PlaywrightTesting
             {
                 case 200:
                     {
-                        AccountQuotumData value = default;
+                        PlaywrightTestingAccountQuotaData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AccountQuotumData.DeserializeAccountQuotumData(document.RootElement);
+                        value = PlaywrightTestingAccountQuotaData.DeserializePlaywrightTestingAccountQuotaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AccountQuotumData)null, message.Response);
+                    return Response.FromValue((PlaywrightTestingAccountQuotaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AccountQuotumData> Get(string subscriptionId, string resourceGroupName, string accountName, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        public Response<PlaywrightTestingAccountQuotaData> Get(string subscriptionId, string resourceGroupName, string accountName, PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -220,13 +220,13 @@ namespace Azure.ResourceManager.PlaywrightTesting
             {
                 case 200:
                     {
-                        AccountQuotumData value = default;
+                        PlaywrightTestingAccountQuotaData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AccountQuotumData.DeserializeAccountQuotumData(document.RootElement);
+                        value = PlaywrightTestingAccountQuotaData.DeserializePlaywrightTestingAccountQuotaData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AccountQuotumData)null, message.Response);
+                    return Response.FromValue((PlaywrightTestingAccountQuotaData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

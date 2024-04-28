@@ -24,12 +24,26 @@ use-model-reader-writer: true
 
 rename-mapping:
   Quota: PlaywrightTestingQuotas
-  CheckNameAvailabilityResponse: CheckNameAvailabilityResult
+  AccountQuota: PlaywrightTestingAccountQuotas
+  CheckNameAvailabilityResponse: PlaywrightTestingNameAvailabilityResult
+  CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
+  CheckNameAvailabilityRequest: PlaywrightTestingNameAvailabilityContent
+  CheckNameAvailabilityReason: PlaywrightTestingNameUnavailableReason
+  AccountFreeTrialProperties.expiryAt: ExpireOn
+  CheckNameAvailabilityRequest.type: -|resource-type
 
 prepend-rp-prefix:
   - QuotaNames
   - Account
+  - AccountProperties 
   - ProvisioningState
+  - AccountQuotaProperties 
+  - AccountFreeTrialProperties
+  - AccountUpdateProperties
+  - QuotaProperties
+  - FreeTrialProperties
+  - FreeTrialState
+  - EnablementStatus
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -37,6 +51,9 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+override-operation-name:
+  Accounts_CheckNameAvailability: CheckPlaywrightTestingNameAvailability
 
 acronym-mapping:
   CPU: Cpu

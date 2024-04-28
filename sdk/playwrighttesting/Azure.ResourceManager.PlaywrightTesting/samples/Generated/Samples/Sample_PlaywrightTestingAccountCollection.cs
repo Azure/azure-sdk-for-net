@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             string accountName = "myPlaywrightAccount";
             PlaywrightTestingAccountData data = new PlaywrightTestingAccountData(new AzureLocation("westus"))
             {
-                Properties = new AccountProperties()
+                Properties = new PlaywrightTestingAccountProperties()
                 {
-                    RegionalAffinity = EnablementStatus.Enabled,
+                    RegionalAffinity = PlaywrightTestingEnablementStatus.Enabled,
                 },
                 Tags =
 {

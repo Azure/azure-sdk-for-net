@@ -194,11 +194,11 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityAccountAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingNameAvailabilityResult>> CheckPlaywrightTestingNameAvailabilityAsync(PlaywrightTestingNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = PlaywrightTestingAccountAccountsClientDiagnostics.CreateScope("MockablePlaywrightTestingSubscriptionResource.CheckNameAvailabilityAccount");
+            using var scope = PlaywrightTestingAccountAccountsClientDiagnostics.CreateScope("MockablePlaywrightTestingSubscriptionResource.CheckPlaywrightTestingNameAvailability");
             scope.Start();
             try
             {
@@ -236,11 +236,11 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResult> CheckNameAvailabilityAccount(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingNameAvailabilityResult> CheckPlaywrightTestingNameAvailability(PlaywrightTestingNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = PlaywrightTestingAccountAccountsClientDiagnostics.CreateScope("MockablePlaywrightTestingSubscriptionResource.CheckNameAvailabilityAccount");
+            using var scope = PlaywrightTestingAccountAccountsClientDiagnostics.CreateScope("MockablePlaywrightTestingSubscriptionResource.CheckPlaywrightTestingNameAvailability");
             scope.Start();
             try
             {

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary> The check availability request body. </summary>
-    public partial class CheckNameAvailabilityContent
+    /// <summary> The check availability result. </summary>
+    public partial class PlaywrightTestingNameAvailabilityResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,29 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
-        public CheckNameAvailabilityContent()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingNameAvailabilityResult"/>. </summary>
+        internal PlaywrightTestingNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
-        /// <param name="resourceType"> The resource type. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="reason"> The reason why the given name is not available. </param>
+        /// <param name="message"> Detailed reason why the given name is available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightTestingNameAvailabilityResult(bool? isNameAvailable, PlaywrightTestingNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            ResourceType = resourceType;
+            IsNameAvailable = isNameAvailable;
+            Reason = reason;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the resource for which availability needs to be checked. </summary>
-        public string Name { get; set; }
-        /// <summary> The resource type. </summary>
-        public string ResourceType { get; set; }
+        /// <summary> Indicates if the resource name is available. </summary>
+        public bool? IsNameAvailable { get; }
+        /// <summary> The reason why the given name is not available. </summary>
+        public PlaywrightTestingNameUnavailableReason? Reason { get; }
+        /// <summary> Detailed reason why the given name is available. </summary>
+        public string Message { get; }
     }
 }

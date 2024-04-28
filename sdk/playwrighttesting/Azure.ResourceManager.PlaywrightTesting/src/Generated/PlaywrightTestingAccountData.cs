@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AccountProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PlaywrightTestingAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PlaywrightTestingAccountProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.PlaywrightTesting
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public AccountProperties Properties { get; set; }
+        public PlaywrightTestingAccountProperties Properties { get; set; }
     }
 }

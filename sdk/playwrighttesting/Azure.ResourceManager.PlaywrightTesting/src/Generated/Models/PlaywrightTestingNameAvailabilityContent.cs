@@ -8,16 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PlaywrightTesting.Models;
 
-namespace Azure.ResourceManager.PlaywrightTesting
+namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary>
-    /// A class representing the AccountQuotum data model.
-    /// A quota resource for a Playwright service account.
-    /// </summary>
-    public partial class AccountQuotumData : ResourceData
+    /// <summary> The check availability request body. </summary>
+    public partial class PlaywrightTestingNameAvailabilityContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +46,25 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccountQuotumData"/>. </summary>
-        public AccountQuotumData()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingNameAvailabilityContent"/>. </summary>
+        public PlaywrightTestingNameAvailabilityContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountQuotumData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccountQuotumData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AccountQuotaProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PlaywrightTestingNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            Name = name;
+            ResourceType = resourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public AccountQuotaProperties Properties { get; set; }
+        /// <summary> The name of the resource for which availability needs to be checked. </summary>
+        public string Name { get; set; }
+        /// <summary> The resource type. </summary>
+        public ResourceType? ResourceType { get; set; }
     }
 }

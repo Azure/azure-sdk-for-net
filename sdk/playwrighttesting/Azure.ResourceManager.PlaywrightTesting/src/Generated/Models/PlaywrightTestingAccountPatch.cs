@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the Account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingAccountPatch(IDictionary<string, string> tags, AccountUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightTestingAccountPatch(IDictionary<string, string> tags, PlaywrightTestingAccountUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Properties = properties;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The updatable properties of the Account. </summary>
-        public AccountUpdateProperties Properties { get; set; }
+        public PlaywrightTestingAccountUpdateProperties Properties { get; set; }
     }
 }

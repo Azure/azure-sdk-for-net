@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
         // Accounts_CheckNameAvailability
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckNameAvailabilityAccount_AccountsCheckNameAvailability()
+        public async Task CheckPlaywrightTestingNameAvailability_AccountsCheckNameAvailability()
         {
             // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2024-02-01-preview/examples/Accounts_CheckNameAvailability.json
             // this example is just showing the usage of "Accounts_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent()
+            PlaywrightTestingNameAvailabilityContent content = new PlaywrightTestingNameAvailabilityContent()
             {
                 Name = "dummyName",
-                ResourceType = "Microsoft.AzurePlaywrightService/Accounts",
+                ResourceType = new ResourceType("Microsoft.AzurePlaywrightService/Accounts"),
             };
-            CheckNameAvailabilityResult result = await subscriptionResource.CheckNameAvailabilityAccountAsync(content);
+            PlaywrightTestingNameAvailabilityResult result = await subscriptionResource.CheckPlaywrightTestingNameAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
 ["Division"] = "LT",
 ["Team"] = "Dev Exp",
 },
-                Properties = new AccountUpdateProperties()
+                Properties = new PlaywrightTestingAccountUpdateProperties()
                 {
-                    RegionalAffinity = EnablementStatus.Enabled,
+                    RegionalAffinity = PlaywrightTestingEnablementStatus.Enabled,
                 },
             };
             PlaywrightTestingAccountResource result = await playwrightTestingAccount.UpdateAsync(patch);

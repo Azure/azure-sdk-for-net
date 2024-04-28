@@ -13,7 +13,7 @@ using Azure.ResourceManager.PlaywrightTesting.Models;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Samples
 {
-    public partial class Sample_AccountQuotumResource
+    public partial class Sample_PlaywrightTestingAccountQuotaResource
     {
         // AccountQuotas_Get
         [NUnit.Framework.Test]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AccountQuotumResource created on azure
-            // for more information of creating AccountQuotumResource, please refer to the document of AccountQuotumResource
+            // this example assumes you already have this PlaywrightTestingAccountQuotaResource created on azure
+            // for more information of creating PlaywrightTestingAccountQuotaResource, please refer to the document of PlaywrightTestingAccountQuotaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
             string accountName = "myPlaywrightAccount";
             PlaywrightTestingQuotaName quotaName = PlaywrightTestingQuotaName.ScalableExecution;
-            ResourceIdentifier accountQuotumResourceId = AccountQuotumResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, quotaName);
-            AccountQuotumResource accountQuotum = client.GetAccountQuotumResource(accountQuotumResourceId);
+            ResourceIdentifier playwrightTestingAccountQuotaResourceId = PlaywrightTestingAccountQuotaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, quotaName);
+            PlaywrightTestingAccountQuotaResource playwrightTestingAccountQuota = client.GetPlaywrightTestingAccountQuotaResource(playwrightTestingAccountQuotaResourceId);
 
             // invoke the operation
-            AccountQuotumResource result = await accountQuotum.GetAsync();
+            PlaywrightTestingAccountQuotaResource result = await playwrightTestingAccountQuota.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AccountQuotumData resourceData = result.Data;
+            PlaywrightTestingAccountQuotaData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

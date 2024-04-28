@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            AccountUpdateProperties properties = default;
+            PlaywrightTestingAccountUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     {
                         continue;
                     }
-                    properties = AccountUpdateProperties.DeserializeAccountUpdateProperties(property.Value, options);
+                    properties = PlaywrightTestingAccountUpdateProperties.DeserializePlaywrightTestingAccountUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AccountQuotumResources in the PlaywrightTestingAccount. </summary>
-        /// <returns> An object representing collection of AccountQuotumResources and their operations over a AccountQuotumResource. </returns>
-        public virtual AccountQuotumCollection GetAccountQuota()
+        /// <summary> Gets a collection of PlaywrightTestingAccountQuotaResources in the PlaywrightTestingAccount. </summary>
+        /// <returns> An object representing collection of PlaywrightTestingAccountQuotaResources and their operations over a PlaywrightTestingAccountQuotaResource. </returns>
+        public virtual PlaywrightTestingAccountQuotaCollection GetAllPlaywrightTestingAccountQuota()
         {
-            return GetCachedClient(client => new AccountQuotumCollection(client, Id));
+            return GetCachedClient(client => new PlaywrightTestingAccountQuotaCollection(client, Id));
         }
 
         /// <summary>
@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountQuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="quotaName"> The Playwright service account quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AccountQuotumResource>> GetAccountQuotumAsync(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingAccountQuotaResource>> GetPlaywrightTestingAccountQuotaAsync(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            return await GetAccountQuota().GetAsync(quotaName, cancellationToken).ConfigureAwait(false);
+            return await GetAllPlaywrightTestingAccountQuota().GetAsync(quotaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -143,16 +143,16 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AccountQuotumResource"/></description>
+        /// <description><see cref="PlaywrightTestingAccountQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="quotaName"> The Playwright service account quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<AccountQuotumResource> GetAccountQuotum(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingAccountQuotaResource> GetPlaywrightTestingAccountQuota(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
-            return GetAccountQuota().Get(quotaName, cancellationToken);
+            return GetAllPlaywrightTestingAccountQuota().Get(quotaName, cancellationToken);
         }
 
         /// <summary>

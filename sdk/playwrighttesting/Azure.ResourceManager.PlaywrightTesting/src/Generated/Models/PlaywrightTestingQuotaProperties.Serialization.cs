@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    public partial class AccountQuotaProperties : IUtf8JsonSerializable, IJsonModel<AccountQuotaProperties>
+    public partial class PlaywrightTestingQuotaProperties : IUtf8JsonSerializable, IJsonModel<PlaywrightTestingQuotaProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountQuotaProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlaywrightTestingQuotaProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AccountQuotaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PlaywrightTestingQuotaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightTestingQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountQuotaProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightTestingQuotaProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             writer.WriteEndObject();
         }
 
-        AccountQuotaProperties IJsonModel<AccountQuotaProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PlaywrightTestingQuotaProperties IJsonModel<PlaywrightTestingQuotaProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightTestingQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountQuotaProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PlaywrightTestingQuotaProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccountQuotaProperties(document.RootElement, options);
+            return DeserializePlaywrightTestingQuotaProperties(document.RootElement, options);
         }
 
-        internal static AccountQuotaProperties DeserializeAccountQuotaProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PlaywrightTestingQuotaProperties DeserializePlaywrightTestingQuotaProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             {
                 return null;
             }
-            AccountFreeTrialProperties freeTrial = default;
+            PlaywrightTestingFreeTrialProperties freeTrial = default;
             PlaywrightTestingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     {
                         continue;
                     }
-                    freeTrial = AccountFreeTrialProperties.DeserializeAccountFreeTrialProperties(property.Value, options);
+                    freeTrial = PlaywrightTestingFreeTrialProperties.DeserializePlaywrightTestingFreeTrialProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AccountQuotaProperties(freeTrial, provisioningState, serializedAdditionalRawData);
+            return new PlaywrightTestingQuotaProperties(freeTrial, provisioningState, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AccountQuotaProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PlaywrightTestingQuotaProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightTestingQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccountQuotaProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightTestingQuotaProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AccountQuotaProperties IPersistableModel<AccountQuotaProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PlaywrightTestingQuotaProperties IPersistableModel<PlaywrightTestingQuotaProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PlaywrightTestingQuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAccountQuotaProperties(document.RootElement, options);
+                        return DeserializePlaywrightTestingQuotaProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccountQuotaProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PlaywrightTestingQuotaProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AccountQuotaProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PlaywrightTestingQuotaProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

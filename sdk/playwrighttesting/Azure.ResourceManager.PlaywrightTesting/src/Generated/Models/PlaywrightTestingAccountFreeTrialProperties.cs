@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
     /// <summary> The Playwright service account quota resource free-trial properties. </summary>
-    public partial class AccountFreeTrialProperties
+    public partial class PlaywrightTestingAccountFreeTrialProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,47 +45,47 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccountFreeTrialProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountFreeTrialProperties"/>. </summary>
         /// <param name="createdOn"> The free-trial createdAt utcDateTime. </param>
-        /// <param name="expiryOn"> The free-trial expiryAt utcDateTime. </param>
+        /// <param name="expireOn"> The free-trial expiryAt utcDateTime. </param>
         /// <param name="allocatedValue"> The free-trial allocated limit value eg. allocated free minutes. </param>
         /// <param name="usedValue"> The free-trial used value eg. used free minutes. </param>
         /// <param name="percentageUsed"> The free-trial percentage used. </param>
-        public AccountFreeTrialProperties(DateTimeOffset createdOn, DateTimeOffset expiryOn, int allocatedValue, int usedValue, float percentageUsed)
+        public PlaywrightTestingAccountFreeTrialProperties(DateTimeOffset createdOn, DateTimeOffset expireOn, int allocatedValue, int usedValue, float percentageUsed)
         {
             CreatedOn = createdOn;
-            ExpiryOn = expiryOn;
+            ExpireOn = expireOn;
             AllocatedValue = allocatedValue;
             UsedValue = usedValue;
             PercentageUsed = percentageUsed;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountFreeTrialProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountFreeTrialProperties"/>. </summary>
         /// <param name="createdOn"> The free-trial createdAt utcDateTime. </param>
-        /// <param name="expiryOn"> The free-trial expiryAt utcDateTime. </param>
+        /// <param name="expireOn"> The free-trial expiryAt utcDateTime. </param>
         /// <param name="allocatedValue"> The free-trial allocated limit value eg. allocated free minutes. </param>
         /// <param name="usedValue"> The free-trial used value eg. used free minutes. </param>
         /// <param name="percentageUsed"> The free-trial percentage used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccountFreeTrialProperties(DateTimeOffset createdOn, DateTimeOffset expiryOn, int allocatedValue, int usedValue, float percentageUsed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlaywrightTestingAccountFreeTrialProperties(DateTimeOffset createdOn, DateTimeOffset expireOn, int allocatedValue, int usedValue, float percentageUsed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedOn = createdOn;
-            ExpiryOn = expiryOn;
+            ExpireOn = expireOn;
             AllocatedValue = allocatedValue;
             UsedValue = usedValue;
             PercentageUsed = percentageUsed;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountFreeTrialProperties"/> for deserialization. </summary>
-        internal AccountFreeTrialProperties()
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingAccountFreeTrialProperties"/> for deserialization. </summary>
+        internal PlaywrightTestingAccountFreeTrialProperties()
         {
         }
 
         /// <summary> The free-trial createdAt utcDateTime. </summary>
         public DateTimeOffset CreatedOn { get; }
         /// <summary> The free-trial expiryAt utcDateTime. </summary>
-        public DateTimeOffset ExpiryOn { get; }
+        public DateTimeOffset ExpireOn { get; }
         /// <summary> The free-trial allocated limit value eg. allocated free minutes. </summary>
         public int AllocatedValue { get; }
         /// <summary> The free-trial used value eg. used free minutes. </summary>
