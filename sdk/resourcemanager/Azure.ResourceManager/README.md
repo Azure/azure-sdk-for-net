@@ -46,7 +46,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
 ```
@@ -428,6 +427,19 @@ GenericResource resource = client.GetGenericResources().Get(id).Value;
 
 var deleteResult = await resource.DeleteAsync(WaitUntil.Completed);
 Console.WriteLine($"Resource deletion response status code: {deleteResult.WaitForCompletionResponse().Status}");
+```
+
+### Rehydrate a long-running operation
+```C# Snippet:Readme_LRORehydration
+ArmClient client = new ArmClient(new DefaultAzureCredential());
+SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
+ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
+var orgData = new ResourceGroupData(AzureLocation.WestUS2);
+var rgOp = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Started, "orgName", orgData);
+var rgOpRehydrationToken = rgOp.GetRehydrationToken();
+var rehydratedOrgOperation = ArmOperation.Rehydrate<ResourceGroupResource>(client, rgOpRehydrationToken!.Value);
+var rawResponse = rehydratedOrgOperation.GetRawResponse();
+await rehydratedOrgOperation.WaitForCompletionAsync();
 ```
 
 For more detailed examples, take a look at [samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager/samples) we have available.
