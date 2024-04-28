@@ -451,6 +451,65 @@ MountPath = "/mounts/a/files",
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // List Deployment Status
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetProductionSiteDeploymentStatuses_ListDeploymentStatus()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListSiteDeploymentStatus.json
+            // this example is just showing the usage of "WebApps_ListProductionSiteDeploymentStatuses" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteResource created on azure
+            // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string name = "testSite";
+            ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (CsmDeploymentStatus item in webSite.GetProductionSiteDeploymentStatusesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Get Deployment Status
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetProductionSiteDeploymentStatus_GetDeploymentStatus()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSiteDeploymentStatus.json
+            // this example is just showing the usage of "WebApps_GetProductionSiteDeploymentStatus" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteResource created on azure
+            // for more information of creating WebSiteResource, please refer to the document of WebSiteResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string name = "testSite";
+            ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
+
+            // invoke the operation
+            string deploymentStatusId = "eacfd68b-3bbd-4ad9-99c5-98614d89c8e5";
+            ArmOperation<CsmDeploymentStatus> lro = await webSite.GetProductionSiteDeploymentStatusAsync(WaitUntil.Completed, deploymentStatusId);
+            CsmDeploymentStatus result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // List backups
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

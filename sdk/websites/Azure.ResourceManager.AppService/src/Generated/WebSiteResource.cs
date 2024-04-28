@@ -930,77 +930,6 @@ namespace Azure.ResourceManager.AppService
             return GetWebSiteContinuousWebJobs().Get(webJobName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SiteDeploymentStatusResources in the WebSite. </summary>
-        /// <returns> An object representing collection of SiteDeploymentStatusResources and their operations over a SiteDeploymentStatusResource. </returns>
-        public virtual SiteDeploymentStatusCollection GetAllSiteDeploymentStatus()
-        {
-            return GetCachedClient(client => new SiteDeploymentStatusCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the deployment status for an app (or deployment slot, if specified).
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deploymentStatus/{deploymentStatusId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetProductionSiteDeploymentStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteDeploymentStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deploymentStatusId"> GUID of the deployment operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStatusId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStatusId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<ArmOperation<SiteDeploymentStatusResource>> GetSiteDeploymentStatusAsync(WaitUntil waitUntil, string deploymentStatusId, CancellationToken cancellationToken = default)
-        {
-            return await GetAllSiteDeploymentStatus().GetAsync(waitUntil, deploymentStatusId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the deployment status for an app (or deployment slot, if specified).
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deploymentStatus/{deploymentStatusId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebApps_GetProductionSiteDeploymentStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteDeploymentStatusResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deploymentStatusId"> GUID of the deployment operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStatusId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStatusId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual ArmOperation<SiteDeploymentStatusResource> GetSiteDeploymentStatus(WaitUntil waitUntil, string deploymentStatusId, CancellationToken cancellationToken = default)
-        {
-            return GetAllSiteDeploymentStatus().Get(waitUntil, deploymentStatusId, cancellationToken);
-        }
-
         /// <summary> Gets a collection of SiteDeploymentResources in the WebSite. </summary>
         /// <returns> An object representing collection of SiteDeploymentResources and their operations over a SiteDeploymentResource. </returns>
         public virtual SiteDeploymentCollection GetSiteDeployments()
@@ -4327,6 +4256,152 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _webSiteWebAppsRestClient.GetContainerLogsZip(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List deployment statuses for an app (or deployment slot, if specified).
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deploymentStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListProductionSiteDeploymentStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="CsmDeploymentStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CsmDeploymentStatus> GetProductionSiteDeploymentStatusesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListProductionSiteDeploymentStatusesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListProductionSiteDeploymentStatusesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CsmDeploymentStatus.DeserializeCsmDeploymentStatus(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetProductionSiteDeploymentStatuses", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List deployment statuses for an app (or deployment slot, if specified).
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deploymentStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_ListProductionSiteDeploymentStatuses</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="CsmDeploymentStatus"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CsmDeploymentStatus> GetProductionSiteDeploymentStatuses(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateListProductionSiteDeploymentStatusesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteWebAppsRestClient.CreateListProductionSiteDeploymentStatusesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CsmDeploymentStatus.DeserializeCsmDeploymentStatus(e), _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetProductionSiteDeploymentStatuses", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the deployment status for an app (or deployment slot, if specified).
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deploymentStatus/{deploymentStatusId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetProductionSiteDeploymentStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deploymentStatusId"> GUID of the deployment operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentStatusId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStatusId"/> is null. </exception>
+        public virtual async Task<ArmOperation<CsmDeploymentStatus>> GetProductionSiteDeploymentStatusAsync(WaitUntil waitUntil, string deploymentStatusId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentStatusId, nameof(deploymentStatusId));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetProductionSiteDeploymentStatus");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.GetProductionSiteDeploymentStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentStatusId, cancellationToken).ConfigureAwait(false);
+                var operation = new AppServiceArmOperation<CsmDeploymentStatus>(new CsmDeploymentStatusOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateGetProductionSiteDeploymentStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentStatusId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the deployment status for an app (or deployment slot, if specified).
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/deploymentStatus/{deploymentStatusId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetProductionSiteDeploymentStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deploymentStatusId"> GUID of the deployment operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentStatusId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStatusId"/> is null. </exception>
+        public virtual ArmOperation<CsmDeploymentStatus> GetProductionSiteDeploymentStatus(WaitUntil waitUntil, string deploymentStatusId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentStatusId, nameof(deploymentStatusId));
+
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetProductionSiteDeploymentStatus");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.GetProductionSiteDeploymentStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentStatusId, cancellationToken);
+                var operation = new AppServiceArmOperation<CsmDeploymentStatus>(new CsmDeploymentStatusOperationSource(), _webSiteWebAppsClientDiagnostics, Pipeline, _webSiteWebAppsRestClient.CreateGetProductionSiteDeploymentStatusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentStatusId).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {

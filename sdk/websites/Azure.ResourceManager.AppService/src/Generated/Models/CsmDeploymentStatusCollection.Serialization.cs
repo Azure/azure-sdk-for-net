@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            IReadOnlyList<CsmDeploymentStatusData> value = default;
+            IReadOnlyList<CsmDeploymentStatus> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CsmDeploymentStatusData> array = new List<CsmDeploymentStatusData>();
+                    List<CsmDeploymentStatus> array = new List<CsmDeploymentStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CsmDeploymentStatusData.DeserializeCsmDeploymentStatusData(item, options));
+                        array.Add(CsmDeploymentStatus.DeserializeCsmDeploymentStatus(item, options));
                     }
                     value = array;
                     continue;

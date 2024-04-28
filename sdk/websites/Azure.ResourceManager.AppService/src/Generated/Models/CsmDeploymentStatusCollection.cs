@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="CsmDeploymentStatusCollection"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal CsmDeploymentStatusCollection(IEnumerable<CsmDeploymentStatusData> value)
+        internal CsmDeploymentStatusCollection(IEnumerable<CsmDeploymentStatus> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CsmDeploymentStatusCollection(IReadOnlyList<CsmDeploymentStatusData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CsmDeploymentStatusCollection(IReadOnlyList<CsmDeploymentStatus> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<CsmDeploymentStatusData> Value { get; }
+        public IReadOnlyList<CsmDeploymentStatus> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

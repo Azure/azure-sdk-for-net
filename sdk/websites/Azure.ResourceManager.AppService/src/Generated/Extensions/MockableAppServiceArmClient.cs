@@ -983,30 +983,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteDeploymentStatusResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteDeploymentStatusResource.CreateResourceIdentifier" /> to create a <see cref="SiteDeploymentStatusResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteDeploymentStatusResource"/> object. </returns>
-        public virtual SiteDeploymentStatusResource GetSiteDeploymentStatusResource(ResourceIdentifier id)
-        {
-            SiteDeploymentStatusResource.ValidateResourceId(id);
-            return new SiteDeploymentStatusResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotDeploymentStatusResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotDeploymentStatusResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDeploymentStatusResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteSlotDeploymentStatusResource"/> object. </returns>
-        public virtual SiteSlotDeploymentStatusResource GetSiteSlotDeploymentStatusResource(ResourceIdentifier id)
-        {
-            SiteSlotDeploymentStatusResource.ValidateResourceId(id);
-            return new SiteSlotDeploymentStatusResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SiteDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SiteDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="SiteDeploymentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

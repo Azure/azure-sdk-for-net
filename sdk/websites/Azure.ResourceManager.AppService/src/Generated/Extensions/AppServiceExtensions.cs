@@ -1540,44 +1540,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteDeploymentStatusResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteDeploymentStatusResource.CreateResourceIdentifier" /> to create a <see cref="SiteDeploymentStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDeploymentStatusResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteDeploymentStatusResource"/> object. </returns>
-        public static SiteDeploymentStatusResource GetSiteDeploymentStatusResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetSiteDeploymentStatusResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteSlotDeploymentStatusResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteSlotDeploymentStatusResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDeploymentStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDeploymentStatusResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteSlotDeploymentStatusResource"/> object. </returns>
-        public static SiteSlotDeploymentStatusResource GetSiteSlotDeploymentStatusResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAppServiceArmClient(client).GetSiteSlotDeploymentStatusResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="SiteDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SiteDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="SiteDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>

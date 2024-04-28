@@ -140,6 +140,67 @@ namespace Azure.ResourceManager.AppService.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // List Deployment Status Slot
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetSlotSiteDeploymentStatusesSlot_ListDeploymentStatusSlot()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/ListSiteDeploymentStatusSlot.json
+            // this example is just showing the usage of "WebApps_ListSlotSiteDeploymentStatusesSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string name = "testSite";
+            string slot = "stage";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (CsmDeploymentStatus item in webSiteSlot.GetSlotSiteDeploymentStatusesSlotAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Get Deployment Status Slot
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetSlotSiteDeploymentStatusSlot_GetDeploymentStatusSlot()
+        {
+            // Generated from example definition: specification/web/resource-manager/Microsoft.Web/stable/2023-12-01/examples/GetSiteDeploymentStatusSlot.json
+            // this example is just showing the usage of "WebApps_GetSlotSiteDeploymentStatusSlot" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WebSiteSlotResource created on azure
+            // for more information of creating WebSiteSlotResource, please refer to the document of WebSiteSlotResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string name = "testSite";
+            string slot = "stage";
+            ResourceIdentifier webSiteSlotResourceId = WebSiteSlotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name, slot);
+            WebSiteSlotResource webSiteSlot = client.GetWebSiteSlotResource(webSiteSlotResourceId);
+
+            // invoke the operation
+            string deploymentStatusId = "eacfd68b-3bbd-4ad9-99c5-98614d89c8e5";
+            ArmOperation<CsmDeploymentStatus> lro = await webSiteSlot.GetSlotSiteDeploymentStatusSlotAsync(WaitUntil.Completed, deploymentStatusId);
+            CsmDeploymentStatus result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // List backups
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

@@ -5258,7 +5258,7 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.CsmDeploymentStatusData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CsmDeploymentStatus"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -5271,13 +5271,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="failedInstancesLogs"> List of URLs pointing to logs for instances which failed to provision. </param>
         /// <param name="errors"> List of errors. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="AppService.CsmDeploymentStatusData"/> instance for mocking. </returns>
-        public static CsmDeploymentStatusData CsmDeploymentStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deploymentId = null, DeploymentBuildStatus? status = null, int? numberOfInstancesInProgress = null, int? numberOfInstancesSuccessful = null, int? numberOfInstancesFailed = null, IEnumerable<string> failedInstancesLogs = null, IEnumerable<ErrorEntity> errors = null, string kind = null)
+        /// <returns> A new <see cref="Models.CsmDeploymentStatus"/> instance for mocking. </returns>
+        public static CsmDeploymentStatus CsmDeploymentStatus(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deploymentId = null, DeploymentBuildStatus? status = null, int? numberOfInstancesInProgress = null, int? numberOfInstancesSuccessful = null, int? numberOfInstancesFailed = null, IEnumerable<string> failedInstancesLogs = null, IEnumerable<ErrorEntity> errors = null, string kind = null)
         {
             failedInstancesLogs ??= new List<string>();
             errors ??= new List<ErrorEntity>();
 
-            return new CsmDeploymentStatusData(
+            return new CsmDeploymentStatus(
                 id,
                 name,
                 resourceType,

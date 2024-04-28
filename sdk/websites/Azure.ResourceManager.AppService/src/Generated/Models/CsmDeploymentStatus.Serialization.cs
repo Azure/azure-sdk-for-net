@@ -12,21 +12,20 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CsmDeploymentStatusData : IUtf8JsonSerializable, IJsonModel<CsmDeploymentStatusData>
+    public partial class CsmDeploymentStatus : IUtf8JsonSerializable, IJsonModel<CsmDeploymentStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CsmDeploymentStatusData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CsmDeploymentStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CsmDeploymentStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CsmDeploymentStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CsmDeploymentStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CsmDeploymentStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CsmDeploymentStatusData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CsmDeploymentStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -121,19 +120,19 @@ namespace Azure.ResourceManager.AppService
             writer.WriteEndObject();
         }
 
-        CsmDeploymentStatusData IJsonModel<CsmDeploymentStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CsmDeploymentStatus IJsonModel<CsmDeploymentStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CsmDeploymentStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CsmDeploymentStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CsmDeploymentStatusData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CsmDeploymentStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCsmDeploymentStatusData(document.RootElement, options);
+            return DeserializeCsmDeploymentStatus(document.RootElement, options);
         }
 
-        internal static CsmDeploymentStatusData DeserializeCsmDeploymentStatusData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CsmDeploymentStatus DeserializeCsmDeploymentStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -273,7 +272,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CsmDeploymentStatusData(
+            return new CsmDeploymentStatus(
                 id,
                 name,
                 type,
@@ -514,9 +513,9 @@ namespace Azure.ResourceManager.AppService
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<CsmDeploymentStatusData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CsmDeploymentStatus>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CsmDeploymentStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CsmDeploymentStatus>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -525,26 +524,26 @@ namespace Azure.ResourceManager.AppService
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CsmDeploymentStatusData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsmDeploymentStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CsmDeploymentStatusData IPersistableModel<CsmDeploymentStatusData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CsmDeploymentStatus IPersistableModel<CsmDeploymentStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CsmDeploymentStatusData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CsmDeploymentStatus>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCsmDeploymentStatusData(document.RootElement, options);
+                        return DeserializeCsmDeploymentStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CsmDeploymentStatusData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsmDeploymentStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CsmDeploymentStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CsmDeploymentStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

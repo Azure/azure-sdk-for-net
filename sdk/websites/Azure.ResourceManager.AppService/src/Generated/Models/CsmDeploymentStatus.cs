@@ -8,16 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// A class representing the CsmDeploymentStatus data model.
-    /// Deployment status response payload.
-    /// </summary>
-    public partial class CsmDeploymentStatusData : ResourceData
+    /// <summary> Deployment status response payload. </summary>
+    public partial class CsmDeploymentStatus : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,14 +47,14 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CsmDeploymentStatusData"/>. </summary>
-        public CsmDeploymentStatusData()
+        /// <summary> Initializes a new instance of <see cref="CsmDeploymentStatus"/>. </summary>
+        public CsmDeploymentStatus()
         {
             FailedInstancesLogs = new ChangeTrackingList<string>();
             Errors = new ChangeTrackingList<ErrorEntity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CsmDeploymentStatusData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsmDeploymentStatus"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -72,7 +68,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="errors"> List of errors. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CsmDeploymentStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deploymentId, DeploymentBuildStatus? status, int? numberOfInstancesInProgress, int? numberOfInstancesSuccessful, int? numberOfInstancesFailed, IList<string> failedInstancesLogs, IList<ErrorEntity> errors, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CsmDeploymentStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string deploymentId, DeploymentBuildStatus? status, int? numberOfInstancesInProgress, int? numberOfInstancesSuccessful, int? numberOfInstancesFailed, IList<string> failedInstancesLogs, IList<ErrorEntity> errors, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DeploymentId = deploymentId;
             Status = status;
