@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
+#pragma warning disable // TODO cleanup of all the warning messages. Issue https://github.com/Azure/azure-sdk-for-net/issues/43768
 namespace Microsoft.AspNetCore.DataProtection
 {
     /// <summary>
