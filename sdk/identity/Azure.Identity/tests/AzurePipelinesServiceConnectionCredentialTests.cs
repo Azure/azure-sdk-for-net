@@ -34,7 +34,6 @@ namespace Azure.Identity.Tests
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
                 MsalClient = config.MockConfidentialMsalClient,
                 CollectionUri = "https://dev.azure.com/myorg/myproject/_apis/serviceendpoint/endpoints?api-version=2.2.2",
-                HubName = "myhub",
                 PlanId = "myplan",
                 JobId = "myjob",
                 TeamProjectId = "myteamproject",
@@ -77,7 +76,6 @@ namespace Azure.Identity.Tests
             {
                 var options = new AzurePipelinesServiceConnectionCredentialOptions();
                 Assert.AreEqual("mockCollectionUri", options.CollectionUri);
-                Assert.AreEqual("mockHubName", options.HubName);
                 Assert.AreEqual("mockJobId", options.JobId);
                 Assert.AreEqual("mockPlanId", options.PlanId);
                 Assert.AreEqual("mockSystemAccessToken", options.SystemAccessToken);
