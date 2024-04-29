@@ -157,7 +157,7 @@ public class MockPipelineTransport : PipelineTransport
 
         protected override BinaryContent? ContentCore
         {
-            get => throw new NotImplementedException();
+            get => null;
             set => throw new NotImplementedException();
         }
 
@@ -186,7 +186,7 @@ public class MockPipelineTransport : PipelineTransport
 
         public override int Status { get; }
 
-        public override string ReasonPhrase => throw new NotImplementedException();
+        public override string ReasonPhrase => string.Empty;
 
         public override Stream? ContentStream
         {
@@ -194,10 +194,10 @@ public class MockPipelineTransport : PipelineTransport
             set => throw new NotImplementedException();
         }
 
-        public override BinaryData Content => throw new NotImplementedException();
+        public override BinaryData Content => new BinaryData(new byte[]{ 1, 2 , 3});
 
         protected override PipelineResponseHeaders HeadersCore
-            => throw new NotImplementedException();
+            => new MockResponseHeaders();
 
         public override void Dispose() { }
 
