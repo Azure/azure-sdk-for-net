@@ -10,9 +10,9 @@ namespace System.ClientModel.Primitives;
 #pragma warning disable CS1591 // public XML comments
 public abstract class JsonModel<T> : IJsonModel, IJsonModel<T>
 {
-    private Dictionary<string, object>? _unknownProperties;
+    private Dictionary<string, BinaryData>? _unknownProperties;
 
-    IDictionary<string, object> IJsonModel.AdditionalProperties
+    IDictionary<string, BinaryData> IJsonModel.AdditionalProperties
         => _unknownProperties ??= new();
 
 #pragma warning disable AZC0014 // Avoid using banned types in public API
