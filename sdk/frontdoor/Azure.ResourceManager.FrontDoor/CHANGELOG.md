@@ -1,12 +1,15 @@
 # Release History
 
-## 1.3.0 (2024-04-23)
+## 1.3.0 (2024-04-30)
 
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details..
-- Use swagger with apiversion 2024-02-01
-- Add log-scrubbing support
+- Update api version to 2024-02-01
+- Add log-scrubbing support for waf
+- Add GroupBy support for waf custom rule
+- Add AnomalyScoringValue for RuleMatchActionType
+- Add JSChallengeValue for RuleMatchActionType
 
 ### Breaking Changes
 
