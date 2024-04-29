@@ -191,14 +191,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
                 }
                 else if (tag.Key == SemanticConventions.AttributeServerPort)
                 {
-                    // The Instrumentation.AspNetCore library sets "server.port" as an object{int}. Doing the same here for comparison to avoid unboxing.
-                    // https://github.com/open-telemetry/opentelemetry-dotnet/blob/Instrumentation.AspNetCore-1.7.0/src/OpenTelemetry.Instrumentation.AspNetCore/Implementation/HttpInListener.cs#L187-L190
-                    object port80 = 80;
-                    object port443 = 443;
-
-                    if (!tag.Value.Equals(port80) && !tag.Value.Equals(port443))
+                    if (tag.Value is int portValue && portValue != 80 && portValue != 443)
                     {
-                        serverPort = $":{tag.Value.ToString()}";
+                        serverPort = $":{portValue}";
                     }
                 }
                 else if (tag.Key == SemanticConventions.AttributeUrlPath)

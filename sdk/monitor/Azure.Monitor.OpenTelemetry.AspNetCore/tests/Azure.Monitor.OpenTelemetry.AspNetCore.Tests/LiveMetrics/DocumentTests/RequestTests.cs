@@ -26,13 +26,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
         }
 
         [Theory]
-        [InlineData("http", "example.com", 8080, "/search", "?q=OpenTelemetry", "http://example.com:8080/search?q=OpenTelemetry")] // The Instrumentation.AspNetCore sets the port as an int.
-        [InlineData("http", "example.com", "8080", "/search", "?q=OpenTelemetry", "http://example.com:8080/search?q=OpenTelemetry")] // This is not expected, but the attribute is object so it could happen.
+        [InlineData("http", "example.com", 8080, "/search", "?q=OpenTelemetry", "http://example.com:8080/search?q=OpenTelemetry")]
         [InlineData("http", "example.com", 80, "/search", "?q=OpenTelemetry", "http://example.com/search?q=OpenTelemetry")] // as a sideeffect of setting as new Uri, the default port is removed from the Absolute Uri.
-        [InlineData("http", "example.com", "80", "/search", "?q=OpenTelemetry", "http://example.com/search?q=OpenTelemetry")] // as a sideeffect of setting as new Uri, the default port is removed from the Absolute Uri.
-        [InlineData("http", "example.com", 443, "/search", "?q=OpenTelemetry", "http://example.com/search?q=OpenTelemetry")] // The Instrumentation.AspNetCore sets the port as an int.
-        [InlineData("http", "example.com", "443", "/search", "?q=OpenTelemetry", "http://example.com:443/search?q=OpenTelemetry")] // If the port is set as a string, it will not be removed from the Absolute Uri.
-        public void VerifyRequestAttributes(string urlScheme, string serverAddress, object serverPort, string urlPath, string urlQuery, string expectedUrl)
+        [InlineData("http", "example.com", 443, "/search", "?q=OpenTelemetry", "http://example.com/search?q=OpenTelemetry")] // we do not record the 443 port.
+        public void VerifyRequestAttributes(string urlScheme, string serverAddress, int serverPort, string urlPath, string urlQuery, string expectedUrl)
         {
             // SETUP
             var uniqueTestId = Guid.NewGuid();
