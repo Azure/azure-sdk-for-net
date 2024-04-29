@@ -33,10 +33,10 @@ namespace Azure.Identity
         /// <summary>
         /// Creates a new instance of the <see cref="AzurePipelinesServiceConnectionCredential"/>.
         /// </summary>
-        /// <param name="tenantId"></param>
-        /// <param name="clientId"></param>
-        /// <param name="serviceConnectionId"></param>
-        /// <param name="options"></param>
+        /// <param name="tenantId">The tenant Id for the service connection.</param>
+        /// <param name="clientId">The client Id for the service connection.</param>
+        /// <param name="serviceConnectionId">The service connection Id.</param>
+        /// <param name="options">An instance of <see cref="AzurePipelinesServiceConnectionCredentialOptions"/>.</param>
         /// <exception cref="System.ArgumentException">When <paramref name="serviceConnectionId"/> is null.</exception>
         public AzurePipelinesServiceConnectionCredential(string tenantId, string clientId, string serviceConnectionId, AzurePipelinesServiceConnectionCredentialOptions options = default)
         {
