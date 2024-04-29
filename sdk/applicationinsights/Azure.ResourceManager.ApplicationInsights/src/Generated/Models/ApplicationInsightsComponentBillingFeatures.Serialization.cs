@@ -131,31 +131,33 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataVolumeCap), out propertyOverride);
-            if (Optional.IsDefined(DataVolumeCap) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  DataVolumeCap: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DataVolumeCap))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  DataVolumeCap: ");
                     BicepSerializationHelpers.AppendChildObject(builder, DataVolumeCap, options, 2, false, "  DataVolumeCap: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentBillingFeatures), out propertyOverride);
-            if (Optional.IsCollectionDefined(CurrentBillingFeatures) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (CurrentBillingFeatures.Any() || hasPropertyOverride)
+                builder.Append("  CurrentBillingFeatures: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CurrentBillingFeatures))
                 {
-                    builder.Append("  CurrentBillingFeatures: ");
-                    if (hasPropertyOverride)
+                    if (CurrentBillingFeatures.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  CurrentBillingFeatures: ");
                         builder.AppendLine("[");
                         foreach (var item in CurrentBillingFeatures)
                         {

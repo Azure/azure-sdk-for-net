@@ -116,17 +116,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RampUpRules), out propertyOverride);
-            if (Optional.IsCollectionDefined(RampUpRules) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (RampUpRules.Any() || hasPropertyOverride)
+                builder.Append("  rampUpRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(RampUpRules))
                 {
-                    builder.Append("  rampUpRules: ");
-                    if (hasPropertyOverride)
+                    if (RampUpRules.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  rampUpRules: ");
                         builder.AppendLine("[");
                         foreach (var item in RampUpRules)
                         {

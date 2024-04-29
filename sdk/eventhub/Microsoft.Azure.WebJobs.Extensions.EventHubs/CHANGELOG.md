@@ -1,14 +1,10 @@
 # Release History
 
-## 6.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 6.3.2 (2024-04-29)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed an issue with scale metrics computation, potentially causing unnecessary scale-up.
 
 ## 6.3.1 (2024-04-17)
 

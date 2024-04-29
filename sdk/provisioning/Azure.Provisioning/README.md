@@ -9,7 +9,7 @@ Azure.Provisioning is a cloud development kit that allows you to declaritively s
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning --prerelease
+dotnet add package Azure.Provisioning
 ```
 
 ### Prerequisites

@@ -3,6 +3,7 @@
 ## 1.12.0-beta.2 (Unreleased)
 
 ### Features Added
+- `ClientAssertionCredentialOptions` now supports `TokenCachePersistenceOptions` for configuring token cache persistence.
 
 ### Breaking Changes
 
