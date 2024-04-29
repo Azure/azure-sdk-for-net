@@ -11,12 +11,6 @@
 - Add AnomalyScoringValue for RuleMatchActionType
 - Add JSChallengeValue for RuleMatchActionType
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.2.0 (2023-11-29)
 
 ### Features Added
