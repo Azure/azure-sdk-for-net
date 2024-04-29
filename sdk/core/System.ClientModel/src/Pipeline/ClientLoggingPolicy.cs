@@ -24,7 +24,6 @@ public class ClientLoggingPolicy : PipelinePolicy
     private const string DefaultEventSourceName = "System.ClientModel";
 
     private static readonly ConcurrentDictionary<string, ClientModelEventSource> s_singletonEventSources = new();
-    private readonly ClientModelEventSource _eventSource;
 
     private readonly bool _logContent;
     private readonly int _maxLength;
@@ -50,7 +49,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         _sanitizer = new PipelineMessageSanitizer(loggingOptions.LoggedQueryParameters, loggingOptions.LoggedHeaderNames);
 
         string logNameToUse = logName ?? DefaultEventSourceName;
-        _eventSource = s_singletonEventSources.GetOrAdd(logNameToUse, _ => ClientModelEventSource.Create(logNameToUse, logTraits));
+        EventSourceSingleton = s_singletonEventSources.GetOrAdd(logNameToUse, _ => ClientModelEventSource.Create(logNameToUse, logTraits));
     }
 
     /// <summary>
@@ -60,6 +59,11 @@ public class ClientLoggingPolicy : PipelinePolicy
     public ClientLoggingPolicy(LoggingOptions? options = default) : this(DefaultEventSourceName, null, options)
     {
     }
+
+    /// <summary>
+    /// TODO
+    /// </summary>
+    internal ClientModelEventSource EventSourceSingleton { get; }
 
     /// <inheritdoc/>
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex) =>
@@ -71,7 +75,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        if (!_isLoggingEnabled || !_eventSource.IsEnabled())
+        if (!_isLoggingEnabled || !EventSourceSingleton.IsEnabled())
         {
             if (async)
             {
@@ -110,7 +114,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
         catch (Exception ex)
         {
-            _eventSource.ExceptionResponse(requestId, ex.ToString());
+            EventSourceSingleton.ExceptionResponse(requestId, ex.ToString());
             throw;
         }
 
@@ -129,18 +133,18 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         if (elapsed > RequestTooLongTime)
         {
-            _eventSource.ResponseDelay(responseId, elapsed);
+            EventSourceSingleton.ResponseDelay(responseId, elapsed);
         }
     }
 
     private void LogRequest(PipelineRequest request, string? requestId)
     {
-        _eventSource.Request(request, requestId, _assemblyName, _sanitizer);
+        EventSourceSingleton.Request(request, requestId, _assemblyName, _sanitizer);
     }
 
     private async Task LogRequestContent(PipelineRequest request, string? requestId, bool async, CancellationToken cancellationToken)
     {
-        if (!_logContent || request.Content == null || !_eventSource.IsEnabled(EventLevel.Informational, EventKeywords.All))
+        if (!_logContent || request.Content == null || !EventSourceSingleton.IsEnabled(EventLevel.Informational, EventKeywords.All))
         {
             return; // nothing to log
         }
@@ -166,7 +170,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
 
         // Log to event source
-        _eventSource.RequestContent(requestId, bytes, requestTextEncoding);
+        EventSourceSingleton.RequestContent(requestId, bytes, requestTextEncoding);
     }
 
     private void LogResponse(PipelineResponse response, string? responseId, double elapsed)
@@ -174,18 +178,18 @@ public class ClientLoggingPolicy : PipelinePolicy
         bool isError = response.IsError;
         if (isError)
         {
-            _eventSource.ErrorResponse(response, responseId, _sanitizer, elapsed);
+            EventSourceSingleton.ErrorResponse(response, responseId, _sanitizer, elapsed);
         }
         else
         {
-            _eventSource.Response(response, responseId, _sanitizer, elapsed);
+            EventSourceSingleton.Response(response, responseId, _sanitizer, elapsed);
         }
     }
 
     private async Task LogResponseContent(PipelineResponse response, string? responseId, bool contentBuffered, bool async, CancellationToken cancellationToken)
     {
-        var logErrorResponseContent = response.IsError && _eventSource.IsEnabled(EventLevel.Warning, EventKeywords.All);
-        var logResponseContent = _eventSource.IsEnabled(EventLevel.Informational, EventKeywords.All) || logErrorResponseContent;
+        var logErrorResponseContent = response.IsError && EventSourceSingleton.IsEnabled(EventLevel.Warning, EventKeywords.All);
+        var logResponseContent = EventSourceSingleton.IsEnabled(EventLevel.Informational, EventKeywords.All) || logErrorResponseContent;
 
         if (!_logContent || !logResponseContent || response.ContentStream == null)
         {
@@ -222,7 +226,7 @@ public class ClientLoggingPolicy : PipelinePolicy
             }
             else
             {
-                response.ContentStream!.CopyTo(memoryStream);
+                response.ContentStream!.CopyTo(memoryStream, cancellationToken);
             }
             response.ContentStream.Seek(0, SeekOrigin.Begin);
 
@@ -233,18 +237,18 @@ public class ClientLoggingPolicy : PipelinePolicy
             return;
         }
 
-        response.ContentStream = new LoggingStream(_eventSource, responseId, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding);
+        response.ContentStream = new LoggingStream(EventSourceSingleton, responseId, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding);
     }
 
     private void LogFormattedResponseContent(bool isError, string? clientId, byte[] bytes, Encoding? encoding)
     {
         if (isError)
         {
-            _eventSource.ErrorResponseContent(clientId, bytes, encoding);
+            EventSourceSingleton.ErrorResponseContent(clientId, bytes, encoding);
         }
         else
         {
-            _eventSource.ResponseContent(clientId, bytes, encoding);
+            EventSourceSingleton.ResponseContent(clientId, bytes, encoding);
         }
     }
 
