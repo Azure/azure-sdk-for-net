@@ -182,15 +182,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
-            if (Optional.IsDefined(Path) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  path: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Path))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  path: ");
                     if (Path.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -204,56 +205,60 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PropertyChangeType), out propertyOverride);
-            builder.Append("  propertyChangeType: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  propertyChangeType: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  propertyChangeType: ");
                 builder.AppendLine($"'{PropertyChangeType.ToSerialString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Before), out propertyOverride);
-            if (Optional.IsDefined(Before) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  before: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Before))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  before: ");
                     builder.AppendLine($"'{Before.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(After), out propertyOverride);
-            if (Optional.IsDefined(After) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  after: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(After))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  after: ");
                     builder.AppendLine($"'{After.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Children), out propertyOverride);
-            if (Optional.IsCollectionDefined(Children) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Children.Any() || hasPropertyOverride)
+                builder.Append("  children: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Children))
                 {
-                    builder.Append("  children: ");
-                    if (hasPropertyOverride)
+                    if (Children.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  children: ");
                         builder.AppendLine("[");
                         foreach (var item in Children)
                         {

@@ -120,29 +120,31 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAssignedIdentities), out propertyOverride);
-            if (Optional.IsDefined(UserAssignedIdentities) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  userAssignedIdentities: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserAssignedIdentities))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  userAssignedIdentities: ");
                     BicepSerializationHelpers.AppendChildObject(builder, UserAssignedIdentities, options, 2, false, "  userAssignedIdentities: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityType), out propertyOverride);
-            if (Optional.IsDefined(IdentityType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdentityType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  type: ");
                     builder.AppendLine($"'{IdentityType.Value.ToString()}'");
                 }
             }
