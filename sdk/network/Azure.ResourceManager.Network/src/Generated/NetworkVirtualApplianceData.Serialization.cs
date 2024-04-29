@@ -132,6 +132,11 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                writer.WritePropertyName("networkProfile"u8);
+                writer.WriteObjectValue(NetworkProfile, options);
+            }
             if (Optional.IsCollectionDefined(AdditionalNics))
             {
                 writer.WritePropertyName("additionalNics"u8);
@@ -257,6 +262,7 @@ namespace Azure.ResourceManager.Network
             long? virtualApplianceAsn = default;
             string sshPublicKey = default;
             IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics = default;
+            NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile = default;
             IList<VirtualApplianceAdditionalNicProperties> additionalNics = default;
             IList<WritableSubResource> internetIngressPublicIPs = default;
             IReadOnlyList<WritableSubResource> virtualApplianceSites = default;
@@ -427,6 +433,15 @@ namespace Azure.ResourceManager.Network
                             virtualApplianceNics = array;
                             continue;
                         }
+                        if (property0.NameEquals("networkProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkProfile = NetworkVirtualAppliancePropertiesFormatNetworkProfile.DeserializeNetworkVirtualAppliancePropertiesFormatNetworkProfile(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("additionalNics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -556,6 +571,7 @@ namespace Azure.ResourceManager.Network
                 virtualApplianceAsn,
                 sshPublicKey,
                 virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>(),
+                networkProfile,
                 additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>(),
                 internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>(),

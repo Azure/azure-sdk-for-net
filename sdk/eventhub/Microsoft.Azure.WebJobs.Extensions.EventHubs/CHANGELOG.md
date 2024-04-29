@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Fix GetUnprocessedEventCount after changes in checkpoint format
+
 ## 6.3.1 (2024-04-17)
 
 ### Other Changes

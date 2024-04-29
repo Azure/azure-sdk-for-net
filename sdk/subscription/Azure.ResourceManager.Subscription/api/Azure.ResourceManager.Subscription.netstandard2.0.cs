@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Subscription
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BillingAccountPolicyResource : Azure.ResourceManager.ArmResource
+    public partial class BillingAccountPolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected BillingAccountPolicyResource() { }
@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Subscription
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string billingAccountId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Subscription.BillingAccountPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.BillingAccountPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Subscription.BillingAccountPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.BillingAccountPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.BillingAccountPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SubscriptionAliasCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Subscription.SubscriptionAliasResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Subscription.SubscriptionAliasResource>, System.Collections.IEnumerable
     {
@@ -57,7 +62,7 @@ namespace Azure.ResourceManager.Subscription
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SubscriptionAliasResource : Azure.ResourceManager.ArmResource
+    public partial class SubscriptionAliasResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SubscriptionAliasResource() { }
@@ -68,6 +73,11 @@ namespace Azure.ResourceManager.Subscription
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Subscription.SubscriptionAliasResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.SubscriptionAliasResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Subscription.SubscriptionAliasData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.SubscriptionAliasData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.SubscriptionAliasData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Subscription.SubscriptionAliasResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Subscription.Models.SubscriptionAliasCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Subscription.SubscriptionAliasResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Subscription.Models.SubscriptionAliasCreateOrUpdateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -104,7 +114,7 @@ namespace Azure.ResourceManager.Subscription
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.TenantPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.TenantPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TenantPolicyResource : Azure.ResourceManager.ArmResource
+    public partial class TenantPolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Subscription.TenantPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.TenantPolicyData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected TenantPolicyResource() { }
@@ -115,6 +125,11 @@ namespace Azure.ResourceManager.Subscription
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Subscription.TenantPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Subscription.TenantPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Subscription.TenantPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Subscription.TenantPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Subscription.TenantPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Subscription.TenantPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.TenantPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.TenantPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Subscription.TenantPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Subscription.Mocking
