@@ -309,6 +309,8 @@ namespace Azure.ResourceManager.AppService
         Azure.ResourceManager.AppService.AppServiceDomainData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServiceDomainData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServiceDomainData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServiceDomainData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.AppServiceDomainResource> TransferOut(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AppServiceDomainResource>> TransferOutAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.AppServiceDomainResource> Update(Azure.ResourceManager.AppService.Models.AppServiceDomainPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AppServiceDomainResource>> UpdateAsync(Azure.ResourceManager.AppService.Models.AppServiceDomainPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -333,6 +335,7 @@ namespace Azure.ResourceManager.AppService
     {
         public AppServiceEnvironmentData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> ClusterSettings { get { throw null; } }
+        public Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData CustomDnsSuffixConfiguration { get { throw null; } set { } }
         public int? DedicatedHostCount { get { throw null; } set { } }
         public string DnsSuffix { get { throw null; } set { } }
         public int? FrontEndScaleFactor { get { throw null; } set { } }
@@ -345,8 +348,11 @@ namespace Azure.ResourceManager.AppService
         public int? MaximumNumberOfMachines { get { throw null; } }
         public int? MultiRoleCount { get { throw null; } }
         public string MultiSize { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData NetworkingConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.UpgradeAvailability? UpgradeAvailability { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.UpgradePreference? UpgradePreference { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> UserWhitelistedIPRanges { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkProfile VirtualNetwork { get { throw null; } set { } }
         Azure.ResourceManager.AppService.AppServiceEnvironmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.AppServiceEnvironmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -375,6 +381,7 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AppServiceEnvironmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.StampCapacity> GetCapacities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.StampCapacity> GetCapacitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationResource GetCustomDnsSuffixConfiguration() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.HostingEnvironmentDiagnostics> GetDiagnostics(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.HostingEnvironmentDiagnostics> GetDiagnosticsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.HostingEnvironmentDiagnostics> GetDiagnosticsItem(string diagnosticsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -417,8 +424,12 @@ namespace Azure.ResourceManager.AppService
         Azure.ResourceManager.AppService.AppServiceEnvironmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServiceEnvironmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServiceEnvironmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServiceEnvironmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response TestUpgradeAvailableNotification(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> TestUpgradeAvailableNotificationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.AppServiceEnvironmentResource> Update(Azure.ResourceManager.AppService.Models.AppServiceEnvironmentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AppServiceEnvironmentResource>> UpdateAsync(Azure.ResourceManager.AppService.Models.AppServiceEnvironmentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Upgrade(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpgradeAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class AppServiceExtensions
     {
@@ -476,7 +487,11 @@ namespace Azure.ResourceManager.AppService
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AppServiceSourceControlResource>> GetAppServiceSourceControlAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string sourceControlType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.AppServiceSourceControlResource GetAppServiceSourceControlResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.AppServiceSourceControlCollection GetAppServiceSourceControls(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.AseRegion> GetAseRegions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AseRegion> GetAseRegionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.AseV3NetworkingConfigurationResource GetAseV3NetworkingConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.AuthsettingsV2SiteConfigResource GetAuthsettingsV2SiteConfigResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.AuthsettingsV2SiteSlotConfigResource GetAuthsettingsV2SiteSlotConfigResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksOnPremProviders(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksProviders(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -484,8 +499,17 @@ namespace Azure.ResourceManager.AppService
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceBillingMeter> GetBillingMeters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceBillingMeter> GetBillingMetersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.CertificateOrderDetectorResource GetCertificateOrderDetectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource> GetContainerApp(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource>> GetContainerAppAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.AppService.ContainerAppResource GetContainerAppResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.ContainerAppCollection GetContainerApps(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.ContainerAppResource> GetContainerApps(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.ContainerAppResource> GetContainerAppsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AppService.Models.DomainControlCenterSsoRequestInfo> GetControlCenterSsoRequestDomain(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.DomainControlCenterSsoRequestInfo>> GetControlCenterSsoRequestDomainAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationResource GetCustomDnsSuffixConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.CustomHostnameSites> GetCustomHostNameSites(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string hostname = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.CustomHostnameSites> GetCustomHostNameSitesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string hostname = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AppService.DeletedSiteResource> GetDeletedSite(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string deletedSiteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.DeletedSiteResource>> GetDeletedSiteAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string deletedSiteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.DeletedSiteResource GetDeletedSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -501,6 +525,8 @@ namespace Azure.ResourceManager.AppService
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.FunctionAppStack> GetFunctionAppStacksProvidersAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.AppService.Models.ProviderStackOSType? stackOSType = default(Azure.ResourceManager.AppService.Models.ProviderStackOSType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceGeoRegion> GetGeoRegions(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AppService.Models.AppServiceSkuName? sku = default(Azure.ResourceManager.AppService.Models.AppServiceSkuName?), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), bool? linuxDynamicWorkersEnabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceGeoRegion> GetGeoRegionsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AppService.Models.AppServiceSkuName? sku = default(Azure.ResourceManager.AppService.Models.AppServiceSkuName?), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), bool? linuxDynamicWorkersEnabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.CsmUsageQuota> GetGetUsagesInLocations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.CsmUsageQuota> GetGetUsagesInLocationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.HostingEnvironmentDetectorResource GetHostingEnvironmentDetectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.HostingEnvironmentMultiRolePoolResource GetHostingEnvironmentMultiRolePoolResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.HostingEnvironmentPrivateEndpointConnectionResource GetHostingEnvironmentPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -529,8 +555,12 @@ namespace Azure.ResourceManager.AppService
         public static Azure.ResourceManager.AppService.PublishingUserResource GetPublishingUserResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceRecommendation> GetRecommendations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, bool? featured = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceRecommendation> GetRecommendationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, bool? featured = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.AppService.RequestHistoryResource GetRequestHistoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.RevisionResource GetRevisionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.ContainerAppSecret> GetSecretsContainerApps(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ContainerAppSecret> GetSecretsContainerAppsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.SiteBackupResource GetSiteBackupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteConfigAppsettingResource GetSiteConfigAppsettingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteConfigSnapshotResource GetSiteConfigSnapshotResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -543,6 +573,8 @@ namespace Azure.ResourceManager.AppService
         public static Azure.ResourceManager.AppService.SiteExtensionResource GetSiteExtensionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteFunctionResource GetSiteFunctionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteHostNameBindingResource GetSiteHostNameBindingResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource GetSiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteHybridConnectionNamespaceRelayResource GetSiteHybridConnectionNamespaceRelayResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteInstanceExtensionResource GetSiteInstanceExtensionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteInstanceProcessModuleResource GetSiteInstanceProcessModuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -554,6 +586,7 @@ namespace Azure.ResourceManager.AppService
         public static Azure.ResourceManager.AppService.SiteProcessResource GetSiteProcessResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SitePublicCertificateResource GetSitePublicCertificateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteRecommendationResource GetSiteRecommendationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.SiteSitecontainerResource GetSiteSitecontainerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteSlotBackupResource GetSiteSlotBackupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteSlotConfigSnapshotResource GetSiteSlotConfigSnapshotResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteSlotDeploymentResource GetSiteSlotDeploymentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -574,18 +607,26 @@ namespace Azure.ResourceManager.AppService
         public static Azure.ResourceManager.AppService.SiteSlotPrivateEndpointConnectionResource GetSiteSlotPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteSlotProcessModuleResource GetSiteSlotProcessModuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteSlotProcessResource GetSiteSlotProcessResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.SiteSlotSitecontainerResource GetSiteSlotSitecontainerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteSlotVirtualNetworkConnectionGatewayResource GetSiteSlotVirtualNetworkConnectionGatewayResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteSlotVirtualNetworkConnectionResource GetSiteSlotVirtualNetworkConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.SiteSlotWorkflowResource GetSiteSlotWorkflowResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteVirtualNetworkConnectionGatewayResource GetSiteVirtualNetworkConnectionGatewayResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.SiteVirtualNetworkConnectionResource GetSiteVirtualNetworkConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.SiteWorkflowResource GetSiteWorkflowResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceSkuResult> GetSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceSkuResult>> GetSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.SlotConfigNamesResource GetSlotConfigNamesResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AppService.StaticSiteResource> GetStaticSite(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteResource>> GetStaticSiteAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource GetStaticSiteBasicAuthPropertiesARMResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource GetStaticSiteBuildDatabaseConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource GetStaticSiteBuildLinkedBackendResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.StaticSiteBuildResource GetStaticSiteBuildResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.StaticSiteBuildUserProvidedFunctionAppResource GetStaticSiteBuildUserProvidedFunctionAppResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.StaticSiteCustomDomainOverviewResource GetStaticSiteCustomDomainOverviewResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource GetStaticSiteDatabaseConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource GetStaticSiteLinkedBackendResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource GetStaticSitePrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.StaticSiteResource GetStaticSiteResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.StaticSiteCollection GetStaticSites(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -635,6 +676,11 @@ namespace Azure.ResourceManager.AppService
         public static Azure.ResourceManager.AppService.WebSiteTriggeredWebJobHistoryResource GetWebSiteTriggeredWebJobHistoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.WebSiteTriggeredwebJobResource GetWebSiteTriggeredwebJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.WebSiteWebJobResource GetWebSiteWebJobResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.WorkflowRunActionResource GetWorkflowRunActionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.WorkflowRunResource GetWorkflowRunResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource GetWorkflowTriggerHistoryResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.WorkflowTriggerResource GetWorkflowTriggerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.AppService.WorkflowVersionResource GetWorkflowVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AppService.Models.StaticSitesWorkflowPreview> PreviewStaticSiteWorkflow(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.AppService.Models.StaticSitesWorkflowPreviewContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.StaticSitesWorkflowPreview>> PreviewStaticSiteWorkflowAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.AppService.Models.StaticSitesWorkflowPreviewContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response ResetAllRecommendationFilters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -693,6 +739,7 @@ namespace Azure.ResourceManager.AppService
         public int? MaximumElasticWorkerCount { get { throw null; } set { } }
         public int? MaximumNumberOfWorkers { get { throw null; } }
         public int? NumberOfSites { get { throw null; } }
+        public int? NumberOfWorkers { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceGroup { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppServiceSkuDescription Sku { get { throw null; } set { } }
@@ -949,9 +996,12 @@ namespace Azure.ResourceManager.AppService
         public AseV3NetworkingConfigurationData() { }
         public bool? AllowNewPrivateEndpointConnections { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> ExternalInboundIPAddresses { get { throw null; } }
+        public bool? FtpEnabled { get { throw null; } set { } }
+        public string InboundIPAddressOverride { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> InternalInboundIPAddresses { get { throw null; } }
         public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> LinuxOutboundIPAddresses { get { throw null; } }
+        public bool? RemoteDebugEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> WindowsOutboundIPAddresses { get { throw null; } }
         Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -975,6 +1025,44 @@ namespace Azure.ResourceManager.AppService
         Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AuthsettingsV2SiteConfigResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AuthsettingsV2SiteConfigResource() { }
+        public virtual Azure.ResourceManager.AppService.SiteAuthSettingsV2Data Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.AuthsettingsV2SiteConfigResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.SiteAuthSettingsV2Data data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.AuthsettingsV2SiteConfigResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.SiteAuthSettingsV2Data data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.AuthsettingsV2SiteConfigResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AuthsettingsV2SiteConfigResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.AuthsettingsV2SiteConfigResource> GetAuthSettingsV2(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AuthsettingsV2SiteConfigResource>> GetAuthSettingsV2Async(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.SiteAuthSettingsV2Data System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.SiteAuthSettingsV2Data System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AuthsettingsV2SiteSlotConfigResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AuthsettingsV2SiteSlotConfigResource() { }
+        public virtual Azure.ResourceManager.AppService.SiteAuthSettingsV2Data Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.AuthsettingsV2SiteSlotConfigResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.SiteAuthSettingsV2Data data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.AuthsettingsV2SiteSlotConfigResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.SiteAuthSettingsV2Data data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.AuthsettingsV2SiteSlotConfigResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AuthsettingsV2SiteSlotConfigResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.AuthsettingsV2SiteSlotConfigResource> GetAuthSettingsV2Slot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AuthsettingsV2SiteSlotConfigResource>> GetAuthSettingsV2SlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.SiteAuthSettingsV2Data System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.SiteAuthSettingsV2Data System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CertificateOrderDetectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.CertificateOrderDetectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.CertificateOrderDetectorResource>, System.Collections.IEnumerable
     {
@@ -1006,6 +1094,67 @@ namespace Azure.ResourceManager.AppService
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServiceDetectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServiceDetectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ContainerAppCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.ContainerAppResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.ContainerAppResource>, System.Collections.IEnumerable
+    {
+        protected ContainerAppCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.ContainerAppResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.AppService.ContainerAppData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.ContainerAppResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string name, Azure.ResourceManager.AppService.ContainerAppData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.ContainerAppResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.ContainerAppResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.ContainerAppResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.ContainerAppResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.ContainerAppResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.ContainerAppResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.ContainerAppResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.ContainerAppResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class ContainerAppData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ContainerAppData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ContainerAppData>
+    {
+        public ContainerAppData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.AppService.Models.Configuration Configuration { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string KubeEnvironmentId { get { throw null; } set { } }
+        public string LatestRevisionFqdn { get { throw null; } }
+        public string LatestRevisionName { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.Template Template { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.ContainerAppData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ContainerAppData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ContainerAppData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.ContainerAppData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ContainerAppData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ContainerAppData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ContainerAppData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerAppResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ContainerAppData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ContainerAppData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected ContainerAppResource() { }
+        public virtual Azure.ResourceManager.AppService.ContainerAppData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.RevisionResource> GetRevision(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.RevisionResource>> GetRevisionAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.RevisionCollection GetRevisions() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.ContainerAppData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ContainerAppData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ContainerAppData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.ContainerAppData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ContainerAppData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ContainerAppData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ContainerAppData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.ContainerAppResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.ContainerAppData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.ContainerAppResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.ContainerAppData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class ContinuousWebJobData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ContinuousWebJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ContinuousWebJobData>
     {
         public ContinuousWebJobData() { }
@@ -1036,6 +1185,55 @@ namespace Azure.ResourceManager.AppService
         Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CustomDnsSuffixConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>
+    {
+        public CustomDnsSuffixConfigurationData() { }
+        public System.Uri CertificateUri { get { throw null; } set { } }
+        public string DnsSuffix { get { throw null; } set { } }
+        public string KeyVaultReferenceIdentity { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string ProvisioningDetails { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.CustomDnsSuffixProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CustomDnsSuffixConfigurationResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected CustomDnsSuffixConfigurationResource() { }
+        public virtual Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<System.BinaryData> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<System.BinaryData>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DatabaseConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.DatabaseConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DatabaseConnectionData>
+    {
+        public DatabaseConnectionData() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview> ConfigurationFiles { get { throw null; } }
+        public string ConnectionIdentity { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string Region { get { throw null; } set { } }
+        public string ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.DatabaseConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.DatabaseConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DeletedSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.DeletedSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.DeletedSiteResource>, System.Collections.IEnumerable
     {
@@ -1242,8 +1440,8 @@ namespace Azure.ResourceManager.AppService
     public partial class HostingEnvironmentPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.HostingEnvironmentPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.HostingEnvironmentPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
         protected HostingEnvironmentPrivateEndpointConnectionCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.HostingEnvironmentPrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.HostingEnvironmentPrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.HostingEnvironmentPrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.HostingEnvironmentPrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.HostingEnvironmentPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1272,8 +1470,8 @@ namespace Azure.ResourceManager.AppService
         Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.HostingEnvironmentPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.HostingEnvironmentPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.HostingEnvironmentPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.HostingEnvironmentPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class HostingEnvironmentRecommendationCollection : Azure.ResourceManager.ArmCollection
     {
@@ -1437,8 +1635,10 @@ namespace Azure.ResourceManager.AppService
         public Azure.Core.ResourceIdentifier AksResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppLogsConfiguration AppLogsConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ArcConfiguration ArcConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ContainerAppsConfiguration ContainerAppsConfiguration { get { throw null; } set { } }
         public string DefaultDomain { get { throw null; } }
         public string DeploymentErrors { get { throw null; } }
+        public string EnvironmentType { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public bool? IsInternalLoadBalancerEnabled { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
@@ -1780,6 +1980,46 @@ namespace Azure.ResourceManager.AppService
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class RequestHistoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.RequestHistoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.RequestHistoryResource>, System.Collections.IEnumerable
+    {
+        protected RequestHistoryCollection() { }
+        public virtual Azure.Response<bool> Exists(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.RequestHistoryResource> Get(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.RequestHistoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.RequestHistoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.RequestHistoryResource>> GetAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.RequestHistoryResource> GetIfExists(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.RequestHistoryResource>> GetIfExistsAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.RequestHistoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.RequestHistoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.RequestHistoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.RequestHistoryResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class RequestHistoryData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.RequestHistoryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RequestHistoryData>
+    {
+        public RequestHistoryData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.AppService.Models.RequestHistoryProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.RequestHistoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.RequestHistoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.RequestHistoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.RequestHistoryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RequestHistoryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RequestHistoryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RequestHistoryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RequestHistoryResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.RequestHistoryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RequestHistoryData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected RequestHistoryResource() { }
+        public virtual Azure.ResourceManager.AppService.RequestHistoryData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName, string repetitionName, string requestHistoryName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.RequestHistoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.RequestHistoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.RequestHistoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.RequestHistoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.RequestHistoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.RequestHistoryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RequestHistoryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RequestHistoryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RequestHistoryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ResourceHealthMetadataData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ResourceHealthMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ResourceHealthMetadataData>
     {
         public ResourceHealthMetadataData() { }
@@ -1791,6 +2031,61 @@ namespace Azure.ResourceManager.AppService
         Azure.ResourceManager.AppService.ResourceHealthMetadataData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ResourceHealthMetadataData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ResourceHealthMetadataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ResourceHealthMetadataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RevisionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.RevisionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.RevisionResource>, System.Collections.IEnumerable
+    {
+        protected RevisionCollection() { }
+        public virtual Azure.Response<bool> Exists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.RevisionResource> Get(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.RevisionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.RevisionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.RevisionResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.RevisionResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.RevisionResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.RevisionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.RevisionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.RevisionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.RevisionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class RevisionData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.RevisionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RevisionData>
+    {
+        public RevisionData(Azure.Core.AzureLocation location) { }
+        public bool? Active { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public string Fqdn { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.RevisionHealthState? HealthState { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
+        public string ProvisioningError { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.RevisionProvisioningState? ProvisioningState { get { throw null; } }
+        public int? Replicas { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.Template Template { get { throw null; } }
+        public int? TrafficWeight { get { throw null; } }
+        Azure.ResourceManager.AppService.RevisionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.RevisionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.RevisionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.RevisionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RevisionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RevisionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RevisionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RevisionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.RevisionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RevisionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected RevisionResource() { }
+        public virtual Azure.ResourceManager.AppService.RevisionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response ActivateRevision(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ActivateRevisionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string name) { throw null; }
+        public virtual Azure.Response DeactivateRevision(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeactivateRevisionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.RevisionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.RevisionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RestartRevision(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RestartRevisionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.RevisionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.RevisionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.RevisionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.RevisionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RevisionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RevisionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RevisionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScmSiteBasicPublishingCredentialsPolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>
     {
@@ -1825,6 +2120,21 @@ namespace Azure.ResourceManager.AppService
         Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SiteAuthSettingsV2Data : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>
+    {
+        public SiteAuthSettingsV2Data() { }
+        public Azure.ResourceManager.AppService.Models.GlobalValidation GlobalValidation { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceHttpSettings HttpSettings { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceIdentityProviders IdentityProviders { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebAppLoginInfo Login { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AuthPlatform Platform { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.SiteAuthSettingsV2Data System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.SiteAuthSettingsV2Data System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteAuthSettingsV2Data>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SiteBackupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteBackupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteBackupResource>, System.Collections.IEnumerable
     {
@@ -1908,12 +2218,14 @@ namespace Azure.ResourceManager.AppService
         public Azure.ResourceManager.AppService.Models.AppServiceCorsSettings Cors { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DefaultDocuments { get { throw null; } set { } }
         public string DocumentRoot { get { throw null; } set { } }
+        public int? ElasticWebAppScaleLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.RampUpRule> ExperimentsRampUpRules { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppServiceFtpsState? FtpsState { get { throw null; } set { } }
         public int? FunctionAppScaleLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.HttpRequestHandlerMapping> HandlerMappings { get { throw null; } set { } }
         public string HealthCheckPath { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> IPSecurityRestrictions { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DefaultAction? IPSecurityRestrictionsDefaultAction { get { throw null; } set { } }
         public bool? IsAlwaysOn { get { throw null; } set { } }
         public bool? IsAutoHealEnabled { get { throw null; } set { } }
         public bool? IsDetailedErrorLoggingEnabled { get { throw null; } set { } }
@@ -1937,7 +2249,9 @@ namespace Azure.ResourceManager.AppService
         public Azure.ResourceManager.AppService.Models.SiteMachineKey MachineKey { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.ManagedPipelineMode? ManagedPipelineMode { get { throw null; } set { } }
         public int? ManagedServiceIdentityId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> Metadata { get { throw null; } set { } }
         public int? MinimumElasticInstanceCount { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.TlsCipherSuite? MinTlsCipherSuite { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? MinTlsVersion { get { throw null; } set { } }
         public string NetFrameworkVersion { get { throw null; } set { } }
         public string NodeVersion { get { throw null; } set { } }
@@ -1952,6 +2266,7 @@ namespace Azure.ResourceManager.AppService
         public string RemoteDebuggingVersion { get { throw null; } set { } }
         public System.DateTimeOffset? RequestTracingExpirationOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DefaultAction? ScmIPSecurityRestrictionsDefaultAction { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? ScmMinTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ScmType? ScmType { get { throw null; } set { } }
         public string TracingOptions { get { throw null; } set { } }
@@ -1995,6 +2310,28 @@ namespace Azure.ResourceManager.AppService
         Azure.ResourceManager.AppService.SiteConfigData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteConfigData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteConfigData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteConfigData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SiteContainerData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteContainerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteContainerData>
+    {
+        public SiteContainerData() { }
+        public Azure.ResourceManager.AppService.Models.AuthType? AuthType { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.EnvironmentVariable> EnvironmentVariables { get { throw null; } }
+        public string Image { get { throw null; } set { } }
+        public bool? IsMain { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        public string PasswordSecret { get { throw null; } set { } }
+        public string StartUpCommand { get { throw null; } set { } }
+        public string TargetPort { get { throw null; } set { } }
+        public string UserManagedIdentityClientId { get { throw null; } set { } }
+        public string UserName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.VolumeMount> VolumeMounts { get { throw null; } }
+        Azure.ResourceManager.AppService.SiteContainerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteContainerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteContainerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.SiteContainerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteContainerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteContainerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteContainerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SiteDeploymentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteDeploymentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteDeploymentResource>, System.Collections.IEnumerable
     {
@@ -2329,6 +2666,71 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteHostNameBindingResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.HostNameBindingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteHostNameBindingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.HostNameBindingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class SiteHostruntimeWebhookApiWorkflowRunActionRepetitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource>, System.Collections.IEnumerable
+    {
+        protected SiteHostruntimeWebhookApiWorkflowRunActionRepetitionCollection() { }
+        public virtual Azure.Response<bool> Exists(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource> Get(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource>> GetAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource> GetIfExists(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource>> GetIfExistsAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource() { }
+        public virtual Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName, string repetitionName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.ExpressionRoot> GetExpressionTraces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ExpressionRoot> GetExpressionTracesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.RequestHistoryCollection GetRequestHistories() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.RequestHistoryResource> GetRequestHistory(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.RequestHistoryResource>> GetRequestHistoryAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource>, System.Collections.IEnumerable
+    {
+        protected SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionCollection() { }
+        public virtual Azure.Response<bool> Exists(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource> Get(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource>> GetAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource> GetIfExists(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource>> GetIfExistsAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource() { }
+        public virtual Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName, string repetitionName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SiteHybridConnectionNamespaceRelayCollection : Azure.ResourceManager.ArmCollection
     {
         protected SiteHybridConnectionNamespaceRelayCollection() { }
@@ -2520,8 +2922,8 @@ namespace Azure.ResourceManager.AppService
     public partial class SitePrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SitePrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SitePrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
         protected SitePrivateEndpointConnectionCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SitePrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SitePrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SitePrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SitePrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.SitePrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2550,8 +2952,8 @@ namespace Azure.ResourceManager.AppService
         Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SitePrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SitePrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SitePrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SitePrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SiteProcessCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteProcessResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteProcessResource>, System.Collections.IEnumerable
     {
@@ -2684,6 +3086,42 @@ namespace Azure.ResourceManager.AppService
         Azure.ResourceManager.AppService.RecommendationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RecommendationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RecommendationRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RecommendationRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SiteSitecontainerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteSitecontainerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteSitecontainerResource>, System.Collections.IEnumerable
+    {
+        protected SiteSitecontainerCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSitecontainerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string containerName, Azure.ResourceManager.AppService.SiteContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSitecontainerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string containerName, Azure.ResourceManager.AppService.SiteContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSitecontainerResource> Get(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.SiteSitecontainerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.SiteSitecontainerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSitecontainerResource>> GetAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.SiteSitecontainerResource> GetIfExists(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.SiteSitecontainerResource>> GetIfExistsAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.SiteSitecontainerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteSitecontainerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.SiteSitecontainerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteSitecontainerResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SiteSitecontainerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteContainerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteContainerData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SiteSitecontainerResource() { }
+        public virtual Azure.ResourceManager.AppService.SiteContainerData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string containerName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSitecontainerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSitecontainerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.SiteContainerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteContainerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteContainerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.SiteContainerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteContainerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteContainerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteContainerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSitecontainerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.SiteContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSitecontainerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.SiteContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SiteSlotBackupCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteSlotBackupResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteSlotBackupResource>, System.Collections.IEnumerable
     {
@@ -3228,8 +3666,8 @@ namespace Azure.ResourceManager.AppService
     public partial class SiteSlotPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteSlotPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteSlotPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
         protected SiteSlotPrivateEndpointConnectionCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSlotPrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSlotPrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSlotPrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSlotPrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3258,8 +3696,8 @@ namespace Azure.ResourceManager.AppService
         Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSlotPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSlotPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSlotPrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSlotPrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SiteSlotProcessCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteSlotProcessResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteSlotProcessResource>, System.Collections.IEnumerable
     {
@@ -3330,6 +3768,42 @@ namespace Azure.ResourceManager.AppService
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ProcessInfoData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ProcessInfoData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class SiteSlotSitecontainerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource>, System.Collections.IEnumerable
+    {
+        protected SiteSlotSitecontainerCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string containerName, Azure.ResourceManager.AppService.SiteContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string containerName, Azure.ResourceManager.AppService.SiteContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource> Get(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource>> GetAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource> GetIfExists(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource>> GetIfExistsAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SiteSlotSitecontainerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteContainerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteContainerData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SiteSlotSitecontainerResource() { }
+        public virtual Azure.ResourceManager.AppService.SiteContainerData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string containerName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.SiteContainerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteContainerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteContainerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.SiteContainerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteContainerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteContainerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteContainerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.SiteContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.SiteContainerData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class SiteSlotVirtualNetworkConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteSlotVirtualNetworkConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteSlotVirtualNetworkConnectionResource>, System.Collections.IEnumerable
     {
         protected SiteSlotVirtualNetworkConnectionCollection() { }
@@ -3397,6 +3871,36 @@ namespace Azure.ResourceManager.AppService
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServiceVirtualNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotVirtualNetworkConnectionResource> Update(Azure.ResourceManager.AppService.AppServiceVirtualNetworkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSlotVirtualNetworkConnectionResource>> UpdateAsync(Azure.ResourceManager.AppService.AppServiceVirtualNetworkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SiteSlotWorkflowCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteSlotWorkflowResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteSlotWorkflowResource>, System.Collections.IEnumerable
+    {
+        protected SiteSlotWorkflowCollection() { }
+        public virtual Azure.Response<bool> Exists(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotWorkflowResource> Get(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.SiteSlotWorkflowResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.SiteSlotWorkflowResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSlotWorkflowResource>> GetAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.SiteSlotWorkflowResource> GetIfExists(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.SiteSlotWorkflowResource>> GetIfExistsAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.SiteSlotWorkflowResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteSlotWorkflowResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.SiteSlotWorkflowResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteSlotWorkflowResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SiteSlotWorkflowResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SiteSlotWorkflowResource() { }
+        public virtual Azure.ResourceManager.AppService.WorkflowEnvelopeData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string workflowName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotWorkflowResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSlotWorkflowResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.WorkflowEnvelopeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowEnvelopeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SiteSourceControlData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteSourceControlData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteSourceControlData>
     {
@@ -3483,6 +3987,36 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.Response<Azure.ResourceManager.AppService.SiteVirtualNetworkConnectionResource> Update(Azure.ResourceManager.AppService.AppServiceVirtualNetworkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteVirtualNetworkConnectionResource>> UpdateAsync(Azure.ResourceManager.AppService.AppServiceVirtualNetworkData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class SiteWorkflowCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteWorkflowResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteWorkflowResource>, System.Collections.IEnumerable
+    {
+        protected SiteWorkflowCollection() { }
+        public virtual Azure.Response<bool> Exists(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteWorkflowResource> Get(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.SiteWorkflowResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.SiteWorkflowResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteWorkflowResource>> GetAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.SiteWorkflowResource> GetIfExists(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.SiteWorkflowResource>> GetIfExistsAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.SiteWorkflowResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.SiteWorkflowResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.SiteWorkflowResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.SiteWorkflowResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SiteWorkflowResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SiteWorkflowResource() { }
+        public virtual Azure.ResourceManager.AppService.WorkflowEnvelopeData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteWorkflowResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteWorkflowResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.WorkflowEnvelopeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowEnvelopeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SlotConfigNamesResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SlotConfigNamesResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SlotConfigNamesResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
@@ -3513,6 +4047,55 @@ namespace Azure.ResourceManager.AppService
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SlotConfigNamesResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SlotConfigNamesResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class StaticSiteBasicAuthPropertiesARMResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected StaticSiteBasicAuthPropertiesARMResource() { }
+        public virtual Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, Azure.ResourceManager.AppService.Models.BasicAuthName basicAuthName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StaticSiteBasicAuthPropertiesARMResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource>, System.Collections.IEnumerable
+    {
+        protected StaticSiteBasicAuthPropertiesARMResourceCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.BasicAuthName basicAuthName, Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.BasicAuthName basicAuthName, Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.AppService.Models.BasicAuthName basicAuthName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.AppService.Models.BasicAuthName basicAuthName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource> Get(Azure.ResourceManager.AppService.Models.BasicAuthName basicAuthName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource>> GetAsync(Azure.ResourceManager.AppService.Models.BasicAuthName basicAuthName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource> GetIfExists(Azure.ResourceManager.AppService.Models.BasicAuthName basicAuthName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource>> GetIfExistsAsync(Azure.ResourceManager.AppService.Models.BasicAuthName basicAuthName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class StaticSiteBasicAuthPropertiesARMResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>
+    {
+        public StaticSiteBasicAuthPropertiesARMResourceData() { }
+        public string ApplicableEnvironmentsMode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Environments { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
+        public string Password { get { throw null; } set { } }
+        public string SecretState { get { throw null; } }
+        public System.Uri SecretUri { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class StaticSiteBuildCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.StaticSiteBuildResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteBuildResource>, System.Collections.IEnumerable
     {
         protected StaticSiteBuildCollection() { }
@@ -3533,9 +4116,11 @@ namespace Azure.ResourceManager.AppService
         public StaticSiteBuildData() { }
         public string BuildId { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview> DatabaseConnections { get { throw null; } }
         public string Hostname { get { throw null; } }
         public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend> LinkedBackends { get { throw null; } }
         public string PullRequestTitle { get { throw null; } }
         public string SourceBranch { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus? Status { get { throw null; } }
@@ -3545,6 +4130,82 @@ namespace Azure.ResourceManager.AppService
         Azure.ResourceManager.AppService.StaticSiteBuildData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteBuildData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteBuildData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteBuildData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class StaticSiteBuildDatabaseConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource>, System.Collections.IEnumerable
+    {
+        protected StaticSiteBuildDatabaseConnectionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string databaseConnectionName, Azure.ResourceManager.AppService.DatabaseConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string databaseConnectionName, Azure.ResourceManager.AppService.DatabaseConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource> Get(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource>> GetAsync(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource> GetIfExists(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource>> GetIfExistsAsync(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class StaticSiteBuildDatabaseConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.DatabaseConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DatabaseConnectionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected StaticSiteBuildDatabaseConnectionResource() { }
+        public virtual Azure.ResourceManager.AppService.DatabaseConnectionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string environmentName, string databaseConnectionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource> GetBuildDatabaseConnectionWithDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource>> GetBuildDatabaseConnectionWithDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.DatabaseConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.DatabaseConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource> Update(Azure.ResourceManager.AppService.Models.DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource>> UpdateAsync(Azure.ResourceManager.AppService.Models.DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StaticSiteBuildLinkedBackendCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource>, System.Collections.IEnumerable
+    {
+        protected StaticSiteBuildLinkedBackendCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string linkedBackendName, Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string linkedBackendName, Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource> Get(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource>> GetAsync(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource> GetIfExists(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource>> GetIfExistsAsync(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class StaticSiteBuildLinkedBackendResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected StaticSiteBuildLinkedBackendResource() { }
+        public virtual Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string environmentName, string linkedBackendName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, bool? isCleaningAuthConfig = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, bool? isCleaningAuthConfig = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ValidateBackendForBuild(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ValidateBackendForBuildAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StaticSiteBuildResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteBuildData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteBuildData>
     {
@@ -3563,12 +4224,20 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.DatabaseConnectionData> GetBuildDatabaseConnectionsWithDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.DatabaseConnectionData> GetBuildDatabaseConnectionsWithDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary> GetFunctionAppSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>> GetFunctionAppSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.StaticSiteFunctionOverview> GetFunctions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.StaticSiteFunctionOverview> GetFunctionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary> GetStaticSiteBuildAppSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>> GetStaticSiteBuildAppSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource> GetStaticSiteBuildDatabaseConnection(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource>> GetStaticSiteBuildDatabaseConnectionAsync(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionCollection GetStaticSiteBuildDatabaseConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource> GetStaticSiteBuildLinkedBackend(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource>> GetStaticSiteBuildLinkedBackendAsync(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendCollection GetStaticSiteBuildLinkedBackends() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildUserProvidedFunctionAppResource> GetStaticSiteBuildUserProvidedFunctionApp(string functionAppName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildUserProvidedFunctionAppResource>> GetStaticSiteBuildUserProvidedFunctionAppAsync(string functionAppName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.StaticSiteBuildUserProvidedFunctionAppCollection GetStaticSiteBuildUserProvidedFunctionApps() { throw null; }
@@ -3692,12 +4361,16 @@ namespace Azure.ResourceManager.AppService
         public Azure.ResourceManager.AppService.Models.StaticSiteBuildProperties BuildProperties { get { throw null; } set { } }
         public string ContentDistributionEndpoint { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> CustomDomains { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview> DatabaseConnections { get { throw null; } }
         public string DefaultHostname { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus? EnterpriseGradeCdnStatus { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string KeyVaultReferenceIdentity { get { throw null; } }
         public string Kind { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend> LinkedBackends { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
-        public string Provider { get { throw null; } }
+        public string Provider { get { throw null; } set { } }
+        public string PublicNetworkAccess { get { throw null; } set { } }
         public string RepositoryToken { get { throw null; } set { } }
         public System.Uri RepositoryUri { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceSkuDescription Sku { get { throw null; } set { } }
@@ -3710,11 +4383,101 @@ namespace Azure.ResourceManager.AppService
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class StaticSiteDatabaseConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource>, System.Collections.IEnumerable
+    {
+        protected StaticSiteDatabaseConnectionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string databaseConnectionName, Azure.ResourceManager.AppService.DatabaseConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string databaseConnectionName, Azure.ResourceManager.AppService.DatabaseConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource> Get(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource>> GetAsync(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource> GetIfExists(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource>> GetIfExistsAsync(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class StaticSiteDatabaseConnectionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.DatabaseConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DatabaseConnectionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected StaticSiteDatabaseConnectionResource() { }
+        public virtual Azure.ResourceManager.AppService.DatabaseConnectionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string databaseConnectionName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource> GetDatabaseConnectionWithDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource>> GetDatabaseConnectionWithDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.DatabaseConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.DatabaseConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.DatabaseConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource> Update(Azure.ResourceManager.AppService.Models.DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource>> UpdateAsync(Azure.ResourceManager.AppService.Models.DatabaseConnectionPatchRequest databaseConnectionRequestEnvelope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class StaticSiteLinkedBackendARMResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>
+    {
+        public StaticSiteLinkedBackendARMResourceData() { }
+        public string BackendResourceId { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } }
+        public string Region { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class StaticSiteLinkedBackendCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource>, System.Collections.IEnumerable
+    {
+        protected StaticSiteLinkedBackendCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string linkedBackendName, Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string linkedBackendName, Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource> Get(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource>> GetAsync(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource> GetIfExists(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource>> GetIfExistsAsync(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class StaticSiteLinkedBackendResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected StaticSiteLinkedBackendResource() { }
+        public virtual Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string linkedBackendName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, bool? isCleaningAuthConfig = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, bool? isCleaningAuthConfig = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ValidateBackend(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ValidateBackendAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class StaticSitePrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
         protected StaticSitePrivateEndpointConnectionCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateEndpointConnectionName, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3743,8 +4506,8 @@ namespace Azure.ResourceManager.AppService
         Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class StaticSiteResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.StaticSiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.StaticSiteData>
     {
@@ -3773,18 +4536,29 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.StaticSiteStringList> GetConfiguredRoles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.StaticSiteStringList>> GetConfiguredRolesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.DatabaseConnectionData> GetDatabaseConnectionsWithDetails(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.DatabaseConnectionData> GetDatabaseConnectionsWithDetailsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary> GetFunctionAppSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>> GetFunctionAppSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServicePrivateLinkResourceData> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource> GetStaticSiteBasicAuthPropertiesARMResource(Azure.ResourceManager.AppService.Models.BasicAuthName basicAuthName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource>> GetStaticSiteBasicAuthPropertiesARMResourceAsync(Azure.ResourceManager.AppService.Models.BasicAuthName basicAuthName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceCollection GetStaticSiteBasicAuthPropertiesARMResources() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildResource> GetStaticSiteBuild(string environmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteBuildResource>> GetStaticSiteBuildAsync(string environmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.StaticSiteBuildCollection GetStaticSiteBuilds() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteCustomDomainOverviewResource> GetStaticSiteCustomDomainOverview(string domainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteCustomDomainOverviewResource>> GetStaticSiteCustomDomainOverviewAsync(string domainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.StaticSiteCustomDomainOverviewCollection GetStaticSiteCustomDomainOverviews() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource> GetStaticSiteDatabaseConnection(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource>> GetStaticSiteDatabaseConnectionAsync(string databaseConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionCollection GetStaticSiteDatabaseConnections() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.StaticSiteFunctionOverview> GetStaticSiteFunctions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.StaticSiteFunctionOverview> GetStaticSiteFunctionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource> GetStaticSiteLinkedBackend(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource>> GetStaticSiteLinkedBackendAsync(string linkedBackendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.StaticSiteLinkedBackendCollection GetStaticSiteLinkedBackends() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource> GetStaticSitePrivateEndpointConnection(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource>> GetStaticSitePrivateEndpointConnectionAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionCollection GetStaticSitePrivateEndpointConnections() { throw null; }
@@ -3931,9 +4705,11 @@ namespace Azure.ResourceManager.AppService
         public bool? IsUsingSdk { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.TriggeredJobRun LatestRun { get { throw null; } set { } }
+        public string PublicNetworkAccess { get { throw null; } set { } }
         public string RunCommand { get { throw null; } set { } }
         public System.Uri SchedulerLogsUri { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Settings { get { throw null; } }
+        public bool? StorageAccountRequired { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.WebJobType? WebJobType { get { throw null; } set { } }
         Azure.ResourceManager.AppService.TriggeredWebJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.TriggeredWebJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4131,9 +4907,12 @@ namespace Azure.ResourceManager.AppService
         public int? ContainerSize { get { throw null; } set { } }
         public string CustomDomainVerificationId { get { throw null; } set { } }
         public int? DailyMemoryTimeQuota { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DaprConfig DaprConfig { get { throw null; } set { } }
         public string DefaultHostName { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.SiteDnsConfig DnsConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> EnabledHostNames { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FunctionAppConfig FunctionAppConfig { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile HostingEnvironmentProfile { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> HostNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.HostNameSslState> HostNameSslStates { get { throw null; } }
@@ -4153,11 +4932,14 @@ namespace Azure.ResourceManager.AppService
         public string KeyVaultReferenceIdentity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedTimeUtc { get { throw null; } }
+        public string ManagedEnvironmentId { get { throw null; } set { } }
         public int? MaxNumberOfWorkers { get { throw null; } }
         public string OutboundIPAddresses { get { throw null; } }
         public string PossibleOutboundIPAddresses { get { throw null; } }
+        public string PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.RedundancyMode? RedundancyMode { get { throw null; } set { } }
         public string RepositorySiteName { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ResourceConfig ResourceConfig { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.SiteConfigProperties SiteConfig { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SlotSwapStatus SlotSwapStatus { get { throw null; } }
@@ -4167,6 +4949,11 @@ namespace Azure.ResourceManager.AppService
         public System.Collections.Generic.IReadOnlyList<string> TrafficManagerHostNames { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppServiceUsageState? UsageState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualNetworkSubnetId { get { throw null; } set { } }
+        public bool? VnetBackupRestoreEnabled { get { throw null; } set { } }
+        public bool? VnetContentShareEnabled { get { throw null; } set { } }
+        public bool? VnetImagePullEnabled { get { throw null; } set { } }
+        public bool? VnetRouteAllEnabled { get { throw null; } set { } }
+        public string WorkloadProfileName { get { throw null; } set { } }
         Azure.ResourceManager.AppService.WebSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WebSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WebSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppService.WebSiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WebSiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4336,6 +5123,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response> ApplySlotConfigToProductionAsync(Azure.ResourceManager.AppService.Models.CsmSlotEntity slotSwapEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.WebAppBackupData> Backup(Azure.ResourceManager.AppService.Models.WebAppBackupInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebAppBackupData>> BackupAsync(Azure.ResourceManager.AppService.Models.WebAppBackupInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.BinaryData> CreateOneDeployOperation(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> CreateOneDeployOperationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.WebAppKeyInfo> CreateOrUpdateHostSecret(string keyType, string keyName, Azure.ResourceManager.AppService.Models.WebAppKeyInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.WebAppKeyInfo>> CreateOrUpdateHostSecretAsync(string keyType, string keyName, Azure.ResourceManager.AppService.Models.WebAppKeyInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
@@ -4345,6 +5134,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBackupConfigurationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteHostSecret(string keyType, string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteHostSecretAsync(string keyType, string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeployWorkflowArtifacts(Azure.ResourceManager.AppService.Models.WorkflowArtifacts workflowArtifacts = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeployWorkflowArtifactsAsync(Azure.ResourceManager.AppService.Models.WorkflowArtifacts workflowArtifacts = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DisableAllForWebAppRecommendation(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DisableAllForWebAppRecommendationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.RestoreRequestInfo> DiscoverBackup(Azure.ResourceManager.AppService.Models.RestoreRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4367,8 +5158,7 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettings> GetAuthSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettings>> GetAuthSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2> GetAuthSettingsV2(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>> GetAuthSettingsV2Async(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.AuthsettingsV2SiteConfigResource GetAuthsettingsV2SiteConfig() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary> GetAzureStorageAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>> GetAzureStorageAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.WebAppBackupInfo> GetBackupConfiguration(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4398,10 +5188,16 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.WebAppNetworkTrace> GetNetworkTracesAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.WebAppNetworkTrace> GetNetworkTracesV2(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.WebAppNetworkTrace> GetNetworkTracesV2Async(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.BinaryData> GetOneDeployStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetOneDeployStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.PerfMonResponseInfo> GetPerfMonCounters(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.PerfMonResponseInfo> GetPerfMonCountersAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServicePrivateLinkResourceData> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus> GetProductionSiteDeploymentStatus(Azure.WaitUntil waitUntil, string deploymentStatusId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus>> GetProductionSiteDeploymentStatusAsync(Azure.WaitUntil waitUntil, string deploymentStatusId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus> GetProductionSiteDeploymentStatuses(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus> GetProductionSiteDeploymentStatusesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.PublishingUserResource> GetPublishingCredentials(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.PublishingUserResource>> GetPublishingCredentialsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.IO.Stream> GetPublishingProfileXmlWithSecrets(Azure.ResourceManager.AppService.Models.CsmPublishingProfile publishingProfileOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4457,9 +5253,15 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.Response<Azure.ResourceManager.AppService.SiteRecommendationResource> GetSiteRecommendation(string name, bool? updateSeen = default(bool?), string recommendationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteRecommendationResource>> GetSiteRecommendationAsync(string name, bool? updateSeen = default(bool?), string recommendationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteRecommendationCollection GetSiteRecommendations() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSitecontainerResource> GetSiteSitecontainer(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSitecontainerResource>> GetSiteSitecontainerAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.SiteSitecontainerCollection GetSiteSitecontainers() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.SiteVirtualNetworkConnectionResource> GetSiteVirtualNetworkConnection(string vnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteVirtualNetworkConnectionResource>> GetSiteVirtualNetworkConnectionAsync(string vnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteVirtualNetworkConnectionCollection GetSiteVirtualNetworkConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteWorkflowResource> GetSiteWorkflow(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteWorkflowResource>> GetSiteWorkflowAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.SiteWorkflowCollection GetSiteWorkflows() { throw null; }
         public virtual Azure.ResourceManager.AppService.SlotConfigNamesResource GetSlotConfigNamesResource() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.SlotDifference> GetSlotDifferencesFromProduction(Azure.ResourceManager.AppService.Models.CsmSlotEntity slotSwapEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.SlotDifference> GetSlotDifferencesFromProductionAsync(Azure.ResourceManager.AppService.Models.CsmSlotEntity slotSwapEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4507,12 +5309,25 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.Response<Azure.ResourceManager.AppService.WebSiteWebJobResource> GetWebSiteWebJob(string webJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteWebJobResource>> GetWebSiteWebJobAsync(string webJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.WebSiteWebJobCollection GetWebSiteWebJobs() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowRunResource> GetWorkflowRun(string workflowName, string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowRunResource>> GetWorkflowRunAsync(string workflowName, string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.WorkflowRunCollection GetWorkflowRuns(string workflowName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowEnvelopeData> GetWorkflowsConnections(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowEnvelopeData>> GetWorkflowsConnectionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowTriggerResource> GetWorkflowTrigger(string workflowName, string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowTriggerResource>> GetWorkflowTriggerAsync(string workflowName, string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.WorkflowTriggerCollection GetWorkflowTriggers(string workflowName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowVersionResource> GetWorkflowVersion(string workflowName, string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowVersionResource>> GetWorkflowVersionAsync(string workflowName, string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.WorkflowVersionCollection GetWorkflowVersions(string workflowName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.SiteCloneability> IsCloneable(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteCloneability>> IsCloneableAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.Models.AppServiceOperation> MigrateMySql(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.MigrateMySqlContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.Models.AppServiceOperation>> MigrateMySqlAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.MigrateMySqlContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.Models.StorageMigrationResult> MigrateStorage(Azure.WaitUntil waitUntil, string subscriptionName, Azure.ResourceManager.AppService.Models.StorageMigrationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.Models.StorageMigrationResult>> MigrateStorageAsync(Azure.WaitUntil waitUntil, string subscriptionName, Azure.ResourceManager.AppService.Models.StorageMigrationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RegenerateAccessKeyWorkflow(string workflowName, Azure.ResourceManager.AppService.Models.RegenerateActionParameter keyType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RegenerateAccessKeyWorkflowAsync(string workflowName, Azure.ResourceManager.AppService.Models.RegenerateActionParameter keyType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ResetAllFiltersForWebAppRecommendation(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ResetAllFiltersForWebAppRecommendationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ResetProductionSlotConfig(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4558,8 +5373,6 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteResource>> UpdateAsync(Azure.ResourceManager.AppService.Models.SitePatchInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettings> UpdateAuthSettings(Azure.ResourceManager.AppService.Models.SiteAuthSettings siteAuthSettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettings>> UpdateAuthSettingsAsync(Azure.ResourceManager.AppService.Models.SiteAuthSettings siteAuthSettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2> UpdateAuthSettingsV2(Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2 siteAuthSettingsV2, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>> UpdateAuthSettingsV2Async(Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2 siteAuthSettingsV2, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary> UpdateAzureStorageAccounts(Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary azureStorageAccounts, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>> UpdateAzureStorageAccountsAsync(Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary azureStorageAccounts, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.WebAppBackupInfo> UpdateBackupConfiguration(Azure.ResourceManager.AppService.Models.WebAppBackupInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4570,6 +5383,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>> UpdateMetadataAsync(Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary metadata, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.WebAppPushSettings> UpdateSitePushSettings(Azure.ResourceManager.AppService.Models.WebAppPushSettings pushSettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.WebAppPushSettings>> UpdateSitePushSettingsAsync(Azure.ResourceManager.AppService.Models.WebAppPushSettings pushSettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response ValidateWorkflow(string workflowName, Azure.ResourceManager.AppService.Models.Workflow validate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ValidateWorkflowAsync(string workflowName, Azure.ResourceManager.AppService.Models.Workflow validate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class WebSiteResourceHealthMetadataResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.ResourceHealthMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.ResourceHealthMetadataData>
     {
@@ -4912,6 +5727,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBackupConfigurationSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteHostSecretSlot(string keyType, string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteHostSecretSlotAsync(string keyType, string keyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeployWorkflowArtifactsSlot(Azure.ResourceManager.AppService.Models.WorkflowArtifacts workflowArtifacts = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeployWorkflowArtifactsSlotAsync(Azure.ResourceManager.AppService.Models.WorkflowArtifacts workflowArtifacts = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.RestoreRequestInfo> DiscoverBackupSlot(Azure.ResourceManager.AppService.Models.RestoreRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.RestoreRequestInfo>> DiscoverBackupSlotAsync(Azure.ResourceManager.AppService.Models.RestoreRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GenerateNewSitePublishingPasswordSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4932,8 +5749,7 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteSlotResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettings> GetAuthSettingsSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettings>> GetAuthSettingsSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2> GetAuthSettingsV2Slot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>> GetAuthSettingsV2SlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.AuthsettingsV2SiteSlotConfigResource GetAuthsettingsV2SiteSlotConfig() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary> GetAzureStorageAccountsSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>> GetAzureStorageAccountsSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.WebAppBackupInfo> GetBackupConfigurationSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -5009,11 +5825,21 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotProcessResource> GetSiteSlotProcess(string processId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSlotProcessResource>> GetSiteSlotProcessAsync(string processId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteSlotProcessCollection GetSiteSlotProcesses() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource> GetSiteSlotSitecontainer(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSlotSitecontainerResource>> GetSiteSlotSitecontainerAsync(string containerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.SiteSlotSitecontainerCollection GetSiteSlotSitecontainers() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotVirtualNetworkConnectionResource> GetSiteSlotVirtualNetworkConnection(string vnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSlotVirtualNetworkConnectionResource>> GetSiteSlotVirtualNetworkConnectionAsync(string vnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteSlotVirtualNetworkConnectionCollection GetSiteSlotVirtualNetworkConnections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotWorkflowResource> GetSiteSlotWorkflow(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSlotWorkflowResource>> GetSiteSlotWorkflowAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.SiteSlotWorkflowCollection GetSiteSlotWorkflows() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.SlotDifference> GetSlotDifferencesSlot(Azure.ResourceManager.AppService.Models.CsmSlotEntity slotSwapEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.SlotDifference> GetSlotDifferencesSlotAsync(Azure.ResourceManager.AppService.Models.CsmSlotEntity slotSwapEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus> GetSlotSiteDeploymentStatusesSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus> GetSlotSiteDeploymentStatusesSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus> GetSlotSiteDeploymentStatusSlot(Azure.WaitUntil waitUntil, string deploymentStatusId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus>> GetSlotSiteDeploymentStatusSlotAsync(Azure.WaitUntil waitUntil, string deploymentStatusId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppSnapshot> GetSlotSnapshots(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppSnapshot> GetSlotSnapshotsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppSnapshot> GetSlotSnapshotsFromDRSecondary(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -5061,6 +5887,8 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.Response<Azure.ResourceManager.AppService.WebSiteTriggeredwebJobResource> GetWebSiteTriggeredwebJob(string webJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteTriggeredwebJobResource>> GetWebSiteTriggeredwebJobAsync(string webJobName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.WebSiteTriggeredwebJobCollection GetWebSiteTriggeredwebJobs() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowEnvelopeData> GetWorkflowsConnectionsSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowEnvelopeData>> GetWorkflowsConnectionsSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.SiteCloneability> IsCloneableSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteCloneability>> IsCloneableSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ResetSlotConfigurationSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -5106,8 +5934,6 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebSiteSlotResource>> UpdateAsync(Azure.ResourceManager.AppService.Models.SitePatchInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettings> UpdateAuthSettingsSlot(Azure.ResourceManager.AppService.Models.SiteAuthSettings siteAuthSettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettings>> UpdateAuthSettingsSlotAsync(Azure.ResourceManager.AppService.Models.SiteAuthSettings siteAuthSettings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2> UpdateAuthSettingsV2Slot(Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2 siteAuthSettingsV2, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>> UpdateAuthSettingsV2SlotAsync(Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2 siteAuthSettingsV2, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary> UpdateAzureStorageAccountsSlot(Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary azureStorageAccounts, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>> UpdateAzureStorageAccountsSlotAsync(Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary azureStorageAccounts, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.WebAppBackupInfo> UpdateBackupConfigurationSlot(Azure.ResourceManager.AppService.Models.WebAppBackupInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -5379,6 +6205,317 @@ namespace Azure.ResourceManager.AppService
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WebJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WebJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class WorkflowEnvelopeData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>
+    {
+        internal WorkflowEnvelopeData() { }
+        public string Kind { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties Properties { get { throw null; } }
+        Azure.ResourceManager.AppService.WorkflowEnvelopeData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowEnvelopeData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowEnvelopeData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowRunActionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.WorkflowRunActionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.WorkflowRunActionResource>, System.Collections.IEnumerable
+    {
+        protected WorkflowRunActionCollection() { }
+        public virtual Azure.Response<bool> Exists(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowRunActionResource> Get(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.WorkflowRunActionResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.WorkflowRunActionResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowRunActionResource>> GetAsync(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.WorkflowRunActionResource> GetIfExists(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.WorkflowRunActionResource>> GetIfExistsAsync(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.WorkflowRunActionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.WorkflowRunActionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.WorkflowRunActionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.WorkflowRunActionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class WorkflowRunActionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionData>
+    {
+        internal WorkflowRunActionData() { }
+        public string Code { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.RunActionCorrelation Correlation { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.BinaryData Error { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ContentLink InputsLink { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ContentLink OutputsLink { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.RetryHistory> RetryHistory { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowStatus? Status { get { throw null; } }
+        public System.BinaryData TrackedProperties { get { throw null; } }
+        public string TrackingId { get { throw null; } }
+        Azure.ResourceManager.AppService.WorkflowRunActionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowRunActionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowRunActionRepetitionDefinitionData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>
+    {
+        public WorkflowRunActionRepetitionDefinitionData(Azure.Core.AzureLocation location) { }
+        public string Code { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.RunActionCorrelation Correlation { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public System.BinaryData Error { get { throw null; } set { } }
+        public System.BinaryData Inputs { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ContentLink InputsLink { get { throw null; } }
+        public int? IterationCount { get { throw null; } set { } }
+        public System.BinaryData Outputs { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ContentLink OutputsLink { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.RepetitionIndex> RepetitionIndexes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.RetryHistory> RetryHistory { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WorkflowStatus? Status { get { throw null; } set { } }
+        public System.BinaryData TrackedProperties { get { throw null; } }
+        public string TrackingId { get { throw null; } }
+        Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowRunActionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected WorkflowRunActionResource() { }
+        public virtual Azure.ResourceManager.AppService.WorkflowRunActionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName, string runName, string actionName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowRunActionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowRunActionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.ExpressionRoot> GetExpressionTraces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ExpressionRoot> GetExpressionTracesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource> GetSiteHostruntimeWebhookApiWorkflowRunActionRepetition(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource>> GetSiteHostruntimeWebhookApiWorkflowRunActionRepetitionAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionCollection GetSiteHostruntimeWebhookApiWorkflowRunActionRepetitions() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource> GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetition(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource>> GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionCollection GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitions() { throw null; }
+        Azure.ResourceManager.AppService.WorkflowRunActionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunActionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowRunActionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunActionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowRunCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.WorkflowRunResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.WorkflowRunResource>, System.Collections.IEnumerable
+    {
+        protected WorkflowRunCollection() { }
+        public virtual Azure.Response<bool> Exists(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowRunResource> Get(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.WorkflowRunResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.WorkflowRunResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowRunResource>> GetAsync(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.WorkflowRunResource> GetIfExists(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.WorkflowRunResource>> GetIfExistsAsync(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.WorkflowRunResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.WorkflowRunResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.WorkflowRunResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.WorkflowRunResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class WorkflowRunData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunData>
+    {
+        internal WorkflowRunData() { }
+        public string Code { get { throw null; } }
+        public string CorrelationClientTrackingId { get { throw null; } }
+        public string CorrelationId { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.BinaryData Error { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.AppService.Models.WorkflowOutputParameter> Outputs { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowRunTrigger Response { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowRunTrigger Trigger { get { throw null; } }
+        public System.DateTimeOffset? WaitEndOn { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ResourceReference Workflow { get { throw null; } }
+        Azure.ResourceManager.AppService.WorkflowRunData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowRunData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowRunResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected WorkflowRunResource() { }
+        public virtual Azure.ResourceManager.AppService.WorkflowRunData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName, string runName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowRunResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowRunResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowRunActionResource> GetWorkflowRunAction(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowRunActionResource>> GetWorkflowRunActionAsync(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.WorkflowRunActionCollection GetWorkflowRunActions() { throw null; }
+        Azure.ResourceManager.AppService.WorkflowRunData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowRunData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowRunData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowRunData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowTriggerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.WorkflowTriggerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.WorkflowTriggerResource>, System.Collections.IEnumerable
+    {
+        protected WorkflowTriggerCollection() { }
+        public virtual Azure.Response<bool> Exists(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowTriggerResource> Get(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.WorkflowTriggerResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.WorkflowTriggerResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowTriggerResource>> GetAsync(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.WorkflowTriggerResource> GetIfExists(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.WorkflowTriggerResource>> GetIfExistsAsync(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.WorkflowTriggerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.WorkflowTriggerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.WorkflowTriggerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.WorkflowTriggerResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class WorkflowTriggerData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerData>
+    {
+        internal WorkflowTriggerData() { }
+        public System.DateTimeOffset? ChangedOn { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.DateTimeOffset? LastExecutionOn { get { throw null; } }
+        public System.DateTimeOffset? NextExecutionOn { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowTriggerRecurrence Recurrence { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowState? State { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ResourceReference Workflow { get { throw null; } }
+        Azure.ResourceManager.AppService.WorkflowTriggerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowTriggerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowTriggerHistoryCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource>, System.Collections.IEnumerable
+    {
+        protected WorkflowTriggerHistoryCollection() { }
+        public virtual Azure.Response<bool> Exists(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource> Get(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource>> GetAsync(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource> GetIfExists(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource>> GetIfExistsAsync(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class WorkflowTriggerHistoryData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>
+    {
+        internal WorkflowTriggerHistoryData() { }
+        public string Code { get { throw null; } }
+        public string CorrelationClientTrackingId { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.BinaryData Error { get { throw null; } }
+        public bool? Fired { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ContentLink InputsLink { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ContentLink OutputsLink { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ResourceReference Run { get { throw null; } }
+        public System.DateTimeOffset? ScheduledOn { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowStatus? Status { get { throw null; } }
+        public string TrackingId { get { throw null; } }
+        Azure.ResourceManager.AppService.WorkflowTriggerHistoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowTriggerHistoryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowTriggerHistoryResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected WorkflowTriggerHistoryResource() { }
+        public virtual Azure.ResourceManager.AppService.WorkflowTriggerHistoryData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName, string triggerName, string historyName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Resubmit(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ResubmitAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.WorkflowTriggerHistoryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowTriggerHistoryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerHistoryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowTriggerResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected WorkflowTriggerResource() { }
+        public virtual Azure.ResourceManager.AppService.WorkflowTriggerData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName, string triggerName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowTriggerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowTriggerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.WorkflowTriggerCallbackUri> GetCallbackUrl(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.WorkflowTriggerCallbackUri>> GetCallbackUrlAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.JsonSchema> GetSchemaJson(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.JsonSchema>> GetSchemaJsonAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.WorkflowTriggerHistoryCollection GetWorkflowTriggerHistories() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource> GetWorkflowTriggerHistory(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource>> GetWorkflowTriggerHistoryAsync(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Run(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RunAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.WorkflowTriggerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowTriggerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowTriggerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowTriggerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.WorkflowVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.WorkflowVersionResource>, System.Collections.IEnumerable
+    {
+        protected WorkflowVersionCollection() { }
+        public virtual Azure.Response<bool> Exists(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowVersionResource> Get(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.WorkflowVersionResource> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.WorkflowVersionResource> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowVersionResource>> GetAsync(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.AppService.WorkflowVersionResource> GetIfExists(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.AppService.WorkflowVersionResource>> GetIfExistsAsync(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.AppService.WorkflowVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.WorkflowVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.WorkflowVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.WorkflowVersionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class WorkflowVersionData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowVersionData>
+    {
+        public WorkflowVersionData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration AccessControl { get { throw null; } set { } }
+        public string AccessEndpoint { get { throw null; } }
+        public System.DateTimeOffset? ChangedOn { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.BinaryData Definition { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration EndpointsConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ResourceReference IntegrationAccount { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.WorkflowParameter> Parameters { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowSku Sku { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowState? State { get { throw null; } set { } }
+        public string Version { get { throw null; } }
+        Azure.ResourceManager.AppService.WorkflowVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowVersionResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowVersionData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected WorkflowVersionResource() { }
+        public virtual Azure.ResourceManager.AppService.WorkflowVersionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string workflowName, string versionId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WorkflowVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WorkflowVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.AppService.WorkflowVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WorkflowVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WorkflowVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WorkflowVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.AppService.Mocking
 {
@@ -5396,7 +6533,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         public virtual Azure.ResourceManager.AppService.AppServicePlanVirtualNetworkConnectionResource GetAppServicePlanVirtualNetworkConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.AppServiceSourceControlResource GetAppServiceSourceControlResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.AseV3NetworkingConfigurationResource GetAseV3NetworkingConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.AuthsettingsV2SiteConfigResource GetAuthsettingsV2SiteConfigResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.AuthsettingsV2SiteSlotConfigResource GetAuthsettingsV2SiteSlotConfigResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.CertificateOrderDetectorResource GetCertificateOrderDetectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.ContainerAppResource GetContainerAppResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationResource GetCustomDnsSuffixConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.DeletedSiteResource GetDeletedSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.DomainOwnershipIdentifierResource GetDomainOwnershipIdentifierResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.HostingEnvironmentDetectorResource GetHostingEnvironmentDetectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -5411,6 +6552,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         public virtual Azure.ResourceManager.AppService.MigrateMySqlStatusResource GetMigrateMySqlStatusResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.NetworkFeatureResource GetNetworkFeatureResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.PublishingUserResource GetPublishingUserResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.RequestHistoryResource GetRequestHistoryResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.RevisionResource GetRevisionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteBackupResource GetSiteBackupResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -5425,6 +6568,8 @@ namespace Azure.ResourceManager.AppService.Mocking
         public virtual Azure.ResourceManager.AppService.SiteExtensionResource GetSiteExtensionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteFunctionResource GetSiteFunctionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteHostNameBindingResource GetSiteHostNameBindingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource GetSiteHostruntimeWebhookApiWorkflowRunActionRepetitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.SiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource GetSiteHostruntimeWebhookApiWorkflowRunActionScopeRepetitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteHybridConnectionNamespaceRelayResource GetSiteHybridConnectionNamespaceRelayResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteInstanceExtensionResource GetSiteInstanceExtensionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteInstanceProcessModuleResource GetSiteInstanceProcessModuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -5436,6 +6581,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         public virtual Azure.ResourceManager.AppService.SiteProcessResource GetSiteProcessResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SitePublicCertificateResource GetSitePublicCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteRecommendationResource GetSiteRecommendationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.SiteSitecontainerResource GetSiteSitecontainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteSlotBackupResource GetSiteSlotBackupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteSlotConfigSnapshotResource GetSiteSlotConfigSnapshotResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteSlotDeploymentResource GetSiteSlotDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -5456,14 +6602,22 @@ namespace Azure.ResourceManager.AppService.Mocking
         public virtual Azure.ResourceManager.AppService.SiteSlotPrivateEndpointConnectionResource GetSiteSlotPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteSlotProcessModuleResource GetSiteSlotProcessModuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteSlotProcessResource GetSiteSlotProcessResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.SiteSlotSitecontainerResource GetSiteSlotSitecontainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteSlotVirtualNetworkConnectionGatewayResource GetSiteSlotVirtualNetworkConnectionGatewayResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteSlotVirtualNetworkConnectionResource GetSiteSlotVirtualNetworkConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.SiteSlotWorkflowResource GetSiteSlotWorkflowResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteVirtualNetworkConnectionGatewayResource GetSiteVirtualNetworkConnectionGatewayResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteVirtualNetworkConnectionResource GetSiteVirtualNetworkConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.SiteWorkflowResource GetSiteWorkflowResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.SlotConfigNamesResource GetSlotConfigNamesResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResource GetStaticSiteBasicAuthPropertiesARMResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.StaticSiteBuildDatabaseConnectionResource GetStaticSiteBuildDatabaseConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.StaticSiteBuildLinkedBackendResource GetStaticSiteBuildLinkedBackendResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.StaticSiteBuildResource GetStaticSiteBuildResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.StaticSiteBuildUserProvidedFunctionAppResource GetStaticSiteBuildUserProvidedFunctionAppResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.StaticSiteCustomDomainOverviewResource GetStaticSiteCustomDomainOverviewResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.StaticSiteDatabaseConnectionResource GetStaticSiteDatabaseConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.StaticSiteLinkedBackendResource GetStaticSiteLinkedBackendResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.StaticSitePrivateEndpointConnectionResource GetStaticSitePrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.StaticSiteResource GetStaticSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.StaticSiteUserProvidedFunctionAppResource GetStaticSiteUserProvidedFunctionAppResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -5498,6 +6652,11 @@ namespace Azure.ResourceManager.AppService.Mocking
         public virtual Azure.ResourceManager.AppService.WebSiteTriggeredWebJobHistoryResource GetWebSiteTriggeredWebJobHistoryResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.WebSiteTriggeredwebJobResource GetWebSiteTriggeredwebJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.WebSiteWebJobResource GetWebSiteWebJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.WorkflowRunActionResource GetWorkflowRunActionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.WorkflowRunResource GetWorkflowRunResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.WorkflowTriggerHistoryResource GetWorkflowTriggerHistoryResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.WorkflowTriggerResource GetWorkflowTriggerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppService.WorkflowVersionResource GetWorkflowVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableAppServiceResourceGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -5519,6 +6678,9 @@ namespace Azure.ResourceManager.AppService.Mocking
         public virtual Azure.Response<Azure.ResourceManager.AppService.AppServicePlanResource> GetAppServicePlan(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AppServicePlanResource>> GetAppServicePlanAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.AppServicePlanCollection GetAppServicePlans() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource> GetContainerApp(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.ContainerAppResource>> GetContainerAppAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppService.ContainerAppCollection GetContainerApps() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.KubeEnvironmentResource> GetKubeEnvironment(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.KubeEnvironmentResource>> GetKubeEnvironmentAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.KubeEnvironmentCollection GetKubeEnvironments() { throw null; }
@@ -5558,12 +6720,18 @@ namespace Azure.ResourceManager.AppService.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.AppServiceEnvironmentResource> GetAppServiceEnvironmentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.AppServicePlanResource> GetAppServicePlans(bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.AppServicePlanResource> GetAppServicePlansAsync(bool? detailed = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AseRegion> GetAseRegions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AseRegion> GetAseRegionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksOnPremProviders(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceBillingMeter> GetBillingMeters(string billingLocation = null, string osType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceBillingMeter> GetBillingMetersAsync(string billingLocation = null, string osType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.ContainerAppResource> GetContainerApps(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.ContainerAppResource> GetContainerAppsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.DomainControlCenterSsoRequestInfo> GetControlCenterSsoRequestDomain(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.DomainControlCenterSsoRequestInfo>> GetControlCenterSsoRequestDomainAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.CustomHostnameSites> GetCustomHostNameSites(string hostname = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.CustomHostnameSites> GetCustomHostNameSitesAsync(string hostname = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.DeletedSiteResource> GetDeletedSite(string deletedSiteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.DeletedSiteResource>> GetDeletedSiteAsync(string deletedSiteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.DeletedSiteCollection GetDeletedSites() { throw null; }
@@ -5573,12 +6741,16 @@ namespace Azure.ResourceManager.AppService.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.DeletedSiteResource>> GetDeletedWebAppByLocationDeletedWebAppAsync(Azure.Core.AzureLocation location, string deletedSiteId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceGeoRegion> GetGeoRegions(Azure.ResourceManager.AppService.Models.AppServiceSkuName? sku = default(Azure.ResourceManager.AppService.Models.AppServiceSkuName?), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), bool? linuxDynamicWorkersEnabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceGeoRegion> GetGeoRegionsAsync(Azure.ResourceManager.AppService.Models.AppServiceSkuName? sku = default(Azure.ResourceManager.AppService.Models.AppServiceSkuName?), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), bool? linuxDynamicWorkersEnabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.CsmUsageQuota> GetGetUsagesInLocations(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.CsmUsageQuota> GetGetUsagesInLocationsAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.KubeEnvironmentResource> GetKubeEnvironments(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.KubeEnvironmentResource> GetKubeEnvironmentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.PremierAddOnOffer> GetPremierAddOnOffers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.PremierAddOnOffer> GetPremierAddOnOffersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceRecommendation> GetRecommendations(bool? featured = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceRecommendation> GetRecommendationsAsync(bool? featured = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.ContainerAppSecret> GetSecretsContainerApps(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ContainerAppSecret> GetSecretsContainerAppsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceSkuResult> GetSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceSkuResult>> GetSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.StaticSiteResource> GetStaticSites(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -5636,6 +6808,24 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.AbnormalTimePeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AbnormalTimePeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AbnormalTimePeriod>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AbnormalTimePeriod>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ActiveRevisionsMode : System.IEquatable<Azure.ResourceManager.AppService.Models.ActiveRevisionsMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ActiveRevisionsMode(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ActiveRevisionsMode Multiple { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ActiveRevisionsMode Single { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.ActiveRevisionsMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.ActiveRevisionsMode left, Azure.ResourceManager.AppService.Models.ActiveRevisionsMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.ActiveRevisionsMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.ActiveRevisionsMode left, Azure.ResourceManager.AppService.Models.ActiveRevisionsMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AnalysisDetectorEvidences : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AnalysisDetectorEvidences>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AnalysisDetectorEvidences>
     {
@@ -5924,12 +7114,11 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AppServiceCertificateEmail : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceCertificateEmail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceCertificateEmail>
+    public partial class AppServiceCertificateEmail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceCertificateEmail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceCertificateEmail>
     {
-        public AppServiceCertificateEmail() { }
-        public string EmailId { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
+        internal AppServiceCertificateEmail() { }
+        public string EmailId { get { throw null; } }
+        public System.DateTimeOffset? TimeStamp { get { throw null; } }
         Azure.ResourceManager.AppService.Models.AppServiceCertificateEmail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceCertificateEmail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceCertificateEmail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppService.Models.AppServiceCertificateEmail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceCertificateEmail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6193,6 +7382,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public AppServiceEnvironmentPatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> ClusterSettings { get { throw null; } }
+        public Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData CustomDnsSuffixConfiguration { get { throw null; } set { } }
         public int? DedicatedHostCount { get { throw null; } set { } }
         public string DnsSuffix { get { throw null; } set { } }
         public int? FrontEndScaleFactor { get { throw null; } set { } }
@@ -6205,8 +7395,11 @@ namespace Azure.ResourceManager.AppService.Models
         public int? MaximumNumberOfMachines { get { throw null; } }
         public int? MultiRoleCount { get { throw null; } }
         public string MultiSize { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData NetworkingConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.UpgradeAvailability? UpgradeAvailability { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.UpgradePreference? UpgradePreference { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> UserWhitelistedIPRanges { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkProfile VirtualNetwork { get { throw null; } set { } }
         Azure.ResourceManager.AppService.Models.AppServiceEnvironmentPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceEnvironmentPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6219,6 +7412,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public AppServiceEnvironmentProperties(Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkProfile virtualNetwork) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> ClusterSettings { get { throw null; } }
+        public Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData CustomDnsSuffixConfiguration { get { throw null; } set { } }
         public int? DedicatedHostCount { get { throw null; } set { } }
         public string DnsSuffix { get { throw null; } set { } }
         public int? FrontEndScaleFactor { get { throw null; } set { } }
@@ -6230,8 +7424,11 @@ namespace Azure.ResourceManager.AppService.Models
         public int? MaximumNumberOfMachines { get { throw null; } }
         public int? MultiRoleCount { get { throw null; } }
         public string MultiSize { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData NetworkingConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.UpgradeAvailability? UpgradeAvailability { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.UpgradePreference? UpgradePreference { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> UserWhitelistedIPRanges { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkProfile VirtualNetwork { get { throw null; } set { } }
         Azure.ResourceManager.AppService.Models.AppServiceEnvironmentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceEnvironmentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6427,6 +7624,24 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppServiceKind : System.IEquatable<Azure.ResourceManager.AppService.Models.AppServiceKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppServiceKind(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AppServiceKind Stateful { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceKind Stateless { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.AppServiceKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.AppServiceKind left, Azure.ResourceManager.AppService.Models.AppServiceKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.AppServiceKind (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.AppServiceKind left, Azure.ResourceManager.AppService.Models.AppServiceKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AppServiceNameValuePair : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair>
     {
         public AppServiceNameValuePair() { }
@@ -6442,7 +7657,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal AppServiceOperation() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResponseError> Errors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.ErrorEntity> Errors { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public System.Guid? GeoMasterOperationId { get { throw null; } }
         public string Id { get { throw null; } }
@@ -6481,6 +7696,7 @@ namespace Azure.ResourceManager.AppService.Models
         public int? MaximumElasticWorkerCount { get { throw null; } set { } }
         public int? MaximumNumberOfWorkers { get { throw null; } }
         public int? NumberOfSites { get { throw null; } }
+        public int? NumberOfWorkers { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceGroup { get { throw null; } }
         public System.DateTimeOffset? SpotExpirationOn { get { throw null; } set { } }
@@ -6635,6 +7851,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.Models.AppServiceSkuName Dynamic { get { throw null; } }
         public static Azure.ResourceManager.AppService.Models.AppServiceSkuName ElasticIsolated { get { throw null; } }
         public static Azure.ResourceManager.AppService.Models.AppServiceSkuName ElasticPremium { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSkuName FlexConsumption { get { throw null; } }
         public static Azure.ResourceManager.AppService.Models.AppServiceSkuName Free { get { throw null; } }
         public static Azure.ResourceManager.AppService.Models.AppServiceSkuName Isolated { get { throw null; } }
         public static Azure.ResourceManager.AppService.Models.AppServiceSkuName IsolatedV2 { get { throw null; } }
@@ -6693,6 +7910,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string AccessKey { get { throw null; } set { } }
         public string AccountName { get { throw null; } set { } }
         public string MountPath { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AzureStorageProtocol? Protocol { get { throw null; } set { } }
         public string ShareName { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceStorageAccountState? State { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppServiceStorageType? StorageType { get { throw null; } set { } }
@@ -6720,6 +7938,7 @@ namespace Azure.ResourceManager.AppService.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AppServiceSupportedTlsVersion(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion One3 { get { throw null; } }
         public static Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion Tls1_0 { get { throw null; } }
         public static Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion Tls1_1 { get { throw null; } }
         public static Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion Tls1_2 { get { throw null; } }
@@ -6949,7 +8168,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.Models.AppServiceBillingMeter AppServiceBillingMeter(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? meterId = default(System.Guid?), Azure.Core.AzureLocation? billingLocation = default(Azure.Core.AzureLocation?), string shortName = null, string friendlyName = null, string osType = null, double? multiplier = default(double?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.AppServiceCertificateData AppServiceCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, Azure.ResourceManager.AppService.Models.KeyVaultSecretStatus? provisioningState = default(Azure.ResourceManager.AppService.Models.KeyVaultSecretStatus?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails AppServiceCertificateDetails(int? version = default(int?), string serialNumber = null, string thumbprintString = null, string subject = null, System.DateTimeOffset? notBefore = default(System.DateTimeOffset?), System.DateTimeOffset? notAfter = default(System.DateTimeOffset?), string signatureAlgorithm = null, string issuer = null, string rawData = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.AppServiceCertificateEmail AppServiceCertificateEmail(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string emailId = null, System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AppServiceCertificateEmail AppServiceCertificateEmail(string emailId = null, System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.AppService.AppServiceCertificateOrderData AppServiceCertificateOrderData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AppServiceCertificateProperties> certificates = null, string distinguishedName = null, string domainVerificationToken = null, int? validityInYears = default(int?), int? keySize = default(int?), Azure.ResourceManager.AppService.Models.CertificateProductType? productType = default(Azure.ResourceManager.AppService.Models.CertificateProductType?), bool? isAutoRenew = default(bool?), Azure.ResourceManager.AppService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.ProvisioningState?), Azure.ResourceManager.AppService.Models.CertificateOrderStatus? status = default(Azure.ResourceManager.AppService.Models.CertificateOrderStatus?), Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails signedCertificate = null, string csr = null, Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails intermediate = null, Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails root = null, string serialNumber = null, System.DateTimeOffset? lastCertificateIssuedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), bool? isPrivateKeyExternal = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = null, System.DateTimeOffset? nextAutoRenewTimeStamp = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.CertificateOrderContact contact = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServiceCertificateOrderPatch AppServiceCertificateOrderPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AppServiceCertificateProperties> certificates = null, string distinguishedName = null, string domainVerificationToken = null, int? validityInYears = default(int?), int? keySize = default(int?), Azure.ResourceManager.AppService.Models.CertificateProductType? productType = default(Azure.ResourceManager.AppService.Models.CertificateProductType?), bool? isAutoRenew = default(bool?), Azure.ResourceManager.AppService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.ProvisioningState?), Azure.ResourceManager.AppService.Models.CertificateOrderStatus? status = default(Azure.ResourceManager.AppService.Models.CertificateOrderStatus?), Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails signedCertificate = null, string csr = null, Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails intermediate = null, Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails root = null, string serialNumber = null, System.DateTimeOffset? lastCertificateIssuanceOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), bool? isPrivateKeyExternal = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = null, System.DateTimeOffset? nextAutoRenewalTimeStamp = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.CertificateOrderContact contact = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServiceCertificatePatch AppServiceCertificatePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, Azure.ResourceManager.AppService.Models.KeyVaultSecretStatus? provisioningState = default(Azure.ResourceManager.AppService.Models.KeyVaultSecretStatus?), string kind = null) { throw null; }
@@ -6962,22 +8181,22 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.Models.AppServiceEndpointDependency AppServiceEndpointDependency(string domainName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceEndpointDetail> endpointDetails = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServiceEndpointDetail AppServiceEndpointDetail(System.Net.IPAddress ipAddress = null, int? port = default(int?), double? latency = default(double?), bool? isAccessible = default(bool?)) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServiceEnvironmentAddressResult AppServiceEnvironmentAddressResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Net.IPAddress serviceIPAddress = null, System.Net.IPAddress internalIPAddress = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> outboundIPAddresses = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.VirtualIPMapping> virtualIPMappings = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.AppServiceEnvironmentData AppServiceEnvironmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AppService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.ProvisioningState?), Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus? status = default(Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus?), Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkProfile virtualNetwork = null, Azure.ResourceManager.AppService.Models.LoadBalancingMode? internalLoadBalancingMode = default(Azure.ResourceManager.AppService.Models.LoadBalancingMode?), string multiSize = null, int? multiRoleCount = default(int?), int? ipSslAddressCount = default(int?), string dnsSuffix = null, int? maximumNumberOfMachines = default(int?), int? frontEndScaleFactor = default(int?), bool? isSuspended = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> clusterSettings = null, System.Collections.Generic.IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = default(bool?), int? dedicatedHostCount = default(int?), bool? isZoneRedundant = default(bool?), string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.AppServiceEnvironmentPatch AppServiceEnvironmentPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.ProvisioningState?), Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus? status = default(Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus?), Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkProfile virtualNetwork = null, Azure.ResourceManager.AppService.Models.LoadBalancingMode? internalLoadBalancingMode = default(Azure.ResourceManager.AppService.Models.LoadBalancingMode?), string multiSize = null, int? multiRoleCount = default(int?), int? ipSslAddressCount = default(int?), string dnsSuffix = null, int? maximumNumberOfMachines = default(int?), int? frontEndScaleFactor = default(int?), bool? isSuspended = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> clusterSettings = null, System.Collections.Generic.IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = default(bool?), int? dedicatedHostCount = default(int?), bool? isZoneRedundant = default(bool?), string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.AppServiceEnvironmentProperties AppServiceEnvironmentProperties(Azure.ResourceManager.AppService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.ProvisioningState?), Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus? status = default(Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus?), Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkProfile virtualNetwork = null, Azure.ResourceManager.AppService.Models.LoadBalancingMode? internalLoadBalancingMode = default(Azure.ResourceManager.AppService.Models.LoadBalancingMode?), string multiSize = null, int? multiRoleCount = default(int?), int? ipSslAddressCount = default(int?), string dnsSuffix = null, int? maximumNumberOfMachines = default(int?), int? frontEndScaleFactor = default(int?), bool? isSuspended = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> clusterSettings = null, System.Collections.Generic.IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = default(bool?), int? dedicatedHostCount = default(int?), bool? isZoneRedundant = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.AppService.AppServiceEnvironmentData AppServiceEnvironmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AppService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.ProvisioningState?), Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus? status = default(Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus?), Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkProfile virtualNetwork = null, Azure.ResourceManager.AppService.Models.LoadBalancingMode? internalLoadBalancingMode = default(Azure.ResourceManager.AppService.Models.LoadBalancingMode?), string multiSize = null, int? multiRoleCount = default(int?), int? ipSslAddressCount = default(int?), string dnsSuffix = null, int? maximumNumberOfMachines = default(int?), int? frontEndScaleFactor = default(int?), bool? isSuspended = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> clusterSettings = null, System.Collections.Generic.IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = default(bool?), Azure.ResourceManager.AppService.Models.UpgradePreference? upgradePreference = default(Azure.ResourceManager.AppService.Models.UpgradePreference?), int? dedicatedHostCount = default(int?), bool? isZoneRedundant = default(bool?), Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData customDnsSuffixConfiguration = null, Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData networkingConfiguration = null, Azure.ResourceManager.AppService.Models.UpgradeAvailability? upgradeAvailability = default(Azure.ResourceManager.AppService.Models.UpgradeAvailability?), string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AppServiceEnvironmentPatch AppServiceEnvironmentPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.ProvisioningState?), Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus? status = default(Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus?), Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkProfile virtualNetwork = null, Azure.ResourceManager.AppService.Models.LoadBalancingMode? internalLoadBalancingMode = default(Azure.ResourceManager.AppService.Models.LoadBalancingMode?), string multiSize = null, int? multiRoleCount = default(int?), int? ipSslAddressCount = default(int?), string dnsSuffix = null, int? maximumNumberOfMachines = default(int?), int? frontEndScaleFactor = default(int?), bool? isSuspended = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> clusterSettings = null, System.Collections.Generic.IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = default(bool?), Azure.ResourceManager.AppService.Models.UpgradePreference? upgradePreference = default(Azure.ResourceManager.AppService.Models.UpgradePreference?), int? dedicatedHostCount = default(int?), bool? isZoneRedundant = default(bool?), Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData customDnsSuffixConfiguration = null, Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData networkingConfiguration = null, Azure.ResourceManager.AppService.Models.UpgradeAvailability? upgradeAvailability = default(Azure.ResourceManager.AppService.Models.UpgradeAvailability?), string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AppServiceEnvironmentProperties AppServiceEnvironmentProperties(Azure.ResourceManager.AppService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.ProvisioningState?), Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus? status = default(Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus?), Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkProfile virtualNetwork = null, Azure.ResourceManager.AppService.Models.LoadBalancingMode? internalLoadBalancingMode = default(Azure.ResourceManager.AppService.Models.LoadBalancingMode?), string multiSize = null, int? multiRoleCount = default(int?), int? ipSslAddressCount = default(int?), string dnsSuffix = null, int? maximumNumberOfMachines = default(int?), int? frontEndScaleFactor = default(int?), bool? isSuspended = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> clusterSettings = null, System.Collections.Generic.IEnumerable<string> userWhitelistedIPRanges = null, bool? hasLinuxWorkers = default(bool?), Azure.ResourceManager.AppService.Models.UpgradePreference? upgradePreference = default(Azure.ResourceManager.AppService.Models.UpgradePreference?), int? dedicatedHostCount = default(int?), bool? isZoneRedundant = default(bool?), Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData customDnsSuffixConfiguration = null, Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData networkingConfiguration = null, Azure.ResourceManager.AppService.Models.UpgradeAvailability? upgradeAvailability = default(Azure.ResourceManager.AppService.Models.UpgradeAvailability?)) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServiceGeoRegion AppServiceGeoRegion(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string displayName = null, string orgDomain = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServiceHostName AppServiceHostName(string name = null, System.Collections.Generic.IEnumerable<string> siteNames = null, string azureResourceName = null, Azure.ResourceManager.AppService.Models.AppServiceResourceType? azureResourceType = default(Azure.ResourceManager.AppService.Models.AppServiceResourceType?), Azure.ResourceManager.AppService.Models.CustomHostNameDnsRecordType? customHostNameDnsRecordType = default(Azure.ResourceManager.AppService.Models.CustomHostNameDnsRecordType?), Azure.ResourceManager.AppService.Models.AppServiceHostNameType? hostNameType = default(Azure.ResourceManager.AppService.Models.AppServiceHostNameType?)) { throw null; }
         public static Azure.ResourceManager.AppService.AppServiceIdentifierData AppServiceIdentifierData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string value = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.AppServiceOperation AppServiceOperation(string id = null, string name = null, Azure.ResourceManager.AppService.Models.AppServiceOperationStatus? status = default(Azure.ResourceManager.AppService.Models.AppServiceOperationStatus?), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.Guid? geoMasterOperationId = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.AppService.AppServicePlanData AppServicePlanData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AppService.Models.AppServiceSkuDescription sku = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, string workerTierName = null, Azure.ResourceManager.AppService.Models.AppServicePlanStatus? status = default(Azure.ResourceManager.AppService.Models.AppServicePlanStatus?), string subscription = null, Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = default(int?), string geoRegion = null, bool? isPerSiteScaling = default(bool?), bool? isElasticScaleEnabled = default(bool?), int? maximumElasticWorkerCount = default(int?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTimeOffset? spotExpireOn = default(System.DateTimeOffset?), System.DateTimeOffset? freeOfferExpireOn = default(System.DateTimeOffset?), string resourceGroup = null, bool? isReserved = default(bool?), bool? isXenon = default(bool?), bool? isHyperV = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), Azure.ResourceManager.AppService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.ProvisioningState?), Azure.ResourceManager.AppService.Models.KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = default(bool?), string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.AppServicePlanPatch AppServicePlanPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string workerTierName = null, Azure.ResourceManager.AppService.Models.AppServicePlanStatus? status = default(Azure.ResourceManager.AppService.Models.AppServicePlanStatus?), string subscription = null, Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = default(int?), string geoRegion = null, bool? isPerSiteScaling = default(bool?), bool? isElasticScaleEnabled = default(bool?), int? maximumElasticWorkerCount = default(int?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTimeOffset? spotExpirationOn = default(System.DateTimeOffset?), System.DateTimeOffset? freeOfferExpirationOn = default(System.DateTimeOffset?), string resourceGroup = null, bool? isReserved = default(bool?), bool? isXenon = default(bool?), bool? isHyperV = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), Azure.ResourceManager.AppService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.ProvisioningState?), Azure.ResourceManager.AppService.Models.KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = default(bool?), string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AppServiceOperation AppServiceOperation(string id = null, string name = null, Azure.ResourceManager.AppService.Models.AppServiceOperationStatus? status = default(Azure.ResourceManager.AppService.Models.AppServiceOperationStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.ErrorEntity> errors = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), System.Guid? geoMasterOperationId = default(System.Guid?)) { throw null; }
+        public static Azure.ResourceManager.AppService.AppServicePlanData AppServicePlanData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AppService.Models.AppServiceSkuDescription sku = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, string workerTierName = null, Azure.ResourceManager.AppService.Models.AppServicePlanStatus? status = default(Azure.ResourceManager.AppService.Models.AppServicePlanStatus?), string subscription = null, Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = default(int?), int? numberOfWorkers = default(int?), string geoRegion = null, bool? isPerSiteScaling = default(bool?), bool? isElasticScaleEnabled = default(bool?), int? maximumElasticWorkerCount = default(int?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTimeOffset? spotExpireOn = default(System.DateTimeOffset?), System.DateTimeOffset? freeOfferExpireOn = default(System.DateTimeOffset?), string resourceGroup = null, bool? isReserved = default(bool?), bool? isXenon = default(bool?), bool? isHyperV = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), Azure.ResourceManager.AppService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.ProvisioningState?), Azure.ResourceManager.AppService.Models.KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = default(bool?), string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AppServicePlanPatch AppServicePlanPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string workerTierName = null, Azure.ResourceManager.AppService.Models.AppServicePlanStatus? status = default(Azure.ResourceManager.AppService.Models.AppServicePlanStatus?), string subscription = null, Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = default(int?), int? numberOfWorkers = default(int?), string geoRegion = null, bool? isPerSiteScaling = default(bool?), bool? isElasticScaleEnabled = default(bool?), int? maximumElasticWorkerCount = default(int?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTimeOffset? spotExpirationOn = default(System.DateTimeOffset?), System.DateTimeOffset? freeOfferExpirationOn = default(System.DateTimeOffset?), string resourceGroup = null, bool? isReserved = default(bool?), bool? isXenon = default(bool?), bool? isHyperV = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), Azure.ResourceManager.AppService.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.ProvisioningState?), Azure.ResourceManager.AppService.Models.KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = default(bool?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServicePoolSkuInfo AppServicePoolSkuInfo(Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), Azure.ResourceManager.AppService.Models.AppServiceSkuDescription sku = null, Azure.ResourceManager.AppService.Models.AppServiceSkuCapacity capacity = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServicePrivateLinkResourceData AppServicePrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.AppServicePrivateLinkResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServicePrivateLinkResourceProperties AppServicePrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServiceRecommendation AppServiceRecommendation(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Guid? recommendationId = default(System.Guid?), Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.AppService.Models.ResourceScopeType? resourceScope = default(Azure.ResourceManager.AppService.Models.ResourceScopeType?), string ruleName = null, string displayName = null, string message = null, Azure.ResourceManager.AppService.Models.NotificationLevel? level = default(Azure.ResourceManager.AppService.Models.NotificationLevel?), Azure.ResourceManager.AppService.Models.RecommendationChannel? channels = default(Azure.ResourceManager.AppService.Models.RecommendationChannel?), System.Collections.Generic.IEnumerable<string> categoryTags = null, string actionName = null, int? enabled = default(int?), System.Collections.Generic.IEnumerable<string> states = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.DateTimeOffset? nextNotificationOn = default(System.DateTimeOffset?), System.DateTimeOffset? notificationExpirationOn = default(System.DateTimeOffset?), System.DateTimeOffset? notifiedOn = default(System.DateTimeOffset?), double? score = default(double?), bool? isDynamic = default(bool?), string extensionName = null, string bladeName = null, string forwardLink = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServiceSkuResult AppServiceSkuResult(Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.GlobalCsmSkuDescription> skus = null) { throw null; }
         public static Azure.ResourceManager.AppService.AppServiceSourceControlData AppServiceSourceControlData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string token = null, string tokenSecret = null, string refreshToken = null, System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.AppServiceStorageAccessInfo AppServiceStorageAccessInfo(Azure.ResourceManager.AppService.Models.AppServiceStorageType? storageType = default(Azure.ResourceManager.AppService.Models.AppServiceStorageType?), string accountName = null, string shareName = null, string accessKey = null, string mountPath = null, Azure.ResourceManager.AppService.Models.AppServiceStorageAccountState? state = default(Azure.ResourceManager.AppService.Models.AppServiceStorageAccountState?)) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AppServiceStorageAccessInfo AppServiceStorageAccessInfo(Azure.ResourceManager.AppService.Models.AppServiceStorageType? storageType = default(Azure.ResourceManager.AppService.Models.AppServiceStorageType?), string accountName = null, string shareName = null, string accessKey = null, string mountPath = null, Azure.ResourceManager.AppService.Models.AppServiceStorageAccountState? state = default(Azure.ResourceManager.AppService.Models.AppServiceStorageAccountState?), Azure.ResourceManager.AppService.Models.AzureStorageProtocol? protocol = default(Azure.ResourceManager.AppService.Models.AzureStorageProtocol?)) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServiceUsage AppServiceUsage(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string resourceName = null, string unit = null, long? currentValue = default(long?), long? limit = default(long?), System.DateTimeOffset? nextResetOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.ComputeModeOption? computeMode = default(Azure.ResourceManager.AppService.Models.ComputeModeOption?), string siteMode = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServiceValidateContent AppServiceValidateContent(string name = null, Azure.ResourceManager.AppService.Models.ValidateResourceType validateResourceType = default(Azure.ResourceManager.AppService.Models.ValidateResourceType), Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier serverFarmId = null, string skuName = null, bool? needLinuxWorkers = default(bool?), bool? isSpot = default(bool?), int? capacity = default(int?), string hostingEnvironment = null, bool? isXenon = default(bool?), System.Uri containerRegistryBaseUri = null, string containerRegistryUsername = null, string containerRegistryPassword = null, string containerImageRepository = null, string containerImageTag = null, string containerImagePlatform = null, Azure.ResourceManager.AppService.Models.AppServiceEnvironmentProperties appServiceEnvironment = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppServiceValidateResult AppServiceValidateResult(string status = null, Azure.ResourceManager.AppService.Models.ValidateResponseError error = null) { throw null; }
@@ -6989,17 +8208,28 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkValidationContent AppServiceVirtualNetworkValidationContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string vnetResourceGroup = null, string vnetName = null, string vnetSubnetName = null, Azure.Core.ResourceIdentifier subnetResourceId = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.AppServiceWorkerPoolData AppServiceWorkerPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.AppServiceSkuDescription sku = null, int? workerSizeId = default(int?), Azure.ResourceManager.AppService.Models.ComputeModeOption? computeMode = default(Azure.ResourceManager.AppService.Models.ComputeModeOption?), string workerSize = null, int? workerCount = default(int?), System.Collections.Generic.IEnumerable<string> instanceNames = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AppSnapshot AppSnapshot(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string time = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> windowsOutboundIPAddresses = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> linuxOutboundIPAddresses = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> externalInboundIPAddresses = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> internalInboundIPAddresses = null, bool? allowNewPrivateEndpointConnections = default(bool?), string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AseRegion AseRegion(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, bool? standard = default(bool?), bool? dedicatedHost = default(bool?), bool? zoneRedundant = default(bool?), System.Collections.Generic.IEnumerable<string> availableSku = null, System.Collections.Generic.IEnumerable<string> availableOS = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> windowsOutboundIPAddresses = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> linuxOutboundIPAddresses = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> externalInboundIPAddresses = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> internalInboundIPAddresses = null, bool? allowNewPrivateEndpointConnections = default(bool?), bool? ftpEnabled = default(bool?), bool? remoteDebugEnabled = default(bool?), string inboundIPAddressOverride = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo AzureResourceErrorInfo(string code = null, string message = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo> details = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary AzureStoragePropertyDictionary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AppServiceStorageAccessInfo> properties = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.CertificateOrderAction CertificateOrderAction(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.CertificateOrderActionType? actionType = default(Azure.ResourceManager.AppService.Models.CertificateOrderActionType?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.CertificateOrderAction CertificateOrderAction(Azure.ResourceManager.AppService.Models.CertificateOrderActionType? actionType = default(Azure.ResourceManager.AppService.Models.CertificateOrderActionType?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.AppService.Models.CertificateOrderContact CertificateOrderContact(string email = null, string nameFirst = null, string nameLast = null, string phone = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.ConnectionStringDictionary ConnectionStringDictionary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.ConnStringValueTypePair> properties = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.ContainerAppData ContainerAppData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState?), string kubeEnvironmentId = null, string latestRevisionName = null, string latestRevisionFqdn = null, Azure.ResourceManager.AppService.Models.Configuration configuration = null, Azure.ResourceManager.AppService.Models.Template template = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ContainerAppSecret ContainerAppSecret(string name = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ContentHash ContentHash(string algorithm = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ContentLink ContentLink(System.Uri uri = null, string contentVersion = null, long? contentSize = default(long?), Azure.ResourceManager.AppService.Models.ContentHash contentHash = null, System.BinaryData metadata = null) { throw null; }
         public static Azure.ResourceManager.AppService.ContinuousWebJobData ContinuousWebJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.ContinuousWebJobStatus? status = default(Azure.ResourceManager.AppService.Models.ContinuousWebJobStatus?), string detailedStatus = null, System.Uri logUri = null, string runCommand = null, System.Uri uri = null, System.Uri extraInfoUri = null, Azure.ResourceManager.AppService.Models.WebJobType? webJobType = default(Azure.ResourceManager.AppService.Models.WebJobType?), string error = null, bool? isUsingSdk = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.CsmDeploymentStatus CsmDeploymentStatus(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string deploymentId = null, Azure.ResourceManager.AppService.Models.DeploymentBuildStatus? status = default(Azure.ResourceManager.AppService.Models.DeploymentBuildStatus?), int? numberOfInstancesInProgress = default(int?), int? numberOfInstancesSuccessful = default(int?), int? numberOfInstancesFailed = default(int?), System.Collections.Generic.IEnumerable<string> failedInstancesLogs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.ErrorEntity> errors = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.CsmOperationDescription CsmOperationDescription(string name = null, bool? isDataAction = default(bool?), Azure.ResourceManager.AppService.Models.CsmOperationDisplay display = null, string origin = null, Azure.ResourceManager.AppService.Models.ServiceSpecification csmOperationDescriptionServiceSpecification = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.CsmOperationDisplay CsmOperationDisplay(string provider = null, string resource = null, string operation = null, string description = null) { throw null; }
         public static Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData CsmPublishingCredentialsPoliciesEntityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? allow = default(bool?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.CsmUsageQuota CsmUsageQuota(string unit = null, System.DateTimeOffset? nextResetOn = default(System.DateTimeOffset?), long? currentValue = default(long?), long? limit = default(long?), Azure.ResourceManager.AppService.Models.LocalizableString name = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.CustomHostnameAnalysisResult CustomHostnameAnalysisResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isHostnameAlreadyVerified = default(bool?), Azure.ResourceManager.AppService.Models.DnsVerificationTestResult? customDomainVerificationTest = default(Azure.ResourceManager.AppService.Models.DnsVerificationTestResult?), Azure.ResponseError customDomainVerificationFailureInfo = null, bool? hasConflictOnScaleUnit = default(bool?), bool? hasConflictAcrossSubscription = default(bool?), string conflictingAppResourceId = null, System.Collections.Generic.IEnumerable<string> cNameRecords = null, System.Collections.Generic.IEnumerable<string> txtRecords = null, System.Collections.Generic.IEnumerable<string> aRecords = null, System.Collections.Generic.IEnumerable<string> alternateCNameRecords = null, System.Collections.Generic.IEnumerable<string> alternateTxtRecords = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.CustomDnsSuffixConfigurationData CustomDnsSuffixConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.CustomDnsSuffixProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.CustomDnsSuffixProvisioningState?), string provisioningDetails = null, string dnsSuffix = null, System.Uri certificateUri = null, string keyVaultReferenceIdentity = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.CustomHostnameAnalysisResult CustomHostnameAnalysisResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isHostnameAlreadyVerified = default(bool?), Azure.ResourceManager.AppService.Models.DnsVerificationTestResult? customDomainVerificationTest = default(Azure.ResourceManager.AppService.Models.DnsVerificationTestResult?), Azure.ResourceManager.AppService.Models.ErrorEntity customDomainVerificationFailureInfo = null, bool? hasConflictOnScaleUnit = default(bool?), bool? hasConflictAcrossSubscription = default(bool?), string conflictingAppResourceId = null, System.Collections.Generic.IEnumerable<string> cNameRecords = null, System.Collections.Generic.IEnumerable<string> txtRecords = null, System.Collections.Generic.IEnumerable<string> aRecords = null, System.Collections.Generic.IEnumerable<string> alternateCNameRecords = null, System.Collections.Generic.IEnumerable<string> alternateTxtRecords = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.CustomHostnameSites CustomHostnameSites(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string customHostname = null, string region = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.AppServiceIdentifierData> siteResourceIds = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.DatabaseConnectionData DatabaseConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string resourceId = null, string connectionIdentity = null, string connectionString = null, string region = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview DatabaseConnectionOverview(string resourceId = null, string connectionIdentity = null, string region = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = null, string name = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.DataProviderKeyValuePair DataProviderKeyValuePair(string key = null, System.BinaryData value = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.DataProviderMetadata DataProviderMetadata(string providerName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.DataProviderKeyValuePair> propertyBag = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.DeletedAppRestoreContent DeletedAppRestoreContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier deletedSiteId = null, bool? recoverConfiguration = default(bool?), string snapshotTime = null, bool? useDRSecondary = default(bool?), string kind = null) { throw null; }
@@ -7014,6 +8244,9 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.Models.DomainAvailabilityCheckResult DomainAvailabilityCheckResult(string name = null, bool? isAvailable = default(bool?), Azure.ResourceManager.AppService.Models.AppServiceDomainType? domainType = default(Azure.ResourceManager.AppService.Models.AppServiceDomainType?)) { throw null; }
         public static Azure.ResourceManager.AppService.Models.DomainControlCenterSsoRequestInfo DomainControlCenterSsoRequestInfo(System.Uri uri = null, string postParameterKey = null, string postParameterValue = null) { throw null; }
         public static Azure.ResourceManager.AppService.DomainOwnershipIdentifierData DomainOwnershipIdentifierData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string ownershipId = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ErrorInfo ErrorInfo(string code = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.Expression Expression(string text = null, System.BinaryData value = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.Expression> subexpressions = null, Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo error = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ExpressionRoot ExpressionRoot(string text = null, System.BinaryData value = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.Expression> subexpressions = null, Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo error = null, string path = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.FunctionAppHostKeys FunctionAppHostKeys(string masterKey = null, System.Collections.Generic.IReadOnlyDictionary<string, string> functionKeys = null, System.Collections.Generic.IReadOnlyDictionary<string, string> systemKeys = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.FunctionAppMajorVersion FunctionAppMajorVersion(string displayText = null, string value = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.FunctionAppMinorVersion> minorVersions = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.FunctionAppMinorVersion FunctionAppMinorVersion(string displayText = null, string value = null, Azure.ResourceManager.AppService.Models.FunctionAppRuntimes stackSettings = null) { throw null; }
@@ -7032,8 +8265,10 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.Models.HybridConnectionKey HybridConnectionKey(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string sendKeyName = null, string sendKeyValue = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.HybridConnectionLimitData HybridConnectionLimitData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? current = default(int?), int? maximum = default(int?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.InboundEnvironmentEndpoint InboundEnvironmentEndpoint(string description = null, System.Collections.Generic.IEnumerable<string> endpoints = null, System.Collections.Generic.IEnumerable<string> ports = null) { throw null; }
-        public static Azure.ResourceManager.AppService.KubeEnvironmentData KubeEnvironmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.AppService.Models.KubeEnvironmentProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.KubeEnvironmentProvisioningState?), string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = default(bool?), string defaultDomain = null, string staticIP = null, Azure.ResourceManager.AppService.Models.ArcConfiguration arcConfiguration = null, Azure.ResourceManager.AppService.Models.AppLogsConfiguration appLogsConfiguration = null, Azure.Core.ResourceIdentifier aksResourceId = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.KubeEnvironmentPatch KubeEnvironmentPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.KubeEnvironmentProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.KubeEnvironmentProvisioningState?), string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = default(bool?), string defaultDomain = null, string staticIP = null, Azure.ResourceManager.AppService.Models.ArcConfiguration arcConfiguration = null, Azure.ResourceManager.AppService.Models.AppLogsConfiguration appLogsConfiguration = null, Azure.Core.ResourceIdentifier aksResourceId = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.Ingress Ingress(string fqdn = null, bool? external = default(bool?), int? targetPort = default(int?), Azure.ResourceManager.AppService.Models.IngressTransportMethod? transport = default(Azure.ResourceManager.AppService.Models.IngressTransportMethod?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.TrafficWeight> traffic = null, bool? allowInsecure = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.JsonSchema JsonSchema(string title = null, string content = null) { throw null; }
+        public static Azure.ResourceManager.AppService.KubeEnvironmentData KubeEnvironmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.AppService.Models.KubeEnvironmentProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.KubeEnvironmentProvisioningState?), string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = default(bool?), string defaultDomain = null, string staticIP = null, string environmentType = null, Azure.ResourceManager.AppService.Models.ArcConfiguration arcConfiguration = null, Azure.ResourceManager.AppService.Models.AppLogsConfiguration appLogsConfiguration = null, Azure.ResourceManager.AppService.Models.ContainerAppsConfiguration containerAppsConfiguration = null, Azure.Core.ResourceIdentifier aksResourceId = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.KubeEnvironmentPatch KubeEnvironmentPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.KubeEnvironmentProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.KubeEnvironmentProvisioningState?), string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = default(bool?), string defaultDomain = null, string staticIP = null, Azure.ResourceManager.AppService.Models.ArcConfiguration arcConfiguration = null, Azure.ResourceManager.AppService.Models.AppLogsConfiguration appLogsConfiguration = null, Azure.ResourceManager.AppService.Models.ContainerAppsConfiguration containerAppsConfiguration = null, Azure.Core.ResourceIdentifier aksResourceId = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.KubeEnvironmentProfile KubeEnvironmentProfile(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?)) { throw null; }
         public static Azure.ResourceManager.AppService.Models.LinuxJavaContainerSettings LinuxJavaContainerSettings(string java11Runtime = null, string java8Runtime = null, bool? isPreview = default(bool?), bool? isDeprecated = default(bool?), bool? isHidden = default(bool?), System.DateTimeOffset? endOfLifeOn = default(System.DateTimeOffset?), bool? isAutoUpdate = default(bool?), bool? isEarlyAccess = default(bool?)) { throw null; }
         public static Azure.ResourceManager.AppService.Models.LocalizableString LocalizableString(string value = null, string localizedValue = null) { throw null; }
@@ -7053,38 +8288,44 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.Models.PremierAddOnOffer PremierAddOnOffer(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string sku = null, string product = null, string vendor = null, bool? isPromoCodeRequired = default(bool?), int? quota = default(int?), Azure.ResourceManager.AppService.Models.AppServicePlanRestriction? webHostingPlanRestrictions = default(Azure.ResourceManager.AppService.Models.AppServicePlanRestriction?), System.Uri privacyPolicyUri = null, System.Uri legalTermsUri = null, string marketplacePublisher = null, string marketplaceOffer = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.PremierAddOnPatchResource PremierAddOnPatchResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string sku = null, string product = null, string vendor = null, string marketplacePublisher = null, string marketplaceOffer = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.PrivateAccessData PrivateAccessData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.PrivateAccessVirtualNetwork> virtualNetworks = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo PrivateLinkConnectionApprovalRequestInfo(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState privateLinkServiceConnectionState = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.ProcessInfoData ProcessInfoData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? identifier = default(int?), string deploymentName = null, string href = null, string minidump = null, bool? isProfileRunning = default(bool?), bool? isIisProfileRunning = default(bool?), double? iisProfileTimeoutInSeconds = default(double?), string parent = null, System.Collections.Generic.IEnumerable<string> children = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.ProcessThreadInfo> threads = null, System.Collections.Generic.IEnumerable<string> openFileHandles = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.ProcessModuleInfoData> modules = null, string fileName = null, string commandLine = null, string userName = null, int? handleCount = default(int?), int? moduleCount = default(int?), int? threadCount = default(int?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), string totalCpuTime = null, string userCpuTime = null, string privilegedCpuTime = null, long? workingSet = default(long?), long? peakWorkingSet = default(long?), long? privateMemory = default(long?), long? virtualMemory = default(long?), long? peakVirtualMemory = default(long?), long? pagedSystemMemory = default(long?), long? nonPagedSystemMemory = default(long?), long? pagedMemory = default(long?), long? peakPagedMemory = default(long?), System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> environmentVariables = null, bool? isScmSite = default(bool?), bool? isWebjob = default(bool?), string description = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.ProcessModuleInfoData ProcessModuleInfoData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string baseAddress = null, string fileName = null, string href = null, string filePath = null, int? moduleMemorySize = default(int?), string fileVersion = null, string fileDescription = null, string product = null, string productVersion = null, bool? isDebug = default(bool?), string language = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.ProcessThreadInfo ProcessThreadInfo(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? identifier = default(int?), string href = null, string process = null, string startAddress = null, int? currentPriority = default(int?), string priorityLevel = null, int? basePriority = default(int?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), string totalProcessorTime = null, string userProcessorTime = null, string state = null, string waitReason = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.PublicCertificateData PublicCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, byte[] blob = null, Azure.ResourceManager.AppService.Models.PublicCertificateLocation? publicCertificateLocation = default(Azure.ResourceManager.AppService.Models.PublicCertificateLocation?), string thumbprintString = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.PublishingUserData PublishingUserData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string publishingUserName = null, string publishingPassword = null, string publishingPasswordHash = null, string publishingPasswordHashSalt = null, System.Uri scmUri = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.RecommendationRuleData RecommendationRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string recommendationName = null, string displayName = null, string message = null, System.Guid? recommendationId = default(System.Guid?), string description = null, string actionName = null, Azure.ResourceManager.AppService.Models.NotificationLevel? level = default(Azure.ResourceManager.AppService.Models.NotificationLevel?), Azure.ResourceManager.AppService.Models.RecommendationChannel? channels = default(Azure.ResourceManager.AppService.Models.RecommendationChannel?), System.Collections.Generic.IEnumerable<string> categoryTags = null, bool? isDynamic = default(bool?), string extensionName = null, string bladeName = null, string forwardLink = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.RecurrenceSchedule RecurrenceSchedule(System.Collections.Generic.IEnumerable<int> minutes = null, System.Collections.Generic.IEnumerable<int> hours = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.DaysOfWeek> weekDays = null, System.Collections.Generic.IEnumerable<int> monthDays = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.RecurrenceScheduleOccurrence> monthlyOccurrences = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.RecurrenceScheduleOccurrence RecurrenceScheduleOccurrence(Azure.ResourceManager.AppService.Models.DayOfWeek? day = default(Azure.ResourceManager.AppService.Models.DayOfWeek?), int? occurrence = default(int?)) { throw null; }
         public static Azure.ResourceManager.AppService.Models.ReissueCertificateOrderContent ReissueCertificateOrderContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? keySize = default(int?), int? delayExistingRevokeInHours = default(int?), string csr = null, bool? isPrivateKeyExternal = default(bool?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.RelayServiceConnectionEntityData RelayServiceConnectionEntityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string entityName = null, string entityConnectionString = null, string resourceConnectionString = null, string hostname = null, int? port = default(int?), System.Uri biztalkUri = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.RemotePrivateEndpointConnection RemotePrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string provisioningState = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState privateLinkServiceConnectionState = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> ipAddresses = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.RemotePrivateEndpointConnectionARMResourceData RemotePrivateEndpointConnectionARMResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string provisioningState = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState privateLinkServiceConnectionState = null, System.Collections.Generic.IEnumerable<System.Net.IPAddress> ipAddresses = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.RenewCertificateOrderContent RenewCertificateOrderContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? keySize = default(int?), string csr = null, bool? isPrivateKeyExternal = default(bool?), string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.RequestHistoryData RequestHistoryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AppService.Models.RequestHistoryProperties properties = null) { throw null; }
         public static Azure.ResourceManager.AppService.ResourceHealthMetadataData ResourceHealthMetadataData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string category = null, bool? isSignalAvailable = default(bool?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.ResourceMetricAvailability ResourceMetricAvailability(string timeGrain = null, string retention = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.ResourceMetricDefinition ResourceMetricDefinition(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string unit = null, string primaryAggregationType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.ResourceMetricAvailability> metricAvailabilities = null, System.Uri resourceUri = null, System.Collections.Generic.IReadOnlyDictionary<string, string> properties = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.ResourceNameAvailability ResourceNameAvailability(bool? isNameAvailable = default(bool?), Azure.ResourceManager.AppService.Models.InAvailabilityReasonType? reason = default(Azure.ResourceManager.AppService.Models.InAvailabilityReasonType?), string message = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.ResourceNameAvailabilityContent ResourceNameAvailabilityContent(string name = null, Azure.ResourceManager.AppService.Models.CheckNameResourceType resourceType = default(Azure.ResourceManager.AppService.Models.CheckNameResourceType), bool? isFqdn = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection ResponseMessageEnvelopeRemotePrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.ResourceManager.AppService.Models.AppServiceArmPlan plan = null, Azure.ResourceManager.AppService.Models.RemotePrivateEndpointConnection properties = null, Azure.ResourceManager.AppService.Models.AppServiceSkuDescription sku = null, string status = null, Azure.ResponseError error = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ResourceNameAvailabilityContent ResourceNameAvailabilityContent(string name = null, Azure.ResourceManager.AppService.Models.CheckNameResourceType resourceType = default(Azure.ResourceManager.AppService.Models.CheckNameResourceType), bool? isFqdn = default(bool?), string environmentId = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ResourceReference ResourceReference(string id = null, string name = null, string resourceType = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection ResponseMessageEnvelopeRemotePrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.ResourceManager.AppService.Models.AppServiceArmPlan plan = null, Azure.ResourceManager.AppService.Models.RemotePrivateEndpointConnection properties = null, Azure.ResourceManager.AppService.Models.AppServiceSkuDescription sku = null, string status = null, Azure.ResourceManager.AppService.Models.ErrorEntity error = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.RestoreRequestInfo RestoreRequestInfo(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri storageAccountUri = null, string blobName = null, bool? canOverwrite = default(bool?), string siteName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceDatabaseBackupSetting> databases = null, bool? ignoreConflictingHostNames = default(bool?), bool? ignoreDatabases = default(bool?), string appServicePlan = null, Azure.ResourceManager.AppService.Models.BackupRestoreOperationType? operationType = default(Azure.ResourceManager.AppService.Models.BackupRestoreOperationType?), bool? adjustConnectionStrings = default(bool?), string hostingEnvironment = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.RevisionData RevisionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string fqdn = null, Azure.ResourceManager.AppService.Models.Template template = null, bool? active = default(bool?), int? replicas = default(int?), int? trafficWeight = default(int?), string provisioningError = null, Azure.ResourceManager.AppService.Models.RevisionHealthState? healthState = default(Azure.ResourceManager.AppService.Models.RevisionHealthState?), Azure.ResourceManager.AppService.Models.RevisionProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.RevisionProvisioningState?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.ServiceSpecification ServiceSpecification(System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.MetricSpecification> metricSpecifications = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.LogSpecification> logSpecifications = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.SiteAuthSettings SiteAuthSettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isEnabled = default(bool?), string runtimeVersion = null, Azure.ResourceManager.AppService.Models.UnauthenticatedClientAction? unauthenticatedClientAction = default(Azure.ResourceManager.AppService.Models.UnauthenticatedClientAction?), bool? isTokenStoreEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> allowedExternalRedirectUrls = null, Azure.ResourceManager.AppService.Models.BuiltInAuthenticationProvider? defaultProvider = default(Azure.ResourceManager.AppService.Models.BuiltInAuthenticationProvider?), double? tokenRefreshExtensionHours = default(double?), string clientId = null, string clientSecret = null, string clientSecretSettingName = null, string clientSecretCertificateThumbprintString = null, string issuer = null, bool? validateIssuer = default(bool?), System.Collections.Generic.IEnumerable<string> allowedAudiences = null, System.Collections.Generic.IEnumerable<string> additionalLoginParams = null, string aadClaimsAuthorization = null, string googleClientId = null, string googleClientSecret = null, string googleClientSecretSettingName = null, System.Collections.Generic.IEnumerable<string> googleOAuthScopes = null, string facebookAppId = null, string facebookAppSecret = null, string facebookAppSecretSettingName = null, System.Collections.Generic.IEnumerable<string> facebookOAuthScopes = null, string gitHubClientId = null, string gitHubClientSecret = null, string gitHubClientSecretSettingName = null, System.Collections.Generic.IEnumerable<string> gitHubOAuthScopes = null, string twitterConsumerKey = null, string twitterConsumerSecret = null, string twitterConsumerSecretSettingName = null, string microsoftAccountClientId = null, string microsoftAccountClientSecret = null, string microsoftAccountClientSecretSettingName = null, System.Collections.Generic.IEnumerable<string> microsoftAccountOAuthScopes = null, string isAuthFromFile = null, string authFilePath = null, string configVersion = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2 SiteAuthSettingsV2(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.AuthPlatform platform = null, Azure.ResourceManager.AppService.Models.GlobalValidation globalValidation = null, Azure.ResourceManager.AppService.Models.AppServiceIdentityProviders identityProviders = null, Azure.ResourceManager.AppService.Models.WebAppLoginInfo login = null, Azure.ResourceManager.AppService.Models.AppServiceHttpSettings httpSettings = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.SiteAuthSettingsV2Data SiteAuthSettingsV2Data(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.AuthPlatform platform = null, Azure.ResourceManager.AppService.Models.GlobalValidation globalValidation = null, Azure.ResourceManager.AppService.Models.AppServiceIdentityProviders identityProviders = null, Azure.ResourceManager.AppService.Models.WebAppLoginInfo login = null, Azure.ResourceManager.AppService.Models.AppServiceHttpSettings httpSettings = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.SiteCloneability SiteCloneability(Azure.ResourceManager.AppService.Models.CloneAbilityResult? result = default(Azure.ResourceManager.AppService.Models.CloneAbilityResult?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.SiteCloneabilityCriterion> blockingFeatures = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.SiteCloneabilityCriterion> unsupportedFeatures = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.SiteCloneabilityCriterion> blockingCharacteristics = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.SiteCloneabilityCriterion SiteCloneabilityCriterion(string name = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.AppService.SiteConfigData SiteConfigData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? numberOfWorkers = default(int?), System.Collections.Generic.IEnumerable<string> defaultDocuments = null, string netFrameworkVersion = null, string phpVersion = null, string pythonVersion = null, string nodeVersion = null, string powerShellVersion = null, string linuxFxVersion = null, string windowsFxVersion = null, bool? isRequestTracingEnabled = default(bool?), System.DateTimeOffset? requestTracingExpirationOn = default(System.DateTimeOffset?), bool? isRemoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = null, bool? isHttpLoggingEnabled = default(bool?), bool? useManagedIdentityCreds = default(bool?), string acrUserManagedIdentityId = null, int? logsDirectorySizeLimit = default(int?), bool? isDetailedErrorLoggingEnabled = default(bool?), string publishingUsername = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> appSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.ConnStringInfo> connectionStrings = null, Azure.ResourceManager.AppService.Models.SiteMachineKey machineKey = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.HttpRequestHandlerMapping> handlerMappings = null, string documentRoot = null, Azure.ResourceManager.AppService.Models.ScmType? scmType = default(Azure.ResourceManager.AppService.Models.ScmType?), bool? use32BitWorkerProcess = default(bool?), bool? isWebSocketsEnabled = default(bool?), bool? isAlwaysOn = default(bool?), string javaVersion = null, string javaContainer = null, string javaContainerVersion = null, string appCommandLine = null, Azure.ResourceManager.AppService.Models.ManagedPipelineMode? managedPipelineMode = default(Azure.ResourceManager.AppService.Models.ManagedPipelineMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.VirtualApplication> virtualApplications = null, Azure.ResourceManager.AppService.Models.SiteLoadBalancing? loadBalancing = default(Azure.ResourceManager.AppService.Models.SiteLoadBalancing?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.RampUpRule> experimentsRampUpRules = null, Azure.ResourceManager.AppService.Models.SiteLimits limits = null, bool? isAutoHealEnabled = default(bool?), Azure.ResourceManager.AppService.Models.AutoHealRules autoHealRules = null, string tracingOptions = null, string vnetName = null, bool? isVnetRouteAllEnabled = default(bool?), int? vnetPrivatePortsCount = default(int?), Azure.ResourceManager.AppService.Models.AppServiceCorsSettings cors = null, Azure.ResourceManager.AppService.Models.WebAppPushSettings push = null, System.Uri apiDefinitionUri = null, string apiManagementConfigId = null, string autoSwapSlotName = null, bool? isLocalMySqlEnabled = default(bool?), int? managedServiceIdentityId = default(int?), int? xManagedServiceIdentityId = default(int?), string keyVaultReferenceIdentity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> ipSecurityRestrictions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = null, bool? allowIPSecurityRestrictionsForScmToUseMain = default(bool?), bool? isHttp20Enabled = default(bool?), Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? minTlsVersion = default(Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion?), Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? scmMinTlsVersion = default(Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion?), Azure.ResourceManager.AppService.Models.AppServiceFtpsState? ftpsState = default(Azure.ResourceManager.AppService.Models.AppServiceFtpsState?), int? preWarmedInstanceCount = default(int?), int? functionAppScaleLimit = default(int?), string healthCheckPath = null, bool? isFunctionsRuntimeScaleMonitoringEnabled = default(bool?), string websiteTimeZone = null, int? minimumElasticInstanceCount = default(int?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AppServiceStorageAccessInfo> azureStorageAccounts = null, string publicNetworkAccess = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.SiteConfigProperties SiteConfigProperties(int? numberOfWorkers = default(int?), System.Collections.Generic.IEnumerable<string> defaultDocuments = null, string netFrameworkVersion = null, string phpVersion = null, string pythonVersion = null, string nodeVersion = null, string powerShellVersion = null, string linuxFxVersion = null, string windowsFxVersion = null, bool? isRequestTracingEnabled = default(bool?), System.DateTimeOffset? requestTracingExpirationOn = default(System.DateTimeOffset?), bool? isRemoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = null, bool? isHttpLoggingEnabled = default(bool?), bool? useManagedIdentityCreds = default(bool?), string acrUserManagedIdentityId = null, int? logsDirectorySizeLimit = default(int?), bool? isDetailedErrorLoggingEnabled = default(bool?), string publishingUsername = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> appSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.ConnStringInfo> connectionStrings = null, Azure.ResourceManager.AppService.Models.SiteMachineKey machineKey = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.HttpRequestHandlerMapping> handlerMappings = null, string documentRoot = null, Azure.ResourceManager.AppService.Models.ScmType? scmType = default(Azure.ResourceManager.AppService.Models.ScmType?), bool? use32BitWorkerProcess = default(bool?), bool? isWebSocketsEnabled = default(bool?), bool? isAlwaysOn = default(bool?), string javaVersion = null, string javaContainer = null, string javaContainerVersion = null, string appCommandLine = null, Azure.ResourceManager.AppService.Models.ManagedPipelineMode? managedPipelineMode = default(Azure.ResourceManager.AppService.Models.ManagedPipelineMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.VirtualApplication> virtualApplications = null, Azure.ResourceManager.AppService.Models.SiteLoadBalancing? loadBalancing = default(Azure.ResourceManager.AppService.Models.SiteLoadBalancing?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.RampUpRule> experimentsRampUpRules = null, Azure.ResourceManager.AppService.Models.SiteLimits limits = null, bool? isAutoHealEnabled = default(bool?), Azure.ResourceManager.AppService.Models.AutoHealRules autoHealRules = null, string tracingOptions = null, string vnetName = null, bool? isVnetRouteAllEnabled = default(bool?), int? vnetPrivatePortsCount = default(int?), Azure.ResourceManager.AppService.Models.AppServiceCorsSettings cors = null, Azure.ResourceManager.AppService.Models.WebAppPushSettings push = null, System.Uri apiDefinitionUri = null, string apiManagementConfigId = null, string autoSwapSlotName = null, bool? isLocalMySqlEnabled = default(bool?), int? managedServiceIdentityId = default(int?), int? xManagedServiceIdentityId = default(int?), string keyVaultReferenceIdentity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> ipSecurityRestrictions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = null, bool? allowIPSecurityRestrictionsForScmToUseMain = default(bool?), bool? isHttp20Enabled = default(bool?), Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? minTlsVersion = default(Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion?), Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? scmMinTlsVersion = default(Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion?), Azure.ResourceManager.AppService.Models.AppServiceFtpsState? ftpsState = default(Azure.ResourceManager.AppService.Models.AppServiceFtpsState?), int? preWarmedInstanceCount = default(int?), int? functionAppScaleLimit = default(int?), string healthCheckPath = null, bool? isFunctionsRuntimeScaleMonitoringEnabled = default(bool?), string websiteTimeZone = null, int? minimumElasticInstanceCount = default(int?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AppServiceStorageAccessInfo> azureStorageAccounts = null, string publicNetworkAccess = null) { throw null; }
+        public static Azure.ResourceManager.AppService.SiteConfigData SiteConfigData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? numberOfWorkers = default(int?), System.Collections.Generic.IEnumerable<string> defaultDocuments = null, string netFrameworkVersion = null, string phpVersion = null, string pythonVersion = null, string nodeVersion = null, string powerShellVersion = null, string linuxFxVersion = null, string windowsFxVersion = null, bool? isRequestTracingEnabled = default(bool?), System.DateTimeOffset? requestTracingExpirationOn = default(System.DateTimeOffset?), bool? isRemoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = null, bool? isHttpLoggingEnabled = default(bool?), bool? useManagedIdentityCreds = default(bool?), string acrUserManagedIdentityId = null, int? logsDirectorySizeLimit = default(int?), bool? isDetailedErrorLoggingEnabled = default(bool?), string publishingUsername = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> appSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.ConnStringInfo> connectionStrings = null, Azure.ResourceManager.AppService.Models.SiteMachineKey machineKey = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.HttpRequestHandlerMapping> handlerMappings = null, string documentRoot = null, Azure.ResourceManager.AppService.Models.ScmType? scmType = default(Azure.ResourceManager.AppService.Models.ScmType?), bool? use32BitWorkerProcess = default(bool?), bool? isWebSocketsEnabled = default(bool?), bool? isAlwaysOn = default(bool?), string javaVersion = null, string javaContainer = null, string javaContainerVersion = null, string appCommandLine = null, Azure.ResourceManager.AppService.Models.ManagedPipelineMode? managedPipelineMode = default(Azure.ResourceManager.AppService.Models.ManagedPipelineMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.VirtualApplication> virtualApplications = null, Azure.ResourceManager.AppService.Models.SiteLoadBalancing? loadBalancing = default(Azure.ResourceManager.AppService.Models.SiteLoadBalancing?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.RampUpRule> experimentsRampUpRules = null, Azure.ResourceManager.AppService.Models.SiteLimits limits = null, bool? isAutoHealEnabled = default(bool?), Azure.ResourceManager.AppService.Models.AutoHealRules autoHealRules = null, string tracingOptions = null, string vnetName = null, bool? isVnetRouteAllEnabled = default(bool?), int? vnetPrivatePortsCount = default(int?), Azure.ResourceManager.AppService.Models.AppServiceCorsSettings cors = null, Azure.ResourceManager.AppService.Models.WebAppPushSettings push = null, System.Uri apiDefinitionUri = null, string apiManagementConfigId = null, string autoSwapSlotName = null, bool? isLocalMySqlEnabled = default(bool?), int? managedServiceIdentityId = default(int?), int? xManagedServiceIdentityId = default(int?), string keyVaultReferenceIdentity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> ipSecurityRestrictions = null, Azure.ResourceManager.AppService.Models.DefaultAction? ipSecurityRestrictionsDefaultAction = default(Azure.ResourceManager.AppService.Models.DefaultAction?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = null, Azure.ResourceManager.AppService.Models.DefaultAction? scmIPSecurityRestrictionsDefaultAction = default(Azure.ResourceManager.AppService.Models.DefaultAction?), bool? allowIPSecurityRestrictionsForScmToUseMain = default(bool?), bool? isHttp20Enabled = default(bool?), Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? minTlsVersion = default(Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion?), Azure.ResourceManager.AppService.Models.TlsCipherSuite? minTlsCipherSuite = default(Azure.ResourceManager.AppService.Models.TlsCipherSuite?), Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? scmMinTlsVersion = default(Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion?), Azure.ResourceManager.AppService.Models.AppServiceFtpsState? ftpsState = default(Azure.ResourceManager.AppService.Models.AppServiceFtpsState?), int? preWarmedInstanceCount = default(int?), int? functionAppScaleLimit = default(int?), int? elasticWebAppScaleLimit = default(int?), string healthCheckPath = null, bool? isFunctionsRuntimeScaleMonitoringEnabled = default(bool?), string websiteTimeZone = null, int? minimumElasticInstanceCount = default(int?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AppServiceStorageAccessInfo> azureStorageAccounts = null, string publicNetworkAccess = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.SiteConfigProperties SiteConfigProperties(int? numberOfWorkers = default(int?), System.Collections.Generic.IEnumerable<string> defaultDocuments = null, string netFrameworkVersion = null, string phpVersion = null, string pythonVersion = null, string nodeVersion = null, string powerShellVersion = null, string linuxFxVersion = null, string windowsFxVersion = null, bool? isRequestTracingEnabled = default(bool?), System.DateTimeOffset? requestTracingExpirationOn = default(System.DateTimeOffset?), bool? isRemoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = null, bool? isHttpLoggingEnabled = default(bool?), bool? useManagedIdentityCreds = default(bool?), string acrUserManagedIdentityId = null, int? logsDirectorySizeLimit = default(int?), bool? isDetailedErrorLoggingEnabled = default(bool?), string publishingUsername = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> appSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.ConnStringInfo> connectionStrings = null, Azure.ResourceManager.AppService.Models.SiteMachineKey machineKey = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.HttpRequestHandlerMapping> handlerMappings = null, string documentRoot = null, Azure.ResourceManager.AppService.Models.ScmType? scmType = default(Azure.ResourceManager.AppService.Models.ScmType?), bool? use32BitWorkerProcess = default(bool?), bool? isWebSocketsEnabled = default(bool?), bool? isAlwaysOn = default(bool?), string javaVersion = null, string javaContainer = null, string javaContainerVersion = null, string appCommandLine = null, Azure.ResourceManager.AppService.Models.ManagedPipelineMode? managedPipelineMode = default(Azure.ResourceManager.AppService.Models.ManagedPipelineMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.VirtualApplication> virtualApplications = null, Azure.ResourceManager.AppService.Models.SiteLoadBalancing? loadBalancing = default(Azure.ResourceManager.AppService.Models.SiteLoadBalancing?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.RampUpRule> experimentsRampUpRules = null, Azure.ResourceManager.AppService.Models.SiteLimits limits = null, bool? isAutoHealEnabled = default(bool?), Azure.ResourceManager.AppService.Models.AutoHealRules autoHealRules = null, string tracingOptions = null, string vnetName = null, bool? isVnetRouteAllEnabled = default(bool?), int? vnetPrivatePortsCount = default(int?), Azure.ResourceManager.AppService.Models.AppServiceCorsSettings cors = null, Azure.ResourceManager.AppService.Models.WebAppPushSettings push = null, System.Uri apiDefinitionUri = null, string apiManagementConfigId = null, string autoSwapSlotName = null, bool? isLocalMySqlEnabled = default(bool?), int? managedServiceIdentityId = default(int?), int? xManagedServiceIdentityId = default(int?), string keyVaultReferenceIdentity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> ipSecurityRestrictions = null, Azure.ResourceManager.AppService.Models.DefaultAction? ipSecurityRestrictionsDefaultAction = default(Azure.ResourceManager.AppService.Models.DefaultAction?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = null, Azure.ResourceManager.AppService.Models.DefaultAction? scmIPSecurityRestrictionsDefaultAction = default(Azure.ResourceManager.AppService.Models.DefaultAction?), bool? allowIPSecurityRestrictionsForScmToUseMain = default(bool?), bool? isHttp20Enabled = default(bool?), Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? minTlsVersion = default(Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion?), Azure.ResourceManager.AppService.Models.TlsCipherSuite? minTlsCipherSuite = default(Azure.ResourceManager.AppService.Models.TlsCipherSuite?), Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? scmMinTlsVersion = default(Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion?), Azure.ResourceManager.AppService.Models.AppServiceFtpsState? ftpsState = default(Azure.ResourceManager.AppService.Models.AppServiceFtpsState?), int? preWarmedInstanceCount = default(int?), int? functionAppScaleLimit = default(int?), int? elasticWebAppScaleLimit = default(int?), string healthCheckPath = null, bool? isFunctionsRuntimeScaleMonitoringEnabled = default(bool?), string websiteTimeZone = null, int? minimumElasticInstanceCount = default(int?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AppServiceStorageAccessInfo> azureStorageAccounts = null, string publicNetworkAccess = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.SiteConfigPropertiesDictionary SiteConfigPropertiesDictionary(bool? use32BitWorkerProcess = default(bool?), string linuxFxVersion = null, string javaVersion = null, string powerShellVersion = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.SiteConfigurationSnapshotInfo SiteConfigurationSnapshotInfo(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? snapshotTakenOn = default(System.DateTimeOffset?), int? snapshotId = default(int?), string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.SiteContainerData SiteContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string image = null, string targetPort = null, bool? isMain = default(bool?), string startUpCommand = null, Azure.ResourceManager.AppService.Models.AuthType? authType = default(Azure.ResourceManager.AppService.Models.AuthType?), string userName = null, string passwordSecret = null, string userManagedIdentityClientId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.VolumeMount> volumeMounts = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.EnvironmentVariable> environmentVariables = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.SiteDnsConfig SiteDnsConfig(System.Collections.Generic.IEnumerable<string> dnsServers = null, string dnsAltServer = null, int? dnsRetryAttemptTimeout = default(int?), int? dnsRetryAttemptCount = default(int?), int? dnsMaxCacheTimeout = default(int?), bool? dnsLegacySortOrder = default(bool?)) { throw null; }
         public static Azure.ResourceManager.AppService.SiteExtensionInfoData SiteExtensionInfoData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string extensionId = null, string title = null, Azure.ResourceManager.AppService.Models.SiteExtensionType? extensionType = default(Azure.ResourceManager.AppService.Models.SiteExtensionType?), string summary = null, string description = null, string version = null, System.Uri extensionUri = null, System.Uri projectUri = null, System.Uri iconUri = null, System.Uri licenseUri = null, System.Uri feedUri = null, System.Collections.Generic.IEnumerable<string> authors = null, string installerCommandLineParams = null, System.DateTimeOffset? publishedOn = default(System.DateTimeOffset?), int? downloadCount = default(int?), bool? localIsLatestVersion = default(bool?), string localPath = null, System.DateTimeOffset? installedOn = default(System.DateTimeOffset?), string provisioningState = null, string comment = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.SiteLogsConfigData SiteLogsConfigData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.ApplicationLogsConfig applicationLogs = null, Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig httpLogs = null, bool? isFailedRequestsTracingEnabled = default(bool?), bool? isDetailedErrorMessagesEnabled = default(bool?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.SiteMachineKey SiteMachineKey(string validation = null, string validationKey = null, string decryption = null, string decryptionKey = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.SitePatchInfo SitePatchInfo(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string state = null, System.Collections.Generic.IEnumerable<string> hostNames = null, string repositorySiteName = null, Azure.ResourceManager.AppService.Models.AppServiceUsageState? usageState = default(Azure.ResourceManager.AppService.Models.AppServiceUsageState?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> enabledHostNames = null, Azure.ResourceManager.AppService.Models.WebSiteAvailabilityState? availabilityState = default(Azure.ResourceManager.AppService.Models.WebSiteAvailabilityState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.HostNameSslState> hostNameSslStates = null, Azure.Core.ResourceIdentifier serverFarmId = null, bool? isReserved = default(bool?), bool? isXenon = default(bool?), bool? isHyperV = default(bool?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.SiteConfigProperties siteConfig = null, System.Collections.Generic.IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = default(bool?), string targetSwapSlot = null, Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = default(bool?), bool? isClientCertEnabled = default(bool?), Azure.ResourceManager.AppService.Models.ClientCertMode? clientCertMode = default(Azure.ResourceManager.AppService.Models.ClientCertMode?), string clientCertExclusionPaths = null, bool? isHostNameDisabled = default(bool?), string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = default(int?), int? dailyMemoryTimeQuota = default(int?), System.DateTimeOffset? suspendOn = default(System.DateTimeOffset?), int? maxNumberOfWorkers = default(int?), Azure.ResourceManager.AppService.Models.CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = default(bool?), string defaultHostName = null, Azure.ResourceManager.AppService.Models.SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = default(bool?), Azure.ResourceManager.AppService.Models.RedundancyMode? redundancyMode = default(Azure.ResourceManager.AppService.Models.RedundancyMode?), System.Guid? inProgressOperationId = default(System.Guid?), bool? isStorageAccountRequired = default(bool?), string keyVaultReferenceIdentity = null, Azure.Core.ResourceIdentifier virtualNetworkSubnetId = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.SitePatchInfo SitePatchInfo(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string state = null, System.Collections.Generic.IEnumerable<string> hostNames = null, string repositorySiteName = null, Azure.ResourceManager.AppService.Models.AppServiceUsageState? usageState = default(Azure.ResourceManager.AppService.Models.AppServiceUsageState?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> enabledHostNames = null, Azure.ResourceManager.AppService.Models.WebSiteAvailabilityState? availabilityState = default(Azure.ResourceManager.AppService.Models.WebSiteAvailabilityState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.HostNameSslState> hostNameSslStates = null, Azure.Core.ResourceIdentifier serverFarmId = null, bool? isReserved = default(bool?), bool? isXenon = default(bool?), bool? isHyperV = default(bool?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.SiteDnsConfig dnsConfiguration = null, Azure.ResourceManager.AppService.Models.SiteConfigProperties siteConfig = null, System.Collections.Generic.IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = default(bool?), string targetSwapSlot = null, Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = default(bool?), bool? isClientCertEnabled = default(bool?), Azure.ResourceManager.AppService.Models.ClientCertMode? clientCertMode = default(Azure.ResourceManager.AppService.Models.ClientCertMode?), string clientCertExclusionPaths = null, bool? isHostNameDisabled = default(bool?), string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = default(int?), int? dailyMemoryTimeQuota = default(int?), System.DateTimeOffset? suspendOn = default(System.DateTimeOffset?), int? maxNumberOfWorkers = default(int?), Azure.ResourceManager.AppService.Models.CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = default(bool?), string defaultHostName = null, Azure.ResourceManager.AppService.Models.SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = default(bool?), Azure.ResourceManager.AppService.Models.RedundancyMode? redundancyMode = default(Azure.ResourceManager.AppService.Models.RedundancyMode?), System.Guid? inProgressOperationId = default(System.Guid?), bool? isStorageAccountRequired = default(bool?), string keyVaultReferenceIdentity = null, Azure.Core.ResourceIdentifier virtualNetworkSubnetId = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.SitePhpErrorLogFlag SitePhpErrorLogFlag(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string localLogErrors = null, string masterLogErrors = null, string localLogErrorsMaxLength = null, string masterLogErrorsMaxLength = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.SiteSeal SiteSeal(string html = null) { throw null; }
         public static Azure.ResourceManager.AppService.SiteSourceControlData SiteSourceControlData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Uri repoUri = null, string branch = null, bool? isManualIntegration = default(bool?), bool? isGitHubAction = default(bool?), bool? isDeploymentRollbackEnabled = default(bool?), bool? isMercurial = default(bool?), Azure.ResourceManager.AppService.Models.GitHubActionConfiguration gitHubActionConfiguration = null, string kind = null) { throw null; }
@@ -7093,12 +8334,16 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.Models.SlotSwapStatus SlotSwapStatus(System.DateTimeOffset? timestampUtc = default(System.DateTimeOffset?), string sourceSlotName = null, string destinationSlotName = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.SnapshotRestoreRequest SnapshotRestoreRequest(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string snapshotTime = null, Azure.ResourceManager.AppService.Models.SnapshotRecoverySource recoverySource = null, bool? canOverwrite = default(bool?), bool? recoverConfiguration = default(bool?), bool? ignoreConflictingHostNames = default(bool?), bool? useDRSecondary = default(bool?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.StampCapacity StampCapacity(string name = null, long? availableCapacity = default(long?), long? totalCapacity = default(long?), string unit = null, Azure.ResourceManager.AppService.Models.ComputeModeOption? computeMode = default(Azure.ResourceManager.AppService.Models.ComputeModeOption?), Azure.ResourceManager.AppService.Models.WorkerSizeOption? workerSize = default(Azure.ResourceManager.AppService.Models.WorkerSizeOption?), int? workerSizeId = default(int?), bool? excludeFromCapacityAllocation = default(bool?), bool? isApplicableForAllComputeModes = default(bool?), string siteMode = null, bool? isLinux = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.AppService.StaticSiteBuildData StaticSiteBuildData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string buildId = null, string sourceBranch = null, string pullRequestTitle = null, string hostname = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus? status = default(Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.StaticSiteBasicAuthPropertiesARMResourceData StaticSiteBasicAuthPropertiesARMResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string password = null, System.Uri secretUri = null, string applicableEnvironmentsMode = null, System.Collections.Generic.IEnumerable<string> environments = null, string secretState = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.StaticSiteBuildData StaticSiteBuildData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string buildId = null, string sourceBranch = null, string pullRequestTitle = null, string hostname = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus? status = default(Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend> linkedBackends = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview> databaseConnections = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.StaticSiteCustomDomainContent StaticSiteCustomDomainContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string validationMethod = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.StaticSiteCustomDomainOverviewData StaticSiteCustomDomainOverviewData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string domainName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.CustomDomainStatus? status = default(Azure.ResourceManager.AppService.Models.CustomDomainStatus?), string validationToken = null, string errorMessage = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.StaticSiteData StaticSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AppService.Models.AppServiceSkuDescription sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string defaultHostname = null, System.Uri repositoryUri = null, string branch = null, System.Collections.Generic.IEnumerable<string> customDomains = null, string repositoryToken = null, Azure.ResourceManager.AppService.Models.StaticSiteBuildProperties buildProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.AppService.Models.StagingEnvironmentPolicy? stagingEnvironmentPolicy = default(Azure.ResourceManager.AppService.Models.StagingEnvironmentPolicy?), bool? allowConfigFileUpdates = default(bool?), Azure.ResourceManager.AppService.Models.StaticSiteTemplate templateProperties = null, string contentDistributionEndpoint = null, string keyVaultReferenceIdentity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, string provider = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.StaticSiteData StaticSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AppService.Models.AppServiceSkuDescription sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string defaultHostname = null, System.Uri repositoryUri = null, string branch = null, System.Collections.Generic.IEnumerable<string> customDomains = null, string repositoryToken = null, Azure.ResourceManager.AppService.Models.StaticSiteBuildProperties buildProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.AppService.Models.StagingEnvironmentPolicy? stagingEnvironmentPolicy = default(Azure.ResourceManager.AppService.Models.StagingEnvironmentPolicy?), bool? allowConfigFileUpdates = default(bool?), Azure.ResourceManager.AppService.Models.StaticSiteTemplate templateProperties = null, string contentDistributionEndpoint = null, string keyVaultReferenceIdentity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend> linkedBackends = null, string provider = null, Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = default(Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus?), string publicNetworkAccess = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview> databaseConnections = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview StaticSiteDatabaseConnectionConfigurationFileOverview(string fileName = null, string contents = null, string staticSiteDatabaseConnectionConfigurationFileOverviewType = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.StaticSiteFunctionOverview StaticSiteFunctionOverview(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string functionName = null, Azure.ResourceManager.AppService.Models.FunctionTriggerType? triggerType = default(Azure.ResourceManager.AppService.Models.FunctionTriggerType?), string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.StaticSitePatch StaticSitePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string defaultHostname = null, System.Uri repositoryUri = null, string branch = null, System.Collections.Generic.IEnumerable<string> customDomains = null, string repositoryToken = null, Azure.ResourceManager.AppService.Models.StaticSiteBuildProperties buildProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.AppService.Models.StagingEnvironmentPolicy? stagingEnvironmentPolicy = default(Azure.ResourceManager.AppService.Models.StagingEnvironmentPolicy?), bool? allowConfigFileUpdates = default(bool?), Azure.ResourceManager.AppService.Models.StaticSiteTemplate templateProperties = null, string contentDistributionEndpoint = null, string keyVaultReferenceIdentity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, string provider = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend StaticSiteLinkedBackend(string backendResourceId = null, string region = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.AppService.StaticSiteLinkedBackendARMResourceData StaticSiteLinkedBackendARMResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string backendResourceId = null, string region = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string provisioningState = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.StaticSitePatch StaticSitePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string defaultHostname = null, System.Uri repositoryUri = null, string branch = null, System.Collections.Generic.IEnumerable<string> customDomains = null, string repositoryToken = null, Azure.ResourceManager.AppService.Models.StaticSiteBuildProperties buildProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = null, Azure.ResourceManager.AppService.Models.StagingEnvironmentPolicy? stagingEnvironmentPolicy = default(Azure.ResourceManager.AppService.Models.StagingEnvironmentPolicy?), bool? allowConfigFileUpdates = default(bool?), Azure.ResourceManager.AppService.Models.StaticSiteTemplate templateProperties = null, string contentDistributionEndpoint = null, string keyVaultReferenceIdentity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend> linkedBackends = null, string provider = null, Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = default(Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus?), string publicNetworkAccess = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview> databaseConnections = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.StaticSiteResetContent StaticSiteResetContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string repositoryToken = null, bool? shouldUpdateRepository = default(bool?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.StaticSiteStringList StaticSiteStringList(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> properties = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.StaticSitesWorkflowPreview StaticSitesWorkflowPreview(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string path = null, string contents = null, string kind = null) { throw null; }
@@ -7114,7 +8359,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.Models.TldLegalAgreement TldLegalAgreement(string agreementKey = null, string title = null, string content = null, System.Uri uri = null) { throw null; }
         public static Azure.ResourceManager.AppService.TopLevelDomainData TopLevelDomainData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isDomainPrivacySupported = default(bool?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.TriggeredJobHistoryData TriggeredJobHistoryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.TriggeredJobRun> runs = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.TriggeredWebJobData TriggeredWebJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.TriggeredJobRun latestRun = null, System.Uri historyUri = null, System.Uri schedulerLogsUri = null, string runCommand = null, System.Uri uri = null, System.Uri extraInfoUri = null, Azure.ResourceManager.AppService.Models.WebJobType? webJobType = default(Azure.ResourceManager.AppService.Models.WebJobType?), string error = null, bool? isUsingSdk = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.TriggeredWebJobData TriggeredWebJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.TriggeredJobRun latestRun = null, System.Uri historyUri = null, System.Uri schedulerLogsUri = null, string runCommand = null, System.Uri uri = null, System.Uri extraInfoUri = null, Azure.ResourceManager.AppService.Models.WebJobType? webJobType = default(Azure.ResourceManager.AppService.Models.WebJobType?), string error = null, bool? isUsingSdk = default(bool?), string publicNetworkAccess = null, bool? storageAccountRequired = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.ValidateResponseError ValidateResponseError(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.VirtualNetworkValidationFailureDetails VirtualNetworkValidationFailureDetails(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string message = null, bool? isFailed = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.VirtualNetworkValidationTestFailure> failedTests = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.VirtualNetworkValidationTestFailure> warnings = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.VirtualNetworkValidationTestFailure VirtualNetworkValidationTestFailure(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string testName = null, string details = null, string kind = null) { throw null; }
@@ -7134,14 +8379,79 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.Models.WebAppStack WebAppStack(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string displayText = null, string value = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.WebAppMajorVersion> majorVersions = null, Azure.ResourceManager.AppService.Models.StackPreferredOS? preferredOS = default(Azure.ResourceManager.AppService.Models.StackPreferredOS?), string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.WebJobData WebJobData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string runCommand = null, System.Uri uri = null, System.Uri extraInfoUri = null, Azure.ResourceManager.AppService.Models.WebJobType? webJobType = default(Azure.ResourceManager.AppService.Models.WebJobType?), string error = null, bool? isUsingSdk = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.WebSiteAnalysisDefinitionData WebSiteAnalysisDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string kind = null) { throw null; }
-        public static Azure.ResourceManager.AppService.WebSiteData WebSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, string state = null, System.Collections.Generic.IEnumerable<string> hostNames = null, string repositorySiteName = null, Azure.ResourceManager.AppService.Models.AppServiceUsageState? usageState = default(Azure.ResourceManager.AppService.Models.AppServiceUsageState?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> enabledHostNames = null, Azure.ResourceManager.AppService.Models.WebSiteAvailabilityState? availabilityState = default(Azure.ResourceManager.AppService.Models.WebSiteAvailabilityState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.HostNameSslState> hostNameSslStates = null, Azure.Core.ResourceIdentifier appServicePlanId = null, bool? isReserved = default(bool?), bool? isXenon = default(bool?), bool? isHyperV = default(bool?), System.DateTimeOffset? lastModifiedTimeUtc = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.SiteConfigProperties siteConfig = null, System.Collections.Generic.IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = default(bool?), string targetSwapSlot = null, Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = default(bool?), bool? isClientCertEnabled = default(bool?), Azure.ResourceManager.AppService.Models.ClientCertMode? clientCertMode = default(Azure.ResourceManager.AppService.Models.ClientCertMode?), string clientCertExclusionPaths = null, bool? isHostNameDisabled = default(bool?), string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = default(int?), int? dailyMemoryTimeQuota = default(int?), System.DateTimeOffset? suspendOn = default(System.DateTimeOffset?), int? maxNumberOfWorkers = default(int?), Azure.ResourceManager.AppService.Models.CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = default(bool?), string defaultHostName = null, Azure.ResourceManager.AppService.Models.SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = default(bool?), Azure.ResourceManager.AppService.Models.RedundancyMode? redundancyMode = default(Azure.ResourceManager.AppService.Models.RedundancyMode?), System.Guid? inProgressOperationId = default(System.Guid?), bool? isStorageAccountRequired = default(bool?), string keyVaultReferenceIdentity = null, Azure.Core.ResourceIdentifier virtualNetworkSubnetId = null, string kind = null) { throw null; }
+        public static Azure.ResourceManager.AppService.WebSiteData WebSiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, string state = null, System.Collections.Generic.IEnumerable<string> hostNames = null, string repositorySiteName = null, Azure.ResourceManager.AppService.Models.AppServiceUsageState? usageState = default(Azure.ResourceManager.AppService.Models.AppServiceUsageState?), bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> enabledHostNames = null, Azure.ResourceManager.AppService.Models.WebSiteAvailabilityState? availabilityState = default(Azure.ResourceManager.AppService.Models.WebSiteAvailabilityState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.HostNameSslState> hostNameSslStates = null, Azure.Core.ResourceIdentifier appServicePlanId = null, bool? isReserved = default(bool?), bool? isXenon = default(bool?), bool? isHyperV = default(bool?), System.DateTimeOffset? lastModifiedTimeUtc = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.SiteDnsConfig dnsConfiguration = null, bool? vnetRouteAllEnabled = default(bool?), bool? vnetImagePullEnabled = default(bool?), bool? vnetContentShareEnabled = default(bool?), bool? vnetBackupRestoreEnabled = default(bool?), Azure.ResourceManager.AppService.Models.SiteConfigProperties siteConfig = null, Azure.ResourceManager.AppService.Models.FunctionAppConfig functionAppConfig = null, Azure.ResourceManager.AppService.Models.DaprConfig daprConfig = null, string workloadProfileName = null, Azure.ResourceManager.AppService.Models.ResourceConfig resourceConfig = null, System.Collections.Generic.IEnumerable<string> trafficManagerHostNames = null, bool? isScmSiteAlsoStopped = default(bool?), string targetSwapSlot = null, Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile hostingEnvironmentProfile = null, bool? isClientAffinityEnabled = default(bool?), bool? isClientCertEnabled = default(bool?), Azure.ResourceManager.AppService.Models.ClientCertMode? clientCertMode = default(Azure.ResourceManager.AppService.Models.ClientCertMode?), string clientCertExclusionPaths = null, bool? isHostNameDisabled = default(bool?), string customDomainVerificationId = null, string outboundIPAddresses = null, string possibleOutboundIPAddresses = null, int? containerSize = default(int?), int? dailyMemoryTimeQuota = default(int?), System.DateTimeOffset? suspendOn = default(System.DateTimeOffset?), int? maxNumberOfWorkers = default(int?), Azure.ResourceManager.AppService.Models.CloningInfo cloningInfo = null, string resourceGroup = null, bool? isDefaultContainer = default(bool?), string defaultHostName = null, Azure.ResourceManager.AppService.Models.SlotSwapStatus slotSwapStatus = null, bool? isHttpsOnly = default(bool?), Azure.ResourceManager.AppService.Models.RedundancyMode? redundancyMode = default(Azure.ResourceManager.AppService.Models.RedundancyMode?), System.Guid? inProgressOperationId = default(System.Guid?), string publicNetworkAccess = null, bool? isStorageAccountRequired = default(bool?), string keyVaultReferenceIdentity = null, Azure.Core.ResourceIdentifier virtualNetworkSubnetId = null, string managedEnvironmentId = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.WebSiteInstanceStatusData WebSiteInstanceStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.SiteRuntimeState? state = default(Azure.ResourceManager.AppService.Models.SiteRuntimeState?), System.Uri statusUri = null, System.Uri detectorUri = null, System.Uri consoleUri = null, string healthCheckUrlString = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.ContainerInfo> containers = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.AppService.Models.WindowsJavaContainerSettings WindowsJavaContainerSettings(string javaContainer = null, string javaContainerVersion = null, bool? isPreview = default(bool?), bool? isDeprecated = default(bool?), bool? isHidden = default(bool?), System.DateTimeOffset? endOfLifeOn = default(System.DateTimeOffset?), bool? isAutoUpdate = default(bool?), bool? isEarlyAccess = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.Workflow Workflow(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.AppService.Models.WorkflowProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.WorkflowProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? changedOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.WorkflowState? state = default(Azure.ResourceManager.AppService.Models.WorkflowState?), string version = null, string accessEndpoint = null, Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration endpointsConfiguration = null, Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration accessControl = null, Azure.ResourceManager.AppService.Models.WorkflowSku sku = null, Azure.ResourceManager.AppService.Models.ResourceReference integrationAccount = null, Azure.ResourceManager.AppService.Models.ResourceReference integrationServiceEnvironment = null, System.BinaryData definition = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.WorkflowParameter> parameters = null, Azure.ResourceManager.AppService.Models.AppServiceKind? kind = default(Azure.ResourceManager.AppService.Models.AppServiceKind?)) { throw null; }
+        public static Azure.ResourceManager.AppService.WorkflowEnvelopeData WorkflowEnvelopeData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties WorkflowEnvelopeProperties(System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> files = null, Azure.ResourceManager.AppService.Models.WorkflowState? flowState = default(Azure.ResourceManager.AppService.Models.WorkflowState?), Azure.ResourceManager.AppService.Models.WorkflowHealth health = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.WorkflowHealth WorkflowHealth(Azure.ResourceManager.AppService.Models.WorkflowHealthState state = Azure.ResourceManager.AppService.Models.WorkflowHealthState.Unknown, Azure.ResourceManager.AppService.Models.ErrorEntity error = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.WorkflowOutputParameter WorkflowOutputParameter(Azure.ResourceManager.AppService.Models.ParameterType? parameterType = default(Azure.ResourceManager.AppService.Models.ParameterType?), System.BinaryData value = null, System.BinaryData metadata = null, string description = null, System.BinaryData error = null) { throw null; }
+        public static Azure.ResourceManager.AppService.WorkflowRunActionData WorkflowRunActionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.WorkflowStatus? status = default(Azure.ResourceManager.AppService.Models.WorkflowStatus?), string code = null, System.BinaryData error = null, string trackingId = null, Azure.ResourceManager.AppService.Models.RunActionCorrelation correlation = null, Azure.ResourceManager.AppService.Models.ContentLink inputsLink = null, Azure.ResourceManager.AppService.Models.ContentLink outputsLink = null, System.BinaryData trackedProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.RetryHistory> retryHistory = null) { throw null; }
+        public static Azure.ResourceManager.AppService.WorkflowRunActionRepetitionDefinitionData WorkflowRunActionRepetitionDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.RunActionCorrelation correlation = null, Azure.ResourceManager.AppService.Models.WorkflowStatus? status = default(Azure.ResourceManager.AppService.Models.WorkflowStatus?), string code = null, System.BinaryData error = null, string trackingId = null, System.BinaryData inputs = null, Azure.ResourceManager.AppService.Models.ContentLink inputsLink = null, System.BinaryData outputs = null, Azure.ResourceManager.AppService.Models.ContentLink outputsLink = null, System.BinaryData trackedProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.RetryHistory> retryHistory = null, int? iterationCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.Models.RepetitionIndex> repetitionIndexes = null) { throw null; }
+        public static Azure.ResourceManager.AppService.WorkflowRunData WorkflowRunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? waitEndOn = default(System.DateTimeOffset?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.WorkflowStatus? status = default(Azure.ResourceManager.AppService.Models.WorkflowStatus?), string code = null, System.BinaryData error = null, string correlationId = null, string correlationClientTrackingId = null, Azure.ResourceManager.AppService.Models.ResourceReference workflow = null, Azure.ResourceManager.AppService.Models.WorkflowRunTrigger trigger = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.AppService.Models.WorkflowOutputParameter> outputs = null, Azure.ResourceManager.AppService.Models.WorkflowRunTrigger response = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.WorkflowRunTrigger WorkflowRunTrigger(string name = null, System.BinaryData inputs = null, Azure.ResourceManager.AppService.Models.ContentLink inputsLink = null, System.BinaryData outputs = null, Azure.ResourceManager.AppService.Models.ContentLink outputsLink = null, System.DateTimeOffset? scheduledOn = default(System.DateTimeOffset?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string trackingId = null, string correlationClientTrackingId = null, string code = null, Azure.ResourceManager.AppService.Models.WorkflowStatus? status = default(Azure.ResourceManager.AppService.Models.WorkflowStatus?), System.BinaryData error = null, System.BinaryData trackedProperties = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.WorkflowSku WorkflowSku(Azure.ResourceManager.AppService.Models.WorkflowSkuName name = default(Azure.ResourceManager.AppService.Models.WorkflowSkuName), Azure.ResourceManager.AppService.Models.ResourceReference plan = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerCallbackUri WorkflowTriggerCallbackUri(string value = null, string method = null, string basePath = null, string relativePath = null, System.Collections.Generic.IEnumerable<string> relativePathParameters = null, Azure.ResourceManager.AppService.Models.WorkflowTriggerListCallbackUrlQueries queries = null) { throw null; }
+        public static Azure.ResourceManager.AppService.WorkflowTriggerData WorkflowTriggerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? changedOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.WorkflowState? state = default(Azure.ResourceManager.AppService.Models.WorkflowState?), Azure.ResourceManager.AppService.Models.WorkflowStatus? status = default(Azure.ResourceManager.AppService.Models.WorkflowStatus?), System.DateTimeOffset? lastExecutionOn = default(System.DateTimeOffset?), System.DateTimeOffset? nextExecutionOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.WorkflowTriggerRecurrence recurrence = null, Azure.ResourceManager.AppService.Models.ResourceReference workflow = null) { throw null; }
+        public static Azure.ResourceManager.AppService.WorkflowTriggerHistoryData WorkflowTriggerHistoryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.WorkflowStatus? status = default(Azure.ResourceManager.AppService.Models.WorkflowStatus?), string code = null, System.BinaryData error = null, string trackingId = null, string correlationClientTrackingId = null, Azure.ResourceManager.AppService.Models.ContentLink inputsLink = null, Azure.ResourceManager.AppService.Models.ContentLink outputsLink = null, bool? fired = default(bool?), Azure.ResourceManager.AppService.Models.ResourceReference run = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerListCallbackUrlQueries WorkflowTriggerListCallbackUrlQueries(string apiVersion = null, string sp = null, string sv = null, string sig = null, string se = null) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerRecurrence WorkflowTriggerRecurrence(Azure.ResourceManager.AppService.Models.RecurrenceFrequency? frequency = default(Azure.ResourceManager.AppService.Models.RecurrenceFrequency?), int? interval = default(int?), string startTime = null, string endTime = null, string timeZone = null, Azure.ResourceManager.AppService.Models.RecurrenceSchedule schedule = null) { throw null; }
+        public static Azure.ResourceManager.AppService.WorkflowVersionData WorkflowVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.AppService.Models.WorkflowProvisioningState? provisioningState = default(Azure.ResourceManager.AppService.Models.WorkflowProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? changedOn = default(System.DateTimeOffset?), Azure.ResourceManager.AppService.Models.WorkflowState? state = default(Azure.ResourceManager.AppService.Models.WorkflowState?), string version = null, string accessEndpoint = null, Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration endpointsConfiguration = null, Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration accessControl = null, Azure.ResourceManager.AppService.Models.WorkflowSku sku = null, Azure.ResourceManager.AppService.Models.ResourceReference integrationAccount = null, System.BinaryData definition = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.WorkflowParameter> parameters = null) { throw null; }
     }
-    public enum ArtifactStorageType
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ArtifactStorageType : System.IEquatable<Azure.ResourceManager.AppService.Models.ArtifactStorageType>
     {
-        LocalNode = 0,
-        NetworkFileSystem = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ArtifactStorageType(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ArtifactStorageType BlobContainer { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ArtifactStorageType LocalNode { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ArtifactStorageType NetworkFileSystem { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.ArtifactStorageType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.ArtifactStorageType left, Azure.ResourceManager.AppService.Models.ArtifactStorageType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.ArtifactStorageType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.ArtifactStorageType left, Azure.ResourceManager.AppService.Models.ArtifactStorageType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AseRegion : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AseRegion>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AseRegion>
+    {
+        public AseRegion() { }
+        public System.Collections.Generic.IList<string> AvailableOS { get { throw null; } }
+        public System.Collections.Generic.IList<string> AvailableSku { get { throw null; } }
+        public bool? DedicatedHost { get { throw null; } }
+        public string DisplayName { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
+        public bool? Standard { get { throw null; } }
+        public bool? ZoneRedundant { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.AseRegion System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AseRegion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AseRegion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.AseRegion System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AseRegion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AseRegion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AseRegion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AuthenticationType : System.IEquatable<Azure.ResourceManager.AppService.Models.AuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AuthenticationType(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AuthenticationType StorageAccountConnectionString { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AuthenticationType SystemAssignedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AuthenticationType UserAssignedIdentity { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.AuthenticationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.AuthenticationType left, Azure.ResourceManager.AppService.Models.AuthenticationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.AuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.AuthenticationType left, Azure.ResourceManager.AppService.Models.AuthenticationType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AuthPlatform : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AuthPlatform>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AuthPlatform>
     {
@@ -7154,6 +8464,13 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.AuthPlatform System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AuthPlatform>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AuthPlatform>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AuthPlatform>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum AuthType
+    {
+        Anonymous = 0,
+        UserCredentials = 1,
+        SystemIdentity = 2,
+        UserAssigned = 3,
     }
     public partial class AutoHealActions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AutoHealActions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AutoHealActions>
     {
@@ -7210,6 +8527,17 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AutoHealTriggers>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AutoHealTriggers>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureResourceErrorInfo : Azure.ResourceManager.AppService.Models.ErrorInfo, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo>
+    {
+        internal AzureResourceErrorInfo() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo> Details { get { throw null; } }
+        public string Message { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class AzureStoragePropertyDictionary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>
     {
         public AzureStoragePropertyDictionary() { }
@@ -7220,6 +8548,25 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureStorageProtocol : System.IEquatable<Azure.ResourceManager.AppService.Models.AzureStorageProtocol>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureStorageProtocol(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AzureStorageProtocol Http { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AzureStorageProtocol Nfs { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AzureStorageProtocol Smb { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.AzureStorageProtocol other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.AzureStorageProtocol left, Azure.ResourceManager.AppService.Models.AzureStorageProtocol right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.AzureStorageProtocol (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.AzureStorageProtocol left, Azure.ResourceManager.AppService.Models.AzureStorageProtocol right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum BackupFrequencyUnit
     {
@@ -7234,6 +8581,23 @@ namespace Azure.ResourceManager.AppService.Models
         Snapshot = 3,
         CloudFS = 4,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BasicAuthName : System.IEquatable<Azure.ResourceManager.AppService.Models.BasicAuthName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BasicAuthName(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.BasicAuthName Default { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.BasicAuthName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.BasicAuthName left, Azure.ResourceManager.AppService.Models.BasicAuthName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.BasicAuthName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.BasicAuthName left, Azure.ResourceManager.AppService.Models.BasicAuthName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public enum BuiltInAuthenticationProvider
     {
         AzureActiveDirectory = 0,
@@ -7243,12 +8607,11 @@ namespace Azure.ResourceManager.AppService.Models
         Twitter = 4,
         Github = 5,
     }
-    public partial class CertificateOrderAction : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CertificateOrderAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CertificateOrderAction>
+    public partial class CertificateOrderAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CertificateOrderAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CertificateOrderAction>
     {
-        public CertificateOrderAction() { }
+        internal CertificateOrderAction() { }
         public Azure.ResourceManager.AppService.Models.CertificateOrderActionType? ActionType { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string Kind { get { throw null; } set { } }
         Azure.ResourceManager.AppService.Models.CertificateOrderAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CertificateOrderAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CertificateOrderAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppService.Models.CertificateOrderAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CertificateOrderAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7410,6 +8773,19 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator !=(Azure.ResourceManager.AppService.Models.ConfigReferenceSource left, Azure.ResourceManager.AppService.Models.ConfigReferenceSource right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class Configuration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Configuration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Configuration>
+    {
+        public Configuration() { }
+        public Azure.ResourceManager.AppService.Models.ActiveRevisionsMode? ActiveRevisionsMode { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.Ingress Ingress { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.RegistryCredentials> Registries { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.Secret> Secrets { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.Configuration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Configuration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Configuration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.Configuration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Configuration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Configuration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Configuration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ConnectionStringDictionary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ConnectionStringDictionary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ConnectionStringDictionary>
     {
         public ConnectionStringDictionary() { }
@@ -7457,6 +8833,67 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.ConnStringValueTypePair System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ConnStringValueTypePair>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ConnStringValueTypePair>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ConnStringValueTypePair>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class Container : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Container>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Container>
+    {
+        public Container() { }
+        public System.Collections.Generic.IList<string> Args { get { throw null; } }
+        public System.Collections.Generic.IList<string> Command { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.EnvironmentVar> Env { get { throw null; } }
+        public string Image { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ContainerResources Resources { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.Container System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Container>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Container>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.Container System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Container>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Container>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Container>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerAppProvisioningState : System.IEquatable<Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerAppProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState InProgress { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState left, Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState left, Azure.ResourceManager.AppService.Models.ContainerAppProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ContainerAppsConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerAppsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerAppsConfiguration>
+    {
+        public ContainerAppsConfiguration() { }
+        public string AppSubnetResourceId { get { throw null; } set { } }
+        public string ControlPlaneSubnetResourceId { get { throw null; } set { } }
+        public string DaprAIInstrumentationKey { get { throw null; } set { } }
+        public string DockerBridgeCidr { get { throw null; } set { } }
+        public string PlatformReservedCidr { get { throw null; } set { } }
+        public string PlatformReservedDnsIP { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.ContainerAppsConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerAppsConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerAppsConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ContainerAppsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerAppsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerAppsConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerAppsConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContainerAppSecret : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerAppSecret>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerAppSecret>
+    {
+        internal ContainerAppSecret() { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.ContainerAppSecret System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerAppSecret>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerAppSecret>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ContainerAppSecret System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerAppSecret>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerAppSecret>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerAppSecret>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ContainerCpuStatistics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerCpuStatistics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerCpuStatistics>
     {
@@ -7530,6 +8967,17 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerNetworkInterfaceStatistics>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerNetworkInterfaceStatistics>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ContainerResources : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerResources>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerResources>
+    {
+        public ContainerResources() { }
+        public double? Cpu { get { throw null; } set { } }
+        public string Memory { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.ContainerResources System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerResources>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerResources>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ContainerResources System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerResources>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerResources>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerResources>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ContainerThrottlingInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContainerThrottlingInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerThrottlingInfo>
     {
         public ContainerThrottlingInfo() { }
@@ -7541,6 +8989,31 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.ContainerThrottlingInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerThrottlingInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerThrottlingInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContainerThrottlingInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContentHash : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContentHash>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContentHash>
+    {
+        internal ContentHash() { }
+        public string Algorithm { get { throw null; } }
+        public string Value { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.ContentHash System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContentHash>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContentHash>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ContentHash System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContentHash>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContentHash>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContentHash>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ContentLink : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContentLink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContentLink>
+    {
+        public ContentLink() { }
+        public Azure.ResourceManager.AppService.Models.ContentHash ContentHash { get { throw null; } }
+        public long? ContentSize { get { throw null; } }
+        public string ContentVersion { get { throw null; } }
+        public System.BinaryData Metadata { get { throw null; } }
+        public System.Uri Uri { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.ContentLink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContentLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ContentLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ContentLink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContentLink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContentLink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ContentLink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ContinuousWebJobStatus
     {
@@ -7554,6 +9027,23 @@ namespace Azure.ResourceManager.AppService.Models
     {
         FixedTime = 0,
         IdentityProviderDerived = 1,
+    }
+    public partial class CsmDeploymentStatus : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus>
+    {
+        public CsmDeploymentStatus() { }
+        public string DeploymentId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ErrorEntity> Errors { get { throw null; } }
+        public System.Collections.Generic.IList<string> FailedInstancesLogs { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
+        public int? NumberOfInstancesFailed { get { throw null; } set { } }
+        public int? NumberOfInstancesInProgress { get { throw null; } set { } }
+        public int? NumberOfInstancesSuccessful { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DeploymentBuildStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.CsmDeploymentStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.CsmDeploymentStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CsmDeploymentStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CsmOperationDescription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CsmOperationDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CsmOperationDescription>
     {
@@ -7618,6 +9108,13 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CsmUsageQuota>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CsmUsageQuota>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public enum CustomDnsSuffixProvisioningState
+    {
+        Succeeded = 0,
+        Failed = 1,
+        Degraded = 2,
+        InProgress = 3,
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CustomDomainStatus : System.IEquatable<Azure.ResourceManager.AppService.Models.CustomDomainStatus>
     {
@@ -7629,6 +9126,7 @@ namespace Azure.ResourceManager.AppService.Models
         public static Azure.ResourceManager.AppService.Models.CustomDomainStatus Failed { get { throw null; } }
         public static Azure.ResourceManager.AppService.Models.CustomDomainStatus Ready { get { throw null; } }
         public static Azure.ResourceManager.AppService.Models.CustomDomainStatus RetrievingValidationToken { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.CustomDomainStatus Unhealthy { get { throw null; } }
         public static Azure.ResourceManager.AppService.Models.CustomDomainStatus Validating { get { throw null; } }
         public bool Equals(Azure.ResourceManager.AppService.Models.CustomDomainStatus other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -7648,7 +9146,7 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Collections.Generic.IList<string> ARecords { get { throw null; } }
         public System.Collections.Generic.IList<string> CNameRecords { get { throw null; } }
         public string ConflictingAppResourceId { get { throw null; } }
-        public Azure.ResponseError CustomDomainVerificationFailureInfo { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ErrorEntity CustomDomainVerificationFailureInfo { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.DnsVerificationTestResult? CustomDomainVerificationTest { get { throw null; } }
         public bool? HasConflictAcrossSubscription { get { throw null; } }
         public bool? HasConflictOnScaleUnit { get { throw null; } }
@@ -7666,6 +9164,19 @@ namespace Azure.ResourceManager.AppService.Models
         CName = 0,
         A = 1,
     }
+    public partial class CustomHostnameSites : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CustomHostnameSites>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomHostnameSites>
+    {
+        public CustomHostnameSites() { }
+        public string CustomHostname { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public string Region { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.AppServiceIdentifierData> SiteResourceIds { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.CustomHostnameSites System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CustomHostnameSites>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CustomHostnameSites>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.CustomHostnameSites System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomHostnameSites>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomHostnameSites>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomHostnameSites>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CustomOpenIdConnectProvider : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CustomOpenIdConnectProvider>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomOpenIdConnectProvider>
     {
         public CustomOpenIdConnectProvider() { }
@@ -7677,6 +9188,119 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.CustomOpenIdConnectProvider System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomOpenIdConnectProvider>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomOpenIdConnectProvider>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomOpenIdConnectProvider>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CustomScaleRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CustomScaleRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomScaleRule>
+    {
+        public CustomScaleRule() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ScaleRuleAuth> Auth { get { throw null; } }
+        public string CustomScaleRuleType { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.CustomScaleRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CustomScaleRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.CustomScaleRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.CustomScaleRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomScaleRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomScaleRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.CustomScaleRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class Dapr : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Dapr>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Dapr>
+    {
+        public Dapr() { }
+        public string AppId { get { throw null; } set { } }
+        public int? AppPort { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DaprComponent> Components { get { throw null; } }
+        public bool? Enabled { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.Dapr System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Dapr>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Dapr>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.Dapr System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Dapr>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Dapr>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Dapr>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DaprComponent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DaprComponent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DaprComponent>
+    {
+        public DaprComponent() { }
+        public string DaprComponentType { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DaprMetadata> Metadata { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.DaprComponent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DaprComponent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DaprComponent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.DaprComponent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DaprComponent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DaprComponent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DaprComponent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DaprConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DaprConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DaprConfig>
+    {
+        public DaprConfig() { }
+        public string AppId { get { throw null; } set { } }
+        public int? AppPort { get { throw null; } set { } }
+        public bool? EnableApiLogging { get { throw null; } set { } }
+        public bool? Enabled { get { throw null; } set { } }
+        public int? HttpMaxRequestSize { get { throw null; } set { } }
+        public int? HttpReadBufferSize { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DaprLogLevel? LogLevel { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.DaprConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DaprConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DaprConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.DaprConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DaprConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DaprConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DaprConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DaprLogLevel : System.IEquatable<Azure.ResourceManager.AppService.Models.DaprLogLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DaprLogLevel(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.DaprLogLevel Debug { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DaprLogLevel Error { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DaprLogLevel Info { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DaprLogLevel Warn { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.DaprLogLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.DaprLogLevel left, Azure.ResourceManager.AppService.Models.DaprLogLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.DaprLogLevel (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.DaprLogLevel left, Azure.ResourceManager.AppService.Models.DaprLogLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class DaprMetadata : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DaprMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DaprMetadata>
+    {
+        public DaprMetadata() { }
+        public string Name { get { throw null; } set { } }
+        public string SecretRef { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.DaprMetadata System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DaprMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DaprMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.DaprMetadata System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DaprMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DaprMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DaprMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DatabaseConnectionOverview : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview>
+    {
+        internal DatabaseConnectionOverview() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview> ConfigurationFiles { get { throw null; } }
+        public string ConnectionIdentity { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Region { get { throw null; } }
+        public string ResourceId { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class DatabaseConnectionPatchRequest : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionPatchRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionPatchRequest>
+    {
+        public DatabaseConnectionPatchRequest() { }
+        public string ConnectionIdentity { get { throw null; } set { } }
+        public string ConnectionString { get { throw null; } set { } }
+        public string Region { get { throw null; } set { } }
+        public string ResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.DatabaseConnectionPatchRequest System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionPatchRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionPatchRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.DatabaseConnectionPatchRequest System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionPatchRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionPatchRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DatabaseConnectionPatchRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataProviderKeyValuePair : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DataProviderKeyValuePair>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DataProviderKeyValuePair>
     {
@@ -7724,6 +9348,44 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DataTableResponseObject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DataTableResponseObject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public enum DayOfWeek
+    {
+        Sunday = 0,
+        Monday = 1,
+        Tuesday = 2,
+        Wednesday = 3,
+        Thursday = 4,
+        Friday = 5,
+        Saturday = 6,
+    }
+    public enum DaysOfWeek
+    {
+        Sunday = 0,
+        Monday = 1,
+        Tuesday = 2,
+        Wednesday = 3,
+        Thursday = 4,
+        Friday = 5,
+        Saturday = 6,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DefaultAction : System.IEquatable<Azure.ResourceManager.AppService.Models.DefaultAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DefaultAction(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.DefaultAction Allow { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DefaultAction Deny { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.DefaultAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.DefaultAction left, Azure.ResourceManager.AppService.Models.DefaultAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.DefaultAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.DefaultAction left, Azure.ResourceManager.AppService.Models.DefaultAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DefaultAuthorizationPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DefaultAuthorizationPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DefaultAuthorizationPolicy>
     {
         public DefaultAuthorizationPolicy() { }
@@ -7748,6 +9410,35 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.DeletedAppRestoreContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DeletedAppRestoreContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DeletedAppRestoreContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DeletedAppRestoreContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DeploymentBuildStatus : System.IEquatable<Azure.ResourceManager.AppService.Models.DeploymentBuildStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DeploymentBuildStatus(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.DeploymentBuildStatus BuildAborted { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DeploymentBuildStatus BuildFailed { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DeploymentBuildStatus BuildInProgress { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DeploymentBuildStatus BuildPending { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DeploymentBuildStatus BuildRequestReceived { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DeploymentBuildStatus BuildSuccessful { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DeploymentBuildStatus PostBuildRestartRequired { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DeploymentBuildStatus RuntimeFailed { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DeploymentBuildStatus RuntimeStarting { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DeploymentBuildStatus RuntimeSuccessful { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DeploymentBuildStatus StartPolling { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DeploymentBuildStatus StartPollingWithRestart { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.DeploymentBuildStatus TimedOut { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.DeploymentBuildStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.DeploymentBuildStatus left, Azure.ResourceManager.AppService.Models.DeploymentBuildStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.DeploymentBuildStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.DeploymentBuildStatus left, Azure.ResourceManager.AppService.Models.DeploymentBuildStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DetectorAbnormalTimePeriod : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.DetectorAbnormalTimePeriod>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DetectorAbnormalTimePeriod>
     {
@@ -8052,6 +9743,110 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DomainRecommendationSearchContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.DomainRecommendationSearchContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EnterpriseGradeCdnStatus : System.IEquatable<Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EnterpriseGradeCdnStatus(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus Disabling { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus Enabled { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus Enabling { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus left, Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus left, Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class EnvironmentVar : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.EnvironmentVar>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.EnvironmentVar>
+    {
+        public EnvironmentVar() { }
+        public string Name { get { throw null; } set { } }
+        public string SecretRef { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.EnvironmentVar System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.EnvironmentVar>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.EnvironmentVar>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.EnvironmentVar System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.EnvironmentVar>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.EnvironmentVar>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.EnvironmentVar>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EnvironmentVariable : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.EnvironmentVariable>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.EnvironmentVariable>
+    {
+        public EnvironmentVariable(string name, string value) { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.EnvironmentVariable System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.EnvironmentVariable>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.EnvironmentVariable>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.EnvironmentVariable System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.EnvironmentVariable>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.EnvironmentVariable>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.EnvironmentVariable>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ErrorEntity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ErrorEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ErrorEntity>
+    {
+        public ErrorEntity() { }
+        public string Code { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ErrorEntity> Details { get { throw null; } }
+        public string ExtendedCode { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ErrorEntity> InnerErrors { get { throw null; } }
+        public string Message { get { throw null; } set { } }
+        public string MessageTemplate { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Parameters { get { throw null; } }
+        public string Target { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.ErrorEntity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ErrorEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ErrorEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ErrorEntity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ErrorEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ErrorEntity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ErrorEntity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ErrorInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ErrorInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ErrorInfo>
+    {
+        internal ErrorInfo() { }
+        public string Code { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.ErrorInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ErrorInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ErrorInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ErrorInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ErrorInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ErrorInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ErrorInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ErrorProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ErrorProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ErrorProperties>
+    {
+        public ErrorProperties() { }
+        public string Code { get { throw null; } set { } }
+        public string Message { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.ErrorProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ErrorProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ErrorProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ErrorProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ErrorProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ErrorProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ErrorProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class Expression : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Expression>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Expression>
+    {
+        internal Expression() { }
+        public Azure.ResourceManager.AppService.Models.AzureResourceErrorInfo Error { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.Expression> Subexpressions { get { throw null; } }
+        public string Text { get { throw null; } }
+        public System.BinaryData Value { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.Expression System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Expression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Expression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.Expression System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Expression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Expression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Expression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ExpressionRoot : Azure.ResourceManager.AppService.Models.Expression, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ExpressionRoot>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ExpressionRoot>
+    {
+        internal ExpressionRoot() { }
+        public string Path { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.ExpressionRoot System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ExpressionRoot>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ExpressionRoot>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ExpressionRoot System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ExpressionRoot>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ExpressionRoot>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ExpressionRoot>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class FileSystemHttpLogsConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>
     {
         public FileSystemHttpLogsConfig() { }
@@ -8064,6 +9859,52 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class FlowAccessControlConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration>
+    {
+        public FlowAccessControlConfiguration() { }
+        public Azure.ResourceManager.AppService.Models.FlowAccessControlConfigurationPolicy Actions { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FlowAccessControlConfigurationPolicy Contents { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FlowAccessControlConfigurationPolicy Triggers { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FlowAccessControlConfigurationPolicy WorkflowManagement { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FlowAccessControlConfigurationPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfigurationPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfigurationPolicy>
+    {
+        public FlowAccessControlConfigurationPolicy() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPAddressRange> AllowedCallerIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.OpenAuthenticationAccessPolicy> OpenAuthenticationPolicyList { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.FlowAccessControlConfigurationPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfigurationPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfigurationPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.FlowAccessControlConfigurationPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfigurationPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfigurationPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowAccessControlConfigurationPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FlowEndpoints : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FlowEndpoints>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowEndpoints>
+    {
+        public FlowEndpoints() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPAddress> AccessEndpointIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPAddress> OutgoingIPAddresses { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.FlowEndpoints System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FlowEndpoints>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FlowEndpoints>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.FlowEndpoints System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowEndpoints>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowEndpoints>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowEndpoints>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FlowEndpointsConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration>
+    {
+        public FlowEndpointsConfiguration() { }
+        public Azure.ResourceManager.AppService.Models.FlowEndpoints Connector { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FlowEndpoints Workflow { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public enum ForwardProxyConvention
     {
         NoProxy = 0,
@@ -8074,6 +9915,18 @@ namespace Azure.ResourceManager.AppService.Models
     {
         NodePort = 0,
         LoadBalancer = 1,
+    }
+    public partial class FunctionAppConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionAppConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionAppConfig>
+    {
+        public FunctionAppConfig() { }
+        public Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorage DeploymentStorage { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FunctionsRuntime Runtime { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FunctionsScaleAndConcurrency ScaleAndConcurrency { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.FunctionAppConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionAppConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionAppConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.FunctionAppConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionAppConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionAppConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionAppConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FunctionAppHostKeys : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionAppHostKeys>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionAppHostKeys>
     {
@@ -8160,6 +10013,41 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionAppStack>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionAppStack>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class FunctionsAlwaysReadyConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsAlwaysReadyConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsAlwaysReadyConfig>
+    {
+        public FunctionsAlwaysReadyConfig() { }
+        public float? InstanceCount { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.FunctionsAlwaysReadyConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsAlwaysReadyConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsAlwaysReadyConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.FunctionsAlwaysReadyConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsAlwaysReadyConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsAlwaysReadyConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsAlwaysReadyConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FunctionsDeploymentStorage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorage>
+    {
+        public FunctionsDeploymentStorage() { }
+        public Azure.ResourceManager.AppService.Models.ArtifactStorageType? ArtifactStorageType { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorageAuthentication Authentication { get { throw null; } set { } }
+        public System.Uri Value { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FunctionsDeploymentStorageAuthentication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorageAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorageAuthentication>
+    {
+        public FunctionsDeploymentStorageAuthentication() { }
+        public Azure.ResourceManager.AppService.Models.AuthenticationType? AuthenticationType { get { throw null; } set { } }
+        public string StorageAccountConnectionStringName { get { throw null; } set { } }
+        public string UserAssignedIdentityResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorageAuthentication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorageAuthentication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorageAuthentication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorageAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorageAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorageAuthentication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsDeploymentStorageAuthentication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class FunctionSecrets : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionSecrets>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionSecrets>
     {
         internal FunctionSecrets() { }
@@ -8170,6 +10058,30 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.FunctionSecrets System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionSecrets>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionSecrets>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionSecrets>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FunctionsRuntime : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsRuntime>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsRuntime>
+    {
+        public FunctionsRuntime() { }
+        public Azure.ResourceManager.AppService.Models.RuntimeName? Name { get { throw null; } set { } }
+        public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.FunctionsRuntime System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsRuntime>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsRuntime>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.FunctionsRuntime System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsRuntime>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsRuntime>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsRuntime>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FunctionsScaleAndConcurrency : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsScaleAndConcurrency>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsScaleAndConcurrency>
+    {
+        public FunctionsScaleAndConcurrency() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.FunctionsAlwaysReadyConfig> AlwaysReady { get { throw null; } }
+        public float? HttpPerInstanceConcurrency { get { throw null; } set { } }
+        public float? InstanceMemoryMB { get { throw null; } set { } }
+        public float? MaximumInstanceCount { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.FunctionsScaleAndConcurrency System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsScaleAndConcurrency>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FunctionsScaleAndConcurrency>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.FunctionsScaleAndConcurrency System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsScaleAndConcurrency>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsScaleAndConcurrency>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FunctionsScaleAndConcurrency>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FunctionTriggerType : System.IEquatable<Azure.ResourceManager.AppService.Models.FunctionTriggerType>
@@ -8343,6 +10255,17 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.HttpRequestHandlerMapping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.HttpRequestHandlerMapping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class HttpScaleRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.HttpScaleRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.HttpScaleRule>
+    {
+        public HttpScaleRule() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ScaleRuleAuth> Auth { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.HttpScaleRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.HttpScaleRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.HttpScaleRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.HttpScaleRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.HttpScaleRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.HttpScaleRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.HttpScaleRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class HybridConnectionKey : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.HybridConnectionKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.HybridConnectionKey>
     {
         public HybridConnectionKey() { }
@@ -8385,6 +10308,71 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.InboundEnvironmentEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.InboundEnvironmentEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class Ingress : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Ingress>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Ingress>
+    {
+        public Ingress() { }
+        public bool? AllowInsecure { get { throw null; } set { } }
+        public bool? External { get { throw null; } set { } }
+        public string Fqdn { get { throw null; } }
+        public int? TargetPort { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.TrafficWeight> Traffic { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.IngressTransportMethod? Transport { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.Ingress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Ingress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Ingress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.Ingress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Ingress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Ingress>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Ingress>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct IngressTransportMethod : System.IEquatable<Azure.ResourceManager.AppService.Models.IngressTransportMethod>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public IngressTransportMethod(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.IngressTransportMethod Auto { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.IngressTransportMethod Http { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.IngressTransportMethod Http2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.IngressTransportMethod other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.IngressTransportMethod left, Azure.ResourceManager.AppService.Models.IngressTransportMethod right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.IngressTransportMethod (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.IngressTransportMethod left, Azure.ResourceManager.AppService.Models.IngressTransportMethod right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class IPAddress : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.IPAddress>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.IPAddress>
+    {
+        public IPAddress() { }
+        public string Address { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.IPAddress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.IPAddress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.IPAddress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.IPAddress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.IPAddress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.IPAddress>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.IPAddress>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class IPAddressRange : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.IPAddressRange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.IPAddressRange>
+    {
+        public IPAddressRange() { }
+        public string AddressRange { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.IPAddressRange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.IPAddressRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.IPAddressRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.IPAddressRange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.IPAddressRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.IPAddressRange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.IPAddressRange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class JsonSchema : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.JsonSchema>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.JsonSchema>
+    {
+        internal JsonSchema() { }
+        public string Content { get { throw null; } }
+        public string Title { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.JsonSchema System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.JsonSchema>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.JsonSchema>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.JsonSchema System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.JsonSchema>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.JsonSchema>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.JsonSchema>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class JwtClaimChecks : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.JwtClaimChecks>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.JwtClaimChecks>
     {
         public JwtClaimChecks() { }
@@ -8395,6 +10383,25 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.JwtClaimChecks System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.JwtClaimChecks>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.JwtClaimChecks>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.JwtClaimChecks>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KeyType : System.IEquatable<Azure.ResourceManager.AppService.Models.KeyType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KeyType(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.KeyType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.KeyType Primary { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.KeyType Secondary { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.KeyType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.KeyType left, Azure.ResourceManager.AppService.Models.KeyType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.KeyType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.KeyType left, Azure.ResourceManager.AppService.Models.KeyType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum KeyVaultSecretStatus
     {
@@ -8416,6 +10423,7 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.Core.ResourceIdentifier AksResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppLogsConfiguration AppLogsConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ArcConfiguration ArcConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ContainerAppsConfiguration ContainerAppsConfiguration { get { throw null; } set { } }
         public string DefaultDomain { get { throw null; } }
         public string DeploymentErrors { get { throw null; } }
         public bool? IsInternalLoadBalancerEnabled { get { throw null; } set { } }
@@ -8636,6 +10644,45 @@ namespace Azure.ResourceManager.AppService.Models
         Information = 2,
         NonUrgentSuggestion = 3,
     }
+    public partial class OpenAuthenticationAccessPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationAccessPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationAccessPolicy>
+    {
+        public OpenAuthenticationAccessPolicy() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.OpenAuthenticationPolicyClaim> Claims { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.OpenAuthenticationProviderType? ProviderType { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.OpenAuthenticationAccessPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationAccessPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationAccessPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.OpenAuthenticationAccessPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationAccessPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationAccessPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationAccessPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class OpenAuthenticationPolicyClaim : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationPolicyClaim>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationPolicyClaim>
+    {
+        public OpenAuthenticationPolicyClaim() { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.OpenAuthenticationPolicyClaim System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationPolicyClaim>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationPolicyClaim>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.OpenAuthenticationPolicyClaim System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationPolicyClaim>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationPolicyClaim>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.OpenAuthenticationPolicyClaim>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OpenAuthenticationProviderType : System.IEquatable<Azure.ResourceManager.AppService.Models.OpenAuthenticationProviderType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OpenAuthenticationProviderType(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.OpenAuthenticationProviderType AAD { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.OpenAuthenticationProviderType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.OpenAuthenticationProviderType left, Azure.ResourceManager.AppService.Models.OpenAuthenticationProviderType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.OpenAuthenticationProviderType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.OpenAuthenticationProviderType left, Azure.ResourceManager.AppService.Models.OpenAuthenticationProviderType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class OpenIdConnectClientCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.OpenIdConnectClientCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.OpenIdConnectClientCredential>
     {
         public OpenIdConnectClientCredential() { }
@@ -8694,6 +10741,31 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.OutboundEnvironmentEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.OutboundEnvironmentEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.OutboundEnvironmentEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.OutboundEnvironmentEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ParameterType : System.IEquatable<Azure.ResourceManager.AppService.Models.ParameterType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ParameterType(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.ParameterType Array { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ParameterType Bool { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ParameterType Float { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ParameterType Int { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ParameterType NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ParameterType Object { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ParameterType SecureObject { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ParameterType SecureString { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.ParameterType String { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.ParameterType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.ParameterType left, Azure.ResourceManager.AppService.Models.ParameterType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.ParameterType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.ParameterType left, Azure.ResourceManager.AppService.Models.ParameterType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class PerfMonResponseInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.PerfMonResponseInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.PerfMonResponseInfo>
     {
@@ -8791,17 +10863,6 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.PrivateAccessVirtualNetwork System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.PrivateAccessVirtualNetwork>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.PrivateAccessVirtualNetwork>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.PrivateAccessVirtualNetwork>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PrivateLinkConnectionApprovalRequestInfo : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo>
-    {
-        public PrivateLinkConnectionApprovalRequestInfo() { }
-        public string Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
-        Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.PrivateLinkConnectionApprovalRequestInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PrivateLinkConnectionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState>
     {
@@ -8932,6 +10993,18 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.QueryUtterancesResults>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.QueryUtterancesResults>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class QueueScaleRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.QueueScaleRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.QueueScaleRule>
+    {
+        public QueueScaleRule() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ScaleRuleAuth> Auth { get { throw null; } }
+        public int? QueueLength { get { throw null; } set { } }
+        public string QueueName { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.QueueScaleRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.QueueScaleRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.QueueScaleRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.QueueScaleRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.QueueScaleRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.QueueScaleRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.QueueScaleRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class RampUpRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RampUpRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RampUpRule>
     {
         public RampUpRule() { }
@@ -8957,6 +11030,55 @@ namespace Azure.ResourceManager.AppService.Models
         Webhook = 3,
         All = 4,
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecurrenceFrequency : System.IEquatable<Azure.ResourceManager.AppService.Models.RecurrenceFrequency>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecurrenceFrequency(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.RecurrenceFrequency Day { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RecurrenceFrequency Hour { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RecurrenceFrequency Minute { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RecurrenceFrequency Month { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RecurrenceFrequency NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RecurrenceFrequency Second { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RecurrenceFrequency Week { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RecurrenceFrequency Year { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.RecurrenceFrequency other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.RecurrenceFrequency left, Azure.ResourceManager.AppService.Models.RecurrenceFrequency right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.RecurrenceFrequency (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.RecurrenceFrequency left, Azure.ResourceManager.AppService.Models.RecurrenceFrequency right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class RecurrenceSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RecurrenceSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RecurrenceSchedule>
+    {
+        internal RecurrenceSchedule() { }
+        public System.Collections.Generic.IReadOnlyList<int> Hours { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<int> Minutes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<int> MonthDays { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.RecurrenceScheduleOccurrence> MonthlyOccurrences { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.DaysOfWeek> WeekDays { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.RecurrenceSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RecurrenceSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RecurrenceSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.RecurrenceSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RecurrenceSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RecurrenceSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RecurrenceSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RecurrenceScheduleOccurrence : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RecurrenceScheduleOccurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RecurrenceScheduleOccurrence>
+    {
+        internal RecurrenceScheduleOccurrence() { }
+        public Azure.ResourceManager.AppService.Models.DayOfWeek? Day { get { throw null; } }
+        public int? Occurrence { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.RecurrenceScheduleOccurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RecurrenceScheduleOccurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RecurrenceScheduleOccurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.RecurrenceScheduleOccurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RecurrenceScheduleOccurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RecurrenceScheduleOccurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RecurrenceScheduleOccurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public enum RedundancyMode
     {
         None = 0,
@@ -8964,6 +11086,16 @@ namespace Azure.ResourceManager.AppService.Models
         Failover = 2,
         ActiveActive = 3,
         GeoRedundant = 4,
+    }
+    public partial class RegenerateActionParameter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RegenerateActionParameter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RegenerateActionParameter>
+    {
+        public RegenerateActionParameter() { }
+        public Azure.ResourceManager.AppService.Models.KeyType? KeyType { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.RegenerateActionParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RegenerateActionParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RegenerateActionParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.RegenerateActionParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RegenerateActionParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RegenerateActionParameter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RegenerateActionParameter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RegistrationAddressInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RegistrationAddressInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RegistrationAddressInfo>
     {
@@ -8997,6 +11129,18 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.RegistrationContactInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RegistrationContactInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RegistrationContactInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RegistrationContactInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RegistryCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RegistryCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RegistryCredentials>
+    {
+        public RegistryCredentials() { }
+        public string PasswordSecretRef { get { throw null; } set { } }
+        public string Server { get { throw null; } set { } }
+        public string Username { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.RegistryCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RegistryCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RegistryCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.RegistryCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RegistryCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RegistryCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RegistryCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ReissueCertificateOrderContent : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ReissueCertificateOrderContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ReissueCertificateOrderContent>
     {
@@ -9039,6 +11183,42 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RenewCertificateOrderContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RenewCertificateOrderContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class RepetitionIndex : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RepetitionIndex>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RepetitionIndex>
+    {
+        public RepetitionIndex(int itemIndex) { }
+        public int ItemIndex { get { throw null; } set { } }
+        public string ScopeName { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.RepetitionIndex System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RepetitionIndex>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RepetitionIndex>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.RepetitionIndex System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RepetitionIndex>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RepetitionIndex>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RepetitionIndex>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class Request : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Request>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Request>
+    {
+        public Request() { }
+        public System.BinaryData Headers { get { throw null; } set { } }
+        public string Method { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.Request System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Request>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Request>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.Request System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Request>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Request>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Request>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RequestHistoryProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RequestHistoryProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RequestHistoryProperties>
+    {
+        public RequestHistoryProperties() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.Request Request { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.Response Response { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.RequestHistoryProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RequestHistoryProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RequestHistoryProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.RequestHistoryProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RequestHistoryProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RequestHistoryProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RequestHistoryProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class RequestsBasedTrigger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RequestsBasedTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RequestsBasedTrigger>
     {
         public RequestsBasedTrigger() { }
@@ -9063,6 +11243,17 @@ namespace Azure.ResourceManager.AppService.Models
         OtherReasons = 8,
         FetchTimedOut = 9,
         UnauthorizedClient = 10,
+    }
+    public partial class ResourceConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ResourceConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceConfig>
+    {
+        public ResourceConfig() { }
+        public double? Cpu { get { throw null; } set { } }
+        public string Memory { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.ResourceConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ResourceConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ResourceConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ResourceConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ResourceMetricAvailability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ResourceMetricAvailability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceMetricAvailability>
     {
@@ -9105,6 +11296,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class ResourceNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ResourceNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceNameAvailabilityContent>
     {
         public ResourceNameAvailabilityContent(string name, Azure.ResourceManager.AppService.Models.CheckNameResourceType resourceType) { }
+        public string EnvironmentId { get { throw null; } set { } }
         public bool? IsFqdn { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.CheckNameResourceType ResourceType { get { throw null; } }
@@ -9113,6 +11305,18 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.ResourceNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ResourceReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ResourceReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceReference>
+    {
+        public ResourceReference() { }
+        public string Id { get { throw null; } set { } }
+        public string Name { get { throw null; } }
+        public string ResourceType { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.ResourceReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ResourceReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ResourceReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ResourceReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResourceReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceScopeType : System.IEquatable<Azure.ResourceManager.AppService.Models.ResourceScopeType>
@@ -9133,10 +11337,22 @@ namespace Azure.ResourceManager.AppService.Models
         public static bool operator !=(Azure.ResourceManager.AppService.Models.ResourceScopeType left, Azure.ResourceManager.AppService.Models.ResourceScopeType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class Response : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Response>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Response>
+    {
+        public Response() { }
+        public Azure.ResourceManager.AppService.Models.ContentLink BodyLink { get { throw null; } set { } }
+        public System.BinaryData Headers { get { throw null; } set { } }
+        public int? StatusCode { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.Response System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Response>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Response>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.Response System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Response>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Response>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Response>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection>
     {
         internal ResponseMessageEnvelopeRemotePrivateEndpointConnection() { }
-        public Azure.ResponseError Error { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ErrorEntity Error { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppServiceArmPlan Plan { get { throw null; } }
@@ -9172,6 +11388,104 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RestoreRequestInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RestoreRequestInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class RetryHistory : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RetryHistory>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RetryHistory>
+    {
+        public RetryHistory() { }
+        public string ClientRequestId { get { throw null; } set { } }
+        public string Code { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ErrorProperties ErrorInfo { get { throw null; } set { } }
+        public string ServiceRequestId { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.RetryHistory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RetryHistory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RetryHistory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.RetryHistory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RetryHistory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RetryHistory>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RetryHistory>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RevisionHealthState : System.IEquatable<Azure.ResourceManager.AppService.Models.RevisionHealthState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RevisionHealthState(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.RevisionHealthState Healthy { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RevisionHealthState None { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RevisionHealthState Unhealthy { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.RevisionHealthState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.RevisionHealthState left, Azure.ResourceManager.AppService.Models.RevisionHealthState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.RevisionHealthState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.RevisionHealthState left, Azure.ResourceManager.AppService.Models.RevisionHealthState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RevisionProvisioningState : System.IEquatable<Azure.ResourceManager.AppService.Models.RevisionProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RevisionProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.RevisionProvisioningState Deprovisioned { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RevisionProvisioningState Deprovisioning { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RevisionProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RevisionProvisioningState Provisioned { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RevisionProvisioningState Provisioning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.RevisionProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.RevisionProvisioningState left, Azure.ResourceManager.AppService.Models.RevisionProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.RevisionProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.RevisionProvisioningState left, Azure.ResourceManager.AppService.Models.RevisionProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class RunActionCorrelation : Azure.ResourceManager.AppService.Models.RunCorrelation, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RunActionCorrelation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RunActionCorrelation>
+    {
+        public RunActionCorrelation() { }
+        public string ActionTrackingId { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.RunActionCorrelation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RunActionCorrelation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RunActionCorrelation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.RunActionCorrelation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RunActionCorrelation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RunActionCorrelation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RunActionCorrelation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RunCorrelation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RunCorrelation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RunCorrelation>
+    {
+        public RunCorrelation() { }
+        public System.Collections.Generic.IList<string> ClientKeywords { get { throw null; } }
+        public string ClientTrackingId { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.RunCorrelation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RunCorrelation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.RunCorrelation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.RunCorrelation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RunCorrelation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RunCorrelation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.RunCorrelation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RuntimeName : System.IEquatable<Azure.ResourceManager.AppService.Models.RuntimeName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RuntimeName(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.RuntimeName Custom { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RuntimeName DotnetIsolated { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RuntimeName Java { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RuntimeName Node { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RuntimeName Powershell { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.RuntimeName Python { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.RuntimeName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.RuntimeName left, Azure.ResourceManager.AppService.Models.RuntimeName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.RuntimeName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.RuntimeName left, Azure.ResourceManager.AppService.Models.RuntimeName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SampleUtterance : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SampleUtterance>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SampleUtterance>
     {
         public SampleUtterance() { }
@@ -9183,6 +11497,42 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.SampleUtterance System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SampleUtterance>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SampleUtterance>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SampleUtterance>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class Scale : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Scale>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Scale>
+    {
+        public Scale() { }
+        public int? MaxReplicas { get { throw null; } set { } }
+        public int? MinReplicas { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ScaleRule> Rules { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.Scale System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Scale>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Scale>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.Scale System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Scale>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Scale>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Scale>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ScaleRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ScaleRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ScaleRule>
+    {
+        public ScaleRule() { }
+        public Azure.ResourceManager.AppService.Models.QueueScaleRule AzureQueue { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.CustomScaleRule Custom { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.HttpScaleRule Http { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.ScaleRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ScaleRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ScaleRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ScaleRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ScaleRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ScaleRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ScaleRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ScaleRuleAuth : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ScaleRuleAuth>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ScaleRuleAuth>
+    {
+        public ScaleRuleAuth() { }
+        public string SecretRef { get { throw null; } set { } }
+        public string TriggerParameter { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.ScaleRuleAuth System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ScaleRuleAuth>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ScaleRuleAuth>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ScaleRuleAuth System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ScaleRuleAuth>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ScaleRuleAuth>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ScaleRuleAuth>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScmType : System.IEquatable<Azure.ResourceManager.AppService.Models.ScmType>
@@ -9213,6 +11563,17 @@ namespace Azure.ResourceManager.AppService.Models
         public static implicit operator Azure.ResourceManager.AppService.Models.ScmType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppService.Models.ScmType left, Azure.ResourceManager.AppService.Models.ScmType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class Secret : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Secret>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Secret>
+    {
+        public Secret() { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.Secret System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Secret>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Secret>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.Secret System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Secret>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Secret>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Secret>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceSpecification : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ServiceSpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ServiceSpecification>
     {
@@ -9275,21 +11636,6 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteAuthSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteAuthSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SiteAuthSettingsV2 : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>
-    {
-        public SiteAuthSettingsV2() { }
-        public Azure.ResourceManager.AppService.Models.GlobalValidation GlobalValidation { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AppServiceHttpSettings HttpSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AppServiceIdentityProviders IdentityProviders { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.WebAppLoginInfo Login { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AuthPlatform Platform { get { throw null; } set { } }
-        Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2 System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class SiteCloneability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SiteCloneability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteCloneability>
     {
         internal SiteCloneability() { }
@@ -9330,12 +11676,14 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.AppServiceCorsSettings Cors { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DefaultDocuments { get { throw null; } set { } }
         public string DocumentRoot { get { throw null; } set { } }
+        public int? ElasticWebAppScaleLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.RampUpRule> ExperimentsRampUpRules { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppServiceFtpsState? FtpsState { get { throw null; } set { } }
         public int? FunctionAppScaleLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.HttpRequestHandlerMapping> HandlerMappings { get { throw null; } set { } }
         public string HealthCheckPath { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> IPSecurityRestrictions { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DefaultAction? IPSecurityRestrictionsDefaultAction { get { throw null; } set { } }
         public bool? IsAlwaysOn { get { throw null; } set { } }
         public bool? IsAutoHealEnabled { get { throw null; } set { } }
         public bool? IsDetailedErrorLoggingEnabled { get { throw null; } set { } }
@@ -9358,7 +11706,9 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.SiteMachineKey MachineKey { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.ManagedPipelineMode? ManagedPipelineMode { get { throw null; } set { } }
         public int? ManagedServiceIdentityId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> Metadata { get { throw null; } set { } }
         public int? MinimumElasticInstanceCount { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.TlsCipherSuite? MinTlsCipherSuite { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? MinTlsVersion { get { throw null; } set { } }
         public string NetFrameworkVersion { get { throw null; } set { } }
         public string NodeVersion { get { throw null; } set { } }
@@ -9373,6 +11723,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string RemoteDebuggingVersion { get { throw null; } set { } }
         public System.DateTimeOffset? RequestTracingExpirationOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.DefaultAction? ScmIPSecurityRestrictionsDefaultAction { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceSupportedTlsVersion? ScmMinTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ScmType? ScmType { get { throw null; } set { } }
         public string TracingOptions { get { throw null; } set { } }
@@ -9414,6 +11765,21 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.SiteConfigurationSnapshotInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteConfigurationSnapshotInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteConfigurationSnapshotInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteConfigurationSnapshotInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SiteDnsConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SiteDnsConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteDnsConfig>
+    {
+        public SiteDnsConfig() { }
+        public string DnsAltServer { get { throw null; } set { } }
+        public bool? DnsLegacySortOrder { get { throw null; } }
+        public int? DnsMaxCacheTimeout { get { throw null; } set { } }
+        public int? DnsRetryAttemptCount { get { throw null; } set { } }
+        public int? DnsRetryAttemptTimeout { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> DnsServers { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.SiteDnsConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SiteDnsConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SiteDnsConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.SiteDnsConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteDnsConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteDnsConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteDnsConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SiteExtensionType
     {
@@ -9465,6 +11831,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string CustomDomainVerificationId { get { throw null; } set { } }
         public int? DailyMemoryTimeQuota { get { throw null; } set { } }
         public string DefaultHostName { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.SiteDnsConfig DnsConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> EnabledHostNames { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile HostingEnvironmentProfile { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> HostNames { get { throw null; } }
@@ -9729,6 +12096,18 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteCustomDomainContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteCustomDomainContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class StaticSiteDatabaseConnectionConfigurationFileOverview : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview>
+    {
+        internal StaticSiteDatabaseConnectionConfigurationFileOverview() { }
+        public string Contents { get { throw null; } }
+        public string FileName { get { throw null; } }
+        public string StaticSiteDatabaseConnectionConfigurationFileOverviewType { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteDatabaseConnectionConfigurationFileOverview>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class StaticSiteFunctionOverview : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSiteFunctionOverview>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteFunctionOverview>
     {
         public StaticSiteFunctionOverview() { }
@@ -9741,6 +12120,19 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteFunctionOverview>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteFunctionOverview>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class StaticSiteLinkedBackend : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend>
+    {
+        internal StaticSiteLinkedBackend() { }
+        public string BackendResourceId { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public string ProvisioningState { get { throw null; } }
+        public string Region { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class StaticSitePatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.StaticSitePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StaticSitePatch>
     {
         public StaticSitePatch() { }
@@ -9749,11 +12141,15 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.StaticSiteBuildProperties BuildProperties { get { throw null; } set { } }
         public string ContentDistributionEndpoint { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> CustomDomains { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.DatabaseConnectionOverview> DatabaseConnections { get { throw null; } }
         public string DefaultHostname { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.EnterpriseGradeCdnStatus? EnterpriseGradeCdnStatus { get { throw null; } set { } }
         public string KeyVaultReferenceIdentity { get { throw null; } }
         public string Kind { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.StaticSiteLinkedBackend> LinkedBackends { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
-        public string Provider { get { throw null; } }
+        public string Provider { get { throw null; } set { } }
+        public string PublicNetworkAccess { get { throw null; } set { } }
         public string RepositoryToken { get { throw null; } set { } }
         public System.Uri RepositoryUri { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.StagingEnvironmentPolicy? StagingEnvironmentPolicy { get { throw null; } set { } }
@@ -9936,6 +12332,19 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StorageMigrationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.StorageMigrationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class Template : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Template>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Template>
+    {
+        public Template() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.Container> Containers { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.Dapr Dapr { get { throw null; } set { } }
+        public string RevisionSuffix { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.Scale Scale { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.Template System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Template>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Template>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.Template System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Template>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Template>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Template>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class TldLegalAgreement : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.TldLegalAgreement>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TldLegalAgreement>
     {
         internal TldLegalAgreement() { }
@@ -9949,6 +12358,39 @@ namespace Azure.ResourceManager.AppService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TldLegalAgreement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TldLegalAgreement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TlsCipherSuite : System.IEquatable<Azure.ResourceManager.AppService.Models.TlsCipherSuite>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TlsCipherSuite(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSAES128GCMSHA256 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSAES256GCMSHA384 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSEcdheEcdsaWithAES128CBCSHA256 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSEcdheEcdsaWithAES128GCMSHA256 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSEcdheEcdsaWithAES256GCMSHA384 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSEcdheRSAWithAES128CBCSHA { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSEcdheRSAWithAES128CBCSHA256 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSEcdheRSAWithAES128GCMSHA256 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSEcdheRSAWithAES256CBCSHA { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSEcdheRSAWithAES256CBCSHA384 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSEcdheRSAWithAES256GCMSHA384 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSRSAWithAES128CBCSHA { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSRSAWithAES128CBCSHA256 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSRSAWithAES128GCMSHA256 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSRSAWithAES256CBCSHA { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSRSAWithAES256CBCSHA256 { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.TlsCipherSuite TLSRSAWithAES256GCMSHA384 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.TlsCipherSuite other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.TlsCipherSuite left, Azure.ResourceManager.AppService.Models.TlsCipherSuite right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.TlsCipherSuite (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.TlsCipherSuite left, Azure.ResourceManager.AppService.Models.TlsCipherSuite right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class TopLevelDomainAgreementOption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.TopLevelDomainAgreementOption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TopLevelDomainAgreementOption>
     {
         public TopLevelDomainAgreementOption() { }
@@ -9959,6 +12401,18 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.TopLevelDomainAgreementOption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TopLevelDomainAgreementOption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TopLevelDomainAgreementOption>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TopLevelDomainAgreementOption>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TrafficWeight : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.TrafficWeight>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TrafficWeight>
+    {
+        public TrafficWeight() { }
+        public bool? LatestRevision { get { throw null; } set { } }
+        public string RevisionName { get { throw null; } set { } }
+        public int? Weight { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.TrafficWeight System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.TrafficWeight>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.TrafficWeight>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.TrafficWeight System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TrafficWeight>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TrafficWeight>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TrafficWeight>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TriggeredJobRun : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.TriggeredJobRun>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.TriggeredJobRun>
     {
@@ -10010,6 +12464,44 @@ namespace Azure.ResourceManager.AppService.Models
         AllowAnonymous = 1,
         Return401 = 2,
         Return403 = 3,
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UpgradeAvailability : System.IEquatable<Azure.ResourceManager.AppService.Models.UpgradeAvailability>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UpgradeAvailability(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.UpgradeAvailability None { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.UpgradeAvailability Ready { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.UpgradeAvailability other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.UpgradeAvailability left, Azure.ResourceManager.AppService.Models.UpgradeAvailability right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.UpgradeAvailability (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.UpgradeAvailability left, Azure.ResourceManager.AppService.Models.UpgradeAvailability right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct UpgradePreference : System.IEquatable<Azure.ResourceManager.AppService.Models.UpgradePreference>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public UpgradePreference(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.UpgradePreference Early { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.UpgradePreference Late { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.UpgradePreference Manual { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.UpgradePreference None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.UpgradePreference other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.UpgradePreference left, Azure.ResourceManager.AppService.Models.UpgradePreference right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.UpgradePreference (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.UpgradePreference left, Azure.ResourceManager.AppService.Models.UpgradePreference right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ValidateResourceType : System.IEquatable<Azure.ResourceManager.AppService.Models.ValidateResourceType>
@@ -10104,6 +12596,19 @@ namespace Azure.ResourceManager.AppService.Models
         Azure.ResourceManager.AppService.Models.VirtualNetworkValidationTestFailure System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.VirtualNetworkValidationTestFailure>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.VirtualNetworkValidationTestFailure>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.VirtualNetworkValidationTestFailure>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class VolumeMount : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.VolumeMount>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.VolumeMount>
+    {
+        public VolumeMount(string volumeSubPath, string containerMountPath) { }
+        public string ContainerMountPath { get { throw null; } set { } }
+        public string Data { get { throw null; } set { } }
+        public bool? ReadOnly { get { throw null; } set { } }
+        public string VolumeSubPath { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.VolumeMount System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.VolumeMount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.VolumeMount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.VolumeMount System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.VolumeMount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.VolumeMount>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.VolumeMount>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WebAppBackupInfo : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WebAppBackupInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WebAppBackupInfo>
     {
@@ -10394,5 +12899,317 @@ namespace Azure.ResourceManager.AppService.Models
         NestedSmall = 9,
         NestedSmallLinux = 10,
         Default = 11,
+    }
+    public partial class Workflow : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Workflow>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Workflow>
+    {
+        public Workflow(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.AppService.Models.FlowAccessControlConfiguration AccessControl { get { throw null; } set { } }
+        public string AccessEndpoint { get { throw null; } }
+        public System.DateTimeOffset? ChangedOn { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.BinaryData Definition { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FlowEndpointsConfiguration EndpointsConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ResourceReference IntegrationAccount { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceKind? Kind { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.WorkflowParameter> Parameters { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowSku Sku { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowState? State { get { throw null; } set { } }
+        public string Version { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.Workflow System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Workflow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.Workflow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.Workflow System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Workflow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Workflow>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.Workflow>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowArtifacts : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowArtifacts>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowArtifacts>
+    {
+        public WorkflowArtifacts() { }
+        public System.BinaryData AppSettings { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Files { get { throw null; } }
+        public System.Collections.Generic.IList<string> FilesToDelete { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.WorkflowArtifacts System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowArtifacts>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowArtifacts>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.WorkflowArtifacts System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowArtifacts>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowArtifacts>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowArtifacts>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowEnvelopeProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties>
+    {
+        internal WorkflowEnvelopeProperties() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Files { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowState? FlowState { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowHealth Health { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowEnvelopeProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowHealth : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowHealth>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowHealth>
+    {
+        internal WorkflowHealth() { }
+        public Azure.ResourceManager.AppService.Models.ErrorEntity Error { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowHealthState State { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.WorkflowHealth System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowHealth>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowHealth>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.WorkflowHealth System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowHealth>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowHealth>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowHealth>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum WorkflowHealthState
+    {
+        Unknown = 0,
+        NotSpecified = 1,
+        Healthy = 2,
+        Unhealthy = 3,
+    }
+    public partial class WorkflowOutputParameter : Azure.ResourceManager.AppService.Models.WorkflowParameter, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowOutputParameter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowOutputParameter>
+    {
+        public WorkflowOutputParameter() { }
+        public System.BinaryData Error { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.WorkflowOutputParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowOutputParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowOutputParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.WorkflowOutputParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowOutputParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowOutputParameter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowOutputParameter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowParameter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowParameter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowParameter>
+    {
+        public WorkflowParameter() { }
+        public string Description { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.ParameterType? ParameterType { get { throw null; } set { } }
+        public System.BinaryData Value { get { throw null; } set { } }
+        Azure.ResourceManager.AppService.Models.WorkflowParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.WorkflowParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowParameter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowParameter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkflowProvisioningState : System.IEquatable<Azure.ResourceManager.AppService.Models.WorkflowProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkflowProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Completed { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Created { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState InProgress { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Moving { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Pending { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Ready { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Registered { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Registering { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Renewing { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Running { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Unregistered { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Unregistering { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Updating { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowProvisioningState Waiting { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.WorkflowProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.WorkflowProvisioningState left, Azure.ResourceManager.AppService.Models.WorkflowProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.WorkflowProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.WorkflowProvisioningState left, Azure.ResourceManager.AppService.Models.WorkflowProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class WorkflowRunTrigger : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowRunTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowRunTrigger>
+    {
+        internal WorkflowRunTrigger() { }
+        public string Code { get { throw null; } }
+        public string CorrelationClientTrackingId { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.BinaryData Error { get { throw null; } }
+        public System.BinaryData Inputs { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ContentLink InputsLink { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.BinaryData Outputs { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ContentLink OutputsLink { get { throw null; } }
+        public System.DateTimeOffset? ScheduledOn { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowStatus? Status { get { throw null; } }
+        public System.BinaryData TrackedProperties { get { throw null; } }
+        public string TrackingId { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.WorkflowRunTrigger System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowRunTrigger>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowRunTrigger>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.WorkflowRunTrigger System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowRunTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowRunTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowRunTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowSku>
+    {
+        internal WorkflowSku() { }
+        public Azure.ResourceManager.AppService.Models.WorkflowSkuName Name { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.ResourceReference Plan { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.WorkflowSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.WorkflowSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkflowSkuName : System.IEquatable<Azure.ResourceManager.AppService.Models.WorkflowSkuName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkflowSkuName(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.WorkflowSkuName Basic { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowSkuName Free { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowSkuName NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowSkuName Premium { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowSkuName Shared { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowSkuName Standard { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.WorkflowSkuName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.WorkflowSkuName left, Azure.ResourceManager.AppService.Models.WorkflowSkuName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.WorkflowSkuName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.WorkflowSkuName left, Azure.ResourceManager.AppService.Models.WorkflowSkuName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkflowState : System.IEquatable<Azure.ResourceManager.AppService.Models.WorkflowState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkflowState(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.WorkflowState Completed { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowState Enabled { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowState NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowState Suspended { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.WorkflowState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.WorkflowState left, Azure.ResourceManager.AppService.Models.WorkflowState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.WorkflowState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.WorkflowState left, Azure.ResourceManager.AppService.Models.WorkflowState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkflowStatus : System.IEquatable<Azure.ResourceManager.AppService.Models.WorkflowStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkflowStatus(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.WorkflowStatus Aborted { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowStatus Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowStatus Faulted { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowStatus Ignored { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowStatus NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowStatus Paused { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowStatus Running { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowStatus Skipped { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowStatus Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowStatus Suspended { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowStatus TimedOut { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowStatus Waiting { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.WorkflowStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.WorkflowStatus left, Azure.ResourceManager.AppService.Models.WorkflowStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.WorkflowStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.WorkflowStatus left, Azure.ResourceManager.AppService.Models.WorkflowStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class WorkflowTriggerCallbackUri : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerCallbackUri>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerCallbackUri>
+    {
+        internal WorkflowTriggerCallbackUri() { }
+        public string BasePath { get { throw null; } }
+        public string Method { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WorkflowTriggerListCallbackUrlQueries Queries { get { throw null; } }
+        public string RelativePath { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> RelativePathParameters { get { throw null; } }
+        public string Value { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.WorkflowTriggerCallbackUri System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerCallbackUri>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerCallbackUri>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.WorkflowTriggerCallbackUri System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerCallbackUri>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerCallbackUri>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerCallbackUri>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WorkflowTriggerListCallbackUrlQueries : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerListCallbackUrlQueries>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerListCallbackUrlQueries>
+    {
+        internal WorkflowTriggerListCallbackUrlQueries() { }
+        public string ApiVersion { get { throw null; } }
+        public string Se { get { throw null; } }
+        public string Sig { get { throw null; } }
+        public string Sp { get { throw null; } }
+        public string Sv { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.WorkflowTriggerListCallbackUrlQueries System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerListCallbackUrlQueries>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerListCallbackUrlQueries>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.WorkflowTriggerListCallbackUrlQueries System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerListCallbackUrlQueries>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerListCallbackUrlQueries>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerListCallbackUrlQueries>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkflowTriggerProvisioningState : System.IEquatable<Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkflowTriggerProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Completed { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Created { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Moving { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState NotSpecified { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Ready { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Registered { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Registering { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Running { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Unregistered { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Unregistering { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState left, Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState left, Azure.ResourceManager.AppService.Models.WorkflowTriggerProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class WorkflowTriggerRecurrence : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerRecurrence>
+    {
+        internal WorkflowTriggerRecurrence() { }
+        public string EndTime { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.RecurrenceFrequency? Frequency { get { throw null; } }
+        public int? Interval { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.RecurrenceSchedule Schedule { get { throw null; } }
+        public string StartTime { get { throw null; } }
+        public string TimeZone { get { throw null; } }
+        Azure.ResourceManager.AppService.Models.WorkflowTriggerRecurrence System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerRecurrence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerRecurrence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.WorkflowTriggerRecurrence System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerRecurrence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerRecurrence>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.WorkflowTriggerRecurrence>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
