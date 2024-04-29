@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateOrUpdateAsync(string,string,string,string,string,RequestContent,RequestContext)">
+    <member name="CreateOrUpdateAsync(string,string,string,string,string,RequestContent,string,RequestContext)">
       <example>
 This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
@@ -10,7 +10,7 @@ TokenCredential credential = new DefaultAzureCredential();
 InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create("<insightId>");
-Response response = await client.CreateOrUpdateAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content);
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content, "multipart/form-data");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("insightId").ToString());
@@ -22,7 +22,7 @@ TokenCredential credential = new DefaultAzureCredential();
 InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = await client.CreateOrUpdateAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content);
+Response response = await client.CreateOrUpdateAsync("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content, "multipart/form-data");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("insightId").ToString());
@@ -43,7 +43,7 @@ Console.WriteLine(result.GetProperty("modifiedBy").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateOrUpdate(string,string,string,string,string,RequestContent,RequestContext)">
+    <member name="CreateOrUpdate(string,string,string,string,string,RequestContent,string,RequestContext)">
       <example>
 This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
@@ -52,7 +52,7 @@ TokenCredential credential = new DefaultAzureCredential();
 InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create("<insightId>");
-Response response = client.CreateOrUpdate("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content);
+Response response = client.CreateOrUpdate("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content, "multipart/form-data");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("insightId").ToString());
@@ -64,7 +64,7 @@ TokenCredential credential = new DefaultAzureCredential();
 InsightAttachments client = new FarmBeatsClient(endpoint, credential).GetInsightAttachmentsClient(apiVersion: "2022-11-01-preview");
 
 using RequestContent content = RequestContent.Create(File.OpenRead("<filePath>"));
-Response response = client.CreateOrUpdate("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content);
+Response response = client.CreateOrUpdate("<partyId>", "<modelId>", "<resourceType>", "<resourceId>", "<insightAttachmentId>", content, "multipart/form-data");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("insightId").ToString());

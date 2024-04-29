@@ -202,7 +202,7 @@ namespace Azure.Data.Tables.Queryable
 
         protected virtual string TranslateMemberName(MemberInfo memberInfo)
         {
-            if (memberInfo.GetCustomAttribute<DataMemberAttribute>() is DataMemberAttribute dataMemberAttribute)
+            if (memberInfo.GetCustomAttribute<DataMemberAttribute>() is DataMemberAttribute dataMemberAttribute && dataMemberAttribute.IsNameSetExplicitly)
             {
                 return dataMemberAttribute.Name;
             }

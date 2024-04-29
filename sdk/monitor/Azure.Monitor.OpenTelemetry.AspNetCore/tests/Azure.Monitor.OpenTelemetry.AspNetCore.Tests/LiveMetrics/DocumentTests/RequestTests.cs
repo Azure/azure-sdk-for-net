@@ -54,6 +54,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             requestActivity.SetTag("server.port", serverPort);
             requestActivity.SetTag("url.path", urlPath);
             requestActivity.SetTag("url.query", urlQuery);
+            requestActivity.SetTag("customKey1", "customValue1");
+            requestActivity.SetTag("customKey2", "customValue2");
+            requestActivity.SetTag("customKey3", "customValue3");
+            requestActivity.SetTag("customKey4", "customValue4");
+            requestActivity.SetTag("customKey5", "customValue5");
+            requestActivity.SetTag("customKey6", "customValue6");
+            requestActivity.SetTag("customKey7", "customValue7");
+            requestActivity.SetTag("customKey8", "customValue8");
+            requestActivity.SetTag("customKey9", "customValue9");
+            requestActivity.SetTag("customKey10", "customValue10");
+            requestActivity.SetTag("customKey11", "customValue11");
             requestActivity.Stop();
 
             var requestDocument = DocumentHelper.ConvertToRequestDocument(requestActivity);
@@ -63,6 +74,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal("HelloWorld", requestDocument.Name);
             Assert.Equal("200", requestDocument.ResponseCode);
             Assert.Equal(expectedUrl, requestDocument.Url.AbsoluteUri);
+
+            VerifyCustomProperties(requestDocument);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(requestActivity.Duration.TotalMilliseconds, requestDocument.Extension_Duration);
