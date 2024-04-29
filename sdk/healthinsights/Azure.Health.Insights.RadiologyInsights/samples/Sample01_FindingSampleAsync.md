@@ -128,7 +128,7 @@ var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
 Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, jobId, radiologyInsightsjob);
 ```
 
-## From the result loop over the inferences and display the categories, interpretations, components and sections of the finding inferences. 
+## Below code is used to display information about a medical finding. The code retrieves the finding, which is represented as a FhirR4Observation object. This object is part of the Fast Healthcare Interoperability Resources (FHIR) standard and is used to represent observations made about a patient. The code then retrieves a list of categories associated with the finding. Each category is represented as a FhirR4CodeableConcept object, which is also part of the FHIR standard and is used to represent coded or textual clinical information. The code then prints out each category. The code also retrieves the code associated with the finding and prints it out. This code is a unique identifier for the specific type of finding. Next, the code retrieves a list of interpretations associated with the finding. Each interpretation is also represented as a FhirR4CodeableConcept object. If this list is not empty, the code then prints out each interpretation. The code then retrieves a list of components associated with the finding. Each component is represented as a FhirR4ObservationComponent object, which is part of the FHIR standard and is used to represent a component of an observation. For each component, the code prints out the code associated with the component and the value of the component, which is also represented as a FhirR4CodeableConcept object. Finally, the code displays additional information about the finding inference using the displaySectionInfo function.
 
 ```C# Snippet:Finding_Async_Tests_Samples_FindingInference
         Console.Write("Finding Inference found");
@@ -166,7 +166,7 @@ Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiol
 }
 ```
 
-## Print the section info of the finding inference.
+## Below code is used to display information about specific sections from a list of extensions. The code first goes through each extension in a list of extensions. Each extension is a FhirR4Extension object, which is a part of the Fast Healthcare Interoperability Resources (FHIR) standard and is used to represent additional information that is not part of the core data elements in a resource. For each extension, the code checks the URL of the extension. If the URL is “section”, the code then retrieves a list of sub-extensions associated with this section. These sub-extensions are also FhirR4Extension objects and represent additional information that is associated with the parent extension. If the list of sub-extensions is not empty, the code then goes through each sub-extension in the list. For each sub-extension, it prints out the URL and the string value of the sub-extension. The URL represents the specific type of information that the sub-extension contains, and the string value is the actual information.
 
 ```C# Snippet:Finding_Async_Tests_Samples_DisplaySectionInfo
 foreach (FhirR4Extension extension in extensionList)
@@ -186,7 +186,10 @@ foreach (FhirR4Extension extension in extensionList)
 }
 ```
 
-## Print the code, display and system properties of the categories, interpretations and components.
+## Following code retrieves a list of medical codes from a codeableConcept object. Each of these codes is represented as a FhirR4Coding object, which is a part of the Fast Healthcare Interoperability Resources (FHIR) standard. If this list of codes is not empty, the system then goes through each code in the list. For each code, it prints out the following details:
+- **The actual code itself, which is a unique identifier for a specific medical concept.**
+- **The display text of the code, which is a human-readable representation of the medical concept that the code represents.**
+- **The system that the code belongs to, which indicates the specific coding system that the code is a part of. This could be a widely recognized coding system like LOINC or SNOMED CT.**
 
 ```C# Snippet:Finding_Async_Tests_Samples_DisplayCodes
 IList<FhirR4Coding> codingList = codeableConcept.Coding;

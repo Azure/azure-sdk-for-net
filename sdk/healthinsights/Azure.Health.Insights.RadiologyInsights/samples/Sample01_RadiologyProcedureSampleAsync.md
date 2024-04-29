@@ -131,7 +131,7 @@ var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
 Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, jobId, radiologyInsightsjob);
 ```
 
-## From the result loop over the inferences, extract the procedure codes, imaging procedures and ordered procedure from the laterality discrepancy and print their code details.
+## Below code we extract the procedure codes from the radiology procedure inference. Procedure codes are specific codes that are used to identify the procedures that have been performed. Each procedure has a unique code associated with it. Imaging procedures refers to the specific imaging procedures that were performed during the radiology procedure. Details about the modality (the method or type of imaging used), the anatomy (the specific part of the body that was imaged), and the laterality (which side of the body was imaged) are included. Ordered Procedures refers to the procedures that were specifically ordered by a healthcare provider. The report includes the code of the ordered procedure and a description of it.
 
 ```C# Snippet:Radiology_Procedure_Async_Tests_Samples_RadiologyProcedureInference
 Console.Write("Radiology Procedure Inference found");
@@ -165,7 +165,10 @@ DisplayCodes(code, 2);
 Console.Write("   Description: " + orderedProcedure.Description);
 ```
 
-## Print the code, display and system properties of the order type, missing body parts and missing body part measurements.
+## Following code retrieves a list of medical codes from a codeableConcept object. Each of these codes is represented as a FhirR4Coding object, which is a part of the Fast Healthcare Interoperability Resources (FHIR) standard. If this list of codes is not empty, the system then goes through each code in the list. For each code, it prints out the following details:
+- **The actual code itself, which is a unique identifier for a specific medical concept.**
+- **The display text of the code, which is a human-readable representation of the medical concept that the code represents.**
+- **The system that the code belongs to, which indicates the specific coding system that the code is a part of. This could be a widely recognized coding system like LOINC or SNOMED CT.**
 
 ```C# Snippet:Radiology_Procedure_Async_Tests_Samples_DisplayCodes
 IList<FhirR4Coding> codingList = codeableConcept.Coding;

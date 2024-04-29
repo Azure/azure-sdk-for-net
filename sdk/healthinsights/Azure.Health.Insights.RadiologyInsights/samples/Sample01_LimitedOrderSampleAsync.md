@@ -111,7 +111,7 @@ var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
 Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, jobId, radiologyInsightsjob);
 ```
 
-## From the result loop over the inferences, extract the order type, missing body parts and missing body part measurements of the limited order inference.
+## Following code is used to display information about medical discrepancy found in a patient’s order. The code retrieves the type of order that was placed. This could be a specific type of test or procedure that was ordered by a healthcare provider. The details of this order type, including its unique code and human-readable description, are then printed out. The code then retrieves a list of body parts that were present in the order but were not found or addressed during the procedure. For each of these missing body parts, the code prints out the details, including the unique code and human-readable description. Finally, the code retrieves a list of measurements for the missing body parts that were present in the order but were not taken or addressed during the procedure. For each of these missing measurements, the code prints out the details, including the unique code and human-readable description.
 
 ```C# Snippet:Limited_Order_Async_Tests_Samples_LimitedOrderDiscrepancyInference
 Console.Write("Limited Order Discrepancy Inference found: ");
@@ -131,7 +131,10 @@ foreach (FhirR4CodeableConcept missingBodyPartMeasurement in missingBodyPartMeas
 }
 ```
 
-## Print the code, display and system properties of the order type, missing body parts and missing body part measurements.
+## Following code retrieves a list of medical codes from a codeableConcept object. Each of these codes is represented as a FhirR4Coding object, which is a part of the Fast Healthcare Interoperability Resources (FHIR) standard. If this list of codes is not empty, the system then goes through each code in the list. For each code, it prints out the following details:
+- **The actual code itself, which is a unique identifier for a specific medical concept.**
+- **The display text of the code, which is a human-readable representation of the medical concept that the code represents.**
+- **The system that the code belongs to, which indicates the specific coding system that the code is a part of. This could be a widely recognized coding system like LOINC or SNOMED CT.**
 
 ```C# Snippet:Limited_Order_Async_Tests_Samples_DisplayCodes
 IList<FhirR4Coding> codingList = codeableConcept.Coding;

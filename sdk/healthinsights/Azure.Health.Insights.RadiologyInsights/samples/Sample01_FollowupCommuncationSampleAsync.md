@@ -130,7 +130,7 @@ var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
 Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, jobId, radiologyInsightsjob);
 ```
 
-## From the result loop over the inferences and display the datetime, recipient and acknowledgement of the followup communication inferences. 
+## Following code is used to display information about a follow-up communication. It refers to a situation where the code has inferred that a follow-up communication has occurred based on the patient’s medical data. The code retrieves a list of dates and times when the communication occurred. These are represented as DateTimeOffset objects, which include both a date and time, and information about the time zone relative to Coordinated Universal Time (UTC). The code then prints out each date and time in the list. The code also retrieves a list of recipients of the communication. These are represented as MedicalProfessionalType objects, which could represent different types of healthcare professionals such as doctors, nurses, or specialists. The code then prints out each recipient in the list. Finally, the code checks whether the communication was acknowledged and prints out this information. This could indicate whether the recipient of the communication has confirmed that they received and understood the communication.
 
 ```C# Snippet:Followup_Communication_Async_Tests_Samples_FollowupCommunicationInference
 Console.Write("Followup Communication Inference found");

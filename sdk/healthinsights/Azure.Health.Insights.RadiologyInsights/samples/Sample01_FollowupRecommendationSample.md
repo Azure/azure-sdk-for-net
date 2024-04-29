@@ -130,7 +130,15 @@ var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
 Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, jobId, radiologyInsightsjob);
 ```
 
-## From the result loop over the inferences and display the generic procedure recommendation and the imaging procedure recommendation of the followup recommendation inferences. 
+## Below code is used to display information about a follow-up recommendation for a patient. The code retrieves a list of evidence supporting the recommendation. This could include various pieces of data or observations that led to the recommendation. Next, the code prints out several characteristics of the recommendation:
+
+- **Whether the recommendation is conditional, meaning it depends on certain conditions or circumstances.**
+- **Whether the recommendation is based on a guideline, meaning it follows a standard or protocol.**
+- **Whether the recommendation is hedging, meaning it is cautious or non-committal.**
+- **Whether the recommendation is an option, meaning it is one of several possible actions that could be taken.**
+
+## The code then identifies the specific procedure that is being recommended. This could be a generic procedure or an imaging procedure. If it's a generic procedure, the code prints out the unique code associated with the procedure. If it's an imaging procedure, the code prints out the unique codes associated with the procedure, as well as details about the imaging procedures that are being recommended. This includes the modality (the method or type of imaging used), the anatomy (the specific part of the body that is to be imaged), and the evidence supporting the use of each modality and anatomy. In summary, this code is used to print out a detailed report on a follow-up recommendation for a patient, including the evidence supporting the recommendation, the characteristics of the recommendation, and the details of the recommended procedure. This can be useful in a healthcare setting for communicating complex medical recommendations. The code uses the Fast Healthcare Interoperability Resources (FHIR) standard to represent and exchange this information. The `FhirR4CodeableConcept` and `FhirR4Extension` objects in the code are part of the FHIR standard and are used to represent coded or textual clinical information.
+
 
 ```C# Snippet:Followup_Recommendation_Sync_Tests_Samples_FollowupRecommendationInference
 Console.Write("Follow Up Recommendation Inference found");
@@ -181,7 +189,10 @@ if (recommendedProcedure is ImagingProcedureRecommendation)
     Console.Write(" Recommended procedure: " + recommendedProcedure);
 ```
 
-## Print the code, display and system properties of the imaging procedure recommendations.
+## Following code retrieves a list of medical codes from a codeableConcept object. Each of these codes is represented as a FhirR4Coding object, which is a part of the Fast Healthcare Interoperability Resources (FHIR) standard. If this list of codes is not empty, the system then goes through each code in the list. For each code, it prints out the following details:
+- **The actual code itself, which is a unique identifier for a specific medical concept.**
+- **The display text of the code, which is a human-readable representation of the medical concept that the code represents.**
+- **The system that the code belongs to, which indicates the specific coding system that the code is a part of. This could be a widely recognized coding system like LOINC or SNOMED CT.**
 
 ```C# Snippet:Followup_Recommendation_Sync_Tests_Samples_DisplayCodes
 IList<FhirR4Coding> codingList = codeableConcept.Coding;
@@ -194,7 +205,7 @@ if (codingList != null)
 }
 ```
 
-## In the ExtractEvidence method iterate over each of the extensions and get the subExtensions. With these subExtensions call the ExtractEvidenceToken method.
+## The code first goes through each extension in a list of extensions. Each extension is a FhirR4Extension object, which is a part of the Fast Healthcare Interoperability Resources (FHIR) standard and is used to represent additional information that is not part of the core data elements in a resource. For each extension, the code retrieves a list of sub-extensions. These sub-extensions are also FhirR4Extension objects and represent additional information that is associated with the parent extension. If the list of sub-extensions is not empty, the code then extracts evidence from these sub-extensions. The extractEvidenceToken function is used to extract this evidence, although the specifics of how this function works are not provided in the given code. The extracted evidence is then added to a string of evidence, with each piece of evidence separated by a space.
 
 ```C# Snippet:Followup_Recommendation_Sync_Tests_Samples_ExtractEvidence
 foreach (FhirR4Extension extension in extensions)
@@ -207,7 +218,7 @@ foreach (FhirR4Extension extension in extensions)
 }
 ```
 
-## In the ExtractEvidenceToken method get the tokens from the subExtensions. Then using these tokens extract the evidence from the document content and written back the evidence.
+## The below code is used to extract a specific substring from a document based on the information contained in a list of extensions. The code first goes through each extension in a list of sub-extensions. Each extension is a FhirR4Extension object, which is a part of the Fast Healthcare Interoperability Resources (FHIR) standard and is used to represent additional information that is not part of the core data elements in a resource. For each extension, the code checks the URL of the extension. If the URL is “offset”, the code retrieves the integer value of the extension and stores it in the offset variable. This represents the starting position of the substring in the document. Similarly, if the URL of the extension is “length”, the code retrieves the integer value of the extension and stores it in the length variable. This represents the length of the substring to be extracted from the document. Once the code has retrieved the offset and length values, it checks if both values are greater than zero. If they are, the code extracts the substring from the document starting at the offset position and with the specified length. The extracted substring is then stored in the evidence variable.
 
 ```C# Snippet:Followup_Recommendation_Sync_Tests_Samples_ExtractEvidenceToken
 foreach (FhirR4Extension iExtension in subExtensions)

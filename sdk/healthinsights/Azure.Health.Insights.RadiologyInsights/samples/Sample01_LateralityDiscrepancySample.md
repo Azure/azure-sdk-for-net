@@ -115,7 +115,7 @@ var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
 Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, jobId, radiologyInsightsjob);
 ```
 
-## From the result loop over the inferences, extract the coding list from the laterality discrepancy inference and print the code, display and system properties of the codes.
+## Below code is used to display information about a discrepancy found in the laterality (the side of the body) indicated in a medical procedure or diagnosis. The code first identifies a “Laterality Discrepancy Inference”. This refers to a situation where there’s a discrepancy between the side of the body (left or right) that was indicated in the medical records and the side that was actually addressed during the procedure or diagnosis. The code retrieves the specific indication of laterality from the discrepancy inference. This could be a specific code that represents the side of the body that was indicated in the medical records. The code then retrieves a list of codes associated with this laterality indication. Each of these codes is represented as a FhirR4Coding object, which is a part of the Fast Healthcare Interoperability Resources (FHIR) standard.
 
 ```C# Snippet:Laterality_Discrepancy_Sync_Tests_Samples_LateralityDiscrepancyInference
 FhirR4CodeableConcept lateralityIndication = lateralityDiscrepancyInference.LateralityIndication;

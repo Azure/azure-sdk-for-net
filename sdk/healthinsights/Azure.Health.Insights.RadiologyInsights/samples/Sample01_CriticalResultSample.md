@@ -131,7 +131,7 @@ var jobId = "job" + DateTimeOffset.Now.ToUnixTimeMilliseconds();
 Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, jobId, radiologyInsightsjob);
 ```
 
-## From the result loop over the inferences and print the description of each critical result found
+## Below code is used to display information about critical results inferred from radiology insights. This is a specific type of inference that indicates a critical result has been found. If the inference is a CriticalResultInference, the code prints out a message indicating that a critical result inference has been found, along with the description of the result. This description provides more details about the critical result.
 
 ```C# Snippet:Critical_Result_Sync_Tests_Samples_CriticalResultInference
 RadiologyInsightsInferenceResult responseData = operation.Value;
