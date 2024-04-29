@@ -4,7 +4,6 @@
     <Description>Azure.Provisioning.PostgreSql simplifies declarative resource provisioning in .NET for Azure PostgreSql.</Description>
     <Version>0.1.0</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn)</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
