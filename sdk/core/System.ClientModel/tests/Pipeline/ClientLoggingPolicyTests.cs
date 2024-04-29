@@ -17,6 +17,9 @@ namespace System.ClientModel.Tests.Pipeline;
 
 public class ClientLoggingPolicyTests : SyncAsyncTestBase
 {
+    private const int RequestEvent = 1;
+    private const int ResponseEvent = 5;
+
     public ClientLoggingPolicyTests(bool isAsync) : base(isAsync)
     {
     }
@@ -66,10 +69,10 @@ public class ClientLoggingPolicyTests : SyncAsyncTestBase
         await Task.WhenAll(sendTasks);
         Assert.AreEqual(4, azureCoreListener.EventData.Count());
 
-        azureCoreListener.SingleEventById(1, e => e.GetProperty<string>("requestId").Equals("client1"));
-        azureCoreListener.SingleEventById(1, e => e.GetProperty<string>("requestId").Equals("client2"));
-        azureCoreListener.SingleEventById(5, e => e.GetProperty<string>("requestId").Equals("client1"));
-        azureCoreListener.SingleEventById(5, e => e.GetProperty<string>("requestId").Equals("client2"));
+        azureCoreListener.SingleEventById(RequestEvent, e => e.GetProperty<string>("requestId").Equals("client1"));
+        azureCoreListener.SingleEventById(RequestEvent, e => e.GetProperty<string>("requestId").Equals("client2"));
+        azureCoreListener.SingleEventById(ResponseEvent, e => e.GetProperty<string>("requestId").Equals("client1"));
+        azureCoreListener.SingleEventById(ResponseEvent, e => e.GetProperty<string>("requestId").Equals("client2"));
     }
 
     [Test]
@@ -118,12 +121,12 @@ public class ClientLoggingPolicyTests : SyncAsyncTestBase
         await Task.WhenAll(sendTasks);
 
         Assert.AreEqual(2, azureCoreListener.EventData.Count());
-        azureCoreListener.SingleEventById(1);
-        azureCoreListener.SingleEventById(5);
+        azureCoreListener.SingleEventById(RequestEvent);
+        azureCoreListener.SingleEventById(ResponseEvent);
 
         Assert.AreEqual(2, clientEventListener.EventData.Count());
-        clientEventListener.SingleEventById(1);
-        clientEventListener.SingleEventById(5);
+        clientEventListener.SingleEventById(RequestEvent);
+        clientEventListener.SingleEventById(ResponseEvent);
     }
 
     [Test]
@@ -173,10 +176,10 @@ public class ClientLoggingPolicyTests : SyncAsyncTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        EventWrittenEventArgs requestLog = clientEventListener.SingleEventById(1);
+        EventWrittenEventArgs requestLog = clientEventListener.SingleEventById(RequestEvent);
         Assert.AreEqual("sample-client-A", requestLog.GetProperty<string>("requestId"));
 
-        EventWrittenEventArgs responseLog = clientEventListener.SingleEventById(5);
+        EventWrittenEventArgs responseLog = clientEventListener.SingleEventById(ResponseEvent);
         Assert.AreEqual("sample-client-B", responseLog.GetProperty<string>("requestId"));
     }
 
@@ -200,10 +203,10 @@ public class ClientLoggingPolicyTests : SyncAsyncTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        EventWrittenEventArgs requestLog = clientEventListener.SingleEventById(1);
+        EventWrittenEventArgs requestLog = clientEventListener.SingleEventById(RequestEvent);
         Guid requestId = Guid.Parse(requestLog.GetProperty<string>("requestId"));
 
-        EventWrittenEventArgs responseLog = clientEventListener.SingleEventById(5);
+        EventWrittenEventArgs responseLog = clientEventListener.SingleEventById(ResponseEvent);
         Guid responseId = Guid.Parse(responseLog.GetProperty<string>("requestId"));
 
         Assert.AreEqual(requestId, responseId);
@@ -231,17 +234,11 @@ public class ClientLoggingPolicyTests : SyncAsyncTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        EventWrittenEventArgs requestLog = clientEventListener.SingleEventById(1);
+        EventWrittenEventArgs requestLog = clientEventListener.SingleEventById(RequestEvent);
         Assert.AreEqual("sample-client", requestLog.GetProperty<string>("requestId"));
 
-        EventWrittenEventArgs responseLog = clientEventListener.SingleEventById(5);
+        EventWrittenEventArgs responseLog = clientEventListener.SingleEventById(ResponseEvent);
         Assert.AreEqual("sample-client", responseLog.GetProperty<string>("requestId"));
-    }
-
-    [Test]
-    public void ElapsedTimeIsCalculated()
-    {
-        // TODO
     }
 
     #region Helpers
