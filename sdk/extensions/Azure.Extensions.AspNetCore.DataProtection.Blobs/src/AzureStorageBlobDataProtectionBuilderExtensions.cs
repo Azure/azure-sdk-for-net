@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 
 #pragma warning disable // TODO cleanup of all the warning messages. Issue https://github.com/Azure/azure-sdk-for-net/issues/43768
 namespace Microsoft.AspNetCore.DataProtection
+#pragma warning disable
 {
     /// <summary>
     /// Contains Azure-specific extension methods for modifying a
