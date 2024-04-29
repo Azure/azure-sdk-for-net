@@ -38,8 +38,6 @@ public class ClientRetryPolicy : PipelinePolicy
         _initialDelay = DefaultInitialDelay;
     }
 
-    internal ClientModelEventSource? ClientEventSource { get; set; }
-
     /// <inheritdoc/>
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         => ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).EnsureCompleted();
@@ -120,11 +118,6 @@ public class ClientRetryPolicy : PipelinePolicy
                 message.Response?.ContentStream?.Dispose();
 
                 message.RetryCount++;
-                if (ClientEventSource != null && ClientEventSource.IsEnabled())
-                {
-                    // TODO - how to get the request id here since this comes before the logging policy?
-                    ClientEventSource.RequestRetrying(null, message.RetryCount, elapsed);
-                }
                 OnTryComplete(message);
 
                 continue;
