@@ -244,6 +244,15 @@ namespace Azure.Core.TestFramework
         public List<(string Header, string QueryParameter)> SanitizedQueryParametersInHeaders { get; } = new();
 
         /// <summary>
+        /// The list of sanitizers to remove. Sanitizer IDs can be found in Test Proxy docs.
+        /// https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md
+        /// </summary>
+        public List<string> SanitizersToRemove { get; } = new()
+        {
+            "AZSDK3430" // $..id
+        };
+
+        /// <summary>
         /// Flag you can (temporarily) enable to save failed test recordings
         /// and debug/re-run at the point of failure without re-running
         /// potentially lengthy live tests.  This should never be checked in
