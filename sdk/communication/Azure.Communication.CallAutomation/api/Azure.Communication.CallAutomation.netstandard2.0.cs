@@ -96,10 +96,8 @@ namespace Azure.Communication.CallAutomation
         public enum ServiceVersion
         {
             V2023_03_06 = 1,
-            V2023_06_15_Preview = 2,
-            V2023_10_15 = 3,
-            V2023_10_03_Preview = 4,
-            V2024_04_15 = 5,
+            V2023_10_15 = 2,
+            V2024_04_15 = 3,
         }
     }
     public abstract partial class CallAutomationEventBase
