@@ -6,9 +6,9 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources;
+
 #endregion Snippet:Readme_AuthClient_Namespaces
 using NUnit.Framework;
 
@@ -201,6 +201,28 @@ namespace Azure.ResourceManager.Tests.Samples
             // we now have the data representing the availabilitySet
             Console.WriteLine(availabilitySet.Data.Name);
             #endregion Snippet:Readme_ManageAvailabilitySetPieces
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task LRORehydration()
+        {
+            #region Snippet:Readme_LRORehydration
+            ArmClient client = new ArmClient(new DefaultAzureCredential());
+            SubscriptionResource subscription = await client.GetDefaultSubscriptionAsync();
+            ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
+            var orgData = new ResourceGroupData(AzureLocation.WestUS2);
+            // We initialize a long-running operation
+            var rgOp = await resourceGroups.CreateOrUpdateAsync(WaitUntil.Started, "orgName", orgData);
+            // We get the rehydration token from the operation
+            var rgOpRehydrationToken = rgOp.GetRehydrationToken();
+            // We rehydrate the long-running operation with the rehydration token, we can also do this asynchronously
+            var rehydratedOrgOperation = ArmOperation.Rehydrate<ResourceGroupResource>(client, rgOpRehydrationToken!.Value);
+            var rehydratedOrgOperationAsync = await ArmOperation.RehydrateAsync<ResourceGroupResource>(client, rgOpRehydrationToken!.Value);
+            // Now we can operate with the rehydrated operation
+            var rawResponse = rehydratedOrgOperation.GetRawResponse();
+            await rehydratedOrgOperation.WaitForCompletionAsync();
+            #endregion Snippet:Readme_LRORehydration
         }
     }
 }

@@ -1,5 +1,13 @@
 # Release History
 
+## 1.12.0-beta.2 (unreleased)
+
+### Features Added
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.11.1 (2024-04-23)
 
 ### Features Added
@@ -10,7 +18,7 @@
 
 ### Features Added
 
-- Enable long-running operation rehydration.
+- Added experimental Bicep serialization.
 
 ## 1.11.0 (2024-03-22)
 

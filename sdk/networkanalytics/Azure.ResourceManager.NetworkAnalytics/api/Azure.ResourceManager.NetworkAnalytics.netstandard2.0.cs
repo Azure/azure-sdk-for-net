@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkAnalytics.DataProductData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkAnalytics.DataProductData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataProductResource : Azure.ResourceManager.ArmResource
+    public partial class DataProductResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkAnalytics.DataProductData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkAnalytics.DataProductData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataProductResource() { }
@@ -76,6 +76,11 @@ namespace Azure.ResourceManager.NetworkAnalytics
         public virtual System.Threading.Tasks.Task<Azure.Response> RotateKeyAsync(Azure.ResourceManager.NetworkAnalytics.Models.NetworkAnalyticsKeyVaultContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkAnalytics.DataProductResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkAnalytics.DataProductResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.NetworkAnalytics.DataProductData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkAnalytics.DataProductData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkAnalytics.DataProductData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkAnalytics.DataProductData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkAnalytics.DataProductData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkAnalytics.DataProductData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkAnalytics.DataProductData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkAnalytics.DataProductResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkAnalytics.Models.DataProductPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.NetworkAnalytics.DataProductResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.NetworkAnalytics.Models.DataProductPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataProductsCatalogResource : Azure.ResourceManager.ArmResource
+    public partial class DataProductsCatalogResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected DataProductsCatalogResource() { }
@@ -99,6 +104,11 @@ namespace Azure.ResourceManager.NetworkAnalytics
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class NetworkAnalyticsExtensions
     {
