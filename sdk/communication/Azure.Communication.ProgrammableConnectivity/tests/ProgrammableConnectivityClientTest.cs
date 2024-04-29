@@ -180,7 +180,7 @@ namespace Azure.Communication.ProgrammableConnectivity.Tests
             DeviceLocationVerificationContent content = new DeviceLocationVerificationContent(
                 networkIdentifier: new NetworkIdentifier("NetworkCode", "Telefonica_Brazil"),
                 latitude: 80.0,
-                longitude: 85.1,
+                longitude: 85.0,
                 accuracy: 50,
                 device: new LocationDevice
                 {
