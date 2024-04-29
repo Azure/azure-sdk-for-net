@@ -12,12 +12,9 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class UserInitiatedRedeploy
     {
-        internal UserInitiatedRedeploy(bool? automaticallyApprove, string dummyProperty, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            AutomaticallyApprove = automaticallyApprove;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
 
+        // Adding DummyProperty so Autorest does not fail on generation
+        // Due to Bug in autorest.csharp https://github.com/Azure/autorest.csharp/issues/4441
         private string DummyProperty { get; }
     }
 }
