@@ -51,8 +51,8 @@ namespace System.ClientModel.Options
         public bool IsLoggingEnabled { get { throw null; } set { } }
         public string? LoggedClientAssemblyName { get { throw null; } set { } }
         public int LoggedContentSizeLimit { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<string> LoggedHeaderNames { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<string> LoggedQueryParameters { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LoggedQueryParameters { get { throw null; } set { } }
         public string? RequestIdHeaderName { get { throw null; } set { } }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }

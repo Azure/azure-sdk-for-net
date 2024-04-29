@@ -16,14 +16,36 @@ public class LoggingOptions
     private const int DefaultLoggedContentSizeLimit = 4 * 1024;
     private const bool DefaultIsLoggingEnabled = true;
     private const bool DefaultIsLoggingContentEnabled = false;
-    private static readonly IList<string> DefaultLoggedHeaderNames = new[] { "TODO" };
-    private static readonly IList<string> DefaultLoggedQueryParameters = new[] { "api-version" };
+    private static readonly IList<string> s_defaultLoggedHeaderNames =
+        new[] {
+            "traceparent",
+            "Accept",
+            "Cache-Control",
+            "Connection",
+            "Content-Length",
+            "Content-Type",
+            "Date",
+            "ETag",
+            "Expires",
+            "If-Match",
+            "If-Modified-Since",
+            "If-None-Match",
+            "If-Unmodified-Since",
+            "Last-Modified",
+            "Pragma",
+            "Request-Id",
+            "Retry-After",
+            "Server",
+            "Transfer-Encoding",
+            "User-Agent",
+            "WWW-Authenticate" };
+    private static readonly IList<string> s_defaultLoggedQueryParameters = new[] { "api-version" };
 
     private bool _isLoggingEnabled = DefaultIsLoggingEnabled;
     private int _loggedContentSizeLimit = DefaultLoggedContentSizeLimit;
     private bool _isLoggingContentEnabled = DefaultIsLoggingContentEnabled;
-    private IList<string> _loggedHeaderNames = DefaultLoggedHeaderNames;
-    private IList<string> _loggedQueryParameters = DefaultLoggedQueryParameters;
+    private IList<string> _loggedHeaderNames = s_defaultLoggedHeaderNames;
+    private IList<string> _loggedQueryParameters = s_defaultLoggedQueryParameters;
     private string? _clientAssembly;
     private string? _requestIdHeaderName;
 

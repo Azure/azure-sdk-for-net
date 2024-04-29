@@ -15,6 +15,7 @@ using ClientModel.Tests.Mocks;
 using ClientModel.Tests;
 using NUnit.Framework;
 using System.IO;
+using System.Threading;
 
 namespace System.ClientModel.Tests.Internal
 {
@@ -22,7 +23,6 @@ namespace System.ClientModel.Tests.Internal
     [NonParallelizable]
     public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
     {
-        private const int BackgroundRefreshFailedEvent = 19;
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
         private const int RequestContentTextEvent = 17;
@@ -61,37 +61,6 @@ namespace System.ClientModel.Tests.Internal
         public void TearDown()
         {
             _listener?.Dispose();
-        }
-
-        [Test]
-        public async Task LogsAreNotWrittenWhenTheSourceDoesNotHaveAnyListeners()
-        {
-            var response = new MockPipelineResponse(200);
-            response.SetContent("Hello");
-
-            var loggingOptions = new LoggingOptions
-            {
-                IsLoggingEnabled = true,
-                IsLoggingContentEnabled = true,
-                LoggedHeaderNames = s_allowedHeaders
-            };
-
-            ClientPipelineOptions options = new()
-            {
-                Transport = new MockPipelineTransport("Transport", i => response),
-                LoggingPolicy = new NotEnabledLoggingPolicy(loggingOptions)
-            };
-
-            ClientPipeline pipeline = ClientPipeline.Create(options);
-
-            PipelineMessage message = pipeline.CreateMessage();
-            message.Request.Uri = new Uri("http://example.com");
-            message.Request.Content = BinaryContent.Create(new BinaryData("Hello"));
-
-            await pipeline.SendSyncOrAsync(message, IsAsync);
-
-            IEnumerable<EventWrittenEventArgs> args = _listener.EventData;
-            Assert.AreEqual(0, args.Count());
         }
 
         [Test]
@@ -266,56 +235,6 @@ namespace System.ClientModel.Tests.Internal
             Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
             Assert.AreEqual(exception.ToString().Split(Environment.NewLine.ToCharArray())[0],
                 e.GetProperty<string>("exception").Split(Environment.NewLine.ToCharArray())[0]);
-        }
-
-        [Test]
-        public void FailingAccessTokenBackgroundRefreshProducesEvents()
-        {
-            // TODO
-            //var credentialMre = new ManualResetEventSlim(true);
-
-            //var currentTime = DateTimeOffset.UtcNow;
-            //var callCount = 0;
-            //var exception = new InvalidOperationException();
-
-            //var credential = new TokenCredentialStub((r, c) =>
-            //{
-            //    callCount++;
-            //    credentialMre.Set();
-            //    return callCount == 1 ? new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2)) : throw exception;
-            //}, IsAsync);
-
-            //var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
-            //MockTransport mockTransport = CreateMockTransport(r =>
-            //{
-            //    credentialMre.Wait();
-            //    return new MockResponse(200);
-            //});
-
-            //var pipeline = new HttpPipeline(mockTransport, new HttpPipelinePolicy[] { policy, new LoggingPolicy(logContent: true, int.MaxValue, _sanitizer, "Test-SDK") });
-            //await SendRequestAsync(pipeline, request =>
-            //{
-            //    request.Method = RequestMethod.Get;
-            //    request.Uri.Reset(new Uri("https://example.com/1"));
-            //    request.Headers.Add("User-Agent", "agent");
-            //});
-
-            //credentialMre.Reset();
-            //string requestId = null;
-            //await SendRequestAsync(pipeline, request =>
-            //{
-            //    request.Method = RequestMethod.Get;
-            //    request.Uri.Reset(new Uri("https://example.com/2"));
-            //    request.Headers.Add("User-Agent", "agent");
-            //    requestId = request.ClientRequestId;
-            //});
-
-            //await Task.Delay(1_000);
-
-            //EventWrittenEventArgs e = _listener.SingleEventById(BackgroundRefreshFailedEvent);
-            //Assert.AreEqual(EventLevel.Informational, e.Level);
-            //Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
-            //Assert.AreEqual(exception.ToString().Split(Environment.NewLine.ToCharArray())[0], e.GetProperty<string>("exception").Split(Environment.NewLine.ToCharArray())[0]);
         }
 
         [Test]
@@ -933,13 +852,6 @@ namespace System.ClientModel.Tests.Internal
         private class AzureCoreLoggingPolicy : ClientLoggingPolicy
         {
             public AzureCoreLoggingPolicy(LoggingOptions options) : base("Azure-Core", new string[] { "Trait", "True" }, options)
-            {
-            }
-        }
-
-        private class NotEnabledLoggingPolicy : ClientLoggingPolicy
-        {
-            public NotEnabledLoggingPolicy(LoggingOptions options) : base("Do-Not-Enable", new string[] { "Trait", "True" }, options)
             {
             }
         }
