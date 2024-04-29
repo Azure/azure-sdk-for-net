@@ -91,10 +91,9 @@ namespace Azure.Identity
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public string CollectionUri { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
-        public string HubName { get { throw null; } set { } }
         public string JobId { get { throw null; } set { } }
         public string PlanId { get { throw null; } set { } }
-        public string SystemAccessToken { get { throw null; } set { } }
+        public string SystemAccessToken { set { } }
         public string TeamProjectId { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
