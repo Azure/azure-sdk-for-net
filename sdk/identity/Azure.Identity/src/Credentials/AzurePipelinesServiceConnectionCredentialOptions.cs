@@ -21,11 +21,6 @@ namespace Azure.Identity
         public string CollectionUri { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
 
         /// <summary>
-        /// The type of build to get the token for
-        /// </summary>
-        public string HubName { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_HOSTTYPE");
-
-        /// <summary>
         /// A unique identifier for a single attempt of a single job. The value is unique to the current pipeline.
         /// </summary>
         public string JobId { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_JOBID");
