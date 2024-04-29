@@ -36,6 +36,22 @@ namespace Azure.ResourceManager.Compute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, RestorePointData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
+            uri.AppendPath(restorePointGroupName, true);
+            uri.AppendPath("/restorePoints/", false);
+            uri.AppendPath(restorePointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, RestorePointData data)
         {
             var message = _pipeline.CreateMessage();
@@ -118,6 +134,22 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
+            uri.AppendPath(restorePointGroupName, true);
+            uri.AppendPath("/restorePoints/", false);
+            uri.AppendPath(restorePointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName)
         {
             var message = _pipeline.CreateMessage();
@@ -194,6 +226,26 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, RestorePointExpand? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
+            uri.AppendPath(restorePointGroupName, true);
+            uri.AppendPath("/restorePoints/", false);
+            uri.AppendPath(restorePointName, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName, RestorePointExpand? expand)

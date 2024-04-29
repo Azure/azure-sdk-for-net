@@ -175,6 +175,12 @@
       ]
     },
     {
+      "filename": "**/sdk/astronomer/**/*.cs",
+      "words": [
+        "astro"
+      ]
+    },
+    {
       "filename": "**/sdk/automanage/**/*.cs",
       "words": [
         "HCRP"
@@ -1148,7 +1154,8 @@
         "Soundex",
         "Sorani",
         "Unprocessable",
-        "Beider"
+        "Beider",
+        "Exfiltration"
       ]
     },
     {

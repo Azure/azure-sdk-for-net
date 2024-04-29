@@ -36,6 +36,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, NetworkFabricExternalNetworkData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
+            uri.AppendPath(l3IsolationDomainName, true);
+            uri.AppendPath("/externalNetworks/", false);
+            uri.AppendPath(externalNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, NetworkFabricExternalNetworkData data)
         {
             var message = _pipeline.CreateMessage();
@@ -118,6 +134,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
+            uri.AppendPath(l3IsolationDomainName, true);
+            uri.AppendPath("/externalNetworks/", false);
+            uri.AppendPath(externalNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName)
@@ -208,6 +240,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, NetworkFabricExternalNetworkPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
+            uri.AppendPath(l3IsolationDomainName, true);
+            uri.AppendPath("/externalNetworks/", false);
+            uri.AppendPath(externalNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, NetworkFabricExternalNetworkPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -292,6 +340,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
+            uri.AppendPath(l3IsolationDomainName, true);
+            uri.AppendPath("/externalNetworks/", false);
+            uri.AppendPath(externalNetworkName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName)
         {
             var message = _pipeline.CreateMessage();
@@ -366,6 +430,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByL3IsolationDomainRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
+            uri.AppendPath(l3IsolationDomainName, true);
+            uri.AppendPath("/externalNetworks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByL3IsolationDomainRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName)
@@ -445,6 +524,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateAdministrativeStateRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
+            uri.AppendPath(l3IsolationDomainName, true);
+            uri.AppendPath("/externalNetworks/", false);
+            uri.AppendPath(externalNetworkName, true);
+            uri.AppendPath("/updateAdministrativeState", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content)
@@ -532,6 +628,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
+        internal RequestUriBuilder CreateUpdateStaticRouteBfdAdministrativeStateRequestUri(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/", false);
+            uri.AppendPath(l3IsolationDomainName, true);
+            uri.AppendPath("/externalNetworks/", false);
+            uri.AppendPath(externalNetworkName, true);
+            uri.AppendPath("/updateStaticRouteBfdAdministrativeState", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateStaticRouteBfdAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string l3IsolationDomainName, string externalNetworkName, UpdateAdministrativeStateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -615,6 +728,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByL3IsolationDomainNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string l3IsolationDomainName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByL3IsolationDomainNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string l3IsolationDomainName)

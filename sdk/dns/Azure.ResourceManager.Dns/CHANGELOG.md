@@ -4,14 +4,19 @@
 
 ### Features Added
 
-- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Added model factory for all `DnsRecordData`
-
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.1 (2024-04-29)
+
+### Features Added
+
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added model factory for all `DnsRecordData`
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ## 1.1.0 (2023-11-21)
 

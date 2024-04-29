@@ -120,30 +120,32 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enabled: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enabled: ");
                     var boolValue = IsEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionInDays), out propertyOverride);
-            if (Optional.IsDefined(RetentionInDays) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  retentionInDays: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionInDays))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  retentionInDays: ");
                     builder.AppendLine($"{RetentionInDays.Value}");
                 }
             }

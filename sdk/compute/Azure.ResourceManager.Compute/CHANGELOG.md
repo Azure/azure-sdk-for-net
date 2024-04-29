@@ -1,10 +1,20 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0-beta.2 (Unreleased)
 
 ### Features Added
 
 - Updated the CRP api-version from 'package-2023-09-01' to the newer 'package-2024-03-01'. This is for the latest Compute RP release (VM, VMSS, etc).
+
+## 1.5.0-beta.1 (2024-04-25)
+
+### Features Added
+
+- Support long-running operation rehydration.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.11.1.
 
 ## 1.4.0 (2024-02-21)
 

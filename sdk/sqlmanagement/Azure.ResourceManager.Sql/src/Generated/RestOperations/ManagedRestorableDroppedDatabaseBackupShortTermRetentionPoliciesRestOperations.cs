@@ -36,6 +36,24 @@ namespace Azure.ResourceManager.Sql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/restorableDroppedDatabases/", false);
+            uri.AppendPath(restorableDroppedDatabaseId, true);
+            uri.AppendPath("/backupShortTermRetentionPolicies/", false);
+            uri.AppendPath(policyName.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName)
         {
             var message = _pipeline.CreateMessage();
@@ -128,6 +146,24 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicyData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/restorableDroppedDatabases/", false);
+            uri.AppendPath(restorableDroppedDatabaseId, true);
+            uri.AppendPath("/backupShortTermRetentionPolicies/", false);
+            uri.AppendPath(policyName.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicyData data)
         {
             var message = _pipeline.CreateMessage();
@@ -214,6 +250,24 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicyData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/restorableDroppedDatabases/", false);
+            uri.AppendPath(restorableDroppedDatabaseId, true);
+            uri.AppendPath("/backupShortTermRetentionPolicies/", false);
+            uri.AppendPath(policyName.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId, ManagedShortTermRetentionPolicyName policyName, ManagedBackupShortTermRetentionPolicyData data)
@@ -304,6 +358,23 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateListByRestorableDroppedDatabaseRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/restorableDroppedDatabases/", false);
+            uri.AppendPath(restorableDroppedDatabaseId, true);
+            uri.AppendPath("/backupShortTermRetentionPolicies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByRestorableDroppedDatabaseRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId)
         {
             var message = _pipeline.CreateMessage();
@@ -387,6 +458,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByRestorableDroppedDatabaseNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByRestorableDroppedDatabaseNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, string restorableDroppedDatabaseId)

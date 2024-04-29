@@ -1,12 +1,26 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.4 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0-beta.3 (2024-04-19)
+
+### Features Added
+
+* Added support for OpenTelemetry Logs to be sent to LiveMetrics.
+  ([#43081](https://github.com/Azure/azure-sdk-for-net/pull/43081))
+
+### Bugs Fixed
+
+* Turned off internal spans and logs in distro HTTP pipelines
+  ([#43359](https://github.com/Azure/azure-sdk-for-net/pull/43359))
 
 ### Other Changes
 
@@ -86,6 +100,18 @@
 * Updated the vendored code in the `OpenTelemetry.ResourceDetectors.Azure`
   resource detector to include the Azure Container Apps resource detector.
   ([#41803](https://github.com/Azure/azure-sdk-for-net/pull/41803))
+
+## 1.1.1 (2024-04-26)
+
+### Other Changes
+
+* Update OpenTelemetry dependencies.
+  ([#43432](https://github.com/Azure/azure-sdk-for-net/pull/43432))
+  - OpenTelemetry 1.8.1
+  - OpenTelemetry.Extensions.Hosting 1.8.1
+  - OpenTelemetry.Instrumentation.AspNetCore 1.8.1
+  - OpenTelemetry.Instrumentation.Http 1.8.1
+  - This update is a response to [CVE-2024-32028](https://nvd.nist.gov/vuln/detail/CVE-2024-32028)
 
 ## 1.1.0 (2024-01-25)
 

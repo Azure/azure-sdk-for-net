@@ -36,6 +36,10 @@ namespace Azure.Identity.Tests
             {
                 options.Transport = config.Transport;
             }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
             options.Pipeline = pipeline;
             return InstrumentClient(new ClientAssertionCredential(config.TenantId, ClientId, () => "assertion", options));
