@@ -37,7 +37,7 @@ namespace Azure.Identity
         /// <param name="clientId"></param>
         /// <param name="serviceConnectionId"></param>
         /// <param name="options"></param>
-        /// <exception cref="System.ArgumentException">When <paramref name="serviceConnectionId"/> is null.</exception>
+        /// <exception cref="System.ArgumentNullException">When <paramref name="tenantId"/>, <paramref name="clientId"/>, or <paramref name="serviceConnectionId"/> is null.</exception>
         public AzurePipelinesServiceConnectionCredential(string tenantId, string clientId, string serviceConnectionId, AzurePipelinesServiceConnectionCredentialOptions options = default)
         {
             Argument.AssertNotNull(serviceConnectionId, nameof(serviceConnectionId));
