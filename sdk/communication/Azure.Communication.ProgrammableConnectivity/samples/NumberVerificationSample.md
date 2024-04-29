@@ -19,7 +19,7 @@ NumberVerificationWithoutCodeContent content = new NumberVerificationWithoutCode
 };
 
 Response response = await client.VerifyWithoutCodeAsync(apcGatewayId, content);
-string locationUrl = response.Headers.TryGetValue("location", out var location) ? location : "not found";
+string locationUrl = response.Headers.TryGetValue("location", out var location) ? location : "Not found";
 
 Console.WriteLine(locationUrl);
 ```
