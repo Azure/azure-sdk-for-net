@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -6039,9 +6040,9 @@ Status = EntityStatus.Active,
 
             using RequestContent content = RequestContent.Create(new
             {
-                file = new object(),
+                file = File.OpenRead("<filePath>"),
             });
-            Response response = client.ImportBusinessMetadata(content);
+            Response response = client.ImportBusinessMetadata(content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6057,9 +6058,9 @@ Status = EntityStatus.Active,
 
             using RequestContent content = RequestContent.Create(new
             {
-                file = new object(),
+                file = File.OpenRead("<filePath>"),
             });
-            Response response = await client.ImportBusinessMetadataAsync(content);
+            Response response = await client.ImportBusinessMetadataAsync(content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -6073,7 +6074,7 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(null);
             Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
         }
 
@@ -6085,7 +6086,7 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(null);
             Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
         }
 
@@ -6099,9 +6100,9 @@ Status = EntityStatus.Active,
 
             using RequestContent content = RequestContent.Create(new
             {
-                file = new object(),
+                file = File.OpenRead("<filePath>"),
             });
-            Response response = client.ImportBusinessMetadata(content);
+            Response response = client.ImportBusinessMetadata(content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
@@ -6124,9 +6125,9 @@ Status = EntityStatus.Active,
 
             using RequestContent content = RequestContent.Create(new
             {
-                file = new object(),
+                file = File.OpenRead("<filePath>"),
             });
-            Response response = await client.ImportBusinessMetadataAsync(content);
+            Response response = await client.ImportBusinessMetadataAsync(content, "multipart/form-data");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
@@ -6147,7 +6148,7 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(null);
             Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
         }
 
@@ -6159,7 +6160,7 @@ Status = EntityStatus.Active,
             TokenCredential credential = new DefaultAzureCredential();
             Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(null);
             Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
         }
 

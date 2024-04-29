@@ -116,29 +116,31 @@ namespace Azure.ResourceManager.KeyVault.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActivationStatus), out propertyOverride);
-            if (Optional.IsDefined(ActivationStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  activationStatus: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActivationStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  activationStatus: ");
                     builder.AppendLine($"'{ActivationStatus.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActivationStatusMessage), out propertyOverride);
-            if (Optional.IsDefined(ActivationStatusMessage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  activationStatusMessage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActivationStatusMessage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  activationStatusMessage: ");
                     if (ActivationStatusMessage.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");

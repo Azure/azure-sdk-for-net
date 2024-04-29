@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Update proto for support for `ServiceBusSessionMessageActions` and `RenewMessageLock` method.
+
 ### Breaking Changes
 
 ### Bugs Fixed
