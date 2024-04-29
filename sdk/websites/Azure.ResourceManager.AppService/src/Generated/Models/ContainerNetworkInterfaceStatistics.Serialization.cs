@@ -219,113 +219,121 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RxBytes), out propertyOverride);
-            if (Optional.IsDefined(RxBytes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  rxBytes: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RxBytes))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  rxBytes: ");
                     builder.AppendLine($"'{RxBytes.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RxPackets), out propertyOverride);
-            if (Optional.IsDefined(RxPackets) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  rxPackets: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RxPackets))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  rxPackets: ");
                     builder.AppendLine($"'{RxPackets.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RxErrors), out propertyOverride);
-            if (Optional.IsDefined(RxErrors) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  rxErrors: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RxErrors))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  rxErrors: ");
                     builder.AppendLine($"'{RxErrors.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RxDropped), out propertyOverride);
-            if (Optional.IsDefined(RxDropped) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  rxDropped: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RxDropped))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  rxDropped: ");
                     builder.AppendLine($"'{RxDropped.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TxBytes), out propertyOverride);
-            if (Optional.IsDefined(TxBytes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  txBytes: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TxBytes))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  txBytes: ");
                     builder.AppendLine($"'{TxBytes.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TxPackets), out propertyOverride);
-            if (Optional.IsDefined(TxPackets) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  txPackets: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TxPackets))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  txPackets: ");
                     builder.AppendLine($"'{TxPackets.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TxErrors), out propertyOverride);
-            if (Optional.IsDefined(TxErrors) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  txErrors: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TxErrors))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  txErrors: ");
                     builder.AppendLine($"'{TxErrors.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TxDropped), out propertyOverride);
-            if (Optional.IsDefined(TxDropped) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  txDropped: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TxDropped))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  txDropped: ");
                     builder.AppendLine($"'{TxDropped.Value.ToString()}'");
                 }
             }

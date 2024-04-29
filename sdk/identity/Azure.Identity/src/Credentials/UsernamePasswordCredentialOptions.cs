@@ -22,5 +22,7 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         public bool DisableInstanceDiscovery { get; set; }
+
+        internal AuthenticationRecord AuthenticationRecord { get; set; }
     }
 }

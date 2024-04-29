@@ -9,7 +9,7 @@ Azure.Provisioning.Redis simplifies declarative resource provisioning in .NET fo
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.ApplicationInsights --prerelease
+dotnet add package Azure.Provisioning.Redis
 ```
 
 ### Prerequisites

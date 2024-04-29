@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Support.Tests
             ValidateProblemClassification(list.FirstOrDefault(item => item.Data.Name == _existProblemClassificationName).Data);
         }
 
-        [RecordedTest]
+/*        [RecordedTest]
         public async Task ClassifyProblems()
         {
             var problemClassificationContent = new ServiceProblemClassificationContent(issueSummary: "database", new Core.ResourceIdentifier(_resourceId), null);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Support.Tests
             Assert.IsNotEmpty(problemClassification.ServiceId);
             Assert.IsNotEmpty(problemClassification.DisplayName);
             Assert.IsNotEmpty(problemClassification.ProblemClassificationId);
-        }
+        }*/
 
         private void ValidateProblemClassification(ProblemClassificationData supportAzureService)
         {

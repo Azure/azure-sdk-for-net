@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(RuleType))
+            {
+                writer.WritePropertyName("ruleType"u8);
+                writer.WriteStringValue(RuleType.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
@@ -106,6 +111,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType? type = default;
+            InboundSecurityRuleType? ruleType = default;
             IList<InboundSecurityRules> rules = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -153,6 +159,15 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("ruleType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ruleType = new InboundSecurityRuleType(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("rules"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -191,6 +206,7 @@ namespace Azure.ResourceManager.Network.Models
                 type,
                 serializedAdditionalRawData,
                 etag,
+                ruleType,
                 rules ?? new ChangeTrackingList<InboundSecurityRules>(),
                 provisioningState);
         }
