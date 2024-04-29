@@ -7,7 +7,7 @@
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <Nullable>enable</Nullable>
     <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
-    <NoWarn>$(NoWarn);AZC0001</NoWarn>
+    <NoWarn>$(NoWarn)</NoWarn>
     <PackageIcon>DotNetPackageIcon.png</PackageIcon>
     <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
   </PropertyGroup>

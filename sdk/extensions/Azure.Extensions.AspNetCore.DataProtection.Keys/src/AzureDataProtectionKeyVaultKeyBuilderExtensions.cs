@@ -11,9 +11,7 @@ using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-#pragma warning disable AZC0001 // Extension methods have to be in the correct namespace to appear in intellisense.
 namespace Microsoft.AspNetCore.DataProtection
-#pragma warning disable
 {
     /// <summary>
     /// Contains Azure KeyVault-specific extension methods for modifying a <see cref="IDataProtectionBuilder"/>.
