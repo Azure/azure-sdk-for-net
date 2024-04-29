@@ -201,10 +201,12 @@ public class ClientLoggingPolicyTests : SyncAsyncTestBase
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
         EventWrittenEventArgs requestLog = clientEventListener.SingleEventById(1);
-        Guid.Parse(requestLog.GetProperty<string>("requestId"));
+        Guid requestId = Guid.Parse(requestLog.GetProperty<string>("requestId"));
 
         EventWrittenEventArgs responseLog = clientEventListener.SingleEventById(5);
-        Guid.Parse(responseLog.GetProperty<string>("requestId"));
+        Guid responseId = Guid.Parse(responseLog.GetProperty<string>("requestId"));
+
+        Assert.AreEqual(requestId, responseId);
     }
 
     [Test]

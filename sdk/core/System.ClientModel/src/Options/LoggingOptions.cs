@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace System.ClientModel.Options;
 
@@ -155,8 +156,8 @@ public class LoggingOptions
     public virtual void Freeze()
     {
         _frozen = true;
-        _loggedHeaderNames = new ReadOnlyCollection<string>(_loggedHeaderNames);
-        _loggedQueryParameters = new ReadOnlyCollection<string>(_loggedQueryParameters);
+        _loggedHeaderNames = new ReadOnlyCollection<string>(_loggedHeaderNames.ToArray());
+        _loggedQueryParameters = new ReadOnlyCollection<string>(_loggedQueryParameters.ToArray());
     }
 
     /// <summary>
