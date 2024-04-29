@@ -38,7 +38,7 @@ namespace Azure.Identity
         /// <summary>
         /// The security token used by the running build.
         /// </summary>
-        public string SystemAccessToken { get; set; } = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
+        public string SystemAccessToken { internal get; set; } = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
 
         /// <summary>
         /// The ID of the project that this build belongs to.
