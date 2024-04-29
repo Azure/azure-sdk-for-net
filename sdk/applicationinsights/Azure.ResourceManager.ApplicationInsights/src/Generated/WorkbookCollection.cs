@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="data"> Properties that need to be specified to create a new workbook. </param>
         /// <param name="sourceId"> Azure Resource Id that will fetch all linked workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="data"> Properties that need to be specified to create a new workbook. </param>
         /// <param name="sourceId"> Azure Resource Id that will fetch all linked workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>

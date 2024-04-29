@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-04-01";
+            _apiVersion = apiVersion ?? "2023-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Get a single workbook by its resourceName. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Get a single workbook by its resourceName. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Delete a workbook. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Delete a workbook. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Create a new workbook. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="data"> Properties that need to be specified to create a new workbook. </param>
         /// <param name="sourceId"> Azure Resource Id that will fetch all linked workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Create a new workbook. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="data"> Properties that need to be specified to create a new workbook. </param>
         /// <param name="sourceId"> Azure Resource Id that will fetch all linked workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Updates a workbook that has already been added. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="patch"> Properties that need to be specified to create a new workbook. </param>
         /// <param name="sourceId"> Azure Resource Id that will fetch all linked workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Updates a workbook that has already been added. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="patch"> Properties that need to be specified to create a new workbook. </param>
         /// <param name="sourceId"> Azure Resource Id that will fetch all linked workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Get the revisions for the workbook defined by its resourceName. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Get the revisions for the workbook defined by its resourceName. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Get a single workbook revision defined by its revisionId. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="revisionId"> The id of the workbook's revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="revisionId"/> is null. </exception>
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <summary> Get a single workbook revision defined by its revisionId. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="revisionId"> The id of the workbook's revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="revisionId"/> is null. </exception>
@@ -1067,7 +1067,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1098,7 +1098,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceName"> The name of the workbook resource. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>

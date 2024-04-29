@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_WorkbookRevisionGet()
         {
-            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2022-04-01/examples/WorkbookRevisionGet.json
+            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2023-06-01/examples/WorkbookRevisionGet.json
             // this example is just showing the usage of "Workbooks_RevisionGet" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

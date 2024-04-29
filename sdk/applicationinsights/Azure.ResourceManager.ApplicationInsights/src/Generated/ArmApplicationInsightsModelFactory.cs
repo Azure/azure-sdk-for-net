@@ -485,60 +485,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.MyWorkbookData"/>. </summary>
-        /// <param name="identity"> Identity used for BYOS. </param>
-        /// <param name="id"> Azure resource Id. </param>
-        /// <param name="name"> Azure resource name. </param>
-        /// <param name="resourceType"> Azure resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"> Resource etag. </param>
-        /// <param name="kind"> The kind of workbook. Choices are user and shared. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <param name="displayName"> The user-defined name of the private workbook. </param>
-        /// <param name="serializedData"> Configuration of this particular private workbook. Configuration data is a string containing valid JSON. </param>
-        /// <param name="version"> This instance's version of the data model. This can change as new features are added that can be marked private workbook. </param>
-        /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this private workbook definition. </param>
-        /// <param name="category"> Workbook category, as defined by the user at creation time. </param>
-        /// <param name="userId"> Unique user id of the specific user that owns this private workbook. </param>
-        /// <param name="sourceId"> Optional resourceId for a source resource. </param>
-        /// <param name="storageUri"> BYOS Storage Account URI. </param>
-        /// <returns> A new <see cref="ApplicationInsights.MyWorkbookData"/> instance for mocking. </returns>
-        public static MyWorkbookData MyWorkbookData(MyWorkbookManagedIdentity identity = null, string id = null, string name = null, string resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, IDictionary<string, string> etag = null, ApplicationInsightsKind? kind = null, SystemData systemData = null, string displayName = null, string serializedData = null, string version = null, string timeModified = null, string category = null, string userId = null, string sourceId = null, Uri storageUri = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            etag ??= new Dictionary<string, string>();
-
-            return new MyWorkbookData(
-                identity,
-                id,
-                name,
-                resourceType,
-                location,
-                tags,
-                etag,
-                serializedAdditionalRawData: null,
-                kind,
-                systemData,
-                displayName,
-                serializedData,
-                version,
-                timeModified,
-                category,
-                userId,
-                sourceId,
-                storageUri);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MyWorkbookUserAssignedIdentities"/>. </summary>
-        /// <param name="principalId"> The principal ID of resource identity. </param>
-        /// <param name="tenantId"> The tenant ID of resource. </param>
-        /// <returns> A new <see cref="Models.MyWorkbookUserAssignedIdentities"/> instance for mocking. </returns>
-        public static MyWorkbookUserAssignedIdentities MyWorkbookUserAssignedIdentities(string principalId = null, Guid? tenantId = null)
-        {
-            return new MyWorkbookUserAssignedIdentities(principalId, tenantId, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="ApplicationInsights.WorkbookData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -593,24 +539,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static LiveTokenResponse LiveTokenResponse(string liveToken = null)
         {
             return new LiveTokenResponse(liveToken, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.ComponentLinkedStorageAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="linkedStorageAccount"> Linked storage account resource ID. </param>
-        /// <returns> A new <see cref="ApplicationInsights.ComponentLinkedStorageAccountData"/> instance for mocking. </returns>
-        public static ComponentLinkedStorageAccountData ComponentLinkedStorageAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string linkedStorageAccount = null)
-        {
-            return new ComponentLinkedStorageAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                linkedStorageAccount,
-                serializedAdditionalRawData: null);
         }
     }
 }

@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: ApplicationInsights
 namespace: Azure.ResourceManager.ApplicationInsights
-require: https://github.com/Azure/azure-rest-api-specs/blob/1fea23ac36b111293dc3efc30f725e9ebb790f7f/specification/applicationinsights/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d4f3374fc56a25acc5442a7efe5aee11413fdfe2/specification/applicationinsights/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -23,6 +23,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 enable-bicep-serialization: true
+tag: package-2024-04-25-only
 
 #mgmt-debug:
 #  show-serialized-names: true

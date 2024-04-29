@@ -157,18 +157,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MyWorkbookResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MyWorkbookResource.CreateResourceIdentifier" /> to create a <see cref="MyWorkbookResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MyWorkbookResource"/> object. </returns>
-        public virtual MyWorkbookResource GetMyWorkbookResource(ResourceIdentifier id)
-        {
-            MyWorkbookResource.ValidateResourceId(id);
-            return new MyWorkbookResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="WorkbookResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WorkbookResource.CreateResourceIdentifier" /> to create a <see cref="WorkbookResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -190,18 +178,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         {
             WorkbookRevisionResource.ValidateResourceId(id);
             return new WorkbookRevisionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ComponentLinkedStorageAccountResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ComponentLinkedStorageAccountResource.CreateResourceIdentifier" /> to create a <see cref="ComponentLinkedStorageAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComponentLinkedStorageAccountResource"/> object. </returns>
-        public virtual ComponentLinkedStorageAccountResource GetComponentLinkedStorageAccountResource(ResourceIdentifier id)
-        {
-            ComponentLinkedStorageAccountResource.ValidateResourceId(id);
-            return new ComponentLinkedStorageAccountResource(Client, id);
         }
     }
 }
