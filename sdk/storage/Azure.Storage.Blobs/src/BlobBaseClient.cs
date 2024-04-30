@@ -494,7 +494,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         protected virtual BlobBaseClient WithSnapshotCore(string snapshot)
         {
-            Argument.AssertNotNullOrWhiteSpace(snapshot, nameof(snapshot));
             _snapshot = snapshot;
             var blobUriBuilder = new BlobUriBuilder(Uri)
             {
@@ -530,7 +529,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns>A new <see cref="BlobBaseClient"/> instance.</returns>
         private protected virtual BlobBaseClient WithVersionCore(string versionId)
         {
-            Argument.AssertNotNullOrWhiteSpace(versionId, nameof(versionId));
             _blobVersionId = versionId;
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
             {

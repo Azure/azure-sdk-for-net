@@ -280,7 +280,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public new AppendBlobClient WithSnapshot(string snapshot)
         {
-            Argument.AssertNotNullOrWhiteSpace(snapshot, nameof(snapshot));
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
             {
                 Snapshot = snapshot
@@ -305,7 +304,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public new AppendBlobClient WithVersion(string versionId)
         {
-            Argument.AssertNotNullOrWhiteSpace(versionId, nameof(versionId));
             BlobUriBuilder blobUriBuilder = new BlobUriBuilder(Uri)
             {
                 VersionId = versionId
