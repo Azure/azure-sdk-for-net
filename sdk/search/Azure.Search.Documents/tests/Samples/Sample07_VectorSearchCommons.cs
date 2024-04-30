@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             AzureKeyCredential credential = new AzureKeyCredential(key);
 
             OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-            EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { input });
+            EmbeddingsOptions embeddingsOptions = new("text-embedding-ada-002", new string[] { input });
 
             Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
             return embeddings.Data[0].Embedding;
@@ -39,37 +39,21 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                         "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
                         "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
                         "the tourist attractions. We highly recommend this hotel.",
-#if !SNIPPET
-                    DescriptionVector = VectorSearchEmbeddings.Hotel1VectorizeDescription,
-#else
                     DescriptionVector = GetEmbeddings(
                         "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
                         "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
                         "the tourist attractions. We highly recommend this hotel."),
-#endif
                     Category = "Luxury",
-#if !SNIPPET
-                    CategoryVector = VectorSearchEmbeddings.LuxuryVectorizeCategory
-#else
                     CategoryVector = GetEmbeddings("Luxury")
-#endif
                 },
                 new Hotel()
                 {
                     HotelId = "2",
                     HotelName = "Roach Motel",
                     Description = "Cheapest hotel in town. Infact, a motel.",
-#if !SNIPPET
-                    DescriptionVector = VectorSearchEmbeddings.Hotel2VectorizeDescription,
-#else
                     DescriptionVector = GetEmbeddings("Cheapest hotel in town. Infact, a motel."),
-#endif
                     Category = "Budget",
-#if !SNIPPET
-                    CategoryVector = VectorSearchEmbeddings.BudgetVectorizeCategory
-#else
                     CategoryVector = GetEmbeddings("Budget")
-#endif
                 },
 #if !SNIPPET
                 new Hotel()
@@ -77,18 +61,18 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     HotelId = "3",
                     HotelName = "EconoStay",
                     Description = "Very popular hotel in town.",
-                    DescriptionVector = VectorSearchEmbeddings.Hotel3VectorizeDescription,
+                    DescriptionVector = GetEmbeddings("Very popular hotel in town."),
                     Category = "Budget",
-                    CategoryVector = VectorSearchEmbeddings.BudgetVectorizeCategory
+                    CategoryVector = GetEmbeddings("Budget")
                 },
                 new Hotel()
                 {
                     HotelId = "4",
                     HotelName = "Modern Stay",
                     Description = "Modern architecture, very polite staff and very clean. Also very affordable.",
-                    DescriptionVector = VectorSearchEmbeddings.Hotel7VectorizeDescription,
+                    DescriptionVector = GetEmbeddings("Modern architecture, very polite staff and very clean. Also very affordable."),
                     Category = "Luxury",
-                    CategoryVector = VectorSearchEmbeddings.LuxuryVectorizeCategory
+                    CategoryVector = GetEmbeddings("Luxury")
                 },
                 new Hotel()
                 {
@@ -97,9 +81,96 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                      Description = "The hotel is ideally located on the main commercial artery of the city in the heart of New York. " +
                      "A few minutes away is Time's Square and the historic centre of the city, " +
                      "as well as other places of interest that make New York one of America's most attractive and cosmopolitan cities.",
-                    DescriptionVector = VectorSearchEmbeddings.Hotel9VectorizeDescription,
+                    DescriptionVector = GetEmbeddings("The hotel is ideally located on the main commercial artery of the city in the heart of New York. " +
+                     "A few minutes away is Time's Square and the historic centre of the city, " +
+                     "as well as other places of interest that make New York one of America's most attractive and cosmopolitan cities."),
                     Category = "Boutique",
-                    CategoryVector = VectorSearchEmbeddings.BoutiqueVectorizeCategory
+                    CategoryVector = GetEmbeddings("Boutique")
+                }
+#endif
+                // Add more hotel documents here...
+            };
+        }
+        #endregion
+
+        #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_GetEmbeddings_WithDimensions
+        public static ReadOnlyMemory<float> GetEmbeddingsWithDimensions(string input)
+        {
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
+            string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
+            AzureKeyCredential credential = new AzureKeyCredential(key);
+
+            OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
+            EmbeddingsOptions embeddingsOptions = new("my-text-embedding-3-small", new string[] { input })
+            {
+                Dimensions = 256
+            };
+
+            Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
+            return embeddings.Data[0].Embedding;
+        }
+        #endregion
+
+        #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Documents
+        public static Hotel[] GetDocuments()
+        {
+            return new[]
+            {
+                new Hotel()
+                {
+                    HotelId = "1",
+                    HotelName = "Fancy Stay",
+                    Description =
+                        "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
+                        "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
+                        "the tourist attractions. We highly recommend this hotel.",
+                    DescriptionVector = GetEmbeddingsWithDimensions(
+                        "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
+                        "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
+                        "the tourist attractions. We highly recommend this hotel."),
+                    Category = "Luxury",
+                    CategoryVector = GetEmbeddingsWithDimensions("Luxury")
+                },
+                new Hotel()
+                {
+                    HotelId = "2",
+                    HotelName = "Roach Motel",
+                    Description = "Cheapest hotel in town. Infact, a motel.",
+                    DescriptionVector = GetEmbeddingsWithDimensions("Cheapest hotel in town. Infact, a motel."),
+                    Category = "Budget",
+                    CategoryVector = GetEmbeddingsWithDimensions("Budget")
+                },
+#if !SNIPPET
+                new Hotel()
+                {
+                    HotelId = "3",
+                    HotelName = "EconoStay",
+                    Description = "Very popular hotel in town.",
+                    DescriptionVector = GetEmbeddingsWithDimensions("Very popular hotel in town."),
+                    Category = "Budget",
+                    CategoryVector = GetEmbeddingsWithDimensions("Budget")
+                },
+                new Hotel()
+                {
+                    HotelId = "4",
+                    HotelName = "Modern Stay",
+                    Description = "Modern architecture, very polite staff and very clean. Also very affordable.",
+                    DescriptionVector = GetEmbeddingsWithDimensions("Modern architecture, very polite staff and very clean. Also very affordable."),
+                    Category = "Luxury",
+                    CategoryVector = GetEmbeddingsWithDimensions("Luxury")
+                },
+                new Hotel()
+                {
+                    HotelId = "5",
+                    HotelName = "Secret Point",
+                     Description = "The hotel is ideally located on the main commercial artery of the city in the heart of New York. " +
+                     "A few minutes away is Time's Square and the historic centre of the city, " +
+                     "as well as other places of interest that make New York one of America's most attractive and cosmopolitan cities.",
+                    DescriptionVector = GetEmbeddingsWithDimensions("The hotel is ideally located on the main commercial artery of the city in the heart of New York. " +
+                     "A few minutes away is Time's Square and the historic centre of the city, " +
+                     "as well as other places of interest that make New York one of America's most attractive and cosmopolitan cities."),
+                    Category = "Boutique",
+                    CategoryVector = GetEmbeddingsWithDimensions("Boutique")
                 }
 #endif
                 // Add more hotel documents here...

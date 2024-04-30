@@ -33,6 +33,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "aiServicesVision": return AIServicesVisionVectorizer.DeserializeAIServicesVisionVectorizer(element);
+                    case "aml": return AMLVectorizer.DeserializeAMLVectorizer(element);
                     case "azureOpenAI": return AzureOpenAIVectorizer.DeserializeAzureOpenAIVectorizer(element);
                     case "customWebApi": return CustomVectorizer.DeserializeCustomVectorizer(element);
                 }
