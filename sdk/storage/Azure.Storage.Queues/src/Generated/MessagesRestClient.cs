@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Queues.Models;
 
 namespace Azure.Storage.Queues
@@ -205,7 +206,7 @@ namespace Azure.Storage.Queues
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
-            var content = new XmlWriterContent();
+            var content = new XmlWriterRequestContent();
             content.XmlWriter.WriteObjectValue(queueMessage, "QueueMessage");
             request.Content = content;
             return message;

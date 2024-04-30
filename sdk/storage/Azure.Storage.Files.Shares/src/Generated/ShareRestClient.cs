@@ -1101,7 +1101,7 @@ namespace Azure.Storage.Files.Shares
             if (shareAcl != null)
             {
                 request.Headers.Add("Content-Type", "application/xml");
-                var content = new XmlWriterContent();
+                var content = new XmlWriterRequestContent();
                 content.XmlWriter.WriteStartElement("SignedIdentifiers");
                 foreach (var item in shareAcl)
                 {

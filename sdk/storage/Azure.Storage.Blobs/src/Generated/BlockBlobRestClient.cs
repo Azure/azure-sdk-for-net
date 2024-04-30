@@ -14,6 +14,7 @@ using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs
 {
@@ -888,7 +889,7 @@ namespace Azure.Storage.Blobs
                 request.Headers.Add("Content-MD5", transactionalContentMD5, "D");
             }
             request.Headers.Add("Content-Type", "application/xml");
-            var content = new XmlWriterContent();
+            var content = new XmlWriterRequestContent();
             content.XmlWriter.WriteObjectValue(blocks, "BlockList");
             request.Content = content;
             return message;

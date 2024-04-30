@@ -7,6 +7,7 @@
 
 using System.Xml;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {

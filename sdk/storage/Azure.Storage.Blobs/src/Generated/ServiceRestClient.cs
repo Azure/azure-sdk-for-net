@@ -59,7 +59,7 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
-            var content = new XmlWriterContent();
+            var content = new XmlWriterRequestContent();
             content.XmlWriter.WriteObjectValue(storageServiceProperties, "StorageServiceProperties");
             request.Content = content;
             return message;
@@ -364,7 +364,7 @@ namespace Azure.Storage.Blobs
             request.Headers.Add("x-ms-version", _version);
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
-            var content = new XmlWriterContent();
+            var content = new XmlWriterRequestContent();
             content.XmlWriter.WriteObjectValue(keyInfo, "KeyInfo");
             request.Content = content;
             return message;
