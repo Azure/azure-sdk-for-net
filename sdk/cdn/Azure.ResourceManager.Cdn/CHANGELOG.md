@@ -20,6 +20,7 @@
 ## 1.2.0 (2023-11-21)
 
 ### Features Added
+
 - Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
