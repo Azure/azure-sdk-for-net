@@ -10,9 +10,18 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> Condition to apply for the sanitization or transform. If the condition is not met, sanitization/transform is not performed. </summary>
     public partial class Condition
     {
-        /// <summary> Initializes a new instance of Condition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Condition"/>. </summary>
         public Condition()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Condition"/>. </summary>
+        /// <param name="uriRegex"></param>
+        /// <param name="responseHeader"> Header condition to apply. </param>
+        internal Condition(string uriRegex, HeaderCondition responseHeader)
+        {
+            UriRegex = uriRegex;
+            ResponseHeader = responseHeader;
         }
 
         /// <summary> Gets or sets the uri regex. </summary>
