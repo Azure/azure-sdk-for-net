@@ -321,7 +321,6 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         [Test]
-        [RecordedTest]
         public async Task UpdateVmIdentityFromUserToSystemUser()
         {
             var collection = await GetVirtualMachineCollectionAsync();
